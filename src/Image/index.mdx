@@ -122,3 +122,27 @@ The preview viewer was rewritten from scratch on top of a Base UI dialog and no 
 | maxScale | Maximum zoom scale relative to the fitted size. Raised automatically when `defaultZoom` resolves above it, so the opening scale is always reachable | `number` | `8` |
 | onOpenChange | Called when the preview viewer opens or closes | `(open: boolean) => void` | - |
 | toolbarAddon | Additional content appended to the preview toolbar | `ReactNode` | - |
+
+### useImagePreview
+
+Opens the viewer from your own trigger for an `<img>` that `Image` doesn't render, such as an image inside a rich-text editor. The viewer animates from that element, the same as clicking an `Image`.
+
+```tsx
+const imgRef = useRef<HTMLImageElement>(null);
+const { open, outlet } = useImagePreview(imgRef, { src: fullSizeUrl });
+
+return (
+  <>
+    <img ref={imgRef} src={thumbUrl} />
+    <button onClick={open}>Zoom</button>
+    {outlet}
+  </>
+);
+```
+
+| Argument / Return | Description | Type |
+| --- | --- | --- |
+| elementRef | The `<img>` the viewer opens from and returns to | `RefObject<HTMLImageElement \| null>` |
+| options | Same as `ImagePreviewOptions` | `ImagePreviewOptions` |
+| open | Opens the viewer; does nothing until `elementRef` has an element | `() => void` |
+| outlet | Render it once next to the image; the viewer mounts there while open | `ReactNode` |

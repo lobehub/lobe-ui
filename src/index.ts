@@ -213,6 +213,8 @@ export {
   type ImageProps,
   PreviewGroup,
   type PreviewGroupProps,
+  useImagePreview,
+  type UseImagePreviewResult,
 } from './Image';
 export { default as ImageSelect, type ImageSelectItem, type ImageSelectProps } from './ImageSelect';
 export {

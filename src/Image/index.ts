@@ -15,3 +15,4 @@ Image.PreviewGroup = PreviewGroup;
 export default Image;
 export { default as PreviewGroup } from './PreviewGroup';
 export type * from './type';
+export { useImagePreview, type UseImagePreviewResult } from './useImagePreview';
