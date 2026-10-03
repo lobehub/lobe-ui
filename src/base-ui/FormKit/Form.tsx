@@ -126,7 +126,7 @@ const Form = <T extends FormValues>({
         noValidate
         className={cx(rootVariants({ variant }), className)}
         ref={mergedRef}
-        style={{ gap, ...style }}
+        style={{ gap: gap ?? (layout === 'vertical' ? 0 : undefined), ...style }}
         onSubmit={handleSubmit}
       >
         {renderedItems}

@@ -114,6 +114,33 @@ describe('<Form>', () => {
     expect(screen.getByLabelText('Name').parentElement!.style.width).toBe('');
   });
 
+  it('stacks vertical fields without the group gap unless a gap is given', () => {
+    const { container, rerender } = render(
+      <Host
+        render={(f) => (
+          <Form form={f} layout="vertical">
+            <FormField label="Name" name="name">
+              <input />
+            </FormField>
+          </Form>
+        )}
+      />,
+    );
+    expect((container.querySelector('form') as HTMLFormElement).style.gap).toBe('0px');
+    rerender(
+      <Host
+        render={(f) => (
+          <Form form={f} gap={24} layout="vertical">
+            <FormField label="Name" name="name">
+              <input />
+            </FormField>
+          </Form>
+        )}
+      />,
+    );
+    expect((container.querySelector('form') as HTMLFormElement).style.gap).toBe('24px');
+  });
+
   it('links an unnamed field label to the child id', () => {
     render(
       <Host
