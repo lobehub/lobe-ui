@@ -240,6 +240,12 @@ const FormField = memo<FormFieldProps>(
     const mergedLayout = layout || (mobile ? 'vertical' : config.layout);
     const mergedVariant = variant || config.variant;
     const mergedMinWidth = minWidth ?? config.itemMinWidth;
+    const controlWidth =
+      mergedLayout === 'vertical' || mergedMinWidth === undefined || mergedMinWidth === ''
+        ? undefined
+        : typeof mergedMinWidth === 'number'
+          ? `${mergedMinWidth}px`
+          : mergedMinWidth;
 
     return (
       <>
@@ -265,18 +271,12 @@ const FormField = memo<FormFieldProps>(
             />
           </label>
           <div
+            style={controlWidth ? { width: controlWidth } : undefined}
             className={cx(
               fieldStyles.control,
               mergedLayout === 'vertical' && fieldStyles.controlVertical,
+              controlWidth && fieldKitStyles.controlFixed,
             )}
-            style={
-              mergedMinWidth === undefined || mergedMinWidth === ''
-                ? undefined
-                : {
-                    minWidth:
-                      typeof mergedMinWidth === 'number' ? `${mergedMinWidth}px` : mergedMinWidth,
-                  }
-            }
           >
             {control}
             {extra && <div className={fieldKitStyles.extra}>{extra}</div>}

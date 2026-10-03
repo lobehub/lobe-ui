@@ -76,6 +76,7 @@ const Form = <T extends FormValues>({
       key={item.name ?? index}
       style={customStyles?.item}
       {...(item as FormFieldProps)}
+      minWidth={'minWidth' in item && item.minWidth === undefined ? '' : item.minWidth}
     />
   );
 
