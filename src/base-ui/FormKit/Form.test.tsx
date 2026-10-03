@@ -78,6 +78,27 @@ describe('<Form>', () => {
     expect(form.getValues()).toEqual({ email: '', name: 'Ada' });
   });
 
+  it('sizes the control to itemMinWidth unless an item opts out with minWidth: undefined', () => {
+    render(
+      <Host
+        render={(f) => (
+          <Form
+            form={f}
+            itemMinWidth={300}
+            itemsType="flat"
+            layout="horizontal"
+            items={[
+              { children: <input />, label: 'Name', name: 'name' },
+              { children: <input />, label: 'Email', minWidth: undefined, name: 'email' },
+            ]}
+          />
+        )}
+      />,
+    );
+    expect(screen.getByLabelText('Name').parentElement!.style.width).toBe('300px');
+    expect(screen.getByLabelText('Email').parentElement!.style.width).toBe('');
+  });
+
   it('links an unnamed field label to the child id', () => {
     render(
       <Host
