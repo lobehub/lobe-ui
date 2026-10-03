@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.55.0](https://github.com/lobehub/lobe-ui/compare/v5.54.0...v5.55.0) (2026-10-03)
+
+### ✨ Features
+
+- **image**: Add useImagePreview for custom preview triggers, closes [#687](https://github.com/lobehub/lobe-ui/issues/687) ([9b74d16](https://github.com/lobehub/lobe-ui/commit/9b74d16))
+
 # [5.54.0](https://github.com/lobehub/lobe-ui/compare/v5.53.0...v5.54.0) (2026-10-01)
 
 ### ✨ Features
