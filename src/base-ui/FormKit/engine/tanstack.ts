@@ -134,6 +134,12 @@ export const createTanstackEngine: CreateEngine = (initialValues) => {
     void runField(path, true);
   };
 
+  const clearErrorsUnder = (path: string) => {
+    const prefix = `${path}.`;
+    for (const map of [fieldErrors, formErrors, serverErrors])
+      for (const key of map.keys()) if (key.startsWith(prefix)) map.delete(key);
+  };
+
   const emitValueChange = (path: string, source: ChangeSource) => {
     for (const listener of valueListeners) listener({ path, source });
   };
@@ -195,6 +201,7 @@ export const createTanstackEngine: CreateEngine = (initialValues) => {
     isTouched,
     moveItem: (path, from, to) => {
       form.moveFieldValues(toEnginePath(path) as never, from, to);
+      clearErrorsUnder(path);
       emitValueChange(path, 'user');
       notify();
     },
@@ -222,6 +229,7 @@ export const createTanstackEngine: CreateEngine = (initialValues) => {
     },
     removeItem: (path, index) => {
       void form.removeFieldValue(toEnginePath(path) as never, index);
+      clearErrorsUnder(path);
       emitValueChange(path, 'user');
       notify();
     },

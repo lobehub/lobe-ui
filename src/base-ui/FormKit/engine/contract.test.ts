@@ -218,6 +218,16 @@ describe.each(engines)('FormEngine contract: %s', (_name, create) => {
       e.removeItem('list', 1);
       expect(e.getValue('list')).toEqual(['b', 'a']);
     });
+
+    it('drops errors recorded under a list when its items shift', async () => {
+      const e = make({ list: ['', 'x'] });
+      e.registerField('list.0', { validate: required });
+      e.blurField('list.0');
+      await wait();
+      expect(e.getField('list.0').error).toBe('required');
+      e.removeItem('list', 0);
+      expect(e.getField('list.0').error).toBeUndefined();
+    });
   });
 
   describe('submit', () => {
