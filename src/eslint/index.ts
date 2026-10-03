@@ -1,3 +1,5 @@
+import { noInlineFormSchema } from './noInlineFormSchema';
+
 const DEPRECATED_UI_COMPONENTS = [
   'Accordion',
   'AccordionItem',
@@ -273,7 +275,8 @@ export const restrictedImports = {
             name: 'thinking-orbs',
           },
           {
-            message: 'ProComponents are deprecated. Use `Table` from "@lobehub/ui/base-ui" instead.',
+            message:
+              'ProComponents are deprecated. Use `Table` from "@lobehub/ui/base-ui" instead.',
             name: '@ant-design/pro-components',
           },
         ],
@@ -289,4 +292,13 @@ export const restrictedImports = {
   },
 };
 
-export default [restrictedImports];
+export const formSchemaRules = {
+  plugins: {
+    '@lobehub/ui': { rules: { 'no-inline-form-schema': noInlineFormSchema } },
+  },
+  rules: {
+    '@lobehub/ui/no-inline-form-schema': 'warn',
+  },
+};
+
+export default [restrictedImports, formSchemaRules];
