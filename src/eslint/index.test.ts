@@ -57,6 +57,22 @@ describe('restrictedImports', () => {
     ]);
   });
 
+  it.each([
+    "import { Form } from '@lobehub/ui';",
+    "import { FormGroup } from '@lobehub/ui';",
+    "import { FormItemProps } from '@lobehub/ui';",
+    "import { FormInstance } from 'antd';",
+    "import useForm from 'antd/es/form/hooks/useForm';",
+  ])('points %s at @lobehub/ui/base-ui/form', (code) => {
+    expect(lint(code)).toEqual([
+      expect.objectContaining({
+        message: expect.stringContaining('@lobehub/ui/base-ui/form'),
+        ruleId: 'no-restricted-imports',
+        severity: 2,
+      }),
+    ]);
+  });
+
   it('rejects the antd skeleton path', () => {
     expect(lint("import Skeleton from 'antd/es/skeleton';")).toEqual([
       expect.objectContaining({ ruleId: 'no-restricted-imports', severity: 2 }),
