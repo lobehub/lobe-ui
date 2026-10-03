@@ -33,6 +33,7 @@ export default defineConfig({
     'src/index.ts',
     // packages
     ...packageEntries,
+    'src/base-ui/FormKit/index.ts',
     'src/i18n/resources/index.ts',
     'src/static-css/emit/index.ts',
     'src/static-css/runtime/index.ts',
