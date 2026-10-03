@@ -231,6 +231,59 @@ describe.each(engines)('FormEngine contract: %s', (_name, create) => {
   });
 
   describe('submit', () => {
+    it.each(['form', 'field'] as const)(
+      'revalidates edits made during async %s validation before submitting',
+      async (validationType) => {
+        const e = make({ a: 'valid' });
+        const { promise, resolve } = Promise.withResolvers<void>();
+        const validate = vi.fn(async (value: unknown) => {
+          await promise;
+          return required(value);
+        });
+        if (validationType === 'form') {
+          e.registerField('a', {});
+          e.setFormValidator(async (values) => {
+            const error = await validate(values.a);
+            return error ? { a: error } : undefined;
+          });
+        } else {
+          e.registerField('a', { validate: (value) => validate(value) });
+        }
+        const onSubmit = vi.fn();
+
+        const submission = e.submit(onSubmit);
+        expect(validate).toHaveBeenCalledWith('valid');
+        e.setValue('a', '', 'user');
+        resolve();
+
+        expect(await submission).toEqual({ errors: { a: 'required' }, valid: false });
+        expect(validate).toHaveBeenLastCalledWith('');
+        expect(onSubmit).not.toHaveBeenCalled();
+        expect(e.getStatus()).toMatchObject({ dirty: true, submitCount: 1, submitting: false });
+      },
+    );
+
+    it('submits the latest values after an edit passes revalidation', async () => {
+      const e = make({ a: 'first' });
+      const { promise, resolve } = Promise.withResolvers<void>();
+      const validate = vi.fn(async (values: Record<string, unknown>) => {
+        await promise;
+        return values.a ? undefined : { a: 'required' };
+      });
+      e.setFormValidator(validate);
+      const onSubmit = vi.fn();
+
+      const submission = e.submit(onSubmit);
+      e.setValue('a', 'latest', 'user');
+      resolve();
+
+      expect(await submission).toEqual({ errors: {}, valid: true });
+      expect(validate).toHaveBeenCalledTimes(2);
+      expect(validate).toHaveBeenLastCalledWith({ a: 'latest' });
+      expect(onSubmit).toHaveBeenCalledExactlyOnceWith({ a: 'latest' });
+      expect(e.getStatus()).toMatchObject({ dirty: false, submitCount: 1, submitting: false });
+    });
+
     it('does not call onSubmit when invalid and counts the attempt', async () => {
       const e = make({ a: '' });
       e.registerField('a', { validate: required });
