@@ -6,6 +6,7 @@ import type { FormInstance, FormValues } from './type';
 interface InstanceInternals {
   engine: FormEngine;
   initialValues: FormValues;
+  onSubmit?: (values: FormValues) => unknown;
   validateOn: ValidateOn;
 }
 
@@ -75,7 +76,10 @@ export const createFormInstance = <T extends FormValues>({
       for (const path of leafPaths(values))
         engine.setValue(path, getIn(values, path), source(options));
     },
-    submit: () => engine.submit() as ReturnType<FormInstance<T>['submit']>,
+    submit: () =>
+      engine.submit((values) => internals.get(form)?.onSubmit?.(values)) as ReturnType<
+        FormInstance<T>['submit']
+      >,
     subscribe: (selector, callback) => {
       let selected = selector(engine.getValues() as T);
       return engine.subscribe(() => {

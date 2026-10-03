@@ -1,4 +1,6 @@
-import type { CSSProperties, ReactElement, ReactNode } from 'react';
+import type { CSSProperties, ReactElement, ReactNode, Ref } from 'react';
+
+import type { IconProps } from '@/Icon';
 
 import type { FormLayout, FormVariant } from '../Form/type';
 import type { ValidateOn } from './engine/types';
@@ -99,6 +101,39 @@ export interface FieldRenderProps<V = any> {
 }
 
 export type { FieldValidate, StandardSchema };
+
+export interface FormGroupItem<T extends FormValues = FormValues> {
+  children: FormFieldProps<T>[] | ReactNode;
+  collapsible?: boolean;
+  defaultActive?: boolean;
+  desc?: ReactNode;
+  extra?: ReactNode;
+  icon?: IconProps['icon'];
+  key?: string;
+  title: ReactNode;
+  variant?: FormVariant;
+}
+
+export interface FormProps<T extends FormValues = FormValues> {
+  activeKey?: (string | number)[];
+  children?: ReactNode;
+  className?: string;
+  classNames?: { group?: string; item?: string };
+  collapsible?: boolean;
+  defaultActiveKey?: (string | number)[];
+  footer?: ReactNode;
+  form: FormInstance<T>;
+  gap?: number | string;
+  itemMinWidth?: string | number;
+  items?: FormGroupItem<T>[] | FormFieldProps<T>[];
+  itemsType?: 'group' | 'flat';
+  layout?: FormLayout;
+  onCollapse?: (keys: (string | number)[]) => void;
+  ref?: Ref<HTMLFormElement>;
+  style?: CSSProperties;
+  styles?: { group?: CSSProperties; item?: CSSProperties };
+  variant?: FormVariant;
+}
 
 export interface FormFieldProps<T extends FormValues = FormValues> extends FieldBinding {
   avatar?: ReactNode;

@@ -17,6 +17,7 @@ export const useForm = <T extends FormValues = FormValues>(
   );
   const latest = useRef(options);
   latest.current = options;
+  getInternals(form).onSubmit = (values) => latest.current.onSubmit?.(values as T);
 
   useEffect(() => {
     const { engine } = getInternals(form);
