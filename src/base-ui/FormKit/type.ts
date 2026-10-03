@@ -1,5 +1,6 @@
-import type { ReactElement, ReactNode } from 'react';
+import type { CSSProperties, ReactElement, ReactNode } from 'react';
 
+import type { FormLayout, FormVariant } from '../Form/type';
 import type { ValidateOn } from './engine/types';
 import type { FieldValidate, StandardSchema } from './schema';
 
@@ -83,6 +84,7 @@ export interface UseFormOptions<T extends FormValues> {
 
 export interface FieldBinding {
   getValue?: (...args: any[]) => unknown;
+  trigger?: string;
   valueProp?: string;
 }
 
@@ -98,4 +100,26 @@ export interface FieldRenderProps<V = any> {
 
 export type { FieldValidate, StandardSchema };
 
-export type FieldChildren = ReactElement | ReactNode;
+export interface FormFieldProps<T extends FormValues = FormValues> extends FieldBinding {
+  avatar?: ReactNode;
+  bare?: boolean;
+  children?: ReactElement | ReactNode;
+  className?: string;
+  deps?: FieldPath<T>[];
+  desc?: ReactNode;
+  divider?: boolean;
+  extra?: ReactNode;
+  hidden?: boolean;
+  label?: ReactNode;
+  layout?: FormLayout;
+  minWidth?: string | number;
+  name: FieldPath<T>;
+  render?: (field: FieldRenderProps) => ReactNode;
+  required?: boolean | string;
+  style?: CSSProperties;
+  tag?: string;
+  validate?: FieldValidate;
+  validateDebounce?: number;
+  validateOn?: ValidateOn;
+  variant?: FormVariant;
+}

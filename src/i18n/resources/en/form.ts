@@ -1,4 +1,5 @@
 export default {
+  'form.required': 'This field is required',
   'form.reset': 'Reset',
   'form.submit': 'Submit',
   'form.unsavedChanges': 'Unsaved changes',
