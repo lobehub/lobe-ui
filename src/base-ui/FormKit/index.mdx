@@ -37,6 +37,7 @@ import { Form, useForm, useWatch } from '@lobehub/ui/base-ui/form';
 - Changing one field re-renders only that field and components that `useWatch` it. Keep static `items` arrays outside the component or in `useMemo`, otherwise the parent re-renders every field shell.
 - `onValuesChange` fires for user edits only. `form.setValue(name, value, { asUser: true })` makes a code change count as a user edit.
 - `useForm({ values })` syncs external state into fields the user has not touched.
+- `layout="vertical"` stacks fields with no root gap (their own padding spaces them); pass `gap` to override.
 
 ## APIs
 
