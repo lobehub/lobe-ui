@@ -78,6 +78,24 @@ const DEPRECATED_ANTD_ONLY = [
   'Upload',
 ];
 
+const DEPRECATED_FORM_EXPORTS = [
+  'Form',
+  'FormDivider',
+  'FormFlatGroup',
+  'FormFooter',
+  'FormGroup',
+  'FormGroupItemType',
+  'FormInstance',
+  'FormItem',
+  'FormItemProps',
+  'FormModal',
+  'FormModalProps',
+  'FormProps',
+];
+
+const FORM_MIGRATION_MESSAGE =
+  'Use `Form`, `useForm` and their types from "@lobehub/ui/base-ui/form" instead.';
+
 const DEPRECATED_ANTD_COMPONENT_PATHS = [
   'antd/es/alert',
   'antd/es/alert/*',
@@ -250,6 +268,16 @@ export const restrictedImports = {
             name: '@lobehub/ui',
           },
           {
+            importNames: DEPRECATED_FORM_EXPORTS,
+            message: FORM_MIGRATION_MESSAGE,
+            name: '@lobehub/ui',
+          },
+          {
+            importNames: DEPRECATED_FORM_EXPORTS,
+            message: FORM_MIGRATION_MESSAGE,
+            name: 'antd',
+          },
+          {
             importNames: ['createStyles'],
             message:
               '`createStyles` is banned in this project. Use `createStaticStyles` from "antd-style" instead.',
@@ -281,6 +309,10 @@ export const restrictedImports = {
           },
         ],
         patterns: [
+          {
+            group: ['antd/es/form', 'antd/es/form/*', 'antd/lib/form', 'antd/lib/form/*'],
+            message: FORM_MIGRATION_MESSAGE,
+          },
           {
             group: DEPRECATED_ANTD_COMPONENT_PATHS,
             message:
