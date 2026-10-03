@@ -221,6 +221,7 @@ export const createTanstackEngine: CreateEngine = (initialValues) => {
     notify();
     try {
       await onSubmit?.(values);
+      if (serverErrors.size > 0) return { errors: Object.fromEntries(serverErrors), valid: false };
       resetTo(getValues());
     } finally {
       submitting = false;

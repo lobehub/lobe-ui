@@ -62,7 +62,7 @@ import { Form, useForm, useWatch } from '@lobehub/ui/base-ui/form';
 | `setValue(name, value, { asUser? })` | Write a value; code changes do not mark the field touched |
 | `setValues(partial, { asUser? })` | Write several values |
 | `validate(names?)` | Resolve to `{ valid, errors }` |
-| `setErrors(map)` | Show server errors; each clears on that field's next edit or on the next submit |
+| `setErrors(map)` | Show server errors; each clears on that field's next edit or on the next submit. Errors set inside `onSubmit` fail that submit and keep the form dirty |
 | `submit()` / `reset(values?)` / `resetField(name)` | Submit and reset |
 | `isTouched(name)` / `isDirty()` | State. A path counts as touched when it or a parent/child path was edited; dirty compares user edits with the reset baseline |
 | `subscribe(selector, callback)` | Subscribe outside React; returns an unsubscribe function |

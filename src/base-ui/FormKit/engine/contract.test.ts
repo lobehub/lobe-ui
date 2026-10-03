@@ -321,6 +321,18 @@ describe.each(engines)('FormEngine contract: %s', (_name, create) => {
       expect(onSubmit).toHaveBeenCalledTimes(1);
     });
 
+    it('keeps server errors set by onSubmit and stays dirty', async () => {
+      const e = make({ a: '' });
+      e.registerField('a', {});
+      e.setValue('a', 'wrong', 'user');
+      const result = await e.submit(() => e.setErrors({ a: 'bad password' }));
+      expect(result).toEqual({ errors: { a: 'bad password' }, valid: false });
+      expect(e.getField('a').error).toBe('bad password');
+      expect(e.getStatus().dirty).toBe(true);
+      e.setValue('a', 'right', 'user');
+      expect(e.getField('a').error).toBeUndefined();
+    });
+
     it('runs onSubmit once for concurrent submits', async () => {
       const e = make({ a: 'x' });
       e.registerField('a', { validate: async () => undefined });
