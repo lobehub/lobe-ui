@@ -16,6 +16,7 @@ export const defaultGetValue = (arg: unknown) => {
 };
 
 export interface ResolvedBinding {
+  emptyValue: unknown;
   getValue: (...args: any[]) => unknown;
   trigger: string;
   valueProp: string;
@@ -31,6 +32,7 @@ export const resolveBinding = (child: ReactElement, override: FieldBinding): Res
   const nativeCheckable = type === 'input' && (props.type === 'checkbox' || props.type === 'radio');
 
   return {
+    emptyValue: override.emptyValue ?? declared?.emptyValue,
     getValue: override.getValue ?? declared?.getValue ?? defaultGetValue,
     trigger: override.trigger ?? declared?.trigger ?? 'onChange',
     valueProp: override.valueProp ?? declared?.valueProp ?? (nativeCheckable ? 'checked' : 'value'),

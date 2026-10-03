@@ -39,6 +39,7 @@ type ControlProps = Pick<
   | 'bare'
   | 'children'
   | 'deps'
+  | 'emptyValue'
   | 'getValue'
   | 'name'
   | 'render'
@@ -55,6 +56,7 @@ const FieldControl = memo<ControlProps>(
     bare,
     children,
     deps,
+    emptyValue,
     getValue,
     id,
     name,
@@ -97,7 +99,9 @@ const FieldControl = memo<ControlProps>(
     const field = useStoreSelector(engine, (e) => e.getField(name));
 
     const child = isValidElement(children) ? (children as ReactElement<any>) : undefined;
-    const binding = child ? resolveBinding(child, { getValue, trigger, valueProp }) : undefined;
+    const binding = child
+      ? resolveBinding(child, { emptyValue, getValue, trigger, valueProp })
+      : undefined;
     const handlerRef = useRef({ binding, childProps: child?.props as Record<string, any> });
     handlerRef.current = { binding, childProps: child?.props as Record<string, any> };
 
@@ -159,7 +163,7 @@ const FieldControl = memo<ControlProps>(
       'aria-invalid': field.error ? true : undefined,
       'id': child.props.id ?? id,
       [binding.trigger]: onChange,
-      [binding.valueProp]: field.value,
+      [binding.valueProp]: field.value === undefined ? binding.emptyValue : field.value,
       'onBlur': onBlur,
     });
 
@@ -183,6 +187,7 @@ const FormField = memo<FormFieldProps>(
     deps,
     desc,
     divider,
+    emptyValue,
     extra,
     getValue,
     hidden,
@@ -213,6 +218,7 @@ const FormField = memo<FormFieldProps>(
       <FieldControl
         bare={bare}
         deps={deps}
+        emptyValue={emptyValue}
         getValue={getValue}
         id={id}
         name={name}

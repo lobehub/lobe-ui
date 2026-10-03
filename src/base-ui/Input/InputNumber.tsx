@@ -76,4 +76,4 @@ const InputNumber = memo<InputNumberProps>(
 
 InputNumber.displayName = 'InputNumber';
 
-export default InputNumber;
+export default Object.assign(InputNumber, { formBinding: { emptyValue: null } as const });

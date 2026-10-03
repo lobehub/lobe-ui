@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { z } from 'zod';
 
 import { Checkbox } from '@/base-ui/Checkbox';
+import { Input } from '@/base-ui/Input';
 
 import { FormKitContext } from './context';
 import FormField from './Field';
@@ -43,6 +44,21 @@ describe('Form.Field binding', () => {
     expect(form.getValue('title')).toBe('world');
     expect(input.value).toBe('world');
     expect(onValuesChange).toHaveBeenCalledWith({ title: 'world' }, { title: 'world' });
+  });
+
+  it('shows a value written after mount into a base-ui Input that started empty', () => {
+    const { Wrap, form } = setup<{ key?: string }>({});
+    render(
+      <Wrap>
+        <FormField label="Key" name="key">
+          <Input />
+        </FormField>
+      </Wrap>,
+    );
+    const input = screen.getByLabelText('Key') as HTMLInputElement;
+    expect(input.value).toBe('');
+    act(() => form.reset({ key: 'loaded' }));
+    expect(input.value).toBe('loaded');
   });
 
   it('still calls the child own onChange before writing', () => {

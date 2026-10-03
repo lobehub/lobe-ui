@@ -112,4 +112,4 @@ const TextArea = memo<TextAreaProps>(
 
 TextArea.displayName = 'TextArea';
 
-export default TextArea;
+export default Object.assign(TextArea, { formBinding: { emptyValue: '' } as const });
