@@ -183,6 +183,7 @@ export const groupStyles = createStaticStyles(({ css, cssVar }) => ({
   `,
   title: css`
     display: flex;
+    flex-shrink: 0;
     gap: 8px;
     align-items: center;
 
