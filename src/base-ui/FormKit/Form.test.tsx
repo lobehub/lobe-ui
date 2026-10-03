@@ -78,6 +78,33 @@ describe('<Form>', () => {
     expect(form.getValues()).toEqual({ email: '', name: 'Ada' });
   });
 
+  it('submits from a button outside the form through the native id', async () => {
+    const onSubmit = vi.fn();
+    render(
+      <Host
+        options={{ onSubmit }}
+        render={(f) => (
+          <>
+            <Form aria-busy autoComplete="off" form={f} id="outside">
+              <FormField label="Name" name="name">
+                <input />
+              </FormField>
+            </Form>
+            <button form="outside" type="submit">
+              go
+            </button>
+          </>
+        )}
+      />,
+    );
+    const el = document.querySelector('form#outside')!;
+    expect(el.getAttribute('autocomplete')).toBe('off');
+    expect(el.getAttribute('aria-busy')).toBe('true');
+    fireEvent.click(screen.getByText('go'));
+    await act(() => wait());
+    expect(onSubmit).toHaveBeenCalledWith({ email: '', name: 'Ada' });
+  });
+
   it('renders flat items, skips hidden ones, then children after items', () => {
     render(
       <Host

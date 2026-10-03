@@ -36,6 +36,7 @@ const Form = <T extends FormValues>({
   style,
   styles: customStyles,
   variant = 'borderless',
+  ...rest
 }: FormProps<T>) => {
   const { mobile } = useResponsive();
   const formRef = useRef<HTMLFormElement | null>(null);
@@ -121,6 +122,7 @@ const Form = <T extends FormValues>({
   return (
     <FormKitContext value={context}>
       <form
+        {...rest}
         noValidate
         className={cx(rootVariants({ variant }), className)}
         ref={mergedRef}

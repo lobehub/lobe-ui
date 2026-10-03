@@ -1,4 +1,4 @@
-import type { CSSProperties, ReactElement, ReactNode, Ref } from 'react';
+import type { CSSProperties, FormHTMLAttributes, ReactElement, ReactNode, Ref } from 'react';
 
 import type { IconProps } from '@/Icon';
 
@@ -114,7 +114,10 @@ export interface FormGroupItem<T extends FormValues = FormValues> {
   variant?: FormVariant;
 }
 
-export interface FormProps<T extends FormValues = FormValues> {
+export interface FormProps<T extends FormValues = FormValues> extends Omit<
+  FormHTMLAttributes<HTMLFormElement>,
+  'children' | 'className' | 'onSubmit' | 'style'
+> {
   activeKey?: (string | number)[];
   children?: ReactNode;
   className?: string;
