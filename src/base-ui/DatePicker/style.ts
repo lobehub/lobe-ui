@@ -102,6 +102,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     gap: 28px;
   `,
   rangeHalf: css`
+    flex: 1;
     min-width: 0;
     padding-block: 2px;
 

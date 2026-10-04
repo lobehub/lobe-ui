@@ -1,3 +1,5 @@
+import { noInlineFormSchema } from './noInlineFormSchema';
+
 const DEPRECATED_UI_COMPONENTS = [
   'Accordion',
   'AccordionItem',
@@ -75,6 +77,24 @@ const DEPRECATED_ANTD_ONLY = [
   'Typography',
   'Upload',
 ];
+
+const DEPRECATED_FORM_EXPORTS = [
+  'Form',
+  'FormDivider',
+  'FormFlatGroup',
+  'FormFooter',
+  'FormGroup',
+  'FormGroupItemType',
+  'FormInstance',
+  'FormItem',
+  'FormItemProps',
+  'FormModal',
+  'FormModalProps',
+  'FormProps',
+];
+
+const FORM_MIGRATION_MESSAGE =
+  'Use `Form`, `useForm` and their types from "@lobehub/ui/base-ui/form" instead.';
 
 const DEPRECATED_ANTD_COMPONENT_PATHS = [
   'antd/es/alert',
@@ -248,6 +268,16 @@ export const restrictedImports = {
             name: '@lobehub/ui',
           },
           {
+            importNames: DEPRECATED_FORM_EXPORTS,
+            message: FORM_MIGRATION_MESSAGE,
+            name: '@lobehub/ui',
+          },
+          {
+            importNames: DEPRECATED_FORM_EXPORTS,
+            message: FORM_MIGRATION_MESSAGE,
+            name: 'antd',
+          },
+          {
             importNames: ['createStyles'],
             message:
               '`createStyles` is banned in this project. Use `createStaticStyles` from "antd-style" instead.',
@@ -273,11 +303,16 @@ export const restrictedImports = {
             name: 'thinking-orbs',
           },
           {
-            message: 'ProComponents are deprecated. Use `Table` from "@lobehub/ui/base-ui" instead.',
+            message:
+              'ProComponents are deprecated. Use `Table` from "@lobehub/ui/base-ui" instead.',
             name: '@ant-design/pro-components',
           },
         ],
         patterns: [
+          {
+            group: ['antd/es/form', 'antd/es/form/*', 'antd/lib/form', 'antd/lib/form/*'],
+            message: FORM_MIGRATION_MESSAGE,
+          },
           {
             group: DEPRECATED_ANTD_COMPONENT_PATHS,
             message:
@@ -289,4 +324,13 @@ export const restrictedImports = {
   },
 };
 
-export default [restrictedImports];
+export const formSchemaRules = {
+  plugins: {
+    '@lobehub/ui': { rules: { 'no-inline-form-schema': noInlineFormSchema } },
+  },
+  rules: {
+    '@lobehub/ui/no-inline-form-schema': 'warn',
+  },
+};
+
+export default [restrictedImports, formSchemaRules];

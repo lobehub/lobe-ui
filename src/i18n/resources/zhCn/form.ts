@@ -1,4 +1,5 @@
 export default {
+  'form.required': '此项为必填项',
   'form.reset': '重置',
   'form.submit': '提交',
   'form.unsavedChanges': '未保存的更改',

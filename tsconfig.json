@@ -16,6 +16,7 @@
     "types": ["node", "vitest/globals"],
     "paths": {
       "@/*": ["src/*"],
+      "@lobehub/ui/base-ui/form": ["src/base-ui/FormKit"],
       "@lobehub/ui": ["src"],
       "@lobehub/ui/*": ["src/*"],
       "@lobehub/ui/mdx": ["src/mdx"],

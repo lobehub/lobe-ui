@@ -90,4 +90,4 @@ const Checkbox = memo<CheckboxProps>(
 
 Checkbox.displayName = 'Checkbox';
 
-export default Checkbox;
+export default Object.assign(Checkbox, { formBinding: { valueProp: 'checked' } as const });

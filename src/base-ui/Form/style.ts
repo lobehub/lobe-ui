@@ -14,6 +14,10 @@ export const styles = createStaticStyles(({ css }) => ({
 
     width: 100%;
 
+    [data-form-group-body] {
+      padding-block: 0;
+    }
+
     ${responsive.sm} {
       gap: 0 !important;
     }
@@ -108,6 +112,7 @@ export const groupStyles = createStaticStyles(({ css, cssVar }) => ({
     flex-direction: column;
   `,
   bodyBoxed: css`
+    padding-block: 16px;
     padding-inline: 16px;
   `,
   chevron: css`
@@ -167,10 +172,19 @@ export const groupStyles = createStaticStyles(({ css, cssVar }) => ({
       transition-duration: 0s;
     }
   `,
+  bodyFilled: css`
+    margin-block-end: 3px;
+    margin-inline: 3px;
+    border-radius: ${cssVar.borderRadius};
+    ${lobeStaticStylish.variantOutlinedWithoutHover}
+  `,
+  bodyFilledLight: lobeStaticStylish.shadow,
   rootFilled: css`
     border-radius: ${cssVar.borderRadiusLG};
-    ${lobeStaticStylish.variantFilledWithoutHover}
     background: ${cssVar.colorFillQuaternary};
+  `,
+  rootFilledDark: css`
+    background: ${cssVar.colorBgLayout};
   `,
   rootOutlined: css`
     border-radius: ${cssVar.borderRadiusLG};
@@ -178,6 +192,7 @@ export const groupStyles = createStaticStyles(({ css, cssVar }) => ({
   `,
   title: css`
     display: flex;
+    flex-shrink: 0;
     gap: 8px;
     align-items: center;
 
@@ -211,6 +226,13 @@ export const groupStyles = createStaticStyles(({ css, cssVar }) => ({
 }));
 
 export const groupVariants = cva(null, {
+  compoundVariants: [
+    {
+      class: groupStyles.rootFilledDark,
+      isDarkMode: true,
+      variant: 'filled',
+    },
+  ],
   defaultVariants: {
     variant: 'borderless',
   },
@@ -219,6 +241,10 @@ export const groupVariants = cva(null, {
       borderless: null,
       filled: groupStyles.rootFilled,
       outlined: groupStyles.rootOutlined,
+    },
+    isDarkMode: {
+      false: null,
+      true: null,
     },
   },
 });
