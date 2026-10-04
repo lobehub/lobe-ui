@@ -209,7 +209,7 @@
     "rc-input-number": "^9.5.0",
     "rc-menu": "^9.16.1",
     "re-resizable": "^6.11.2",
-    "react-avatar-editor": "^15.1.0",
+    "react-avatar-editor": "^16.0.0",
     "react-error-boundary": "^6.1.2",
     "react-hotkeys-hook": "^5.3.3",
     "react-markdown": "^10.1.0",
