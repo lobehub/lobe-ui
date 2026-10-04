@@ -172,10 +172,19 @@ export const groupStyles = createStaticStyles(({ css, cssVar }) => ({
       transition-duration: 0s;
     }
   `,
+  bodyFilled: css`
+    margin-block-end: 3px;
+    margin-inline: 3px;
+    border-radius: ${cssVar.borderRadius};
+    ${lobeStaticStylish.variantOutlinedWithoutHover}
+  `,
+  bodyFilledLight: lobeStaticStylish.shadow,
   rootFilled: css`
     border-radius: ${cssVar.borderRadiusLG};
-    ${lobeStaticStylish.variantFilledWithoutHover}
     background: ${cssVar.colorFillQuaternary};
+  `,
+  rootFilledDark: css`
+    background: ${cssVar.colorBgLayout};
   `,
   rootOutlined: css`
     border-radius: ${cssVar.borderRadiusLG};
@@ -217,6 +226,13 @@ export const groupStyles = createStaticStyles(({ css, cssVar }) => ({
 }));
 
 export const groupVariants = cva(null, {
+  compoundVariants: [
+    {
+      class: groupStyles.rootFilledDark,
+      isDarkMode: true,
+      variant: 'filled',
+    },
+  ],
   defaultVariants: {
     variant: 'borderless',
   },
@@ -225,6 +241,10 @@ export const groupVariants = cva(null, {
       borderless: null,
       filled: groupStyles.rootFilled,
       outlined: groupStyles.rootOutlined,
+    },
+    isDarkMode: {
+      false: null,
+      true: null,
     },
   },
 });
