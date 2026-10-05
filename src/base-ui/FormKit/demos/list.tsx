@@ -1,42 +1,33 @@
-import { Flexbox } from '@lobehub/ui';
-import { ActionIcon, Button, Input } from '@lobehub/ui/base-ui';
+import { Input } from '@lobehub/ui/base-ui';
 import { Form, useForm } from '@lobehub/ui/base-ui/form';
-import { PlusIcon, Trash2Icon } from 'lucide-react';
 
 type Values = { env: { key: string; value: string }[] };
 
+const columns = [
+  { children: <Input placeholder={'KEY'} />, name: 'key', required: true, title: 'Key' },
+  { children: <Input placeholder={'value'} />, flex: 1.4, name: 'value', title: 'Value' },
+];
+
 export default () => {
   const form = useForm<Values>({
-    initialValues: { env: [{ key: 'LOG_LEVEL', value: 'info' }] },
+    initialValues: {
+      env: [
+        { key: 'LOG_LEVEL', value: 'info' },
+        { key: 'PORT', value: '3210' },
+      ],
+    },
   });
 
   return (
     <Form form={form} layout={'vertical'} variant={'outlined'}>
       <Form.Group title={'Environment variables'}>
-        <Form.List name={'env'}>
-          {({ fields, add, remove }) => (
-            <Flexbox gap={8}>
-              {fields.map((field) => (
-                <Flexbox horizontal align={'center'} gap={8} key={field.key}>
-                  <Form.Field<Values> bare name={`env.${field.index}.key`}>
-                    <Input placeholder={'KEY'} />
-                  </Form.Field>
-                  <Form.Field<Values> bare name={`env.${field.index}.value`}>
-                    <Input placeholder={'value'} />
-                  </Form.Field>
-                  <ActionIcon
-                    icon={Trash2Icon}
-                    title={'Remove'}
-                    onClick={() => remove(field.index)}
-                  />
-                </Flexbox>
-              ))}
-              <Button icon={PlusIcon} onClick={() => add({ key: '', value: '' })}>
-                Add variable
-              </Button>
-            </Flexbox>
-          )}
-        </Form.List>
+        <Form.List
+          addText={'Add variable'}
+          columns={columns}
+          emptyText={'No variables yet'}
+          name={'env'}
+          newItem={{ key: '', value: '' }}
+        />
       </Form.Group>
     </Form>
   );

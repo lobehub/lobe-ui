@@ -11,6 +11,8 @@ import { isPressEnter } from './pressEnter';
 import { rootVariants, styles } from './style';
 import type { InputNumberProps } from './type';
 
+const controlIconSize = { large: 13, middle: 12, small: 10 } as const;
+
 const InputNumber = memo<InputNumberProps>(
   ({
     ref,
@@ -34,6 +36,11 @@ const InputNumber = memo<InputNumberProps>(
   }) => {
     const { isDarkMode } = useThemeMode();
     const mergedVariant = variant || (isDarkMode ? 'filled' : 'outlined');
+    const controlClassName = cx(
+      styles.numberControl,
+      size === 'small' && styles.numberControlSmall,
+      size === 'large' && styles.numberControlLarge,
+    );
     const mergedFormat =
       precision === undefined
         ? format
@@ -60,12 +67,14 @@ const InputNumber = memo<InputNumberProps>(
         />
         {suffix && <span className={styles.slot}>{suffix}</span>}
         {controls && (
-          <div className={styles.numberControls}>
-            <NumberField.Increment className={styles.numberControl}>
-              <Icon icon={ChevronUp} size={12} />
+          <div
+            className={cx(styles.numberControls, size === 'small' && styles.numberControlsSmall)}
+          >
+            <NumberField.Increment className={controlClassName}>
+              <Icon icon={ChevronUp} size={controlIconSize[size]} />
             </NumberField.Increment>
-            <NumberField.Decrement className={styles.numberControl}>
-              <Icon icon={ChevronDown} size={12} />
+            <NumberField.Decrement className={controlClassName}>
+              <Icon icon={ChevronDown} size={controlIconSize[size]} />
             </NumberField.Decrement>
           </div>
         )}

@@ -171,39 +171,52 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     cursor: pointer;
 
     display: flex;
-    flex: 1;
     align-items: center;
     justify-content: center;
 
+    width: 20px;
+    height: 13px;
     margin: 0;
     padding: 0;
     border: none;
+    border-radius: 4px;
 
     color: ${cssVar.colorTextTertiary};
 
     background: none;
     outline: none;
 
-    transition: color 150ms ${cssVar.motionEaseOut};
+    transition:
+      color 150ms ${cssVar.motionEaseOut},
+      background 150ms ${cssVar.motionEaseOut};
 
     &:hover:not(:disabled) {
       color: ${cssVar.colorText};
+      background: ${cssVar.colorFillSecondary};
     }
 
     &:disabled {
       cursor: not-allowed;
-      opacity: 0.4;
+      opacity: 0.3;
     }
+  `,
+  numberControlLarge: css`
+    width: 22px;
+    height: 15px;
+  `,
+  numberControlSmall: css`
+    width: 16px;
+    height: 10px;
+    border-radius: 3px;
   `,
   numberControls: css`
     display: flex;
     flex: none;
     flex-direction: column;
-    align-self: stretch;
-
-    width: 22px;
-    margin-inline-end: -8px;
-    border-inline-start: 1px solid ${cssVar.colorBorderSecondary};
+    margin-inline-end: -6px;
+  `,
+  numberControlsSmall: css`
+    margin-inline-end: -4px;
   `,
   numberInput: css`
     font-variant-numeric: tabular-nums;
