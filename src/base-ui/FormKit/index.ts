@@ -22,7 +22,7 @@ export const Form = Object.assign(FormParent, {
 });
 
 export { useFormInstance } from './context';
-export type { FormListField, FormListProps, FormListRenderProps } from './List';
+export type { FormListColumn, FormListField, FormListProps, FormListRenderProps } from './List';
 export type {
   DeepPartial,
   FieldBinding,

@@ -90,7 +90,18 @@ import { Form, useForm, useWatch } from '@lobehub/ui/base-ui/form';
 
 ### Form.List
 
-`<Form.List name>{({ fields, add, remove, move }) => …}</Form.List>` — `fields` carry a stable `key`, the `index` and the item `name` prefix.
+Pass `columns` for the built-in table, or a render function as `children` for your own layout: `{({ fields, add, remove, move }) => …}`. `fields` carry a stable `key`, the `index` and the item `name` prefix. `children` wins over `columns`.
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| name | Path of the array value | `string` | - |
+| columns | Table columns; each cell binds `children` to `<item>.<column.name>` | `FormListColumn[]` | - |
+| newItem | Item appended by the add button; objects are cloned, functions are called | `unknown \| (() => unknown)` | `{}` |
+| addText | Add button label | `ReactNode` | `Add` |
+| emptyText | Shown when the list is empty | `ReactNode` | `No items yet` |
+| children | Render the rows yourself | `(props: FormListRenderProps) => ReactNode` | - |
+
+`FormListColumn`: `name`, `title`, `children` (the control), `flex` (column width ratio, default `1`), `required`, `validate`.
 
 ## Migrating from antd Form
 

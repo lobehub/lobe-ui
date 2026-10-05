@@ -1,4 +1,7 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
+import { motion } from 'motion/react';
+
+import { MotionProvider } from '@/MotionProvider';
 
 import FormField from './Field';
 import Form from './Form';
@@ -76,5 +79,46 @@ describe('Form.List', () => {
     act(() => form.reset({ env: [{ key: 'X' }, { key: 'Y' }] }));
     expect(screen.getAllByTestId('row')).toHaveLength(2);
     expect((screen.getByLabelText('key-1') as HTMLInputElement).value).toBe('Y');
+  });
+});
+
+const TableEditor = ({ initial, item }: { initial: Values['env']; item?: unknown }) => {
+  form = useForm<Values>({ initialValues: { env: initial } });
+  return (
+    <MotionProvider motion={motion}>
+      <Form form={form}>
+        <FormList
+          addText="add row"
+          columns={[{ children: <input />, name: 'key', title: 'Key' }]}
+          emptyText="nothing here"
+          name="env"
+          newItem={item}
+        />
+      </Form>
+    </MotionProvider>
+  );
+};
+
+describe('Form.List columns', () => {
+  it('binds each cell, labels it by column title and removes rows', () => {
+    render(<TableEditor initial={[{ key: 'A' }, { key: 'B' }]} />);
+    expect(screen.getByText('Key')).toBeTruthy();
+    const second = screen.getByLabelText('Key 2') as HTMLInputElement;
+    expect(second.value).toBe('B');
+    fireEvent.change(second, { target: { value: 'BB' } });
+    expect(form.getValues().env).toEqual([{ key: 'A' }, { key: 'BB' }]);
+    fireEvent.click(screen.getAllByRole('button', { name: 'Remove' })[0]);
+    expect(form.getValues().env).toEqual([{ key: 'BB' }]);
+  });
+
+  it('appends a fresh copy of newItem each time', () => {
+    const item = { key: '' };
+    render(<TableEditor initial={[]} item={item} />);
+    expect(screen.getByText('nothing here')).toBeTruthy();
+    fireEvent.click(screen.getByText('add row'));
+    fireEvent.click(screen.getByText('add row'));
+    fireEvent.change(screen.getByLabelText('Key 1'), { target: { value: 'X' } });
+    expect(form.getValues().env).toEqual([{ key: 'X' }, { key: '' }]);
+    expect(item).toEqual({ key: '' });
   });
 });
