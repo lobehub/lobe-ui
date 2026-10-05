@@ -1,6 +1,6 @@
 'use client';
 
-import { cx } from 'antd-style';
+import { cssVar, cx } from 'antd-style';
 import { Loader2 } from 'lucide-react';
 import { memo } from 'react';
 
@@ -82,7 +82,7 @@ const Switch = memo<SwitchProps>(
               className={styles.loading}
               icon={Loader2}
               size={size === 'small' ? 8 : 12}
-              style={{ color: 'var(--lobe-color-primary)' }}
+              style={{ color: cssVar.colorPrimary }}
             />
           )}
         </SwitchThumb>
