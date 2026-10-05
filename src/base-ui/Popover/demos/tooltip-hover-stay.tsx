@@ -1,5 +1,6 @@
 import { Flexbox, Popover, Tooltip, TooltipGroup } from '@lobehub/ui';
 import { Button } from '@lobehub/ui/base-ui';
+import { cssVar } from 'antd-style';
 import { Info } from 'lucide-react';
 import { useState } from 'react';
 
@@ -20,7 +21,7 @@ export default () => {
               <div style={{ fontSize: 14, fontWeight: 600 }}>
                 Hover Tooltip shouldn&apos;t close Popover
               </div>
-              <div style={{ color: 'var(--lobe-color-text-3)', fontSize: 12, lineHeight: 1.6 }}>
+              <div style={{ color: cssVar.colorTextTertiary, fontSize: 12, lineHeight: 1.6 }}>
                 Move mouse onto tooltip content and keep it open.
               </div>
               <Flexbox horizontal align="center" gap={8}>

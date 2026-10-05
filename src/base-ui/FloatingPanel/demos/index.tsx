@@ -5,7 +5,7 @@ import { MessageCirclePlus, Share2 } from 'lucide-react';
 import { useState } from 'react';
 
 const Demo = () => {
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
 
   return (
     <div
@@ -13,7 +13,6 @@ const Demo = () => {
         background: cssVar.colorBgLayout,
         border: `1px solid ${cssVar.colorBorderSecondary}`,
         borderRadius: 16,
-        minHeight: 460,
         overflow: 'hidden',
         position: 'relative',
       }}

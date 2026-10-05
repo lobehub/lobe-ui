@@ -1,16 +1,17 @@
 import { Flexbox, Popover, PopoverGroup, Tag } from '@lobehub/ui';
 import { Button } from '@lobehub/ui/base-ui';
+import { cssVar } from 'antd-style';
 import { BarChart3, LayoutDashboard, Sparkles } from 'lucide-react';
 
 const content = {
   analytics: (
     <Flexbox gap={10} style={{ padding: '8px 12px', width: 280 }}>
       <Flexbox horizontal align="center" gap={8}>
-        <BarChart3 size={18} style={{ color: 'var(--lobe-color-primary)' }} />
+        <BarChart3 size={18} style={{ color: cssVar.colorPrimary }} />
         <div style={{ fontSize: 15, fontWeight: 600 }}>Analytics</div>
         <Tag color="green">Popular</Tag>
       </Flexbox>
-      <div style={{ color: 'var(--lobe-color-text-2)', fontSize: 13, lineHeight: 1.6 }}>
+      <div style={{ color: cssVar.colorTextSecondary, fontSize: 13, lineHeight: 1.6 }}>
         Deep dive into reports, user cohorts, and conversion funnel insights to optimize your
         strategy.
       </div>
@@ -19,11 +20,11 @@ const content = {
   automation: (
     <Flexbox gap={10} style={{ padding: '8px 12px', width: 260 }}>
       <Flexbox horizontal align="center" gap={8}>
-        <Sparkles size={18} style={{ color: 'var(--lobe-color-warning)' }} />
+        <Sparkles size={18} style={{ color: cssVar.colorWarning }} />
         <div style={{ fontSize: 15, fontWeight: 600 }}>Automation</div>
         <Tag color="purple">New</Tag>
       </Flexbox>
-      <div style={{ color: 'var(--lobe-color-text-2)', fontSize: 13, lineHeight: 1.6 }}>
+      <div style={{ color: cssVar.colorTextSecondary, fontSize: 13, lineHeight: 1.6 }}>
         Create smart rules, schedule tasks, and build powerful workflows to save time.
       </div>
     </Flexbox>
@@ -31,10 +32,10 @@ const content = {
   dashboard: (
     <Flexbox gap={10} style={{ padding: '8px 12px', width: 280 }}>
       <Flexbox horizontal align="center" gap={8}>
-        <LayoutDashboard size={18} style={{ color: 'var(--lobe-color-success)' }} />
+        <LayoutDashboard size={18} style={{ color: cssVar.colorSuccess }} />
         <div style={{ fontSize: 15, fontWeight: 600 }}>Dashboard</div>
       </Flexbox>
-      <div style={{ color: 'var(--lobe-color-text-2)', fontSize: 13, lineHeight: 1.6 }}>
+      <div style={{ color: cssVar.colorTextSecondary, fontSize: 13, lineHeight: 1.6 }}>
         Get a comprehensive overview of your activity with quick actions and real-time metrics.
       </div>
     </Flexbox>
@@ -48,7 +49,7 @@ export default () => (
       align="center"
       gap={4}
       style={{
-        background: 'var(--lobe-color-fill-secondary)',
+        background: cssVar.colorFillSecondary,
         borderRadius: 12,
         padding: '8px 12px',
         width: 'fit-content',

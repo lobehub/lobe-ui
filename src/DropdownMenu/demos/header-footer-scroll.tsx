@@ -1,4 +1,5 @@
 import { Button, DropdownMenu, type DropdownMenuProps } from '@lobehub/ui';
+import { cssVar } from 'antd-style';
 
 const zones: [string, string][] = [
   ['Honolulu', 'GMT-10'],
@@ -35,7 +36,7 @@ export default () => {
       placement="bottomLeft"
       popupProps={{ style: { maxHeight: 300 } }}
       footer={
-        <div style={{ color: 'var(--lobe-color-text-3)', fontSize: 12 }}>
+        <div style={{ color: cssVar.colorTextTertiary, fontSize: 12 }}>
           18 time zones · scroll to explore
         </div>
       }

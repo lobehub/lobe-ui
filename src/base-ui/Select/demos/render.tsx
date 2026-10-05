@@ -1,5 +1,6 @@
 import { Flexbox, Icon, Tag } from '@lobehub/ui';
 import { Select } from '@lobehub/ui/base-ui';
+import { cssVar } from 'antd-style';
 import { Palette, Sparkles, Zap } from 'lucide-react';
 import { useMemo } from 'react';
 
@@ -46,7 +47,7 @@ export default () => {
       gap={12}
       justify="center"
       style={{
-        background: 'var(--lobe-color-fill-secondary)',
+        background: cssVar.colorFillSecondary,
         borderRadius: 16,
         padding: 28,
       }}
@@ -88,7 +89,7 @@ export default () => {
               <Icon icon={meta.icon} size={16} />
               <Flexbox gap={2}>
                 <div style={{ fontSize: 13, fontWeight: 600 }}>{option.label}</div>
-                <div style={{ color: 'var(--lobe-color-text-3)', fontSize: 11 }}>
+                <div style={{ color: cssVar.colorTextTertiary, fontSize: 11 }}>
                   {meta.description}
                 </div>
               </Flexbox>
@@ -99,7 +100,7 @@ export default () => {
           );
         }}
       />
-      <div style={{ color: 'var(--lobe-color-text-3)', fontSize: 12, textAlign: 'center' }}>
+      <div style={{ color: cssVar.colorTextTertiary, fontSize: 12, textAlign: 'center' }}>
         Render rich labels in the list and compact chips in the trigger.
       </div>
     </Flexbox>

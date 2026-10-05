@@ -11,13 +11,13 @@ import DemoServer from './demos/server.tsx?demo';
 
 Sort by clicking a header, filter from the funnel icon, page through with the pager. `scroll.y` keeps the header in view; `fixed: 'right'` pins the action column.
 
-<Demo of={DemoIndex} layout="bare" />
+<Demo of={DemoIndex} />
 
 ## Server-driven
 
 `sorter: true` leaves row order alone and reports the sort through `onChange`; `pagination.total` switches the pager to server mode. Fetch the page yourself and pass it as `dataSource`.
 
-<Demo of={DemoServer} layout="bare" />
+<Demo of={DemoServer} />
 
 ## APIs
 

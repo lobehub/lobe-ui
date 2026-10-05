@@ -1,6 +1,7 @@
 import { ActionIcon, Avatar, Flexbox, Header, Popover, PopoverGroup, Tag } from '@lobehub/ui';
 import { Button } from '@lobehub/ui/base-ui';
 import { LobeHub } from '@lobehub/ui/brand';
+import { cssVar } from 'antd-style';
 import {
   Bell,
   BookOpen,
@@ -37,7 +38,7 @@ const NavItem = ({
       <Flexbox gap={6} style={{ minWidth: 200, padding: '8px' }}>
         <div
           style={{
-            color: 'var(--lobe-color-text-3)',
+            color: cssVar.colorTextTertiary,
             fontSize: 11,
             fontWeight: 600,
             letterSpacing: '0.5px',
@@ -93,7 +94,7 @@ export default () => {
                 <Flexbox gap={12} style={{ padding: '12px', width: 340 }}>
                   <Flexbox horizontal align="center" justify="space-between">
                     <Flexbox horizontal align="center" gap={8}>
-                      <Bell size={18} style={{ color: 'var(--lobe-color-primary)' }} />
+                      <Bell size={18} style={{ color: cssVar.colorPrimary }} />
                       <span style={{ fontSize: 15, fontWeight: 600 }}>Notifications</span>
                     </Flexbox>
                     <Button size="small" type="text">
@@ -117,7 +118,7 @@ export default () => {
                         gap={8}
                         key={i}
                         style={{
-                          background: 'var(--lobe-color-fill-tertiary)',
+                          background: cssVar.colorFillTertiary,
                           borderRadius: 10,
                           cursor: 'pointer',
                           padding: '12px 14px',
@@ -134,7 +135,7 @@ export default () => {
                             </Tag>
                           )}
                         </Flexbox>
-                        <div style={{ color: 'var(--lobe-color-text-3)', fontSize: 11 }}>
+                        <div style={{ color: cssVar.colorTextTertiary, fontSize: 11 }}>
                           {item.time}
                         </div>
                       </Flexbox>
@@ -147,7 +148,7 @@ export default () => {
                 <ActionIcon icon={Bell} size="large" />
                 <div
                   style={{
-                    background: 'var(--lobe-color-error)',
+                    background: cssVar.colorError,
                     borderRadius: '50%',
                     height: 8,
                     position: 'absolute',
@@ -170,8 +171,7 @@ export default () => {
                     align="center"
                     gap={12}
                     style={{
-                      background:
-                        'linear-gradient(135deg, var(--lobe-color-fill-secondary) 0%, var(--lobe-color-fill-tertiary) 100%)',
+                      background: `linear-gradient(135deg, ${cssVar.colorFillSecondary} 0%, ${cssVar.colorFillTertiary} 100%)`,
                       borderRadius: 10,
                       padding: '12px 14px',
                     }}
@@ -179,13 +179,13 @@ export default () => {
                     <Avatar
                       avatar="https://api.dicebear.com/7.x/avataaars/svg?seed=user"
                       size={44}
-                      style={{ border: '2px solid var(--lobe-color-bg-container)' }}
+                      style={{ border: `2px solid ${cssVar.colorBgContainer}` }}
                     />
                     <Flexbox flex={1} gap={4}>
                       <div style={{ fontSize: 15, fontWeight: 600 }}>John Doe</div>
                       <Flexbox horizontal align="center" gap={6}>
                         <Tag color="purple">Pro</Tag>
-                        <div style={{ color: 'var(--lobe-color-text-3)', fontSize: 11 }}>
+                        <div style={{ color: cssVar.colorTextTertiary, fontSize: 11 }}>
                           Premium Member
                         </div>
                       </Flexbox>
@@ -193,7 +193,7 @@ export default () => {
                   </Flexbox>
                   <div
                     style={{
-                      background: 'var(--lobe-color-border)',
+                      background: cssVar.colorBorder,
                       height: 1,
                       margin: '4px 0',
                     }}
@@ -216,7 +216,7 @@ export default () => {
                   </Button>
                   <div
                     style={{
-                      background: 'var(--lobe-color-border)',
+                      background: cssVar.colorBorder,
                       height: 1,
                       margin: '4px 0',
                     }}
@@ -226,7 +226,7 @@ export default () => {
                     icon={<LogOut size={16} />}
                     type="text"
                     style={{
-                      color: 'var(--lobe-color-error)',
+                      color: cssVar.colorError,
                       justifyContent: 'flex-start',
                       padding: '10px 12px',
                     }}
@@ -240,7 +240,7 @@ export default () => {
                 avatar="https://api.dicebear.com/7.x/avataaars/svg?seed=user"
                 size={36}
                 style={{
-                  border: '2px solid var(--lobe-color-border)',
+                  border: `2px solid ${cssVar.colorBorder}`,
                   cursor: 'pointer',
                   transition: 'all 0.2s',
                 }}
