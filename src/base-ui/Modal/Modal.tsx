@@ -192,9 +192,7 @@ const Modal = memo<ModalComponentProps>(
       );
 
       if (typeof footer === 'function') {
-        const BoundCancelBtn: React.FC = () => cancelBtnNode;
-        const BoundOkBtn: React.FC = () => okBtnNode;
-        return footer(defaultFooter, { CancelBtn: BoundCancelBtn, OkBtn: BoundOkBtn });
+        return footer(defaultFooter, { CancelBtn: () => cancelBtnNode, OkBtn: () => okBtnNode });
       }
 
       return footer ?? defaultFooter;
