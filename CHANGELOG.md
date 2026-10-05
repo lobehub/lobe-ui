@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.56.0](https://github.com/lobehub/lobe-ui/compare/v5.55.0...v5.56.0) (2026-10-05)
+
+### ✨ Features
+
+- **form**: Controlled base-ui Form with an engine-agnostic API, closes [#688](https://github.com/lobehub/lobe-ui/issues/688) [#694](https://github.com/lobehub/lobe-ui/issues/694) [#692](https://github.com/lobehub/lobe-ui/issues/692) ([d545d60](https://github.com/lobehub/lobe-ui/commit/d545d60))
+
 # [5.55.0](https://github.com/lobehub/lobe-ui/compare/v5.54.0...v5.55.0) (2026-10-03)
 
 ### ✨ Features
