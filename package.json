@@ -200,7 +200,7 @@
     "hast-util-to-text": "^4.0.2",
     "html-url-attributes": "^3.0.1",
     "immer": "^11.1.11",
-    "katex": "^0.18.1",
+    "katex": "^0.19.0",
     "leva": "^0.10.1",
     "lucide-react": "^1.24.0",
     "marked": "^18.0.6",
