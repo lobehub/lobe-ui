@@ -12,12 +12,13 @@ import {
 } from '@lobehub/ui';
 import { GradientButton } from '@lobehub/ui/awesome';
 import { Button } from '@lobehub/ui/base-ui';
+import { cssVar } from 'antd-style';
 import { Heart, Settings, Star } from 'lucide-react';
 
 const PopoverContent = ({ title }: { title: string }) => (
   <Flexbox gap={8} style={{ padding: 12, width: 200 }}>
     <Text style={{ fontWeight: 600 }}>{title}</Text>
-    <Text style={{ color: 'var(--lobe-color-text-3)', fontSize: 13 }}>
+    <Text style={{ color: cssVar.colorTextTertiary, fontSize: 13 }}>
       This popover was triggered by the component above.
     </Text>
   </Flexbox>
@@ -35,7 +36,7 @@ const Section = ({
   <Flexbox gap={12}>
     <Flexbox gap={4}>
       <Text style={{ fontSize: 15, fontWeight: 600 }}>{title}</Text>
-      <Text style={{ color: 'var(--lobe-color-text-3)', fontSize: 13 }}>{description}</Text>
+      <Text style={{ color: cssVar.colorTextTertiary, fontSize: 13 }}>{description}</Text>
     </Flexbox>
     <Flexbox horizontal gap={12} wrap="wrap">
       {children}
@@ -48,7 +49,7 @@ export default () => {
     <Flexbox gap={32} style={{ padding: 24 }}>
       <Flexbox gap={8}>
         <Text style={{ fontSize: 20, fontWeight: 700 }}>Native Button Auto Detection</Text>
-        <Text style={{ color: 'var(--lobe-color-text-3)', fontSize: 14 }}>
+        <Text style={{ color: cssVar.colorTextTertiary, fontSize: 14 }}>
           Demonstrates automatic nativeButton prop resolution based on component type. No manual
           nativeButton prop is passed - all detection is automatic.
         </Text>
@@ -111,7 +112,7 @@ export default () => {
             align="center"
             gap={8}
             style={{
-              background: 'var(--lobe-color-fill-tertiary)',
+              background: cssVar.colorFillTertiary,
               borderRadius: 8,
               cursor: 'pointer',
               padding: '8px 16px',
@@ -125,7 +126,7 @@ export default () => {
         <Popover content={<PopoverContent title="Center Trigger" />} trigger="click">
           <Center
             style={{
-              background: 'var(--lobe-color-fill-tertiary)',
+              background: cssVar.colorFillTertiary,
               borderRadius: 8,
               cursor: 'pointer',
               height: 40,
@@ -150,7 +151,7 @@ export default () => {
         <Popover content={<PopoverContent title="div Trigger" />} trigger="click">
           <div
             style={{
-              background: 'var(--lobe-color-fill-tertiary)',
+              background: cssVar.colorFillTertiary,
               borderRadius: 8,
               cursor: 'pointer',
               padding: '8px 16px',
@@ -163,7 +164,7 @@ export default () => {
         <Popover content={<PopoverContent title="span Trigger" />} trigger="click">
           <span
             style={{
-              background: 'var(--lobe-color-fill-tertiary)',
+              background: cssVar.colorFillTertiary,
               borderRadius: 8,
               cursor: 'pointer',
               display: 'inline-block',

@@ -1,10 +1,8 @@
 import { Flexbox, toast } from '@lobehub/ui';
 import { Button } from '@lobehub/ui/base-ui';
-import { StoryBook, useCreateStore } from '@lobehub/ui/storybook';
 import { useRef } from 'react';
 
 export default () => {
-  const store = useCreateStore();
   const attemptRef = useRef(0);
 
   const showNetworkError = () => {
@@ -17,13 +15,11 @@ export default () => {
   };
 
   return (
-    <StoryBook levaStore={store}>
-      <Flexbox horizontal gap={8} style={{ flexWrap: 'wrap' }}>
-        <Button type="primary" onClick={showNetworkError}>
-          Retry failing request
-        </Button>
-        <Button onClick={() => toast.info('Another notification')}>Show another toast</Button>
-      </Flexbox>
-    </StoryBook>
+    <Flexbox horizontal gap={8} style={{ flexWrap: 'wrap' }}>
+      <Button type="primary" onClick={showNetworkError}>
+        Retry failing request
+      </Button>
+      <Button onClick={() => toast.info('Another notification')}>Show another toast</Button>
+    </Flexbox>
   );
 };

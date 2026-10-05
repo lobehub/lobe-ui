@@ -1,4 +1,5 @@
 import { ScrollArea } from '@lobehub/ui';
+import { cssVar } from 'antd-style';
 
 const blocks = [
   {
@@ -69,9 +70,7 @@ export default () => {
           >
             <div style={{ fontSize: 13, fontWeight: 600 }}>{item.title}</div>
           </div>
-          <p style={{ color: 'var(--lobe-color-text-secondary)', margin: 0, padding: 12 }}>
-            {item.desc}
-          </p>
+          <p style={{ color: cssVar.colorTextSecondary, margin: 0, padding: 12 }}>{item.desc}</p>
         </section>
       ))}
     </ScrollArea>

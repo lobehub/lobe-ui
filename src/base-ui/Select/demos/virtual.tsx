@@ -1,5 +1,6 @@
 import { Flexbox, Tag } from '@lobehub/ui';
 import { Select } from '@lobehub/ui/base-ui';
+import { cssVar } from 'antd-style';
 import { useMemo, useState } from 'react';
 
 export default () => {
@@ -19,7 +20,7 @@ export default () => {
       gap={12}
       justify="center"
       style={{
-        background: 'var(--lobe-color-fill-secondary)',
+        background: cssVar.colorFillSecondary,
         borderRadius: 16,
         padding: 28,
       }}
@@ -39,7 +40,7 @@ export default () => {
         value={value}
         onChange={(next) => setValue(next as string | null)}
       />
-      <div style={{ color: 'var(--lobe-color-text-3)', fontSize: 12, textAlign: 'center' }}>
+      <div style={{ color: cssVar.colorTextTertiary, fontSize: 12, textAlign: 'center' }}>
         Virtualized list keeps scrolling smooth with large datasets.
       </div>
     </Flexbox>

@@ -1,4 +1,5 @@
 import { Button, DropdownMenu, Flexbox, Icon, Tooltip, TooltipGroup } from '@lobehub/ui';
+import { cssVar } from 'antd-style';
 import { Info } from 'lucide-react';
 import { useState } from 'react';
 
@@ -27,7 +28,7 @@ export default () => {
             {
               key: 'description',
               label: (
-                <div style={{ color: 'var(--lobe-color-text-3)', fontSize: 12, lineHeight: 1.6 }}>
+                <div style={{ color: cssVar.colorTextTertiary, fontSize: 12, lineHeight: 1.6 }}>
                   Move mouse onto tooltip content and keep it open.
                 </div>
               ),

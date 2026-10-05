@@ -19,23 +19,23 @@ import DemoGroupChildrenPreserve from './demos/group-children-preserve.tsx?demo'
 
 Wrap multiple tooltips in `TooltipGroup` to share a single floating instance. When you hover/focus different triggers, the tooltip only updates the anchor + content, reducing per-tooltip overhead.
 
-<Demo of={DemoGroup} layout="bare" />
+<Demo of={DemoGroup} layout="center" />
 
 ## Tooltip Group Shared Props
 
-<Demo of={DemoGroupShared} layout="bare" />
+<Demo of={DemoGroupShared} layout="center" />
 
 ## Trigger Removal
 
 Verify tooltips close when the trigger node is removed, for both standalone and group usage.
 
-<Demo of={DemoGroupRemoveTrigger} layout="bare" />
+<Demo of={DemoGroupRemoveTrigger} />
 
 ## Children Preservation On Reset
 
 When the active trigger becomes invalid the group hard-resets its popup. Sibling children must not be torn down with it. Type into the neighbor input, open a tooltip, then force a reset and confirm the input text and mount count survive.
 
-<Demo of={DemoGroupChildrenPreserve} layout="bare" />
+<Demo of={DemoGroupChildrenPreserve} />
 
 ## APIs
 

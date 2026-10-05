@@ -6,6 +6,7 @@ import {
   ScrollAreaThumb,
   ScrollAreaViewport,
 } from '@lobehub/ui';
+import { cssVar } from 'antd-style';
 
 const items = Array.from({ length: 100 }, (_, index) => index + 1);
 
@@ -36,9 +37,9 @@ export default () => {
                 key={item}
                 style={{
                   alignItems: 'center',
-                  background: 'var(--lobe-color-fill-tertiary)',
+                  background: cssVar.colorFillTertiary,
                   borderRadius: 8,
-                  color: 'var(--lobe-color-text-secondary)',
+                  color: cssVar.colorTextSecondary,
                   display: 'flex',
                   fontSize: 14,
                   fontWeight: 500,

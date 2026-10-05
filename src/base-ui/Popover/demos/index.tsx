@@ -1,6 +1,7 @@
 import { Flexbox, Popover, type PopoverProps, Tag } from '@lobehub/ui';
 import { Button } from '@lobehub/ui/base-ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
+import { cssVar } from 'antd-style';
 import { Sliders } from 'lucide-react';
 
 export default () => {
@@ -39,11 +40,11 @@ export default () => {
     <StoryBook levaStore={store}>
       <Flexbox align="center" gap={16}>
         <Flexbox horizontal align="center" gap={12}>
-          <Sliders size={20} style={{ color: 'var(--lobe-color-primary)' }} />
+          <Sliders size={20} style={{ color: cssVar.colorPrimary }} />
           <div style={{ fontSize: 15, fontWeight: 600 }}>Interactive Playground</div>
           <Tag color="blue">Customizable</Tag>
         </Flexbox>
-        <div style={{ color: 'var(--lobe-color-text-3)', fontSize: 13 }}>
+        <div style={{ color: cssVar.colorTextTertiary, fontSize: 13 }}>
           Use the controls panel on the right to customize the popover properties
         </div>
         <Popover {...control}>

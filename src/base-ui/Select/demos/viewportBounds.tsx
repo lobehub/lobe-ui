@@ -1,5 +1,6 @@
 import { Flexbox, Text } from '@lobehub/ui';
 import { Select, setFloatingCollisionPadding } from '@lobehub/ui/base-ui';
+import { cssVar } from 'antd-style';
 import { useEffect, useState } from 'react';
 
 const TITLE_BAR_HEIGHT = 40;
@@ -22,8 +23,8 @@ export default () => {
       <div
         style={{
           alignItems: 'center',
-          background: 'var(--lobe-color-fill-secondary)',
-          borderBottom: '1px solid var(--lobe-color-border)',
+          background: cssVar.colorFillSecondary,
+          borderBottom: `1px solid ${cssVar.colorBorder}`,
           display: 'flex',
           fontSize: 12,
           height: TITLE_BAR_HEIGHT,

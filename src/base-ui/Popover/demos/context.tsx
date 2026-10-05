@@ -1,5 +1,6 @@
 import { Flexbox, Popover, Tag, usePopoverContext } from '@lobehub/ui';
 import { Button } from '@lobehub/ui/base-ui';
+import { cssVar } from 'antd-style';
 import { Check, Code2 } from 'lucide-react';
 
 const Content = () => {
@@ -12,13 +13,13 @@ const Content = () => {
             align="center"
             justify="center"
             style={{
-              background: 'var(--lobe-color-success-bg)',
+              background: cssVar.colorSuccessBg,
               borderRadius: 8,
               height: 36,
               width: 36,
             }}
           >
-            <Code2 size={18} style={{ color: 'var(--lobe-color-success)' }} />
+            <Code2 size={18} style={{ color: cssVar.colorSuccess }} />
           </Flexbox>
           <Flexbox flex={1} gap={4}>
             <Flexbox horizontal align="center" gap={6}>
@@ -27,7 +28,7 @@ const Content = () => {
             </Flexbox>
           </Flexbox>
         </Flexbox>
-        <div style={{ color: 'var(--lobe-color-text-2)', fontSize: 13, lineHeight: 1.7 }}>
+        <div style={{ color: cssVar.colorTextSecondary, fontSize: 13, lineHeight: 1.7 }}>
           Access popover controls from within the content component. Close imperatively without
           managing external state.
         </div>
@@ -36,14 +37,14 @@ const Content = () => {
       <Flexbox
         gap={6}
         style={{
-          background: 'var(--lobe-color-fill-tertiary)',
+          background: cssVar.colorFillTertiary,
           borderRadius: 8,
           fontFamily: 'monospace',
           fontSize: 12,
           padding: 12,
         }}
       >
-        <div style={{ color: 'var(--lobe-color-text-3)' }}>
+        <div style={{ color: cssVar.colorTextTertiary }}>
           const {'{ close }'} = usePopoverContext();
         </div>
       </Flexbox>

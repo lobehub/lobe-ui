@@ -1,5 +1,6 @@
 import { ActionIcon, DropdownMenu, Flexbox, Popover, Tag } from '@lobehub/ui';
 import { Button } from '@lobehub/ui/base-ui';
+import { cssVar } from 'antd-style';
 import { Folder, MoreHorizontal } from 'lucide-react';
 
 import { items } from '@/DropdownMenu/demos/data';
@@ -15,7 +16,7 @@ export default () => {
           <Flexbox gap={16} style={{ padding: '12px 16px', width: 300 }}>
             <Flexbox horizontal align="center" justify="space-between">
               <Flexbox horizontal align="center" gap={8}>
-                <Folder size={18} style={{ color: 'var(--lobe-color-primary)' }} />
+                <Folder size={18} style={{ color: cssVar.colorPrimary }} />
                 <div style={{ fontSize: 15, fontWeight: 600 }}>Project Actions</div>
               </Flexbox>
               <DropdownMenu items={items} placement="bottomRight">
@@ -25,7 +26,7 @@ export default () => {
             <Flexbox
               gap={8}
               style={{
-                background: 'var(--lobe-color-fill-tertiary)',
+                background: cssVar.colorFillTertiary,
                 borderRadius: 8,
                 padding: 12,
               }}
@@ -34,7 +35,7 @@ export default () => {
                 <Tag color="purple">Tip</Tag>
                 <div style={{ fontSize: 13, fontWeight: 500 }}>Nested Components</div>
               </Flexbox>
-              <div style={{ color: 'var(--lobe-color-text-3)', fontSize: 12, lineHeight: 1.6 }}>
+              <div style={{ color: cssVar.colorTextTertiary, fontSize: 12, lineHeight: 1.6 }}>
                 Click the action button to open a dropdown menu from within a popover. Components
                 compose seamlessly.
               </div>
