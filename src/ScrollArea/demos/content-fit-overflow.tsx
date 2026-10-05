@@ -1,4 +1,5 @@
 import { ScrollArea } from '@lobehub/ui';
+import { cssVar } from 'antd-style';
 
 const codeSample = `const veryLongVariableName = 'This single non-breaking line is much wider than the surrounding flex container';
 function example(input) {
@@ -9,7 +10,7 @@ const Demo = ({ disableContentFit, label }: { disableContentFit?: boolean; label
   <div>
     <div
       style={{
-        color: 'var(--lobe-color-text-secondary)',
+        color: cssVar.colorTextSecondary,
         fontSize: 12,
         marginBottom: 8,
       }}
@@ -19,7 +20,7 @@ const Demo = ({ disableContentFit, label }: { disableContentFit?: boolean; label
     <div
       style={{
         alignSelf: 'flex-start',
-        border: '1px dashed var(--lobe-color-warning)',
+        border: `1px dashed ${cssVar.colorWarning}`,
         borderRadius: 8,
         display: 'flex',
         gap: 12,
@@ -30,9 +31,9 @@ const Demo = ({ disableContentFit, label }: { disableContentFit?: boolean; label
       <div
         style={{
           alignSelf: 'flex-start',
-          background: 'var(--lobe-color-fill-tertiary)',
+          background: cssVar.colorFillTertiary,
           borderRadius: 999,
-          color: 'var(--lobe-color-text-secondary)',
+          color: cssVar.colorTextSecondary,
           fontSize: 12,
           padding: '4px 12px',
           whiteSpace: 'nowrap',
@@ -54,7 +55,7 @@ const Demo = ({ disableContentFit, label }: { disableContentFit?: boolean; label
         </p>
         <pre
           style={{
-            background: 'var(--lobe-color-fill-secondary)',
+            background: cssVar.colorFillSecondary,
             borderRadius: 6,
             fontFamily: 'var(--lobe-font-family-code)',
             fontSize: 13,

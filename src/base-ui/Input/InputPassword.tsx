@@ -38,4 +38,4 @@ const InputPassword = memo<InputPasswordProps>(({ visibilityToggle = true, suffi
 
 InputPassword.displayName = 'InputPassword';
 
-export default InputPassword;
+export default Object.assign(InputPassword, { formBinding: { emptyValue: '' } as const });

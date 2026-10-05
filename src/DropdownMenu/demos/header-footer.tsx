@@ -1,4 +1,5 @@
 import { Avatar, Button, DropdownMenu, type DropdownMenuProps, Flexbox, Icon } from '@lobehub/ui';
+import { cssVar } from 'antd-style';
 import {
   CreditCardIcon,
   LifeBuoyIcon,
@@ -32,7 +33,7 @@ export default () => {
           <Avatar avatar="🧑‍🚀" size={36} />
           <Flexbox>
             <div style={{ fontSize: 14, fontWeight: 600 }}>Astro Naut</div>
-            <div style={{ color: 'var(--lobe-color-text-3)', fontSize: 12 }}>astro@lobehub.com</div>
+            <div style={{ color: cssVar.colorTextTertiary, fontSize: 12 }}>astro@lobehub.com</div>
           </Flexbox>
         </Flexbox>
       }

@@ -1,12 +1,10 @@
 import { Tooltip, TooltipGroup } from '@lobehub/ui';
 import { Button } from '@lobehub/ui/base-ui';
-import { StoryBook, useCreateStore } from '@lobehub/ui/storybook';
 import { useEffect, useRef, useState } from 'react';
 
 import { Flexbox } from '@/Flex';
 
 export default () => {
-  const store = useCreateStore();
   const [standaloneMounted, setStandaloneMounted] = useState(true);
   const [standalonePending, setStandalonePending] = useState(false);
   const standaloneTimerRef = useRef<number | null>(null);
@@ -101,74 +99,72 @@ export default () => {
   };
 
   return (
-    <StoryBook levaStore={store}>
-      <Flexbox gap={16}>
-        <div style={hintStyle}>
-          Hover the trigger, then remove it while the tooltip is open. Both variants should close
-          immediately.
-        </div>
-        <Flexbox gap={20}>
-          <Flexbox gap={12}>
-            <div style={titleStyle}>Standalone Tooltip</div>
-            <Flexbox horizontal align="center" gap={12} wrap="wrap">
-              <Button onClick={toggleStandaloneMounted}>
-                {standaloneMounted ? 'Unmount trigger' : 'Mount trigger'}
-              </Button>
-              <Button
-                disabled={!standaloneMounted || standalonePending}
-                onClick={removeStandaloneLater}
+    <Flexbox gap={16}>
+      <div style={hintStyle}>
+        Hover the trigger, then remove it while the tooltip is open. Both variants should close
+        immediately.
+      </div>
+      <Flexbox gap={20}>
+        <Flexbox gap={12}>
+          <div style={titleStyle}>Standalone Tooltip</div>
+          <Flexbox horizontal align="center" gap={12} wrap="wrap">
+            <Button onClick={toggleStandaloneMounted}>
+              {standaloneMounted ? 'Unmount trigger' : 'Mount trigger'}
+            </Button>
+            <Button
+              disabled={!standaloneMounted || standalonePending}
+              onClick={removeStandaloneLater}
+            >
+              {standalonePending ? 'Removing...' : 'Remove in 1s'}
+            </Button>
+            {standaloneMounted && (
+              <Tooltip
+                closeDelay={10_000}
+                openDelay={0}
+                title="Tooltip should be destroyed on unmount"
               >
-                {standalonePending ? 'Removing...' : 'Remove in 1s'}
-              </Button>
-              {standaloneMounted && (
-                <Tooltip
-                  closeDelay={10_000}
-                  openDelay={0}
-                  title="Tooltip should be destroyed on unmount"
-                >
+                <Button type="primary">Hover me</Button>
+              </Tooltip>
+            )}
+          </Flexbox>
+        </Flexbox>
+        <Flexbox gap={12}>
+          <div style={titleStyle}>Tooltip Group (Singleton)</div>
+          <Flexbox horizontal align="center" gap={12} wrap="wrap">
+            <Button onClick={toggleGroupMounted}>
+              {groupMounted ? 'Unmount trigger' : 'Mount trigger'}
+            </Button>
+            <Button disabled={!groupMounted || groupPending} onClick={removeGroupLater}>
+              {groupPending ? 'Removing...' : 'Remove in 1s'}
+            </Button>
+            <TooltipGroup closeDelay={10_000} openDelay={0}>
+              {groupMounted && (
+                <Tooltip title="Tooltip should be destroyed on unmount">
                   <Button type="primary">Hover me</Button>
                 </Tooltip>
               )}
-            </Flexbox>
+            </TooltipGroup>
           </Flexbox>
-          <Flexbox gap={12}>
-            <div style={titleStyle}>Tooltip Group (Singleton)</div>
-            <Flexbox horizontal align="center" gap={12} wrap="wrap">
-              <Button onClick={toggleGroupMounted}>
-                {groupMounted ? 'Unmount trigger' : 'Mount trigger'}
-              </Button>
-              <Button disabled={!groupMounted || groupPending} onClick={removeGroupLater}>
-                {groupPending ? 'Removing...' : 'Remove in 1s'}
-              </Button>
-              <TooltipGroup closeDelay={10_000} openDelay={0}>
-                {groupMounted && (
-                  <Tooltip title="Tooltip should be destroyed on unmount">
-                    <Button type="primary">Hover me</Button>
-                  </Tooltip>
-                )}
-              </TooltipGroup>
-            </Flexbox>
-          </Flexbox>
-          <Flexbox gap={12}>
-            <div style={titleStyle}>Tooltip Group (Display None)</div>
-            <Flexbox horizontal align="center" gap={12} wrap="wrap">
-              <Button onClick={toggleGroupHidden}>
-                {groupHidden ? 'Show trigger' : 'Hide trigger'}
-              </Button>
-              <Button disabled={groupHidden || groupHiddenPending} onClick={hideGroupLater}>
-                {groupHiddenPending ? 'Hiding...' : 'Hide in 1s'}
-              </Button>
-              <TooltipGroup closeDelay={10_000} openDelay={0}>
-                <div style={{ display: groupHidden ? 'none' : 'block' }}>
-                  <Tooltip title="Tooltip should be hidden on display:none">
-                    <Button type="primary">Hover me</Button>
-                  </Tooltip>
-                </div>
-              </TooltipGroup>
-            </Flexbox>
+        </Flexbox>
+        <Flexbox gap={12}>
+          <div style={titleStyle}>Tooltip Group (Display None)</div>
+          <Flexbox horizontal align="center" gap={12} wrap="wrap">
+            <Button onClick={toggleGroupHidden}>
+              {groupHidden ? 'Show trigger' : 'Hide trigger'}
+            </Button>
+            <Button disabled={groupHidden || groupHiddenPending} onClick={hideGroupLater}>
+              {groupHiddenPending ? 'Hiding...' : 'Hide in 1s'}
+            </Button>
+            <TooltipGroup closeDelay={10_000} openDelay={0}>
+              <div style={{ display: groupHidden ? 'none' : 'block' }}>
+                <Tooltip title="Tooltip should be hidden on display:none">
+                  <Button type="primary">Hover me</Button>
+                </Tooltip>
+              </div>
+            </TooltipGroup>
           </Flexbox>
         </Flexbox>
       </Flexbox>
-    </StoryBook>
+    </Flexbox>
   );
 };

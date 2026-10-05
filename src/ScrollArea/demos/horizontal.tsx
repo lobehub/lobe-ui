@@ -1,4 +1,5 @@
 import { ScrollArea } from '@lobehub/ui';
+import { cssVar } from 'antd-style';
 
 const tags = [
   'Vernacular',
@@ -41,9 +42,9 @@ export default () => {
         <span
           key={tag}
           style={{
-            background: 'var(--lobe-color-fill-tertiary)',
+            background: cssVar.colorFillTertiary,
             borderRadius: 999,
-            color: 'var(--lobe-color-text-secondary)',
+            color: cssVar.colorTextSecondary,
             flexShrink: 0,
             fontSize: 13,
             fontWeight: 500,

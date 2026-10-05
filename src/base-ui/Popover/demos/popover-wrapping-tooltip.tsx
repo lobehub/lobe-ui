@@ -1,5 +1,6 @@
 import { Flexbox, Popover, Tooltip } from '@lobehub/ui';
 import { Button } from '@lobehub/ui/base-ui';
+import { cssVar } from 'antd-style';
 import { HelpCircle } from 'lucide-react';
 
 /**
@@ -16,7 +17,7 @@ export default () => {
         content={
           <Flexbox gap={8} style={{ padding: '12px 16px', width: 260 }}>
             <div style={{ fontSize: 15, fontWeight: 600 }}>Popover wrapping Tooltip</div>
-            <div style={{ color: 'var(--lobe-color-text-3)', fontSize: 13, lineHeight: 1.6 }}>
+            <div style={{ color: cssVar.colorTextTertiary, fontSize: 13, lineHeight: 1.6 }}>
               The trigger is a button wrapped by Tooltip. Tooltip shows on hover; click opens this
               popover.
             </div>

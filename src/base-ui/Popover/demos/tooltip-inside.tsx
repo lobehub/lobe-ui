@@ -1,5 +1,6 @@
 import { Flexbox, Popover, Tooltip } from '@lobehub/ui';
 import { Button } from '@lobehub/ui/base-ui';
+import { cssVar } from 'antd-style';
 import { Info, Sparkles } from 'lucide-react';
 
 export default () => {
@@ -13,7 +14,7 @@ export default () => {
           <Flexbox gap={16} style={{ padding: '12px 16px' }}>
             <Flexbox gap={8}>
               <div style={{ fontSize: 15, fontWeight: 600 }}>Nested Tooltips</div>
-              <div style={{ color: 'var(--lobe-color-text-3)', fontSize: 13, lineHeight: 1.6 }}>
+              <div style={{ color: cssVar.colorTextTertiary, fontSize: 13, lineHeight: 1.6 }}>
                 Tooltips can work seamlessly inside popovers, providing additional context on hover.
               </div>
             </Flexbox>

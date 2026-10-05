@@ -1,5 +1,6 @@
 import { Flexbox, Popover, Tooltip, TooltipGroup } from '@lobehub/ui';
 import { Button } from '@lobehub/ui/base-ui';
+import { cssVar } from 'antd-style';
 import { HelpCircle, Info } from 'lucide-react';
 
 /**
@@ -18,7 +19,7 @@ export default () => {
             content={
               <Flexbox gap={8} style={{ padding: '12px 16px', width: 260 }}>
                 <div style={{ fontSize: 15, fontWeight: 600 }}>Popover A</div>
-                <div style={{ color: 'var(--lobe-color-text-3)', fontSize: 13, lineHeight: 1.6 }}>
+                <div style={{ color: cssVar.colorTextTertiary, fontSize: 13, lineHeight: 1.6 }}>
                   This popover opens on click, while the tooltip (singleton) shows on hover.
                 </div>
               </Flexbox>
@@ -38,7 +39,7 @@ export default () => {
             content={
               <Flexbox gap={8} style={{ padding: '12px 16px', width: 260 }}>
                 <div style={{ fontSize: 15, fontWeight: 600 }}>Popover B</div>
-                <div style={{ color: 'var(--lobe-color-text-3)', fontSize: 13, lineHeight: 1.6 }}>
+                <div style={{ color: cssVar.colorTextTertiary, fontSize: 13, lineHeight: 1.6 }}>
                   Hovering between buttons smoothly transitions the shared tooltip. Clicking still
                   opens each button's own popover.
                 </div>

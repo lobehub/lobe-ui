@@ -1,0 +1,124 @@
+---
+title: Form
+description: Controlled form from @lobehub/ui/base-ui/form — a form instance, schema-first validation and field-level render granularity, with the engine kept behind an internal adapter.
+category: Data Entry
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoJsx from './demos/jsx.tsx?demo';
+import DemoList from './demos/list.tsx?demo';
+import DemoAutosave from './demos/autosave.tsx?demo';
+
+Import from its own entry so pages without forms never load the form engine:
+
+```ts
+import { Form, useForm, useWatch } from '@lobehub/ui/base-ui/form';
+```
+
+## Items config with a schema
+
+<Demo of={DemoIndex} />
+
+## JSX fields, async validation and deps
+
+<Demo of={DemoJsx} />
+
+## Form.List
+
+<Demo of={DemoList} />
+
+## Auto-save with onValuesChange
+
+<Demo of={DemoAutosave} />
+
+## Rules of thumb
+
+- Define schemas and validators at module scope. `useForm({ schema })` reads the schema once; switch it with `form.setSchema(next)`.
+- Changing one field re-renders only that field and components that `useWatch` it. Keep static `items` arrays outside the component or in `useMemo`, otherwise the parent re-renders every field shell.
+- `onValuesChange` fires for user edits only. `form.setValue(name, value, { asUser: true })` makes a code change count as a user edit.
+- `useForm({ values })` syncs external state into fields the user has not touched.
+- `layout="vertical"` stacks fields with no root gap (their own padding spaces them); pass `gap` to override.
+
+## APIs
+
+### useForm
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| schema | Standard Schema (zod, valibot…) for the whole form; infers `T` | `StandardSchema` | - |
+| initialValues | Values the form starts from. `reset` returns to the latest values set by code, by `values` sync or by a successful submit | `T` | `{}` |
+| values | External values synced into untouched fields when they change | `T` | - |
+| onSubmit | Called with values after a valid submit | `(values: T) => unknown` | - |
+| onValuesChange | Called after user edits with the changed slice and all values | `(changed: DeepPartial<T>, values: T) => void` | - |
+| valuesChangeDebounce | Merge `onValuesChange` calls inside this window (ms) | `number` | `0` |
+| validateOn | Default validation timing for fields | `'auto' \| 'change' \| 'blur' \| 'submit'` | `'auto'` |
+
+`'auto'` validates a field on its first blur, then on every change while it has an error. Submit validates everything.
+
+### FormInstance
+
+| Method | Description |
+| --- | --- |
+| `getValues()` / `getValue(name)` | Read values |
+| `setValue(name, value, { asUser? })` | Write a value; code changes do not mark the field touched |
+| `setValues(partial, { asUser? })` | Write several values |
+| `validate(names?)` | Resolve to `{ valid, errors }` |
+| `setErrors(map)` | Show server errors; each clears on that field's next edit or on the next submit. Errors set inside `onSubmit` fail that submit and keep the form dirty |
+| `submit()` / `reset(values?)` / `resetField(name)` | Submit and reset |
+| `isTouched(name)` / `isDirty()` | State. A path counts as touched when it or a parent/child path was edited; dirty compares user edits with the reset baseline |
+| `subscribe(selector, callback)` | Subscribe outside React; returns an unsubscribe function |
+| `setSchema(schema)` | Replace the form schema |
+
+### Form.Field
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| name | Dot path, e.g. `agent.model`, `env.0.key`. Omit it for a layout-only row whose child manages its own state | `FieldPath<T>` | - |
+| label / desc / extra / tag / avatar | Layout content | `ReactNode` | - |
+| required | Built-in empty check plus asterisk; a string replaces the message | `boolean \| string` | - |
+| validate | Field-level schema or function returning an error string | `StandardSchema \| (value, values) => string \| undefined \| Promise` | - |
+| validateOn | Override the form timing | `'auto' \| 'change' \| 'blur' \| 'submit'` | form default |
+| validateDebounce | Debounce change-triggered validation (ms) | `number` | - |
+| deps | Re-validate this field when these fields change | `FieldPath<T>[]` | - |
+| valueProp | Prop that receives the value | `string` | `'value'` |
+| trigger | Prop that reports changes | `string` | `'onChange'` |
+| getValue | Map the trigger arguments to the stored value | `(...args) => unknown` | event value |
+| emptyValue | Value passed to the control while the field is `undefined`, so it stays controlled. lobe-ui inputs declare `''` (`InputNumber`: `null`) | `unknown` | control's `formBinding.emptyValue` |
+| render | Render the control yourself | `(field: FieldRenderProps) => ReactNode` | - |
+| bare | Render only the control, without label or layout | `boolean` | - |
+| hidden / divider / layout / minWidth / variant | Layout | - | - |
+
+### Form.List
+
+Pass `columns` for the built-in table, or a render function as `children` for your own layout: `{({ fields, add, remove, move }) => …}`. `fields` carry a stable `key`, the `index` and the item `name` prefix. `children` wins over `columns`.
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| name | Path of the array value | `string` | - |
+| columns | Table columns; each cell binds `children` to `<item>.<column.name>` | `FormListColumn[]` | - |
+| newItem | Item appended by the add button; objects are cloned, functions are called | `unknown \| (() => unknown)` | `{}` |
+| addText | Add button label | `ReactNode` | `Add` |
+| emptyText | Shown when the list is empty | `ReactNode` | `No items yet` |
+| children | Render the rows yourself | `(props: FormListRenderProps) => ReactNode` | - |
+
+`FormListColumn`: `name`, `title`, `children` (the control), `flex` (column width ratio, default `1`), `required`, `validate`.
+
+## Migrating from antd Form
+
+| antd | `@lobehub/ui/base-ui/form` |
+| --- | --- |
+| `const [form] = Form.useForm()` | `const form = useForm<Values>({ initialValues })` |
+| `<Form.Item name rules={[{ required: true }]}>` | `<Form.Field name required>` |
+| `rules={[{ validator }]}` | `validate={async (value, values) => message \| undefined}` |
+| `rules={[{ type: 'email' }]}` | `email: z.string().email()` in the form schema |
+| `valuePropName="checked"` | handled by lobe-ui controls; `valueProp="checked"` for others |
+| `getValueFromEvent` | `getValue` |
+| `noStyle` | `bare` |
+| `dependencies={['password']}` | `deps={['password']}` |
+| `shouldUpdate` | `useWatch` + plain conditional rendering |
+| `form.setFieldsValue(v)` | `form.setValues(v)` |
+| `form.validateFields()` | `await form.validate()`, check `valid` |
+| `form.setFields([{ name, errors }])` | `form.setErrors({ [name]: message })` |
+| `useEffect(() => form.setFieldsValue(store))` | `useForm({ values: store })` |
+| `Form.useWatch('a', form)` | `useWatch(form, 'a')` |
+| `Form.Provider` | `form.subscribe(selector, callback)` |

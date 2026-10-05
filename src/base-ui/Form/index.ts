@@ -9,6 +9,9 @@ import FormSubmitFooter from './components/FormSubmitFooter';
 import FormTitle from './components/FormTitle';
 import FormParent from './Form';
 
+/**
+ * @deprecated Use `Form` from `@lobehub/ui/base-ui/form`. This uncontrolled Form is removed in the next major.
+ */
 export const Form = Object.assign(FormParent, {
   Divider: FormDivider,
   Field: FormField,

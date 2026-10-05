@@ -1,5 +1,6 @@
 import { Flexbox, Popover, PopoverGroup, Tag } from '@lobehub/ui';
 import { Button } from '@lobehub/ui/base-ui';
+import { cssVar } from 'antd-style';
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp } from 'lucide-react';
 
 const content = (placement: string, icon: React.ReactNode) => (
@@ -10,7 +11,7 @@ const content = (placement: string, icon: React.ReactNode) => (
     </Flexbox>
     <Flexbox
       style={{
-        background: 'var(--lobe-color-fill-tertiary)',
+        background: cssVar.colorFillTertiary,
         borderRadius: 6,
         fontFamily: 'monospace',
         fontSize: 12,
@@ -30,7 +31,7 @@ export default () => {
       <Flexbox
         gap={8}
         style={{
-          background: 'var(--lobe-color-fill-secondary)',
+          background: cssVar.colorFillSecondary,
           borderRadius: 16,
           padding: 48,
         }}
@@ -87,13 +88,13 @@ export default () => {
             align="center"
             justify="center"
             style={{
-              background: 'var(--lobe-color-fill-tertiary)',
+              background: cssVar.colorFillTertiary,
               borderRadius: 12,
               height: 120,
               width: 120,
             }}
           >
-            <div style={{ color: 'var(--lobe-color-text-3)', fontSize: 13, textAlign: 'center' }}>
+            <div style={{ color: cssVar.colorTextTertiary, fontSize: 13, textAlign: 'center' }}>
               Hover any
               <br />
               button

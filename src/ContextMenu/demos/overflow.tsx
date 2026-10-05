@@ -1,11 +1,4 @@
-import {
-  Block,
-  ContextMenuHost,
-  type ContextMenuItem,
-  ContextMenuTrigger,
-  type MenuInfo,
-  Text,
-} from '@lobehub/ui';
+import { Block, type ContextMenuItem, ContextMenuTrigger, type MenuInfo, Text } from '@lobehub/ui';
 import { createStaticStyles } from 'antd-style';
 import { useMemo, useState } from 'react';
 
@@ -47,21 +40,18 @@ export default () => {
   );
 
   return (
-    <>
-      <ContextMenuTrigger className={styles.trigger} items={items}>
-        <Block align="center" direction="vertical" gap={8} justify="center" padding={16}>
-          <Text strong as={'p'}>
-            Right click this panel
-          </Text>
-          <Text as={'p'} type="secondary">
-            The 24-item menu remains within the viewport and scrolls internally.
-          </Text>
-          <Text as={'p'} type="secondary">
-            Selected item: {selectedItem}
-          </Text>
-        </Block>
-      </ContextMenuTrigger>
-      <ContextMenuHost />
-    </>
+    <ContextMenuTrigger className={styles.trigger} items={items}>
+      <Block align="center" direction="vertical" gap={8} justify="center" padding={16}>
+        <Text strong as={'p'}>
+          Right click this panel
+        </Text>
+        <Text as={'p'} type="secondary">
+          The 24-item menu remains within the viewport and scrolls internally.
+        </Text>
+        <Text as={'p'} type="secondary">
+          Selected item: {selectedItem}
+        </Text>
+      </Block>
+    </ContextMenuTrigger>
   );
 };

@@ -1,7 +1,7 @@
 'use client';
 
 import { Collapsible } from '@base-ui/react/collapsible';
-import { cx, useResponsive } from 'antd-style';
+import { cx, useResponsive, useThemeMode } from 'antd-style';
 import { ChevronDown } from 'lucide-react';
 import { memo, type ReactNode } from 'react';
 
@@ -53,6 +53,14 @@ const FormGroup = memo<FormGroupProps>(
     const { mobile } = useResponsive();
     const isBorderless = variant === 'borderless';
     const isCollapsible = collapsible === undefined ? !isBorderless : collapsible;
+    const { isDarkMode } = useThemeMode();
+    const rootClassName = cx(groupVariants({ isDarkMode, variant }), className);
+    const bodyClassName = cx(
+      groupStyles.body,
+      !isBorderless && groupStyles.bodyBoxed,
+      variant === 'filled' && groupStyles.bodyFilled,
+      variant === 'filled' && !isDarkMode && groupStyles.bodyFilledLight,
+    );
 
     if (mobile)
       return (
@@ -67,7 +75,7 @@ const FormGroup = memo<FormGroupProps>(
 
     if (!isCollapsible)
       return (
-        <div className={cx(groupVariants({ variant }), className)} {...rest}>
+        <div className={rootClassName} {...rest}>
           {title && (
             <div
               className={cx(
@@ -79,7 +87,7 @@ const FormGroup = memo<FormGroupProps>(
               {extra}
             </div>
           )}
-          <div className={cx(groupStyles.body, !isBorderless && groupStyles.bodyBoxed)}>
+          <div data-form-group-body className={bodyClassName}>
             {children}
           </div>
         </div>
@@ -87,7 +95,7 @@ const FormGroup = memo<FormGroupProps>(
 
     return (
       <Collapsible.Root
-        className={cx(groupVariants({ variant }), className)}
+        className={rootClassName}
         defaultOpen={defaultActive}
         open={active}
         onOpenChange={onCollapse}
@@ -106,7 +114,7 @@ const FormGroup = memo<FormGroupProps>(
           {extra}
         </div>
         <Collapsible.Panel className={groupStyles.panel}>
-          <div className={cx(groupStyles.body, !isBorderless && groupStyles.bodyBoxed)}>
+          <div data-form-group-body className={bodyClassName}>
             {children}
           </div>
         </Collapsible.Panel>

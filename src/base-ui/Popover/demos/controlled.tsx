@@ -1,5 +1,6 @@
 import { ActionIcon, Flexbox, Popover, Tag } from '@lobehub/ui';
 import { Button, Input } from '@lobehub/ui/base-ui';
+import { cssVar } from 'antd-style';
 import { AlertTriangle, Check, Edit3, Trash2, X } from 'lucide-react';
 import { useState } from 'react';
 
@@ -23,22 +24,22 @@ export default () => {
                   align="center"
                   justify="center"
                   style={{
-                    background: 'var(--lobe-color-error-bg)',
+                    background: cssVar.colorErrorBg,
                     borderRadius: 8,
                     height: 40,
                     width: 40,
                   }}
                 >
-                  <AlertTriangle size={20} style={{ color: 'var(--lobe-color-error)' }} />
+                  <AlertTriangle size={20} style={{ color: cssVar.colorError }} />
                 </Flexbox>
                 <Flexbox flex={1} gap={6}>
                   <div style={{ fontSize: 15, fontWeight: 600 }}>Confirm Deletion</div>
-                  <div style={{ color: 'var(--lobe-color-text-3)', fontSize: 12 }}>
+                  <div style={{ color: cssVar.colorTextTertiary, fontSize: 12 }}>
                     This action cannot be undone
                   </div>
                 </Flexbox>
               </Flexbox>
-              <div style={{ color: 'var(--lobe-color-text-2)', fontSize: 13, lineHeight: 1.6 }}>
+              <div style={{ color: cssVar.colorTextSecondary, fontSize: 13, lineHeight: 1.6 }}>
                 Are you sure you want to permanently delete this item? All associated data will be
                 lost.
               </div>
@@ -75,11 +76,11 @@ export default () => {
           content={
             <Flexbox gap={16} style={{ padding: '12px 16px', width: 300 }}>
               <Flexbox horizontal align="center" gap={8}>
-                <Edit3 size={18} style={{ color: 'var(--lobe-color-primary)' }} />
+                <Edit3 size={18} style={{ color: cssVar.colorPrimary }} />
                 <div style={{ fontSize: 15, fontWeight: 600 }}>Rename Project</div>
               </Flexbox>
               <Flexbox gap={8}>
-                <div style={{ color: 'var(--lobe-color-text-3)', fontSize: 12 }}>
+                <div style={{ color: cssVar.colorTextTertiary, fontSize: 12 }}>
                   Enter a new name for your project
                 </div>
                 <Input
@@ -128,9 +129,17 @@ export default () => {
       </Flexbox>
 
       {/* 外部控制 */}
-      <Button icon={<Edit3 size={16} />} size="large" type="text" onClick={() => setEditOpen(true)}>
-        Edit Externally
-      </Button>
+      <Flexbox align="center" gap={12}>
+        <Button
+          icon={<Edit3 size={16} />}
+          size="large"
+          type="text"
+          onClick={() => setEditOpen(true)}
+        >
+          Edit Externally
+        </Button>
+        <Tag>External</Tag>
+      </Flexbox>
     </Flexbox>
   );
 };

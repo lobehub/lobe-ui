@@ -10,6 +10,7 @@ import {
   Tag,
 } from '@lobehub/ui';
 import { Button } from '@lobehub/ui/base-ui';
+import { cssVar } from 'antd-style';
 import { Blocks } from 'lucide-react';
 import { useState } from 'react';
 
@@ -34,14 +35,14 @@ export default () => {
                     <div style={{ fontSize: 15, fontWeight: 600 }}>Atomic Components</div>
                     <Tag color="blue">Advanced</Tag>
                   </Flexbox>
-                  <div style={{ color: 'var(--lobe-color-text-2)', fontSize: 13, lineHeight: 1.7 }}>
+                  <div style={{ color: cssVar.colorTextSecondary, fontSize: 13, lineHeight: 1.7 }}>
                     Build fully customized popovers using primitive components for maximum
                     flexibility and control.
                   </div>
                   <Flexbox
                     gap={4}
                     style={{
-                      background: 'var(--lobe-color-fill-tertiary)',
+                      background: cssVar.colorFillTertiary,
                       borderRadius: 6,
                       fontFamily: 'monospace',
                       fontSize: 12,

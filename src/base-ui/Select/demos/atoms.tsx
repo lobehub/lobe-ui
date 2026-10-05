@@ -14,6 +14,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@lobehub/ui/base-ui';
+import { cssVar } from 'antd-style';
 import { Check, ChevronDown } from 'lucide-react';
 import { useMemo, useState } from 'react';
 
@@ -46,7 +47,7 @@ export default () => {
       gap={12}
       justify="center"
       style={{
-        background: 'var(--lobe-color-fill-secondary)',
+        background: cssVar.colorFillSecondary,
         borderRadius: 16,
         minHeight: 260,
         padding: 28,
@@ -100,7 +101,7 @@ export default () => {
           </SelectPositioner>
         </SelectPortal>
       </SelectRoot>
-      <div style={{ color: 'var(--lobe-color-text-3)', fontSize: 12, textAlign: 'center' }}>
+      <div style={{ color: cssVar.colorTextTertiary, fontSize: 12, textAlign: 'center' }}>
         Compose trigger, popup, and items for full control.
       </div>
     </Flexbox>
