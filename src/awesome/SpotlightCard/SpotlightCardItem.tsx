@@ -1,10 +1,9 @@
 'use client';
 
-import { useThemeMode } from 'antd-style';
 import { memo, useMemo } from 'react';
 
 import { Flexbox } from '@/Flex';
-import { cx } from '@/styles';
+import { cx, useThemeMode } from '@/styles';
 
 import { styles } from './style';
 import type { SpotlightCardItemProps } from './type';

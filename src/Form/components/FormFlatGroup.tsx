@@ -1,10 +1,9 @@
 'use client';
 
-import { useResponsive } from 'antd-style';
 import { memo } from 'react';
 
 import { Flexbox } from '@/Flex';
-import { cx } from '@/styles';
+import { cx, useResponsive } from '@/styles';
 
 import { flatGroupStyles, flatGroupVariants } from '../style';
 import type { FormFlatGroupProps } from '../type';

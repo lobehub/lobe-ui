@@ -1,7 +1,7 @@
-import { useThemeMode } from 'antd-style';
 import { type CSSProperties, memo, useState } from 'react';
 
 import Spline, { type SplineProps } from '@/awesome/Spline';
+import { useThemeMode } from '@/styles';
 
 import Loading from './Loading';
 

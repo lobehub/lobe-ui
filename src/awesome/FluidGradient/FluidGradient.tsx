@@ -1,10 +1,9 @@
 'use client';
 
-import { useThemeMode } from 'antd-style';
 import { type CSSProperties, memo, useEffect, useRef, useState } from 'react';
 
 import { LANDING_PALETTE_DARK, LANDING_PALETTE_LIGHT } from '@/awesome/landingTokens';
-import { cx } from '@/styles';
+import { cx, useThemeMode } from '@/styles';
 
 import { styles } from './style';
 import type { FluidGradientProps } from './type';

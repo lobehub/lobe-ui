@@ -1,13 +1,12 @@
 'use client';
 
 import { Collapse as AntdCollapse, ConfigProvider } from 'antd';
-import { useThemeMode } from 'antd-style';
 import { ChevronDown } from 'lucide-react';
 import { isValidElement, memo, useMemo } from 'react';
 
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
-import { cx } from '@/styles';
+import { cx, useThemeMode } from '@/styles';
 
 import { DEFAULT_PADDING, getPadding, styles, variants } from './style';
 import type { CollapseProps } from './type';

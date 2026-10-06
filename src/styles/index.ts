@@ -19,3 +19,18 @@ export { generateCustomStylish as lobeCustomStylish } from './theme/customStylis
 export { staticStylish as lobeStaticStylish } from './theme/customStylishStatic';
 export { generateCustomToken as lobeCustomToken } from './theme/customToken';
 export { generateColorNeutralPalette, generateColorPalette } from './theme/generateColorPalette';
+export {
+  type LobeAppearance,
+  type LobeTheme,
+  LobeThemeScript,
+  type LobeThemeScriptProps,
+  type LobeThemeState,
+  type ResponsiveState,
+  setLobeTheme,
+  ThemeScope,
+  type ThemeScopeProps,
+  useResponsive,
+  useTheme,
+  useThemeMode,
+} from './theme/scope';
+export { getThemeCss } from './theme/themeCss';

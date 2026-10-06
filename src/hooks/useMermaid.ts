@@ -1,10 +1,10 @@
 'use client';
 
-import { useThemeMode } from 'antd-style';
 import { renderMermaidSVG, type RenderOptions, type ThemeName, THEMES } from 'beautiful-mermaid';
 import { useEffect, useId, useMemo, useState } from 'react';
 
 import { prepareInlineMermaidSvg } from '@/Mermaid/SyntaxMermaid/prepareInlineSvg';
+import { useThemeMode } from '@/styles';
 
 import { createCdnMermaidConfig, renderWithCdnMermaid } from './useMermaidCdn';
 

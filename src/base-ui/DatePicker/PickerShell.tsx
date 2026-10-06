@@ -1,6 +1,5 @@
 'use client';
 
-import { useThemeMode } from 'antd-style';
 import { type CSSProperties, memo, type ReactElement, type ReactNode, useRef } from 'react';
 
 import ClearButton from '@/base-ui/Input/ClearButton';
@@ -14,7 +13,7 @@ import {
   PopoverRoot,
   PopoverTriggerElement,
 } from '@/base-ui/Popover';
-import { cx } from '@/styles';
+import { cx, useThemeMode } from '@/styles';
 
 export interface PickerShellProps {
   children: ReactNode;

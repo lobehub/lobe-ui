@@ -1,7 +1,6 @@
 'use client';
 
 import { GithubIcon } from '@lobehub/ui/icons';
-import { useResponsive } from 'antd-style';
 import { memo, useCallback } from 'react';
 
 import A from '@/A';
@@ -10,6 +9,7 @@ import GradientButton from '@/awesome/GradientButton';
 import Button from '@/base-ui/Button';
 import { Center, Flexbox } from '@/Flex';
 import Icon from '@/Icon';
+import { useResponsive } from '@/styles';
 
 import { styles } from './style';
 import { type HeroProps } from './type';

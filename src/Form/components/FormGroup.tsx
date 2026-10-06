@@ -1,13 +1,12 @@
 'use client';
 
-import { useResponsive } from 'antd-style';
 import { isUndefined } from 'es-toolkit/compat';
 import { memo } from 'react';
 
 import Collapse from '@/Collapse';
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
-import { cx } from '@/styles';
+import { cx, useResponsive } from '@/styles';
 
 import { groupStyles, titleVariants } from '../style';
 import type { FormGroupProps } from '../type';

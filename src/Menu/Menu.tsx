@@ -1,12 +1,11 @@
 'use client';
 
 import { ConfigProvider, Menu as AntdMenu } from 'antd';
-import { useTheme } from 'antd-style';
 import { memo, useMemo } from 'react';
 
 import { IconProvider } from '@/Icon';
 import { mapItems } from '@/Menu/utils';
-import { cx } from '@/styles';
+import { cx, useTheme } from '@/styles';
 
 import { variants } from './style';
 import { type MenuProps } from './type';

@@ -1,11 +1,10 @@
 'use client';
 
 import { Input as BaseInput } from '@base-ui/react/input';
-import { useThemeMode } from 'antd-style';
 import { memo, useRef, useState } from 'react';
 import { useMergeRefs } from 'react-merge-refs';
 
-import { cx } from '@/styles';
+import { cx, useThemeMode } from '@/styles';
 
 import ClearButton from './ClearButton';
 import { clearNativeValue } from './clearNativeValue';

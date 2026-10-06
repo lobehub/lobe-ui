@@ -42,7 +42,9 @@ export const toCssVariables = (token: Record<string, number | string>) =>
       .filter(([key]) => !IGNORED.has(key))
       .map(([key, value]) => [
         toCssVarName(key),
-        typeof value === 'number' && !UNITLESS.has(key) ? `${value}px` : String(value),
+        typeof value === 'number' && !UNITLESS.has(key)
+          ? `${value}px`
+          : String(value).replaceAll(/\s+/g, ' ').trim(),
       ]),
   );
 

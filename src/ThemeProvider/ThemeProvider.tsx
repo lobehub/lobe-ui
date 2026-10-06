@@ -14,13 +14,13 @@ import { type CSSProperties, memo, type ReactNode, useCallback, useMemo, useStat
 import { useCdnFn } from '@/ConfigProvider';
 import FontLoader from '@/FontLoader';
 import {
-  createLobeToken,
+  getThemeCss,
   lobeCustomStylish,
   lobeCustomToken,
   type NeutralColors,
   type PrimaryColors,
+  ThemeScope,
 } from '@/styles';
-import { toCssVariables } from '@/styles/css';
 import { createLobeAntdTheme } from '@/styles/theme/antdTheme';
 import { type LobeCustomToken } from '@/types/customToken';
 
@@ -153,24 +153,23 @@ interface LobeAppProps {
 
 const LobeApp = ({ children, className, neutralColor, primaryColor, style }: LobeAppProps) => {
   const { appearance } = useThemeMode();
-  const vars = useMemo(
-    () =>
-      toCssVariables(
-        createLobeToken({
-          appearance: appearance === 'dark' ? 'dark' : 'light',
-          neutralColor,
-          primaryColor,
-        }),
-      ),
-    [appearance, neutralColor, primaryColor],
-  );
 
   return (
     <App
       className={className}
-      style={{ ...vars, isolation: 'isolate', minHeight: 'inherit', width: 'inherit', ...style }}
+      style={{ isolation: 'isolate', minHeight: 'inherit', width: 'inherit', ...style }}
     >
-      {children}
+      <style href="lobe-ui-theme" precedence="lobe-ui">
+        {getThemeCss()}
+      </style>
+      <ThemeScope
+        appearance={appearance === 'dark' ? 'dark' : 'light'}
+        neutralColor={neutralColor}
+        primaryColor={primaryColor}
+        style={contentsStyle}
+      >
+        {children}
+      </ThemeScope>
     </App>
   );
 };

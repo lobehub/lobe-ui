@@ -1,11 +1,10 @@
 'use client';
 
 import { Field } from '@base-ui/react/field';
-import { useThemeMode } from 'antd-style';
 import { type CSSProperties, memo, useMemo, useRef, useState } from 'react';
 import { useMergeRefs } from 'react-merge-refs';
 
-import { cx } from '@/styles';
+import { cx, useThemeMode } from '@/styles';
 
 import ClearButton from './ClearButton';
 import { clearNativeValue } from './clearNativeValue';

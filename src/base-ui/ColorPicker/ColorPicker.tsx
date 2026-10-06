@@ -1,6 +1,5 @@
 'use client';
 
-import { useThemeMode } from 'antd-style';
 import { Pipette } from 'lucide-react';
 import { type CSSProperties, memo, useEffect, useRef, useState } from 'react';
 import useControlledState from 'use-merge-value';
@@ -19,7 +18,7 @@ import { Slider } from '@/base-ui/Slider';
 import colorPickerMessages from '@/i18n/resources/en/colorPicker';
 import { useTranslation } from '@/i18n/useTranslation';
 import Icon from '@/Icon';
-import { cx } from '@/styles';
+import { cx, useThemeMode } from '@/styles';
 
 import { formatColor, type Hsva, normalizeHexInput, parseColor } from './color';
 import SaturationArea from './SaturationArea';
