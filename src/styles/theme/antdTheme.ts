@@ -2,10 +2,8 @@ import type { ThemeConfig } from 'antd';
 import type { ThemeAppearance } from 'antd-style';
 
 import type { NeutralColors, PrimaryColors } from '../customTheme';
-import { darkAlgorithm } from './algorithms/darkAlgorithm';
-import { lightAlgorithm } from './algorithms/lightAlgorithm';
+import { createLobeToken } from './createLobeToken';
 import { baseToken } from './token/base';
-import { shadowToken } from './token/shadow';
 
 export interface LobeAntdThemeParams {
   appearance: ThemeAppearance;
@@ -24,41 +22,44 @@ export const createLobeAntdTheme = ({
   appearance,
   primaryColor,
 }: LobeAntdThemeParams): ThemeConfig => {
-  const isDark = appearance === 'dark';
+  const token = createLobeToken({
+    appearance: appearance === 'dark' ? 'dark' : 'light',
+    neutralColor,
+    primaryColor,
+  });
+  // baseToken never defined colorBorder, so these component overrides have always been undefined;
+  // kept as-is so antd's static CSS output stays byte-identical until antd is removed
+  const { colorBorder } = baseToken as { colorBorder?: string };
 
   return {
-    algorithm: isDark ? darkAlgorithm : lightAlgorithm,
+    // antd drops seed keys (colorPrimary, colorError, …) from `token` overrides and its darkAlgorithm
+    // rewrites them, so they must also be laid over the mapped token
+    algorithm: (_seed, mapToken) => ({ ...mapToken!, ...token }),
     components: {
       Button: {
         contentFontSizeSM: 12,
       },
       DatePicker: {
-        activeBorderColor: baseToken.colorBorder,
-        hoverBorderColor: baseToken.colorBorder,
+        activeBorderColor: colorBorder,
+        hoverBorderColor: colorBorder,
       },
       Input: {
-        activeBorderColor: baseToken.colorBorder,
-        hoverBorderColor: baseToken.colorBorder,
+        activeBorderColor: colorBorder,
+        hoverBorderColor: colorBorder,
       },
       InputNumber: {
-        activeBorderColor: baseToken.colorBorder,
-        hoverBorderColor: baseToken.colorBorder,
+        activeBorderColor: colorBorder,
+        hoverBorderColor: colorBorder,
       },
       Mentions: {
-        activeBorderColor: baseToken.colorBorder,
-        hoverBorderColor: baseToken.colorBorder,
+        activeBorderColor: colorBorder,
+        hoverBorderColor: colorBorder,
       },
       Select: {
-        activeBorderColor: baseToken.colorBorder,
-        hoverBorderColor: baseToken.colorBorder,
+        activeBorderColor: colorBorder,
+        hoverBorderColor: colorBorder,
       },
     },
-    token: {
-      ...baseToken,
-      ...shadowToken[isDark ? 'dark' : 'light'],
-      // @ts-ignore
-      neutralColor,
-      primaryColor,
-    },
+    token,
   };
 };

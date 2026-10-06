@@ -1,11 +1,15 @@
-import { type AliasToken } from 'antd/es/theme/interface';
 import { type GetCustomToken } from 'antd-style';
 import { camelCase } from 'es-toolkit/compat';
 import { mix } from 'polished';
 
 import { colorScales } from '@/color/colors';
 import { type ColorScaleItem } from '@/color/types';
-import { type LobeCustomToken } from '@/types/customToken';
+import {
+  type ColorPalettes,
+  type ColorPalettesAlpha,
+  type ColorToken,
+  type LobeCustomToken,
+} from '@/types/customToken';
 
 const generateColorPalette = ({
   name,
@@ -44,7 +48,7 @@ const generateCustomColorPalette = ({
   appearance: 'light' | 'dark';
   name: string;
   scale: ColorScaleItem;
-}): Partial<AliasToken> => {
+}) => {
   const colorStepPalette: { [key: string]: string } = {};
 
   for (const [index, color] of scale[appearance].entries()) {
@@ -65,7 +69,7 @@ const generateCustomColorPalette = ({
 };
 
 export const generateCustomColorToken = (isDarkMode: boolean) => {
-  let colorCustomToken: any = {};
+  let colorCustomToken = {} as ColorPalettes & ColorPalettesAlpha & ColorToken;
 
   for (const [type, scale] of Object.entries(colorScales)) {
     colorCustomToken = {
@@ -81,9 +85,8 @@ export const generateCustomColorToken = (isDarkMode: boolean) => {
   return colorCustomToken;
 };
 
-export const generateCustomToken: GetCustomToken<LobeCustomToken> = ({ isDarkMode, token }) => {
-  return {
+export const generateCustomToken: GetCustomToken<LobeCustomToken> = ({ isDarkMode, token }) =>
+  ({
     ...generateCustomColorToken(isDarkMode),
     colorBgContainerSecondary: mix(0.5, token.colorBgLayout, token.colorBgContainer),
-  };
-};
+  }) as LobeCustomToken;
