@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.57.0](https://github.com/lobehub/lobe-ui/compare/v5.56.0...v5.57.0) (2026-10-06)
+
+### ✨ Features
+
+- **eslint**: Point old Form imports at @lobehub/ui/base-ui/form, closes [#693](https://github.com/lobehub/lobe-ui/issues/693) ([d792417](https://github.com/lobehub/lobe-ui/commit/d792417))
+
 # [5.56.0](https://github.com/lobehub/lobe-ui/compare/v5.55.0...v5.56.0) (2026-10-05)
 
 ### ✨ Features
