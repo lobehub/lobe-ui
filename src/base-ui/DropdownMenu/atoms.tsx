@@ -10,11 +10,11 @@ import { mergeRefs, useMergeRefs } from 'react-merge-refs';
 import { getFloatingCollisionPadding } from '@/base-ui/floating';
 import Switch from '@/base-ui/Switch';
 import { MenuVirtualList, type VirtualListProps } from '@/base-ui/virtual';
+import { useAppElement } from '@/ConfigProvider/AppElementContext';
 import { FloatingLayerProvider } from '@/hooks/useFloatingLayer';
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { cx } from '@/styles';
 import { CLASSNAMES } from '@/styles/classNames';
-import { useAppElement } from '@/ThemeProvider/AppElementContext';
 import { placementMap } from '@/utils/placement';
 
 import { useLayerZIndex } from '../zIndex';

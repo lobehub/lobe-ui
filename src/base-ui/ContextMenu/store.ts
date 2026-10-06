@@ -1,8 +1,8 @@
 import type { VirtualElement } from '@floating-ui/react';
 import type { ReactNode } from 'react';
 
+import type { IconAlign } from '@/base-ui/menu';
 import type { VirtualListProps } from '@/base-ui/virtual';
-import type { IconAlign } from '@/Menu';
 
 import type { IconSpaceMode } from './renderItems';
 import type { ContextMenuItem } from './type';

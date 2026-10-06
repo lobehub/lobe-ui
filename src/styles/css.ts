@@ -50,12 +50,10 @@ export const toCssVariables = (token: Record<string, number | string>) =>
 
 export type LobeCssVar = Record<Exclude<keyof LobeToken, 'motionBase' | 'motionUnit'>, string>;
 
-// the --ant fallback covers nodes portaled outside the ThemeProvider root, where only antd's
-// globally emitted vars exist; values are identical (see createLobeToken parity test)
 export const cssVar = Object.fromEntries(
   Object.keys(createLobeToken({ appearance: 'light' }))
     .filter((key) => !IGNORED.has(key))
-    .map((key) => [key, `var(${toCssVarName(key)}, var(--ant-${toKebabCase(key)}))`]),
+    .map((key) => [key, `var(${toCssVarName(key)})`]),
 ) as LobeCssVar;
 
 const breakpoints = {

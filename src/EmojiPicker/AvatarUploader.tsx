@@ -6,6 +6,7 @@ import AvatarEditor from 'react-avatar-editor';
 
 import Button from '@/base-ui/Button';
 import Tag from '@/base-ui/Tag';
+import Text from '@/base-ui/Text';
 import { toast, ToastHost } from '@/base-ui/Toast';
 import { UploadDragger } from '@/base-ui/Upload';
 import { Center, Flexbox } from '@/Flex';
@@ -13,7 +14,6 @@ import emojiPickerMessages from '@/i18n/resources/en/emojiPicker';
 import { useTranslation } from '@/i18n/useTranslation';
 import Icon from '@/Icon';
 import { cssVar } from '@/styles';
-import Text from '@/Text';
 
 import { type AvatarUploaderProps } from './type';
 

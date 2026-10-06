@@ -1,4 +1,4 @@
-import { Flexbox } from '@lobehub/ui';
+import { Flexbox, Segmented } from '@lobehub/ui';
 import { BentoCard, BentoGrid } from '@lobehub/ui/awesome';
 import ColorSwatches from '@lobehub/ui/ColorSwatches';
 import FluentEmoji from '@lobehub/ui/FluentEmoji';
@@ -7,7 +7,6 @@ import Highlighter from '@lobehub/ui/Highlighter';
 import Hotkey from '@lobehub/ui/Hotkey';
 import Markdown from '@lobehub/ui/Markdown';
 import Snippet from '@lobehub/ui/Snippet';
-import ThemeSwitch from '@lobehub/ui/ThemeSwitch';
 import { useTheme } from 'next-themes';
 
 import { renderLink } from './renderLink';
@@ -43,10 +42,14 @@ function ThemeSwitchTile() {
   const preference = theme === 'light' || theme === 'dark' ? theme : 'system';
 
   return (
-    <ThemeSwitch
-      themeMode={preference === 'system' ? 'auto' : preference}
-      variant={'outlined'}
-      onThemeSwitch={(mode) => setTheme(mode === 'auto' ? 'system' : mode)}
+    <Segmented
+      value={preference}
+      options={[
+        { label: 'Light', value: 'light' },
+        { label: 'System', value: 'system' },
+        { label: 'Dark', value: 'dark' },
+      ]}
+      onChange={setTheme}
     />
   );
 }

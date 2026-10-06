@@ -2,7 +2,7 @@
 
 import { memo, useEffect, useMemo, useState } from 'react';
 
-import DraggablePanel from '@/DraggablePanel';
+import { DraggablePanel } from '@/base-ui/DraggablePanel';
 import { useResponsive } from '@/styles';
 
 import LayoutFooter from './components/LayoutFooter';

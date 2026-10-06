@@ -7,8 +7,13 @@ import type {
 } from '@base-ui/react/menu';
 import type { ReactNode } from 'react';
 
+import type {
+  BaseMenuItemType,
+  IconAlign,
+  MenuCheckboxItemType,
+  MenuSwitchItemType,
+} from '@/base-ui/menu';
 import type { VirtualListProps } from '@/base-ui/virtual';
-import type { BaseMenuItemType, IconAlign, MenuCheckboxItemType, MenuSwitchItemType } from '@/Menu';
 import type { Trigger } from '@/types';
 import type { Placement } from '@/utils/placement';
 

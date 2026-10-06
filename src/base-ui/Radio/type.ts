@@ -2,8 +2,9 @@ import type { Radio as BaseRadio } from '@base-ui/react/radio';
 import type { RadioGroup as BaseRadioGroup } from '@base-ui/react/radio-group';
 import type { ComponentProps, CSSProperties, ReactNode } from 'react';
 
+import type { TextProps } from '@/base-ui/Text';
 import type { FlexboxProps } from '@/Flex';
-import type { TextProps } from '@/Text';
+import type { DistributiveOmit } from '@/types';
 
 type BaseRadioProps = Omit<
   ComponentProps<typeof BaseRadio.Root>,
@@ -30,7 +31,7 @@ export interface RadioProps extends BaseRadioProps {
     text?: CSSProperties;
     wrapper?: CSSProperties;
   };
-  textProps?: Omit<TextProps, 'children' | 'className' | 'style'>;
+  textProps?: DistributiveOmit<TextProps, 'children' | 'className' | 'style'>;
 }
 
 export interface RadioGroupOption {

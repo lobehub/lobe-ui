@@ -14,11 +14,11 @@ import {
 import { mergeRefs } from 'react-merge-refs';
 
 import { getFloatingCollisionPadding } from '@/base-ui/floating';
+import { useAppElement } from '@/ConfigProvider/AppElementContext';
 import { useFloatingLayer } from '@/hooks/useFloatingLayer';
 import { useIsClient } from '@/hooks/useIsClient';
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { cx } from '@/styles';
-import { useAppElement } from '@/ThemeProvider/AppElementContext';
 import { placementMap } from '@/utils/placement';
 
 import { TooltipArrowIcon } from './ArrowIcon';

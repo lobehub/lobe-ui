@@ -3,10 +3,10 @@
 import { memo, type Ref, useMemo } from 'react';
 
 import A from '@/A';
+import Text from '@/base-ui/Text';
 import Block from '@/Block';
 import { Flexbox } from '@/Flex';
 import Img from '@/Img';
-import Text from '@/Text';
 import { type AProps } from '@/types';
 
 import { styles } from './style';

@@ -4,9 +4,9 @@ import { Tooltip as BaseTooltip } from '@base-ui/react/tooltip';
 import { type FC, useCallback, useRef, useState } from 'react';
 
 import { getFloatingCollisionPadding } from '@/base-ui/floating';
+import { useAppElement } from '@/ConfigProvider/AppElementContext';
 import { useFloatingLayer } from '@/hooks/useFloatingLayer';
 import { cx } from '@/styles';
-import { useAppElement } from '@/ThemeProvider/AppElementContext';
 import {
   useDestroyOnInvalidActiveTriggerElement,
   useHidePopupWhenPositionerAtOrigin,

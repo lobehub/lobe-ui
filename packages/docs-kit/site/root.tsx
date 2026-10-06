@@ -22,7 +22,6 @@ export const links: LinksFunction = () => {
     { href: favicons.icon16, rel: 'icon', sizes: '16x16', type: 'image/png' },
     { href: favicons.icon32, rel: 'icon', sizes: '32x32', type: 'image/png' },
     { href: favicons.appleTouchIcon, rel: 'apple-touch-icon', sizes: '180x180' },
-    { href: '/antd.css', rel: 'stylesheet' },
     { href: '/theme-vars.css', rel: 'stylesheet' },
   ];
 };

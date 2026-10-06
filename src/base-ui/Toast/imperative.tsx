@@ -3,9 +3,9 @@
 import { Toast as BaseToast } from '@base-ui/react/toast';
 import { memo, useEffect, useId, useState, useSyncExternalStore } from 'react';
 
+import { useAppElement } from '@/ConfigProvider/AppElementContext';
 import { useIsClient } from '@/hooks/useIsClient';
 import { cx } from '@/styles';
-import { useAppElement } from '@/ThemeProvider/AppElementContext';
 
 import { acquireLayerZIndex } from '../zIndex';
 import { ToastContext } from './context';

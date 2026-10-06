@@ -4,8 +4,8 @@ import { Checkbox as BaseCheckbox } from '@base-ui/react/checkbox';
 import { CheckIcon, Minus } from 'lucide-react';
 import { type CSSProperties, memo } from 'react';
 
+import Text from '@/base-ui/Text';
 import { cx } from '@/styles';
-import Text from '@/Text';
 
 import { styles } from './style';
 import type { CheckboxProps } from './type';

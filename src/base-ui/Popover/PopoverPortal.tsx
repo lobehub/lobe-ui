@@ -1,6 +1,6 @@
 'use client';
 
-import { useAppElement } from '@/ThemeProvider/AppElementContext';
+import { useAppElement } from '@/ConfigProvider/AppElementContext';
 
 export const usePopoverPortalContainer = (
   root?: HTMLElement | ShadowRoot | null,

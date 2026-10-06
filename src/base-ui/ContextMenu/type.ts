@@ -1,4 +1,4 @@
-import type { BaseMenuItemType, MenuCheckboxItemType, MenuSwitchItemType } from '@/Menu';
+import type { BaseMenuItemType, MenuCheckboxItemType, MenuSwitchItemType } from '@/base-ui/menu';
 
 export type ContextMenuCheckboxItem = MenuCheckboxItemType;
 

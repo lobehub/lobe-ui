@@ -19,3 +19,5 @@ export type InputProps = HTMLAttributes<HTMLInputElement>;
 export type TextAreaProps = HTMLAttributes<HTMLTextAreaElement>;
 
 export type SpanProps = HTMLAttributes<HTMLSpanElement>;
+
+export type DistributiveOmit<T, K extends PropertyKey> = T extends unknown ? Omit<T, K> : never;

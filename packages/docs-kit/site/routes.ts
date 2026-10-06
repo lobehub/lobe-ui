@@ -1,7 +1,6 @@
 import { index, layout, route, type RouteConfig } from '@react-router/dev/routes';
 
 export default [
-  route('antd.css', './app/routes/antd-css.ts'),
   route('theme-vars.css', './app/routes/theme-vars-css.ts'),
   route('llms.txt', './app/routes/llms-txt.ts'),
   route('skills.md', './app/routes/skills-md.ts'),

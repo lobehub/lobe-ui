@@ -1,9 +1,9 @@
-import { Button, DropdownMenu, Icon, type MenuProps } from '@lobehub/ui';
+import { Button, type DropdownItem, DropdownMenu, Icon } from '@lobehub/ui';
 import { Book, Feather, FileClock, FlaskConical, Mail, MessageCircle } from 'lucide-react';
 import { useMemo } from 'react';
 
 export default () => {
-  const helpMenuItems: MenuProps['items'] = useMemo(
+  const helpMenuItems: DropdownItem[] = useMemo(
     () => [
       {
         icon: <Icon icon={Book} />,

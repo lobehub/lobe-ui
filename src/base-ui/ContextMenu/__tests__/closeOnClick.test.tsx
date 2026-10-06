@@ -1,6 +1,6 @@
 import { act, fireEvent, render, screen } from '@testing-library/react';
 
-import AppElementContext from '@/ThemeProvider/AppElementContext';
+import AppElementContext from '@/ConfigProvider/AppElementContext';
 
 import { ContextMenuHost } from '../ContextMenuHost';
 import { closeContextMenu, getSnapshot, showContextMenu } from '../store';

@@ -17,18 +17,12 @@ const lint = (code: string) => {
 
 describe('restrictedImports', () => {
   it.each([
-    [
-      '@lobehub/ui root',
-      "import { Alert } from '@lobehub/ui';",
-      'The antd-based wrapper is deprecated.',
-    ],
-    ['antd', "import { Alert } from 'antd';", 'Direct antd import is deprecated.'],
-    [
-      'antd component path',
-      "import Alert from 'antd/es/alert';",
-      'Direct antd component import is deprecated.',
-    ],
-  ])('rejects Alert from %s', (_, code, message) => {
+    ["import { Alert } from 'antd';", 'no longer ships antd'],
+    ["import Alert from 'antd/es/alert';", 'no longer ships antd'],
+    ["import Menu from 'rc-menu';", 'no longer ships antd'],
+    ["import { createStaticStyles } from 'antd-style';", 'instead of antd-style'],
+    ["import { LoadingOutlined } from '@ant-design/icons';", '@ant-design packages'],
+  ])('rejects %s', (code, message) => {
     expect(lint(code)).toEqual([
       expect.objectContaining({
         message: expect.stringContaining(message),
@@ -39,70 +33,10 @@ describe('restrictedImports', () => {
   });
 
   it.each([
-    'ActionIcon',
-    'Avatar',
-    'DraggablePanel',
-    'DraggablePanelHeader',
-    'Dropdown',
-    'FormTitle',
-    'InputOPT',
-    'Skeleton',
-    'SkeletonParagraph',
-    'Switch',
-    'Tag',
-    'Text',
-  ])('rejects the migrated %s wrapper', (name) => {
-    expect(lint(`import { ${name} } from '@lobehub/ui';`)).toEqual([
-      expect.objectContaining({ ruleId: 'no-restricted-imports', severity: 2 }),
-    ]);
-  });
-
-  it.each([
-    "import { Form } from '@lobehub/ui';",
-    "import { FormGroup } from '@lobehub/ui';",
-    "import { FormItemProps } from '@lobehub/ui';",
-    "import { FormInstance } from 'antd';",
-    "import useForm from 'antd/es/form/hooks/useForm';",
-  ])('points %s at @lobehub/ui/base-ui/form', (code) => {
-    expect(lint(code)).toEqual([
-      expect.objectContaining({
-        message: expect.stringContaining('@lobehub/ui/base-ui/form'),
-        ruleId: 'no-restricted-imports',
-        severity: 2,
-      }),
-    ]);
-  });
-
-  it('rejects the antd skeleton path', () => {
-    expect(lint("import Skeleton from 'antd/es/skeleton';")).toEqual([
-      expect.objectContaining({ ruleId: 'no-restricted-imports', severity: 2 }),
-    ]);
-  });
-
-  it.each(['Alert', 'DraggablePanel', 'Skeleton'])(
-    'allows %s from the Base UI entrypoint',
-    (name) => {
-      expect(lint(`import { ${name} } from '@lobehub/ui/base-ui';`)).toEqual([]);
-    },
-  );
-
-  it.each([
-    'Badge',
-    'Empty',
-    'Pagination',
-    'Popover',
-    'Progress',
-    'Result',
-    'Spin',
-    'Tooltip',
-    'Upload',
-  ])('rejects %s from antd', (name) => {
-    expect(lint(`import { ${name} } from 'antd';`)).toEqual([
-      expect.objectContaining({ ruleId: 'no-restricted-imports', severity: 2 }),
-    ]);
-  });
-
-  it('allows Tooltip from @lobehub/ui', () => {
-    expect(lint("import { Tooltip } from '@lobehub/ui';")).toEqual([]);
+    "import { Alert, Button, Form, Text } from '@lobehub/ui';",
+    "import { Button } from '@lobehub/ui/base-ui';",
+    "import { Form } from '@lobehub/ui/base-ui/form';",
+  ])('allows %s', (code) => {
+    expect(lint(code)).toEqual([]);
   });
 });

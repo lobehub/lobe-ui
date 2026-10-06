@@ -2,13 +2,6 @@ import type { LobeCustomStylish } from '@/types/customStylish';
 
 import { createStaticStyles, keyframes } from '../css';
 
-/**
- * Static version of custom stylish utilities.
- * This can be used with createStaticStyles for better performance.
- *
- * Note: Some styles that depend on isDarkMode or custom tokens may have limitations.
- * For full dynamic support, use the regular customStylish from './customStylish'.
- */
 const gradient = keyframes`
   0% {
     background-position: 0% 50%;

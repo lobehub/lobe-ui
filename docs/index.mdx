@@ -13,14 +13,17 @@ pnpm add @lobehub/ui
 ```
 
 ```tsx | pure
-import { Button, I18nProvider, ThemeProvider } from '@lobehub/ui';
+import '@lobehub/ui/theme.css';
+
+import { Button, ConfigProvider, I18nProvider } from '@lobehub/ui';
 import allResources from '@lobehub/ui/i18n/resources/all';
+import { motion } from 'motion/react';
 
 export default () => (
   <I18nProvider resources={allResources}>
-    <ThemeProvider>
+    <ConfigProvider motion={motion}>
       <Button>Hello AIGC</Button>
-    </ThemeProvider>
+    </ConfigProvider>
   </I18nProvider>
 );
 ```

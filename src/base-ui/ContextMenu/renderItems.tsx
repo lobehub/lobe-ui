@@ -10,12 +10,7 @@ import { memo, useCallback, useState } from 'react';
 
 import { styles } from '@/base-ui/DropdownMenu/sharedStyle';
 import { getFloatingCollisionPadding } from '@/base-ui/floating';
-import { SubmenuArrowIcon } from '@/base-ui/SubmenuArrowIcon';
-import Switch from '@/base-ui/Switch';
-import common from '@/i18n/resources/en/common';
-import { useTranslation } from '@/i18n/useTranslation';
-import Icon from '@/Icon';
-import type { BaseMenuItemGroupType, BaseSubMenuType } from '@/Menu/baseItem';
+import type { BaseMenuItemGroupType, BaseSubMenuType } from '@/base-ui/menu/baseItem';
 import {
   getItemKey,
   getItemLabel,
@@ -24,8 +19,13 @@ import {
   renderIcon,
   type RenderItemContentOptions,
   type RenderOptions,
-} from '@/Menu/renderUtils';
-import type { MenuDividerType, MenuInfo, MenuItemType } from '@/Menu/type';
+} from '@/base-ui/menu/renderUtils';
+import type { MenuDividerType, MenuInfo, MenuItemType } from '@/base-ui/menu/type';
+import { SubmenuArrowIcon } from '@/base-ui/SubmenuArrowIcon';
+import Switch from '@/base-ui/Switch';
+import common from '@/i18n/resources/en/common';
+import { useTranslation } from '@/i18n/useTranslation';
+import Icon from '@/Icon';
 import { cx } from '@/styles';
 import { preventDefaultAndStopPropagation } from '@/utils/dom';
 
@@ -69,7 +69,7 @@ const ContextMenuSubmenuPositioner = memo(
 
 ContextMenuSubmenuPositioner.displayName = 'ContextMenuSubmenuPositioner';
 
-export type { IconAlign, IconSpaceMode } from '@/Menu/renderUtils';
+export type { IconAlign, IconSpaceMode } from '@/base-ui/menu/renderUtils';
 
 const EmptyMenuItem = memo(() => {
   const { t } = useTranslation(common);
