@@ -1,6 +1,10 @@
 import { writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
-import { getThemeCss } from '../src/styles/theme/themeCss';
+import { getGlobalCss, getThemeCss } from '../src/styles/theme/themeCss';
 
-writeFileSync(fileURLToPath(new URL('../es/theme.css', import.meta.url)), `${getThemeCss()}\n`);
+const write = (name: string, css: string) =>
+  writeFileSync(fileURLToPath(new URL(`../es/${name}`, import.meta.url)), `${css}\n`);
+
+write('theme.css', getThemeCss());
+write('global.css', getGlobalCss());

@@ -1,7 +1,7 @@
 import { toCssVariables } from '../css';
 import { neutralColors, primaryColors } from '../customTheme';
 import { createLobeToken, type CreateLobeTokenParams } from './createLobeToken';
-import { getThemeCss } from './themeCss';
+import { getGlobalCss, getThemeCss } from './themeCss';
 
 const parseRules = () => {
   const rules = new Map<string, Record<string, string>>();
@@ -45,5 +45,10 @@ describe('getThemeCss', () => {
 
   it.each(variants)('resolves %o to createLobeToken', (params) => {
     expect(resolve(rules, params)).toEqual(toCssVariables(createLobeToken(params)));
+  });
+
+  it('keeps document resets out of theme.css', () => {
+    expect(getThemeCss()).not.toMatch(/^\s*(html|body|\*)\s*\{/m);
+    expect(getGlobalCss()).toMatch(/^\s*body\s*\{/m);
   });
 });

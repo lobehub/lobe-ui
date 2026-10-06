@@ -33,4 +33,4 @@ export {
   useTheme,
   useThemeMode,
 } from './theme/scope';
-export { getThemeCss } from './theme/themeCss';
+export { getGlobalCss, getThemeCss } from './theme/themeCss';

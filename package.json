@@ -105,6 +105,7 @@
       "types": "./es/static-css/vite/index.d.mts",
       "import": "./es/static-css/vite/index.mjs"
     },
+    "./global.css": "./es/global.css",
     "./theme.css": "./es/theme.css",
     "./es/*": {
       "types": "./es/*.d.mts",
