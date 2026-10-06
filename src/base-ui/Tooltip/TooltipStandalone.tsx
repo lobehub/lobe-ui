@@ -2,7 +2,6 @@
 
 import { mergeProps } from '@base-ui/react/merge-props';
 import { Tooltip as BaseTooltip } from '@base-ui/react/tooltip';
-import { cx } from 'antd-style';
 import {
   cloneElement,
   isValidElement,
@@ -18,6 +17,7 @@ import { getFloatingCollisionPadding } from '@/base-ui/floating';
 import { useFloatingLayer } from '@/hooks/useFloatingLayer';
 import { useIsClient } from '@/hooks/useIsClient';
 import { useNativeButton } from '@/hooks/useNativeButton';
+import { cx } from '@/styles';
 import { useAppElement } from '@/ThemeProvider/AppElementContext';
 import { placementMap } from '@/utils/placement';
 

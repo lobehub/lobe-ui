@@ -1,8 +1,8 @@
-import { createStaticStyles } from 'antd-style';
+import { createStaticStyles } from '@/styles';
 
 export const styles = createStaticStyles(({ css, cssVar }) => {
   const size = 'var(--loading-dots-size, 8px)';
-  const dotColor = 'var(--loading-dots-color, var(--ant-color-primary))';
+  const dotColor = 'var(--loading-dots-color, var(--lobe-color-primary))';
 
   return {
     container: css`

@@ -1,5 +1,6 @@
-import { cssVar } from 'antd-style';
 import { camelCase } from 'es-toolkit/compat';
+
+import { cssVar } from '@/styles';
 
 export const presetColors = [
   'red',
@@ -29,7 +30,7 @@ const toKebabCase = (value: string) =>
 
 const getCssVar = (tokenKey: string) => {
   const mapped = (cssVar as Record<string, string>)[tokenKey];
-  return mapped || `var(--ant-${toKebabCase(tokenKey)})`;
+  return mapped || `var(--lobe-${toKebabCase(tokenKey)})`;
 };
 
 export const colorsPreset = (type: string, ...keys: string[]) =>

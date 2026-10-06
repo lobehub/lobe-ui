@@ -1,7 +1,8 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { memo, useCallback } from 'react';
+
+import { cx } from '@/styles';
 
 import {
   DraggablePanelContent,

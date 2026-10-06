@@ -1,10 +1,10 @@
 'use client';
 
 import { Autocomplete } from '@base-ui/react/autocomplete';
-import { cx } from 'antd-style';
 import type React from 'react';
 
 import { styles as menuStyles } from '@/base-ui/DropdownMenu/sharedStyle';
+import { cx } from '@/styles';
 import { useAppElement } from '@/ThemeProvider';
 
 import { styles } from './style';

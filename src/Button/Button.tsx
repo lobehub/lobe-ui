@@ -1,11 +1,12 @@
 'use client';
 
 import { Button as AntdButton } from 'antd';
-import { cx, useThemeMode } from 'antd-style';
+import { useThemeMode } from 'antd-style';
 import { Loader2Icon } from 'lucide-react';
 import { type FC, isValidElement } from 'react';
 
 import Icon from '@/Icon';
+import { cx } from '@/styles';
 
 import { variants } from './style';
 import type { ButtonProps } from './type';

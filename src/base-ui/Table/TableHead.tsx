@@ -1,10 +1,10 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import type { CSSProperties, ReactNode } from 'react';
 
 import Icon from '@/Icon';
+import { cx } from '@/styles';
 
 import { styles } from './style';
 import type { TableColumn, TableProps } from './type';

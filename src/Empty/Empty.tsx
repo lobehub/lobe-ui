@@ -1,11 +1,11 @@
 'use client';
 
-import { cssVar, cx } from 'antd-style';
 import { Plus } from 'lucide-react';
 import { type KeyboardEvent, memo, useMemo } from 'react';
 
 import FluentEmoji from '@/FluentEmoji';
 import Icon from '@/Icon';
+import { cssVar, cx } from '@/styles';
 import Text from '@/Text';
 
 import { styles } from './style';

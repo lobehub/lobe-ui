@@ -1,8 +1,9 @@
 'use client';
 
 import { Segmented as AntdSegmented } from 'antd';
-import { cx } from 'antd-style';
 import { memo } from 'react';
+
+import { cx } from '@/styles';
 
 import { variants } from './style';
 import type { SegmentedProps } from './type';

@@ -1,7 +1,8 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { memo } from 'react';
+
+import { cx } from '@/styles';
 
 import type { SyntaxMermaidProps } from '../type';
 import StaticMermaid from './StaticMermaid';

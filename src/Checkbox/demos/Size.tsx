@@ -1,5 +1,4 @@
-import { Checkbox } from '@lobehub/ui';
-import { cssVar } from 'antd-style';
+import { Checkbox, cssVar } from '@lobehub/ui';
 
 import { Center } from '@/Flex';
 

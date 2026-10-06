@@ -1,6 +1,5 @@
 'use client';
 
-import { cx } from 'antd-style';
 import {
   type CSSProperties,
   useCallback,
@@ -10,6 +9,8 @@ import {
   useRef,
 } from 'react';
 import useControlledState from 'use-merge-value';
+
+import { cx } from '@/styles';
 
 import {
   SegmentedIndicator,

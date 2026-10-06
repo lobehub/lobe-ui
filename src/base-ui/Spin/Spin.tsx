@@ -1,10 +1,10 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { LoaderCircle } from 'lucide-react';
 import { memo, useMemo } from 'react';
 
 import Icon from '@/Icon';
+import { cx } from '@/styles';
 
 import NetworkGlyph from './NetworkGlyph';
 import { styles } from './style';

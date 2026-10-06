@@ -1,4 +1,4 @@
-import { createStaticStyles, keyframes } from 'antd-style';
+import { createStaticStyles, keyframes } from '@/styles';
 
 const shimmer = keyframes`
   0% {

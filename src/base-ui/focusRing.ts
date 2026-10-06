@@ -1,6 +1,5 @@
-import { css, cssVar, keyframes } from 'antd-style';
-
 import { focusRingColor as ringColor } from '@/GlobalFocusRing/style';
+import { css, cssVar, keyframes } from '@/styles';
 
 const ringIn = keyframes`
   from {

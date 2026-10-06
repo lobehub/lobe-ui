@@ -1,9 +1,9 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { memo } from 'react';
 
 import Snippet from '@/Snippet';
+import { cx } from '@/styles';
 
 import { styles } from './style';
 import type { InstallBannerProps } from './type';

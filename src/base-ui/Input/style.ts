@@ -1,8 +1,7 @@
-import { createStaticStyles } from 'antd-style';
 import { cva } from 'class-variance-authority';
 
 import { controlHeight } from '@/base-ui/controlSize';
-import { lobeStaticStylish } from '@/styles';
+import { createStaticStyles, lobeStaticStylish } from '@/styles';
 
 export const styles = createStaticStyles(({ css, cssVar }) => ({
   clear: css`

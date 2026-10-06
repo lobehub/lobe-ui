@@ -1,12 +1,12 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { memo } from 'react';
 import useControlledState from 'use-merge-value';
 
 import MessageInput from '@/chat/MessageInput';
 import MessageModal from '@/chat/MessageModal';
 import Markdown from '@/Markdown';
+import { cx } from '@/styles';
 
 import { type EditableMessageProps } from './type';
 

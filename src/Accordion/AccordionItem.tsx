@@ -1,6 +1,5 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { AnimatePresence } from 'motion/react';
 import {
   type ComponentPropsWithoutRef,
@@ -18,6 +17,7 @@ import useMergeState from 'use-merge-value';
 import Block from '@/Block';
 import { Flexbox } from '@/Flex';
 import { type MotionComponentType, useMotionComponent } from '@/MotionProvider';
+import { cx } from '@/styles';
 import Text from '@/Text';
 import { stopPropagation } from '@/utils/dom';
 

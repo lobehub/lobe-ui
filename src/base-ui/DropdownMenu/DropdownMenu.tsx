@@ -1,10 +1,10 @@
 'use client';
 
 import { Menu } from '@base-ui/react/menu';
-import { cx } from 'antd-style';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useNativeButton } from '@/hooks/useNativeButton';
+import { cx } from '@/styles';
 import { parseTrigger } from '@/utils/parseTrigger';
 
 import {

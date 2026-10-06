@@ -1,9 +1,9 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { Fragment, memo } from 'react';
 
 import { ToastHost } from '@/base-ui/Toast';
+import { cx } from '@/styles';
 
 import ChatListItem from './components/ChatListItem';
 import HistoryDivider from './components/HistoryDivider';

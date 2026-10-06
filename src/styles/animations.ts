@@ -1,4 +1,4 @@
-import { keyframes } from 'antd-style';
+import { keyframes } from './css';
 
 export const fadeIn = keyframes`
     0% {

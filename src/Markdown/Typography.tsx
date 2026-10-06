@@ -1,7 +1,8 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { memo } from 'react';
+
+import { cx } from '@/styles';
 
 import { styles } from './markdown.style';
 import type { TypographyProps } from './type';

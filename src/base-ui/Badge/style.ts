@@ -1,5 +1,6 @@
-import { createStaticStyles, cssVar, keyframes } from 'antd-style';
 import { cva } from 'class-variance-authority';
+
+import { createStaticStyles, cssVar, keyframes } from '@/styles';
 
 const pulse = keyframes`
   to {

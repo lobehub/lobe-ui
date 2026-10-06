@@ -1,10 +1,10 @@
 'use client';
 
-import { cx } from 'antd-style';
 import type { CSSProperties, Key, ReactNode } from 'react';
 
 import Spin from '@/base-ui/Spin';
 import Empty from '@/Empty';
+import { cx } from '@/styles';
 
 import { styles } from './style';
 import { getCellValue } from './toColumnDefs';

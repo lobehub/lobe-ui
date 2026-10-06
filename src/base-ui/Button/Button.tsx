@@ -1,6 +1,5 @@
 'use client';
 
-import { cx } from 'antd-style';
 import {
   isValidElement,
   type MouseEvent,
@@ -11,6 +10,7 @@ import {
 
 import Icon, { type IconProps } from '@/Icon';
 import { useMotionComponent } from '@/MotionProvider';
+import { cx } from '@/styles';
 
 import { styles } from './style';
 import type { ButtonOutdent, ButtonProps, ButtonType } from './type';

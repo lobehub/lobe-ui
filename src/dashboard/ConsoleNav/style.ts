@@ -1,4 +1,4 @@
-import { createStaticStyles } from 'antd-style';
+import { createStaticStyles } from '@/styles';
 
 export const styles = createStaticStyles(({ css, cssVar, responsive }) => {
   // Fades out at once on collapse, but waits on expand until the width has room for the text.

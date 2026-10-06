@@ -1,5 +1,6 @@
-import { createStaticStyles, cx, keyframes } from 'antd-style';
 import { cva } from 'class-variance-authority';
+
+import { createStaticStyles, cx, keyframes } from '@/styles';
 
 const fadeIn = keyframes`
   0% {

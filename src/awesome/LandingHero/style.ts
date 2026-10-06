@@ -1,6 +1,5 @@
-import { createStaticStyles } from 'antd-style';
-
 import { accentGradient } from '@/awesome/landingTokens';
+import { createStaticStyles } from '@/styles';
 
 const splitStack = '@media (max-width: 860px)';
 

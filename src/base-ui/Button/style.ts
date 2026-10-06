@@ -1,7 +1,6 @@
-import { createStaticStyles } from 'antd-style';
-
 import { controlHeight } from '@/base-ui/controlSize';
 import { focusRing } from '@/base-ui/focusRing';
+import { createStaticStyles } from '@/styles';
 
 export const buttonPaddingInline = {
   large: 16,

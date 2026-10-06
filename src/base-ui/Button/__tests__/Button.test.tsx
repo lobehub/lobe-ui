@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { type ReactNode, useState } from 'react';
 
 import ConfigProvider from '@/ConfigProvider';
+import { cssVar } from '@/styles';
 
 import Button from '../Button';
 import { buttonPaddingInline } from '../style';
@@ -186,8 +187,8 @@ describe('Button', () => {
     expect(style.marginInlineStart.replaceAll(' ', '')).not.toContain('--button-padding-inline');
   });
   test.each([
-    [false, 'var(--ant-color-primary-active)'],
-    [true, 'var(--ant-color-error-active)'],
+    [false, cssVar.colorPrimaryActive],
+    [true, cssVar.colorErrorActive],
   ])(
     'solid button (danger=%s) keeps its fill when a global popup-open highlight targets the trigger',
     (danger, expected) => {

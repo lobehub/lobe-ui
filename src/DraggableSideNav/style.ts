@@ -1,4 +1,4 @@
-import { createStaticStyles } from 'antd-style';
+import { createStaticStyles } from '@/styles';
 
 // Layout constants (aligned with DraggablePanel)
 const LAYOUT = {
@@ -145,7 +145,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     cursor: col-resize;
 
     position: absolute;
-    inset-block: 0 0;
+    inset-block: 0;
 
     width: 8px;
 

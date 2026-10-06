@@ -1,6 +1,4 @@
-import { createStaticStyles, responsive } from 'antd-style';
-
-import { lobeStaticStylish } from '@/styles';
+import { createStaticStyles, lobeStaticStylish, responsive } from '@/styles';
 
 export const styles = createStaticStyles(({ css, cssVar }) => ({
   actions: css`

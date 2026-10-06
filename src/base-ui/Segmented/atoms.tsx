@@ -2,8 +2,9 @@
 
 import { Toggle as BaseUIToggle } from '@base-ui/react/toggle';
 import { ToggleGroup as BaseUIToggleGroup } from '@base-ui/react/toggle-group';
-import { cx } from 'antd-style';
 import { type ComponentProps, type CSSProperties, type FC, type ReactNode } from 'react';
+
+import { cx } from '@/styles';
 
 import { itemVariants, listVariants, styles } from './style';
 import type { SegmentedSize, SegmentedVariant } from './type';

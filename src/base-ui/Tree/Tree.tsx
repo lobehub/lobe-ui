@@ -1,10 +1,10 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { memo, useId, useMemo, useRef, useState } from 'react';
 import useControlledState from 'use-merge-value';
 
 import { FocusScope, focusScopeItem, useScopeArrowNav } from '@/base-ui/FocusScope';
+import { cx } from '@/styles';
 
 import { TreeContext, type TreeContextValue } from './context';
 import { styles } from './style';
@@ -130,7 +130,8 @@ const Tree = memo<TreeProps>(
       const keys = checkStrictly ? [node.key] : getSubtreeKeys(node);
       const base = new Set(checkStrictly ? checkedKeys : checked);
       keys.forEach((key) => (willCheck ? base.add(key) : base.delete(key)));
-      if (!willCheck && !checkStrictly) getAncestorKeys(treeData, node.key).forEach((key) => base.delete(key));
+      if (!willCheck && !checkStrictly)
+        getAncestorKeys(treeData, node.key).forEach((key) => base.delete(key));
       const next = checkStrictly ? [...base] : [...conductCheck(treeData, base).checked];
       setCheckedKeys(next);
       setActiveKey(node.key);
@@ -143,7 +144,8 @@ const Tree = memo<TreeProps>(
       return flat.find((row) => row.node.key === key);
     };
 
-    const withRow = (fn: (row: (typeof flat)[number], event: KeyboardEvent) => void) =>
+    const withRow =
+      (fn: (row: (typeof flat)[number], event: KeyboardEvent) => void) =>
       (event: KeyboardEvent) => {
         const row = currentRow();
         if (row) fn(row, event);
@@ -164,16 +166,16 @@ const Tree = memo<TreeProps>(
           setExpandedKeys(next);
           onExpand?.(next, { expanded: true, node: row.node });
         }),
-        ArrowLeft: withRow((row) => {
+        'ArrowLeft': withRow((row) => {
           if (row.hasChildren && expanded.has(row.node.key)) toggleExpand(row.node);
           else if (row.parentKey) focusRow(row.parentKey);
         }),
-        ArrowRight: withRow((row) => {
+        'ArrowRight': withRow((row) => {
           if (!row.hasChildren) return;
           if (expanded.has(row.node.key)) focusRow(flat[row.index + 1].node.key);
           else toggleExpand(row.node);
         }),
-        Enter: withRow((row, event) => toggleSelect(row.node, event)),
+        'Enter': withRow((row, event) => toggleSelect(row.node, event)),
       },
       itemSelector: '[role="treeitem"]',
       onItemFocus: (el) => el.dataset.id && setActiveKey(el.dataset.id),

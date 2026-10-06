@@ -1,11 +1,11 @@
 'use client';
 
 import { Tabs as AntdTabs } from 'antd';
-import { cx } from 'antd-style';
 import { MoreHorizontalIcon } from 'lucide-react';
 import { type FC } from 'react';
 
 import ActionIcon from '@/base-ui/ActionIcon';
+import { cx } from '@/styles';
 
 import { styles, variants } from './style';
 import type { TabsProps } from './type';

@@ -1,10 +1,10 @@
 'use client';
 
 import { Toast as BaseToast } from '@base-ui/react/toast';
-import { cx } from 'antd-style';
 import { memo, useEffect, useId, useState, useSyncExternalStore } from 'react';
 
 import { useIsClient } from '@/hooks/useIsClient';
+import { cx } from '@/styles';
 import { useAppElement } from '@/ThemeProvider/AppElementContext';
 
 import { acquireLayerZIndex } from '../zIndex';

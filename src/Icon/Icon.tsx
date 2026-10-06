@@ -1,8 +1,9 @@
 'use client';
 
-import { cx } from 'antd-style';
 import type { LucideIcon } from 'lucide-react';
 import { isValidElement, memo, useMemo } from 'react';
+
+import { cx } from '@/styles';
 
 import { useIconContext } from './components/IconProvider';
 import { calcSize } from './components/utils';

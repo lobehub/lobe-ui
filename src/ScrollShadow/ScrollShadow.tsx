@@ -1,12 +1,12 @@
 'use client';
 
-import { cx } from 'antd-style';
 import type { FC } from 'react';
 import { useMemo, useRef } from 'react';
 import { mergeRefs } from 'react-merge-refs';
 
 import { Flexbox } from '@/Flex';
 import { useEventCallback } from '@/hooks/useEventCallback';
+import { cx } from '@/styles';
 
 import { variants } from './style';
 import type { ScrollShadowProps } from './type';

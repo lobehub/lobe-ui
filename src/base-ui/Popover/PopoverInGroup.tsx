@@ -2,12 +2,12 @@
 
 import { mergeProps } from '@base-ui/react/merge-props';
 import { Popover as BasePopover } from '@base-ui/react/popover';
-import { cx } from 'antd-style';
 import { cloneElement, type FC, isValidElement, useMemo } from 'react';
 import { use } from 'react';
 import { mergeRefs } from 'react-merge-refs';
 
 import { useNativeButton } from '@/hooks/useNativeButton';
+import { cx } from '@/styles';
 import { parseTrigger } from '@/utils/parseTrigger';
 
 import { PopoverGroupHandleContext } from './groupContext';

@@ -1,7 +1,8 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { memo, type ReactNode } from 'react';
+
+import { cx } from '@/styles';
 
 import { pillSize, statusColor, styles } from './style';
 import type { BadgeProps } from './type';

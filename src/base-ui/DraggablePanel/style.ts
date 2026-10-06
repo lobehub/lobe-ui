@@ -1,5 +1,6 @@
-import { createStaticStyles, cx } from 'antd-style';
 import { cva } from 'class-variance-authority';
+
+import { createStaticStyles, cx } from '@/styles';
 
 const TOGGLE_HIT_SHORT = 26;
 const TOGGLE_HIT_LONG = 40;

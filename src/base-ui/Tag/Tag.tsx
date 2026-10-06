@@ -1,9 +1,9 @@
 'use client';
 
-import { cssVar, cx } from 'antd-style';
 import { X } from 'lucide-react';
 import { memo, useMemo, useState } from 'react';
 
+import { cssVar, cx } from '@/styles';
 import { safeReadableColor } from '@/utils/safeReadableColor';
 
 import { styles, variants } from './style';

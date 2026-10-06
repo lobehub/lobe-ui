@@ -1,10 +1,10 @@
 'use client';
 
-import { createStaticStyles, cx } from 'antd-style';
 import { ChevronDownIcon } from 'lucide-react';
 import { createContext, type CSSProperties, type ReactNode, use, useMemo } from 'react';
 
 import { DropdownMenu, type DropdownMenuProps } from '@/base-ui/DropdownMenu';
+import { createStaticStyles, cx } from '@/styles';
 
 import Button from './Button';
 import type { ButtonProps } from './type';

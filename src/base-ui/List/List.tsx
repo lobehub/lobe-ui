@@ -1,7 +1,8 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { type Key, memo, type MouseEvent, useState } from 'react';
+
+import { cx } from '@/styles';
 
 import ListRow from './ListRow';
 import { styles } from './style';

@@ -1,7 +1,6 @@
-import { createStaticStyles, cx } from 'antd-style';
 import { cva } from 'class-variance-authority';
 
-import { lobeStaticStylish } from '@/styles';
+import { createStaticStyles, cx, lobeStaticStylish } from '@/styles';
 
 // 动态类名常量（用于 className）
 export const actionsHoverCls = 'ant-highlighter-highlighter-hover-actions';

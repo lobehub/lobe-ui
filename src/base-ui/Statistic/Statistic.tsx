@@ -1,9 +1,9 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { memo } from 'react';
 
 import Skeleton from '@/base-ui/Skeleton';
+import { cx } from '@/styles';
 
 import { formatStatisticValue } from './formatValue';
 import { styles } from './style';

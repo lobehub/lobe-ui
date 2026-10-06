@@ -1,7 +1,6 @@
-import { createStaticStyles, cx } from 'antd-style';
 import { cva } from 'class-variance-authority';
 
-import { lobeStaticStylish } from '@/styles';
+import { createStaticStyles, cx, lobeStaticStylish } from '@/styles';
 
 // 用于 hover 选择器的类名标识
 export const maskHoverCls = 'lobe-video-mask';

@@ -1,12 +1,12 @@
 'use client';
 
 import { Drawer as AntdDrawer } from 'antd';
-import { cssVar } from 'antd-style';
 import { XIcon } from 'lucide-react';
 import { type CSSProperties, memo, useMemo } from 'react';
 
 import ActionIcon from '@/base-ui/ActionIcon';
 import { Flexbox } from '@/Flex';
+import { cssVar } from '@/styles';
 
 import type { DrawerProps } from './type';
 

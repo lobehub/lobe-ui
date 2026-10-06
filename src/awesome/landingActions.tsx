@@ -1,10 +1,10 @@
-import { createStaticStyles, cx } from 'antd-style';
 import { Fragment, type ReactNode } from 'react';
 
 import BottomGradientButton from '@/awesome/BottomGradientButton';
 import { isExternalHref, type LandingLinkRender, renderLandingLink } from '@/awesome/landingLink';
 import { accentGradient } from '@/awesome/landingTokens';
 import Icon, { type IconProps } from '@/Icon';
+import { createStaticStyles, cx } from '@/styles';
 
 export interface LandingAction {
   /** Opens in a new tab. Inferred from absolute URLs when omitted. */

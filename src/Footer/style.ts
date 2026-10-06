@@ -1,4 +1,4 @@
-import { createStaticStyles, responsive } from 'antd-style';
+import { createStaticStyles, responsive } from '@/styles';
 
 export const styles = createStaticStyles(({ css, cssVar }) => {
   const prefix = `rc-footer`;
@@ -109,12 +109,12 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       }
 
       &-light {
-        color: rgba(0, 0, 0, 85%);
+        color: rgb(0 0 0 / 85%);
         background-color: transparent;
 
         h2,
         a {
-          color: rgba(0, 0, 0, 85%);
+          color: rgb(0 0 0 / 85%);
         }
       }
 
@@ -124,7 +124,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
 
       &-light &-item-separator,
       &-light &-item-description {
-        color: rgba(0, 0, 0, 45%);
+        color: rgb(0 0 0 / 45%);
       }
     }
   `;

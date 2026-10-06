@@ -1,10 +1,10 @@
 'use client';
 
-import { cssVar, cx } from 'antd-style';
 import { Check, X } from 'lucide-react';
 import { memo, useMemo } from 'react';
 
 import Icon from '@/Icon';
+import { cssVar, cx } from '@/styles';
 
 import { styles, trackHeight } from './style';
 import type { ProgressProps } from './type';

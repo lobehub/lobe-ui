@@ -1,4 +1,4 @@
-import { createStaticStyles, keyframes, responsive } from 'antd-style';
+import { createStaticStyles, keyframes, responsive } from '@/styles';
 
 const aurora = keyframes`
   0% {
@@ -69,7 +69,7 @@ export const styles = createStaticStyles(({ css }) => ({
 
     animation: ${aurora} 100s linear infinite;
 
-    mask-image: radial-gradient(at 100% 0, rgb(0, 0, 0) 10%, rgba(0, 0, 0, 0%) 70%);
+    mask-image: radial-gradient(at 100% 0, rgb(0 0 0) 10%, rgb(0 0 0 / 0%) 70%);
 
     &::after {
       ${darkBackground}
@@ -111,7 +111,7 @@ export const styles = createStaticStyles(({ css }) => ({
 
     animation: ${aurora} 100s linear infinite;
 
-    mask-image: radial-gradient(at 100% 0, rgb(0, 0, 0) 10%, rgba(0, 0, 0, 0%) 70%);
+    mask-image: radial-gradient(at 100% 0, rgb(0 0 0) 10%, rgb(0 0 0 / 0%) 70%);
 
     &::after {
       ${lightBackground}

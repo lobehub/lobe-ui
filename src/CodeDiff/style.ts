@@ -1,7 +1,6 @@
-import { createStaticStyles, cx } from 'antd-style';
 import { cva } from 'class-variance-authority';
 
-import { lobeStaticStylish } from '@/styles';
+import { createStaticStyles, cx, lobeStaticStylish } from '@/styles';
 
 export const prefix = 'lobe-code-diff';
 export const compactActionsCls = `${prefix}-actions-compact`;

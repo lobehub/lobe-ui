@@ -1,6 +1,4 @@
-import { createStaticStyles, cx } from 'antd-style';
-
-import { lobeStaticStylish } from '@/styles';
+import { createStaticStyles, cx, lobeStaticStylish } from '@/styles';
 
 export const styles = createStaticStyles(({ css, cssVar }) =>
   cx(

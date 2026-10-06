@@ -2,7 +2,6 @@
 
 import { useHover } from 'ahooks';
 import { ConfigProvider } from 'antd';
-import { cx } from 'antd-style';
 import isEqual from 'fast-deep-equal';
 import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from 'lucide-react';
 import type { Enable, NumberSize, Size } from 're-resizable';
@@ -22,6 +21,7 @@ import useControlledState from 'use-merge-value';
 
 import { Center } from '@/Flex';
 import Icon from '@/Icon';
+import { cx } from '@/styles';
 
 import { handleVariants, panelVariants, styles, toggleVariants } from './style';
 import type { DraggablePanelProps } from './type';
@@ -486,13 +486,13 @@ const DraggablePanel = memo<DraggablePanelProps>(
       ? {
           height: isExpand ? expandedOuterSize : 0,
           overflow: 'hidden',
-          transition: shouldTransition ? 'height 0.2s var(--ant-motion-ease-out, ease)' : 'none',
+          transition: shouldTransition ? 'height 0.2s var(--lobe-motion-ease-out, ease)' : 'none',
           width: '100%',
           ...stableOuterFlex,
         }
       : {
           overflow: 'hidden',
-          transition: shouldTransition ? 'width 0.2s var(--ant-motion-ease-out, ease)' : 'none',
+          transition: shouldTransition ? 'width 0.2s var(--lobe-motion-ease-out, ease)' : 'none',
           width: isExpand ? expandedOuterSize : 0,
           ...(usesStableLayout
             ? {

@@ -1,8 +1,7 @@
-import { createStaticStyles, responsive } from 'antd-style';
 import { cva } from 'class-variance-authority';
 
 import { focusRing } from '@/base-ui/focusRing';
-import { lobeStaticStylish } from '@/styles';
+import { createStaticStyles, lobeStaticStylish, responsive } from '@/styles';
 
 export const styles = createStaticStyles(({ css }) => ({
   root: css`

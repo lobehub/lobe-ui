@@ -1,8 +1,7 @@
-import { createStaticStyles } from 'antd-style';
 import { cva } from 'class-variance-authority';
 
 import { focusRing } from '@/base-ui/focusRing';
-import { lobeStaticStylish } from '@/styles';
+import { createStaticStyles, lobeStaticStylish } from '@/styles';
 
 export const styles = createStaticStyles(({ css, cssVar }) => {
   const indicator = css`

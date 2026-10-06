@@ -1,9 +1,9 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { memo } from 'react';
 
 import { DraggablePanel } from '@/base-ui/DraggablePanel';
+import { cx } from '@/styles';
 
 import ChatInputAreaInner from './components/ChatInputAreaInner';
 import { styles } from './style';

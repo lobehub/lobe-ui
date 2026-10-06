@@ -7,7 +7,7 @@ const TaskHeader = ({ outdent }: { outdent?: boolean }) => (
     gap={8}
     padding={16}
     style={{
-      border: '1px solid var(--ant-color-border-secondary, rgba(127,127,127,0.25))',
+      border: '1px solid var(--lobe-color-border-secondary, rgba(127,127,127,0.25))',
       borderRadius: 12,
       maxWidth: 560,
     }}

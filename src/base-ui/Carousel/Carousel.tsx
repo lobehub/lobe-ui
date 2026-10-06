@@ -1,6 +1,5 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import {
   Children,
@@ -16,6 +15,7 @@ import useControlledState from 'use-merge-value';
 
 import ActionIcon from '@/base-ui/ActionIcon';
 import { useEventCallback } from '@/hooks/useEventCallback';
+import { cx } from '@/styles';
 
 import { styles } from './style';
 import type { CarouselProps } from './type';

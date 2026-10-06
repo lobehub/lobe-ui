@@ -1,4 +1,6 @@
-import { css, type Theme } from 'antd-style';
+import { type Theme } from 'antd-style';
+
+import { css } from '@/styles';
 
 export default (token: Theme) => css`
   :root {

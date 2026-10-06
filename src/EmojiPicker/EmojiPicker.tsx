@@ -4,7 +4,7 @@ import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
 import { getLobeIconCDN } from '@lobehub/icons/es/features/getLobeIconCDN';
 import { toc } from '@lobehub/icons/es/toc';
-import { cx, useTheme } from 'antd-style';
+import { useTheme } from 'antd-style';
 import chroma from 'chroma-js';
 import { SmileIcon, TrashIcon, UploadIcon } from 'lucide-react';
 import { memo, useMemo, useRef, useState } from 'react';
@@ -19,6 +19,7 @@ import emojiPickerMessages from '@/i18n/resources/en/emojiPicker';
 import { useTranslation } from '@/i18n/useTranslation';
 import Icon from '@/Icon';
 import Popover from '@/Popover';
+import { cx } from '@/styles';
 import Tooltip from '@/Tooltip';
 
 import AvatarUploader from './AvatarUploader';

@@ -1,7 +1,7 @@
 import { STREAM_FADE_DURATION } from '@lobehub/streamdown';
-import { createStaticStyles, cx } from 'antd-style';
 import { cva } from 'class-variance-authority';
 
+import { createStaticStyles, cx } from '@/styles';
 import { fadeIn } from '@/styles/animations';
 
 export const styles = createStaticStyles(({ css, cssVar }) => {

@@ -1,6 +1,5 @@
 'use client';
 
-import { createStaticStyles, cx } from 'antd-style';
 import type { FC } from 'react';
 
 import Highlighter, { type HighlighterProps } from '@/Highlighter';
@@ -8,6 +7,7 @@ import { FALLBACK_LANG } from '@/Highlighter/const';
 import HtmlPreview, { type HtmlPreviewProps } from '@/HtmlPreview';
 import Mermaid, { type MermaidProps } from '@/Mermaid';
 import Snippet, { type SnippetProps } from '@/Snippet';
+import { createStaticStyles, cx } from '@/styles';
 
 const styles = createStaticStyles(({ css }) => ({
   container: css`

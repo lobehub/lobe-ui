@@ -1,8 +1,9 @@
 'use client';
 
 import { Form } from 'antd';
-import { cx } from 'antd-style';
 import { memo, useMemo } from 'react';
+
+import { cx } from '@/styles';
 
 import { itemVariants } from '../style';
 import type { FormItemProps } from '../type';

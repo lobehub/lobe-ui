@@ -1,6 +1,5 @@
-import { Flexbox, Popover, Tooltip } from '@lobehub/ui';
+import { cssVar, Flexbox, Popover, Tooltip } from '@lobehub/ui';
 import { Button } from '@lobehub/ui/base-ui';
-import { cssVar } from 'antd-style';
 import { Info, Sparkles } from 'lucide-react';
 
 export default () => {

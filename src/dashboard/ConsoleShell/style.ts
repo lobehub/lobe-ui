@@ -1,4 +1,4 @@
-import { createStaticStyles } from 'antd-style';
+import { createStaticStyles } from '@/styles';
 
 const SIDEBAR_INLINE_SIZE = 248;
 // Twice the nav icon inset (8px nav padding + 10px item padding) plus the 18px icon, so the icons

@@ -1,4 +1,4 @@
-import { createStaticStyles } from 'antd-style';
+import { createStaticStyles } from '@/styles';
 
 import { TOAST_DODGE_DURATION, TOAST_DODGE_EASE } from '../Toast/dodge';
 

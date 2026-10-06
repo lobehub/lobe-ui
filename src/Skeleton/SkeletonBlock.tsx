@@ -1,10 +1,10 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { type FC } from 'react';
 
 import Block from '@/Block';
 import type { SkeletonBlockProps } from '@/Skeleton/type';
+import { cx } from '@/styles';
 
 import { styles } from './style';
 

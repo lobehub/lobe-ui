@@ -1,12 +1,12 @@
 'use client';
 
-import { cssVar, cx } from 'antd-style';
 import { memo } from 'react';
 import useMergeState from 'use-merge-value';
 
 import { styles, variants } from '@/CodeEditor/style';
 import { Flexbox } from '@/Flex';
 import SyntaxHighlighter from '@/Highlighter/SyntaxHighlighter';
+import { cssVar, cx } from '@/styles';
 
 import type { CodeEditorProps } from './type';
 

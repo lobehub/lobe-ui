@@ -1,5 +1,6 @@
-import { createStaticStyles } from 'antd-style';
 import { cva } from 'class-variance-authority';
+
+import { createStaticStyles } from '@/styles';
 
 export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
@@ -159,6 +160,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
           border: 1px solid ${cssVar.colorFill};
           border-radius: 50%;
 
+          /* stylelint-disable-next-line declaration-property-value-no-unknown */
           background-color: attr(data-color);
 
           /* Fallback for browsers that don't support attr() in background */

@@ -1,10 +1,10 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { memo, type MouseEvent } from 'react';
 
 import A from '@/A';
 import Icon from '@/Icon';
+import { cx } from '@/styles';
 
 import { styles } from './style';
 import type { ListItemType, ListProps } from './type';

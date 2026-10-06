@@ -1,5 +1,4 @@
-import { Hotkey } from '@lobehub/ui';
-import { cssVar } from 'antd-style';
+import { cssVar, Hotkey } from '@lobehub/ui';
 
 import { Center } from '@/Flex';
 

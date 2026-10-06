@@ -1,7 +1,8 @@
 'use client';
 
-import { createStaticStyles, cx } from 'antd-style';
 import { memo, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
+
+import { createStaticStyles, cx } from '@/styles';
 
 import { buildShellSrcDoc, SHELL_UPDATE_MESSAGE_TYPE } from './buildShellSrcDoc';
 import { buildStaticSrcDoc } from './buildStaticSrcDoc';

@@ -1,12 +1,12 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { MoreHorizontal } from 'lucide-react';
 import { type FC, useMemo } from 'react';
 
 import ActionIcon from '@/base-ui/ActionIcon';
 import DropdownMenu from '@/DropdownMenu';
 import { Center } from '@/Flex';
+import { cx } from '@/styles';
 import { TooltipGroup } from '@/Tooltip';
 
 import { variants } from './style';

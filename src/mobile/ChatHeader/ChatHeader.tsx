@@ -1,12 +1,12 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { ChevronLeft } from 'lucide-react';
 import { memo } from 'react';
 
 import ActionIcon from '@/base-ui/ActionIcon';
 import { Flexbox } from '@/Flex';
 import MobileSafeArea from '@/mobile/SafeArea';
+import { cx } from '@/styles';
 
 import { styles } from './style';
 import type { ChatHeaderProps } from './type';

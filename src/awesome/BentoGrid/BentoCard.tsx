@@ -1,9 +1,9 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { type CSSProperties, memo } from 'react';
 
 import { renderLandingLink } from '@/awesome/landingLink';
+import { cx } from '@/styles';
 
 import { styles } from './style';
 import type { BentoCardProps } from './type';

@@ -1,11 +1,11 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { type FC, useMemo } from 'react';
 
 import Avatar from '@/base-ui/Avatar';
 import Block from '@/Block';
 import Grid from '@/Grid';
+import { cx } from '@/styles';
 
 import { variants } from './style';
 import type { GroupAvatarProps } from './type';

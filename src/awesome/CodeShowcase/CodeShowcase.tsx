@@ -1,10 +1,10 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { type CSSProperties, memo, useState } from 'react';
 
 import Segmented from '@/base-ui/Segmented';
 import Highlighter from '@/Highlighter';
+import { cx } from '@/styles';
 
 import { styles } from './style';
 import type { CodeShowcaseProps } from './type';

@@ -1,12 +1,12 @@
 'use client';
 
 import { type RowData, useTable } from '@tanstack/react-table';
-import { cx } from 'antd-style';
 import { type Key, memo, type ReactNode, useEffect, useMemo } from 'react';
 
 import Pagination from '@/base-ui/Pagination';
 import Spin from '@/base-ui/Spin';
 import { useEventCallback } from '@/hooks/useEventCallback';
+import { cx } from '@/styles';
 
 import { tableFeatureSet } from './features';
 import FilterMenu from './FilterMenu';

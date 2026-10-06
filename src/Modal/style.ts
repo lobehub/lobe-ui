@@ -1,4 +1,4 @@
-import { createStaticStyles } from 'antd-style';
+import { createStaticStyles } from '@/styles';
 
 export const HEADER_HEIGHT = 56;
 export const FOOTER_HEIGHT = 68;

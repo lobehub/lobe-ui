@@ -1,5 +1,6 @@
-import { createStaticStyles } from 'antd-style';
 import { cva } from 'class-variance-authority';
+
+import { createStaticStyles } from '@/styles';
 
 export const styles = createStaticStyles(({ css }) => {
   return {

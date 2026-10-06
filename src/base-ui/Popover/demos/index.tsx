@@ -1,7 +1,7 @@
 import { Flexbox, Popover, type PopoverProps, Tag } from '@lobehub/ui';
+import { cssVar } from '@lobehub/ui';
 import { Button } from '@lobehub/ui/base-ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
-import { cssVar } from 'antd-style';
 import { Sliders } from 'lucide-react';
 
 export default () => {

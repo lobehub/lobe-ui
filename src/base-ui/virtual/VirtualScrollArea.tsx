@@ -1,6 +1,5 @@
 'use client';
 
-import { createStaticStyles, cx } from 'antd-style';
 import {
   Children,
   cloneElement,
@@ -22,6 +21,7 @@ import {
   ScrollAreaViewport,
   type ScrollAreaViewportProps,
 } from '@/base-ui/ScrollArea/atoms';
+import { createStaticStyles, cx } from '@/styles';
 
 // `--lobe-virtual-scroll-inset` is the inline padding of the box the scroll area sits in: the
 // root bleeds out by it so the scrollbar hugs that box's edge, and the viewport pads the rows back.

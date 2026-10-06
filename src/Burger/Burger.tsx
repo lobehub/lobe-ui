@@ -1,12 +1,12 @@
 'use client';
 
 import { Drawer, Menu } from 'antd';
-import { cx } from 'antd-style';
 import { MenuIcon, X } from 'lucide-react';
 import { memo, useMemo } from 'react';
 
 import ActionIcon from '@/base-ui/ActionIcon';
 import { Center } from '@/Flex';
+import { cx } from '@/styles';
 
 import { styles } from './style';
 import type { BurgerProps } from './type';

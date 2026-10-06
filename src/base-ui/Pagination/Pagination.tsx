@@ -1,12 +1,12 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { memo, useEffect, useRef, useState } from 'react';
 import useControlledState from 'use-merge-value';
 
 import Select from '@/base-ui/Select';
 import { useEventCallback } from '@/hooks/useEventCallback';
+import { cx } from '@/styles';
 
 import { clampPage, getPageCount, getPaginationItems } from './helpers';
 import { buttonVariants, ellipsisVariants, styles } from './style';

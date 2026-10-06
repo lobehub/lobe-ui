@@ -1,9 +1,9 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { type FC, useRef } from 'react';
 
 import { useTextOverflow } from '@/hooks/useTextOverflow';
+import { cx } from '@/styles';
 import Tooltip from '@/Tooltip';
 
 import { variants } from './styles';

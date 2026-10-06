@@ -1,4 +1,4 @@
-import { Flexbox, Tag } from '@lobehub/ui';
+import { cssVar, Flexbox, Tag } from '@lobehub/ui';
 import {
   SelectGroup,
   SelectGroupLabel,
@@ -14,7 +14,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@lobehub/ui/base-ui';
-import { cssVar } from 'antd-style';
 import { Check, ChevronDown } from 'lucide-react';
 import { useMemo, useState } from 'react';
 

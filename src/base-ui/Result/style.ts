@@ -1,4 +1,4 @@
-import { createStaticStyles, cssVar } from 'antd-style';
+import { createStaticStyles, cssVar } from '@/styles';
 
 export const styles = createStaticStyles(({ css, cssVar }) => ({
   customIcon: css`

@@ -1,6 +1,6 @@
 'use client';
 
-import { cx, useThemeMode } from 'antd-style';
+import { useThemeMode } from 'antd-style';
 import {
   ArrowBigUpIcon,
   ArrowDownIcon,
@@ -25,6 +25,7 @@ import LeftClickIcon from '@/icons/lucideExtra/LeftClickIcon';
 import LeftDoubleClickIcon from '@/icons/lucideExtra/LeftDoubleClickIcon';
 import RightClickIcon from '@/icons/lucideExtra/RightClickIcon';
 import RightDoubleClickIcon from '@/icons/lucideExtra/RightDoubleClickIcon';
+import { cx } from '@/styles';
 
 import { KeyMapEnum } from './const';
 import { variants } from './style';

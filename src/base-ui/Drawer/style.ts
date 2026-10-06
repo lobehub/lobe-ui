@@ -1,6 +1,5 @@
-import { createStaticStyles } from 'antd-style';
-
 import { focusRing } from '@/base-ui/focusRing';
+import { createStaticStyles } from '@/styles';
 
 export const styles = createStaticStyles(({ css, cssVar }) => ({
   backdrop: css`
@@ -84,19 +83,19 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       calc(var(--drawer-cast-x, 0) * 6px) calc(var(--drawer-cast-y, 0) * 6px) 16px 0
         color-mix(
           in srgb,
-          var(--ant-color-shadow, #000) calc(8% * var(--drawer-cast-alpha, 1)),
+          var(--lobe-color-shadow, #000) calc(8% * var(--drawer-cast-alpha, 1)),
           transparent
         ),
       calc(var(--drawer-cast-x, 0) * 3px) calc(var(--drawer-cast-y, 0) * 3px) 6px -4px
         color-mix(
           in srgb,
-          var(--ant-color-shadow, #000) calc(12% * var(--drawer-cast-alpha, 1)),
+          var(--lobe-color-shadow, #000) calc(12% * var(--drawer-cast-alpha, 1)),
           transparent
         ),
       calc(var(--drawer-cast-x, 0) * 9px) calc(var(--drawer-cast-y, 0) * 9px) 28px 8px
         color-mix(
           in srgb,
-          var(--ant-color-shadow, #000) calc(5% * var(--drawer-cast-alpha, 1)),
+          var(--lobe-color-shadow, #000) calc(5% * var(--drawer-cast-alpha, 1)),
           transparent
         );
 

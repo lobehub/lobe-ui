@@ -1,5 +1,6 @@
-import { cx } from 'antd-style';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+
+import { cx } from '@/styles';
 
 import { FloatingSheetHeader } from './FloatingSheetHeader';
 import { clamp, dampenValue, resolveSize } from './helpers';

@@ -1,7 +1,6 @@
 'use client';
 
 import { useHover } from 'ahooks';
-import { cx } from 'antd-style';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Resizable, type ResizeCallback } from 're-resizable';
 import {
@@ -17,6 +16,7 @@ import useControlledState from 'use-merge-value';
 
 import { Center, Flexbox } from '@/Flex';
 import Icon from '@/Icon';
+import { cx } from '@/styles';
 
 import { styles } from './style';
 import type { DraggableSideNavProps } from './type';

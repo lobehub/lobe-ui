@@ -1,9 +1,11 @@
 'use client';
 
 import { Form as AntForm } from 'antd';
-import { cx, useResponsive } from 'antd-style';
+import { useResponsive } from 'antd-style';
 import { isUndefined } from 'es-toolkit/compat';
 import { memo, useCallback, useState } from 'react';
+
+import { cx } from '@/styles';
 
 import FormFlatGroup from './components/FormFlatGroup';
 import FormGroup from './components/FormGroup';

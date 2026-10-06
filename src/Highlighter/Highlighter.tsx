@@ -1,12 +1,12 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import Tag from '@/base-ui/Tag';
 import CopyButton from '@/CopyButton';
 import { Flexbox } from '@/Flex';
 import { getCodeLanguageDisplayName } from '@/Highlighter/const';
+import { cx } from '@/styles';
 
 import FullFeatured from './FullFeatured';
 import { styles, variants } from './style';

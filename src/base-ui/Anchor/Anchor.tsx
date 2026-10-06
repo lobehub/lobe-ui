@@ -1,6 +1,5 @@
 'use client';
 
-import { cx } from 'antd-style';
 import {
   type CSSProperties,
   memo,
@@ -14,6 +13,7 @@ import { useMergeRefs } from 'react-merge-refs';
 import useControlledState from 'use-merge-value';
 
 import { useEventCallback } from '@/hooks/useEventCallback';
+import { cx } from '@/styles';
 
 import { styles } from './style';
 import type { AnchorItem, AnchorProps } from './type';

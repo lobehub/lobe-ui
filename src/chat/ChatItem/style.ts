@@ -1,4 +1,4 @@
-import { createStaticStyles, responsive } from 'antd-style';
+import { createStaticStyles, responsive } from '@/styles';
 
 export const styles = createStaticStyles(({ css, cssVar }) => {
   const blockStylish = css`

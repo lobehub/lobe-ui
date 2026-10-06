@@ -1,6 +1,4 @@
-import { createStaticStyles, cx, responsive } from 'antd-style';
-
-import { lobeStaticStylish } from '@/styles';
+import { createStaticStyles, cx, lobeStaticStylish, responsive } from '@/styles';
 
 const prefixCls = 'ant';
 

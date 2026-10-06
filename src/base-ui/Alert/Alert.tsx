@@ -1,10 +1,10 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { AlertTriangle, CheckCircle, ChevronRight, Info, X, XCircle } from 'lucide-react';
 import { memo, useEffect, useRef, useState } from 'react';
 
 import Icon from '@/Icon';
+import { cx } from '@/styles';
 
 import {
   extraHeaderVariants,

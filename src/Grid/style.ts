@@ -1,4 +1,4 @@
-import { createStaticStyles } from 'antd-style';
+import { createStaticStyles } from '@/styles';
 
 export const styles = createStaticStyles(({ css }) => {
   return css`

@@ -1,7 +1,7 @@
-import { createStaticStyles } from 'antd-style';
 import { cva } from 'class-variance-authority';
 
 import { focusRing, focusRingColor } from '@/base-ui/focusRing';
+import { createStaticStyles } from '@/styles';
 
 import { TOAST_DODGE_DURATION, TOAST_DODGE_EASE } from './dodge';
 

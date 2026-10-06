@@ -1,6 +1,5 @@
 'use client';
 
-import { cssVar } from 'antd-style';
 import { memo, type ReactNode } from 'react';
 
 import Divider from '@/brand/components/Divider';
@@ -9,6 +8,7 @@ import Logo3d from '@/brand/Logo3d';
 import LogoFlat from '@/brand/LogoFlat';
 import LogoMono from '@/brand/LogoMono';
 import { Flexbox } from '@/Flex';
+import { cssVar } from '@/styles';
 import { type DivProps } from '@/types';
 
 import { styles } from './style';

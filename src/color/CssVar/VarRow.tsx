@@ -1,8 +1,8 @@
-import { cssVar } from 'antd-style';
 import { memo } from 'react';
 
 import { toast } from '@/base-ui/Toast';
 import { Flexbox } from '@/Flex';
+import { cssVar } from '@/styles';
 import { copyToClipboard } from '@/utils/copyToClipboard';
 
 import { styles } from './style';

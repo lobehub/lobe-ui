@@ -1,9 +1,10 @@
 'use client';
 
 import { Accordion as BaseUIAccordion } from '@base-ui/react/accordion';
-import { cx } from 'antd-style';
 import { ChevronDown, ChevronRight, Play } from 'lucide-react';
 import { createContext, type FC, use, useMemo } from 'react';
+
+import { cx } from '@/styles';
 
 import {
   contentVariants,

@@ -11,8 +11,8 @@ import ConfigProvider from '@/ConfigProvider';
 import Popover from '../Popover';
 import PopoverGroup from '../PopoverGroup';
 
-vi.mock('antd-style', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('antd-style')>();
+vi.mock('@/styles/css', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/styles/css')>();
   return {
     ...actual,
     createStaticStyles: vi.fn((fn: any) => {

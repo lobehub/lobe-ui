@@ -1,5 +1,6 @@
-import { createStaticStyles, keyframes } from 'antd-style';
 import { cva } from 'class-variance-authority';
+
+import { createStaticStyles, keyframes } from '@/styles';
 
 const shine = keyframes`
   0% {

@@ -1,11 +1,11 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { isString } from 'es-toolkit/compat';
 import { type FC } from 'react';
 import { useMemo } from 'react';
 
 import { Flexbox } from '@/Flex';
+import { cx } from '@/styles';
 
 import { styles } from './style';
 import type { GridProps } from './type';

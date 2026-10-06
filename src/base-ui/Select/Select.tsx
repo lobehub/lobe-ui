@@ -1,11 +1,12 @@
 'use client';
 
 import { Select as BaseSelect } from '@base-ui/react/select';
-import { cx, useThemeMode } from 'antd-style';
+import { useThemeMode } from 'antd-style';
 import { type MouseEvent } from 'react';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { styles as menuStyles } from '@/base-ui/DropdownMenu/sharedStyle';
+import { cx } from '@/styles';
 
 import { SelectPositioner } from './atoms';
 import { isValueEmpty } from './helpers';

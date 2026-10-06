@@ -1,4 +1,4 @@
-import { Button, Icon, Input } from '@lobehub/ui';
+import { Button, createStaticStyles, Icon, Input } from '@lobehub/ui';
 import {
   DropdownMenuFooter,
   DropdownMenuHeader,
@@ -15,7 +15,6 @@ import {
   DropdownMenuScrollViewport,
   DropdownMenuTrigger,
 } from '@lobehub/ui/base-ui';
-import { createStaticStyles } from 'antd-style';
 import { CheckIcon, GitBranchIcon, GitBranchPlusIcon, SearchIcon } from 'lucide-react';
 import { type KeyboardEvent, useMemo, useState } from 'react';
 

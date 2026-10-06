@@ -1,10 +1,12 @@
 'use client';
 
 import { useSize } from 'ahooks';
-import { cssVar, cx, useTheme } from 'antd-style';
+import { useTheme } from 'antd-style';
 import chroma from 'chroma-js';
 import { shuffle } from 'es-toolkit/compat';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+
+import { cssVar, cx } from '@/styles';
 
 import Grid, { type GridProps } from './components/Grid';
 import { styles } from './style';

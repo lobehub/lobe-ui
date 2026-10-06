@@ -1,7 +1,7 @@
 'use client';
 
 import { Alert as AntdAlert } from 'antd';
-import { cssVar, cx, useTheme } from 'antd-style';
+import { useTheme } from 'antd-style';
 import { camelCase } from 'es-toolkit/compat';
 import { AlertTriangle, CheckCircle, Info, X, XCircle } from 'lucide-react';
 import { memo } from 'react';
@@ -10,6 +10,7 @@ import { Accordion, AccordionItem } from '@/Accordion';
 import ActionIcon from '@/base-ui/ActionIcon';
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
+import { cssVar, cx } from '@/styles';
 
 import { extraHeaderVariants, extraVariants, rootVariants } from './style';
 import type { AlertProps } from './type';

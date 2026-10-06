@@ -1,7 +1,9 @@
 'use client';
 
-import { cx, useThemeMode } from 'antd-style';
+import { useThemeMode } from 'antd-style';
 import { memo, useMemo } from 'react';
+
+import { cx } from '@/styles';
 
 import { styles } from './style';
 import type { SpotlightProps } from './type';

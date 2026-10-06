@@ -1,7 +1,8 @@
-import { css, useTheme } from 'antd-style';
+import { useTheme } from 'antd-style';
 import { rgba } from 'polished';
 import { useMemo } from 'react';
 
+import { css } from '@/styles';
 import { safeReadableColor } from '@/utils/safeReadableColor';
 
 export const useStyles = () => {

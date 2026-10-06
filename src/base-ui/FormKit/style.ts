@@ -1,4 +1,4 @@
-import { createStaticStyles } from 'antd-style';
+import { createStaticStyles } from '@/styles';
 
 export const fieldKitStyles = createStaticStyles(({ css, cssVar }) => ({
   controlFixed: css`

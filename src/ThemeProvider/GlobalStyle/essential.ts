@@ -1,5 +1,6 @@
-import { css, type Theme } from 'antd-style';
+import { type Theme } from 'antd-style';
 
+import { css } from '@/styles';
 import { CLASSNAMES } from '@/styles/classNames';
 
 /**

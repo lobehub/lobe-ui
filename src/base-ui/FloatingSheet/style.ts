@@ -1,4 +1,4 @@
-import { createStaticStyles } from 'antd-style';
+import { createStaticStyles } from '@/styles';
 
 const transitionDuration = '0.3s';
 const transitionEasing = 'cubic-bezier(0.32, 0.72, 0, 1)';

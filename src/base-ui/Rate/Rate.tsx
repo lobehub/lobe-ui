@@ -1,9 +1,10 @@
 'use client';
 
-import { cssVar, cx } from 'antd-style';
 import { Star } from 'lucide-react';
 import { type KeyboardEvent, memo, useState } from 'react';
 import useControlledState from 'use-merge-value';
+
+import { cssVar, cx } from '@/styles';
 
 import { styles } from './style';
 import type { RateProps } from './type';

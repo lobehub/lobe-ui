@@ -1,8 +1,9 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { type FC } from 'react';
 import useControlledState from 'use-merge-value';
+
+import { cx } from '@/styles';
 
 import { TabsIndicator, TabsList, TabsPanel, TabsRoot, TabsTab } from './atoms';
 import { styles } from './style';

@@ -1,8 +1,9 @@
 'use client';
 
-import { cssVar, cx } from 'antd-style';
 import { Check, Info, TriangleAlert, X } from 'lucide-react';
 import { memo, useMemo } from 'react';
+
+import { cssVar, cx } from '@/styles';
 
 import { statusColor, styles } from './style';
 import type { ResultProps } from './type';

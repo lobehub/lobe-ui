@@ -1,11 +1,12 @@
 'use client';
 
-import { cx, useResponsive } from 'antd-style';
+import { useResponsive } from 'antd-style';
 import { LevaPanel } from 'leva';
 import { memo, type Ref } from 'react';
 
 import { DraggablePanel } from '@/base-ui/DraggablePanel';
 import { Center, Flexbox, type FlexboxProps } from '@/Flex';
+import { cx } from '@/styles';
 
 import { styles } from './style';
 

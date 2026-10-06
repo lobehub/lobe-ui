@@ -1,9 +1,10 @@
 'use client';
 
-import { cx, useResponsive } from 'antd-style';
+import { useResponsive } from 'antd-style';
 import { memo } from 'react';
 
 import { Flexbox } from '@/Flex';
+import { cx } from '@/styles';
 
 import { styles } from './style';
 import type { HeaderProps } from './type';

@@ -2,7 +2,6 @@
 
 import { mergeProps } from '@base-ui/react/merge-props';
 import { Popover as BasePopover } from '@base-ui/react/popover';
-import { cx } from 'antd-style';
 import {
   cloneElement,
   type ComponentProps,
@@ -15,6 +14,7 @@ import { mergeRefs, useMergeRefs } from 'react-merge-refs';
 import { getFloatingCollisionPadding } from '@/base-ui/floating';
 import { FloatingLayerProvider } from '@/hooks/useFloatingLayer';
 import { useNativeButton } from '@/hooks/useNativeButton';
+import { cx } from '@/styles';
 import { placementMap } from '@/utils/placement';
 
 import { useLayerZIndex } from '../zIndex';

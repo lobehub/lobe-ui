@@ -1,6 +1,6 @@
-import { createStaticStyles } from 'antd-style';
 import { cva } from 'class-variance-authority';
 
+import { createStaticStyles } from '@/styles';
 import { SMOOTH_CORNER_MASKS } from '@/utils/smoothCorners';
 
 export const styles = createStaticStyles(({ css }) => {

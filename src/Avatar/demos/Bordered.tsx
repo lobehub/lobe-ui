@@ -1,5 +1,4 @@
-import { Avatar } from '@lobehub/ui';
-import { cssVar } from 'antd-style';
+import { Avatar, cssVar } from '@lobehub/ui';
 
 import { Center } from '@/Flex';
 
