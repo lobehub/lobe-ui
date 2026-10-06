@@ -53,7 +53,10 @@ const readCssVars = <T extends string>(names: Record<T, string>): Record<T, stri
 
   const computed = globalThis.getComputedStyle(document.documentElement);
   for (const [key, variable] of Object.entries(names) as [T, string][]) {
-    result[key] = computed.getPropertyValue(variable).trim() || undefined;
+    result[key] =
+      computed.getPropertyValue(variable).trim() ||
+      computed.getPropertyValue(variable.replace('--lobe-', '--ant-')).trim() ||
+      undefined;
   }
   return result;
 };
