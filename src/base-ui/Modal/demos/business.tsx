@@ -1,6 +1,5 @@
-import { cssVar, Flexbox, Popover as LobePopover, Text, Tooltip as LobeTooltip } from '@lobehub/ui';
-import { Button, createModalSystem, Modal, Select as LobeSelect } from '@lobehub/ui/base-ui';
-import { Avatar, Popover, Select, Space, Tag, Tooltip } from 'antd';
+import { Avatar, cssVar, Flexbox, Popover, Tag, Text, Tooltip } from '@lobehub/ui';
+import { Button, createModalSystem, Modal, Select } from '@lobehub/ui/base-ui';
 import { AlertTriangle, FileText, Share2 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -69,9 +68,7 @@ const ConfigModalDemo = () => {
           <Text style={{ fontSize: 14, fontWeight: 500 }}>MCP Server</Text>
           <Text style={{ fontSize: 12, opacity: 0.5 }}>local-mcp · http://localhost:3100</Text>
         </Flexbox>
-        <Tag color="green" style={{ margin: 0 }}>
-          Connected
-        </Tag>
+        <Tag color="green">Connected</Tag>
       </Flexbox>
 
       <Modal
@@ -128,9 +125,7 @@ const ProfileSetupDemo = () => {
           padding: '12px 16px',
         }}
       >
-        <Avatar size={36} style={{ background: cssVar.colorPrimary, flexShrink: 0 }}>
-          ?
-        </Avatar>
+        <Avatar avatar="?" background={cssVar.colorPrimary} size={36} style={{ flexShrink: 0 }} />
         <Flexbox flex={1} gap={1}>
           <Text style={{ fontWeight: 600 }}>Complete your profile</Text>
           <Text style={{ fontSize: 12, opacity: 0.6 }}>
@@ -190,7 +185,7 @@ const PopoverModalDemo = () => {
       <Flexbox horizontal align="center" gap={6} wrap="wrap">
         <Text style={{ fontSize: 12, opacity: 0.5 }}>Filters:</Text>
         {['Status: All', 'Assignee: Any', 'Priority: High'].map((chip) => (
-          <Tag key={chip} style={{ cursor: 'default', margin: 0 }}>
+          <Tag key={chip} style={{ cursor: 'default' }}>
             {chip}
           </Tag>
         ))}
@@ -214,14 +209,14 @@ const PopoverModalDemo = () => {
             <Text
               style={{ fontSize: 12, fontWeight: 600, opacity: 0.5, textTransform: 'uppercase' }}
             >
-              Antd Components
+              Components
             </Text>
-            <Space>
-              <Tooltip title="Filter by date range">
-                <Button size="small">Date Range</Button>
+            <Flexbox horizontal gap={8}>
+              <Tooltip title="Filter by assignee">
+                <Button size="small">Assignee</Button>
               </Tooltip>
-              <Popover content="Select a category" title="Category Filter" trigger="click">
-                <Button size="small">Category</Button>
+              <Popover content={<div style={{ padding: 12 }}>Pick a status</div>}>
+                <Button size="small">Status</Button>
               </Popover>
               <Select
                 defaultValue="lucy"
@@ -233,32 +228,7 @@ const PopoverModalDemo = () => {
                   { value: 'disabled', label: 'Disabled', disabled: true },
                 ]}
               />
-            </Space>
-          </Flexbox>
-          <Flexbox gap={8}>
-            <Text
-              style={{ fontSize: 12, fontWeight: 600, opacity: 0.5, textTransform: 'uppercase' }}
-            >
-              Lobe UI Components
-            </Text>
-            <Space>
-              <LobeTooltip title="Filter by assignee">
-                <Button size="small">Assignee</Button>
-              </LobeTooltip>
-              <LobePopover content={<div style={{ padding: 12 }}>Pick a status</div>}>
-                <Button size="small">Status</Button>
-              </LobePopover>
-              <LobeSelect
-                defaultValue="lucy"
-                size="small"
-                style={{ width: 120 }}
-                options={[
-                  { value: 'jack', label: 'Jack' },
-                  { value: 'lucy', label: 'Lucy' },
-                  { value: 'disabled', label: 'Disabled', disabled: true },
-                ]}
-              />
-            </Space>
+            </Flexbox>
           </Flexbox>
         </Flexbox>
       </Modal>

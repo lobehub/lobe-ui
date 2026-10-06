@@ -1,6 +1,5 @@
-import { cssVar, Flexbox, Text } from '@lobehub/ui';
+import { cssVar, Flexbox, Tag, Text } from '@lobehub/ui';
 import { Button, FloatingSheet, type FloatingSheetProps } from '@lobehub/ui/base-ui';
-import { Tag } from 'antd';
 import { ChevronUp, Database, FileText, GripHorizontal, Search, Sparkles, X } from 'lucide-react';
 import { type ReactNode, useState } from 'react';
 
@@ -204,9 +203,7 @@ const OverlayWorkspaceDemo = () => {
                     </Text>
                   </Flexbox>
                 </Flexbox>
-                <Tag bordered={false} color="blue" style={{ margin: 0 }}>
-                  {badge}
-                </Tag>
+                <Tag color="blue">{badge}</Tag>
               </Flexbox>
             ))}
           </Flexbox>
@@ -280,9 +277,7 @@ const OverlayWorkspaceDemo = () => {
                     <Text style={{ color: cssVar.colorTextSecondary, fontSize: 12 }}>{hint}</Text>
                   </Flexbox>
                 </Flexbox>
-                <Tag bordered={false} color="cyan" style={{ margin: 0 }}>
-                  {type}
-                </Tag>
+                <Tag color="cyan">{type}</Tag>
               </Flexbox>
             ))}
           </Flexbox>

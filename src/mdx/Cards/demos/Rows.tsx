@@ -1,6 +1,5 @@
-import { Typography } from '@lobehub/ui';
+import { Divider, Typography } from '@lobehub/ui';
 import { Card, Cards } from '@lobehub/ui/mdx';
-import { Divider } from 'antd';
 
 export default () => (
   <Typography>

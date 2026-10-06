@@ -1,10 +1,5 @@
-import {
-  createStaticStyles as createAntdStaticStyles,
-  css,
-  cx,
-  injectGlobal,
-  keyframes,
-} from 'antd-style';
+import createEmotion from '@emotion/css/create-instance';
+import { type CSSInterpolation, type SerializedStyles, serializeStyles } from '@emotion/serialize';
 
 import { createLobeToken, type LobeToken } from './theme/createLobeToken';
 
@@ -80,17 +75,53 @@ export interface StaticStyleUtils {
   responsive: typeof responsive;
 }
 
-let staticCss!: StaticStyleUtils['css'];
-let staticCx!: StaticStyleUtils['cx'];
+const emotion = createEmotion({ key: 'acss', speedy: false });
 
-// antd-style's top-level `css` returns SerializedStyles; only its static instance yields class names
-createAntdStaticStyles((utils) => {
-  staticCss = utils.css;
-  staticCx = utils.cx;
-  return {};
-});
+const isSerialized = (value: unknown): value is SerializedStyles =>
+  typeof value === 'object' && value !== null && 'name' in value && 'styles' in value;
+
+export const css = (
+  template: TemplateStringsArray | CSSInterpolation,
+  ...args: CSSInterpolation[]
+): SerializedStyles =>
+  serializeStyles([template as CSSInterpolation, ...args], emotion.cache.registered);
+
+export const cx = (...classNames: unknown[]): string =>
+  emotion.cx(
+    ...(classNames.map((value) => (isSerialized(value) ? emotion.css(value) : value)) as Parameters<
+      typeof emotion.cx
+    >),
+  );
+
+export const { injectGlobal, keyframes } = emotion;
+
+const staticCss: StaticStyleUtils['css'] = (template, ...args) => emotion.css(template, ...args);
 
 export const createStaticStyles = <T>(stylesFn: (utils: StaticStyleUtils) => T): T =>
-  stylesFn({ css: staticCss, cssVar, cx: staticCx, responsive });
+  stylesFn({ css: staticCss, cssVar, cx, responsive });
 
-export { css, cx, injectGlobal, keyframes };
+export interface StaticStyleExtract {
+  css: string;
+  ids: string[];
+  key: string;
+  tag: string;
+}
+
+// emotion rehydrates `<style data-emotion="acss id…">` from SSR into its cache on the client
+export const extractStaticStyle = Object.assign(
+  (_html?: string, _options?: Record<string, unknown>): StaticStyleExtract[] => {
+    const { inserted, key } = emotion.cache;
+    const ids = Object.keys(inserted).filter((id) => typeof inserted[id] === 'string');
+    const styles = ids.map((id) => inserted[id]).join('');
+    if (!styles) return [];
+    return [
+      {
+        css: styles,
+        ids,
+        key,
+        tag: `<style data-emotion="${key} ${ids.join(' ')}">${styles}</style>`,
+      },
+    ];
+  },
+  { cache: emotion.cache },
+);

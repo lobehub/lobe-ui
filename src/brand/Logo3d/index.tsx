@@ -1,6 +1,5 @@
 'use client';
 
-import type { ImageProps } from 'antd';
 import { type FC } from 'react';
 
 import { useCdnFn } from '@/ConfigProvider';
@@ -9,7 +8,7 @@ import type { ImgProps } from '@/types';
 
 import { LOGO_3D } from '../LobeHub/style';
 
-type Logo3dProps = Omit<ImgProps & ImageProps, 'width' | 'height' | 'src'> & {
+type Logo3dProps = Omit<ImgProps, 'width' | 'height' | 'src'> & {
   size?: number | string;
 };
 

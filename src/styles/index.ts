@@ -1,12 +1,15 @@
+export { createGlobalStyle } from './createGlobalStyle';
 export {
   createStaticStyles,
   css,
   cssVar,
   cx,
+  extractStaticStyle,
   injectGlobal,
   keyframes,
   type LobeCssVar,
   responsive,
+  type StaticStyleExtract,
   type StaticStyleUtils,
 } from './css';
 export * from './customTheme';

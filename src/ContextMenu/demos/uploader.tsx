@@ -7,9 +7,9 @@ import {
   ContextMenuTrigger,
   Icon,
   Text,
+  Upload,
 } from '@lobehub/ui';
 import { createStaticStyles } from '@lobehub/ui';
-import { Upload, type UploadFile, type UploadProps } from 'antd';
 import { FileIcon, UploadIcon, XIcon } from 'lucide-react';
 import { useMemo, useState } from 'react';
 
@@ -103,26 +103,22 @@ const formatFileSize = (bytes: number) => {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 };
 
-export default () => {
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
+interface UploadedFile {
+  name: string;
+  size: number;
+  uid: string;
+}
 
-  const uploadProps: UploadProps = {
-    beforeUpload: (file) => {
-      setFileList((prev) => [
-        ...prev,
-        {
-          name: file.name,
-          size: file.size,
-          status: 'done',
-          uid: file.uid,
-        },
-      ]);
-      // 业务逻辑完成后，手动关闭菜单
-      closeContextMenu();
-      return false;
-    },
-    fileList,
-    showUploadList: false,
+export default () => {
+  const [fileList, setFileList] = useState<UploadedFile[]>([]);
+
+  const handleFiles = (files: File[]) => {
+    setFileList((prev) => [
+      ...prev,
+      ...files.map((file) => ({ name: file.name, size: file.size, uid: crypto.randomUUID() })),
+    ]);
+    // 业务逻辑完成后，手动关闭菜单
+    closeContextMenu();
   };
 
   const handleRemoveFile = (uid: string) => {
@@ -138,7 +134,7 @@ export default () => {
         icon: <Icon icon={UploadIcon} />,
         key: 'upload',
         label: (
-          <Upload {...uploadProps}>
+          <Upload onFiles={handleFiles}>
             <span>Upload File</span>
           </Upload>
         ),

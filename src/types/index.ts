@@ -1,4 +1,4 @@
-import type { AnchorHTMLAttributes, HTMLAttributes } from 'react';
+import type { AnchorHTMLAttributes, HTMLAttributes,ImgHTMLAttributes } from 'react';
 
 export * from './customStylish';
 export * from './customToken';
@@ -10,7 +10,7 @@ export type VideoProps = HTMLAttributes<HTMLVideoElement>;
 
 export type SvgProps = HTMLAttributes<SVGSVGElement>;
 
-export type ImgProps = HTMLAttributes<HTMLImageElement>;
+export type ImgProps = ImgHTMLAttributes<HTMLImageElement>;
 
 export type AProps = AnchorHTMLAttributes<HTMLAnchorElement>;
 

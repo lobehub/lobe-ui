@@ -143,3 +143,16 @@ lobe-ui components will later move to StyleX (compiled at lobe-ui build time int
 - StyleX migration (token groups and `--lobe-*` names are already shaped for it).
 - Migrating lobe-chat / lobehub-cloud to the new major (separate stacked PRs after the beta).
 - Rewriting downstream repos from `antd-style` to `@lobehub/ui` (per-repo PRs using the codemod, after the beta).
+
+## Implementation notes (deviations from the plan above)
+
+- **`ThemeScope`** (new, optional): writes `data-theme` / `data-primary-color` / `data-neutral-color` on its own `div` (unset values inherit from the parent scope) and provides context. Needed because docs-kit (and apps) render islands with a different appearance; hooks read the nearest `ThemeScope`, else `<html>` attributes. Hooks do not walk the DOM.
+- **`global.css` split**: `theme.css` = variables + essential rules; document resets (`html`, `body`, `code`, `::selection`, `*` scrollbars) ship separately as opt-in `@lobehub/ui/global.css` (`getGlobalCss()`), matching the old `enableGlobalStyle`. Inside `@layer`, their `!important` font rule would otherwise beat unlayered app styles (seen as a code-font change across docs).
+- **`LobeThemeScript`** has no `storageKey`; persisting the choice is left to the app / next-themes.
+- **ConfigProvider / docs-kit moves** happened in PR-3 together with the ThemeProvider removal (PR-2 kept ThemeProvider as a bridge that injects `theme.css` and wraps its tree in `ThemeScope`).
+- **Legacy root components** with base-ui successors were deleted too (Accordion, ActionIcon, Checkbox, DraggablePanel, List, Skeleton, Text); explicit root exports would otherwise shadow the base-ui ones.
+- **static-css** was deleted entirely (not only its antd parts): its remaining job (static token vars) is `theme.css`.
+- **`compatibility.json`**: entries whose source was deleted are pruned (161 → 131 documents, 539 → 457 demos); old root URLs such as `/components/button` 404. Moving base-ui pages to `/components/*` is a docs follow-up.
+- **eslint preset**: bans `antd`, `antd-style`, `@ant-design/*`, `rc-*`, `@rc-component/*`; no rule for `@lobehub/ui/base-ui` (one severity per `no-restricted-imports` config, and the alias keeps working).
+- **Styling backing**: own `@emotion/css` instance (key `acss`); top-level `css` keeps antd-style's `SerializedStyles` return so `cx(css…)` / `createGlobalStyle(({ theme }) => css…)` call sites keep working.
+- **Still pulling antd for consumers**: `@lobehub/icons` and `@lobehub/fluent-emoji` (peer deps) depend on antd-style / antd in their published versions; they need their own antd-style → `@lobehub/ui` switch.

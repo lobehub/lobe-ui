@@ -1,7 +1,6 @@
-import { cssVar, Flexbox, Text } from '@lobehub/ui';
+import { cssVar, Flexbox, Tag, Text } from '@lobehub/ui';
 import { Button, FloatingSheet, type FloatingSheetProps } from '@lobehub/ui/base-ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
-import { Tag } from 'antd';
 import { SlidersHorizontal, X } from 'lucide-react';
 import { useMemo, useState } from 'react';
 
@@ -271,18 +270,10 @@ export default () => {
             <div style={stageStyle}>
               <Flexbox gap={12} padding={18} style={{ minHeight: 0 }}>
                 <Flexbox horizontal align="center" gap={8} wrap="wrap">
-                  <Tag bordered={false} color="blue" style={{ margin: 0 }}>
-                    className: {sheetProps.className ?? 'undefined'}
-                  </Tag>
-                  <Tag bordered={false} color="geekblue" style={{ margin: 0 }}>
-                    width: {String(sheetProps.width)}
-                  </Tag>
-                  <Tag bordered={false} color="cyan" style={{ margin: 0 }}>
-                    dismissible: {String(sheetProps.dismissible)}
-                  </Tag>
-                  <Tag bordered={false} color="purple" style={{ margin: 0 }}>
-                    variant: {sheetProps.variant}
-                  </Tag>
+                  <Tag color="blue">className: {sheetProps.className ?? 'undefined'}</Tag>
+                  <Tag color="geekblue">width: {String(sheetProps.width)}</Tag>
+                  <Tag color="cyan">dismissible: {String(sheetProps.dismissible)}</Tag>
+                  <Tag color="purple">variant: {sheetProps.variant}</Tag>
                 </Flexbox>
 
                 <Flexbox gap={10} style={{ flex: 1, minHeight: 0, overflow: 'auto' }}>

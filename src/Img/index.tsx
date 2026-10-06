@@ -1,6 +1,5 @@
 'use client';
 
-import { type ImageProps } from 'antd';
 import { createElement, type ElementType, type FC, memo, type Ref, use, useMemo } from 'react';
 
 import { ConfigContext } from '@/ConfigProvider';
@@ -8,7 +7,7 @@ import { type ImgProps as HtmlImgeProps } from '@/types';
 
 const createContainer = (as: ElementType) => memo((props: any) => createElement(as, props));
 
-type ImgProps = HtmlImgeProps & ImageProps & { ref?: Ref<HTMLImageElement>; unoptimized?: boolean };
+type ImgProps = HtmlImgeProps & { ref?: Ref<HTMLImageElement>; unoptimized?: boolean };
 
 const Img: FC<ImgProps> = ({ unoptimized, ...rest }) => {
   const config = use(ConfigContext);

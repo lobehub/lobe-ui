@@ -1,27 +1,25 @@
-import { Button, useTranslation } from '@lobehub/ui';
+import { Block, Button, Flexbox, Tag, Text, useTranslation } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
-import { Card, Space, Tag, Typography } from 'antd';
 import { motion } from 'motion/react';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { I18nProvider } from '@/i18n';
-
-const { Text } = Typography;
 
 const Preview = ({ loading, requestedLocale }: { loading: boolean; requestedLocale: string }) => {
   const { t, locale } = useTranslation();
   const isReady = !loading && locale === requestedLocale;
 
   return (
-    <Card title="Dynamic import resources">
-      <Space wrap align="center">
+    <Block gap={16} padding={16} variant="outlined">
+      <Text strong>Dynamic import resources</Text>
+      <Flexbox horizontal align="center" gap={8} wrap="wrap">
         <Text type="secondary">Requested</Text>
         <Tag color="blue">{requestedLocale}</Tag>
         <Text type="secondary">Active</Text>
         <Tag color={locale === requestedLocale ? 'green' : 'gold'}>{locale}</Tag>
         <Tag color={isReady ? 'green' : 'gold'}>{isReady ? 'Ready' : 'Loading'}</Tag>
-      </Space>
-      <Space wrap size={[8, 8]} style={{ marginTop: 16 }}>
+      </Flexbox>
+      <Flexbox horizontal gap={8} wrap="wrap">
         <Button size="small" type="primary">
           {t('common.confirm')}
         </Button>
@@ -29,26 +27,26 @@ const Preview = ({ loading, requestedLocale }: { loading: boolean; requestedLoca
         <Button danger size="small">
           {t('common.delete')}
         </Button>
-      </Space>
-      <Space direction="vertical" size={8} style={{ marginTop: 16 }}>
+      </Flexbox>
+      <Flexbox gap={8}>
         {(['form.unsavedChanges', 'emojiPicker.draggerDesc'] as const).map((key) => (
-          <Space direction="vertical" key={key} size={2}>
+          <Flexbox gap={2} key={key}>
             <Text
+              fontSize={12}
               type="secondary"
+              wordBreak="break-word"
               style={{
                 fontFamily:
                   'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
-                fontSize: 12,
-                wordBreak: 'break-word',
               }}
             >
               {key}
             </Text>
             <Text>{t(key)}</Text>
-          </Space>
+          </Flexbox>
         ))}
-      </Space>
-    </Card>
+      </Flexbox>
+    </Block>
   );
 };
 
@@ -88,19 +86,17 @@ export default () => {
 
   return (
     <StoryBook levaStore={store}>
-      <Space direction="vertical" size={16} style={{ width: '100%' }}>
-        <Card size="small">
-          <Space wrap align="center">
-            <Text type="secondary">Resources</Text>
-            <Tag color="geekblue">Promise</Tag>
-            <Text type="secondary">Requested locale</Text>
-            <Tag color="blue">{control.locale}</Tag>
-          </Space>
-        </Card>
+      <Flexbox gap={16} width="100%">
+        <Block horizontal align="center" gap={8} padding={12} variant="outlined" wrap="wrap">
+          <Text type="secondary">Resources</Text>
+          <Tag color="geekblue">Promise</Tag>
+          <Text type="secondary">Requested locale</Text>
+          <Tag color="blue">{control.locale}</Tag>
+        </Block>
         <I18nProvider locale={control.locale} motion={motion} resources={resourcePromise}>
           <Preview loading={loading} requestedLocale={control.locale} />
         </I18nProvider>
-      </Space>
+      </Flexbox>
     </StoryBook>
   );
 };
