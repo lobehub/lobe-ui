@@ -63,6 +63,19 @@ describe('getThemeCss', () => {
     expect(getThemeCss()).not.toMatch(/:where\([^)]*\bhtml\b/);
   });
 
+  it('ships the antd reset in global.css without fighting the root typography', () => {
+    const globalCss = getGlobalCss();
+    const body = globalCss.match(/\n {2}body \{([^}]*)\}/)?.[1];
+
+    expect(body).toBeDefined();
+    expect(body).not.toMatch(/(^|\s)(line-height|font-size|font-family|color):/);
+    expect(globalCss).toMatch(
+      /input,\s*button,\s*select,\s*optgroup,\s*textarea \{[^}]*font-family: inherit;/,
+    );
+    expect(globalCss).toMatch(/h1,\s*h2,\s*h3,\s*h4,\s*h5,\s*h6 \{[^}]*margin-block: 0 0\.5em;/);
+    expect(globalCss).toMatch(/\[hidden\] \{\s*display: none !important;/);
+  });
+
   it('orders the lobe layers so components beat popup and base helpers', () => {
     const order = '@layer lobe-base, lobe-popup, lobe-ui;';
     expect(getThemeCss().startsWith(order)).toBe(true);

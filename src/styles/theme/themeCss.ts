@@ -149,8 +149,6 @@ const globalCss = `@layer lobe-base {
     margin: 0;
     padding: 0;
 
-    font-family: ${v('fontFamily')};
-    font-size: ${v('fontSize')};
     font-feature-settings: var(--font-settings);
     font-variation-settings: var(--font-variations);
     font-optical-sizing: auto;
@@ -160,8 +158,6 @@ const globalCss = `@layer lobe-base {
     font-size-adjust: from-font;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    line-height: 1;
-    color: ${v('colorTextBase')};
     text-wrap: pretty;
     text-size-adjust: 100%;
     text-rendering: optimizelegibility;
@@ -174,6 +170,90 @@ const globalCss = `@layer lobe-base {
 
     -webkit-overflow-scrolling: touch;
     -webkit-tap-highlight-color: transparent;
+  }
+
+  html,
+  body {
+    width: 100%;
+    height: 100%;
+  }
+
+  [tabindex='-1']:focus {
+    outline: none;
+  }
+
+  [hidden] {
+    display: none !important;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-block: 0 0.5em;
+    font-weight: 500;
+  }
+
+  p,
+  ol,
+  ul,
+  dl,
+  pre {
+    margin-block: 0 1em;
+  }
+
+  ol ol,
+  ul ul,
+  ol ul,
+  ul ol {
+    margin-block-end: 0;
+  }
+
+  dd {
+    margin-block-end: 0.5em;
+    margin-inline-start: 0;
+  }
+
+  blockquote,
+  figure {
+    margin-block: 0 1em;
+    margin-inline: 0;
+  }
+
+  img {
+    border-style: none;
+    vertical-align: middle;
+  }
+
+  table {
+    border-collapse: collapse;
+  }
+
+  input,
+  button,
+  select,
+  optgroup,
+  textarea {
+    margin: 0;
+
+    font-family: inherit;
+    font-size: inherit;
+    line-height: inherit;
+    color: inherit;
+  }
+
+  textarea {
+    resize: vertical;
+    overflow: auto;
+  }
+
+  fieldset {
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
   }
 
   code,
