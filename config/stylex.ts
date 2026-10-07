@@ -13,7 +13,7 @@ interface CssSheet {
 
 // lightningcss 1.33 serializes absent options as `null` (e.g. `var()`'s `from` and `fallback`) but
 // cannot deserialize them back, so a visitor returning the stylesheet must drop those fields.
-const dropNullFields = <T>(node: T): T => {
+export const dropNullFields = <T>(node: T): T => {
   if (Array.isArray(node)) return node.map(dropNullFields) as T;
   if (node === null || typeof node !== 'object') return node;
   return Object.fromEntries(

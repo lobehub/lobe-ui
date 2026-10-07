@@ -1,10 +1,11 @@
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
-import { dirname, join, resolve } from 'node:path';
+import { join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import stylex from '@stylexjs/unplugin/rolldown';
 import { defineConfig, type Rolldown } from 'tsdown';
 
+import { layerComponentCss } from './config/componentCss.ts';
 import { stylexOptions } from './config/stylex.ts';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
@@ -31,13 +32,13 @@ const packageEntries = readdirSync(srcDir)
 const componentCss = (): Rolldown.Plugin => {
   const files = new Set<string>();
   return {
+    buildStart() {
+      files.clear();
+    },
     generateBundle() {
       const source = [...files]
         .toSorted()
-        .map((file) => {
-          const css = readFileSync(file, 'utf8').trim();
-          return /^@layer lobe-ui\b/.test(css) ? css : `@layer lobe-ui {\n${css}\n}`;
-        })
+        .map((file) => layerComponentCss(readFileSync(file, 'utf8'), file))
         .join('\n\n');
       this.emitFile({
         fileName: 'style.css',
@@ -48,8 +49,10 @@ const componentCss = (): Rolldown.Plugin => {
     name: 'lobe-ui:component-css',
     resolveId: {
       filter: { id: /\.css$/ },
-      handler(source, importer) {
-        files.add(resolve(dirname(importer!), source));
+      async handler(source, importer) {
+        const resolved = await this.resolve(source, importer, { skipSelf: true });
+        if (!resolved) this.error(`Cannot resolve ${source} from ${importer}`);
+        files.add(resolved.id);
         return { external: true, id: source, moduleSideEffects: false };
       },
     },
