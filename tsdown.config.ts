@@ -1,4 +1,4 @@
-import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -52,6 +52,33 @@ const componentCss = (): Rolldown.Plugin => {
   };
 };
 
+// StyleX leaves its priority-0 group (keyframes, custom properties) unlayered by design. This runs
+// in closeBundle because StyleX's writeBundle re-appends its CSS when the file no longer contains it verbatim.
+const layerStylexBase = (): Rolldown.Plugin => ({
+  closeBundle() {
+    const file = resolve(root, 'es/style.css');
+    if (!existsSync(file)) return;
+    const layered: string[] = [];
+    const unlayered: string[] = [];
+    let depth = 0;
+    let statement = '';
+    for (const char of readFileSync(file, 'utf8')) {
+      statement += char;
+      if (char === '{') depth++;
+      if (char === '}') depth--;
+      if (depth === 0 && (char === '}' || char === ';')) {
+        const trimmed = statement.trim();
+        (/^@layer\b/.test(trimmed) ? layered : unlayered).push(trimmed);
+        statement = '';
+      }
+    }
+    if (unlayered.length === 0) return;
+    layered.push(`@layer lobe-ui.priority1 {\n${unlayered.join('\n')}\n}`);
+    writeFileSync(file, `${layered.join('\n\n')}\n`);
+  },
+  name: 'lobe-ui:layer-stylex-base',
+});
+
 export default defineConfig({
   dts: true,
   entry: [
@@ -71,7 +98,7 @@ export default defineConfig({
   outputOptions: { assetFileNames: '[name][extname]' },
   // componentCss must emit style.css before StyleX's generateBundle appends to the first CSS asset;
   // StyleX re-emits that asset by name, so an unhashed assetFileNames keeps it at es/style.css.
-  plugins: [componentCss(), stylex({ ...stylexOptions, dev: false })],
+  plugins: [componentCss(), stylex({ ...stylexOptions, dev: false }), layerStylexBase()],
 
   sourcemap: true,
   unbundle: true,
