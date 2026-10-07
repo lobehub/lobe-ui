@@ -1,4 +1,5 @@
 import { defineConfig } from '@lobehub/eslint-config';
+import stylex from '@stylexjs/eslint-plugin';
 
 export default defineConfig(
   {
@@ -63,6 +64,16 @@ export default defineConfig(
     ],
     rules: {
       'no-restricted-syntax': 'off',
+    },
+  },
+  {
+    files: ['src/**/style*.ts', 'src/styles/stylex/**'],
+    plugins: { '@stylexjs': stylex },
+    rules: {
+      '@stylexjs/no-unused': 'error',
+      '@stylexjs/sort-keys': 'error',
+      '@stylexjs/valid-shorthands': 'error',
+      '@stylexjs/valid-styles': 'error',
     },
   },
 );

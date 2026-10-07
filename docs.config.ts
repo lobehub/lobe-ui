@@ -1,4 +1,5 @@
 import legacyRedirects from './compatibility.json';
+import { stylexOptions } from './config/stylex';
 import { defineDocsConfig } from './packages/docs-kit/src/config';
 
 export default defineDocsConfig({
@@ -21,6 +22,7 @@ export default defineDocsConfig({
   homePage: './docs/home/home.tsx',
   legacyRedirects,
   siteUrl: 'https://ui.lobehub.com',
+  stylex: stylexOptions,
   themeConfig: {
     analytics: {
       plausible: {

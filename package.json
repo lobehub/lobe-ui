@@ -91,6 +91,7 @@
     },
     "./global.css": "./es/global.css",
     "./theme.css": "./es/theme.css",
+    "./style.css": "./es/style.css",
     "./es/*": {
       "types": "./es/*.d.mts",
       "import": "./es/*.mjs"
@@ -105,6 +106,7 @@
   "scripts": {
     "build": "tsdown && tsx ./scripts/buildThemeCss.ts && npm run build:packages",
     "build:packages": "tsx ./scripts/build.ts",
+    "build:stylex-vars": "tsx ./scripts/buildStylexVars.ts",
     "build:watch": "tsdown --watch",
     "ci": "npm run lint:circular && npm run lint && npm run type-check",
     "clean": "rm -r es lib dist coverage .eslintcache node_modules/.cache",
@@ -170,6 +172,7 @@
     "@shikijs/stream": "^4.3.1",
     "@shikijs/transformers": "^4.3.1",
     "@splinetool/runtime": "1.12.98",
+    "@stylexjs/stylex": "0.19.1",
     "@tanstack/form-core": "^1.33.5",
     "@tanstack/react-table": "^9.2.4",
     "ahooks": "^3.9.7",
@@ -235,6 +238,8 @@
     "@mdx-js/rollup": "3.1.1",
     "@playwright/test": "1.61.1",
     "@react-router/dev": "8.2.0",
+    "@stylexjs/eslint-plugin": "0.19.1",
+    "@stylexjs/unplugin": "0.19.1",
     "@testing-library/react": "^16.3.2",
     "@types/chroma-js": "^3.1.2",
     "@types/hast": "^3.0.5",

@@ -1,8 +1,11 @@
 import { existsSync, readdirSync, readFileSync, statSync } from 'node:fs';
-import { join, resolve } from 'node:path';
+import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { defineConfig } from 'tsdown';
+import stylex from '@stylexjs/unplugin/rolldown';
+import { defineConfig, type Rolldown } from 'tsdown';
+
+import { stylexOptions } from './config/stylex.ts';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
 const pkg = JSON.parse(readFileSync(resolve(root, 'package.json'), 'utf8')) as {
@@ -25,6 +28,30 @@ const packageEntries = readdirSync(srcDir)
   .map((dir) => `src/${dir}/index.ts`)
   .sort();
 
+const componentCss = (): Rolldown.Plugin => {
+  const files = new Set<string>();
+  return {
+    generateBundle() {
+      const source = [...files]
+        .toSorted()
+        .map((file) => {
+          const css = readFileSync(file, 'utf8').trim();
+          return /^@layer lobe-ui\b/.test(css) ? css : `@layer lobe-ui {\n${css}\n}`;
+        })
+        .join('\n\n');
+      this.emitFile({ fileName: 'style.css', source, type: 'asset' });
+    },
+    name: 'lobe-ui:component-css',
+    resolveId: {
+      filter: { id: /\.css$/ },
+      handler(source, importer) {
+        files.add(resolve(dirname(importer!), source));
+        return { external: true, id: source, moduleSideEffects: false };
+      },
+    },
+  };
+};
+
 export default defineConfig({
   dts: true,
   entry: [
@@ -41,6 +68,10 @@ export default defineConfig({
   format: ['esm'],
 
   outDir: 'es',
+  outputOptions: { assetFileNames: '[name][extname]' },
+  // componentCss must emit style.css before StyleX's generateBundle appends to the first CSS asset;
+  // StyleX re-emits that asset by name, so an unhashed assetFileNames keeps it at es/style.css.
+  plugins: [componentCss(), stylex({ ...stylexOptions, dev: false })],
 
   sourcemap: true,
   unbundle: true,

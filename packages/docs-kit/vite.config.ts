@@ -48,6 +48,14 @@ const createAliasEntries = (alias: Record<string, string> = {}): Alias[] =>
       ];
     });
 
+const stylex = () => {
+  if (!docsConfig.stylex) return;
+  const plugin = repositoryRequire(
+    '@stylexjs/unplugin/vite',
+  ) as typeof import('@stylexjs/unplugin/vite');
+  return plugin.default(docsConfig.stylex);
+};
+
 export default defineConfig({
   optimizeDeps: process.env.VITEST
     ? { noDiscovery: true }
@@ -69,6 +77,7 @@ export default defineConfig({
         include: runtimeOptimizeDeps,
       },
   plugins: [
+    stylex(),
     codeInspectorPlugin({
       bundler: 'vite',
     }),
