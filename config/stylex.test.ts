@@ -69,12 +69,14 @@ describe('StyleX lightningcss options', () => {
     expect(css).toContain('translateX(calc(var(--switch-x, 0px) * var(--switch-dir)))');
   });
 
-  it('does not lower selectors or properties for old browsers', () => {
+  it('keeps :dir() and logical properties but still adds vendor prefixes', () => {
     const css = run(stylexOutput);
 
+    expect(css).toContain(':dir(rtl)');
     expect(css).not.toContain(':lang(');
     expect(css).toContain('padding-inline: 2px');
-    expect(css).not.toContain('-webkit-user-select');
+    expect(css).not.toContain('padding-left');
+    expect(css).toContain('-webkit-user-select: none');
   });
 
   it('leaves output without priority-0 rules or a layer header alone', () => {

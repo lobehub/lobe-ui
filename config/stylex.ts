@@ -43,8 +43,12 @@ export const layerStylexBase = <T extends CssSheet>(sheet: T): T | undefined => 
 export const stylexOptions = {
   aliases: { '@/*': [`${rootDir}src/*`] },
   classNamePrefix: 'lb',
-  // The unplugin defaults targets to the project browserslist, which lowers `:dir()` to `:lang()`.
-  lightningcssOptions: { targets: {}, visitor: { StyleSheetExit: layerStylexBase } },
+  lightningcssOptions: {
+    // Features.DirSelector (4) | Features.LogicalProperties (524288): lowering `:dir()` to `:lang()`
+    // and logical properties to physical fallbacks breaks StyleX's RTL rules; vendor prefixing stays.
+    exclude: 4 | 524_288,
+    visitor: { StyleSheetExit: layerStylexBase },
+  },
   unstable_moduleResolution: { rootDir, type: 'commonJS' as const },
   useCSSLayers: { prefix: 'lobe-ui' },
 };
