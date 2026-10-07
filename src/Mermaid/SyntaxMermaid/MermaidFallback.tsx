@@ -2,8 +2,8 @@
 
 import { memo } from 'react';
 
-import Text from '@/base-ui/Text';
 import { Flexbox } from '@/Flex';
+import Text from '@/Text';
 
 import { type SyntaxMermaidProps } from '../type';
 

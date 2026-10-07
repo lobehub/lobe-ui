@@ -3,12 +3,12 @@
 import type { FC } from 'react';
 
 import A from '@/A';
-import Tag, { type TagProps } from '@/base-ui/Tag';
 import Block, { type BlockProps } from '@/Block';
 import { Flexbox } from '@/Flex';
 import Icon, { type IconProps } from '@/Icon';
 import Img from '@/Img';
 import { createStaticStyles, cx } from '@/styles';
+import Tag, { type TagProps } from '@/Tag';
 
 const styles = createStaticStyles(({ css, cssVar }) => {
   return {

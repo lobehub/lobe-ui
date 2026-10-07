@@ -1,6 +1,6 @@
 'use client';
 
-import Skeleton from '@/base-ui/Skeleton';
+import Skeleton from '@/Skeleton';
 
 import { styles as surfaceStyles } from '../Surface/style';
 import { styles } from './style';

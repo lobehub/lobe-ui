@@ -2,9 +2,9 @@
 
 import { memo } from 'react';
 
-import { ToastHost } from '@/base-ui/Toast';
 import { Flexbox } from '@/Flex';
 import { useThemeMode } from '@/styles';
+import { ToastHost } from '@/Toast';
 
 import { type ColorScaleItem } from '../types';
 import ScaleRow from './ScaleRow';

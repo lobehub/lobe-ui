@@ -3,12 +3,12 @@
 import { memo, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 
-import Button from '@/base-ui/Button';
-import { TextArea } from '@/base-ui/Input';
+import Button from '@/Button';
 import CodeEditor from '@/CodeEditor';
 import { Flexbox } from '@/Flex';
 import { KeyMapEnum } from '@/Hotkey/const';
 import { combineKeys } from '@/Hotkey/utils';
+import { TextArea } from '@/Input';
 import { cx, useResponsive } from '@/styles';
 import Tooltip from '@/Tooltip';
 

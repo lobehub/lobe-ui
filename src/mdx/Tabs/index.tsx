@@ -2,9 +2,9 @@
 
 import { type FC, type ReactNode, useState } from 'react';
 
-import LobeTabs, { type TabsProps as LobeTabsProps } from '@/base-ui/Tabs';
 import { Flexbox, type FlexboxProps } from '@/Flex';
 import { cx } from '@/styles';
+import LobeTabs, { type TabsProps as LobeTabsProps } from '@/Tabs';
 
 import { styles } from './style';
 

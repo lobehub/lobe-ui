@@ -5,7 +5,7 @@ import type { ReactElement } from 'react';
 import { MemoryRouter, useLocation } from 'react-router';
 import siteConfig from 'virtual:lobedocs/site-config';
 
-import { styles as modalStyles } from '@/base-ui/Modal/style';
+import { styles as modalStyles } from '@/Modal/style';
 
 import type { DocumentManifestEntry } from '../../types/content';
 import { DocsLayout } from './DocsLayout';

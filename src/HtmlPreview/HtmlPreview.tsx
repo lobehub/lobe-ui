@@ -3,13 +3,13 @@
 import { Download, Expand } from 'lucide-react';
 import { memo, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import ActionIcon from '@/base-ui/ActionIcon';
-import Segmented from '@/base-ui/Segmented';
-import Spin from '@/base-ui/Spin';
+import ActionIcon from '@/ActionIcon';
 import CopyButton from '@/CopyButton';
 import { Flexbox } from '@/Flex';
 import { actionsHoverCls, variants } from '@/Highlighter/style';
 import SyntaxHighlighter from '@/Highlighter/SyntaxHighlighter';
+import Segmented from '@/Segmented';
+import Spin from '@/Spin';
 import { createStaticStyles, cx, keyframes } from '@/styles';
 import { stopPropagation } from '@/utils/dom';
 import { downloadBlob } from '@/utils/downloadBlob';

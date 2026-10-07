@@ -11,7 +11,6 @@ export const reviewedCategoryOrder = {
 
 export const reviewedSectionOrder = [
   'Components',
-  'Base UI',
   'Chat',
   'Dashboard',
   'Mobile',

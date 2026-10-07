@@ -12,9 +12,9 @@ import {
 } from 'react';
 import { useMergeRefs } from 'react-merge-refs';
 
-import { ToastHost } from '@/base-ui/Toast';
-import { useLayerZIndex } from '@/base-ui/zIndex';
 import { useAppElement } from '@/ConfigProvider/AppElementContext';
+import { useLayerZIndex } from '@/internal/zIndex';
+import { ToastHost } from '@/Toast';
 
 import { styles } from '../style';
 import { computeFit, type Size, unrotatedRect } from './geometry';

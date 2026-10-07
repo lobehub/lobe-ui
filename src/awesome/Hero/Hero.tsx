@@ -6,7 +6,7 @@ import { memo, useCallback } from 'react';
 import A from '@/A';
 import AuroraBackground from '@/awesome/AuroraBackground';
 import GradientButton from '@/awesome/GradientButton';
-import Button from '@/base-ui/Button';
+import Button from '@/Button';
 import { Center, Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 import { useResponsive } from '@/styles';

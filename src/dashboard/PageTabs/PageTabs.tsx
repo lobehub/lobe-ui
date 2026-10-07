@@ -1,6 +1,6 @@
 'use client';
 
-import Tabs from '@/base-ui/Tabs';
+import Tabs from '@/Tabs';
 
 import { styles } from './style';
 import type { PageTabsProps } from './type';

@@ -2,10 +2,10 @@
 
 import { Minus, TrendingDown, TrendingUp } from 'lucide-react';
 
-import Text from '@/base-ui/Text';
 import Block from '@/Block';
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
+import Text from '@/Text';
 
 import { styles as surfaceStyles } from '../Surface/style';
 import { styles } from './style';

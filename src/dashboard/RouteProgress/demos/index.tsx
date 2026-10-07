@@ -1,4 +1,4 @@
-import { Button } from '@lobehub/ui/base-ui';
+import { Button } from '@lobehub/ui';
 import { RouteProgress } from '@lobehub/ui/dashboard';
 import { useState } from 'react';
 

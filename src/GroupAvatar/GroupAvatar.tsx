@@ -2,7 +2,7 @@
 
 import { type FC, useMemo } from 'react';
 
-import Avatar from '@/base-ui/Avatar';
+import Avatar from '@/Avatar';
 import Block from '@/Block';
 import Grid from '@/Grid';
 import { cx } from '@/styles';

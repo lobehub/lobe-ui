@@ -54,7 +54,7 @@ const toastMock = vi.hoisted(() => ({
   success: vi.fn(),
 }));
 
-vi.mock('@/base-ui/Toast', () => ({
+vi.mock('@/Toast', () => ({
   ToastHost: () => null,
   toast: toastMock,
 }));

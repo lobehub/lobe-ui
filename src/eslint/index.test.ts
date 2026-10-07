@@ -34,8 +34,8 @@ describe('restrictedImports', () => {
 
   it.each([
     "import { Alert, Button, Form, Text } from '@lobehub/ui';",
-    "import { Button } from '@lobehub/ui/base-ui';",
-    "import { Form } from '@lobehub/ui/base-ui/form';",
+    "import { Button } from '@lobehub/ui';",
+    "import { Form } from '@lobehub/ui/form';",
   ])('allows %s', (code) => {
     expect(lint(code)).toEqual([]);
   });

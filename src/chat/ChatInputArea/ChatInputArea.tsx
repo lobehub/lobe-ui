@@ -2,7 +2,7 @@
 
 import { memo } from 'react';
 
-import { DraggablePanel } from '@/base-ui/DraggablePanel';
+import { DraggablePanel } from '@/DraggablePanel';
 import { cx } from '@/styles';
 
 import ChatInputAreaInner from './components/ChatInputAreaInner';

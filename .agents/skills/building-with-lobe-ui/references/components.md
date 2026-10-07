@@ -8,9 +8,9 @@
 
 ## C-01 base-ui 优先（硬性规则）
 
-`@lobehub/ui/base-ui` 是当前的规范命名空间，基于 `@base-ui/react` 1.8.0。顶层的同名组件大多是早期的 antd 包装层，已在源码里标记 `@deprecated`。
+`@lobehub/ui` 是当前的规范命名空间，基于 `@base-ui/react` 1.8.0。顶层的同名组件大多是早期的 antd 包装层，已在源码里标记 `@deprecated`。
 
-**这些顶层组件不要用，改从 `@lobehub/ui/base-ui` 导入：**
+**这些顶层组件不要用，改从 `@lobehub/ui` 导入：**
 
 ```
 Accordion · AccordionItem · ActionIcon · Alert · AutoComplete · Avatar · Button

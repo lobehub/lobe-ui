@@ -12,7 +12,7 @@ import type { DocumentationInventory } from '../types';
 import { extractComponentApi } from './extractComponent';
 
 const repositoryRoot = resolve(import.meta.dirname, '../../../../..');
-const documentPath = resolve(repositoryRoot, 'src/base-ui/Button/index.mdx');
+const documentPath = resolve(repositoryRoot, 'src/Button/index.mdx');
 let server: ViteDevServer | undefined;
 
 afterEach(async () => {
@@ -21,7 +21,7 @@ afterEach(async () => {
 });
 
 it('migrates the Button guide once while preserving its demos and the generated API request', () => {
-  expect(existsSync(resolve(repositoryRoot, 'src/base-ui/Button/index.md'))).toBe(false);
+  expect(existsSync(resolve(repositoryRoot, 'src/Button/index.md'))).toBe(false);
   const source = readFileSync(documentPath, 'utf8');
   const compatibility = JSON.parse(
     readFileSync(resolve(repositoryRoot, 'compatibility.json'), 'utf8'),
@@ -32,13 +32,12 @@ it('migrates the Button guide once while preserving its demos and the generated 
   expect(source).toContain('<Api name="Button"');
   expect(
     compatibility.demoReferences
-      .filter(({ pathname }) => pathname === '/components/base-ui/button')
-      .every(({ document }) => document === 'src/base-ui/Button/index.mdx'),
+      .filter(({ pathname }) => pathname === '/components/button')
+      .every(({ document }) => document === 'src/Button/index.mdx'),
   ).toBe(true);
   expect(
-    compatibility.documents.find(({ pathname }) => pathname === '/components/base-ui/button')
-      ?.source,
-  ).toBe('src/base-ui/Button/index.mdx');
+    compatibility.documents.find(({ pathname }) => pathname === '/components/button')?.source,
+  ).toBe('src/Button/index.mdx');
   expect(JSON.stringify(extractComponentApi({ documentPath, name: 'Button' }))).not.toContain(
     repositoryRoot,
   );
@@ -50,7 +49,7 @@ it('renders serialized Button properties and every canonical demo frame through 
     logLevel: 'silent',
     server: { middlewareMode: true },
   });
-  const module = await server.ssrLoadModule('/src/base-ui/Button/index.mdx');
+  const module = await server.ssrLoadModule('/src/Button/index.mdx');
   const { ConfigProvider } = await server.ssrLoadModule('@lobehub/ui');
   const html = renderToStaticMarkup(
     createElement(

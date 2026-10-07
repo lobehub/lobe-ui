@@ -1,7 +1,7 @@
 'use client';
 
-import Text from '@/base-ui/Text';
 import { Flexbox } from '@/Flex';
+import Text from '@/Text';
 
 import { styles } from './style';
 import type { PageHeaderProps } from './type';

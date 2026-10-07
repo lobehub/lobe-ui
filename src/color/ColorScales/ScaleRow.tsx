@@ -1,7 +1,7 @@
 import { memo } from 'react';
 
-import { toast } from '@/base-ui/Toast';
 import { Flexbox } from '@/Flex';
+import { toast } from '@/Toast';
 import { copyToClipboard } from '@/utils/copyToClipboard';
 
 import { alphaBg, styles } from './style';

@@ -3,9 +3,9 @@
 import { ChevronDown, Play } from 'lucide-react';
 import { type ReactNode, useCallback, useEffect, useId, useRef, useState } from 'react';
 
-import Tooltip from '@/base-ui/Tooltip';
 import Icon from '@/Icon';
 import ScrollShadow from '@/ScrollShadow';
+import Tooltip from '@/Tooltip';
 
 import { useConsoleShellState } from '../ConsoleShell/context';
 import { useLocalStorage, usePrefersReducedMotion } from '../hooks';

@@ -2,8 +2,8 @@
 
 import { type CSSProperties, memo, useState } from 'react';
 
-import Segmented from '@/base-ui/Segmented';
 import Highlighter from '@/Highlighter';
+import Segmented from '@/Segmented';
 import { cx } from '@/styles';
 
 import { styles } from './style';

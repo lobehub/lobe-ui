@@ -1,3 +1,3 @@
-import type { ButtonProps } from '@/base-ui/Button';
+import type { ButtonProps } from '@/Button';
 
 export type BottomGradientButtonProps = ButtonProps;

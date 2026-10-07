@@ -13,8 +13,8 @@ import {
   useState,
 } from 'react';
 
-import Skeleton from '@/base-ui/Skeleton';
 import { Flexbox } from '@/Flex';
+import Skeleton from '@/Skeleton';
 import { cx, useThemeMode } from '@/styles';
 
 import { usePreviewGroupContext } from './PreviewGroup';

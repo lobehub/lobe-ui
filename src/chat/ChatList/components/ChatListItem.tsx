@@ -1,9 +1,9 @@
 import { memo, type ReactNode, useCallback, useMemo, useState } from 'react';
 
-import { type AlertProps } from '@/base-ui/Alert';
-import { toast } from '@/base-ui/Toast';
+import { type AlertProps } from '@/Alert';
 import ChatItem from '@/chat/ChatItem';
 import { type ChatMessage } from '@/chat/types';
+import { toast } from '@/Toast';
 import { copyToClipboard } from '@/utils/copyToClipboard';
 
 import { type ChatListItemProps, type ListItemProps } from '../type';

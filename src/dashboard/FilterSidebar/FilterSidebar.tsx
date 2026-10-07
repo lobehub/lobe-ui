@@ -3,9 +3,9 @@
 import { Filter } from 'lucide-react';
 import { useState } from 'react';
 
-import Button from '@/base-ui/Button';
-import { DraggablePanel } from '@/base-ui/DraggablePanel';
-import { Drawer } from '@/base-ui/Drawer';
+import Button from '@/Button';
+import { DraggablePanel } from '@/DraggablePanel';
+import { Drawer } from '@/Drawer';
 
 import { useIsCompact, useLocalStorage } from '../hooks';
 import { styles as surfaceStyles } from '../Surface/style';

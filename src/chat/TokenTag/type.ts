@@ -1,4 +1,4 @@
-import type { ActionIconProps } from '@/base-ui/ActionIcon';
+import type { ActionIconProps } from '@/ActionIcon';
 
 export interface TokenTagProps extends ActionIconProps {
   maxValue: number;

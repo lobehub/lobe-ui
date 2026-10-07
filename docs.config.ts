@@ -6,7 +6,10 @@ export default defineDocsConfig({
     '@': 'src',
     // docs-kit consumes published `es/*` subpaths. Resolve those imports back
     // to source while developing @lobehub/ui itself.
-    '@lobehub/ui/base-ui/form': 'src/base-ui/FormKit',
+    '@lobehub/ui/form': 'src/FormKit',
+    // Published @lobehub/icons still imports the removed `base-ui` subpath; drop once it ships a
+    // release that imports from `@lobehub/ui`.
+    '@lobehub/ui/base-ui': 'src',
     '@lobehub/ui/es': 'src',
     '@lobehub/ui': 'src',
   },

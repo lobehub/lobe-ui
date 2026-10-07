@@ -3,9 +3,9 @@
 import { PlayIcon } from 'lucide-react';
 import { type CSSProperties, memo, type Ref, useMemo, useState } from 'react';
 
-import ActionIcon from '@/base-ui/ActionIcon';
-import Skeleton from '@/base-ui/Skeleton';
+import ActionIcon from '@/ActionIcon';
 import { Flexbox, type FlexboxProps } from '@/Flex';
+import Skeleton from '@/Skeleton';
 import { cssVar, cx } from '@/styles';
 import { type VideoProps as VProps } from '@/types';
 

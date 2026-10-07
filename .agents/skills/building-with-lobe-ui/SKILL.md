@@ -39,7 +39,7 @@ description: >
 
 ## 硬性前提：搞对这三件事，否则全是白工
 
-**一、`@lobehub/ui/base-ui` 是当前的规范命名空间。** 顶层的 `Button`、`Modal`、`Select`、`Tabs`、`Text`、`Tag`、`Avatar`、`ActionIcon`、`Segmented`、`Skeleton`、`Dropdown` 等 27 个经典组件已标记 `@deprecated`，它们是 antd 包装层。新代码一律从 `@lobehub/ui/base-ui` 导入，`@lobehub/ui/eslint` 会强制这条规则。完整清单见 [components.md](references/components.md) 的 C-01。
+**一、`@lobehub/ui` 是当前的规范命名空间。** 顶层的 `Button`、`Modal`、`Select`、`Tabs`、`Text`、`Tag`、`Avatar`、`ActionIcon`、`Segmented`、`Skeleton`、`Dropdown` 等 27 个经典组件已标记 `@deprecated`，它们是 antd 包装层。新代码一律从 `@lobehub/ui` 导入，`@lobehub/ui/eslint` 会强制这条规则。完整清单见 [components.md](references/components.md) 的 C-01。
 
 **二、样式只写 `createStaticStyles` + `cssVar`。** `createStyles` 已被 eslint 禁用。仓库里约 170 个 `style.ts` 全部是这个写法，零例外：
 

@@ -21,6 +21,7 @@ import DemoCheckbox from './demos/checkbox.tsx?demo';
 import DemoSwitch from './demos/switch.tsx?demo';
 import DemoSwitchMixed from './demos/switch-mixed.tsx?demo';
 import DemoLazy from './demos/lazy.tsx?demo';
+import DemoVirtual from './demos/virtual.tsx?demo';
 import DemoCustomTrigger from './demos/custom-trigger.tsx?demo';
 import DemoLinkLabel from './demos/link-label.tsx?demo';
 import DemoUploader from './demos/uploader.tsx?demo';
@@ -104,6 +105,12 @@ When items have descriptions, use `iconAlign` to control icon vertical alignment
 
 <Demo of={DemoLazy} layout="center" />
 
+## Virtual List
+
+Long flat lists (a branch picker, a model list) can be virtualized so only the rows near the scroll position are mounted. Compose it from atoms: a `DropdownMenuHeader` holding a search input that filters the rows, a `DropdownMenuScrollViewport` with `virtual` and a `listItemHeight` hint wrapping the `DropdownMenuItem` rows, and a `DropdownMenuFooter` with the pinned action. The viewport is the only scroller — it renders through `ScrollArea` — while header and footer stay fixed. A `DropdownMenuItem` placed directly in a header or footer drops the slot's inline padding so it lines up with the rows. Keyboard navigation works across the full list — arrow keys, Home/End, and typeahead jump to any row, not just the mounted window — the highlighted row stays mounted while you scroll, and `keepMounted` pins extra child indices. The composed `DropdownMenu` accepts the same `virtual` / `listItemHeight` props for `items`-driven menus.
+
+<Demo of={DemoVirtual} layout="center" />
+
 ## Custom Trigger (Non-button)
 
 <Demo of={DemoCustomTrigger} layout="center" />
@@ -126,7 +133,7 @@ When using Tooltip inside DropdownMenu, wrap both in `TooltipGroup` to ensure th
 
 ### DropdownMenuV2
 
-<Api name="DropdownMenu" migrationKey="heading:%5B%22DropdownMenuV2%22%5D:0" />
+<Api name="DropdownMenu" from=".." migrationKey="heading:%5B%22DropdownMenuV2%22%5D:0" />
 
 Additionally, DropdownMenuV2 inherits all properties from Base UI `Menu.Root` except `children`.
 

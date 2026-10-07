@@ -1,6 +1,6 @@
 import { type CSSProperties, type FC, useMemo } from 'react';
 
-import A from '@/base-ui/Avatar';
+import A from '@/Avatar';
 import { Flexbox } from '@/Flex';
 
 import { styles } from '../style';

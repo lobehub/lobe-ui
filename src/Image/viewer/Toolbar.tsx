@@ -14,12 +14,12 @@ import {
 import type { MotionValue } from 'motion/react';
 import { memo, type ReactNode, useCallback, useMemo, useState, useSyncExternalStore } from 'react';
 
-import ActionIcon from '@/base-ui/ActionIcon';
-import DropdownMenu, { type DropdownItem } from '@/base-ui/DropdownMenu';
-import { toast } from '@/base-ui/Toast';
+import ActionIcon from '@/ActionIcon';
+import DropdownMenu, { type DropdownItem } from '@/DropdownMenu';
 import { Center, Flexbox } from '@/Flex';
 import imageMessages from '@/i18n/resources/en/image';
 import { useTranslation } from '@/i18n/useTranslation';
+import { toast } from '@/Toast';
 import { TooltipGroup } from '@/Tooltip';
 import { getClipboardBlob } from '@/utils/blobToPng';
 import { downloadBlob } from '@/utils/downloadBlob';
