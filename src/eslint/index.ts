@@ -1,3 +1,4 @@
+import { noBaseUiSubpath } from './noBaseUiSubpath';
 import { noInlineFormSchema } from './noInlineFormSchema';
 
 const REMOVED_ANTD_MESSAGE =
@@ -32,13 +33,25 @@ export const restrictedImports = {
   },
 };
 
-export const formSchemaRules = {
-  plugins: {
-    '@lobehub/ui': { rules: { 'no-inline-form-schema': noInlineFormSchema } },
+const plugin = {
+  rules: {
+    'no-base-ui-subpath': noBaseUiSubpath,
+    'no-inline-form-schema': noInlineFormSchema,
   },
+};
+
+export const subpathRules = {
+  plugins: { '@lobehub/ui': plugin },
+  rules: {
+    '@lobehub/ui/no-base-ui-subpath': 'error',
+  },
+};
+
+export const formSchemaRules = {
+  plugins: { '@lobehub/ui': plugin },
   rules: {
     '@lobehub/ui/no-inline-form-schema': 'warn',
   },
 };
 
-export default [restrictedImports, formSchemaRules];
+export default [restrictedImports, subpathRules, formSchemaRules];
