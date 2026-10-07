@@ -70,6 +70,13 @@ const essentialCss = `@layer lobe-ui {
 }
 
 @layer lobe-base {
+  :where(body, body [data-theme]) {
+    color: ${v('colorText')};
+    font-family: ${v('fontFamily')};
+    font-size: ${v('fontSize')};
+    line-height: ${v('lineHeight')};
+  }
+
   :where(.lobe-flex) {
     --lobe-flex: 0 1 auto;
     --lobe-flex-direction: column;

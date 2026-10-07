@@ -52,6 +52,17 @@ describe('getThemeCss', () => {
     expect(getGlobalCss()).toMatch(/^\s*body\s*\{/m);
   });
 
+  it('gives body and nested theme scopes the root typography in the lowest layer', () => {
+    const block = getThemeCss().match(
+      /@layer lobe-base \{[^@]*?:where\(body, body \[data-theme\]\) \{([^}]*)\}/,
+    );
+    expect(block?.[1]).toContain('color: var(--lobe-color-text');
+    expect(block?.[1]).toContain('font-family: var(--lobe-font-family');
+    expect(block?.[1]).toContain('font-size: var(--lobe-font-size');
+    expect(block?.[1]).toContain('line-height: var(--lobe-line-height');
+    expect(getThemeCss()).not.toMatch(/:where\([^)]*\bhtml\b/);
+  });
+
   it('orders the lobe layers so components beat popup and base helpers', () => {
     const order = '@layer lobe-base, lobe-popup, lobe-ui;';
     expect(getThemeCss().startsWith(order)).toBe(true);
