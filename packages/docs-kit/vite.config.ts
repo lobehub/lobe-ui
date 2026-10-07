@@ -1,5 +1,6 @@
 import { createRequire } from 'node:module';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 
 import { reactRouter } from '@react-router/dev/vite';
 import { codeInspectorPlugin } from 'code-inspector-plugin';
@@ -48,12 +49,18 @@ const createAliasEntries = (alias: Record<string, string> = {}): Alias[] =>
       ];
     });
 
-const stylex = () => {
+const stylex = async () => {
   if (!docsConfig.stylex) return;
   const plugin = repositoryRequire(
     '@stylexjs/unplugin/vite',
   ) as typeof import('@stylexjs/unplugin/vite');
-  return plugin.default(docsConfig.stylex);
+  // docs.config is serialized out of a subprocess, so options holding functions (lightningcss
+  // visitors) are passed as a module path and loaded here instead.
+  const options =
+    typeof docsConfig.stylex === 'string'
+      ? (await import(pathToFileURL(path.resolve(repositoryRoot, docsConfig.stylex)).href)).default
+      : docsConfig.stylex;
+  return plugin.default(options);
 };
 
 export default defineConfig({
