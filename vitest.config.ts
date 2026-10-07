@@ -10,7 +10,7 @@ import { lobeDocsSiteConfigPlugin } from './packages/docs-kit/site/compiler/vite
 const srcPath = fileURLToPath(new URL('./src', import.meta.url));
 
 export default defineConfig({
-  plugins: [stylex(stylexOptions), lobeDocsSiteConfigPlugin()],
+  plugins: [stylex({ ...stylexOptions, runtimeInjection: true }), lobeDocsSiteConfigPlugin()],
   resolve: {
     alias: [
       { find: '@', replacement: srcPath },
