@@ -63,6 +63,15 @@ describe('getThemeCss', () => {
     expect(getThemeCss()).not.toMatch(/:where\([^)]*\bhtml\b/);
   });
 
+  it('styles links like the antd App wrapper did, in the lowest layer', () => {
+    const base = getThemeCss().match(/@layer lobe-base \{([\s\S]*?)\n\}/)?.[1];
+
+    expect(base).toMatch(
+      /:where\(body\) :where\(a\) \{[^}]*color: var\(--lobe-color-link\);[^}]*text-decoration: none;/,
+    );
+    expect(base).toMatch(/:where\(body\) :where\(a\):hover \{[^}]*var\(--lobe-color-link-hover\)/);
+  });
+
   it('ships the antd reset in global.css without fighting the root typography', () => {
     const globalCss = getGlobalCss();
     const body = globalCss.match(/\n {2}body \{([^}]*)\}/)?.[1];

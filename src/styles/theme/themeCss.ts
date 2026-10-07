@@ -77,6 +77,36 @@ const essentialCss = `@layer lobe-ui {
     line-height: ${v('lineHeight')};
   }
 
+  :where(body) :where(a) {
+    cursor: pointer;
+
+    color: ${v('colorLink')};
+    text-decoration: none;
+
+    background-color: transparent;
+    outline: none;
+
+    transition: color ${v('motionDurationSlow')};
+  }
+
+  :where(body) :where(a):hover {
+    color: ${v('colorLinkHover')};
+  }
+
+  :where(body) :where(a):active {
+    color: ${v('colorLinkActive')};
+  }
+
+  :where(body) :where(a):focus-visible {
+    outline: ${v('lineWidthFocus')} solid ${v('colorPrimaryBorder')};
+    outline-offset: 1px;
+  }
+
+  :where(body) :where(a)[disabled] {
+    cursor: not-allowed;
+    color: ${v('colorTextDisabled')};
+  }
+
   :where(.lobe-flex) {
     --lobe-flex: 0 1 auto;
     --lobe-flex-direction: column;
