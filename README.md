@@ -118,7 +118,15 @@ Lobe UI CSS is emitted inside the `lobe-base`, `lobe-popup` and `lobe-ui` cascad
 }
 ```
 
-Tailwind v4 users should list their `base` layer before `lobe-ui` in the same statement.
+This `@layer` statement must be the first CSS your app loads, before `theme.css` and `style.css`: the first declaration of a layer fixes its order and later order statements are ignored.
+
+With Tailwind v4, use one merged statement as the very first CSS, before `@import 'tailwindcss'`, `theme.css` and `style.css`:
+
+```css
+@layer theme, base, lobe-base, lobe-popup, lobe-ui, components, utilities;
+```
+
+The lobe layers sit after Tailwind's `base` (preflight), so preflight loses to Lobe UI, and before `components` / `utilities`, so Tailwind utilities still beat Lobe UI.
 
 ### Theming
 
