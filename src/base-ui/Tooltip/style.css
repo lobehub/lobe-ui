@@ -1,0 +1,92 @@
+@layer lobe-ui {
+  /* Old and new text overlap in one clip box while the box morphs; blurring both layers during
+     the crossfade turns the misaligned overlap into a soft smear instead of garbled text. */
+  .lobe-tooltip-viewport [data-previous],
+  .lobe-tooltip-viewport [data-current] {
+    transform: translateX(0);
+
+    display: flex;
+    gap: 6px;
+    align-items: center;
+
+    opacity: 1;
+    filter: blur(0);
+
+    transition:
+      transform var(--lobe-tooltip-layout-duration) var(--lobe-tooltip-layout-ease),
+      opacity calc(var(--lobe-tooltip-layout-duration) / 2) var(--lobe-tooltip-fade-ease),
+      filter calc(var(--lobe-tooltip-layout-duration) / 2) var(--lobe-tooltip-fade-ease);
+  }
+
+  .lobe-tooltip-viewport [data-current] {
+    transition-delay:
+      0s, calc(var(--lobe-tooltip-layout-duration) / 6),
+      calc(var(--lobe-tooltip-layout-duration) / 6);
+  }
+
+  .lobe-tooltip-viewport [data-previous][data-ending-style],
+  .lobe-tooltip-viewport [data-current][data-starting-style] {
+    filter: blur(var(--lobe-tooltip-content-blur));
+  }
+
+  /* Freeze both layers at their own final width so neither re-wraps while the box morphs;
+     the viewport clip reveals the new text as the box grows over it. */
+  .lobe-tooltip-viewport [data-previous] {
+    position: absolute;
+    inset-block-start: 4px;
+    inset-inline-start: var(--lobe-tooltip-viewport-inline-padding);
+    width: calc(var(--popup-width) - var(--lobe-tooltip-viewport-inline-padding) * 2 - 2px);
+  }
+
+  .lobe-tooltip-viewport[data-transitioning] [data-current] {
+    width: calc(var(--positioner-width) - var(--lobe-tooltip-viewport-inline-padding) * 2 - 2px);
+  }
+
+  .lobe-tooltip-viewport[data-repop] [data-previous] {
+    display: none;
+  }
+
+  .lobe-tooltip-viewport[data-repop] [data-current] {
+    transition: none;
+  }
+
+  .lobe-tooltip-viewport[data-activation-direction~='right'] [data-previous][data-ending-style] {
+    transform: translateX(calc(var(--lobe-tooltip-content-shift) * -1));
+    opacity: 0;
+  }
+
+  .lobe-tooltip-viewport[data-activation-direction~='right'] [data-current][data-starting-style] {
+    transform: translateX(var(--lobe-tooltip-content-shift));
+    opacity: 0;
+  }
+
+  .lobe-tooltip-viewport[data-activation-direction~='left'] [data-previous][data-ending-style] {
+    transform: translateX(var(--lobe-tooltip-content-shift));
+    opacity: 0;
+  }
+
+  .lobe-tooltip-viewport[data-activation-direction~='left'] [data-current][data-starting-style] {
+    transform: translateX(calc(var(--lobe-tooltip-content-shift) * -1));
+    opacity: 0;
+  }
+
+  .lobe-tooltip-viewport[data-activation-direction~='down'] [data-previous][data-ending-style] {
+    transform: translateY(calc(var(--lobe-tooltip-content-shift) * -1));
+    opacity: 0;
+  }
+
+  .lobe-tooltip-viewport[data-activation-direction~='down'] [data-current][data-starting-style] {
+    transform: translateY(var(--lobe-tooltip-content-shift));
+    opacity: 0;
+  }
+
+  .lobe-tooltip-viewport[data-activation-direction~='up'] [data-previous][data-ending-style] {
+    transform: translateY(var(--lobe-tooltip-content-shift));
+    opacity: 0;
+  }
+
+  .lobe-tooltip-viewport[data-activation-direction~='up'] [data-current][data-starting-style] {
+    transform: translateY(calc(var(--lobe-tooltip-content-shift) * -1));
+    opacity: 0;
+  }
+}
