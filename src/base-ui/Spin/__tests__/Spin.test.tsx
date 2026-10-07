@@ -54,6 +54,19 @@ describe('Spin', () => {
     );
   });
 
+  test('styles network lines and animates nodes', () => {
+    renderSpin({ variant: 'network' });
+
+    const status = screen.getByRole('status');
+    const line = getComputedStyle(status.querySelector('line')!);
+    const node = getComputedStyle(status.querySelector('i')!);
+
+    expect(line.opacity).toBe('0.3');
+    expect(line.strokeWidth).toBe('0.5');
+    expect(node.animationName).not.toBe('none');
+    expect(node.animationIterationCount).toBe('infinite');
+  });
+
   test('renders a custom indicator instead of the built-in glyph', () => {
     renderSpin({ indicator: <span data-testid="custom-indicator" /> });
 

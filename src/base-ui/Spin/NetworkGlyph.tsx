@@ -1,3 +1,4 @@
+import * as stylex from '@stylexjs/stylex';
 import type { CSSProperties } from 'react';
 import { memo } from 'react';
 
@@ -34,29 +35,33 @@ const NetworkGlyph = memo<{ px: number }>(({ px }) => {
   } as CSSProperties;
 
   return (
-    <span className={styles.network} style={{ height: px, width: px }}>
-      <span className={styles.networkBox} style={boxStyle}>
-        <svg className={styles.networkLines} viewBox="0 0 100 100">
+    <span {...stylex.props(styles.network)} style={{ height: px, width: px }}>
+      <span {...stylex.props(styles.networkBox)} style={boxStyle}>
+        <svg {...stylex.props(styles.networkLines)} viewBox="0 0 100 100">
           {lines.map((line) => (
-            <line key={`${line.x1}-${line.y1}-${line.y2}`} {...line} />
+            <line
+              key={`${line.x1}-${line.y1}-${line.y2}`}
+              {...line}
+              {...stylex.props(styles.networkLine)}
+            />
           ))}
         </svg>
         {nodes.map(({ x, y }, index) => (
           <i
-            className={styles.networkNode}
+            {...stylex.props(styles.networkNode)}
             key={`${x}-${y}`}
             style={{ animationDelay: `${index * 0.2}s`, left: x, top: y }}
           />
         ))}
         {particles.map((index) => (
           <i
-            className={styles.networkParticle}
+            {...stylex.props(styles.networkParticle)}
             key={index}
             style={{ animationDelay: `${index * 0.6}s` }}
           />
         ))}
-        <b className={styles.networkCore} />
-        <u className={styles.networkRing} />
+        <b {...stylex.props(styles.networkCore)} />
+        <u {...stylex.props(styles.networkRing)} />
       </span>
     </span>
   );

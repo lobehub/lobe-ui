@@ -1,10 +1,11 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { LoaderCircle } from 'lucide-react';
 import { memo, useMemo } from 'react';
 
 import Icon from '@/Icon';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
 import NetworkGlyph from './NetworkGlyph';
 import { styles } from './style';
@@ -45,9 +46,14 @@ const Spin = memo<SpinProps>(
         const offset = circumference * (1 - clamped / 100);
 
         return (
-          <svg className={cx(styles.glyph, styles.ring)} height={px} viewBox="0 0 24 24" width={px}>
+          <svg
+            {...stylex.props(styles.glyph, styles.ring)}
+            height={px}
+            viewBox="0 0 24 24"
+            width={px}
+          >
             <circle
-              className={styles.ringTrack}
+              {...stylex.props(styles.ringTrack)}
               cx={12}
               cy={12}
               fill="none"
@@ -55,7 +61,7 @@ const Spin = memo<SpinProps>(
               strokeWidth={2.5}
             />
             <circle
-              className={styles.ringProgress}
+              {...stylex.props(styles.ringProgress)}
               cx={12}
               cy={12}
               fill="none"
@@ -69,7 +75,7 @@ const Spin = memo<SpinProps>(
         );
       }
 
-      return <Icon spin className={styles.glyph} icon={LoaderCircle} size={px} />;
+      return <Icon spin {...stylex.props(styles.glyph)} icon={LoaderCircle} size={px} />;
     }, [indicator, variant, percent, px]);
 
     if (!spinning) return children ?? null;
@@ -79,13 +85,12 @@ const Spin = memo<SpinProps>(
         <div
           aria-busy
           aria-live="polite"
-          className={cx(styles.root, className)}
           ref={ref}
           role="status"
-          style={style}
+          {...styleProps(styles.root, className, style)}
           {...rest}
         >
-          <span aria-hidden className={styles.glyphBox}>
+          <span aria-hidden {...stylex.props(styles.glyphBox)}>
             {glyph}
           </span>
         </div>
@@ -93,13 +98,13 @@ const Spin = memo<SpinProps>(
     }
 
     return (
-      <div className={cx(styles.wrapper, className)} ref={ref} style={style} {...rest}>
+      <div ref={ref} {...styleProps(styles.wrapper, className, style)} {...rest}>
         {children}
-        <div aria-busy aria-live="polite" className={styles.overlay} role="status">
-          <span aria-hidden className={styles.glyphBox}>
+        <div aria-busy aria-live="polite" {...stylex.props(styles.overlay)} role="status">
+          <span aria-hidden {...stylex.props(styles.glyphBox)}>
             {glyph}
           </span>
-          {tip && <span className={styles.tip}>{tip}</span>}
+          {tip && <span {...stylex.props(styles.tip)}>{tip}</span>}
         </div>
       </div>
     );

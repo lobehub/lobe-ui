@@ -1,169 +1,135 @@
-import { createStaticStyles, keyframes } from '@/styles';
+import * as stylex from '@stylexjs/stylex';
 
-const nodePulse = keyframes`
-  0%, 100% {
-    opacity: 0.3;
-  }
-  50% {
-    opacity: 1;
-  }
-`;
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-const particleFlow = keyframes`
-  0% {
-    transform: translateX(0);
-    opacity: 0.5;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateX(50px);
-    opacity: 0.5;
-  }
-`;
+const nodePulse = stylex.keyframes({
+  '0%, 100%': { opacity: 0.3 },
+  '50%': { opacity: 1 },
+});
 
-const coreBreath = keyframes`
-  0%, 100% {
-    transform: scale(0.8);
-    opacity: 0.5;
-  }
-  50% {
-    transform: scale(1);
-    opacity: 1;
-  }
-`;
+const particleFlow = stylex.keyframes({
+  '0%': { opacity: 0.5, transform: 'translateX(0)' },
+  '50%': { opacity: 1 },
+  '100%': { opacity: 0.5, transform: 'translateX(50px)' },
+});
 
-const ringSpin = keyframes`
-  to {
-    transform: rotate(360deg);
-  }
-`;
+const coreBreath = stylex.keyframes({
+  '0%, 100%': { opacity: 0.5, transform: 'scale(0.8)' },
+  '50%': { opacity: 1, transform: 'scale(1)' },
+});
 
-const reducedMotion = `
-  @media (prefers-reduced-motion: reduce) {
-    animation: none;
-  }
-`;
+const ringSpin = stylex.keyframes({
+  to: { transform: 'rotate(360deg)' },
+});
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  glyph: css`
-    display: inline-flex;
-  `,
-  glyphBox: css`
-    display: inline-flex;
-  `,
-  network: css`
-    position: relative;
-    display: inline-block;
-  `,
-  networkBox: css`
-    position: absolute;
-    inset-block-start: 0;
-    inset-inline-start: 0;
-    transform-origin: 0 0;
+const reducedMotion = '@media (prefers-reduced-motion: reduce)';
 
-    width: 100px;
-    height: 100px;
-  `,
-  networkCore: css`
-    position: absolute;
-    inset-block-start: 47px;
-    inset-inline-start: 47px;
+const loop = (name: string, duration: string, timing: string) => ({
+  animationDuration: { default: duration, [reducedMotion]: '0s' },
+  animationIterationCount: { default: 'infinite', [reducedMotion]: 1 },
+  animationName: { default: name, [reducedMotion]: 'none' },
+  animationTimingFunction: { default: timing, [reducedMotion]: 'ease' },
+});
 
-    width: 6px;
-    height: 6px;
-
-    background: currentcolor;
-
-    animation: ${coreBreath} 2s infinite;
-    ${reducedMotion}
-  `,
-  networkLines: css`
-    position: absolute;
-    inset: 0;
-    width: 100px;
-    height: 100px;
-
-    line {
-      opacity: 0.3;
-      stroke: currentcolor;
-      stroke-width: 0.5;
-    }
-  `,
-  networkNode: css`
-    position: absolute;
-
-    margin: calc(var(--spin-node-size) / -2);
-    border-radius: 50%;
-    width: var(--spin-node-size);
-    height: var(--spin-node-size);
-
-    background: currentcolor;
-
-    animation: ${nodePulse} 2s infinite;
-    ${reducedMotion}
-  `,
-  networkParticle: css`
-    position: absolute;
-    inset-block-start: 50px;
-    inset-inline-start: 25px;
-
-    margin: calc(var(--spin-particle-size) / -2);
-    border-radius: 50%;
-    width: var(--spin-particle-size);
-    height: var(--spin-particle-size);
-
-    background: currentcolor;
-
-    animation: ${particleFlow} 2s infinite;
-    ${reducedMotion}
-  `,
-  networkRing: css`
-    position: absolute;
-    inset: 10px;
-
-    border: 1px dashed currentcolor;
-    border-radius: 50%;
-
-    opacity: 0.4;
-
-    animation: ${ringSpin} 20s linear infinite;
-    ${reducedMotion}
-  `,
-  overlay: css`
-    position: absolute;
-    inset: 0;
-
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    align-items: center;
-    justify-content: center;
-
-    color: ${cssVar.colorTextSecondary};
-
-    background: color-mix(in srgb, ${cssVar.colorBgContainer} 70%, transparent);
-  `,
-  ring: css`
-    rotate: -90deg;
-  `,
-  ringProgress: css`
-    stroke: ${cssVar.colorPrimary};
-  `,
-  ringTrack: css`
-    stroke: ${cssVar.colorFillTertiary};
-  `,
-  root: css`
-    display: inline-flex;
-    align-items: center;
-    color: ${cssVar.colorTextSecondary};
-  `,
-  tip: css`
-    font-size: ${cssVar.fontSizeSM};
-    color: ${cssVar.colorTextSecondary};
-  `,
-  wrapper: css`
-    position: relative;
-  `,
-}));
+export const styles = stylex.create({
+  glyph: {
+    display: 'inline-flex',
+  },
+  glyphBox: {
+    display: 'inline-flex',
+  },
+  network: {
+    display: 'inline-block',
+    position: 'relative',
+  },
+  networkBox: {
+    insetBlockStart: 0,
+    insetInlineStart: 0,
+    position: 'absolute',
+    transformOrigin: '0 0',
+    height: 100,
+    width: 100,
+  },
+  networkCore: {
+    ...loop(coreBreath, '2s', 'ease'),
+    backgroundColor: 'currentcolor',
+    insetBlockStart: 47,
+    insetInlineStart: 47,
+    position: 'absolute',
+    height: 6,
+    width: 6,
+  },
+  networkLine: {
+    stroke: 'currentcolor',
+    strokeWidth: 0.5,
+    opacity: 0.3,
+  },
+  networkLines: {
+    inset: 0,
+    position: 'absolute',
+    height: 100,
+    width: 100,
+  },
+  networkNode: {
+    ...loop(nodePulse, '2s', 'ease'),
+    margin: 'calc(var(--spin-node-size) / -2)',
+    borderRadius: '50%',
+    backgroundColor: 'currentcolor',
+    position: 'absolute',
+    height: 'var(--spin-node-size)',
+    width: 'var(--spin-node-size)',
+  },
+  networkParticle: {
+    ...loop(particleFlow, '2s', 'ease'),
+    margin: 'calc(var(--spin-particle-size) / -2)',
+    borderRadius: '50%',
+    backgroundColor: 'currentcolor',
+    insetBlockStart: 50,
+    insetInlineStart: 25,
+    position: 'absolute',
+    height: 'var(--spin-particle-size)',
+    width: 'var(--spin-particle-size)',
+  },
+  networkRing: {
+    ...loop(ringSpin, '20s', 'linear'),
+    inset: 10,
+    borderColor: 'currentcolor',
+    borderRadius: '50%',
+    borderStyle: 'dashed',
+    borderWidth: 1,
+    opacity: 0.4,
+    position: 'absolute',
+  },
+  overlay: {
+    inset: 0,
+    gap: 8,
+    alignItems: 'center',
+    backgroundColor: `color-mix(in srgb, ${cssVar.colorBgContainer} 70%, transparent)`,
+    color: cssVar.colorTextSecondary,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    position: 'absolute',
+  },
+  ring: {
+    rotate: '-90deg',
+  },
+  ringProgress: {
+    stroke: cssVar.colorPrimary,
+  },
+  ringTrack: {
+    stroke: cssVar.colorFillTertiary,
+  },
+  root: {
+    alignItems: 'center',
+    color: cssVar.colorTextSecondary,
+    display: 'inline-flex',
+  },
+  tip: {
+    color: cssVar.colorTextSecondary,
+    fontSize: cssVar.fontSizeSM,
+  },
+  wrapper: {
+    position: 'relative',
+  },
+});
