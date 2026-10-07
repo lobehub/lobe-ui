@@ -3,6 +3,7 @@ import path from 'node:path';
 
 const es = path.resolve(import.meta.dirname, '../es');
 const migrated = [
+  'base-ui/Button',
   'base-ui/Divider',
   'base-ui/Spin',
   'base-ui/Switch',

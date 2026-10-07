@@ -10,7 +10,8 @@ import {
 
 import Icon, { type IconProps } from '@/Icon';
 import { useMotionComponent } from '@/MotionProvider';
-import { cx } from '@/styles';
+import { focusRing } from '@/styles/stylex/focusRing';
+import { styleProps } from '@/styles/stylex/props';
 
 import { styles } from './style';
 import type { ButtonOutdent, ButtonProps, ButtonType } from './type';
@@ -43,7 +44,7 @@ const resolveVariantCls = ({
   danger: boolean;
   ghost: boolean;
   type: NonNullable<ButtonProps['type']>;
-}): string => {
+}) => {
   // `text` and `link` already drop the surface, so `ghost` there would only cost them
   // their own traits (link's zero inline padding).
   if (ghost && type !== 'text' && type !== 'link') {
@@ -57,19 +58,19 @@ const resolveVariantCls = ({
       return danger ? styles.dangerSolid : styles.variantPrimary;
     }
     case 'dashed': {
-      return danger ? cx(styles.variantDashed, styles.dangerOutlined) : styles.variantDashed;
+      return danger ? [styles.variantDashed, styles.dangerOutlined] : styles.variantDashed;
     }
     case 'fill': {
       return danger ? styles.dangerFill : styles.variantFill;
     }
     case 'text': {
-      return danger ? cx(styles.variantText, styles.dangerInline) : styles.variantText;
+      return danger ? [styles.variantText, styles.dangerInline] : styles.variantText;
     }
     case 'link': {
-      return danger ? cx(styles.variantLink, styles.dangerInline) : styles.variantLink;
+      return danger ? [styles.variantLink, styles.dangerInline] : styles.variantLink;
     }
     default: {
-      return danger ? cx(styles.variantDefault, styles.dangerOutlined) : styles.variantDefault;
+      return danger ? [styles.variantDefault, styles.dangerOutlined] : styles.variantDefault;
     }
   }
 };
@@ -85,6 +86,7 @@ const motionTransition = {
 type ButtonImplProps = Omit<ButtonProps, 'outdent' | 'type'> & {
   outdent?: ButtonOutdent;
   type?: ButtonType;
+  xstyle?: Parameters<typeof styleProps>[0];
 };
 
 const ButtonImpl = ({
@@ -108,6 +110,7 @@ const ButtonImpl = ({
   styles: userStyles,
   target,
   type = 'default',
+  xstyle,
   ...rest
 }: ButtonImplProps) => {
   const Motion = useMotionComponent();
@@ -130,37 +133,43 @@ const ButtonImpl = ({
         : styles.outdentStart
       : undefined;
 
-  const composedClassName = cx(
-    styles.base,
-    sizeCls,
-    variantCls,
-    shapeCls,
-    block && styles.block,
-    iconPosition === 'end' && styles.iconEnd,
-    iconOnlySizeCls,
-    outdentCls,
+  const composedClassName = styleProps(
+    [
+      styles.base,
+      focusRing.info,
+      sizeCls,
+      variantCls,
+      shapeCls,
+      block && styles.block,
+      iconPosition === 'end' && styles.iconEnd,
+      iconOnlySizeCls,
+      outdentCls,
+      xstyle,
+    ],
     className,
-  );
+  ).className;
 
   const spinnerNode = (
     <span
       aria-hidden={!loading}
-      style={userStyles?.icon}
-      className={cx(
-        styles.iconBox,
-        styles.spinnerSlot,
-        loading && styles.spinnerSlotShow,
-        iconPosition === 'end' && styles.spinnerSlotEnd,
+      {...styleProps(
+        [
+          styles.iconBox,
+          styles.spinnerSlot,
+          iconPosition === 'end' && styles.spinnerSlotEnd,
+          loading && styles.spinnerSlotShow,
+        ],
         classNames?.icon,
+        userStyles?.icon,
       )}
     >
-      <span className={styles.spinner} />
+      <span {...styleProps(styles.spinner)} />
     </span>
   );
 
   const iconNode =
     icon && !loading ? (
-      <span className={cx(styles.iconBox, classNames?.icon)} style={userStyles?.icon}>
+      <span {...styleProps(styles.iconBox, classNames?.icon, userStyles?.icon)}>
         {resolveIconNode(icon)}
       </span>
     ) : null;
@@ -229,6 +238,8 @@ const ButtonImpl = ({
 };
 
 ButtonImpl.displayName = 'BaseButton';
+
+export { ButtonImpl };
 
 const Button = ButtonImpl as <T extends ButtonType = 'default'>(
   props: ButtonProps<T>,

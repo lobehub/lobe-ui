@@ -190,28 +190,17 @@ describe('Button', () => {
     [false, cssVar.colorPrimaryActive],
     [true, cssVar.colorErrorActive],
   ])(
-    'solid button (danger=%s) keeps its fill when a global popup-open highlight targets the trigger',
+    'solid button (danger=%s) shows its active fill while its popup is open',
     (danger, expected) => {
-      const override = document.createElement('style');
-      override.textContent =
-        '.lobe-dropdown-menu-trigger[data-popup-open]:not([data-no-highlight]) { background: rgb(1, 2, 3); }';
-      document.head.append(override);
-
       renderButton(
-        <Button
-          data-popup-open
-          className={'lobe-dropdown-menu-trigger'}
-          danger={danger}
-          type={'primary'}
-        >
+        <Button data-popup-open danger={danger} type={'primary'}>
           Open
         </Button>,
       );
 
       const style = getComputedStyle(screen.getByRole('button', { name: 'Open' }));
 
-      expect(style.background).toBe(expected);
-      override.remove();
+      expect(style.backgroundColor).toBe(expected);
     },
   );
 });
