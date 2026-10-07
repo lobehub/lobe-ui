@@ -182,7 +182,7 @@
     "@shikijs/core": "^4.3.1",
     "@shikijs/stream": "^4.3.1",
     "@shikijs/transformers": "^4.3.1",
-    "@splinetool/runtime": "1.12.98",
+    "@splinetool/runtime": "2.0.75",
     "@tanstack/form-core": "^1.33.5",
     "@tanstack/react-table": "^9.2.4",
     "ahooks": "^3.9.7",
