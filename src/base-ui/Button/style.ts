@@ -332,24 +332,28 @@ export const splitStyles = stylex.create({
       width: { default: null, [last]: 1 },
     },
   },
-  itemSolidPrimary: {
+  itemFillDanger: {
     borderColor: {
-      default: `var(--lobe-split-button-fill, ${cssVar.colorPrimary})`,
-      [popupOpen]: cssVar.colorPrimaryActive,
+      default: `var(--lobe-split-button-fill, ${cssVar.colorError})`,
+      [popupOpen]: cssVar.colorErrorActive,
     },
     backgroundColor: {
-      default: `var(--lobe-split-button-fill, ${cssVar.colorPrimary})`,
-      [popupOpen]: cssVar.colorPrimaryActive,
+      default: `var(--lobe-split-button-fill, ${cssVar.colorError})`,
+      [popupOpen]: cssVar.colorErrorActive,
     },
   },
-  itemSolidDanger: {
+  itemFillGhost: {
+    borderColor: 'var(--lobe-split-button-fill, transparent)',
+    backgroundColor: 'var(--lobe-split-button-fill, transparent)',
+  },
+  itemFillPrimary: {
     borderColor: {
-      default: `var(--lobe-split-button-fill, ${cssVar.colorError})`,
-      [popupOpen]: cssVar.colorErrorActive,
+      default: `var(--lobe-split-button-fill, ${cssVar.colorPrimary})`,
+      [popupOpen]: cssVar.colorPrimaryActive,
     },
     backgroundColor: {
-      default: `var(--lobe-split-button-fill, ${cssVar.colorError})`,
-      [popupOpen]: cssVar.colorErrorActive,
+      default: `var(--lobe-split-button-fill, ${cssVar.colorPrimary})`,
+      [popupOpen]: cssVar.colorPrimaryActive,
     },
   },
 });

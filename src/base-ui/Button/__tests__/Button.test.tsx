@@ -6,13 +6,18 @@ import ConfigProvider from '@/ConfigProvider';
 import { cssVar } from '@/styles';
 
 import Button from '../Button';
-import { buttonPaddingInline } from '../style';
+import { buttonPaddingInline, buttonStyles } from '../index';
 import type { ButtonProps } from '../type';
 
 const renderButton = (children: ReactNode) =>
   render(<ConfigProvider motion={motion}>{children}</ConfigProvider>);
 
 describe('Button', () => {
+  test('exports buttonStyles as StyleX class strings', () => {
+    expect(typeof buttonStyles.base).toBe('string');
+    expect(buttonStyles.base).toMatch(/(^|\s)lb\w+/);
+  });
+
   test('provides a positioning context for absolutely positioned content', () => {
     renderButton(
       <Button>

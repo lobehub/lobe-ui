@@ -5,7 +5,7 @@ export {
   type SplitButtonMenuProps,
   type SplitButtonProps,
 } from './SplitButton';
-export { buttonPaddingInline, styles as buttonStyles } from './style';
+export { buttonPaddingInline, buttonStyles } from './style';
 export type {
   ButtonIconPosition,
   ButtonOutdent,

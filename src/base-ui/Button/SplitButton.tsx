@@ -59,23 +59,29 @@ const SplitButton = ({
   );
 };
 
-const itemStyle = (shared: SharedVisualProps, type: ButtonProps['type']) => {
+const itemFill = ({ danger, ghost }: Pick<ButtonProps, 'danger' | 'ghost'>) => {
+  if (ghost) return splitStyles.itemFillGhost;
+  return danger ? splitStyles.itemFillDanger : splitStyles.itemFillPrimary;
+};
+
+const itemStyle = (
+  shared: SharedVisualProps,
+  item: Pick<ButtonProps, 'danger' | 'ghost' | 'type'>,
+) => {
   const solid = shared.type === 'primary';
   return [
     splitStyles.item,
     (shared.disabled || shared.loading) && splitStyles.itemInteractionDisabled,
     solid && splitStyles.itemSolid,
     solid &&
-      type === 'primary' &&
-      (shared.danger ? splitStyles.itemSolidDanger : splitStyles.itemSolidPrimary),
+      (item.type ?? shared.type) === 'primary' &&
+      itemFill({ danger: item.danger ?? shared.danger, ghost: item.ghost }),
   ];
 };
 
 const SplitButtonMain = (props: ButtonProps) => {
   const shared = use(SplitButtonContext);
-  return (
-    <ButtonImpl {...shared} {...props} xstyle={itemStyle(shared, props.type ?? shared.type)} />
-  );
+  return <ButtonImpl {...shared} {...props} xstyle={itemStyle(shared, props)} />;
 };
 
 interface SplitButtonMenuProps extends Omit<DropdownMenuProps, 'children'> {
@@ -96,7 +102,7 @@ const SplitButtonMenu = ({
         {...shared}
         disabled={interactionDisabled}
         icon={icon}
-        xstyle={itemStyle(shared, shared.type)}
+        xstyle={itemStyle(shared, {})}
       />
     </DropdownMenu>
   );
