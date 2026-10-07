@@ -92,6 +92,7 @@ Import the theme stylesheet once, then wrap the app in `ConfigProvider`:
 
 ```tsx
 import '@lobehub/ui/theme.css';
+import '@lobehub/ui/style.css';
 // optional document resets (body font, background, scrollbars)
 import '@lobehub/ui/global.css';
 
@@ -104,6 +105,20 @@ export default () => (
   </ConfigProvider>
 );
 ```
+
+Lobe UI CSS is emitted inside the `lobe-base`, `lobe-popup` and `lobe-ui` cascade layers, so unlayered CSS always wins over it. Put global resets (`button { font: inherit }`, normalize.css, ...) in a layer declared before them:
+
+```css
+@layer reset, lobe-base, lobe-popup, lobe-ui;
+
+@layer reset {
+  button {
+    font: inherit;
+  }
+}
+```
+
+Tailwind v4 users should list their `base` layer before `lobe-ui` in the same statement.
 
 ### Theming
 

@@ -14,6 +14,7 @@ pnpm add @lobehub/ui
 
 ```tsx | pure
 import '@lobehub/ui/theme.css';
+import '@lobehub/ui/style.css';
 
 import { Button, ConfigProvider, I18nProvider } from '@lobehub/ui';
 import allResources from '@lobehub/ui/i18n/resources/all';
@@ -27,6 +28,20 @@ export default () => (
   </I18nProvider>
 );
 ```
+
+Lobe UI CSS is emitted inside the `lobe-base`, `lobe-popup` and `lobe-ui` cascade layers, so unlayered CSS always wins over it. Put global resets (`button { font: inherit }`, normalize.css, ...) in a layer declared before them:
+
+```css
+@layer reset, lobe-base, lobe-popup, lobe-ui;
+
+@layer reset {
+  button {
+    font: inherit;
+  }
+}
+```
+
+Tailwind v4 users should list their `base` layer before `lobe-ui` in the same statement.
 
 The components are based on [Ant Design](https://ant.design/components/overview) and are fully compatible with its component APIs. [antd-style](https://ant-design.github.io/antd-style) is the recommended CSS-in-JS styling solution.
 
