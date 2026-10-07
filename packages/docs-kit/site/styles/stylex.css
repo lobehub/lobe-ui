@@ -1,1 +1,2 @@
+/* Imported in builds so Vite emits a root-*.css asset that StyleX appends its rules to. */
 @layer docs-reset, lobe-base, lobe-popup, lobe-ui;

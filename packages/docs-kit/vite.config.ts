@@ -60,7 +60,25 @@ const stylex = async () => {
     typeof docsConfig.stylex === 'string'
       ? (await import(pathToFileURL(path.resolve(repositoryRoot, docsConfig.stylex)).href)).default
       : docsConfig.stylex;
-  return plugin.default(options);
+  // Without a target the plugin appends to the first CSS asset it finds (e.g. Tag-*.css), which
+  // only the routes importing that component link; root-*.css is linked on every page.
+  const stylexPlugin = plugin.default({
+    cssInjectionTarget: (fileName: string) => /(^|\/)root-[\w-]+\.css$/.test(fileName),
+    ...options,
+  });
+  const { generateBundle, writeBundle } = stylexPlugin as Record<string, any>;
+  // The SSR build has no root CSS asset, so the plugin would append a second copy to a route's CSS
+  // that React Router moves into the client assets and links from that route.
+  const clientOnly = (hook: any) =>
+    function (this: any, ...args: unknown[]) {
+      if (this.environment?.config.consumer === 'server') return;
+      return hook.apply(this, args);
+    };
+  return {
+    ...stylexPlugin,
+    generateBundle: clientOnly(generateBundle),
+    writeBundle: clientOnly(writeBundle),
+  };
 };
 
 export default defineConfig({
