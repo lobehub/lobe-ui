@@ -1,14 +1,20 @@
 'use client';
 
+import './style.css';
+
 import { Switch } from '@base-ui/react/switch';
+import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { animate, motionValue } from 'motion';
 import type { CSSProperties, KeyboardEvent, MouseEvent, PointerEvent } from 'react';
 import { createContext, use, useEffect, useMemo, useRef, useState } from 'react';
 import useControlledState from 'use-merge-value';
 
-import { cx } from '@/styles';
+import { focusRing } from '@/styles/stylex/focusRing';
+import { styleProps } from '@/styles/stylex/props';
 
-import { rootVariants, styles, thumbVariants } from './style';
+import { switchMarker } from './marker.stylex';
+import { styles } from './style';
 import type {
   SwitchChangeEventHandler,
   SwitchContextType,
@@ -26,6 +32,9 @@ const THUMB_METRICS: Record<
   default: { checkedX: 14, pressedCheckedX: 10, pressedWidth: 22, width: 18 },
   small: { checkedX: 12, pressedCheckedX: 8, pressedWidth: 16, width: 12 },
 };
+
+const rootSizeStyles = { default: styles.rootDefault, small: styles.rootSmall };
+const thumbSizeStyles = { default: styles.thumbDefault, small: styles.thumbSmall };
 
 const THUMB_SPRING = { damping: 24, stiffness: 360, type: 'spring' as const };
 
@@ -64,6 +73,7 @@ export const SwitchRoot = ({
   inputRef,
   id,
   name,
+  style,
   ...rest
 }: SwitchRootInternalProps) => {
   const [isPressed, setIsPressed] = useState(false);
@@ -80,8 +90,6 @@ export const SwitchRoot = ({
     },
     value: checked,
   });
-
-  const baseClassName = rootVariants({ size });
 
   const contextValue = useMemo(
     () => ({
@@ -154,7 +162,11 @@ export const SwitchRoot = ({
         render={
           <button
             {...rest}
-            className={cx(baseClassName, className)}
+            {...styleProps(
+              [switchMarker, focusRing.info, styles.root, rootSizeStyles[size]],
+              clsx('lobe-switch', className),
+              style,
+            )}
             onClick={handleClick}
             onKeyDown={handleKeyDown}
             onKeyUp={handleKeyUp}
@@ -183,7 +195,6 @@ export const SwitchThumb = ({
 }: SwitchThumbProps) => {
   const { isChecked, isPressed } = useSwitchContext();
   const ref = useRef<HTMLSpanElement>(null);
-  const baseClassName = thumbVariants({ size });
 
   const metrics = THUMB_METRICS[size];
   const targetX = isChecked ? (isPressed ? metrics.pressedCheckedX : metrics.checkedX) : 0;
@@ -231,9 +242,11 @@ export const SwitchThumb = ({
       render={
         <span
           {...rest}
-          className={cx(baseClassName, className)}
           ref={ref}
-          style={{ ...initialStyle, ...style }}
+          {...styleProps([styles.thumb, thumbSizeStyles[size]], className, {
+            ...initialStyle,
+            ...style,
+          })}
         >
           {children}
         </span>
@@ -244,23 +257,22 @@ export const SwitchThumb = ({
 
 SwitchThumb.displayName = 'SwitchThumb';
 
-const getIconPositionClass = (position: SwitchIconPosition, size: 'default' | 'small') => {
-  if (position === 'thumb') return styles.iconThumb;
-  if (position === 'left') return size === 'small' ? styles.iconLeftSmall : styles.iconLeft;
-  return size === 'small' ? styles.iconRightSmall : styles.iconRight;
+const iconPositionStyles: Record<SwitchIconPosition, stylex.StyleXStyles> = {
+  left: styles.iconLeft,
+  right: styles.iconRight,
+  thumb: styles.iconThumb,
 };
 
 export const SwitchIcon = ({
   children,
   className,
   position,
-  size = 'default',
+  size: _size,
+  style,
   ...rest
 }: SwitchIconProps) => {
-  const positionClass = getIconPositionClass(position, size);
-
   return (
-    <span className={cx(styles.icon, positionClass, className)} {...rest}>
+    <span {...styleProps([styles.icon, iconPositionStyles[position]], className, style)} {...rest}>
       {children}
     </span>
   );
@@ -268,4 +280,12 @@ export const SwitchIcon = ({
 
 SwitchIcon.displayName = 'SwitchIcon';
 
-export { styles as switchStyles } from './style';
+const switchClassNames = Object.fromEntries(
+  Object.entries(styles).map(([key, value]) => [key, stylex.props(value).className ?? '']),
+) as Record<keyof typeof styles, string>;
+
+export const switchStyles = {
+  ...switchClassNames,
+  iconLeftSmall: switchClassNames.iconLeft,
+  iconRightSmall: switchClassNames.iconRight,
+};
