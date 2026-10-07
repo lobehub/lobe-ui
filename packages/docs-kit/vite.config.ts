@@ -71,6 +71,11 @@ export default defineConfig({
           '!**/*.d.ts',
           '!**/*.test.*',
         ],
+        // A pre-bundled dep that imports an aliased package (@lobehub/icons ->
+        // @lobehub/ui -> src) would otherwise inline its own copy of that source,
+        // skipping source plugins such as StyleX. Externalized, the import is
+        // resolved through the alias at serve time.
+        exclude: Object.keys(docsConfig.alias ?? {}),
         // Installed UI packages and generated demo modules expose these only at
         // runtime. Pre-bundle the dependencies available in the consuming project
         // to avoid an invalidating second optimization pass after first paint.
