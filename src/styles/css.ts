@@ -109,9 +109,17 @@ export interface StaticStyleExtract {
 
 // emotion rehydrates `<style data-emotion="acss id…">` from SSR into its cache on the client
 export const extractStaticStyle = Object.assign(
-  (_html?: string, _options?: Record<string, unknown>): StaticStyleExtract[] => {
-    const { inserted, key } = emotion.cache;
-    const ids = Object.keys(inserted).filter((id) => typeof inserted[id] === 'string');
+  (html?: string, _options?: Record<string, unknown>): StaticStyleExtract[] => {
+    const { inserted, key, registered } = emotion.cache;
+    const used = html
+      ? new Set([...html.matchAll(new RegExp(`${key}-([\\w-]+)`, 'g'))].map((match) => match[1]))
+      : undefined;
+    // Same rule as @emotion/server extractCritical: unregistered ids are globals/keyframes and always ship
+    const ids = Object.keys(inserted).filter(
+      (id) =>
+        typeof inserted[id] === 'string' &&
+        (!used || used.has(id) || registered[`${key}-${id}`] === undefined),
+    );
     const styles = ids.map((id) => inserted[id]).join('');
     if (!styles) return [];
     return [
