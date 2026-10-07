@@ -1,14 +1,32 @@
 'use client';
 
+import './style.css';
+
+import clsx from 'clsx';
 import { X } from 'lucide-react';
 import { memo, useMemo, useState } from 'react';
 
-import { cssVar, cx } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { styleProps } from '@/styles/stylex/props';
+import { stylish } from '@/styles/stylex/stylish';
 import { safeReadableColor } from '@/utils/safeReadableColor';
 
-import { styles, variants } from './style';
+import { styles } from './style';
 import type { TagProps } from './type';
 import { colorsPreset, colorsPresetSystem, presetColors, presetSystemColors } from './utils';
+
+const variantStyles = {
+  borderless: stylish.variantBorderlessWithoutHover,
+  filled: stylish.variantFilledWithoutHover,
+  outlined: stylish.variantOutlinedWithoutHover,
+  solid: stylish.variantFilledWithoutHover,
+};
+
+const roundSizeStyles = {
+  large: styles.roundLarge,
+  middle: styles.roundMiddle,
+  small: styles.roundSmall,
+};
 
 const Tag = memo<TagProps>(
   ({
@@ -87,16 +105,24 @@ const Tag = memo<TagProps>(
 
     return (
       <span
-        className={cx(variants({ shape, size, variant }), className, classNames?.root)}
         ref={ref}
-        style={{
-          background: colors.backgroundColor,
-          borderColor: colors.borderColor,
-          color: colors.textColor,
-          cursor: onClick ? 'pointer' : undefined,
-          ...style,
-          ...customStyles?.root,
-        }}
+        {...styleProps(
+          [
+            styles.root,
+            variantStyles[variant],
+            styles[size],
+            shape === 'round' && [styles.round, roundSizeStyles[size]],
+          ],
+          clsx('lobe-tag', className, classNames?.root),
+          {
+            background: colors.backgroundColor,
+            borderColor: colors.borderColor,
+            color: colors.textColor,
+            cursor: onClick ? 'pointer' : undefined,
+            ...style,
+            ...customStyles?.root,
+          },
+        )}
         onClick={onClick}
         {...rest}
       >
@@ -105,8 +131,7 @@ const Tag = memo<TagProps>(
         {closable && (
           <button
             aria-label="Close"
-            className={cx(styles.close, classNames?.closeIcon)}
-            style={customStyles?.closeIcon}
+            {...styleProps(styles.close, classNames?.closeIcon, customStyles?.closeIcon)}
             type="button"
             onClick={(e) => {
               e.stopPropagation();

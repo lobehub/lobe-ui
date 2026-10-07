@@ -1,0 +1,6 @@
+@layer lobe-ui {
+  .lobe-tag span {
+    margin: 0;
+    line-height: inherit;
+  }
+}
