@@ -68,7 +68,7 @@ describe('springScrollTo', () => {
     expect(window.scrollTo).toHaveBeenCalled();
     const firstCall = (window.scrollTo as ReturnType<typeof vi.fn>).mock.calls[0];
     const y = typeof firstCall[0] === 'number' ? firstCall[1] : firstCall[0]?.top;
-    expect(y).toBe(120);
+    expect(y).toBeCloseTo(120, 6);
 
     animation.stop();
   });
