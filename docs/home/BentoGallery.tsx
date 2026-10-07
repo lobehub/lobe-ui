@@ -71,9 +71,9 @@ export function BentoGallery() {
       </BentoCard>
       <BentoCard
         hint="try it"
-        href="/components/theme-switch"
+        href="/components/config-provider"
         renderLink={renderLink}
-        title="ThemeSwitch"
+        title="Theming"
       >
         <ThemeSwitchTile />
       </BentoCard>
