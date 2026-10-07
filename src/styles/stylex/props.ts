@@ -3,7 +3,13 @@ import clsx from 'clsx';
 import type { CSSProperties } from 'react';
 
 export const styleProps = (
-  styles: stylex.StyleXStyles | stylex.StyleXStyles[],
+  styles: stylex.StyleXArray<
+    | stylex.CompiledStyles
+    | boolean
+    | null
+    | undefined
+    | Readonly<[stylex.CompiledStyles, stylex.InlineStyles]>
+  >,
   className?: string,
   style?: CSSProperties,
 ): { className: string; style: CSSProperties | undefined } => {
