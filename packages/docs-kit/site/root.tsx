@@ -38,6 +38,7 @@ export function Layout({ children }: { children: ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta content="width=device-width, initial-scale=1" name="viewport" />
+        <style>{'@layer docs-reset, lobe-base, lobe-popup, lobe-ui;'}</style>
         <ThemeBootstrap prefersColor={siteConfig.themeConfig?.prefersColor} />
         <Meta />
         <Links />

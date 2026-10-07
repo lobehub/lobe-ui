@@ -39,7 +39,11 @@ const componentCss = (): Rolldown.Plugin => {
           return /^@layer lobe-ui\b/.test(css) ? css : `@layer lobe-ui {\n${css}\n}`;
         })
         .join('\n\n');
-      this.emitFile({ fileName: 'style.css', source, type: 'asset' });
+      this.emitFile({
+        fileName: 'style.css',
+        source: `@layer lobe-base, lobe-popup, lobe-ui;\n\n${source}`,
+        type: 'asset',
+      });
     },
     name: 'lobe-ui:component-css',
     resolveId: {

@@ -17,6 +17,9 @@ const fail = (message: string) => errors.push(message);
 const stylePath = path.join(es, 'style.css');
 if (existsSync(stylePath)) {
   const css = readFileSync(stylePath, 'utf8').replaceAll(/\/\*[\S\s]*?\*\//g, '');
+  const layerOrder = '@layer lobe-base, lobe-popup, lobe-ui;';
+  if (!css.trimStart().startsWith(layerOrder)) fail(`es/style.css must start with ${layerOrder}`);
+  let first = true;
   let depth = 0;
   let statement = '';
   for (const char of css) {
@@ -25,9 +28,10 @@ if (existsSync(stylePath)) {
     if (char === '}') depth--;
     if (depth === 0 && (char === '}' || char === ';')) {
       const head = statement.trim();
-      if (!/^@layer lobe-ui[\s.,;{]/.test(head))
+      if (!(first && head === layerOrder) && !/^@layer lobe-ui[\s.,;{]/.test(head))
         fail(`rule outside @layer lobe-ui: ${head.slice(0, 80)}`);
       statement = '';
+      first = false;
     }
   }
   if (!/@property --lobe-scroll-area-fade-top\b/.test(css))
