@@ -1,11 +1,12 @@
 'use client';
 
+import './global.css';
+
 import { ScrollArea as BaseScrollArea } from '@base-ui/react/scroll-area';
 import type React from 'react';
 
 import { cx } from '@/styles';
 
-import ScrollAreaGlobalStyle from './globalStyle';
 import { styles } from './style';
 
 const mergeStateClassName = <TState,>(
@@ -40,13 +41,7 @@ export type ScrollAreaCornerProps = React.ComponentProps<typeof BaseScrollArea.C
 
 export const ScrollAreaRoot = ({ className, ...rest }: ScrollAreaRootProps) => {
   return (
-    <>
-      <ScrollAreaGlobalStyle />
-      <BaseScrollArea.Root
-        {...rest}
-        className={mergeStateClassName(styles.root, className) as any}
-      />
-    </>
+    <BaseScrollArea.Root {...rest} className={mergeStateClassName(styles.root, className) as any} />
   );
 };
 

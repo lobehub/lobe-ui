@@ -29,6 +29,8 @@ if (existsSync(stylePath)) {
       statement = '';
     }
   }
+  if (!/@property --lobe-scroll-area-fade-top\b/.test(css))
+    fail('ScrollArea @property rules missing');
   for (const [, name] of css.replaceAll(/@layer[^;{]*/g, '').matchAll(/\.(-?[A-Z_a-z][\w-]*)/g)) {
     if (!/^(lb|lobe-)/.test(name)) fail(`class without lb/lobe- prefix: .${name}`);
   }
@@ -45,10 +47,13 @@ for (const file of globSync('**/*.mjs', { cwd: es })) {
   ) {
     fail(`${file} imports emotion`);
   }
+  if (file.startsWith('base-ui/ScrollArea/') && code.includes('createGlobalStyle')) {
+    fail(`${file} injects global styles at runtime`);
+  }
 }
 
 if (errors.length > 0) {
   console.error(errors.join('\n'));
   process.exit(1);
 }
-console.log(`es/style.css ok; checked ${migrated.join(', ')}`);
+console.log(`es/style.css ok; checked ${migrated.join(', ')}, base-ui/ScrollArea`);
