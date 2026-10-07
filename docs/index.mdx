@@ -51,7 +51,7 @@ With Tailwind v4, use one merged statement as the very first CSS, before `@impor
 @layer theme, base, lobe-base, lobe-popup, lobe-ui, components, utilities;
 ```
 
-The lobe layers sit after Tailwind's `base` (preflight), so preflight loses to Lobe UI, and before `components` / `utilities`, so Tailwind utilities still beat Lobe UI.
+The lobe layers sit after Tailwind's `base` (preflight), so preflight loses to Lobe UI, and before `components` / `utilities`, so Tailwind utilities still beat Lobe UI. These layering guarantees cover components already migrated to StyleX; the remaining components still inject runtime styles until the migration completes.
 
 The components are based on [Ant Design](https://ant.design/components/overview) and are fully compatible with its component APIs. [antd-style](https://ant-design.github.io/antd-style) is the recommended CSS-in-JS styling solution.
 

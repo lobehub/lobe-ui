@@ -126,7 +126,7 @@ With Tailwind v4, use one merged statement as the very first CSS, before `@impor
 @layer theme, base, lobe-base, lobe-popup, lobe-ui, components, utilities;
 ```
 
-The lobe layers sit after Tailwind's `base` (preflight), so preflight loses to Lobe UI, and before `components` / `utilities`, so Tailwind utilities still beat Lobe UI.
+The lobe layers sit after Tailwind's `base` (preflight), so preflight loses to Lobe UI, and before `components` / `utilities`, so Tailwind utilities still beat Lobe UI. These layering guarantees cover components already migrated to StyleX; the remaining components still inject runtime styles until the migration completes.
 
 ### Theming
 
