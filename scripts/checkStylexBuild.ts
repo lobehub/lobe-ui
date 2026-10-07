@@ -36,7 +36,11 @@ if (existsSync(stylePath)) {
   }
   if (!/@property --lobe-scroll-area-fade-top\b/.test(css))
     fail('ScrollArea @property rules missing');
-  for (const [, name] of css.replaceAll(/@layer[^;{]*/g, '').matchAll(/\.(-?[A-Z_a-z][\w-]*)/g)) {
+  const selectors = css
+    .replaceAll(/@layer[^;{]*/g, '')
+    .replaceAll(/url\([^)]*\)/g, '')
+    .replaceAll(/"[^"]*"|'[^']*'/g, '');
+  for (const [, name] of selectors.matchAll(/\.(-?[A-Z_a-z][\w-]*)/g)) {
     if (!/^(lb|lobe-)/.test(name)) fail(`class without lb/lobe- prefix: .${name}`);
   }
 } else {

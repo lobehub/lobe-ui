@@ -104,7 +104,7 @@
     "es"
   ],
   "scripts": {
-    "build": "tsdown && tsx ./scripts/buildThemeCss.ts && npm run build:packages",
+    "build": "tsdown && tsx ./scripts/buildThemeCss.ts && tsx ./scripts/checkStylexBuild.ts && npm run build:packages",
     "build:packages": "tsx ./scripts/build.ts",
     "build:stylex-vars": "tsx ./scripts/buildStylexVars.ts",
     "build:watch": "tsdown --watch",
