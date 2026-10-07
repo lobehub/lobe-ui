@@ -54,10 +54,16 @@ scripts/
 
 ```ts
 export const styleProps = (
-  styles: stylex.StyleXStyles | stylex.StyleXStyles[],
+  styles: stylex.StyleXArray<
+    | stylex.CompiledStyles
+    | boolean
+    | null
+    | undefined
+    | Readonly<[stylex.CompiledStyles, stylex.InlineStyles]>
+  >,
   className?: string,
   style?: CSSProperties,
-) => {
+): { className: string; style: CSSProperties | undefined } => {
   const p = stylex.props(styles);
   return {
     className: clsx(p.className, className),
@@ -66,7 +72,7 @@ export const styleProps = (
 };
 ```
 
-`clsx` is already a dependency. Consumer `className` / `style` are applied after StyleX's, and consumer CSS wins by being unlayered.
+`styles` is anything `stylex.props` accepts: a style, a nested `StyleXArray` with `false` / `null` / `undefined` holes, and markers (`stylex.defineMarker()` values), so a root can take its marker in the same array. `clsx` is already a dependency. Consumer `className` / `style` are applied after StyleX's, and consumer CSS wins by being unlayered.
 
 ## 2. Toolchain
 
@@ -108,6 +114,39 @@ First task of the implementation: verify that tsdown `unbundle` merges imported 
 
 Slots: `styleProps([styles.popup, …], classNames?.popup, customStyles?.popup)`. base-ui function `className={(state) => …}` keeps working because `styleProps` returns a string.
 
+Rules the pilot settled on:
+
+- **`stylex.props` vs `styleProps`.** Use `styleProps` only on an element that merges a consumer `className` / `style` (root or a slot from `classNames` / `styles`). Every other internal element spreads `stylex.props(...)` directly (Spin glyphs, Tooltip arrow, Button spinner).
+- **Size variants.** A module-level map from the size prop to a style, indexed in the array: `const rootSizeStyles = { default: styles.rootDefault, small: styles.rootSmall }` → `rootSizeStyles[size]` (Switch, Tag `roundSizeStyles`). Tag's `styles[size]` (keys named after the size) is the same idea for a single sized slot. Button's `resolveSizeCls` predates this rule; don't copy it.
+- **Parent → child style injection.** When a wrapper renders another lobe-ui component and must restyle it, split the child into an internal `*Impl` component with an `xstyle?: Parameters<typeof styleProps>[0]` prop that is appended last to its root array (it wins over the child's own entries). SplitButton passes its item styles to `ButtonImpl` this way; ActionIcon → Button follows the same pattern. `xstyle` is internal, never on the public props type.
+- **Ancestor state.** Use a component-specific `stylex.defineMarker()` exported from a `marker.stylex.ts` next to the component (Switch `switchMarker`), put it in the parent's props array and target it with `stylex.when.ancestor('[data-checked]', switchMarker)`. Don't use `stylex.defaultMarker()`: it matches any other component's default marker in the tree.
+- **Sibling `style.css`.** Rules for markup the component doesn't render (consumer children, third-party DOM) go in a sibling `style.css` imported from the component, wrapped in `@layer lobe-ui { … }` and scoped by a stable `lobe-<component>` class on the root (Tag, Switch, Tooltip, ScrollArea `global.css`).
+
+### Cascade
+
+- Layer order is `@layer lobe-base, lobe-popup, lobe-ui;`, declared as the first statement of `theme.css`, `global.css` and `es/style.css`. `lobe-base` holds opt-in document resets and `:where()` helpers, `lobe-popup` the popup trigger highlight; both lose to component styles.
+- StyleX output sits in `lobe-ui.priority1…N`. Its priority-0 rules (keyframes, custom-property rules) are moved into `lobe-ui.priority1` by the lightningcss visitor in `config/stylex.ts`.
+- Sibling `style.css` rules sit directly in `lobe-ui` (not a sublayer), so they beat every StyleX sublayer. Use them to override StyleX output on consumer markup, not to restyle what StyleX already styles.
+- Consumer CSS: unlayered wins; resets must live in a layer declared before `lobe-base`.
+
+### StyleX 0.19.1 gotchas
+
+- `background` and `animation` shorthands compile to nothing, silently. Write longhands (`backgroundColor`, `backgroundImage`, `animationName`, `animationDuration`, `animationIterationCount`, `animationTimingFunction`). Write `border` as `borderWidth` / `borderStyle` / `borderColor`. `transition`, `outline`, `inset`, `insetBlock` and `margin` survive. eslint `no-restricted-syntax` flags `background` / `animation` / `border` keys inside `stylex.create` in style files.
+- A longhand beats its shorthand by priority regardless of array order: override a longhand with the same longhand.
+- When several conditions of one property can match at once, the emitted order follows neither the source nor the key order (`@stylexjs/sort-keys` reorders keys). Make overlapping conditions mutually exclusive with `:not()` (`':is([data-layout]):not([data-instant])'`).
+- `transition: none` → `transitionProperty: 'none'`, `transitionDuration: '0s'`, `transitionTimingFunction: 'ease'`.
+- `stylex.when.*` must be an inline computed key inside `stylex.create`; hoisting the call to a module-level const throws at runtime. Plain string consts as keys are fine. No default parameter values in dynamic-style arrow functions.
+- `@stylexjs/valid-styles` rejects object values under non-allowlisted pseudo keys: flatten into compound keys (`':is([data-checked]):hover:not([data-disabled])'`) or hoist `@media` outside.
+- Component custom properties (`--lobe-tooltip-*`) may be declared inside `stylex.create`; they land in `lobe-ui.priority1`.
+- StyleX CSS passes through lightningcss with the project browserslist (vendor prefixes added) except `:dir()` and logical-property lowering, which are excluded. Check `es/style.css` for anything else lightningcss rewrites.
+- Shared mixins live in `src/styles/stylex/` (`focusRing.info`, `stylish.ts`).
+
+### Verifying a migration
+
+- vitest runs StyleX with `runtimeInjection: true`, so `getComputedStyle` assertions work in tests.
+- Dark mode: open the demo at `/~demos/<id>?appearance=dark`, or use playwright `colorScheme: 'dark'`. Setting `data-theme` on `<html>` alone does not switch the docs page; confirm the computed background actually changed.
+- `pnpm build` runs `scripts/checkStylexBuild.ts`, which fails on CSS outside `@layer lobe-ui`, unprefixed class names, `.css` imports left in `es/**`, or emotion imports in migrated modules (add the module to its `migrated` list).
+
 ## 4. Pilot
 
 | Module                             | Covers                                                                         |
@@ -141,6 +180,15 @@ Stacked PRs in this order, each with a pixel diff and the conventions in §3:
 3. `chat`, `mdx`, `mobile`, `awesome`, `dashboard`, `brand`, `color`, `icons`, `storybook`
 4. third-party markup: `Markdown`, `Highlighter`, `Mermaid`, `CodeEditor`, `HtmlPreview` (mostly plain `.css`)
 5. cleanup: delete internal-only emotion helpers, remove `extractStaticStyle` from lobe-ui SSR guidance if nothing internal needs it
+
+## Implementation notes (deviations from this spec)
+
+- **Component `.css` via a tsdown plugin, not native merging.** tsdown `unbundle` does not merge imported `.css` into the StyleX asset. The `lobe-ui:component-css` plugin in `tsdown.config.ts` resolves each `.css` import (`this.resolve`, so package CSS works), drops the import from the emitted JS, and emits `es/style.css` = layer order + every collected file; StyleX then appends its CSS to that asset. `config/componentCss.ts` parses each file with lightningcss, wraps top-level rules not already in `@layer lobe-ui…` into `@layer lobe-ui`, and applies the same targets / `exclude` as the StyleX output.
+- **lightningcss visitor for layering.** `processStylexRules` leaves priority-0 rules unlayered; the `layerStylexBase` visitor in `config/stylex.ts` moves them into `lobe-ui.priority1`, in both the lib build and docs.
+- **lightningcss lowering.** Default browserslist targets stay (vendor prefixes), with `exclude` = `DirSelector | LogicalProperties` so `:dir()` and logical properties are not lowered to `:lang()` / physical fallbacks.
+- **Layer reorder and docs reset.** The original `lobe-ui` first declaration let `lobe-popup` (trigger highlight) override StyleX Button backgrounds. The order is now `lobe-base, lobe-popup, lobe-ui` everywhere; `global.css` resets moved into `lobe-base`. docs-kit's element resets moved into `@layer docs-reset`, declared first (`docs-reset, lobe-base, lobe-popup, lobe-ui`) in `site/root.tsx` and the build stub `site/styles/stylex.css`; the docs build appends StyleX CSS to the `root-*.css` asset (`cssInjectionTarget`) so every route links it.
+- **Sibling CSS beyond ScrollArea.** Switch (`:dir(rtl)` direction variable), Tag (`span` child reset) and Tooltip (viewport crossfade on base-ui-rendered children) each ship a sibling `style.css`.
+- **vitest `runtimeInjection: true`**, so computed-style tests keep working without emotion.
 
 ## Out of scope
 

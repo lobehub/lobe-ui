@@ -1,5 +1,6 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import {
   isValidElement,
   type MouseEvent,
@@ -163,7 +164,7 @@ const ButtonImpl = ({
         userStyles?.icon,
       )}
     >
-      <span {...styleProps(styles.spinner)} />
+      <span {...stylex.props(styles.spinner)} />
     </span>
   );
 

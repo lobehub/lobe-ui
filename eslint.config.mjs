@@ -74,6 +74,19 @@ export default defineConfig(
       '@stylexjs/sort-keys': 'error',
       '@stylexjs/valid-shorthands': 'error',
       '@stylexjs/valid-styles': 'error',
+      'no-restricted-syntax': [
+        'error',
+        {
+          message: 'Default export is not allowed. Use named exports instead.',
+          selector: 'ExportDefaultDeclaration',
+        },
+        {
+          message:
+            'StyleX 0.19 silently drops this shorthand; use longhands (backgroundColor, animationName, borderWidth/borderStyle/borderColor).',
+          selector:
+            "CallExpression[callee.object.name='stylex'][callee.property.name='create'] Property[key.name=/^(animation|background|border)$/], CallExpression[callee.object.name='stylex'][callee.property.name='create'] Property[key.value=/^(animation|background|border)$/]",
+        },
+      ],
     },
   },
 );
