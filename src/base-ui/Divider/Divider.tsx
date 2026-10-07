@@ -1,24 +1,25 @@
 'use client';
 
 import { Separator } from '@base-ui/react/separator';
+import * as stylex from '@stylexjs/stylex';
 import { memo } from 'react';
 
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
 import { styles } from './style';
 import type { DividerProps } from './type';
 
 const Divider = memo<DividerProps>(
-  ({ children, className, dashed = false, orientation = 'horizontal', ref, ...rest }) => {
+  ({ children, className, dashed = false, orientation = 'horizontal', ref, style, ...rest }) => {
     if (children != null && orientation === 'horizontal') {
       return (
         <Separator
-          className={cx(styles.withText, dashed && styles.dashed, className)}
           orientation="horizontal"
           ref={ref}
+          {...styleProps([styles.withText, dashed && styles.dashed], className, style)}
           {...rest}
         >
-          <span className={styles.text}>{children}</span>
+          <span {...stylex.props(styles.text)}>{children}</span>
         </Separator>
       );
     }
@@ -27,10 +28,13 @@ const Divider = memo<DividerProps>(
       <Separator
         orientation={orientation}
         ref={ref}
-        className={cx(
-          orientation === 'vertical' ? styles.vertical : styles.horizontal,
-          dashed && styles.dashed,
+        {...styleProps(
+          [
+            orientation === 'vertical' ? styles.vertical : styles.horizontal,
+            dashed && styles.dashed,
+          ],
           className,
+          style,
         )}
         {...rest}
       />
