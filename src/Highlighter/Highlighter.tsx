@@ -5,11 +5,11 @@ import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import CopyButton from '@/CopyButton';
 import { Flexbox } from '@/Flex';
 import { getCodeLanguageDisplayName } from '@/Highlighter/const';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 import Tag from '@/Tag';
 
 import FullFeatured from './FullFeatured';
-import { styles, variants } from './style';
+import { actionsHoverCls, langHoverCls, rootClassName, rootStyles, styles } from './style';
 import SyntaxHighlighter from './SyntaxHighlighter';
 import { type HighlighterProps } from './type';
 
@@ -146,14 +146,20 @@ export const Highlighter = memo<HighlighterProps>(
 
     return (
       <Flexbox
-        className={cx(variants({ shadow, variant, wrap }), className)}
         data-code-type="highlighter"
         {...rest}
+        {...styleProps(rootStyles({ shadow, variant }), rootClassName(wrap, className), rest.style)}
       >
-        <Flexbox horizontal align={'center'} className={styles.actions} flex={'none'} gap={4}>
+        <Flexbox
+          horizontal
+          align={'center'}
+          flex={'none'}
+          gap={4}
+          {...styleProps(styles.actions, actionsHoverCls)}
+        >
           {actions}
         </Flexbox>
-        {showLanguage && language && <Tag className={styles.lang}>{displayName}</Tag>}
+        {showLanguage && language && <Tag className={langHoverCls}>{displayName}</Tag>}
         {body}
       </Flexbox>
     );

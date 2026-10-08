@@ -1,54 +1,35 @@
-import { cva } from 'class-variance-authority';
+import './style.css';
 
-import { createStaticStyles, lobeStaticStylish } from '@/styles';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => {
-  return {
-    borderless: lobeStaticStylish.variantBorderlessWithoutHover,
-    filled: lobeStaticStylish.variantFilledWithoutHover,
-    hightlight: css`
-      overflow: auto hidden;
-      flex: 1;
-      height: 100%;
-      padding: 0;
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { stylish } from '@/styles/stylex/stylish';
 
-      pre {
-        display: flex;
-        align-items: center;
-        height: 100%;
-      }
-    `,
-    outlined: lobeStaticStylish.variantOutlinedWithoutHover,
-    root: css`
-      position: relative;
-
-      overflow: hidden;
-
-      max-width: 100%;
-      height: 38px;
-      padding-block: 0;
-      padding-inline: 12px 8px;
-      border-radius: ${cssVar.borderRadius};
-    `,
-    shadow: lobeStaticStylish.shadow,
-  };
-});
-
-export const variants = cva(styles.root, {
-  defaultVariants: {
-    shadow: false,
-    variant: 'filled',
+export const styles = stylex.create({
+  highlight: {
+    padding: 0,
+    flex: '1',
+    height: '100%',
+    overflowX: 'auto',
+    overflowY: 'hidden',
   },
-
-  variants: {
-    variant: {
-      filled: styles.filled,
-      outlined: styles.outlined,
-      borderless: styles.borderless,
-    },
-    shadow: {
-      false: null,
-      true: styles.shadow,
-    },
+  root: {
+    borderRadius: cssVar.borderRadius,
+    overflow: 'hidden',
+    paddingBlock: 0,
+    paddingInlineEnd: 8,
+    paddingInlineStart: 12,
+    position: 'relative',
+    height: 38,
+    maxWidth: '100%',
+  },
+  shadow: {
+    boxShadow: `0 1px 0 -1px ${cssVar.colorBorder}, 0 1px 2px -0.5px ${cssVar.colorBorder}, 0 2px 2px -1px ${cssVar.colorBorderSecondary}, 0 3px 6px -4px ${cssVar.colorBorderSecondary}`,
   },
 });
+
+export const variantStyles = {
+  borderless: stylish.variantBorderlessWithoutHover,
+  filled: stylish.variantFilledWithoutHover,
+  outlined: stylish.variantOutlinedWithoutHover,
+};

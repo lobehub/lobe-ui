@@ -1,4 +1,4 @@
-import { cssVar } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
 export default {
   displayName: 'Lobe Theme',
