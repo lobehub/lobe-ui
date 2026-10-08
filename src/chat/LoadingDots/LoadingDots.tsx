@@ -1,8 +1,9 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { type FC, useMemo } from 'react';
 
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
 import { styles } from './style';
 import type { LoadingDotsProps } from './type';
@@ -14,7 +15,6 @@ const LoadingDots: FC<LoadingDotsProps> = ({
   className,
   style,
 }) => {
-  // Convert props to CSS variables
   const cssVariables = useMemo<Record<string, string>>(() => {
     const vars: Record<string, string> = {
       '--loading-dots-size': `${size}px`,
@@ -28,25 +28,33 @@ const LoadingDots: FC<LoadingDotsProps> = ({
   const renderDots = () => {
     switch (variant) {
       case 'pulse': {
-        return <div className={styles.pulseDot} style={{ animationDelay: '0s' }} />;
+        return (
+          <div {...stylex.props(styles.dot, styles.pulseDot)} style={{ animationDelay: '0s' }} />
+        );
       }
 
       case 'wave': {
         return (
           <>
-            <div className={styles.waveDot} style={{ animationDelay: '0s' }} />
-            <div className={styles.waveDot} style={{ animationDelay: '0.12s' }} />
-            <div className={styles.waveDot} style={{ animationDelay: '0.24s' }} />
+            <div {...stylex.props(styles.dot, styles.waveDot)} style={{ animationDelay: '0s' }} />
+            <div
+              {...stylex.props(styles.dot, styles.waveDot)}
+              style={{ animationDelay: '0.12s' }}
+            />
+            <div
+              {...stylex.props(styles.dot, styles.waveDot)}
+              style={{ animationDelay: '0.24s' }}
+            />
           </>
         );
       }
 
       case 'orbit': {
         return (
-          <div className={styles.orbitContainer}>
-            <div className={styles.orbitDot} style={{ animationDelay: '0s' }} />
-            <div className={styles.orbitDot} style={{ animationDelay: '-0.4s' }} />
-            <div className={styles.orbitDot} style={{ animationDelay: '-0.8s' }} />
+          <div {...stylex.props(styles.orbitContainer)}>
+            <div {...stylex.props(styles.orbitDot)} style={{ animationDelay: '0s' }} />
+            <div {...stylex.props(styles.orbitDot)} style={{ animationDelay: '-0.4s' }} />
+            <div {...stylex.props(styles.orbitDot)} style={{ animationDelay: '-0.8s' }} />
           </div>
         );
       }
@@ -54,9 +62,15 @@ const LoadingDots: FC<LoadingDotsProps> = ({
       case 'typing': {
         return (
           <>
-            <div className={styles.typingDot} style={{ animationDelay: '0s' }} />
-            <div className={styles.typingDot} style={{ animationDelay: '0.15s' }} />
-            <div className={styles.typingDot} style={{ animationDelay: '0.3s' }} />
+            <div {...stylex.props(styles.dot, styles.typingDot)} style={{ animationDelay: '0s' }} />
+            <div
+              {...stylex.props(styles.dot, styles.typingDot)}
+              style={{ animationDelay: '0.15s' }}
+            />
+            <div
+              {...stylex.props(styles.dot, styles.typingDot)}
+              style={{ animationDelay: '0.3s' }}
+            />
           </>
         );
       }
@@ -64,9 +78,18 @@ const LoadingDots: FC<LoadingDotsProps> = ({
       default: {
         return (
           <>
-            <div className={styles.defaultDot} style={{ animationDelay: '0s' }} />
-            <div className={styles.defaultDot} style={{ animationDelay: '0.15s' }} />
-            <div className={styles.defaultDot} style={{ animationDelay: '0.3s' }} />
+            <div
+              {...stylex.props(styles.dot, styles.defaultDot)}
+              style={{ animationDelay: '0s' }}
+            />
+            <div
+              {...stylex.props(styles.dot, styles.defaultDot)}
+              style={{ animationDelay: '0.15s' }}
+            />
+            <div
+              {...stylex.props(styles.dot, styles.defaultDot)}
+              style={{ animationDelay: '0.3s' }}
+            />
           </>
         );
       }
@@ -75,11 +98,10 @@ const LoadingDots: FC<LoadingDotsProps> = ({
 
   return (
     <div
-      className={cx(variant === 'orbit' ? styles.orbitWrapper : styles.container, className)}
-      style={{
+      {...styleProps(variant === 'orbit' ? styles.orbitWrapper : styles.container, className, {
         ...cssVariables,
         ...style,
-      }}
+      })}
     >
       {renderDots()}
     </div>
