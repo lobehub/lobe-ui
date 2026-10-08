@@ -1,160 +1,114 @@
-import { focusRing } from '@/internal/focusRing';
-import { createStaticStyles } from '@/styles';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  checkbox: css`
-    margin-inline-end: 8px;
-  `,
-  guide: css`
-    pointer-events: none;
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-    position: absolute;
-    inset-block-start: 0;
-    inset-inline-start: 0;
-
-    overflow: visible;
-
-    height: 100%;
-
-    path {
-      fill: none;
-      stroke: ${cssVar.colorBorderSecondary};
-      stroke-linecap: round;
-      stroke-width: 1;
-    }
-  `,
-  icon: css`
-    display: inline-flex;
-    flex: none;
-    align-items: center;
-
-    margin-inline-end: 6px;
-
-    color: ${cssVar.colorTextSecondary};
-  `,
-  node: css`
-    position: relative;
-
-    display: flex;
-    align-items: center;
-
-    border-radius: ${cssVar.borderRadius};
-
-    color: ${cssVar.colorText};
-
-    outline: none;
-    ${focusRing}
-  `,
-  nodeBlock: css`
-    cursor: pointer;
-
-    &:hover {
-      background: ${cssVar.colorFillTertiary};
-    }
-
-    &[aria-selected='true'] {
-      background: ${cssVar.colorFillSecondary};
-    }
-  `,
-  nodeDisabled: css`
-    cursor: not-allowed;
-    color: ${cssVar.colorTextDisabled};
-
-    &:hover {
-      background: transparent;
-    }
-  `,
-  panel: css`
-    overflow: hidden;
-    height: var(--collapsible-panel-height);
-    transition: height 200ms ${cssVar.motionEaseOut};
-
-    &[data-starting-style],
-    &[data-ending-style] {
-      height: 0;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      transition-duration: 0s;
-    }
-  `,
-  root: css`
-    user-select: none;
-    display: flex;
-    flex-direction: column;
-    outline: none;
-  `,
-  switcher: css`
-    cursor: pointer;
-
-    display: grid;
-    flex: none;
-    place-items: center;
-
-    width: 24px;
-    height: 24px;
-    padding: 0;
-    border: 0;
-    border-radius: ${cssVar.borderRadiusSM};
-
-    color: ${cssVar.colorTextSecondary};
-
-    background: none;
-
-    &:hover {
-      color: ${cssVar.colorText};
-      background: ${cssVar.colorFillSecondary};
-    }
-
-    svg {
-      transition: transform 200ms ${cssVar.motionEaseOut};
-    }
-
-    [aria-expanded='true'] > & svg {
-      transform: rotate(90deg);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      svg {
-        transition-duration: 0s;
-      }
-    }
-  `,
-  switcherLeaf: css`
-    pointer-events: none;
-    visibility: hidden;
-  `,
-  title: css`
-    overflow: hidden;
-    display: inline-flex;
-    gap: 6px;
-    align-items: center;
-
-    min-width: 0;
-    padding-block: 2px;
-    padding-inline: 6px;
-    border-radius: ${cssVar.borderRadiusSM};
-
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  `,
-  titleBlock: css`
-    flex: 1;
-  `,
-  titleInline: css`
-    cursor: pointer;
-
-    &:hover {
-      background: ${cssVar.colorFillTertiary};
-    }
-
-    [aria-selected='true'] > & {
-      background: ${cssVar.colorFillSecondary};
-    }
-
-    [aria-disabled='true'] > & {
-      cursor: not-allowed;
-      background: transparent;
-    }
-  `,
-}));
+export const styles = stylex.create({
+  checkbox: {
+    marginInlineEnd: 8,
+  },
+  guide: {
+    overflow: 'visible',
+    insetBlockStart: 0,
+    insetInlineStart: 0,
+    pointerEvents: 'none',
+    position: 'absolute',
+    height: '100%',
+  },
+  guidePath: {
+    fill: 'none',
+    stroke: cssVar.colorBorderSecondary,
+    strokeLinecap: 'round',
+    strokeWidth: 1,
+  },
+  icon: {
+    flex: 'none',
+    alignItems: 'center',
+    color: cssVar.colorTextSecondary,
+    display: 'inline-flex',
+    marginInlineEnd: 6,
+  },
+  node: {
+    borderRadius: cssVar.borderRadius,
+    outline: 'none',
+    alignItems: 'center',
+    color: cssVar.colorText,
+    display: 'flex',
+    position: 'relative',
+  },
+  nodeBlock: {
+    cursor: 'pointer',
+  },
+  nodeDisabled: {
+    color: cssVar.colorTextDisabled,
+    cursor: 'not-allowed',
+  },
+  nodeDisabledSelected: {
+    backgroundColor: { 'default': cssVar.colorFillSecondary, ':hover': 'transparent' },
+  },
+  nodeHover: {
+    backgroundColor: { 'default': null, ':hover': cssVar.colorFillTertiary },
+  },
+  nodeSelected: {
+    backgroundColor: cssVar.colorFillSecondary,
+  },
+  panel: {
+    overflow: 'hidden',
+    transition: `height 200ms ${cssVar.motionEaseOut}`,
+    transitionDuration: { 'default': null, '@media (prefers-reduced-motion: reduce)': '0s' },
+    height: {
+      'default': 'var(--collapsible-panel-height)',
+      ':is([data-starting-style], [data-ending-style])': 0,
+    },
+  },
+  root: {
+    outline: 'none',
+    display: 'flex',
+    flexDirection: 'column',
+    userSelect: 'none',
+  },
+  switcher: {
+    padding: 0,
+    borderColor: 'currentcolor',
+    borderRadius: cssVar.borderRadiusSM,
+    borderStyle: 'none',
+    borderWidth: 0,
+    flex: 'none',
+    placeItems: 'center',
+    backgroundColor: { 'default': 'transparent', ':hover': cssVar.colorFillSecondary },
+    color: { 'default': cssVar.colorTextSecondary, ':hover': cssVar.colorText },
+    cursor: 'pointer',
+    display: 'grid',
+    height: 24,
+    width: 24,
+  },
+  switcherLeaf: {
+    pointerEvents: 'none',
+    visibility: 'hidden',
+  },
+  title: {
+    borderRadius: cssVar.borderRadiusSM,
+    gap: 6,
+    overflow: 'hidden',
+    paddingBlock: 2,
+    paddingInline: 6,
+    alignItems: 'center',
+    display: 'inline-flex',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    minWidth: 0,
+  },
+  titleBlock: {
+    flex: '1',
+  },
+  titleInline: {
+    backgroundColor: { 'default': null, ':hover': cssVar.colorFillTertiary },
+    cursor: 'pointer',
+  },
+  titleInlineDisabled: {
+    backgroundColor: 'transparent',
+    cursor: 'not-allowed',
+  },
+  titleInlineSelected: {
+    backgroundColor: cssVar.colorFillSecondary,
+  },
+});
