@@ -1,354 +1,295 @@
-import { cva } from 'class-variance-authority';
+import './style.css';
 
-import { controlHeight } from '@/internal/controlSize';
-import { focusRing } from '@/internal/focusRing';
-import { createStaticStyles, cx, lobeStaticStylish } from '@/styles';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  arrow: css`
-    display: flex;
-    width: 12px;
-    height: 6px;
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { focusRing } from '@/styles/stylex/focusRing';
 
-    & > svg {
-      width: 100%;
-      height: 100%;
-    }
-  `,
-  borderless: cx(
-    lobeStaticStylish.variantBorderless,
-    css`
-      --lobe-select-open-bg: ${cssVar.colorFillTertiary};
-      --lobe-select-readonly-bg: color-mix(in srgb, ${cssVar.colorFillTertiary} 70%, transparent);
-      --lobe-select-disabled-bg: color-mix(in srgb, ${cssVar.colorFillTertiary} 55%, transparent);
-    `,
-  ),
-  clear: css`
-    display: inline-flex;
-    align-items: center;
+import { selectMarker } from './marker.stylex';
 
-    color: ${cssVar.colorTextTertiary};
+const open =
+  ":not([data-disabled], [data-readonly]):is([data-popup-open], [data-open], [data-state='open'], [aria-expanded='true'])";
+const hover =
+  ":hover:not([data-disabled], [data-readonly], [data-popup-open], [data-open], [data-state='open'], [aria-expanded='true'])";
+const disabled = ':is([data-disabled]):not([data-readonly])';
+const readonly = ':is([data-readonly])';
+const startingOrEnding = ':is([data-starting-style], [data-ending-style])';
+const openBg = `var(--lobe-select-open-bg, ${cssVar.colorFillTertiary})`;
+const disabledBg = 'var(--lobe-select-disabled-bg, transparent)';
+const readonlyBg = 'var(--lobe-select-readonly-bg, transparent)';
 
-    opacity: 0;
-
-    transition: opacity 150ms ${cssVar.motionEaseOut};
-
-    &:hover {
-      color: ${cssVar.colorTextSecondary};
-    }
-  `,
-  empty: css``,
-  filled: cx(
-    lobeStaticStylish.variantFilled,
-    css`
-      --lobe-select-open-bg: ${cssVar.colorFillSecondary};
-      --lobe-select-readonly-bg: color-mix(in srgb, ${cssVar.colorFillTertiary} 70%, transparent);
-      --lobe-select-disabled-bg: color-mix(in srgb, ${cssVar.colorFillTertiary} 55%, transparent);
-    `,
-  ),
-  group: css``,
-  groupLabel: css``,
-  icon: css`
-    display: inline-flex;
-    align-items: center;
-    transition: transform 150ms ${cssVar.motionEaseOut};
-
-    &[data-popup-open] {
-      transform: rotate(180deg);
-    }
-  `,
-  item: css``,
-  itemBoldSelected: css`
-    &[data-selected] {
-      font-weight: 600;
-    }
-  `,
-  itemIndicator: css`
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    margin-inline-start: auto;
-    padding-inline-start: 8px;
-
-    color: ${cssVar.colorPrimary};
-  `,
-  itemText: css``,
-  list: css`
-    overflow-y: auto;
-    flex: 1;
-    min-height: 0;
-    padding-block: 0;
-  `,
-  listWithSearch: css`
-    padding-block-start: 4px;
-  `,
-  outlined: cx(
-    lobeStaticStylish.variantOutlined,
-    css`
-      --lobe-select-open-bg: ${cssVar.colorFillTertiary};
-      --lobe-select-readonly-bg: color-mix(in srgb, ${cssVar.colorBgContainer} 75%, transparent);
-      --lobe-select-disabled-bg: color-mix(in srgb, ${cssVar.colorBgContainer} 60%, transparent);
-    `,
-  ),
-  popup: css`
-    --lobe-select-available-height: min(
-      var(--available-height),
-      var(--lobe-select-popup-max-height, var(--available-height))
-    );
-
-    transform-origin: var(--transform-origin);
-
-    display: flex;
-    flex-direction: column;
-
-    box-sizing: border-box;
-    max-height: var(--lobe-select-available-height);
-
-    transition:
-      opacity 150ms ${cssVar.motionEaseOut},
-      transform 150ms ${cssVar.motionEaseOut};
-
-    &[data-starting-style],
-    &[data-ending-style] {
-      transform: scaleY(0.92);
-      opacity: 0;
-    }
-  `,
-  positioner: css`
-    z-index: 1100;
-    outline: none;
-  `,
-  prefix: css`
-    display: inline-flex;
-    align-items: center;
-    color: ${cssVar.colorTextSecondary};
-  `,
-  scrollArrow: css`
-    cursor: default;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    height: 16px;
-
-    color: ${cssVar.colorTextSecondary};
-
-    background: ${cssVar.colorBgElevated};
-  `,
-  search: css`
-    cursor: text;
-
-    display: flex;
-    align-items: center;
-
-    min-height: 36px;
-    margin-inline: calc(-1 * var(--lobe-menu-popup-padding));
-    padding-block: 8px;
-    padding-inline: 12px;
-    border-block-end: 1px solid ${cssVar.colorFillSecondary};
-  `,
-  searchInput: css`
-    flex: 1;
-
-    min-width: 0;
-    padding-block: 0;
-    padding-inline: 4px;
-    border: 0;
-
-    font-size: 14px;
-    line-height: 20px;
-    color: ${cssVar.colorText};
-
-    background: transparent;
-    outline: none;
-
-    &::placeholder {
-      color: ${cssVar.colorTextPlaceholder};
-    }
-  `,
-  shadow: lobeStaticStylish.shadow,
-  suffix: css`
-    display: inline-flex;
-    gap: 6px;
-    align-items: center;
-    color: ${cssVar.colorTextSecondary};
-  `,
-  tag: css`
-    display: inline-flex;
-    align-items: center;
-
-    max-width: 100%;
-    padding-block: 0;
-    padding-inline: 6px;
-    border-radius: ${cssVar.borderRadiusSM};
-
-    font-size: 12px;
-    line-height: 20px;
-    color: ${cssVar.colorText};
-
-    background: ${cssVar.colorFillTertiary};
-  `,
-  tagClose: css`
-    cursor: pointer;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    margin-inline-start: 4px;
-
-    color: ${cssVar.colorTextSecondary};
-
-    transition: opacity 150ms ${cssVar.motionEaseOut};
-  `,
-  tags: css`
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
-    align-items: center;
-  `,
-  tagsValue: css`
-    /* No growing, so an empty trigger leaves the inline input the full width — but it must
-       still shrink, or the tags stay at max-content and run off the trigger instead of wrapping. */
-    flex: 0 1 auto;
-  `,
-  tagsSearch: css`
-    display: flex;
-    flex: 1;
-    min-width: 48px;
-  `,
-  trigger: css`
-    cursor: pointer;
-    user-select: none;
-
-    display: inline-flex;
-    gap: 8px;
-    align-items: center;
-
-    box-sizing: border-box;
-    width: 100%;
-    border: 1px solid transparent;
-    border-radius: ${cssVar.borderRadius};
-
-    font-family: inherit;
-    color: ${cssVar.colorText};
-
-    background: transparent;
-    outline: none;
-
-    transition: all 150ms ${cssVar.motionEaseOut};
-
-    &:not([data-disabled], [data-readonly])[data-popup-open],
-    &:not([data-disabled], [data-readonly])[data-open],
-    &:not([data-disabled], [data-readonly])[data-state='open'],
-    &:not([data-disabled], [data-readonly])[aria-expanded='true'] {
-      background: var(--lobe-select-open-bg, ${cssVar.colorFillTertiary});
-    }
-
-    ${focusRing};
-
-    &:hover [data-role='lobe-select-clear'] {
-      opacity: 1;
-    }
-
-    &[data-placeholder] [data-role='lobe-select-clear'] {
-      pointer-events: none;
-      opacity: 0;
-    }
-
-    &[data-disabled] {
-      cursor: not-allowed;
-      color: ${cssVar.colorTextDisabled};
-      background: var(--lobe-select-disabled-bg, transparent);
-
-      &:hover {
-        background: var(--lobe-select-disabled-bg, transparent);
-      }
-    }
-
-    &[data-readonly] {
-      cursor: default;
-      color: ${cssVar.colorTextSecondary};
-      background: var(--lobe-select-readonly-bg, transparent);
-
-      &:hover {
-        background: var(--lobe-select-readonly-bg, transparent);
-      }
-    }
-
-    &[data-disabled] [data-role='lobe-select-clear'] {
-      pointer-events: none;
-      opacity: 0;
-    }
-  `,
-  triggerLarge: css`
-    min-height: ${controlHeight.large}px;
-    padding-block: 6px;
-    padding-inline: 12px;
-
-    font-size: 16px;
-    line-height: 24px;
-  `,
-  triggerMiddle: css`
-    min-height: ${controlHeight.middle}px;
-    padding-block: 4px;
-    padding-inline: 11px;
-
-    font-size: 14px;
-    line-height: 20px;
-  `,
-  triggerSmall: css`
-    min-height: ${controlHeight.small}px;
-    padding-block: 0;
-    padding-inline: 8px;
-
-    font-size: 12px;
-    line-height: 18px;
-  `,
-  value: css`
-    display: flex;
-    flex: 1;
-    flex-wrap: wrap;
-    gap: 4px;
-    align-items: center;
-
-    min-width: 0;
-
-    color: inherit;
-
-    &[data-placeholder] {
-      color: ${cssVar.colorTextPlaceholder};
-    }
-  `,
-  valueText: css`
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  `,
-}));
-
-export const triggerVariants = cva(styles.trigger, {
-  defaultVariants: {
-    shadow: false,
-    size: 'middle',
-    variant: 'outlined',
+export const styles = stylex.create({
+  arrow: {
+    display: 'flex',
+    height: 6,
+    width: 12,
   },
-  variants: {
-    shadow: {
-      false: null,
-      true: styles.shadow,
+  borderless: {
+    '--lobe-select-disabled-bg': `color-mix(in srgb, ${cssVar.colorFillTertiary} 55%, transparent)`,
+    '--lobe-select-open-bg': cssVar.colorFillTertiary,
+    '--lobe-select-readonly-bg': `color-mix(in srgb, ${cssVar.colorFillTertiary} 70%, transparent)`,
+    'borderColor': 'currentcolor',
+    'borderStyle': 'none',
+    'borderWidth': 'medium',
+    'backgroundColor': {
+      default: 'transparent',
+      [disabled]: disabledBg,
+      [hover]: cssVar.colorFillTertiary,
+      [open]: openBg,
+      [readonly]: readonlyBg,
     },
-    size: {
-      large: styles.triggerLarge,
-      middle: styles.triggerMiddle,
-      small: styles.triggerSmall,
+    'boxShadow': 'none',
+  },
+  clear: {
+    transition: `opacity 150ms ${cssVar.motionEaseOut}`,
+    alignItems: 'center',
+    color: { 'default': cssVar.colorTextTertiary, ':hover': cssVar.colorTextSecondary },
+    display: 'inline-flex',
+    opacity: {
+      default: 0,
+      [stylex.when.ancestor(':hover:not([data-placeholder], [data-disabled])', selectMarker)]: 1,
     },
-    variant: {
-      borderless: styles.borderless,
-      filled: styles.filled,
-      outlined: styles.outlined,
+    pointerEvents: {
+      default: null,
+      [stylex.when.ancestor(':is([data-placeholder], [data-disabled])', selectMarker)]: 'none',
     },
+  },
+  empty: {
+    color: cssVar.colorTextTertiary,
+  },
+  filled: {
+    '--lobe-select-disabled-bg': `color-mix(in srgb, ${cssVar.colorFillTertiary} 55%, transparent)`,
+    '--lobe-select-open-bg': cssVar.colorFillSecondary,
+    '--lobe-select-readonly-bg': `color-mix(in srgb, ${cssVar.colorFillTertiary} 70%, transparent)`,
+    'backgroundColor': {
+      default: cssVar.colorFillTertiary,
+      [disabled]: disabledBg,
+      [hover]: cssVar.colorFillSecondary,
+      [open]: openBg,
+      [readonly]: readonlyBg,
+    },
+  },
+  icon: {
+    transition: `transform 150ms ${cssVar.motionEaseOut}`,
+    alignItems: 'center',
+    display: 'inline-flex',
+    transform: { 'default': null, ':is([data-popup-open])': 'rotate(180deg)' },
+  },
+  itemBoldSelected: {
+    fontWeight: { 'default': null, ':is([data-selected])': 600 },
+  },
+  itemIndicator: {
+    alignItems: 'center',
+    color: cssVar.colorPrimary,
+    display: 'inline-flex',
+    justifyContent: 'center',
+    marginInlineStart: 'auto',
+    paddingInlineStart: 8,
+  },
+  list: {
+    flex: '1',
+    paddingBlockEnd: 0,
+    paddingBlockStart: 0,
+    minHeight: 0,
+    overflowY: 'auto',
+  },
+  listWithSearch: {
+    paddingBlockStart: 4,
+  },
+  outlined: {
+    '--lobe-select-disabled-bg': `color-mix(in srgb, ${cssVar.colorBgContainer} 60%, transparent)`,
+    '--lobe-select-open-bg': cssVar.colorFillTertiary,
+    '--lobe-select-readonly-bg': `color-mix(in srgb, ${cssVar.colorBgContainer} 75%, transparent)`,
+    'borderColor': { 'default': cssVar.colorBorderSecondary, ':hover': cssVar.colorBorder },
+    'borderStyle': 'solid',
+    'borderWidth': 1,
+    'backgroundColor': {
+      default: cssVar.colorBgContainer,
+      [disabled]: disabledBg,
+      [open]: openBg,
+      [readonly]: readonlyBg,
+    },
+  },
+  popup: {
+    '--lobe-select-available-height':
+      'min(var(--available-height), var(--lobe-select-popup-max-height, var(--available-height)))',
+    'transition': `opacity 150ms ${cssVar.motionEaseOut}, transform 150ms ${cssVar.motionEaseOut}`,
+    'boxSizing': 'border-box',
+    'display': 'flex',
+    'flexDirection': 'column',
+    'opacity': { default: null, [startingOrEnding]: 0 },
+    'transform': { default: null, [startingOrEnding]: 'scaleY(0.92)' },
+    'transformOrigin': 'var(--transform-origin)',
+    'maxHeight': 'var(--lobe-select-available-height)',
+  },
+  positioner: {
+    outline: 'none',
+    zIndex: 1100,
+  },
+  prefix: {
+    alignItems: 'center',
+    color: cssVar.colorTextSecondary,
+    display: 'inline-flex',
+  },
+  scrollArrow: {
+    alignItems: 'center',
+    backgroundColor: cssVar.colorBgElevated,
+    color: cssVar.colorTextSecondary,
+    cursor: 'default',
+    display: 'flex',
+    justifyContent: 'center',
+    height: 16,
+  },
+  search: {
+    marginInline: 'calc(-1 * var(--lobe-menu-popup-padding))',
+    paddingBlock: 8,
+    paddingInline: 12,
+    alignItems: 'center',
+    borderBlockEndColor: cssVar.colorFillSecondary,
+    borderBlockEndStyle: 'solid',
+    borderBlockEndWidth: 1,
+    cursor: 'text',
+    display: 'flex',
+    minHeight: 36,
+  },
+  searchInput: {
+    'borderColor': 'currentcolor',
+    'borderStyle': 'none',
+    'borderWidth': 0,
+    'flex': '1',
+    'outline': 'none',
+    'paddingBlock': 0,
+    'paddingInline': 4,
+    'backgroundColor': 'transparent',
+    'color': cssVar.colorText,
+    'fontSize': 14,
+    'lineHeight': '20px',
+    'minWidth': 0,
+    '::placeholder': { color: cssVar.colorTextPlaceholder },
+  },
+  shadow: {
+    boxShadow: `0 1px 0 -1px ${cssVar.colorBorder}, 0 1px 2px -0.5px ${cssVar.colorBorder}, 0 2px 2px -1px ${cssVar.colorBorderSecondary}, 0 3px 6px -4px ${cssVar.colorBorderSecondary}`,
+  },
+  suffix: {
+    gap: 6,
+    alignItems: 'center',
+    color: cssVar.colorTextSecondary,
+    display: 'inline-flex',
+  },
+  tag: {
+    borderRadius: cssVar.borderRadiusSM,
+    paddingBlock: 0,
+    paddingInline: 6,
+    alignItems: 'center',
+    backgroundColor: cssVar.colorFillTertiary,
+    color: cssVar.colorText,
+    display: 'inline-flex',
+    fontSize: 12,
+    lineHeight: '20px',
+    maxWidth: '100%',
+  },
+  tagClose: {
+    transition: `opacity 150ms ${cssVar.motionEaseOut}`,
+    alignItems: 'center',
+    color: cssVar.colorTextSecondary,
+    cursor: 'pointer',
+    display: 'inline-flex',
+    justifyContent: 'center',
+    marginInlineStart: 4,
+  },
+  tags: {
+    gap: 4,
+    alignItems: 'center',
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  tagsSearch: {
+    flex: '1',
+    display: 'flex',
+    minWidth: 48,
+  },
+  tagsValue: {
+    flexBasis: 'auto',
+    flexGrow: '0',
+    flexShrink: '1',
+  },
+  trigger: {
+    borderColor: 'transparent',
+    borderRadius: cssVar.borderRadius,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    gap: 8,
+    outline: 'none',
+    transition: `all 150ms ${cssVar.motionEaseOut}`,
+    alignItems: 'center',
+    boxSizing: 'border-box',
+    color: {
+      default: cssVar.colorText,
+      [disabled]: cssVar.colorTextDisabled,
+      [readonly]: cssVar.colorTextSecondary,
+    },
+    cursor: { default: 'pointer', [disabled]: 'not-allowed', [readonly]: 'default' },
+    display: 'inline-flex',
+    fontFamily: 'inherit',
+    userSelect: 'none',
+    width: '100%',
+  },
+  triggerLarge: {
+    paddingBlock: 6,
+    paddingInline: 12,
+    fontSize: 16,
+    lineHeight: '24px',
+    minHeight: 40,
+  },
+  triggerMiddle: {
+    paddingBlock: 4,
+    paddingInline: 11,
+    fontSize: 14,
+    lineHeight: '20px',
+    minHeight: 32,
+  },
+  triggerSmall: {
+    paddingBlock: 0,
+    paddingInline: 8,
+    fontSize: 12,
+    lineHeight: '18px',
+    minHeight: 24,
+  },
+  value: {
+    flex: '1',
+    gap: 4,
+    alignItems: 'center',
+    color: { 'default': 'inherit', ':is([data-placeholder])': cssVar.colorTextPlaceholder },
+    display: 'flex',
+    flexWrap: 'wrap',
+    minWidth: 0,
+  },
+  valueText: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
   },
 });
+
+const triggerSizeStyles = {
+  large: styles.triggerLarge,
+  middle: styles.triggerMiddle,
+  small: styles.triggerSmall,
+};
+
+export const triggerStyles = ({
+  shadow,
+  size,
+  variant,
+}: {
+  shadow?: boolean;
+  size?: keyof typeof triggerSizeStyles;
+  variant: 'borderless' | 'filled' | 'outlined';
+}) => [
+  styles.trigger,
+  focusRing.info,
+  selectMarker,
+  shadow && styles.shadow,
+  triggerSizeStyles[size ?? 'middle'],
+  styles[variant],
+];

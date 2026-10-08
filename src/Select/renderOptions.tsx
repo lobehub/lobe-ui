@@ -1,11 +1,12 @@
 'use client';
 
 import { Select as BaseSelect } from '@base-ui/react/select';
+import clsx from 'clsx';
 import { Check } from 'lucide-react';
 
-import { styles as menuStyles } from '@/DropdownMenu/sharedStyle';
+import { menuStyles } from '@/DropdownMenu/sharedStyle';
 import Icon from '@/Icon';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
 import { getOptionSearchText, isGroupOption } from './helpers';
 import { styles } from './style';
@@ -38,24 +39,17 @@ function renderItem(
       key={`${String(option.value)}-${index}`}
       label={getOptionSearchText(option)}
       value={option.value}
-      className={cx(
-        menuStyles.item,
-        styles.item,
-        isBoldIndicator && styles.itemBoldSelected,
-        classNames?.item,
-        classNames?.option,
-        option.className,
+      {...styleProps(
+        [menuStyles.item, isBoldIndicator && styles.itemBoldSelected],
+        clsx(classNames?.item, classNames?.option, option.className),
+        { minHeight: listItemHeight, ...option.style },
       )}
-      style={{
-        minHeight: listItemHeight,
-        ...option.style,
-      }}
     >
       <BaseSelect.ItemText className={itemTextClassName}>
         {optionRender ? optionRender(option, { index }) : option.label}
       </BaseSelect.ItemText>
       {!isBoldIndicator && (
-        <BaseSelect.ItemIndicator className={cx(styles.itemIndicator, classNames?.itemIndicator)}>
+        <BaseSelect.ItemIndicator {...styleProps(styles.itemIndicator, classNames?.itemIndicator)}>
           <Icon icon={Check} size={'small'} />
         </BaseSelect.ItemIndicator>
       )}
@@ -70,10 +64,8 @@ export function renderOptions(params: RenderOptionsParams) {
   return items.map((item, index) => {
     if (isGroupOption(item)) {
       return (
-        <BaseSelect.Group className={cx(styles.group, classNames?.group)} key={`group-${index}`}>
-          <BaseSelect.GroupLabel
-            className={cx(menuStyles.groupLabel, styles.groupLabel, classNames?.groupLabel)}
-          >
+        <BaseSelect.Group className={classNames?.group} key={`group-${index}`}>
+          <BaseSelect.GroupLabel {...styleProps(menuStyles.groupLabel, classNames?.groupLabel)}>
             {item.label}
           </BaseSelect.GroupLabel>
           {item.options.map((option) => renderItem(option, optionIndex++, params))}
