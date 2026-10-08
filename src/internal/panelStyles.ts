@@ -32,35 +32,6 @@ export const panelStyles = createStaticStyles(({ css, cssVar }) => ({
       background: ${cssVar.colorFillTertiary};
     }
   `,
-  pill: css`
-    ${focusRing};
-    cursor: pointer;
-
-    display: inline-flex;
-    gap: 6px;
-    align-items: center;
-    justify-content: center;
-
-    height: 32px;
-    padding-inline: 14px;
-    border: 0;
-    border-radius: 999px;
-
-    font: inherit;
-    font-size: 13px;
-    font-weight: 500;
-    color: ${cssVar.colorBgContainer};
-
-    background: ${cssVar.colorText};
-  `,
-  pillGhost: css`
-    color: ${cssVar.colorText};
-    background: ${cssVar.colorFillTertiary};
-
-    &:hover {
-      background: ${cssVar.colorFillSecondary};
-    }
-  `,
   popup: css`
     padding: 16px;
     border-radius: 16px;
