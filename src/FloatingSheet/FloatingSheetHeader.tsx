@@ -1,6 +1,5 @@
+import * as stylex from '@stylexjs/stylex';
 import { type ReactNode } from 'react';
-
-import { cx } from '@/styles';
 
 import { styles } from './style';
 
@@ -22,12 +21,12 @@ export function FloatingSheetHeader({
   const s = styles;
 
   return (
-    <div className={cx(s.header, isDragging && s.headerDragging)} {...handleProps}>
-      <div className={s.handle} />
-      <div className={s.headerContent}>
-        {title && <div className={s.headerTitle}>{title}</div>}
+    <div {...stylex.props(s.header, isDragging && s.headerDragging)} {...handleProps}>
+      <div {...stylex.props(s.handle)} />
+      <div {...stylex.props(s.headerContent)}>
+        {title && <div {...stylex.props(s.headerTitle)}>{title}</div>}
         {headerActions && (
-          <div className={s.headerActions} data-no-drag="">
+          <div {...stylex.props(s.headerActions)} data-no-drag="">
             {headerActions}
           </div>
         )}
