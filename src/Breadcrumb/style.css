@@ -1,0 +1,11 @@
+@layer lobe-ui {
+  .lobe-breadcrumb li a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .lobe-breadcrumb a:hover,
+  .lobe-breadcrumb button:hover {
+    color: var(--lobe-color-text);
+  }
+}
