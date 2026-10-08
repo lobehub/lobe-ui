@@ -12,7 +12,7 @@ import { useTranslation } from '@/i18n/useTranslation';
 import { TextArea } from '@/Input';
 import Markdown from '@/Markdown';
 import { Modal } from '@/Modal';
-import { useResponsive } from '@/styles';
+import { useResponsive } from '@/styles/theme/scope';
 
 import { type MessageModalProps } from './type';
 

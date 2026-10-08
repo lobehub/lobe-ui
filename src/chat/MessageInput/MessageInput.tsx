@@ -1,5 +1,6 @@
 'use client';
 
+import clsx from 'clsx';
 import { memo, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 
@@ -9,7 +10,7 @@ import { Flexbox } from '@/Flex';
 import { KeyMapEnum } from '@/Hotkey/const';
 import { combineKeys } from '@/Hotkey/utils';
 import { TextArea } from '@/Input';
-import { cx, useResponsive } from '@/styles';
+import { useResponsive } from '@/styles/theme/scope';
 import Tooltip from '@/Tooltip';
 
 import { styles } from './style';
@@ -65,7 +66,7 @@ const MessageInput = memo<MessageInputProps>(
         {mobile ? (
           <TextArea
             autoSize
-            className={cx(styles, classNames?.editor)}
+            className={clsx(styles, classNames?.editor)}
             placeholder={placeholder}
             style={customStyles?.editor}
             value={temporaryValue}
@@ -75,7 +76,7 @@ const MessageInput = memo<MessageInputProps>(
           />
         ) : (
           <CodeEditor
-            className={cx(styles, classNames?.editor)}
+            className={clsx(styles, classNames?.editor)}
             classNames={classNames}
             language={language}
             placeholder={placeholder}
