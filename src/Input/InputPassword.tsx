@@ -1,5 +1,6 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { Eye, EyeOff } from 'lucide-react';
 import { memo, useState } from 'react';
 
@@ -21,10 +22,10 @@ const InputPassword = memo<InputPasswordProps>(({ visibilityToggle = true, suffi
           {visibilityToggle && (
             <button
               aria-label={visible ? 'Hide password' : 'Show password'}
-              className={styles.passwordToggle}
               tabIndex={-1}
               type={'button'}
               onClick={() => setVisible((v) => !v)}
+              {...stylex.props(styles.passwordToggle)}
             >
               <Icon icon={visible ? Eye : EyeOff} size={16} />
             </button>

@@ -4,12 +4,13 @@ import { Input as BaseInput } from '@base-ui/react/input';
 import { memo, useRef, useState } from 'react';
 import { useMergeRefs } from 'react-merge-refs';
 
-import { cx, useThemeMode } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
+import { useThemeMode } from '@/styles/theme/scope';
 
 import ClearButton from './ClearButton';
 import { clearNativeValue } from './clearNativeValue';
 import { isPressEnter } from './pressEnter';
-import { rootVariants, styles } from './style';
+import { inputRootStyles, styles } from './style';
 import type { InputProps } from './type';
 
 const hasText = (value: unknown) =>
@@ -48,23 +49,21 @@ const Input = memo<InputProps>(
 
     return (
       <div
-        className={cx(rootVariants({ shadow, size, variant: mergedVariant }), className)}
         data-disabled={disabled ? '' : undefined}
-        style={style}
+        {...styleProps(inputRootStyles({ shadow, size, variant: mergedVariant }), className, style)}
       >
         {prefix && (
-          <span className={cx(styles.slot, classNames?.prefix)} style={customStyles?.prefix}>
+          <span {...styleProps(styles.slot, classNames?.prefix, customStyles?.prefix)}>
             {prefix}
           </span>
         )}
         <BaseInput
-          className={cx(styles.input, classNames?.input)}
           defaultValue={defaultValue}
           disabled={disabled}
           readOnly={readOnly}
           ref={mergedRef}
-          style={customStyles?.input}
           value={value}
+          {...styleProps(styles.input, classNames?.input, customStyles?.input)}
           onChange={(event) => {
             setFilled(event.currentTarget.value.length > 0);
             onChange?.(event);
@@ -84,7 +83,7 @@ const Input = memo<InputProps>(
           />
         )}
         {suffix && (
-          <span className={cx(styles.slot, classNames?.suffix)} style={customStyles?.suffix}>
+          <span {...styleProps(styles.slot, classNames?.suffix, customStyles?.suffix)}>
             {suffix}
           </span>
         )}

@@ -1,14 +1,16 @@
 'use client';
 
 import { NumberField } from '@base-ui/react/number-field';
+import * as stylex from '@stylexjs/stylex';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { memo } from 'react';
 
 import Icon from '@/Icon';
-import { cx, useThemeMode } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
+import { useThemeMode } from '@/styles/theme/scope';
 
 import { isPressEnter } from './pressEnter';
-import { rootVariants, styles } from './style';
+import { inputRootStyles, styles } from './style';
 import type { InputNumberProps } from './type';
 
 const controlIconSize = { large: 13, middle: 12, small: 10 } as const;
@@ -36,7 +38,7 @@ const InputNumber = memo<InputNumberProps>(
   }) => {
     const { isDarkMode } = useThemeMode();
     const mergedVariant = variant || (isDarkMode ? 'filled' : 'outlined');
-    const controlClassName = cx(
+    const controlProps = stylex.props(
       styles.numberControl,
       size === 'small' && styles.numberControlSmall,
       size === 'large' && styles.numberControlLarge,
@@ -49,31 +51,33 @@ const InputNumber = memo<InputNumberProps>(
     return (
       <NumberField.Root
         allowWheelScrub={changeOnWheel}
-        className={cx(rootVariants({ shadow, size, variant: mergedVariant }), className)}
         format={mergedFormat}
-        style={style}
         onValueChange={onChange}
         {...rest}
+        {...styleProps(inputRootStyles({ shadow, size, variant: mergedVariant }), className, style)}
       >
-        {prefix && <span className={styles.slot}>{prefix}</span>}
+        {prefix && <span {...stylex.props(styles.slot)}>{prefix}</span>}
         <NumberField.Input
-          className={cx(styles.input, styles.numberInput, classNames?.input)}
           placeholder={placeholder}
           ref={ref}
-          style={customStyles?.input}
           onKeyDown={(event) => {
             if (isPressEnter(event)) onPressEnter?.(event);
           }}
+          {...styleProps(
+            [styles.input, styles.numberInput],
+            classNames?.input,
+            customStyles?.input,
+          )}
         />
-        {suffix && <span className={styles.slot}>{suffix}</span>}
+        {suffix && <span {...stylex.props(styles.slot)}>{suffix}</span>}
         {controls && (
           <div
-            className={cx(styles.numberControls, size === 'small' && styles.numberControlsSmall)}
+            {...stylex.props(styles.numberControls, size === 'small' && styles.numberControlsSmall)}
           >
-            <NumberField.Increment className={controlClassName}>
+            <NumberField.Increment {...controlProps}>
               <Icon icon={ChevronUp} size={controlIconSize[size]} />
             </NumberField.Increment>
-            <NumberField.Decrement className={controlClassName}>
+            <NumberField.Decrement {...controlProps}>
               <Icon icon={ChevronDown} size={controlIconSize[size]} />
             </NumberField.Decrement>
           </div>
