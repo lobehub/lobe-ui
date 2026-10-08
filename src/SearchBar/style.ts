@@ -1,26 +1,21 @@
-import { createStaticStyles, cx, lobeStaticStylish } from '@/styles';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  icon: css`
-    color: ${cssVar.colorTextPlaceholder};
-  `,
-  search: css`
-    position: relative;
-    max-width: 100%;
-  `,
-  tag: cx(
-    lobeStaticStylish.blur,
-    css`
-      position: absolute;
-      inset-block-start: 50%;
-      inset-inline-end: 6px;
-      transform: translateY(-50%);
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-      color: ${cssVar.colorTextDescription};
-
-      kbd {
-        color: inherit;
-      }
-    `,
-  ),
-}));
+export const styles = stylex.create({
+  icon: {
+    color: cssVar.colorTextPlaceholder,
+  },
+  search: {
+    position: 'relative',
+    maxWidth: '100%',
+  },
+  tag: {
+    backdropFilter: 'saturate(150%) blur(10px)',
+    color: cssVar.colorTextDescription,
+    insetBlockStart: '50%',
+    insetInlineEnd: 6,
+    position: 'absolute',
+    transform: 'translateY(-50%)',
+  },
+});
