@@ -1,12 +1,11 @@
 'use client';
 
+import './style.css';
+
 import { type FC, type ReactNode, useState } from 'react';
 
 import { Flexbox, type FlexboxProps } from '@/Flex';
-import { cx } from '@/styles';
 import LobeTabs, { type TabsProps as LobeTabsProps } from '@/Tabs';
-
-import { styles } from './style';
 
 export interface TabsProps extends Omit<FlexboxProps, 'children'> {
   children: ReactNode[];
@@ -29,15 +28,15 @@ const Tabs: FC<TabsProps> = ({
   const index = Number(activeIndex);
 
   return (
-    <Flexbox className={cx(styles.container, className)} {...rest}>
+    <Flexbox className={className} {...rest}>
       <LobeTabs
         activeKey={activeIndex}
-        className={cx(styles.header, tabNavClassName)}
+        className={tabNavClassName}
         variant={'square'}
         classNames={{
-          indicator: styles.indicator,
-          list: styles.list,
-          tab: styles.tab,
+          indicator: 'lobe-mdx-tabs-indicator',
+          list: 'lobe-mdx-tabs-list',
+          tab: 'lobe-mdx-tabs-tab',
         }}
         items={items.map((item, i) => ({
           key: String(i),

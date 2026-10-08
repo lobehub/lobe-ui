@@ -1,8 +1,9 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import type { FC } from 'react';
 
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 import type { DivProps } from '@/types';
 
 import { styles } from './style';
@@ -11,8 +12,8 @@ export type TabProps = DivProps;
 
 const Tab: FC<TabProps> = ({ children, className, ...rest }) => {
   return (
-    <div className={cx(styles.body, className)} {...rest}>
-      <div>{children}</div>
+    <div {...styleProps(styles.body, className)} {...rest}>
+      <div {...stylex.props(styles.inner)}>{children}</div>
     </div>
   );
 };

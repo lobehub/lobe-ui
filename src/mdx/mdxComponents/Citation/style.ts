@@ -1,34 +1,26 @@
-import { createStaticStyles } from '@/styles';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  container: css`
-    display: inline-flex;
-    line-height: var(--lobe-markdown-line-height);
-    vertical-align: baseline;
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-    a {
-      color: inherit;
-    }
-  `,
-  link: css`
-    cursor: pointer;
-    color: ${cssVar.colorTextSecondary};
-
-    :hover {
-      color: ${cssVar.colorText};
-    }
-  `,
-  supContainer: css`
-    vertical-align: super;
-  `,
-  url: css`
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-
-    max-width: 400px;
-
-    text-overflow: ellipsis;
-  `,
-}));
+export const styles = stylex.create({
+  container: {
+    display: 'inline-flex',
+    lineHeight: 'var(--lobe-markdown-line-height)',
+    verticalAlign: 'baseline',
+  },
+  link: {
+    color: cssVar.colorTextSecondary,
+    cursor: 'pointer',
+  },
+  supContainer: {
+    verticalAlign: 'super',
+  },
+  url: {
+    overflow: 'hidden',
+    WebkitBoxOrient: 'vertical',
+    WebkitLineClamp: 1,
+    display: '-webkit-box',
+    textOverflow: 'ellipsis',
+    maxWidth: 400,
+  },
+});

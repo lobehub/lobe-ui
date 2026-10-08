@@ -1,5 +1,9 @@
 'use client';
 
+import './style.css';
+
+import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import type { FC } from 'react';
 
 import A from '@/A';
@@ -7,50 +11,11 @@ import Block, { type BlockProps } from '@/Block';
 import { Flexbox } from '@/Flex';
 import Icon, { type IconProps } from '@/Icon';
 import Img from '@/Img';
-import { createStaticStyles, cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 import Tag, { type TagProps } from '@/Tag';
 
-const styles = createStaticStyles(({ css, cssVar }) => {
-  return {
-    card: css`
-      --lobe-markdown-header-multiple: 0.2;
-      --lobe-markdown-margin-multiple: 1;
-
-      overflow: hidden;
-      height: 100%;
-      color: ${cssVar.colorText};
-
-      h3,
-      p {
-        margin-block: 0 !important;
-      }
-
-      p {
-        color: ${cssVar.colorTextDescription};
-        transition: color 0.2s ${cssVar.motionEaseInOut};
-      }
-
-      &:hover {
-        p {
-          color: ${cssVar.colorTextSecondary};
-        }
-
-        .mdx-card-icon {
-          opacity: 1;
-        }
-      }
-    `,
-    content: css`
-      width: 100%;
-      padding: 1.4em;
-    `,
-    icon: css`
-      margin-block: 0.1em;
-      opacity: 0.5;
-      transition: opacity 0.2s ${cssVar.motionEaseInOut};
-    `,
-  };
-});
+import { cardMarker } from './marker.stylex';
+import { styles } from './style';
 
 export interface CardProps extends Omit<BlockProps, 'children'> {
   desc?: string;
@@ -81,7 +46,7 @@ const Card: FC<CardProps> = ({
       <Block
         clickable
         align={'flex-start'}
-        className={cx(styles.card, className)}
+        {...styleProps([styles.card, cardMarker], clsx('lobe-mdx-card', className))}
         variant={variant}
         {...rest}
       >
@@ -97,7 +62,7 @@ const Card: FC<CardProps> = ({
         {tag && (
           <Flexbox
             align={'flex-start'}
-            className={styles.content}
+            {...stylex.props(styles.content)}
             style={{ paddingBottom: '0.2em', paddingTop: '1.8em' }}
           >
             <Tag
@@ -117,12 +82,12 @@ const Card: FC<CardProps> = ({
         <Flexbox
           horizontal
           align={desc ? 'flex-start' : 'center'}
-          className={styles.content}
+          {...stylex.props(styles.content)}
           gap={'0.75em'}
         >
           {!image && icon && (
             <Icon
-              className={cx(styles.icon, 'mdx-card-icon')}
+              {...styleProps(styles.icon, 'mdx-card-icon')}
               icon={icon}
               size={{ size: '1.5em' }}
               {...iconProps}
@@ -130,7 +95,7 @@ const Card: FC<CardProps> = ({
           )}
           <Flexbox gap={'0.2em'}>
             <h3>{title}</h3>
-            {desc && <p>{desc}</p>}
+            {desc && <p {...stylex.props(styles.desc)}>{desc}</p>}
           </Flexbox>
         </Flexbox>
       </Block>

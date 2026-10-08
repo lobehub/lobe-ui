@@ -1,5 +1,6 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { FolderIcon, FolderOpen } from 'lucide-react';
 import { type FC, useState } from 'react';
 
@@ -21,14 +22,14 @@ const Folder: FC<FolderProps> = ({ name, defaultOpen, icon = FolderIcon, childre
       <Flexbox
         horizontal
         align={'center'}
-        className={styles.folder}
+        {...stylex.props(styles.folder)}
         gap={4}
         onClick={() => setOpen(!open)}
       >
         <Icon icon={open ? FolderOpen : icon} />
         <span>{name}</span>
       </Flexbox>
-      {open && <Flexbox className={styles.folderChildren}>{children}</Flexbox>}
+      {open && <Flexbox {...stylex.props(styles.folderChildren)}>{children}</Flexbox>}
     </Flexbox>
   );
 };
