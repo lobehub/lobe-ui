@@ -1,113 +1,85 @@
-import { cva } from 'class-variance-authority';
+import * as stylex from '@stylexjs/stylex';
 
-import { focusRing } from '@/internal/focusRing';
-import { createStaticStyles } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  item: css`
-    cursor: pointer;
-    user-select: none;
+import { toggleGroupItemMarker } from './marker.stylex';
 
-    display: inline-flex;
-    flex-shrink: 0;
-    gap: 4px;
-    align-items: center;
-    justify-content: center;
-
-    border: 0;
-    border-radius: ${cssVar.borderRadius};
-
-    font: inherit;
-    font-size: 12px;
-    color: ${cssVar.colorTextTertiary};
-    white-space: nowrap;
-
-    background: transparent;
-    outline: none;
-
-    transition:
-      background 120ms ${cssVar.motionEaseOut},
-      color 120ms ${cssVar.motionEaseOut};
-
-    &:hover:not([data-disabled]) {
-      color: ${cssVar.colorTextSecondary};
-      background: ${cssVar.colorFillSecondary};
-    }
-
-    &[data-pressed] {
-      color: ${cssVar.colorText};
-      background: ${cssVar.colorFillSecondary};
-    }
-
-    &[data-pressed]:hover:not([data-disabled]) {
-      background: ${cssVar.colorFill};
-    }
-
-    ${focusRing};
-
-    &[data-disabled] {
-      cursor: not-allowed;
-      color: ${cssVar.colorTextDisabled};
-    }
-  `,
-  itemIcon: css`
-    display: inline-flex;
-    flex-shrink: 0;
-    align-items: center;
-  `,
-  itemLabel: css`
-    display: inline-flex;
-    align-items: center;
-  `,
-  itemMiddle: css`
-    height: 28px;
-    padding-inline: 8px;
-  `,
-  itemSmall: css`
-    height: 24px;
-    padding-inline: 6px;
-  `,
-  itemOutlined: css`
-    border-radius: 0;
-
-    & + & {
-      border-inline-start: 1px solid ${cssVar.colorBorderSecondary};
-    }
-  `,
-  root: css`
-    display: inline-flex;
-    align-items: center;
-  `,
-  rootBorderless: css`
-    gap: 2px;
-  `,
-  rootOutlined: css`
-    overflow: hidden;
-    border: 1px solid ${cssVar.colorBorderSecondary};
-    border-radius: ${cssVar.borderRadius};
-  `,
-}));
-
-export const rootVariants = cva(styles.root, {
-  defaultVariants: { variant: 'outlined' },
-  variants: {
-    variant: {
-      borderless: styles.rootBorderless,
-      outlined: styles.rootOutlined,
+export const styles = stylex.create({
+  item: {
+    font: 'inherit',
+    borderColor: 'currentcolor',
+    borderRadius: cssVar.borderRadius,
+    borderStyle: 'none',
+    borderWidth: 0,
+    gap: 4,
+    outline: 'none',
+    transition: `background 120ms ${cssVar.motionEaseOut}, color 120ms ${cssVar.motionEaseOut}`,
+    alignItems: 'center',
+    backgroundColor: {
+      'default': 'transparent',
+      ':hover:not([data-disabled]):not([data-pressed])': cssVar.colorFillSecondary,
+      ':is([data-pressed]):hover:not([data-disabled])': cssVar.colorFill,
+      ':is([data-pressed]):is([data-disabled])': cssVar.colorFillSecondary,
+      ':is([data-pressed]):not(:hover)': cssVar.colorFillSecondary,
+    },
+    color: {
+      'default': cssVar.colorTextTertiary,
+      ':hover:not([data-disabled])': cssVar.colorTextSecondary,
+      ':is([data-disabled])': cssVar.colorTextDisabled,
+      ':is([data-pressed]):not(:hover):not([data-disabled])': cssVar.colorText,
+    },
+    cursor: { 'default': 'pointer', ':is([data-disabled])': 'not-allowed' },
+    display: 'inline-flex',
+    flexShrink: 0,
+    fontSize: 12,
+    justifyContent: 'center',
+    userSelect: 'none',
+    whiteSpace: 'nowrap',
+  },
+  itemIcon: {
+    alignItems: 'center',
+    display: 'inline-flex',
+    flexShrink: 0,
+  },
+  itemLabel: {
+    alignItems: 'center',
+    display: 'inline-flex',
+  },
+  itemMiddle: {
+    paddingInline: 8,
+    height: 28,
+  },
+  itemOutlined: {
+    borderRadius: 0,
+    borderInlineStartColor: {
+      default: null,
+      [stylex.when.siblingBefore(':is(*)', toggleGroupItemMarker)]: cssVar.colorBorderSecondary,
+    },
+    borderInlineStartStyle: {
+      default: null,
+      [stylex.when.siblingBefore(':is(*)', toggleGroupItemMarker)]: 'solid',
+    },
+    borderInlineStartWidth: {
+      default: null,
+      [stylex.when.siblingBefore(':is(*)', toggleGroupItemMarker)]: 1,
     },
   },
-});
-
-export const itemVariants = cva(styles.item, {
-  defaultVariants: { size: 'middle', variant: 'outlined' },
-  variants: {
-    size: {
-      middle: styles.itemMiddle,
-      small: styles.itemSmall,
-    },
-    variant: {
-      borderless: null,
-      outlined: styles.itemOutlined,
-    },
+  itemSmall: {
+    paddingInline: 6,
+    height: 24,
+  },
+  root: {
+    alignItems: 'center',
+    display: 'inline-flex',
+  },
+  rootBorderless: {
+    gap: 2,
+  },
+  rootOutlined: {
+    borderColor: cssVar.colorBorderSecondary,
+    borderRadius: cssVar.borderRadius,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    overflow: 'hidden',
   },
 });
