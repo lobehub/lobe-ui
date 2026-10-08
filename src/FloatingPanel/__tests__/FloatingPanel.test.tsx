@@ -14,17 +14,6 @@ if (!globalThis.ResizeObserver) {
   } as any;
 }
 
-vi.mock('@/styles/css', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@/styles/css')>();
-  return {
-    ...actual,
-    createStaticStyles: vi.fn((fn: any) => () => {
-      const result = fn({ css: () => '', cssVar: {} });
-      return new Proxy(result, { get: (target, key) => target[key as keyof typeof target] || '' });
-    }),
-  };
-});
-
 const renderWithProvider = (node: ReactNode) =>
   render(<ConfigProvider motion={motion}>{node}</ConfigProvider>);
 

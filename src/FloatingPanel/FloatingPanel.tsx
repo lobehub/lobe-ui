@@ -1,24 +1,24 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { X } from 'lucide-react';
 import type { MotionProps } from 'motion/react';
 import type { CSSProperties, PointerEvent as ReactPointerEvent } from 'react';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
 import type { ModalRootProps } from '../Modal';
+import { ModalBackdrop, ModalPortal, ModalRoot } from '../Modal';
 import {
-  ModalBackdrop,
-  ModalClose,
-  ModalContent,
-  ModalFooter,
-  ModalHeader,
-  ModalPopup,
-  ModalPortal,
-  ModalRoot,
-  ModalTitle,
-} from '../Modal';
+  ModalCloseImpl,
+  ModalContentImpl,
+  ModalFooterImpl,
+  ModalHeaderImpl,
+  ModalPopupImpl,
+  ModalTitleImpl,
+} from '../Modal/atoms';
 import { styles } from './style';
 import { ToastDodge } from './ToastDodge';
 import type {
@@ -119,7 +119,7 @@ const getResizeHandles = (placement: FloatingPanelPlacement): FloatingPanelResiz
 };
 
 const getResizeHandleClassName = (s: typeof styles, handle: FloatingPanelResizeHandle) => {
-  const handleClassMap: Record<FloatingPanelResizeHandle, string> = {
+  const handleClassMap = {
     bottom: s.resizeHandleBottom,
     bottomLeft: s.resizeHandleBottomLeft,
     bottomRight: s.resizeHandleBottomRight,
@@ -325,13 +325,15 @@ const FloatingPanel = memo<FloatingPanelProps>(
           {mask && (
             <ModalBackdrop className={classNames?.backdrop} style={semanticStyles?.backdrop} />
           )}
-          <ModalPopup
+          <ModalPopupImpl
             aria-label={ariaLabel}
-            className={cx(s.wrapper, classNames?.wrapper)}
+            className={classNames?.wrapper}
             motionProps={resolvedMotionProps}
-            panelClassName={cx(s.panel, isTop && s.panelTop, className, classNames?.panel)}
+            panelClassName={clsx(className, classNames?.panel)}
+            panelXstyle={[s.panel, isTop && s.panelTop]}
             popupStyle={popupStyle}
             width={activeResizeSize?.width ?? width}
+            xstyle={s.wrapper}
             style={{
               height: activeResizeSize?.height ?? height,
               minHeight,
@@ -347,63 +349,69 @@ const FloatingPanel = memo<FloatingPanelProps>(
                   aria-hidden
                   data-floating-panel-resize-handle={handle}
                   key={handle}
-                  style={semanticStyles?.resizeHandle}
-                  className={cx(
-                    s.resizeHandle,
-                    getResizeHandleClassName(s, handle),
+                  {...styleProps(
+                    [s.resizeHandle, getResizeHandleClassName(s, handle)],
                     classNames?.resizeHandle,
+                    semanticStyles?.resizeHandle,
                   )}
                   onPointerDown={handleResizeStart(handle)}
                 />
               ))}
             {showHeader && (
-              <ModalHeader
-                className={cx(s.header, classNames?.header)}
+              <ModalHeaderImpl
+                className={classNames?.header}
                 style={semanticStyles?.header}
+                xstyle={s.header}
               >
                 {title !== undefined ? (
-                  <ModalTitle
-                    className={cx(s.title, classNames?.title)}
+                  <ModalTitleImpl
+                    className={classNames?.title}
                     style={semanticStyles?.title}
+                    xstyle={s.title}
                   >
                     {title}
-                  </ModalTitle>
+                  </ModalTitleImpl>
                 ) : (
                   <span />
                 )}
-                <div className={s.headerActions}>
+                <div {...stylex.props(s.headerActions)}>
                   {actions && (
                     <div
-                      className={cx(s.actions, classNames?.actions)}
-                      style={semanticStyles?.actions}
+                      {...styleProps(s.actions, classNames?.actions, semanticStyles?.actions)}
                     >
                       {actions}
                     </div>
                   )}
                   {closable && (
-                    <ModalClose
+                    <ModalCloseImpl
                       aria-label={closeLabel}
-                      className={cx(s.close, classNames?.close)}
+                      className={classNames?.close}
                       style={semanticStyles?.close}
+                      xstyle={s.close}
                     >
                       {closeIcon ?? <X size={16} />}
-                    </ModalClose>
+                    </ModalCloseImpl>
                   )}
                 </div>
-              </ModalHeader>
+              </ModalHeaderImpl>
             )}
-            <ModalContent className={cx(s.body, classNames?.body)} style={semanticStyles?.body}>
+            <ModalContentImpl
+              className={classNames?.body}
+              style={semanticStyles?.body}
+              xstyle={s.body}
+            >
               {children}
-            </ModalContent>
+            </ModalContentImpl>
             {footer && (
-              <ModalFooter
-                className={cx(s.footer, classNames?.footer)}
+              <ModalFooterImpl
+                className={classNames?.footer}
                 style={semanticStyles?.footer}
+                xstyle={s.footer}
               >
                 {footer}
-              </ModalFooter>
+              </ModalFooterImpl>
             )}
-          </ModalPopup>
+          </ModalPopupImpl>
         </ModalPortal>
       </ModalRoot>
     );
