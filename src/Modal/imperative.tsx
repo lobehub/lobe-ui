@@ -6,14 +6,13 @@ import { createPortal } from 'react-dom';
 
 import { useAppElement } from '@/ConfigProvider/AppElementContext';
 import { useIsClient } from '@/hooks/useIsClient';
-import { cx } from '@/styles';
 import { registerDevSingleton } from '@/utils/devSingleton';
 
 import { Button } from '../Button';
 import {
   ModalBackdrop,
   ModalClose,
-  ModalContent,
+  ModalContentImpl,
   ModalFooter,
   ModalHeader,
   ModalPopup,
@@ -207,12 +206,13 @@ export function createModalSystem(): ModalSystem {
                   <ModalClose className={classNames?.close} style={semanticStyles?.close} />
                 </ModalHeader>
               )}
-              <ModalContent
-                className={cx(!showTitle && styles.contentNoHeader, classNames?.content)}
+              <ModalContentImpl
+                className={classNames?.content}
                 style={semanticStyles?.content}
+                xstyle={!showTitle && styles.contentNoHeader}
               >
                 {content ?? children}
-              </ModalContent>
+              </ModalContentImpl>
               {footer}
             </ModalPopup>
           </ModalPortal>
