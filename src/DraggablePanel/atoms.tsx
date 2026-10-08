@@ -1,5 +1,7 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { ChevronLeft } from 'lucide-react';
 import type { HTMLMotionProps, MotionStyle } from 'motion/react';
 import { useTransform } from 'motion/react';
@@ -18,7 +20,7 @@ import useControlledState from 'use-merge-value';
 
 import ActionIcon from '@/ActionIcon';
 import { useMotionComponent } from '@/MotionProvider';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 import type { DivProps } from '@/types';
 
 import { DraggablePanelContext, useDraggablePanelContext } from './context';
@@ -29,7 +31,31 @@ import { createPanelController } from './core/controller';
 import { coarsePointer, handleSize as getHandleSize } from './core/env';
 import { useIsomorphicLayoutEffect, useStore } from './core/internal';
 import { timing } from './core/transition';
-import { handleVariants, rootVariants, SEAM_ARROW, styles, toggleVariants } from './style';
+import { draggablePanelMarker, draggablePanelToggleMarker } from './marker.stylex';
+import { SEAM_ARROW, styles } from './style';
+
+const prefix = 'base-draggable-panel';
+
+const floatStyles = {
+  bottom: styles.bottomFloat,
+  left: styles.leftFloat,
+  right: styles.rightFloat,
+  top: styles.topFloat,
+};
+
+const toggleStyles = {
+  bottom: styles.toggleTop,
+  left: styles.toggleRight,
+  right: styles.toggleLeft,
+  top: styles.toggleBottom,
+};
+
+const togglePlacementClass = {
+  bottom: `${prefix}-toggle-top`,
+  left: `${prefix}-toggle-right`,
+  right: `${prefix}-toggle-left`,
+  top: `${prefix}-toggle-bottom`,
+};
 
 const PAN_THRESHOLD = 3;
 
@@ -176,11 +202,20 @@ export const DraggablePanelRoot = memo<DraggablePanelRootProps>(
     return (
       <DraggablePanelContext value={context}>
         <aside
-          className={cx(rootVariants({ mode, placement }), className)}
           data-expand={isExpand}
           data-expandable={expandable}
           data-resizing={state.dragging}
           ref={elementRef}
+          className={
+            styleProps(
+              [
+                styles.root,
+                mode === 'float' ? floatStyles[placement] : styles.fixed,
+                draggablePanelMarker,
+              ],
+              clsx(prefix, className),
+            ).className
+          }
           style={
             {
               '--draggable-panel-bg': backgroundColor || '',
@@ -229,7 +264,7 @@ export const DraggablePanelContent = memo<DraggablePanelContentProps>(
       >
         <Motion.div
           animate={{ scale: shrunk ? COLLAPSED_SCALE : 1 }}
-          className={cx(styles.content, className)}
+          className={styleProps(styles.content, clsx(`${prefix}-content`, className)).className}
           transition={timing()}
           style={
             {
@@ -275,11 +310,16 @@ export const DraggablePanelHandle = memo<DraggablePanelHandleProps>(
         aria-valuemin={min}
         aria-valuenow={target}
         aria-valuetext={`${target} pixels`}
-        className={cx(handleVariants({ edge: axis.edge }), className)}
         data-border={showBorder}
         data-resizing={state.dragging || undefined}
         role="separator"
         tabIndex={0}
+        className={
+          styleProps(
+            [styles.handle, axis.vertical ? styles.handleHorizontal : styles.handleVertical],
+            clsx(`${prefix}-handle`, className),
+          ).className
+        }
         style={
           {
             '--draggable-panel-handle-size': `${size}px`,
@@ -358,16 +398,27 @@ export const DraggablePanelToggle = memo<DraggablePanelToggleProps>(
 
     return (
       <div
-        className={cx(toggleVariants({ placement }), className)}
         style={{ opacity: expand ? undefined : showHandleWhenCollapsed ? 1 : 0, ...style }}
+        className={
+          styleProps(
+            [styles.toggleRoot, toggleStyles[placement]],
+            clsx(`${prefix}-toggle`, togglePlacementClass[placement], className),
+          ).className
+        }
         {...rest}
       >
         <button
           aria-label={expand ? 'Collapse panel' : 'Expand panel'}
           type="button"
           onClick={toggleExpand}
+          {...stylex.props(
+            styles.toggleButton,
+            axis.vertical && styles.toggleButtonHorizontal,
+            draggablePanelToggleMarker,
+          )}
         >
           <svg
+            {...stylex.props(styles.toggleSvg)}
             fill="none"
             height={ARROW_BOX}
             style={{ '--seam-bend': bend } as CSSProperties}
@@ -383,14 +434,25 @@ export const DraggablePanelToggle = memo<DraggablePanelToggleProps>(
                 y1={0}
                 y2={ARROW_BOX}
               >
-                <stop data-end="" offset={0} stopOpacity={edgeOpacity} />
-                <stop data-tip="" offset={0.3} />
-                <stop data-tip="" offset={0.7} />
-                <stop data-end="" offset={1} stopOpacity={edgeOpacity} />
+                <stop
+                  data-end=""
+                  offset={0}
+                  stopOpacity={edgeOpacity}
+                  {...stylex.props(styles.toggleStopEnd)}
+                />
+                <stop data-tip="" offset={0.3} {...stylex.props(styles.toggleStopTip)} />
+                <stop data-tip="" offset={0.7} {...stylex.props(styles.toggleStopTip)} />
+                <stop
+                  data-end=""
+                  offset={1}
+                  stopOpacity={edgeOpacity}
+                  {...stylex.props(styles.toggleStopEnd)}
+                />
               </linearGradient>
             </defs>
             <g transform={axis.vertical ? `rotate(90 ${ARROW_C} ${ARROW_C})` : undefined}>
               <path
+                {...stylex.props(styles.togglePath)}
                 d={ARROW_PATH}
                 stroke={`url(#${gradientId})`}
                 strokeLinecap="round"
@@ -410,7 +472,9 @@ DraggablePanelToggle.displayName = 'DraggablePanelToggle';
 export type DraggablePanelContainerProps = DivProps;
 
 export const DraggablePanelContainer = memo<DraggablePanelContainerProps>(
-  ({ className, ...rest }) => <div className={cx(styles.container, className)} {...rest} />,
+  ({ className, ...rest }) => (
+    <div className={styleProps(styles.container, className).className} {...rest} />
+  ),
 );
 
 DraggablePanelContainer.displayName = 'DraggablePanelContainer';
@@ -418,7 +482,7 @@ DraggablePanelContainer.displayName = 'DraggablePanelContainer';
 export type DraggablePanelBodyProps = DivProps;
 
 export const DraggablePanelBody = memo<DraggablePanelBodyProps>(({ className, style, ...rest }) => (
-  <div className={cx(styles.body, className)} style={{ flex: 1, ...style }} {...rest} />
+  <div {...styleProps(styles.body, className, { flex: 1, ...style })} {...rest} />
 ));
 
 DraggablePanelBody.displayName = 'DraggablePanelBody';
@@ -426,7 +490,7 @@ DraggablePanelBody.displayName = 'DraggablePanelBody';
 export type DraggablePanelFooterProps = DivProps;
 
 export const DraggablePanelFooter = memo<DraggablePanelFooterProps>(({ className, ...rest }) => (
-  <div className={cx(styles.footer, className)} {...rest} />
+  <div className={styleProps(styles.footer, className).className} {...rest} />
 ));
 
 DraggablePanelFooter.displayName = 'DraggablePanelFooter';
@@ -442,7 +506,7 @@ export const DraggablePanelHeader = memo<DraggablePanelHeaderProps>(
     const { toggleExpand } = useDraggablePanelContext();
 
     return (
-      <div className={cx(styles.header, className)} {...rest}>
+      <div className={styleProps(styles.header, className).className} {...rest}>
         <ActionIcon icon={ChevronLeft} size={'small'} onClick={onCollapse ?? toggleExpand} />
         {title}
         {extra}
