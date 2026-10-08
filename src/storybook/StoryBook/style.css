@@ -30,7 +30,7 @@
   }
 
   .lobe-storybook-leva input:checked + label > svg {
-    stroke: var(--lobe-color-bg-layout);
+    stroke: var(--lobe-color-bg-layout) !important;
   }
 
   .lobe-storybook-leva button {
