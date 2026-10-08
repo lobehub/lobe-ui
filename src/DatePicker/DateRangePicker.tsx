@@ -1,5 +1,6 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import dayjs from 'dayjs';
 import { ArrowRight, CalendarIcon } from 'lucide-react';
 import { memo, useState } from 'react';
@@ -8,6 +9,7 @@ import useControlledState from 'use-merge-value';
 import datePickerMessages from '@/i18n/resources/en/datePicker';
 import { useTranslation } from '@/i18n/useTranslation';
 import Icon from '@/Icon';
+import { focusRing } from '@/styles/stylex/focusRing';
 
 import { clampToBounds, DEFAULT_FORMAT, orderRange } from './calendar';
 import CalendarPanel from './CalendarPanel';
@@ -52,11 +54,11 @@ const DateRangePicker = memo<DateRangePickerProps>(
     const bounds = { disabledDate, max, min };
 
     const half = (date: Date | null, fallback: string, active: boolean) => (
-      <span className={styles.rangeHalf} data-active={active ? '' : undefined}>
+      <span {...stylex.props(styles.rangeHalf)} data-active={active ? '' : undefined}>
         {date ? (
           formatDate(date, format, DEFAULT_FORMAT.date)
         ) : (
-          <span className={styles.placeholder}>{fallback}</span>
+          <span {...stylex.props(styles.placeholder)}>{fallback}</span>
         )}
       </span>
     );
@@ -83,19 +85,19 @@ const DateRangePicker = memo<DateRangePickerProps>(
         style={style}
         variant={variant}
         icon={
-          <span className={styles.icon}>
+          <span {...stylex.props(styles.icon)}>
             <Icon icon={CalendarIcon} size={14} />
           </span>
         }
         trigger={
-          <button className={styles.trigger} disabled={disabled} type="button">
-            <span className={styles.rangeTrigger}>
+          <button {...stylex.props(focusRing.info, styles.trigger)} disabled={disabled} type="button">
+            <span {...stylex.props(styles.rangeTrigger)}>
               {half(
                 shown[0],
                 placeholder?.[0] ?? t('datePicker.startPlaceholder'),
                 open && !draft[0],
               )}
-              <span className={styles.icon}>
+              <span {...stylex.props(styles.icon)}>
                 <Icon icon={ArrowRight} size={14} />
               </span>
               {half(
@@ -115,7 +117,7 @@ const DateRangePicker = memo<DateRangePickerProps>(
           setOpen(next);
         }}
       >
-        <div className={styles.range}>
+        <div {...stylex.props(styles.range)}>
           <CalendarPanel
             bounds={bounds}
             hovered={hovered}
