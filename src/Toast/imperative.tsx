@@ -5,7 +5,7 @@ import { memo, useEffect, useId, useState, useSyncExternalStore } from 'react';
 
 import { useAppElement } from '@/ConfigProvider/AppElementContext';
 import { useIsClient } from '@/hooks/useIsClient';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
 import { acquireLayerZIndex } from '../internal/zIndex';
 import { ToastContext } from './context';
@@ -16,7 +16,7 @@ import {
   markToastHostReady,
   runWhenToastHostReady,
 } from './pendingQueue';
-import { viewportVariants } from './style';
+import { styles, viewportPositionStyles } from './style';
 import ToastItem from './Toast';
 import {
   type ToastAPI,
@@ -379,8 +379,9 @@ export const ToastHost = memo(
         <BaseToast.Provider limit={limit} timeout={duration} toastManager={getManager(pos)}>
           <BaseToast.Portal container={container}>
             <BaseToast.Viewport
-              className={cx(viewportVariants({ position: pos }), className)}
-              style={{ zIndex: viewportZIndex }}
+              {...styleProps([styles.viewport, viewportPositionStyles[pos]], className, {
+                zIndex: viewportZIndex,
+              })}
             >
               <ToastList />
             </BaseToast.Viewport>

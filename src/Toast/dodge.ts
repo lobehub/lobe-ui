@@ -1,15 +1,13 @@
+import { toastDodge } from './dodge.stylex';
+
 export const TOAST_WIDTH = 360;
 export const TOAST_MIN_WIDTH = 260;
 export const TOAST_EDGE = 16;
 export const TOAST_ROW_HEIGHT = 88;
 export const TOAST_DODGE_GUTTER = 12;
 
-// Spring baked as linear(): stiffness 460 / damping 53 / mass 2.3, zeta ~0.81
-// with 1.2% overshoot. The duration is the spring's settle time — change them
-// together with the curve, not independently.
-export const TOAST_DODGE_DURATION = '608ms';
-export const TOAST_DODGE_EASE =
-  'linear(0, 0.08, 0.249, 0.437, 0.607, 0.745, 0.847, 0.917, 0.963, 0.99, 1.004, 1.011, 1.012, 1.011, 1.009, 1.007, 1.005, 1.003, 1.002, 1)';
+export const TOAST_DODGE_DURATION = toastDodge.duration;
+export const TOAST_DODGE_EASE = toastDodge.ease;
 
 export const TOAST_SHIFT_X_VAR = '--toast-shift-x';
 export const TOAST_SHIFT_Y_VAR = '--toast-shift-y';
