@@ -2,7 +2,7 @@
 
 import { type FC } from 'react';
 
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
 import Skeleton from './Skeleton';
 import { styles } from './style';
@@ -19,7 +19,7 @@ const SkeletonAvatar: FC<SkeletonAvatarProps> = ({
   ...rest
 }) => (
   <Skeleton
-    className={cx(styles.avatar, className)}
+    className={styleProps(styles.avatar, className).className}
     height={height ?? size}
     radius={shape === 'circle' ? '50%' : undefined}
     width={width ?? size}
