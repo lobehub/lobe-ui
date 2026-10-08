@@ -1,75 +1,34 @@
-import { cva } from 'class-variance-authority';
+import * as stylex from '@stylexjs/stylex';
 
-import { createStaticStyles, lobeStaticStylish } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => {
-  return {
-    borderless: css`
-      ${lobeStaticStylish.variantBorderlessWithoutHover};
-      padding-inline: 4px;
-    `,
-    filled: lobeStaticStylish.variantFilledWithoutHover,
-    inverseThemeDark: css`
-      color: ${cssVar.colorTextTertiary};
-      background: color-mix(in srgb, ${cssVar.colorBgContainer} 8%, transparent);
-    `,
-    inverseThemeLight: css`
-      color: ${cssVar.colorTextTertiary};
-      background: color-mix(in srgb, ${cssVar.colorBgContainer} 16%, transparent);
-    `,
-    outlined: lobeStaticStylish.variantOutlinedWithoutHover,
-    root: css`
-      overflow: hidden;
-
-      min-width: 1.8em;
-      height: 1.8em;
-      padding-block: 0;
-      padding-inline: 8px;
-      border: none;
-      border-radius: ${cssVar.borderRadiusSM};
-
-      font-family: ${cssVar.fontFamily};
-      font-size: 12px;
-      line-height: 1.1;
-      color: ${cssVar.colorTextSecondary};
-      text-align: center;
-      white-space: nowrap;
-    `,
-  };
-});
-
-export const variants = cva(styles.root, {
-  compoundVariants: [
-    {
-      class: styles.inverseThemeDark,
-      inverseTheme: true,
-      isDarkMode: true,
-    },
-    {
-      class: styles.inverseThemeLight,
-      inverseTheme: true,
-      isDarkMode: false,
-    },
-  ],
-  defaultVariants: {
-    inverseTheme: false,
-    isDarkMode: false,
-    variant: 'filled',
+export const styles = stylex.create({
+  borderless: {
+    paddingInline: 4,
   },
-
-  variants: {
-    inverseTheme: {
-      false: null,
-      true: null,
-    },
-    isDarkMode: {
-      false: null,
-      true: null,
-    },
-    variant: {
-      borderless: styles.borderless,
-      filled: styles.filled,
-      outlined: styles.outlined,
-    },
+  inverseThemeDark: {
+    backgroundColor: `color-mix(in srgb, ${cssVar.colorBgContainer} 8%, transparent)`,
+    color: cssVar.colorTextTertiary,
+  },
+  inverseThemeLight: {
+    backgroundColor: `color-mix(in srgb, ${cssVar.colorBgContainer} 16%, transparent)`,
+    color: cssVar.colorTextTertiary,
+  },
+  root: {
+    borderColor: 'currentcolor',
+    borderRadius: cssVar.borderRadiusSM,
+    borderStyle: 'none',
+    borderWidth: 'medium',
+    overflow: 'hidden',
+    paddingBlock: 0,
+    paddingInline: 8,
+    color: cssVar.colorTextSecondary,
+    fontFamily: cssVar.fontFamily,
+    fontSize: 12,
+    lineHeight: 1.1,
+    textAlign: 'center',
+    whiteSpace: 'nowrap',
+    height: '1.8em',
+    minWidth: '1.8em',
   },
 });
