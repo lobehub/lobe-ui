@@ -1,20 +1,19 @@
-import { createStaticStyles } from '@/styles';
-
-export const styles = createStaticStyles(({ css }) => ({
-  container: css`
+@layer lobe-ui {
+  .lobe-search-result-card {
     min-width: 160px;
     max-width: 160px;
     height: 100%;
 
     font-size: 12px;
     color: initial;
-  `,
-  url: css`
+  }
+
+  .lobe-search-result-card-url {
     overflow: hidden;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 1;
 
     text-overflow: ellipsis;
-  `,
-}));
+  }
+}

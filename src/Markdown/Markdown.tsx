@@ -1,17 +1,17 @@
 'use client';
 
+import clsx from 'clsx';
 import { memo, useCallback } from 'react';
 
 import { useStableValue } from '@/hooks/useStableValue';
 import { PreviewGroup } from '@/Image';
-import { cx } from '@/styles';
 
 import { MarkdownProvider } from './components/MarkdownProvider';
 import { useDelayedAnimated } from './components/useDelayedAnimated';
-import { variants } from './style';
+import { rootStyles, styles } from './style';
 import { MarkdownRender, StreamdownRender } from './SyntaxMarkdown';
 import { type MarkdownProps } from './type';
-import Typography from './Typography';
+import { TypographyImpl } from './Typography';
 
 const Markdown = memo<MarkdownProps>((props) => {
   const {
@@ -79,9 +79,8 @@ const Markdown = memo<MarkdownProps>((props) => {
 
   return (
     <PreviewGroup enable={enableImageGallery}>
-      <Typography
+      <TypographyImpl
         borderRadius={borderRadius}
-        className={cx(variants({ enableLatex, variant }), className)}
         data-code-type="markdown"
         fontSize={fontSize}
         headerMultiple={headerMultiple}
@@ -89,6 +88,13 @@ const Markdown = memo<MarkdownProps>((props) => {
         marginMultiple={marginMultiple}
         ref={ref}
         style={style}
+        xstyle={rootStyles.root}
+        className={clsx(
+          variant === 'chat' && styles.chat,
+          enableLatex && styles.latex,
+          styles.gfm,
+          className,
+        )}
         onDoubleClick={onDoubleClick}
         {...rest}
       >
@@ -120,7 +126,7 @@ const Markdown = memo<MarkdownProps>((props) => {
             {children}
           </Render>
         </MarkdownProvider>
-      </Typography>
+      </TypographyImpl>
     </PreviewGroup>
   );
 });

@@ -1,5 +1,7 @@
 'use client';
 
+import './style.css';
+
 import { memo, type Ref, useMemo } from 'react';
 
 import A from '@/A';
@@ -8,8 +10,6 @@ import { Flexbox } from '@/Flex';
 import Img from '@/Img';
 import Text from '@/Text';
 import { type AProps } from '@/types';
-
-import { styles } from './style';
 
 export interface SearchResultCardProps extends AProps {
   alt?: string;
@@ -40,7 +40,7 @@ const SearchResultCard = memo<SearchResultCardProps>(({ ref, url, title, alt, ..
     <A href={url} ref={ref} rel="noreferrer" target={'_blank'} {...rest}>
       <Block
         clickable
-        className={styles.container}
+        className={'lobe-search-result-card'}
         gap={2}
         justify={'space-between'}
         key={url}
@@ -56,7 +56,7 @@ const SearchResultCard = memo<SearchResultCardProps>(({ ref, url, title, alt, ..
             src={`https://icons.duckduckgo.com/ip3/${host}.ico`}
             width={14}
           />
-          <Text ellipsis className={styles.url} type={'secondary'}>
+          <Text ellipsis className={'lobe-search-result-card-url'} type={'secondary'}>
             {domain}
           </Text>
         </Flexbox>
