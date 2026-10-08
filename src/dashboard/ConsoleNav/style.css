@@ -1,0 +1,7 @@
+@layer lobe-ui {
+  @starting-style {
+    .lobe-console-nav-rail-link {
+      background: transparent;
+    }
+  }
+}
