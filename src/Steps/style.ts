@@ -1,151 +1,147 @@
-import { createStaticStyles } from '@/styles';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  body: css`
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    min-width: 0;
-  `,
-  connector: css`
-    flex: 1;
-    min-width: 16px;
-    height: 1px;
-    background: ${cssVar.colorBorderSecondary};
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-    li[data-status='finish'] > & {
-      background: ${cssVar.colorPrimary};
-    }
-  `,
-  description: css`
-    font-size: 13px;
-    line-height: 1.5;
-    color: ${cssVar.colorTextSecondary};
-  `,
-  dot: css`
-    & > li > span:first-child {
-      width: 7px;
-      height: 7px;
-      margin-block-start: 8px;
-      border: 0;
+export const styles = stylex.create({
+  body: {
+    gap: 2,
+    display: 'flex',
+    flexDirection: 'column',
+    minWidth: 0,
+  },
+  connector: {
+    flex: '1',
+    backgroundColor: cssVar.colorBorderSecondary,
+    height: 1,
+    minWidth: 16,
+  },
+  connectorFinish: {
+    backgroundColor: cssVar.colorPrimary,
+  },
+  connectorVertical: {
+    insetBlockEnd: 4,
+    insetBlockStart: 26,
+    insetInlineStart: 11,
+    position: 'absolute',
+    height: 'auto',
+    minWidth: 0,
+    width: 1,
+  },
+  description: {
+    color: cssVar.colorTextSecondary,
+    fontSize: 13,
+    lineHeight: 1.5,
+  },
+  dot: {
+    borderColor: 'currentcolor',
+    borderStyle: 'none',
+    borderWidth: 0,
+    backgroundColor: cssVar.colorTextQuaternary,
+    marginBlockStart: 8,
+    height: 7,
+    width: 7,
+  },
+  dotActive: {
+    backgroundColor: cssVar.colorPrimary,
+  },
+  horizontal: {
+    gap: 8,
+    alignItems: 'center',
+    display: 'flex',
+  },
+  indicator: {
+    borderColor: cssVar.colorBorder,
+    borderRadius: '50%',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    flex: 'none',
+    alignItems: 'center',
+    color: cssVar.colorTextDescription,
+    display: 'inline-flex',
+    fontSize: 12,
+    fontVariantNumeric: 'tabular-nums',
+    fontWeight: 500,
+    justifyContent: 'center',
+    height: 22,
+    width: 22,
+  },
+  indicatorError: {
+    borderColor: cssVar.colorError,
+    color: cssVar.colorError,
+  },
+  indicatorFinish: {
+    borderColor: cssVar.colorPrimary,
+    color: cssVar.colorPrimary,
+  },
+  indicatorGuide: {
+    color: cssVar.colorTextSecondary,
+  },
+  indicatorProcess: {
+    borderColor: cssVar.colorPrimary,
+    backgroundColor: cssVar.colorPrimary,
+    color: cssVar.colorBgContainer,
+  },
+  itemHorizontal: {
+    flex: '1',
+    gap: 8,
+    alignItems: 'center',
+    display: 'flex',
+    minWidth: 0,
+  },
+  itemHorizontalLast: {
+    flex: 'none',
+  },
+  itemVertical: {
+    columnGap: 12,
+    display: 'grid',
+    gridTemplateColumns: 'auto minmax(0, 1fr)',
+    paddingBlockEnd: 18,
+    position: 'relative',
+  },
+  itemVerticalLast: {
+    paddingBlockEnd: 0,
+  },
+  root: {
+    margin: 0,
+    padding: 0,
+    listStyle: 'none',
+  },
+  title: {
+    color: cssVar.colorTextDescription,
+    fontSize: 14,
+    lineHeight: '22px',
+    whiteSpace: 'nowrap',
+  },
+  titleActive: {
+    color: cssVar.colorText,
+  },
+  titleError: {
+    color: cssVar.colorError,
+  },
+  titleProcess: {
+    fontWeight: 500,
+  },
+  titleVertical: {
+    whiteSpace: 'normal',
+  },
+  vertical: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+});
 
-      background: ${cssVar.colorTextQuaternary};
-    }
+export const indicatorStatusStyles = {
+  error: styles.indicatorError,
+  finish: styles.indicatorFinish,
+  guide: styles.indicatorGuide,
+  process: styles.indicatorProcess,
+  wait: null,
+};
 
-    & > li[data-status='process'] > span:first-child,
-    & > li[data-status='finish'] > span:first-child {
-      background: ${cssVar.colorPrimary};
-    }
-  `,
-  horizontal: css`
-    display: flex;
-    gap: 8px;
-    align-items: center;
-
-    & > li {
-      display: flex;
-      flex: 1;
-      gap: 8px;
-      align-items: center;
-
-      min-width: 0;
-    }
-
-    & > li:last-child {
-      flex: none;
-    }
-  `,
-  indicator: css`
-    display: inline-flex;
-    flex: none;
-    align-items: center;
-    justify-content: center;
-
-    width: 22px;
-    height: 22px;
-    border: 1px solid ${cssVar.colorBorder};
-    border-radius: 50%;
-
-    font-size: 12px;
-    font-weight: 500;
-    font-variant-numeric: tabular-nums;
-    color: ${cssVar.colorTextDescription};
-
-    li[data-status='process'] > & {
-      border-color: ${cssVar.colorPrimary};
-      color: ${cssVar.colorBgContainer};
-      background: ${cssVar.colorPrimary};
-    }
-
-    li[data-status='finish'] > & {
-      border-color: ${cssVar.colorPrimary};
-      color: ${cssVar.colorPrimary};
-    }
-
-    li[data-status='error'] > & {
-      border-color: ${cssVar.colorError};
-      color: ${cssVar.colorError};
-    }
-
-    li[data-status='guide'] > & {
-      color: ${cssVar.colorTextSecondary};
-    }
-  `,
-  root: css`
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  `,
-  title: css`
-    font-size: 14px;
-    line-height: 22px;
-    color: ${cssVar.colorTextDescription};
-    white-space: nowrap;
-
-    li[data-status='process'] &,
-    li[data-status='finish'] &,
-    li[data-status='guide'] & {
-      color: ${cssVar.colorText};
-    }
-
-    li[data-status='process'] & {
-      font-weight: 500;
-    }
-
-    li[data-status='error'] & {
-      color: ${cssVar.colorError};
-    }
-  `,
-  vertical: css`
-    display: flex;
-    flex-direction: column;
-
-    & > li {
-      position: relative;
-
-      display: grid;
-      grid-template-columns: auto minmax(0, 1fr);
-      column-gap: 12px;
-
-      padding-block-end: 18px;
-    }
-
-    & > li:last-child {
-      padding-block-end: 0;
-    }
-
-    & > li > span[aria-hidden] {
-      position: absolute;
-      inset-block: 26px 4px;
-      inset-inline-start: 11px;
-
-      width: 1px;
-      min-width: 0;
-      height: auto;
-    }
-
-    & > li > div > div:first-child {
-      white-space: normal;
-    }
-  `,
-}));
+export const titleStatusStyles = {
+  error: styles.titleError,
+  finish: styles.titleActive,
+  guide: styles.titleActive,
+  process: [styles.titleActive, styles.titleProcess],
+  wait: null,
+};
