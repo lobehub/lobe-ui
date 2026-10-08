@@ -19,12 +19,16 @@ export const styles = stylex.create({
     width: 'var(--chat-item-avatar-size, 40px)',
   },
   container: {
+    paddingInline: { default: 12, [media.sm]: 8 },
+    paddingBlockEnd: 12,
+    paddingBlockStart: { default: 24, [media.sm]: 12 },
     position: 'relative',
     maxWidth: '100vw',
   },
   containerDocs: {
     transition: `background-color 100ms ${cssVar.motionEaseOut}`,
     marginBlockEnd: -16,
+    paddingBlockStart: { default: 24, [media.sm]: 16 },
   },
   editingInput: {
     width: '100%',
@@ -58,6 +62,12 @@ export const styles = stylex.create({
   },
   loadingRight: {
     insetInlineEnd: -4,
+  },
+  messageContent: {
+    flexDirection: { default: null, [media.sm]: 'column' },
+  },
+  narrowFullWidth: {
+    width: { default: null, [media.sm]: '100%' },
   },
   messageBubble: {
     borderColor: `color-mix(in srgb, ${cssVar.colorBorderSecondary} 66%, transparent)`,

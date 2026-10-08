@@ -4,7 +4,7 @@ import { memo, useState } from 'react';
 import useControlledState from 'use-merge-value';
 
 import Button from '@/Button';
-import { styles as textStyles } from '@/chat/MessageInput/style';
+import { styles as textStyles, textAreaStyle } from '@/chat/MessageInput/style';
 import CodeEditor from '@/CodeEditor';
 import { Flexbox } from '@/Flex';
 import messageModalMessages from '@/i18n/resources/en/messageModal';
@@ -98,6 +98,7 @@ const MessageModal = memo<MessageModalProps>(
               className={textStyles}
               defaultValue={temporaryValue}
               placeholder={placeholder}
+              style={textAreaStyle}
               value={temporaryValue}
               variant={'borderless'}
               onBlur={(e) => setMessage(e.target.value)}

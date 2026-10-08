@@ -13,7 +13,7 @@ import { TextArea } from '@/Input';
 import { useResponsive } from '@/styles/theme/scope';
 import Tooltip from '@/Tooltip';
 
-import { styles } from './style';
+import { styles, textAreaStyle } from './style';
 import type { MessageInputProps } from './type';
 
 const MessageInput = memo<MessageInputProps>(
@@ -68,7 +68,7 @@ const MessageInput = memo<MessageInputProps>(
             autoSize
             className={clsx(styles, classNames?.editor)}
             placeholder={placeholder}
-            style={customStyles?.editor}
+            style={{ ...textAreaStyle, ...customStyles?.editor }}
             value={temporaryValue}
             variant={variant}
             onBlur={(e) => setValue(e.target.value)}

@@ -55,7 +55,7 @@ const ChatItem = memo<ChatItemProps>(
     titleAddon,
     ...rest
   }) => {
-    const { mobile, sm: aboveSm } = useResponsive();
+    const { mobile } = useResponsive();
     const { t } = useTranslation(chatMessages);
 
     const avatarSize = mobile ? MOBILE_AVATAR_SIZE : avatarProps?.size || 40;
@@ -115,8 +115,6 @@ const ChatItem = memo<ChatItemProps>(
         className={containerClassName}
         direction={placement === 'left' ? 'horizontal' : 'horizontal-reverse'}
         gap={mobile ? 6 : 12}
-        paddingBlock={`${aboveSm ? 24 : isDocs ? 16 : 12}px 12px`}
-        paddingInline={aboveSm ? 12 : 8}
         style={cssVariables}
         width={'100%'}
         {...rest}
@@ -156,15 +154,13 @@ const ChatItem = memo<ChatItemProps>(
             data-layout={layoutMode}
             gap={8}
             width={editing ? '100%' : undefined}
-            {...stylex.props(styles.messageBox)}
+            {...stylex.props(styles.messageBox, styles.messageContent)}
             direction={
-              !aboveSm
-                ? 'vertical'
-                : layoutMode === 'horizontal'
-                  ? placement === 'left'
-                    ? 'horizontal'
-                    : 'horizontal-reverse'
-                  : 'vertical'
+              layoutMode === 'horizontal'
+                ? placement === 'left'
+                  ? 'horizontal'
+                  : 'horizontal-reverse'
+                : 'vertical'
             }
           >
             <Flexbox ref={contentRef} width={'100%'}>

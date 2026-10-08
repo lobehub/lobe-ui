@@ -44,7 +44,7 @@ const MessageContent = memo<MessageContentProps>(
     // placement and primary are part of the interface but not used in this component
     void placement;
     void primary;
-    const { mobile, sm: aboveSm } = useResponsive();
+    const { mobile } = useResponsive();
     const isBubble = variant === 'bubble';
 
     const content = (
@@ -68,11 +68,12 @@ const MessageContent = memo<MessageContentProps>(
       <Flexbox
         paddingBlock={editing ? '8px 12px' : isBubble ? 8 : '6px 0'}
         paddingInline={editing || isBubble ? 12 : 0}
-        width={editing || !aboveSm ? '100%' : undefined}
+        width={editing ? '100%' : undefined}
         onDoubleClick={onDoubleClick}
         {...stylex.props(
           isBubble && styles.messageBubble,
           styles.messageBox,
+          styles.narrowFullWidth,
           editing && [styles.editingContainer, !isBubble && styles.editingContainerDocs],
         )}
       >
