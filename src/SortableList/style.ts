@@ -1,49 +1,21 @@
-import { cva } from 'class-variance-authority';
+import * as stylex from '@stylexjs/stylex';
 
-import { createStaticStyles, lobeStaticStylish } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => {
-  return {
-    borderless: lobeStaticStylish.variantBorderlessWithoutHover,
-    container: css`
-      padding: 0;
-      list-style: none;
-    `,
-    filled: lobeStaticStylish.variantFilledWithoutHover,
-    item: css`
-      overflow: hidden;
-      box-sizing: border-box;
-      border-radius: ${cssVar.borderRadius};
-      list-style: none;
-    `,
-    itemVariant: css`
-      padding-block: 4px;
-      padding-inline: 4px 16px;
-    `,
-    outlined: lobeStaticStylish.variantOutlinedWithoutHover,
-  };
-});
-
-export const variants = cva(styles.item, {
-  compoundVariants: [
-    {
-      className: styles.itemVariant,
-      variant: 'outlined',
-    },
-    {
-      className: styles.itemVariant,
-      variant: 'filled',
-    },
-  ],
-  defaultVariants: {
-    variant: 'borderless',
+export const styles = stylex.create({
+  container: {
+    padding: 0,
+    listStyle: 'none',
   },
-
-  variants: {
-    variant: {
-      filled: styles.filled,
-      outlined: styles.outlined,
-      borderless: styles.borderless,
-    },
+  item: {
+    borderRadius: cssVar.borderRadius,
+    listStyle: 'none',
+    overflow: 'hidden',
+    boxSizing: 'border-box',
+  },
+  itemVariant: {
+    paddingBlock: 4,
+    paddingInlineEnd: 16,
+    paddingInlineStart: 4,
   },
 });

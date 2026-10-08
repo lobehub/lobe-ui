@@ -1,84 +1,40 @@
-import { cva } from 'class-variance-authority';
+import * as stylex from '@stylexjs/stylex';
 
-import { createStaticStyles, lobeStaticStylish } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  borderless: lobeStaticStylish.variantBorderlessWithoutHover,
-  close: css`
-    position: absolute;
-    inset-block-start: 8px;
-    inset-inline-end: 8px;
-  `,
-  content: css`
-    padding: 16px;
-  `,
-  cover: css`
-    align-self: center;
-  `,
-  desc: css`
-    color: ${cssVar.colorTextDescription};
-  `,
-  filledDark: css`
-    ${lobeStaticStylish.variantFilledWithoutHover};
-    background: linear-gradient(
-      to bottom,
-      ${cssVar.colorFillTertiary},
-      ${cssVar.colorFillQuaternary}
-    );
-  `,
-  filledLight: css`
-    ${lobeStaticStylish.variantFilledWithoutHover};
-    background: linear-gradient(
-      to bottom,
-      ${cssVar.colorFillQuaternary},
-      ${cssVar.colorFillTertiary}
-    );
-  `,
-  outlined: lobeStaticStylish.variantOutlinedWithoutHover,
-  root: css`
-    position: relative;
-    overflow: hidden;
-    border-radius: ${cssVar.borderRadiusLG};
-  `,
-  shadow: lobeStaticStylish.shadow,
-  title: css`
-    font-size: 16px;
-    font-weight: bold;
-  `,
-}));
-
-export const variants = cva(styles.root, {
-  compoundVariants: [
-    {
-      class: styles.filledDark,
-      isDarkMode: true,
-      variant: 'filled',
-    },
-    {
-      class: styles.filledLight,
-      isDarkMode: false,
-      variant: 'filled',
-    },
-  ],
-  defaultVariants: {
-    isDarkMode: false,
-    shadow: false,
-    variant: 'filled',
+export const styles = stylex.create({
+  close: {
+    insetBlockStart: 8,
+    insetInlineEnd: 8,
+    position: 'absolute',
   },
-
-  variants: {
-    isDarkMode: {
-      false: null,
-      true: null,
-    },
-    shadow: {
-      false: null,
-      true: styles.shadow,
-    },
-    variant: {
-      borderless: styles.borderless,
-      filled: null,
-      outlined: styles.outlined,
-    },
+  content: {
+    padding: 16,
+  },
+  cover: {
+    alignSelf: 'center',
+  },
+  desc: {
+    color: cssVar.colorTextDescription,
+  },
+  filledDark: {
+    backgroundColor: 'transparent',
+    backgroundImage: `linear-gradient(to bottom, ${cssVar.colorFillTertiary}, ${cssVar.colorFillQuaternary})`,
+  },
+  filledLight: {
+    backgroundColor: 'transparent',
+    backgroundImage: `linear-gradient(to bottom, ${cssVar.colorFillQuaternary}, ${cssVar.colorFillTertiary})`,
+  },
+  root: {
+    borderRadius: cssVar.borderRadiusLG,
+    overflow: 'hidden',
+    position: 'relative',
+  },
+  shadow: {
+    boxShadow: `0 1px 0 -1px ${cssVar.colorBorder}, 0 1px 2px -0.5px ${cssVar.colorBorder}, 0 2px 2px -1px ${cssVar.colorBorderSecondary}, 0 3px 6px -4px ${cssVar.colorBorderSecondary}`,
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: 'bold',
   },
 });

@@ -17,6 +17,7 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
+import * as stylex from '@stylexjs/stylex';
 import { Fragment, memo, type ReactNode, useMemo, useState } from 'react';
 
 import { Flexbox } from '@/Flex';
@@ -69,7 +70,7 @@ const SortableListParent = memo<SortableListProps>(
         }}
       >
         <SortableContext items={items} strategy={verticalListSortingStrategy}>
-          <Flexbox as={'ul'} className={styles.container} gap={gap} ref={ref} {...rest}>
+          <Flexbox as={'ul'} {...stylex.props(styles.container)} gap={gap} ref={ref} {...rest}>
             {items.map((item) => (
               <Fragment key={item.id}>{renderItem(item)}</Fragment>
             ))}
