@@ -1,15 +1,16 @@
 'use client';
 
+import clsx from 'clsx';
 import type { MouseEvent, ReactElement, Ref } from 'react';
 import { memo, useMemo } from 'react';
 
 import type { ButtonProps } from '@/Button';
-import Button from '@/Button';
+import { ButtonImpl } from '@/Button/Button';
 import Icon from '@/Icon';
-import { cx } from '@/styles';
+import type { styleProps } from '@/styles/stylex/props';
 import Tooltip from '@/Tooltip';
 
-import { variants } from './style';
+import { styles } from './style';
 import type { ActionIconOutdent, ActionIconProps, ActionIconVariant } from './type';
 import { calcOutdent, calcSize } from './utils';
 
@@ -17,6 +18,12 @@ const resolveButtonType = (variant: ActionIconProps['variant']) => {
   if (variant === 'filled') return 'fill' as const;
   if (variant === 'outlined') return 'default' as const;
   return 'text' as const;
+};
+
+const activeStyles = {
+  borderless: styles.active,
+  filled: styles.activeFill,
+  outlined: styles.activeOutlined,
 };
 
 const resolveButtonSize = (size: ActionIconProps['size']) => {
@@ -28,9 +35,10 @@ const resolveButtonSize = (size: ActionIconProps['size']) => {
 type ActionIconImplProps = Omit<ActionIconProps, 'outdent' | 'variant'> & {
   outdent?: ActionIconOutdent;
   variant?: ActionIconVariant;
+  xstyle?: Parameters<typeof styleProps>[0];
 };
 
-const ActionIconImpl = memo<ActionIconImplProps>(
+export const ActionIconImpl = memo<ActionIconImplProps>(
   ({
     active,
     className,
@@ -56,6 +64,7 @@ const ActionIconImpl = memo<ActionIconImplProps>(
     title,
     tooltipProps,
     variant = 'borderless',
+    xstyle,
     ...rest
   }) => {
     const { blockSize, borderRadius } = useMemo(() => calcSize(size), [size]);
@@ -98,10 +107,10 @@ const ActionIconImpl = memo<ActionIconImplProps>(
       : undefined;
 
     const node = (
-      <Button
+      <ButtonImpl
         {...(rest as unknown as ButtonProps)}
         aria-label={popupTriggerLabel}
-        className={cx(variants({ active, danger, glass, shadow }), classNames?.root, className)}
+        className={clsx(classNames?.root, className)}
         danger={danger}
         disabled={disabled}
         htmlType="button"
@@ -119,6 +128,14 @@ const ActionIconImpl = memo<ActionIconImplProps>(
           ...slotStyles?.root,
           ...style,
         }}
+        xstyle={[
+          styles.root,
+          active && activeStyles[variant],
+          danger && styles.dangerRoot,
+          glass && styles.glass,
+          shadow && styles.shadow,
+          xstyle,
+        ]}
         onClick={handleClick}
       />
     );
