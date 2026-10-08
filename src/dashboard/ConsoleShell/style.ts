@@ -1,4 +1,9 @@
-import { createStaticStyles } from '@/styles';
+import * as stylex from '@stylexjs/stylex';
+
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { media } from '@/styles/stylex/media.stylex';
+
+import { consoleBrandMarker } from './marker.stylex';
 
 const SIDEBAR_INLINE_SIZE = 248;
 // Twice the nav icon inset (8px nav padding + 10px item padding) plus the 18px icon, so the icons
@@ -6,207 +11,167 @@ const SIDEBAR_INLINE_SIZE = 248;
 const SIDEBAR_RAIL_INLINE_SIZE = 54;
 const WORKSPACE_INSET = 8;
 
+const reducedMotion = '@media (prefers-reduced-motion: reduce)';
+const flushPage = ':has([data-page-layout="flush"])';
+
 /**
- * `responsive.laptop`, not `responsive.tablet`. The aliases are named for
+ * `media.laptop`, not `media.tablet`. The aliases are named for
  * devices, and only `laptop` (max-width 991px) lines up with `useIsCompact`.
  */
-export const styles = createStaticStyles(({ css, cssVar, responsive }) => ({
-  brand: css`
-    display: flex;
-    flex: none;
-    align-items: center;
-
-    block-size: 56px;
-    margin-block-start: ${WORKSPACE_INSET}px;
-    padding-inline: 15px;
-
-    color: ${cssVar.colorText};
-    white-space: nowrap;
-
-    ${responsive.laptop} {
-      margin-block-start: 0;
-    }
-  `,
-  brandAnchor: css`
-    display: flex;
-    align-items: center;
-
-    inline-size: 100%;
-    min-inline-size: 0;
-
-    color: inherit;
-    text-decoration: none;
-  `,
-  brandLockup: css`
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    min-inline-size: 0;
-  `,
-  brandName: css`
-    overflow: hidden;
-
-    font-size: 14px;
-    font-weight: 600;
-    line-height: 1.3;
-    color: ${cssVar.colorText};
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
-    transition: opacity 120ms ease 80ms;
-
-    [data-collapsed='true'] & {
-      text-overflow: clip;
-      opacity: 0;
-      transition-delay: 0s;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      transition: none;
-    }
-  `,
-  main: css`
-    overflow: auto;
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    gap: 20px;
-
-    min-inline-size: 0;
-    min-block-size: 0;
-    padding: 24px;
-
-    /*
-     * A page that owns a full-height split sets data-page-layout="flush" and
-     * takes over padding and scrolling, so its sidebar can sit on the card edge.
-     */
-    &:has([data-page-layout='flush']) {
-      overflow: hidden;
-      gap: 0;
-      padding: 0;
-    }
-
-    ${responsive.mobile} {
-      gap: 16px;
-      padding: 16px;
-    }
-  `,
-  navSlot: css`
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    min-block-size: 0;
-  `,
-  shell: css`
-    overflow: hidden;
-    display: flex;
-    flex: 1;
-
-    block-size: 100%;
-    min-block-size: 0;
-
-    background: ${cssVar.colorBgLayout};
-  `,
-  sidebar: css`
-    overflow: hidden;
-    display: flex;
-    flex: none;
-    flex-direction: column;
-
-    inline-size: ${SIDEBAR_INLINE_SIZE}px;
-    block-size: 100%;
-    min-block-size: 0;
-
-    transition: inline-size 200ms ease;
-
-    &[data-collapsed='true'] {
-      inline-size: ${SIDEBAR_RAIL_INLINE_SIZE}px;
-    }
-
-    &[data-instant='true'] {
-      transition: none;
-    }
-
-    ${responsive.laptop} {
-      display: none;
-    }
-  `,
-  sidebarBottom: css`
-    flex: none;
-    padding: 8px;
-  `,
-  skipLink: css`
-    position: fixed;
-    z-index: 2000;
-    inset-block-start: -100px;
-    inset-inline-start: 12px;
-
-    padding-block: 8px;
-    padding-inline: 12px;
-    border-radius: ${cssVar.borderRadius};
-
-    color: ${cssVar.colorText};
-
-    background: ${cssVar.colorBgElevated};
-
-    &:focus {
-      inset-block-start: 12px;
-    }
-  `,
-  topbar: css`
-    display: flex;
-    flex: none;
-    gap: 8px;
-    align-items: center;
-
-    block-size: 56px;
-    padding-inline: 12px;
-    border-block-end: 1px solid ${cssVar.colorBorderSecondary};
-  `,
-  topbarDivider: css`
-    flex: none;
-
-    inline-size: 1px;
-    block-size: 18px;
-    margin-inline: 2px;
-
-    background: ${cssVar.colorBorderSecondary};
-  `,
-  topbarMain: css`
-    display: flex;
-    flex: 1;
-    align-items: center;
-    min-inline-size: 0;
-  `,
-  tools: css`
-    display: flex;
-    flex: none;
-    gap: 6px;
-    align-items: center;
-
-    margin-inline-start: auto;
-  `,
-  workspace: css`
-    overflow: hidden;
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-
-    min-inline-size: 0;
-    min-block-size: 0;
-    margin-block: ${WORKSPACE_INSET}px;
-    margin-inline: 0 ${WORKSPACE_INSET}px;
-    border: 1px solid ${cssVar.colorBorderSecondary};
-    border-radius: ${cssVar.borderRadiusLG};
-
-    background: ${cssVar.colorBgContainer};
-    box-shadow: ${cssVar.boxShadowTertiary};
-
-    ${responsive.laptop} {
-      margin: 0;
-      border: none;
-      border-radius: 0;
-      box-shadow: none;
-    }
-  `,
-}));
+export const styles = stylex.create({
+  brand: {
+    flex: 'none',
+    paddingInline: 15,
+    alignItems: 'center',
+    blockSize: 56,
+    color: cssVar.colorText,
+    display: 'flex',
+    marginBlockStart: { default: WORKSPACE_INSET, [media.laptop]: 0 },
+    whiteSpace: 'nowrap',
+  },
+  brandAnchor: {
+    textDecoration: 'none',
+    alignItems: 'center',
+    color: 'inherit',
+    display: 'flex',
+    inlineSize: '100%',
+    minInlineSize: 0,
+  },
+  brandLockup: {
+    gap: 10,
+    alignItems: 'center',
+    display: 'flex',
+    minInlineSize: 0,
+  },
+  brandName: {
+    overflow: 'hidden',
+    transition: { default: 'opacity 120ms ease 80ms', [reducedMotion]: 'none' },
+    color: cssVar.colorText,
+    fontSize: 14,
+    fontWeight: 600,
+    lineHeight: 1.3,
+    opacity: {
+      default: null,
+      [stylex.when.ancestor('[data-collapsed="true"]', consoleBrandMarker)]: 0,
+    },
+    textOverflow: {
+      default: 'ellipsis',
+      [stylex.when.ancestor('[data-collapsed="true"]', consoleBrandMarker)]: 'clip',
+    },
+    transitionDelay: {
+      default: null,
+      [stylex.when.ancestor('[data-collapsed="true"]', consoleBrandMarker)]: '0s',
+    },
+    whiteSpace: 'nowrap',
+  },
+  main: {
+    padding: {
+      default: 24,
+      [flushPage]: 0,
+      [media.mobile]: { default: 16, [flushPage]: 0 },
+    },
+    flex: '1',
+    gap: {
+      default: 20,
+      [flushPage]: 0,
+      [media.mobile]: { default: 16, [flushPage]: 0 },
+    },
+    overflow: { default: 'auto', [flushPage]: 'hidden' },
+    display: 'flex',
+    flexDirection: 'column',
+    minBlockSize: 0,
+    minInlineSize: 0,
+  },
+  navSlot: {
+    flex: '1',
+    display: 'flex',
+    flexDirection: 'column',
+    minBlockSize: 0,
+  },
+  shell: {
+    flex: '1',
+    overflow: 'hidden',
+    backgroundColor: cssVar.colorBgLayout,
+    blockSize: '100%',
+    display: 'flex',
+    minBlockSize: 0,
+  },
+  sidebar: {
+    flex: 'none',
+    overflow: 'hidden',
+    transition: 'inline-size 200ms ease',
+    blockSize: '100%',
+    display: { default: 'flex', [media.laptop]: 'none' },
+    flexDirection: 'column',
+    inlineSize: SIDEBAR_INLINE_SIZE,
+    minBlockSize: 0,
+  },
+  sidebarCollapsed: {
+    inlineSize: SIDEBAR_RAIL_INLINE_SIZE,
+  },
+  sidebarInstant: {
+    transition: 'none',
+  },
+  sidebarBottom: {
+    padding: 8,
+    flex: 'none',
+  },
+  skipLink: {
+    borderRadius: cssVar.borderRadius,
+    paddingBlock: 8,
+    paddingInline: 12,
+    backgroundColor: cssVar.colorBgElevated,
+    color: cssVar.colorText,
+    insetBlockStart: { 'default': -100, ':focus': 12 },
+    insetInlineStart: 12,
+    position: 'fixed',
+    zIndex: 2000,
+  },
+  topbar: {
+    flex: 'none',
+    gap: 8,
+    paddingInline: 12,
+    alignItems: 'center',
+    blockSize: 56,
+    borderBlockEndColor: cssVar.colorBorderSecondary,
+    borderBlockEndStyle: 'solid',
+    borderBlockEndWidth: 1,
+    display: 'flex',
+  },
+  topbarDivider: {
+    flex: 'none',
+    marginInline: 2,
+    backgroundColor: cssVar.colorBorderSecondary,
+    blockSize: 18,
+    inlineSize: 1,
+  },
+  topbarMain: {
+    flex: '1',
+    alignItems: 'center',
+    display: 'flex',
+    minInlineSize: 0,
+  },
+  tools: {
+    flex: 'none',
+    gap: 6,
+    alignItems: 'center',
+    display: 'flex',
+    marginInlineStart: 'auto',
+  },
+  workspace: {
+    borderColor: { default: cssVar.colorBorderSecondary, [media.laptop]: 'currentcolor' },
+    borderRadius: { default: cssVar.borderRadiusLG, [media.laptop]: 0 },
+    borderStyle: { default: 'solid', [media.laptop]: 'none' },
+    borderWidth: { default: 1, [media.laptop]: 'medium' },
+    flex: '1',
+    marginBlock: { default: WORKSPACE_INSET, [media.laptop]: 0 },
+    marginInline: { default: `0 ${WORKSPACE_INSET}px`, [media.laptop]: 0 },
+    overflow: 'hidden',
+    backgroundColor: cssVar.colorBgContainer,
+    boxShadow: { default: cssVar.boxShadowTertiary, [media.laptop]: 'none' },
+    display: 'flex',
+    flexDirection: 'column',
+    minBlockSize: 0,
+    minInlineSize: 0,
+  },
+});

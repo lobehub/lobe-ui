@@ -1,11 +1,12 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { memo } from 'react';
 import useMergeState from 'use-merge-value';
 
 import { Flexbox } from '@/Flex';
 import SafeArea from '@/mobile/SafeArea';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
 import { styles } from './style';
 import type { TabBarProps } from './type';
@@ -22,31 +23,47 @@ const TabBar = memo<TabBarProps>(
     );
 
     return (
-      <Flexbox as={'footer'} className={cx(styles.container, className)} ref={ref} {...rest}>
+      <Flexbox
+        as={'footer'}
+        flex={'none'}
+        ref={ref}
+        width={'100vw'}
+        {...styleProps(styles.container, className)}
+        {...rest}
+      >
         <Flexbox
           horizontal
           align={'center'}
-          className={cx(styles.inner, className)}
+          height={48}
           justify={'space-around'}
+          {...styleProps(styles.inner, className)}
         >
           {items.map((item) => {
             const active = item.key === currentActive;
             return (
               <Flexbox
                 align={'center'}
-                className={cx(styles.tab, active && styles.active)}
                 gap={4}
+                height={48}
                 justify={'center'}
                 key={item.key}
+                width={48}
+                {...stylex.props(styles.tab, active && styles.active)}
                 onClick={() => {
                   setCurrentActive(item.key);
                   item?.onClick?.();
                 }}
               >
-                <Flexbox align={'center'} className={styles.icon} justify={'center'}>
+                <Flexbox
+                  align={'center'}
+                  height={24}
+                  justify={'center'}
+                  width={24}
+                  {...stylex.props(styles.icon)}
+                >
                   {typeof item.icon === 'function' ? item.icon(active) : item.icon}
                 </Flexbox>
-                <div className={styles.title}>
+                <div {...stylex.props(styles.title)}>
                   {typeof item.title === 'function' ? item.title(active) : item.title}
                 </div>
               </Flexbox>

@@ -1,9 +1,11 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { memo } from 'react';
 
 import { Flexbox } from '@/Flex';
-import { cx, useThemeMode } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
+import { useThemeMode } from '@/styles/theme/scope';
 
 import { styles } from './style';
 import type { AuroraBackgroundProps } from './type';
@@ -13,8 +15,8 @@ const AuroraBackground = memo<AuroraBackgroundProps>(
     const { isDarkMode } = useThemeMode();
     return (
       <Flexbox ref={ref} {...rest}>
-        <Flexbox className={cx(styles.wrapper, classNames?.wrapper)} style={customStyles?.wrapper}>
-          <div className={isDarkMode ? styles.bgDark : styles.bgLight} />
+        <Flexbox {...styleProps(styles.wrapper, classNames?.wrapper, customStyles?.wrapper)}>
+          <div {...stylex.props(styles.bg, isDarkMode ? styles.bgDark : styles.bgLight)} />
         </Flexbox>
         <Flexbox
           className={classNames?.content}

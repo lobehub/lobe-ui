@@ -1,9 +1,11 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { type CSSProperties, memo, useEffect, useRef, useState } from 'react';
 
 import { LANDING_PALETTE_DARK, LANDING_PALETTE_LIGHT } from '@/awesome/landingTokens';
-import { cx, useThemeMode } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
+import { useThemeMode } from '@/styles/theme/scope';
 
 import { styles } from './style';
 import type { FluidGradientProps } from './type';
@@ -297,19 +299,20 @@ const FluidGradient = memo<FluidGradientProps>(
     return (
       <div
         aria-hidden
-        className={cx(styles.root, className)}
         data-ready={ready ? '' : undefined}
-        style={
-          {
-            '--fluid-stop-a': palette[0],
-            '--fluid-stop-b': palette[1],
-            '--fluid-stop-c': palette[2],
-            ...style,
-          } as CSSProperties
-        }
+        {...styleProps(styles.root, className, {
+          '--fluid-stop-a': palette[0],
+          '--fluid-stop-b': palette[1],
+          '--fluid-stop-c': palette[2],
+          ...style,
+        } as CSSProperties)}
         {...rest}
       >
-        <canvas key={canvasEpoch} ref={canvasRef} />
+        <canvas
+          key={canvasEpoch}
+          ref={canvasRef}
+          {...stylex.props(styles.canvas, ready && styles.canvasReady)}
+        />
       </div>
     );
   },

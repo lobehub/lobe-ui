@@ -1,0 +1,10 @@
+@layer lobe-ui {
+  .lobe-install-banner-footnote a {
+    color: var(--lobe-color-primary);
+    text-decoration: none;
+  }
+
+  .lobe-install-banner-footnote a:hover {
+    text-decoration: underline;
+  }
+}

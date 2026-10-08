@@ -1,9 +1,11 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { memo, useMemo } from 'react';
 
 import { Flexbox } from '@/Flex';
-import { cx, useThemeMode } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
+import { useThemeMode } from '@/styles/theme/scope';
 
 import { styles } from './style';
 import type { SpotlightCardItemProps } from './type';
@@ -22,15 +24,17 @@ const SpotlightCardItem = memo<SpotlightCardItemProps>(
 
     return (
       <Flexbox
-        className={cx(isDarkMode ? styles.itemContainerDark : styles.itemContainerLight, className)}
-        style={{
+        width={'100%'}
+        {...styleProps([styles.item, isDarkMode ? styles.itemDark : styles.itemLight], className, {
           ...cssVariables,
           borderRadius,
           ...style,
-        }}
+        })}
         {...rest}
       >
-        <Flexbox className={styles.content}>{children}</Flexbox>
+        <Flexbox flex={'1 1 auto'} height={'100%'} {...stylex.props(styles.content)}>
+          {children}
+        </Flexbox>
       </Flexbox>
     );
   },

@@ -1,9 +1,12 @@
 'use client';
 
+import './style.css';
+
+import * as stylex from '@stylexjs/stylex';
 import { type CSSProperties, memo } from 'react';
 
 import { renderLandingLink } from '@/awesome/landingLink';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
 import { styles } from './style';
 import type { BentoCardProps } from './type';
@@ -22,25 +25,30 @@ const BentoCard = memo<BentoCardProps>(
     ...rest
   }) => (
     <div
-      className={cx(styles.card, className)}
       data-wide={colSpan > 2}
-      style={
-        { '--bento-col-span': colSpan, '--bento-row-span': rowSpan, ...style } as CSSProperties
-      }
+      {...styleProps(styles.card, className, {
+        '--bento-col-span': colSpan,
+        '--bento-row-span': rowSpan,
+        ...style,
+      } as CSSProperties)}
       {...rest}
     >
       {(title || hint) && (
-        <div className={styles.header}>
+        <div {...stylex.props(styles.header)}>
           {title &&
             (href ? (
-              renderLandingLink(renderLink, { children: title, className: styles.title, href })
+              renderLandingLink(renderLink, {
+                children: title,
+                className: stylex.props(styles.title).className,
+                href,
+              })
             ) : (
-              <span className={styles.title}>{title}</span>
+              <span {...stylex.props(styles.title)}>{title}</span>
             ))}
-          {hint && <span className={styles.hint}>{hint}</span>}
+          {hint && <span {...stylex.props(styles.hint)}>{hint}</span>}
         </div>
       )}
-      <div className={styles.body}>{children}</div>
+      <div {...styleProps(styles.body, 'lobe-bento-card-body')}>{children}</div>
     </div>
   ),
 );

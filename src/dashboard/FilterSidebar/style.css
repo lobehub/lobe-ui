@@ -1,0 +1,11 @@
+@layer lobe-ui {
+  [data-split-card='true'] .lobe-filter-sidebar-content > :last-child {
+    margin-inline: -16px;
+  }
+
+  @media (width <= 991.98px) {
+    .lobe-filter-sidebar-content > :last-child {
+      margin-inline: 0;
+    }
+  }
+}

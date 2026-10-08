@@ -1,9 +1,10 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { memo } from 'react';
 
 import { LandingActions } from '@/awesome/landingActions';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 import Tag from '@/Tag';
 
 import { styles } from './style';
@@ -30,32 +31,33 @@ const LandingSection = memo<LandingSectionProps>(
     const hasActions = Boolean(actions?.length);
     const hasAside = hasActions || Boolean(extra);
     const hasHeader = Boolean(eyebrow || title || description || hasAside);
+    const isStart = align === 'start';
 
     return (
       <section
         aria-labelledby={title ? headingId : undefined}
-        className={cx(styles.root, className)}
         data-divider={divider}
         id={id}
+        {...styleProps([styles.root, divider && styles.rootDivider], className)}
         {...rest}
       >
         {hasHeader && (
-          <div className={styles.header} data-align={align}>
-            <div className={styles.heading}>
+          <div data-align={align} {...stylex.props(styles.header, isStart && styles.headerStart)}>
+            <div {...stylex.props(styles.heading, isStart && styles.headingStart)}>
               {eyebrow && (
-                <Tag className={styles.eyebrow} color={eyebrowColor} shape={'round'}>
+                <Tag {...stylex.props(styles.eyebrow)} color={eyebrowColor} shape={'round'}>
                   {eyebrow}
                 </Tag>
               )}
               {title && (
-                <h2 className={styles.title} id={headingId}>
+                <h2 id={headingId} {...stylex.props(styles.title)}>
                   {title}
                 </h2>
               )}
-              {description && <p className={styles.description}>{description}</p>}
+              {description && <p {...stylex.props(styles.description)}>{description}</p>}
             </div>
             {hasAside && (
-              <div className={styles.extra}>
+              <div {...stylex.props(styles.extra, isStart && styles.extraStart)}>
                 {hasActions && (
                   <LandingActions
                     actions={actions!}
@@ -69,7 +71,7 @@ const LandingSection = memo<LandingSectionProps>(
             )}
           </div>
         )}
-        {children && <div className={hasHeader ? styles.body : undefined}>{children}</div>}
+        {children && <div {...stylex.props(hasHeader && styles.body)}>{children}</div>}
       </section>
     );
   },

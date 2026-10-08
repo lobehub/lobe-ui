@@ -1,5 +1,8 @@
 'use client';
 
+import './style.css';
+
+import * as stylex from '@stylexjs/stylex';
 import { Bot, UserRound } from 'lucide-react';
 import { memo, useState } from 'react';
 
@@ -7,10 +10,10 @@ import { renderLandingIcon } from '@/awesome/landingIcon';
 import Icon from '@/Icon';
 import Segmented from '@/Segmented';
 import Snippet from '@/Snippet';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
 import { DEFAULT_SKILL_AGENTS } from './agents';
-import { styles } from './style';
+import { childStyles, styles } from './style';
 import type { AgentSkillCardMode, AgentSkillCardProps } from './type';
 
 const AVATAR_SIZE = 28;
@@ -33,7 +36,7 @@ const AgentSkillCard = memo<AgentSkillCardProps>(
     const shell = panel.shell ?? mode === 'human';
 
     return (
-      <div className={cx(styles.root, className)} {...rest}>
+      <div {...styleProps(styles.root, className)} {...rest}>
         {human && (
           <Segmented<AgentSkillCardMode>
             block
@@ -58,27 +61,29 @@ const AgentSkillCard = memo<AgentSkillCardProps>(
             }}
           />
         )}
-        <div className={styles.panel}>
+        <div {...stylex.props(styles.panel)}>
           {mode === 'agent' && agents.length > 0 && (
-            <div className={styles.agents}>
+            <div {...stylex.props(styles.agents)}>
               {agents.map(({ avatar, title }) => (
-                <span className={styles.agent} key={title} title={title}>
+                <span key={title} title={title} {...stylex.props(styles.agent)}>
                   {renderLandingIcon(avatar, AVATAR_SIZE)}
                 </span>
               ))}
             </div>
           )}
-          {panel.description && <p className={styles.description}>{panel.description}</p>}
+          {panel.description && <p {...stylex.props(styles.description)}>{panel.description}</p>}
           <Snippet
-            className={styles.code}
             language={'bash'}
             prefix={shell ? '$' : undefined}
+            style={childStyles.code}
             variant={'outlined'}
           >
             {panel.code}
           </Snippet>
         </div>
-        {footer && <div className={styles.footer}>{footer}</div>}
+        {footer && (
+          <div {...styleProps(styles.footer, 'lobe-agent-skill-card-footer')}>{footer}</div>
+        )}
       </div>
     );
   },

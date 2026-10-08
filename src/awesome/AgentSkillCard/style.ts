@@ -1,81 +1,70 @@
-import { createStaticStyles } from '@/styles';
+import * as stylex from '@stylexjs/stylex';
+import type { CSSProperties } from 'react';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  agent: css`
-    display: inline-flex;
-    flex: none;
-    border-radius: 8px;
-    transition: transform 140ms ease;
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-    &:hover {
-      transform: translateY(-2px);
-    }
+export const styles = stylex.create({
+  agent: {
+    borderRadius: 8,
+    flex: 'none',
+    transition: 'transform 140ms ease',
+    display: 'inline-flex',
+    transform: {
+      'default': null,
+      ':hover': 'translateY(-2px)',
+      '@media (prefers-reduced-motion: reduce)': { 'default': null, ':hover': 'none' },
+    },
+  },
+  agents: {
+    gap: 14,
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
+  description: {
+    margin: 0,
+    color: cssVar.colorText,
+    fontSize: 15,
+    fontWeight: 500,
+    lineHeight: 1.5,
+    textAlign: 'center',
+    textWrap: 'balance',
+  },
+  footer: {
+    gap: 16,
+    color: cssVar.colorTextTertiary,
+    display: 'flex',
+    flexWrap: 'wrap',
+    fontSize: cssVar.fontSizeSM,
+    justifyContent: 'center',
+  },
+  panel: {
+    gap: 16,
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  root: {
+    borderColor: cssVar.colorBorderSecondary,
+    borderRadius: 16,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    gap: 20,
+    paddingInline: 12,
+    backdropFilter: 'blur(12px)',
+    backgroundColor: `color-mix(in srgb, ${cssVar.colorBgElevated} 25%, transparent)`,
+    boxShadow: '0 1px 2px rgb(0 0 0 / 4%), 0 12px 32px rgb(0 0 0 / 6%)',
+    display: 'flex',
+    flexDirection: 'column',
+    inlineSize: '100%',
+    maxInlineSize: 480,
+    paddingBlockEnd: '16px',
+    paddingBlockStart: '12px',
+  },
+});
 
-    @media (prefers-reduced-motion: reduce) {
-      &:hover {
-        transform: none;
-      }
-    }
-  `,
-  agents: css`
-    display: flex;
-    flex-wrap: wrap;
-    gap: 14px;
-    justify-content: center;
-  `,
-  code: css`
-    inline-size: 100%;
-    text-align: start;
-  `,
-  description: css`
-    margin: 0;
-
-    font-size: 15px;
-    font-weight: 500;
-    line-height: 1.5;
-    color: ${cssVar.colorText};
-    text-align: center;
-    text-wrap: balance;
-  `,
-  footer: css`
-    display: flex;
-    flex-wrap: wrap;
-    gap: 16px;
-    justify-content: center;
-
-    font-size: ${cssVar.fontSizeSM};
-    color: ${cssVar.colorTextTertiary};
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    a:hover {
-      color: ${cssVar.colorText};
-    }
-  `,
-  panel: css`
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-  `,
-  root: css`
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-
-    inline-size: 100%;
-    max-inline-size: 480px;
-    padding-block: 12px 16px;
-    padding-inline: 12px;
-    border: 1px solid ${cssVar.colorBorderSecondary};
-    border-radius: 16px;
-
-    background: color-mix(in srgb, ${cssVar.colorBgElevated} 25%, transparent);
-    backdrop-filter: blur(12px);
-    box-shadow:
-      0 1px 2px rgb(0 0 0 / 4%),
-      0 12px 32px rgb(0 0 0 / 6%);
-  `,
-}));
+export const childStyles = {
+  code: {
+    inlineSize: '100%',
+    textAlign: 'start',
+  },
+} satisfies Record<string, CSSProperties>;

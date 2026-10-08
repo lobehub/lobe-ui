@@ -1,17 +1,16 @@
-import { createStaticStyles } from '@/styles';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  bar: css`
-    will-change: transform, opacity;
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-    position: fixed;
-    z-index: 1000;
-    inset-block-start: 0;
-    inset-inline: 0;
-    transform-origin: 0 50%;
-
-    block-size: 2px;
-
-    background: ${cssVar.colorPrimary};
-  `,
-}));
+export const styles = stylex.create({
+  bar: {
+    insetInline: 0,
+    backgroundColor: cssVar.colorPrimary,
+    blockSize: 2,
+    insetBlockStart: 0,
+    position: 'fixed',
+    transformOrigin: '0 50%',
+    willChange: 'transform, opacity',
+    zIndex: 1000,
+  },
+});

@@ -1,118 +1,102 @@
-import { createStaticStyles } from '@/styles';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css, cssVar, responsive }) => ({
-  action: css`
-    flex: none;
-    inline-size: 96px;
-    block-size: 32px;
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { media } from '@/styles/stylex/media.stylex';
 
-    ${responsive.mobile} {
-      inline-size: 100%;
-      block-size: 44px;
-    }
-  `,
-  cell: css`
-    flex: none;
-    inline-size: 88px;
-    block-size: 14px;
-  `,
-  copy: css`
-    flex: 1;
-    min-inline-size: 0;
-  `,
-  header: css`
-    display: flex;
-    gap: 16px;
-    align-items: flex-start;
-    justify-content: space-between;
-
-    ${responsive.mobile} {
-      flex-direction: column;
-      align-items: stretch;
-    }
-  `,
-  headerCopy: css`
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    gap: 8px;
-
-    min-inline-size: 0;
-  `,
-  page: css`
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-  `,
-  row: css`
-    display: flex;
-    gap: 12px;
-    align-items: center;
-
-    min-block-size: 54px;
-    padding-block: 12px;
-    padding-inline: 16px;
-    border-block-end: 1px solid ${cssVar.colorBorder};
-
-    &:last-child {
-      border-block-end: none;
-    }
-  `,
-  srOnly: css`
-    position: absolute;
-
-    overflow: hidden;
-
-    inline-size: 1px;
-    block-size: 1px;
-
-    white-space: nowrap;
-
-    clip-path: inset(50%);
-  `,
-  statGrid: css`
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 12px;
-  `,
-  stat: css`
-    display: flex;
-    flex-direction: column;
-    padding: 16px;
-  `,
-  statValue: css`
-    inline-size: 42%;
-    block-size: ${cssVar.fontSizeHeading2};
-    margin-block: 6px 14px;
-  `,
-  table: css`
-    overflow: hidden;
-    min-inline-size: 0;
-  `,
-  tag: css`
-    flex: none;
-    inline-size: 72px;
-    block-size: 22px;
-    border-radius: ${cssVar.borderRadiusSM};
-  `,
-  thead: css`
-    display: flex;
-    gap: 12px;
-    align-items: center;
-
-    min-block-size: 39px;
-    padding-block: 10px;
-    padding-inline: 16px;
-
-    background: ${cssVar.colorFillTertiary};
-  `,
-  theadCell: css`
-    flex: none;
-    block-size: 12px;
-  `,
-  title: css`
-    inline-size: 220px;
-    max-inline-size: 70%;
-    block-size: ${cssVar.fontSizeHeading3};
-  `,
-}));
+export const styles = stylex.create({
+  action: {
+    flex: 'none',
+    blockSize: { default: 32, [media.mobile]: 44 },
+    inlineSize: { default: 96, [media.mobile]: '100%' },
+  },
+  cell: {
+    flex: 'none',
+    blockSize: 14,
+    inlineSize: 88,
+  },
+  copy: {
+    flex: '1',
+    minInlineSize: 0,
+  },
+  header: {
+    gap: 16,
+    alignItems: { default: 'flex-start', [media.mobile]: 'stretch' },
+    display: 'flex',
+    flexDirection: { default: null, [media.mobile]: 'column' },
+    justifyContent: 'space-between',
+  },
+  headerCopy: {
+    flex: '1',
+    gap: 8,
+    display: 'flex',
+    flexDirection: 'column',
+    minInlineSize: 0,
+  },
+  page: {
+    gap: 20,
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  row: {
+    gap: 12,
+    paddingBlock: 12,
+    paddingInline: 16,
+    alignItems: 'center',
+    borderBlockEndColor: { 'default': cssVar.colorBorder, ':last-child': 'currentcolor' },
+    borderBlockEndStyle: { 'default': 'solid', ':last-child': 'none' },
+    borderBlockEndWidth: { 'default': 1, ':last-child': 'medium' },
+    display: 'flex',
+    minBlockSize: 54,
+  },
+  srOnly: {
+    overflow: 'hidden',
+    blockSize: 1,
+    clipPath: 'inset(50%)',
+    inlineSize: 1,
+    position: 'absolute',
+    whiteSpace: 'nowrap',
+  },
+  stat: {
+    padding: 16,
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  statGrid: {
+    gap: 12,
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+  },
+  statValue: {
+    blockSize: cssVar.fontSizeHeading2,
+    inlineSize: '42%',
+    marginBlockEnd: '14px',
+    marginBlockStart: '6px',
+  },
+  table: {
+    overflow: 'hidden',
+    minInlineSize: 0,
+  },
+  tag: {
+    flex: 'none',
+    blockSize: 22,
+    inlineSize: 72,
+  },
+  thead: {
+    gap: 12,
+    paddingBlock: 10,
+    paddingInline: 16,
+    alignItems: 'center',
+    backgroundColor: cssVar.colorFillTertiary,
+    display: 'flex',
+    minBlockSize: 39,
+  },
+  theadCell: {
+    flex: 'none',
+    blockSize: 12,
+  },
+  title: {
+    blockSize: cssVar.fontSizeHeading3,
+    inlineSize: 220,
+    maxInlineSize: '70%',
+  },
+});

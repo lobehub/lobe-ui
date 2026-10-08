@@ -1,12 +1,15 @@
 'use client';
 
+import './style.css';
+
+import * as stylex from '@stylexjs/stylex';
 import { type CSSProperties, memo, useState } from 'react';
 
 import Highlighter from '@/Highlighter';
 import Segmented from '@/Segmented';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
-import { styles } from './style';
+import { childStyles, styles } from './style';
 import type { CodeShowcaseProps } from './type';
 
 const CodeShowcase = memo<CodeShowcaseProps>(
@@ -28,14 +31,16 @@ const CodeShowcase = memo<CodeShowcaseProps>(
 
     return (
       <div
-        className={cx(styles.root, className)}
-        style={{ '--code-showcase-min-height': `${minHeight}px`, ...style } as CSSProperties}
+        {...styleProps(styles.root, className, {
+          '--code-showcase-min-height': `${minHeight}px`,
+          ...style,
+        } as CSSProperties)}
         {...rest}
       >
         {items.length > 1 && (
           <Segmented
-            className={styles.tabs}
             options={items.map(({ key, label }) => ({ label, value: key }))}
+            style={childStyles.tabs}
             value={active.key}
             variant={'outlined'}
             onChange={(key) => {
@@ -44,15 +49,15 @@ const CodeShowcase = memo<CodeShowcaseProps>(
             }}
           />
         )}
-        <div className={styles.panes}>
+        <div {...stylex.props(styles.panes)}>
           <Highlighter
-            className={styles.code}
             language={active.language ?? 'tsx'}
+            style={childStyles.code}
             variant={'outlined'}
           >
             {active.code}
           </Highlighter>
-          <div className={styles.preview}>{active.preview}</div>
+          <div {...styleProps(styles.preview, 'lobe-code-showcase-preview')}>{active.preview}</div>
         </div>
       </div>
     );
