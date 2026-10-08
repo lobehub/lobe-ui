@@ -1,11 +1,14 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { memo, useEffect, useMemo, useRef, useState } from 'react';
 
 import { Flexbox } from '@/Flex';
 import chatMessages from '@/i18n/resources/en/chat';
 import { useTranslation } from '@/i18n/useTranslation';
-import { cx, useResponsive } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
+import { useResponsive } from '@/styles/theme/scope';
 
 import Actions from './components/Actions';
 import Avatar from './components/Avatar';
@@ -101,21 +104,11 @@ const ChatItem = memo<ChatItemProps>(
       return () => observer.disconnect();
     }, [variant, actionsWrapWidth]);
 
-    const containerClassName = cx(
-      variant === 'docs' ? styles.containerDocs : styles.container,
-      className,
-    );
-
-    const messageContainerClassName = useMemo(() => {
-      if (editing) {
-        return hasTime ? styles.messageContainerEditingWithTime : styles.messageContainerEditing;
-      }
-      return hasTime ? styles.messageContainerWithTime : styles.messageContainer;
-    }, [editing, hasTime]);
-
-    const messageContentClassName = useMemo(() => {
-      return editing ? styles.messageContentEditing : styles.messageContent;
-    }, [editing]);
+    const isDocs = variant === 'docs';
+    const containerClassName = styleProps(
+      [styles.container, isDocs && styles.containerDocs],
+      clsx('lobe-chat-item', isDocs ? 'lobe-chat-item-docs' : 'lobe-chat-item-bubble', className),
+    ).className;
 
     return (
       <Flexbox
@@ -143,8 +136,13 @@ const ChatItem = memo<ChatItemProps>(
         )}
         <Flexbox
           align={placement === 'left' ? 'flex-start' : 'flex-end'}
-          className={messageContainerClassName}
           ref={containerRef}
+          {...stylex.props(
+            styles.messageBox,
+            styles.messageContainer,
+            editing && styles.editing,
+            hasTime && styles.withTime,
+          )}
         >
           <Title
             avatar={avatar}
@@ -156,9 +154,9 @@ const ChatItem = memo<ChatItemProps>(
           {aboveMessage}
           <Flexbox
             align={placement === 'left' ? 'flex-start' : 'flex-end'}
-            className={messageContentClassName}
-            data-layout={layoutMode} // 添加数据属性以方便样式选择
+            data-layout={layoutMode}
             gap={8}
+            {...stylex.props(styles.messageBox, styles.messageContent, editing && styles.editing)}
             direction={
               layoutMode === 'horizontal'
                 ? placement === 'left'
