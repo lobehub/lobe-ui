@@ -110,11 +110,11 @@ const stubNatural = (element: HTMLImageElement, width: number, height: number) =
 const renderWithMotion = (node: ReactNode) =>
   render(<ConfigProvider motion={motion}>{node}</ConfigProvider>);
 
-const getViewerImage = () => document.querySelector<HTMLImageElement>('.viewerImage');
-const getPopup = () => document.querySelector<HTMLElement>('.viewerPopup');
-const getCounter = () => document.querySelector<HTMLElement>('.viewerCounter');
-const getPrevButton = () => document.querySelector<HTMLElement>('.viewerNavPrev');
-const getNextButton = () => document.querySelector<HTMLElement>('.viewerNavNext');
+const getViewerImage = () => document.querySelector<HTMLImageElement>('.lobe-image-viewer-image');
+const getPopup = () => document.querySelector<HTMLElement>('.lobe-image-viewer-popup');
+const getCounter = () => document.querySelector<HTMLElement>('.lobe-image-viewer-counter');
+const getPrevButton = () => document.querySelector<HTMLElement>('.lobe-image-viewer-nav-prev');
+const getNextButton = () => document.querySelector<HTMLElement>('.lobe-image-viewer-nav-next');
 
 const wheel = (init: { ctrlKey?: boolean; deltaY: number }) =>
   act(() => {
@@ -291,7 +291,9 @@ describe('gallery navigation', () => {
     expect(ghost?.getAttribute('src')).toBe('https://example.com/a.png');
     expect(ghost?.getAttribute('aria-hidden')).toBe('true');
 
-    const live = document.querySelector<HTMLImageElement>('.viewerImage:not([data-ghost])');
+    const live = document.querySelector<HTMLImageElement>(
+      '.lobe-image-viewer-image:not([data-ghost])',
+    );
     expect(live?.getAttribute('src')).toBe('https://example.com/b.png');
     expect(live?.style.transform).toContain('translate3d(1024px, 0px, 0)');
 
