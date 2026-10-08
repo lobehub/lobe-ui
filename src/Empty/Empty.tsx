@@ -1,11 +1,13 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { Plus } from 'lucide-react';
 import { type KeyboardEvent, memo, useMemo } from 'react';
 
 import FluentEmoji from '@/FluentEmoji';
 import Icon from '@/Icon';
-import { cssVar, cx } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { styleProps } from '@/styles/stylex/props';
 import Text from '@/Text';
 
 import { styles } from './style';
@@ -58,12 +60,14 @@ const Empty = memo<EmptyProps>(
       );
     }, [image, emoji, imageSize, resolvedIcon, isPage, iconColor, iconSize]);
 
-    const rootClassName = cx(
-      isPage ? styles.rootPage : styles.root,
-      !isPage && variant === 'dashed' && styles.dashed,
-      isClickable && styles.dashedClickable,
+    const rootClassName = styleProps(
+      [
+        isPage ? styles.rootPage : styles.root,
+        !isPage && variant === 'dashed' && styles.dashed,
+        isClickable && styles.dashedClickable,
+      ],
       className,
-    );
+    ).className;
 
     const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
       if (!isClickable) return;
@@ -122,7 +126,7 @@ const Empty = memo<EmptyProps>(
             {descriptionNode}
             {children}
             {action && (
-              <div className={styles.extraPage} {...actionProps}>
+              <div {...stylex.props(styles.extraPage)} {...actionProps}>
                 {action}
               </div>
             )}
@@ -147,7 +151,7 @@ const Empty = memo<EmptyProps>(
         {descriptionNode}
         {children}
         {action && (
-          <div className={styles.action} {...actionProps}>
+          <div {...stylex.props(styles.action)} {...actionProps}>
             {action}
           </div>
         )}

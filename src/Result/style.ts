@@ -1,66 +1,55 @@
-import { createStaticStyles, cssVar } from '@/styles';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  customIcon: css`
-    display: flex;
-    flex-shrink: 0;
-    justify-content: center;
-    margin-block-end: 12px;
-  `,
-  extra: css`
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    align-items: center;
-    align-self: stretch;
-    justify-content: center;
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-    margin-block-start: 10px;
-
-    > :is(div, section, form) {
-      flex: 1 1 100%;
-    }
-  `,
-  icon: css`
-    display: flex;
-    flex-shrink: 0;
-    align-items: center;
-    justify-content: center;
-
-    width: 72px;
-    height: 72px;
-    margin-block-end: 12px;
-    border-radius: 50%;
-
-    svg {
-      width: 36px;
-      height: 36px;
-    }
-  `,
-  root: css`
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    align-items: center;
-
-    padding-block: 16px;
-    padding-inline: 8px;
-
-    text-align: center;
-  `,
-  subTitle: css`
-    max-width: 36ch;
-    margin: 0;
-    font-size: 13px;
-    color: ${cssVar.colorTextTertiary};
-  `,
-  title: css`
-    margin: 0;
-    font-size: 20px;
-    font-weight: 600;
-    text-wrap: balance;
-  `,
-}));
+export const styles = stylex.create({
+  customIcon: {
+    display: 'flex',
+    flexShrink: 0,
+    justifyContent: 'center',
+    marginBlockEnd: 12,
+  },
+  extra: {
+    gap: 8,
+    alignItems: 'center',
+    alignSelf: 'stretch',
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    marginBlockStart: 10,
+  },
+  icon: {
+    borderRadius: '50%',
+    alignItems: 'center',
+    display: 'flex',
+    flexShrink: 0,
+    justifyContent: 'center',
+    marginBlockEnd: 12,
+    height: 72,
+    width: 72,
+  },
+  root: {
+    gap: 6,
+    paddingBlock: 16,
+    paddingInline: 8,
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    textAlign: 'center',
+  },
+  subTitle: {
+    margin: 0,
+    color: cssVar.colorTextTertiary,
+    fontSize: 13,
+    maxWidth: '36ch',
+  },
+  title: {
+    margin: 0,
+    fontSize: 20,
+    fontWeight: 600,
+    textWrap: 'balance',
+  },
+});
 
 export const statusColor: Record<'success' | 'error' | 'warning', string> = {
   error: cssVar.colorError,
