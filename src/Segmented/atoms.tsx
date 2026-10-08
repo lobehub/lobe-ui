@@ -1,13 +1,26 @@
 'use client';
 
+import './style.css';
+
 import { Toggle as BaseUIToggle } from '@base-ui/react/toggle';
 import { ToggleGroup as BaseUIToggleGroup } from '@base-ui/react/toggle-group';
+import clsx from 'clsx';
 import { type ComponentProps, type CSSProperties, type FC, type ReactNode } from 'react';
 
-import { cx } from '@/styles';
+import { focusRing } from '@/styles/stylex/focusRing';
+import { styleProps } from '@/styles/stylex/props';
 
-import { itemVariants, listVariants, styles } from './style';
+import { segmentedMarker } from './marker.stylex';
+import { styles } from './style';
 import type { SegmentedSize, SegmentedVariant } from './type';
+
+const listVariantStyles = { filled: styles.listFilled, outlined: styles.listOutlined };
+
+const itemSizeStyles = {
+  large: styles.itemLarge,
+  middle: styles.itemMiddle,
+  small: styles.itemSmall,
+};
 
 export type SegmentedRootProps<Value extends string = string> = Omit<
   ComponentProps<typeof BaseUIToggleGroup<Value>>,
@@ -30,8 +43,20 @@ export const SegmentedRoot = <Value extends string = string>({
 }: SegmentedRootProps<Value>) => {
   return (
     <BaseUIToggleGroup<Value>
-      className={cx(listVariants({ block, glass, shadow, variant }), className)}
       data-variant={variant}
+      className={
+        styleProps(
+          [
+            segmentedMarker,
+            styles.list,
+            block && styles.listBlock,
+            glass && styles.listGlass,
+            shadow && styles.listShadow,
+            listVariantStyles[variant],
+          ],
+          className,
+        ).className
+      }
       {...rest}
     />
   );
@@ -54,7 +79,17 @@ export const SegmentedItem = <Value extends string = string>({
   size = 'middle',
   ...rest
 }: SegmentedItemProps<Value>) => {
-  return <BaseUIToggle<Value> className={cx(itemVariants({ block, size }), className)} {...rest} />;
+  return (
+    <BaseUIToggle<Value>
+      className={
+        styleProps(
+          [styles.item, focusRing.info, block && styles.itemBlock, itemSizeStyles[size]],
+          className,
+        ).className
+      }
+      {...rest}
+    />
+  );
 };
 
 SegmentedItem.displayName = 'SegmentedItem';
@@ -66,16 +101,12 @@ interface SimpleSpanProps {
 }
 
 export const SegmentedItemIcon: FC<SimpleSpanProps> = ({ children, className, style }) => (
-  <span className={cx(styles.itemIcon, className)} style={style}>
-    {children}
-  </span>
+  <span {...styleProps(styles.itemIcon, className, style)}>{children}</span>
 );
 SegmentedItemIcon.displayName = 'SegmentedItemIcon';
 
 export const SegmentedItemLabel: FC<SimpleSpanProps> = ({ children, className, style }) => (
-  <span className={cx(styles.itemLabel, className)} style={style}>
-    {children}
-  </span>
+  <span {...styleProps(styles.itemLabel, className, style)}>{children}</span>
 );
 SegmentedItemLabel.displayName = 'SegmentedItemLabel';
 
@@ -85,6 +116,9 @@ export interface SegmentedIndicatorProps {
 }
 
 export const SegmentedIndicator: FC<SegmentedIndicatorProps> = ({ className, style }) => (
-  <span aria-hidden className={cx(styles.indicator, className)} style={style} />
+  <span
+    aria-hidden
+    {...styleProps(styles.indicator, clsx('lobe-segmented-indicator', className), style)}
+  />
 );
 SegmentedIndicator.displayName = 'SegmentedIndicator';
