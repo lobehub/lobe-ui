@@ -1,313 +1,171 @@
-import { createStaticStyles } from '@/styles';
+import './style.css';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  arrow: css`
-    --lobe-popover-arrow-offset-block: 5px;
-    --lobe-popover-arrow-offset-inline: 8px;
+import * as stylex from '@stylexjs/stylex';
 
-    pointer-events: none;
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-    position: absolute;
-    transform-origin: center;
+const reducedMotion = '@media (prefers-reduced-motion: reduce)';
+const layoutAnimation = ':is([data-layout-animation])';
+const instantOrRepop = ':is([data-instant], [data-repop])';
+const instant = ':is([data-instant])';
+const popupLayoutTiming =
+  ':is([data-layout-animation]):not([data-repop], [data-ending-style], [data-instant])';
+const popupLayoutProperty = ':is([data-layout-animation]):not([data-repop], [data-instant])';
+const popupRepopTiming = ':is([data-repop]):not([data-ending-style], [data-instant])';
+const popupEndingTiming = ':is([data-ending-style]):not([data-instant])';
+const positionerLayout = ':is([data-layout-animation]):not([data-instant], [data-repop])';
+const startingOrEnding = ':is([data-starting-style], [data-ending-style])';
+const anchorHidden = ":is([data-anchor-hidden], [data-zero-origin='true'])";
+const placementTop =
+  ":is([data-placement='top'], [data-placement='topLeft'], [data-placement='topRight'])";
+const placementLeft =
+  ":is([data-placement='left'], [data-placement='leftTop'], [data-placement='leftBottom'])";
+const placementRight =
+  ":is([data-placement='right'], [data-placement='rightTop'], [data-placement='rightBottom'])";
 
-    display: flex;
+const springGlide =
+  'linear(0, 0.041, 0.14, 0.268, 0.407, 0.541, 0.661, 0.765, 0.849, 0.915, 0.964, 0.998, 1.02, 1.032, 1.038, 1.039, 1.036, 1.032, 1.027, 1.022, 1.016, 1.012, 1.008, 1.005, 1.003)';
 
-    width: 12px;
-    height: 6px;
+export const styles = stylex.create({
+  arrow: {
+    '--lobe-popover-arrow-offset-block': '5px',
+    '--lobe-popover-arrow-offset-inline': '8px',
+    'transition':
+      'inset-inline-start var(--lobe-popover-layout-duration) var(--lobe-popover-layout-ease), inset-block-start var(--lobe-popover-layout-duration) var(--lobe-popover-layout-ease)',
+    'display': 'flex',
+    'insetBlockEnd': {
+      'default': null,
+      ":is([data-side='top'])": 'calc(var(--lobe-popover-arrow-offset-block) * -1)',
+    },
+    'insetBlockStart': {
+      'default': null,
+      ":is([data-side='bottom'])": 'calc(var(--lobe-popover-arrow-offset-block) * -1)',
+    },
+    'insetInlineEnd': {
+      'default': null,
+      ":is([data-side='left'])": 'calc(var(--lobe-popover-arrow-offset-inline) * -1)',
+    },
+    'insetInlineStart': {
+      'default': null,
+      ":is([data-side='right'])": 'calc(var(--lobe-popover-arrow-offset-inline) * -1)',
+    },
+    'pointerEvents': 'none',
+    'position': 'absolute',
+    'transform': {
+      'default': null,
+      ":is([data-side='left'])": 'rotate(90deg)',
+      ":is([data-side='right'])": 'rotate(-90deg)',
+      ":is([data-side='top'])": 'rotate(180deg)',
+    },
+    'transformOrigin': 'center',
+    'height': 6,
+    'width': 12,
+  },
+  arrowFill: {
+    fill: cssVar.colorBgElevated,
+  },
+  arrowStroke: {
+    fill: 'none',
+    stroke: cssVar.colorBorder,
+    strokeWidth: '1px',
+  },
+  arrowSvg: {
+    display: 'block',
+    height: '100%',
+    width: '100%',
+  },
 
-    transition:
-      inset-inline-start var(--lobe-popover-layout-duration) var(--lobe-popover-layout-ease),
-      inset-block-start var(--lobe-popover-layout-duration) var(--lobe-popover-layout-ease);
+  popup: {
+    borderRadius: cssVar.borderRadius,
+    outline: 'none',
+    backgroundColor: cssVar.colorBgElevated,
+    boxShadow: `${cssVar.boxShadowSecondary}, var(--lobe-ring)`,
+    boxSizing: 'border-box',
+    color: cssVar.colorText,
+    opacity: { default: null, [startingOrEnding]: 0 },
+    position: 'relative',
+    transform: {
+      default: null,
+      [startingOrEnding]:
+        'translate3d(var(--lobe-popover-translate-x), var(--lobe-popover-translate-y), 0) scale(var(--lobe-popover-animation-scale))',
+    },
+    transformOrigin: 'var(--transform-origin)',
+    transitionDuration: {
+      default: 'var(--lobe-popover-animation-duration)',
+      [instant]: '0s',
+      [popupEndingTiming]: 'var(--lobe-popover-animation-duration-exit)',
+      [popupLayoutTiming]:
+        'var(--lobe-popover-animation-duration), var(--lobe-popover-animation-duration), var(--lobe-popover-layout-duration), var(--lobe-popover-layout-duration)',
+      [popupRepopTiming]: '0s',
+    },
+    transitionProperty: {
+      default: 'opacity, transform',
+      [instantOrRepop]: 'none',
+      [popupLayoutProperty]: 'opacity, transform, width, height',
+    },
+    transitionTimingFunction: {
+      default: 'var(--lobe-popover-animation-ease-out)',
+      [instant]: 'ease',
+      [popupEndingTiming]: 'var(--lobe-popover-animation-ease-in)',
+      [popupLayoutTiming]:
+        'var(--lobe-popover-animation-ease-out), var(--lobe-popover-animation-ease-out), var(--lobe-popover-layout-ease), var(--lobe-popover-layout-ease)',
+      [popupRepopTiming]: 'ease',
+    },
+    height: { default: null, [layoutAnimation]: 'var(--popup-height, auto)' },
+    maxWidth: 'var(--available-width)',
+    minWidth: 120,
+    width: { default: null, [layoutAnimation]: 'var(--popup-width, auto)' },
+  },
 
-    & > svg {
-      display: block;
-      width: 100%;
-      height: 100%;
-    }
+  positioner: {
+    '--lobe-popover-animation-duration': '150ms',
+    '--lobe-popover-animation-duration-exit': '75ms',
+    '--lobe-popover-animation-ease-in': 'ease-in',
+    '--lobe-popover-animation-ease-out': cssVar.motionEaseOut,
+    '--lobe-popover-animation-scale': '0.96',
+    '--lobe-popover-animation-translate': '6px',
+    '--lobe-popover-layout-duration': { default: '380ms', [reducedMotion]: '0s' },
+    '--lobe-popover-layout-ease': springGlide,
+    '--lobe-popover-translate-x': {
+      default: '0',
+      [placementLeft]: 'var(--lobe-popover-animation-translate)',
+      [placementRight]: 'calc(var(--lobe-popover-animation-translate) * -1)',
+    },
+    '--lobe-popover-translate-y': {
+      default: 'calc(var(--lobe-popover-animation-translate) * -1)',
+      [placementLeft]: '0',
+      [placementRight]: '0',
+      [placementTop]: 'var(--lobe-popover-animation-translate)',
+    },
+    'pointerEvents': { [anchorHidden]: 'none', default: null },
+    'transitionDuration': {
+      default: 'var(--lobe-popover-animation-duration)',
+      [instantOrRepop]: '0s',
+      [positionerLayout]: 'var(--lobe-popover-layout-duration)',
+    },
+    'transitionProperty': {
+      default: 'none',
+      [positionerLayout]:
+        'inset-block-start, inset-inline-start, inset-inline-end, inset-block-end, transform',
+    },
+    'transitionTimingFunction': {
+      default: 'var(--lobe-popover-animation-ease-out)',
+      [instantOrRepop]: 'ease',
+      [positionerLayout]: 'var(--lobe-popover-layout-ease)',
+    },
+    'visibility': { [anchorHidden]: 'hidden', default: null },
+    'zIndex': 1100,
+    'height': 'var(--positioner-height)',
+    'width': 'min(var(--positioner-width), var(--available-width))',
+  },
 
-    & [data-role='fill'] {
-      fill: ${cssVar.colorBgElevated};
-    }
-
-    & [data-role='stroke'] {
-      fill: none;
-      stroke: ${cssVar.colorBorder};
-      stroke-width: 1px;
-    }
-
-    &[data-side='top'] {
-      inset-block-end: calc(var(--lobe-popover-arrow-offset-block) * -1);
-      transform: rotate(180deg);
-    }
-
-    &[data-side='left'] {
-      inset-inline-end: calc(var(--lobe-popover-arrow-offset-inline) * -1);
-      transform: rotate(90deg);
-    }
-
-    &[data-side='right'] {
-      inset-inline-start: calc(var(--lobe-popover-arrow-offset-inline) * -1);
-      transform: rotate(-90deg);
-    }
-
-    &[data-side='bottom'] {
-      inset-block-start: calc(var(--lobe-popover-arrow-offset-block) * -1);
-    }
-  `,
-
-  popup: css`
-    position: relative;
-    transform-origin: var(--transform-origin);
-
-    box-sizing: border-box;
-    min-width: 120px;
-    max-width: var(--available-width);
-    border-radius: ${cssVar.borderRadius};
-
-    color: ${cssVar.colorText};
-
-    background: ${cssVar.colorBgElevated};
-    outline: none;
-    box-shadow: ${cssVar.boxShadowSecondary}, var(--lobe-ring);
-
-    transition-timing-function: var(--lobe-popover-animation-ease-out);
-    transition-duration: var(--lobe-popover-animation-duration);
-    transition-property: opacity, transform;
-
-    /* Base UI writes the old size into --popup-width/height on a trigger switch and the new size
-       one frame later; the box only morphs if width/height actually read them. */
-    &[data-layout-animation] {
-      width: var(--popup-width, auto);
-      height: var(--popup-height, auto);
-
-      transition-timing-function:
-        var(--lobe-popover-animation-ease-out), var(--lobe-popover-animation-ease-out),
-        var(--lobe-popover-layout-ease), var(--lobe-popover-layout-ease);
-      transition-duration:
-        var(--lobe-popover-animation-duration), var(--lobe-popover-animation-duration),
-        var(--lobe-popover-layout-duration), var(--lobe-popover-layout-duration);
-      transition-property: opacity, transform, width, height;
-    }
-
-    &[data-repop] {
-      transition: none;
-    }
-
-    &[data-starting-style],
-    &[data-ending-style] {
-      transform: translate3d(var(--lobe-popover-translate-x), var(--lobe-popover-translate-y), 0)
-        scale(var(--lobe-popover-animation-scale));
-      opacity: 0;
-    }
-
-    &[data-ending-style] {
-      transition-timing-function: var(--lobe-popover-animation-ease-in);
-      transition-duration: var(--lobe-popover-animation-duration-exit);
-    }
-
-    &[data-instant] {
-      transition: none;
-    }
-  `,
-
-  positioner: css`
-    --lobe-popover-animation-duration: 150ms;
-    --lobe-popover-animation-translate: 6px;
-    --lobe-popover-animation-scale: 0.96;
-    --lobe-popover-animation-ease-in: ease-in;
-    --lobe-popover-animation-duration-exit: 75ms;
-    --lobe-popover-animation-ease-out: ${cssVar.motionEaseOut};
-    --lobe-popover-translate-x: 0;
-    --lobe-popover-translate-y: calc(var(--lobe-popover-animation-translate) * -1);
-    --lobe-popover-layout-duration: 380ms;
-    --lobe-popover-layout-ease: linear(
-      0,
-      0.041,
-      0.14,
-      0.268,
-      0.407,
-      0.541,
-      0.661,
-      0.765,
-      0.849,
-      0.915,
-      0.964,
-      0.998,
-      1.02,
-      1.032,
-      1.038,
-      1.039,
-      1.036,
-      1.032,
-      1.027,
-      1.022,
-      1.016,
-      1.012,
-      1.008,
-      1.005,
-      1.003
-    );
-
-    z-index: 1100;
-
-    width: min(var(--positioner-width), var(--available-width));
-    height: var(--positioner-height);
-
-    transition-timing-function: var(--lobe-popover-animation-ease-out);
-    transition-duration: var(--lobe-popover-animation-duration);
-    transition-property: none;
-
-    &[data-layout-animation] {
-      transition-timing-function: var(--lobe-popover-layout-ease);
-      transition-duration: var(--lobe-popover-layout-duration);
-      transition-property:
-        inset-block-start, inset-inline-start, inset-inline-end, inset-block-end, transform;
-    }
-
-    &[data-instant],
-    &[data-repop] {
-      transition: none;
-    }
-
-    /* Fallback: never show a popover when the anchor is hidden or the positioner falls back to (0,0). */
-    &[data-anchor-hidden],
-    &[data-zero-origin='true'] {
-      pointer-events: none;
-      visibility: hidden;
-    }
-
-    &[data-placement='top'],
-    &[data-placement='topLeft'],
-    &[data-placement='topRight'] {
-      --lobe-popover-translate-x: 0;
-      --lobe-popover-translate-y: var(--lobe-popover-animation-translate);
-    }
-
-    &[data-placement='bottom'],
-    &[data-placement='bottomLeft'],
-    &[data-placement='bottomRight'] {
-      --lobe-popover-translate-x: 0;
-      --lobe-popover-translate-y: calc(var(--lobe-popover-animation-translate) * -1);
-    }
-
-    &[data-placement='left'],
-    &[data-placement='leftTop'],
-    &[data-placement='leftBottom'] {
-      --lobe-popover-translate-x: var(--lobe-popover-animation-translate);
-      --lobe-popover-translate-y: 0;
-    }
-
-    &[data-placement='right'],
-    &[data-placement='rightTop'],
-    &[data-placement='rightBottom'] {
-      --lobe-popover-translate-x: calc(var(--lobe-popover-animation-translate) * -1);
-      --lobe-popover-translate-y: 0;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      --lobe-popover-layout-duration: 0s;
-    }
-  `,
-
-  root: css`
-    user-select: none;
-    position: relative;
-    filter: drop-shadow(0 2px 8px rgb(0 0 0 / 12%));
-  `,
-
-  viewport: css`
-    --lobe-popover-viewport-inline-padding: 12px;
-    --lobe-popover-content-shift: 8px;
-    --lobe-popover-content-blur: 4px;
-
-    position: relative;
-    overflow: clip;
-    padding-block: 12px;
-    padding-inline: var(--lobe-popover-viewport-inline-padding);
-
-    /* Old and new content overlap in one clip box while the box morphs; blurring both layers
-       during the crossfade turns the misaligned overlap into a soft smear instead of garbled text. */
-    [data-previous],
-    [data-current] {
-      transform: translateX(0);
-      opacity: 1;
-      filter: blur(0);
-      transition:
-        transform var(--lobe-popover-layout-duration) var(--lobe-popover-layout-ease),
-        opacity calc(var(--lobe-popover-layout-duration) / 2) var(--lobe-popover-animation-ease-out),
-        filter calc(var(--lobe-popover-layout-duration) / 2) var(--lobe-popover-animation-ease-out);
-    }
-
-    [data-current] {
-      transition-delay:
-        0s, calc(var(--lobe-popover-layout-duration) / 6),
-        calc(var(--lobe-popover-layout-duration) / 6);
-    }
-
-    [data-previous][data-ending-style],
-    [data-current][data-starting-style] {
-      filter: blur(var(--lobe-popover-content-blur));
-    }
-
-    /* Freeze both layers at their own final width so neither re-wraps while the box morphs;
-       the viewport clip reveals the new content as the box grows over it. */
-    [data-previous] {
-      position: absolute;
-      inset-block-start: 12px;
-      inset-inline-start: var(--lobe-popover-viewport-inline-padding);
-      width: calc(var(--popup-width) - var(--lobe-popover-viewport-inline-padding) * 2 - 2px);
-    }
-
-    &[data-transitioning] [data-current] {
-      width: calc(var(--positioner-width) - var(--lobe-popover-viewport-inline-padding) * 2 - 2px);
-    }
-
-    &[data-repop] [data-previous] {
-      display: none;
-    }
-
-    &[data-repop] [data-current] {
-      transition: none;
-    }
-
-    &[data-activation-direction~='right'] [data-previous][data-ending-style] {
-      transform: translateX(calc(var(--lobe-popover-content-shift) * -1));
-      opacity: 0;
-    }
-
-    &[data-activation-direction~='right'] [data-current][data-starting-style] {
-      transform: translateX(var(--lobe-popover-content-shift));
-      opacity: 0;
-    }
-
-    &[data-activation-direction~='left'] [data-previous][data-ending-style] {
-      transform: translateX(var(--lobe-popover-content-shift));
-      opacity: 0;
-    }
-
-    &[data-activation-direction~='left'] [data-current][data-starting-style] {
-      transform: translateX(calc(var(--lobe-popover-content-shift) * -1));
-      opacity: 0;
-    }
-
-    &[data-activation-direction~='down'] [data-previous][data-ending-style] {
-      transform: translateY(calc(var(--lobe-popover-content-shift) * -1));
-      opacity: 0;
-    }
-
-    &[data-activation-direction~='down'] [data-current][data-starting-style] {
-      transform: translateY(var(--lobe-popover-content-shift));
-      opacity: 0;
-    }
-
-    &[data-activation-direction~='up'] [data-previous][data-ending-style] {
-      transform: translateY(var(--lobe-popover-content-shift));
-      opacity: 0;
-    }
-
-    &[data-activation-direction~='up'] [data-current][data-starting-style] {
-      transform: translateY(calc(var(--lobe-popover-content-shift) * -1));
-      opacity: 0;
-    }
-  `,
-}));
+  viewport: {
+    '--lobe-popover-content-blur': '4px',
+    '--lobe-popover-content-shift': '8px',
+    '--lobe-popover-viewport-inline-padding': '12px',
+    'overflow': 'clip',
+    'paddingBlock': 12,
+    'paddingInline': 'var(--lobe-popover-viewport-inline-padding)',
+    'position': 'relative',
+  },
+});
