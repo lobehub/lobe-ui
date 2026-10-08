@@ -35,6 +35,11 @@ const styles = createStaticStyles(({ css, cssVar }) => ({
     }
   `,
   solid: css`
+    /* solid halves share one color, so the outline-merging overlap only adds a dark seam once each half is translucent (disabled) */
+    & > :where(button, a):last-of-type {
+      margin-inline-start: 0;
+    }
+
     & > :where(button, a):last-of-type::before {
       pointer-events: none;
       content: '';
