@@ -1,5 +1,6 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { InfoIcon } from 'lucide-react';
 import { memo, useEffect } from 'react';
 
@@ -9,7 +10,8 @@ import formMessages from '@/i18n/resources/en/form';
 import { useTranslation } from '@/i18n/useTranslation';
 import Icon from '@/Icon';
 import { useMotionComponent } from '@/MotionProvider';
-import { cssVar, cx } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { styleProps } from '@/styles/stylex/props';
 
 import { useFormContext } from '../context';
 import { submitFooterStyles as styles } from '../style';
@@ -27,6 +29,7 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
     children,
     texts,
     className,
+    style,
     ...rest
   }) => {
     const Motion = useMotionComponent();
@@ -104,10 +107,10 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
         <Flexbox
           horizontal
           align={'center'}
-          className={cx(styles.footer, className)}
           gap={8}
           justify={'flex-end'}
           {...rest}
+          {...styleProps(styles.footer, className, style)}
         >
           {content}
         </Flexbox>
@@ -116,7 +119,7 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
     return (
       <Motion.div
         animate={hasUnsavedChanges ? 'visible' : 'hidden'}
-        className={styles.floatFooter}
+        {...stylex.props(styles.floatFooter)}
         initial={'hidden'}
         transition={{ duration: 0.1, ease: 'easeOut' }}
         variants={{
@@ -138,6 +141,7 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
           className={className}
           gap={8}
           justify={'center'}
+          style={style}
           {...rest}
         >
           {content}

@@ -4,13 +4,15 @@ import { Form as BaseForm } from '@base-ui/react/form';
 import { isUndefined } from 'es-toolkit/compat';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { cx, useResponsive } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
+import { useResponsive } from '@/styles/theme/scope';
 
 import FormField from './components/FormField';
 import FormFlatGroup from './components/FormFlatGroup';
 import FormGroup from './components/FormGroup';
 import { FormContext } from './context';
-import { rootVariants } from './style';
+import { formMarker } from './marker.stylex';
+import { rootStyles } from './style';
 import type { FormFieldProps, FormGroupItemType, FormProps } from './type';
 
 const serializeForm = (form: HTMLFormElement | null) => {
@@ -172,9 +174,12 @@ const Form = memo<FormProps>(
     return (
       <FormContext value={context}>
         <BaseForm
-          className={cx(rootVariants({ variant }), className)}
           ref={mergedRef}
-          style={{ gap, ...style }}
+          {...styleProps(
+            [formMarker, rootStyles.root, variant === 'borderless' && rootStyles.borderless],
+            className,
+            { gap, ...style },
+          )}
           onFormSubmit={async (values, eventDetails) => {
             onFormSubmit?.(values, eventDetails);
             if (!onFinish) return;
