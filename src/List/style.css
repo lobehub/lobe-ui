@@ -1,0 +1,5 @@
+@layer lobe-ui {
+  .lobe-list-label a {
+    color: inherit;
+  }
+}
