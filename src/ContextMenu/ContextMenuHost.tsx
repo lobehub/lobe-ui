@@ -1,13 +1,14 @@
 'use client';
 
 import { ContextMenu } from '@base-ui/react/context-menu';
+import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { memo, useEffect, useMemo, useSyncExternalStore } from 'react';
 
 import { useAppElement } from '@/ConfigProvider/AppElementContext';
 import { useIsClient } from '@/hooks/useIsClient';
 import { getFloatingCollisionPadding } from '@/internal/floating';
 import { MenuVirtualList } from '@/internal/virtual';
-import { cx } from '@/styles';
 import { registerDevSingleton } from '@/utils/devSingleton';
 import { preventDefaultAndStopPropagation } from '@/utils/dom';
 
@@ -21,7 +22,7 @@ import {
   subscribe,
   updateLastPointer,
 } from './store';
-import { styles } from './style';
+import { menuClassNames, menuStyles, styles } from './style';
 
 const noAnimationStyles = { '--lobe-dropdown-animation-duration': '0ms' } as React.CSSProperties;
 
@@ -80,9 +81,12 @@ export const ContextMenuHost = memo(() => {
           style={{ ...noAnimationStyles, zIndex }}
         >
           <ContextMenu.Popup
-            className={cx(styles.popup, hasSlots && styles.popupWithSlots)}
             data-has-footer={state.footer == null ? undefined : ''}
             data-has-header={state.header == null ? undefined : ''}
+            className={clsx(
+              stylex.props(menuStyles.popup, hasSlots && menuStyles.popupWithSlots).className,
+              menuClassNames.popup,
+            )}
             onContextMenu={preventDefaultAndStopPropagation}
           >
             {state.header == null ? null : <div className={styles.header}>{state.header}</div>}
