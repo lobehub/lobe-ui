@@ -17,7 +17,7 @@ import ActionIcon from '@/ActionIcon';
 import ChatInputAreaInner from '@/chat/ChatInputArea/components/ChatInputAreaInner';
 import { Flexbox } from '@/Flex';
 import SafeArea from '@/mobile/SafeArea';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
 import { styles } from './style';
 import { type ChatInputAreaProps } from './type';
@@ -59,7 +59,7 @@ const ChatInputArea = memo<ChatInputAreaProps>(
     > = useCallback(
       ({ children, ...r }) =>
         expand ? (
-          <Flexbox className={styles.inner} gap={8}>
+          <Flexbox gap={8} height={'inherit'} paddingInline={8}>
             <Flexbox horizontal gap={8} justify={'flex-end'}>
               {r.textAreaLeftAddons}
               {r.textAreaRightAddons}
@@ -69,7 +69,7 @@ const ChatInputArea = memo<ChatInputAreaProps>(
             {r.bottomAddons}
           </Flexbox>
         ) : (
-          <Flexbox horizontal align={'flex-end'} className={styles.inner} gap={8}>
+          <Flexbox horizontal align={'flex-end'} gap={8} height={'inherit'} paddingInline={8}>
             {r.textAreaLeftAddons}
             {children}
             {r.textAreaRightAddons}
@@ -82,24 +82,27 @@ const ChatInputArea = memo<ChatInputAreaProps>(
 
     return (
       <Flexbox
-        className={cx(styles.container, expand && styles.expand, className)}
+        flex={'none'}
         gap={12}
-        style={style}
+        height={expand ? '100%' : undefined}
+        paddingBlock={12}
+        width={expand ? '100%' : undefined}
+        {...styleProps([styles.container, expand && styles.expand], className, style)}
       >
         {topAddons && <Flexbox style={showAddons ? {} : { display: 'none' }}>{topAddons}</Flexbox>}
         <Flexbox
-          className={cx(expand && styles.expand)}
+          height={expand ? '100%' : undefined}
           ref={containerRef}
           style={{ position: 'relative' }}
+          width={expand ? '100%' : undefined}
         >
           {showFullscreen && (
             <ActionIcon
               active
-              className={styles.expandButton}
               icon={expand ? ChevronDown : ChevronUp}
               id={'sssssss'}
               size={{ blockSize: 24, borderRadius: '50%', size: 14 }}
-              style={expand ? { top: 6 } : {}}
+              style={{ insetInlineEnd: 14, position: 'absolute', ...(expand ? { top: 6 } : {}) }}
               onClick={() => setExpand?.(!expand)}
             />
           )}
@@ -111,10 +114,9 @@ const ChatInputArea = memo<ChatInputAreaProps>(
           >
             <ChatInputAreaInner
               autoSize={expand ? false : { maxRows: 6, minRows: 1 }}
-              className={styles.expandTextArea}
               loading={loading}
               ref={ref}
-              style={{ minHeight: 36, paddingBlock: 6 }}
+              style={{ flex: 1, minHeight: 36, paddingBlock: 6 }}
               value={value}
               variant={expand ? 'borderless' : 'filled'}
               onBlur={() => setIsFocused(false)}
