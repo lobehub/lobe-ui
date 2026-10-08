@@ -1,5 +1,6 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import {
   Children,
@@ -13,9 +14,9 @@ import {
 } from 'react';
 import useControlledState from 'use-merge-value';
 
-import ActionIcon from '@/ActionIcon';
+import { ActionIconImpl as ActionIcon } from '@/ActionIcon/ActionIcon';
 import { useEventCallback } from '@/hooks/useEventCallback';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
 import { styles } from './style';
 import type { CarouselProps } from './type';
@@ -93,7 +94,7 @@ const Carousel = memo<CarouselProps>(
     return (
       <div
         aria-roledescription="carousel"
-        className={cx(styles.root, className)}
+        className={styleProps(styles.root, className).className}
         role="region"
         onPointerEnter={(event) => {
           onPointerEnter?.(event);
@@ -106,7 +107,7 @@ const Carousel = memo<CarouselProps>(
         {...rest}
       >
         <div
-          className={styles.viewport}
+          {...stylex.props(styles.viewport)}
           style={adaptiveHeight && height !== undefined ? { height } : undefined}
           onPointerCancel={() => {
             swipeStartXRef.current = null;
@@ -125,7 +126,7 @@ const Carousel = memo<CarouselProps>(
         >
           <div
             aria-live={interval && !paused ? 'off' : 'polite'}
-            className={cx(styles.track, adaptiveHeight && styles.trackAdaptive)}
+            {...stylex.props(styles.track, adaptiveHeight && styles.trackAdaptive)}
             style={{ transform: `translateX(-${current * 100}%)` }}
           >
             {slides.map((slide, slideIndex) => {
@@ -135,7 +136,7 @@ const Carousel = memo<CarouselProps>(
                   aria-hidden={!active || undefined}
                   aria-label={`${slideIndex + 1} of ${count}`}
                   aria-roledescription="slide"
-                  className={styles.slide}
+                  {...stylex.props(styles.slide)}
                   inert={!active}
                   key={keys[slideIndex]}
                   role="group"
@@ -152,32 +153,32 @@ const Carousel = memo<CarouselProps>(
             <>
               <ActionIcon
                 aria-label="Previous slide"
-                className={styles.arrow}
                 disabled={!loop && current === 0}
                 icon={ChevronLeft}
                 size={ARROW_SIZE}
                 style={{ insetInlineStart: 8 }}
+                xstyle={styles.arrow}
                 onClick={prev}
               />
               <ActionIcon
                 aria-label="Next slide"
-                className={styles.arrow}
                 disabled={atEnd}
                 icon={ChevronRight}
                 size={ARROW_SIZE}
                 style={{ insetInlineEnd: 8 }}
+                xstyle={styles.arrow}
                 onClick={next}
               />
             </>
           )}
         </div>
         {dots && count > 1 && (
-          <div className={styles.dots}>
+          <div {...stylex.props(styles.dots)}>
             {slides.map((_, dotIndex) => (
               <button
                 aria-current={dotIndex === current || undefined}
                 aria-label={`Go to slide ${dotIndex + 1}`}
-                className={styles.dot}
+                {...stylex.props(styles.dot)}
                 key={keys[dotIndex]}
                 type="button"
                 onClick={() => goTo(dotIndex)}
