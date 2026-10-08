@@ -60,6 +60,9 @@ const Callout: FC<CalloutProps> = ({ children, type = 'info', className, style, 
     <Flexbox
       horizontal
       align={'flex-start'}
+      gap={'0.75em'}
+      paddingBlock={'calc(var(--lobe-markdown-margin-multiple) * 1em)'}
+      paddingInline={'1em'}
       {...styleProps(styles.container, className, {
         background,
         boxShadow: `0 0 0 1px ${background} inset`,

@@ -9,10 +9,4 @@ export const styles = stylex.create({
     overflow: 'auto',
     position: 'relative',
   },
-  leftWithPadding: {
-    overflow: 'auto',
-    paddingBlock: 40,
-    paddingInline: 24,
-    position: 'relative',
-  },
 });

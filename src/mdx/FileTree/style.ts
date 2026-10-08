@@ -15,7 +15,4 @@ export const styles = stylex.create({
     color: { 'default': null, ':hover': cssVar.colorText },
     cursor: 'pointer',
   },
-  folderChildren: {
-    paddingInlineStart: '1em',
-  },
 });

@@ -10,14 +10,9 @@ export const styles = stylex.create({
     '--lobe-markdown-margin-multiple': 1,
     'overflow': 'hidden',
     'color': cssVar.colorText,
-    'height': '100%',
   },
   container: {
     marginBlock: 'calc(var(--lobe-markdown-margin-multiple) * 1em)',
-  },
-  content: {
-    padding: '1.4em',
-    width: '100%',
   },
   desc: {
     transition: `color 0.2s ${cssVar.motionEaseInOut}`,

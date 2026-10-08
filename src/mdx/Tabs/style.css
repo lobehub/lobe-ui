@@ -1,29 +1,4 @@
 @layer lobe-ui {
-  .lobe-mdx-tabs-indicator.lobe-mdx-tabs-indicator {
-    height: 3px;
-    border-start-start-radius: 3px;
-    border-start-end-radius: 3px;
-  }
-
-  .lobe-mdx-tabs-list.lobe-mdx-tabs-list {
-    gap: 8px;
-    padding: 4px;
-    box-shadow: none;
-  }
-
-  .lobe-mdx-tabs-tab.lobe-mdx-tabs-tab {
-    height: auto;
-    padding-block: 8px;
-    padding-inline: 12px;
-    border-radius: var(--lobe-border-radius);
-
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 22px;
-
-    transition: background-color 100ms ease-out;
-  }
-
   .lobe-mdx-tabs-tab.lobe-mdx-tabs-tab:hover:not([data-disabled]) {
     background: var(--lobe-color-fill-tertiary);
   }

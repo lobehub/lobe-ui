@@ -46,6 +46,7 @@ const Card: FC<CardProps> = ({
       <Block
         clickable
         align={'flex-start'}
+        height={'100%'}
         {...styleProps([styles.card, cardMarker], clsx('lobe-mdx-card', className))}
         variant={variant}
         {...rest}
@@ -62,8 +63,9 @@ const Card: FC<CardProps> = ({
         {tag && (
           <Flexbox
             align={'flex-start'}
-            {...stylex.props(styles.content)}
+            padding={'1.4em'}
             style={{ paddingBottom: '0.2em', paddingTop: '1.8em' }}
+            width={'100%'}
           >
             <Tag
               color={tagColor}
@@ -82,8 +84,9 @@ const Card: FC<CardProps> = ({
         <Flexbox
           horizontal
           align={desc ? 'flex-start' : 'center'}
-          {...stylex.props(styles.content)}
           gap={'0.75em'}
+          padding={'1.4em'}
+          width={'100%'}
         >
           {!image && icon && (
             <Icon

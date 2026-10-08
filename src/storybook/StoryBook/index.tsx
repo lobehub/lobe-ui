@@ -36,8 +36,10 @@ export const StoryBook = memo<StoryBookProps>(
         width={'100%'}
       >
         <Center
-          {...stylex.props(noPadding ? styles.left : styles.leftWithPadding)}
+          {...stylex.props(styles.left)}
           flex={1}
+          paddingBlock={noPadding ? undefined : 40}
+          paddingInline={noPadding ? undefined : 24}
           {...rest}
         >
           {children}

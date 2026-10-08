@@ -29,7 +29,7 @@ const Folder: FC<FolderProps> = ({ name, defaultOpen, icon = FolderIcon, childre
         <Icon icon={open ? FolderOpen : icon} />
         <span>{name}</span>
       </Flexbox>
-      {open && <Flexbox {...stylex.props(styles.folderChildren)}>{children}</Flexbox>}
+      {open && <Flexbox paddingInline={'1em 0'}>{children}</Flexbox>}
     </Flexbox>
   );
 };
