@@ -1,10 +1,13 @@
 'use client';
 
 import { Checkbox as BaseCheckbox } from '@base-ui/react/checkbox';
+import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { CheckIcon, Minus } from 'lucide-react';
 import { type CSSProperties, memo } from 'react';
 
-import { cx } from '@/styles';
+import { focusRing } from '@/styles/stylex/focusRing';
+import { styleProps } from '@/styles/stylex/props';
 import Text from '@/Text';
 
 import { styles } from './style';
@@ -39,16 +42,15 @@ const Checkbox = memo<CheckboxProps>(
       <BaseCheckbox.Root
         disabled={disabled}
         indeterminate={indeterminate}
-        style={boxStyle}
-        className={cx(
-          styles.root,
-          children ? classNames?.checkbox : className,
-          classNames?.checkbox,
-        )}
         onCheckedChange={onChange}
         {...rest}
+        {...styleProps(
+          [styles.root, focusRing.info],
+          clsx(children ? classNames?.checkbox : className, classNames?.checkbox),
+          boxStyle,
+        )}
       >
-        <BaseCheckbox.Indicator className={styles.indicator}>
+        <BaseCheckbox.Indicator {...stylex.props(styles.indicator)}>
           {indeterminate ? (
             <Minus
               size={size}
@@ -70,8 +72,11 @@ const Checkbox = memo<CheckboxProps>(
 
     return (
       <label
-        className={cx(styles.label, className, classNames?.wrapper)}
-        style={{ gap: Math.floor(size / 2), ...style, ...customStyles?.wrapper }}
+        {...styleProps(styles.label, clsx(className, classNames?.wrapper), {
+          gap: Math.floor(size / 2),
+          ...style,
+          ...customStyles?.wrapper,
+        })}
       >
         {box}
         <Text

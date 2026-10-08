@@ -1,20 +1,19 @@
 'use client';
 
 import { Accordion as BaseUIAccordion } from '@base-ui/react/accordion';
+import * as stylex from '@stylexjs/stylex';
 import { ChevronDown, ChevronRight, Play } from 'lucide-react';
 import { createContext, type FC, use, useMemo } from 'react';
 
-import { cx } from '@/styles';
+import { focusRing } from '@/styles/stylex/focusRing';
+import { styleProps } from '@/styles/stylex/props';
 
 import {
-  contentVariants,
-  headerVariants,
-  indicatorVariants,
-  itemVariants,
-  rootVariants,
-  styles,
-  triggerVariants,
-} from './style';
+  accordionHeaderMarker,
+  accordionPanelMarker,
+  accordionTriggerMarker,
+} from './marker.stylex';
+import { styles } from './style';
 import type {
   AccordionHeaderProps,
   AccordionIndicatorPlacement,
@@ -30,6 +29,24 @@ interface AccordionContextValue {
   indicatorPlacement: AccordionIndicatorPlacement;
   variant: AccordionVariant;
 }
+
+const triggerVariantStyles = {
+  borderless: styles.triggerBorderless,
+  filled: styles.triggerFilled,
+  outlined: styles.triggerOutlined,
+};
+
+const indicatorPlacementStyles = {
+  end: styles.indicatorEnd,
+  inline: styles.indicatorInline,
+  start: styles.indicatorStart,
+};
+
+const contentVariantStyles = {
+  borderless: styles.contentBorderless,
+  filled: styles.contentBorderless,
+  outlined: styles.contentOutlined,
+};
 
 const AccordionContext = createContext<AccordionContextValue>({
   hideIndicator: false,
@@ -56,8 +73,11 @@ export const AccordionRoot: FC<AccordionRootProps> = ({
   return (
     <AccordionContext value={contextValue}>
       <BaseUIAccordion.Root
-        className={cx(rootVariants({ variant }), className)}
         multiple={multiple}
+        className={
+          styleProps([styles.root, variant === 'outlined' && styles.rootOutlined], className)
+            .className
+        }
         {...rest}
       >
         {children}
@@ -76,7 +96,15 @@ export const AccordionItem: FC<AccordionItemProps> = ({
   const ctx = useAccordionContext();
   const variant = variantProp ?? ctx.variant;
 
-  return <BaseUIAccordion.Item className={cx(itemVariants({ variant }), className)} {...rest} />;
+  return (
+    <BaseUIAccordion.Item
+      className={
+        styleProps([styles.item, variant === 'outlined' && styles.itemOutlined], className)
+          .className
+      }
+      {...rest}
+    />
+  );
 };
 
 AccordionItem.displayName = 'AccordionItem';
@@ -93,7 +121,18 @@ export const AccordionHeader: FC<AccordionHeaderProps> = ({
 
   return (
     <BaseUIAccordion.Header
-      className={cx(headerVariants({ inline, variant }), className)}
+      className={
+        styleProps(
+          [
+            accordionHeaderMarker,
+            styles.header,
+            variant === 'borderless' && styles.headerBorderless,
+            variant === 'filled' && styles.headerFilled,
+            inline && variant !== 'outlined' && styles.headerInline,
+          ],
+          className,
+        ).className
+      }
       {...rest}
     />
   );
@@ -115,7 +154,7 @@ export const AccordionTrigger: FC<AccordionTriggerProps> = ({
   const placement = placementProp ?? ctx.indicatorPlacement;
 
   const indicator = !hideIndicator && (
-    <span className={indicatorVariants({ placement })}>
+    <span {...stylex.props(styles.indicator, indicatorPlacementStyles[placement])}>
       {placement === 'start' && <ChevronRight size={16} />}
       {placement === 'inline' && <Play fill="currentColor" size={7} strokeWidth={1} />}
       {placement === 'end' && <ChevronDown size={16} />}
@@ -123,7 +162,15 @@ export const AccordionTrigger: FC<AccordionTriggerProps> = ({
   );
 
   return (
-    <BaseUIAccordion.Trigger className={cx(triggerVariants({ variant }), className)} {...rest}>
+    <BaseUIAccordion.Trigger
+      className={
+        styleProps(
+          [accordionTriggerMarker, focusRing.info, styles.trigger, triggerVariantStyles[variant]],
+          className,
+        ).className
+      }
+      {...rest}
+    >
       {placement === 'start' && indicator}
       {children}
       {placement !== 'start' && indicator}
@@ -151,10 +198,22 @@ export const AccordionPanel: FC<AccordionPanelProps> = ({
   const inline = placement === 'inline';
 
   return (
-    <BaseUIAccordion.Panel className={cx(styles.panel, className)} {...rest}>
+    <BaseUIAccordion.Panel
+      className={styleProps([accordionPanelMarker, styles.panel], className).className}
+      {...rest}
+    >
       <div
-        className={cx(contentVariants({ indent, inline, variant }), contentClassName)}
-        style={contentStyle}
+        {...styleProps(
+          [
+            styles.content,
+            contentVariantStyles[variant],
+            inline && variant === 'borderless' && styles.contentInline,
+            indent && variant !== 'outlined' && styles.contentIndent,
+            indent && variant === 'outlined' && styles.contentIndentOutlined,
+          ],
+          contentClassName,
+          contentStyle,
+        )}
       >
         {children}
       </div>
@@ -164,4 +223,4 @@ export const AccordionPanel: FC<AccordionPanelProps> = ({
 
 AccordionPanel.displayName = 'AccordionPanel';
 
-export { styles as accordionStyles } from './style';
+export { accordionStyles } from './style';

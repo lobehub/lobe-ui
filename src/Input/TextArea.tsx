@@ -1,15 +1,17 @@
 'use client';
 
 import { Field } from '@base-ui/react/field';
+import * as stylex from '@stylexjs/stylex';
 import { type CSSProperties, memo, useMemo, useRef, useState } from 'react';
 import { useMergeRefs } from 'react-merge-refs';
 
-import { cx, useThemeMode } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
+import { useThemeMode } from '@/styles/theme/scope';
 
 import ClearButton from './ClearButton';
 import { clearNativeValue } from './clearNativeValue';
 import { isPressEnter } from './pressEnter';
-import { rootVariants, styles } from './style';
+import { inputRootStyles, styles } from './style';
 import type { TextAreaProps } from './type';
 
 const textLength = (value: unknown) =>
@@ -59,20 +61,29 @@ const TextArea = memo<TextAreaProps>(
     return (
       <div
         data-disabled={disabled ? '' : undefined}
-        style={{ ...cssVariables, ...style }}
-        className={cx(
-          rootVariants({ shadow, variant: mergedVariant }),
-          styles.textarea,
-          autoSize && styles.textareaAutoSize,
-          resize && styles.textareaResize,
-          showCount && styles.textareaWithCount,
+        data-variant={mergedVariant}
+        {...styleProps(
+          [
+            ...inputRootStyles({ shadow, variant: mergedVariant }),
+            styles.textarea,
+            showCount && styles.textareaWithCount,
+          ],
           className,
+          { ...cssVariables, ...style },
         )}
       >
         <Field.Control
-          className={cx(styles.input, classNames?.input)}
           disabled={disabled}
-          style={customStyles?.input}
+          {...styleProps(
+            [
+              styles.input,
+              styles.textareaControl,
+              autoSize && styles.textareaAutoSize,
+              resize && styles.textareaResize,
+            ],
+            classNames?.input,
+            customStyles?.input,
+          )}
           render={
             <textarea
               defaultValue={defaultValue}
@@ -94,7 +105,7 @@ const TextArea = memo<TextAreaProps>(
         />
         {showClear && (
           <ClearButton
-            className={styles.textareaClear}
+            xstyle={styles.textareaClear}
             onClear={() => {
               clearNativeValue(textareaRef.current);
               onClear?.();
@@ -102,7 +113,7 @@ const TextArea = memo<TextAreaProps>(
           />
         )}
         {showCount && (
-          <span className={styles.count} data-over={over ? '' : undefined}>
+          <span data-over={over ? '' : undefined} {...stylex.props(styles.count)}>
             {maxLength === undefined ? length : `${length} / ${maxLength}`}
           </span>
         )}

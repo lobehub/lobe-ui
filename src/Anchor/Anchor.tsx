@@ -1,5 +1,6 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import {
   type CSSProperties,
   memo,
@@ -13,7 +14,7 @@ import { useMergeRefs } from 'react-merge-refs';
 import useControlledState from 'use-merge-value';
 
 import { useEventCallback } from '@/hooks/useEventCallback';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
 import { styles } from './style';
 import type { AnchorItem, AnchorProps } from './type';
@@ -64,7 +65,18 @@ const getActiveKey = (
 };
 
 const Anchor = memo<AnchorProps>(
-  ({ activeKey, className, getContainer, items, offset = 0, onChange, onClick, ref, ...rest }) => {
+  ({
+    activeKey,
+    className,
+    getContainer,
+    items,
+    offset = 0,
+    onChange,
+    onClick,
+    ref,
+    style,
+    ...rest
+  }) => {
     const [mergedActiveKey, setMergedActiveKey] = useControlledState<string | null>(null, {
       onChange,
       value: activeKey,
@@ -143,13 +155,13 @@ const Anchor = memo<AnchorProps>(
       container.scrollTo({ behavior: reduceMotion ? 'auto' : 'smooth', top });
     };
 
-    const renderList = (list: AnchorItem[]) => (
-      <ul className={styles.list}>
+    const renderList = (list: AnchorItem[], nested: boolean) => (
+      <ul {...stylex.props(styles.list, nested && styles.listNested)}>
         {list.map((item) => (
           <li key={item.key}>
             <a
               aria-current={item.key === mergedActiveKey ? 'location' : undefined}
-              className={styles.link}
+              {...stylex.props(styles.link, nested && styles.linkNested)}
               data-key={item.key}
               href={item.href}
               title={typeof item.title === 'string' ? item.title : undefined}
@@ -157,16 +169,16 @@ const Anchor = memo<AnchorProps>(
             >
               {item.title}
             </a>
-            {item.children && item.children.length > 0 && renderList(item.children)}
+            {item.children && item.children.length > 0 && renderList(item.children, true)}
           </li>
         ))}
       </ul>
     );
 
     return (
-      <nav className={cx(styles.root, className)} ref={mergedRef} {...rest}>
-        <span aria-hidden className={styles.marker} hidden={!marker} style={marker} />
-        {renderList(items)}
+      <nav ref={mergedRef} {...rest} {...styleProps(styles.root, className, style)}>
+        <span aria-hidden {...stylex.props(styles.marker)} hidden={!marker} style={marker} />
+        {renderList(items, false)}
       </nav>
     );
   },

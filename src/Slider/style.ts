@@ -1,77 +1,66 @@
-import { focusRing } from '@/internal/focusRing';
-import { createStaticStyles } from '@/styles';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  control: css`
-    display: flex;
-    align-items: center;
-    width: 100%;
-    height: 20px;
-  `,
-  indicator: css`
-    border-radius: inherit;
-    background: ${cssVar.colorPrimary};
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-    [data-disabled] & {
-      background: ${cssVar.colorTextQuaternary};
-    }
-  `,
-  root: css`
-    display: flex;
-    align-items: center;
-    width: 100%;
+import { sliderMarker } from './marker.stylex';
 
-    &[data-disabled] {
-      cursor: not-allowed;
-    }
-  `,
-  thumb: css`
-    flex-shrink: 0;
+const reducedMotion = '@media (prefers-reduced-motion: reduce)';
+const activeRing = `0 0 0 2px ${cssVar.colorPrimaryBorder}`;
 
-    width: 8px;
-    height: 16px;
-    border-radius: 100px;
+export const styles = stylex.create({
+  control: {
+    alignItems: 'center',
+    display: 'flex',
+    height: 20,
+    width: '100%',
+  },
+  indicator: {
+    borderRadius: 'inherit',
+    backgroundColor: {
+      default: cssVar.colorPrimary,
+      [stylex.when.ancestor('[data-disabled]', sliderMarker)]: cssVar.colorTextQuaternary,
+    },
+  },
+  root: {
+    alignItems: 'center',
+    cursor: { 'default': null, ':is([data-disabled])': 'not-allowed' },
+    display: 'flex',
+    width: '100%',
+  },
+  thumb: {
+    'borderRadius': 100,
+    'transition': `box-shadow 150ms ${cssVar.motionEaseOut}`,
+    'backgroundColor': {
+      default: cssVar.colorPrimary,
+      [stylex.when.ancestor('[data-disabled]', sliderMarker)]: cssVar.colorTextQuaternary,
+    },
+    'boxShadow': {
+      'default': `0 0 0 1px ${cssVar.colorBgContainer}`,
+      ':hover:not([data-disabled] *)': activeRing,
+      [stylex.when.ancestor('[data-dragging]', sliderMarker)]: activeRing,
+    },
+    'flexShrink': 0,
+    'transitionDuration': { default: null, [reducedMotion]: '0s' },
+    'height': 16,
+    'width': 8,
+    '::before': {
+      content: "''",
+      insetBlockStart: '50%',
+      insetInlineStart: '50%',
+      position: 'absolute',
+      translate: '-50% -50%',
+      height: 40,
+      width: 24,
+    },
+  },
+  track: {
+    borderRadius: 100,
+    backgroundColor: cssVar.colorFillSecondary,
+    height: 4,
+    width: '100%',
+  },
+});
 
-    background: ${cssVar.colorPrimary};
-    box-shadow: 0 0 0 1px ${cssVar.colorBgContainer};
-
-    transition: box-shadow 150ms ${cssVar.motionEaseOut};
-
-    &::before {
-      content: '';
-
-      position: absolute;
-      inset-block-start: 50%;
-      inset-inline-start: 50%;
-      translate: -50% -50%;
-
-      width: 24px;
-      height: 40px;
-    }
-
-    &:hover:not([data-disabled] *) {
-      box-shadow: 0 0 0 2px ${cssVar.colorPrimaryBorder};
-    }
-
-    ${focusRing};
-
-    [data-dragging] & {
-      box-shadow: 0 0 0 2px ${cssVar.colorPrimaryBorder};
-    }
-
-    [data-disabled] & {
-      background: ${cssVar.colorTextQuaternary};
-      box-shadow: 0 0 0 1px ${cssVar.colorBgContainer};
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      transition-duration: 0s;
-    }
-  `,
-  track: css`
-    width: 100%;
-    height: 4px;
-    border-radius: 100px;
-    background: ${cssVar.colorFillSecondary};
-  `,
-}));
+export const sliderStyles = Object.fromEntries(
+  Object.entries(styles).map(([key, value]) => [key, stylex.props(value).className ?? '']),
+) as Record<keyof typeof styles, string>;

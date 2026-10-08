@@ -1,99 +1,65 @@
-import { cva } from 'class-variance-authority';
+import * as stylex from '@stylexjs/stylex';
 
-import { createStaticStyles } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  button: css`
-    cursor: pointer;
+const enabledHover = ':hover:not(:disabled)';
+const currentAtRest = ':is([aria-current="page"]):is(:disabled, :not(:hover))';
 
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    min-width: 28px;
-    height: 28px;
-    padding-inline: 6px;
-    border: none;
-    border-radius: ${cssVar.borderRadius};
-
-    font-size: 13px;
-    font-weight: 500;
-    font-variant-numeric: tabular-nums;
-    color: ${cssVar.colorTextSecondary};
-
-    background: transparent;
-
-    transition: background-color 0.15s;
-
-    &:hover:not(:disabled) {
-      color: ${cssVar.colorText};
-      background: ${cssVar.colorFillTertiary};
-    }
-
-    &:disabled {
-      cursor: default;
-      color: ${cssVar.colorTextQuaternary};
-      background: transparent;
-    }
-
-    &[aria-current='page'] {
-      font-weight: 600;
-      color: ${cssVar.colorText};
-      background: ${cssVar.colorFillSecondary};
-    }
-  `,
-  ellipsis: css`
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 28px;
-
-    color: ${cssVar.colorTextQuaternary};
-    letter-spacing: 2px;
-  `,
-  root: css`
-    display: inline-flex;
-    gap: 4px;
-    align-items: center;
-    font-variant-numeric: tabular-nums;
-  `,
-  small: css`
-    min-width: 24px;
-    height: 24px;
-    font-size: 12px;
-  `,
-  smallEllipsis: css`
-    width: 24px;
-  `,
-  total: css`
-    margin-inline-end: 8px;
-    font-size: 12px;
-    color: ${cssVar.colorTextTertiary};
-    white-space: nowrap;
-  `,
-}));
-
-export const buttonVariants = cva(styles.button, {
-  defaultVariants: {
-    size: 'middle',
-  },
-  variants: {
-    size: {
-      middle: null,
-      small: styles.small,
+export const styles = stylex.create({
+  button: {
+    borderColor: 'currentcolor',
+    borderRadius: cssVar.borderRadius,
+    borderStyle: 'none',
+    borderWidth: 'medium',
+    paddingInline: 6,
+    transition: 'background-color 0.15s',
+    alignItems: 'center',
+    backgroundColor: {
+      [currentAtRest]: cssVar.colorFillSecondary,
+      default: 'transparent',
+      [enabledHover]: cssVar.colorFillTertiary,
     },
-  },
-});
-
-export const ellipsisVariants = cva(styles.ellipsis, {
-  defaultVariants: {
-    size: 'middle',
-  },
-  variants: {
-    size: {
-      middle: null,
-      small: styles.smallEllipsis,
+    color: {
+      'default': cssVar.colorTextSecondary,
+      [enabledHover]: cssVar.colorText,
+      ':disabled:not([aria-current="page"])': cssVar.colorTextQuaternary,
+      ':is([aria-current="page"]):not(:hover:not(:disabled))': cssVar.colorText,
     },
+    cursor: { 'default': 'pointer', ':disabled': 'default' },
+    display: 'inline-flex',
+    fontSize: 13,
+    fontVariantNumeric: 'tabular-nums',
+    fontWeight: { 'default': 500, ':is([aria-current="page"])': 600 },
+    justifyContent: 'center',
+    height: 28,
+    minWidth: 28,
+  },
+  ellipsis: {
+    alignItems: 'center',
+    color: cssVar.colorTextQuaternary,
+    display: 'inline-flex',
+    justifyContent: 'center',
+    letterSpacing: 2,
+    width: 28,
+  },
+  root: {
+    gap: 4,
+    alignItems: 'center',
+    display: 'inline-flex',
+    fontVariantNumeric: 'tabular-nums',
+  },
+  small: {
+    fontSize: 12,
+    height: 24,
+    minWidth: 24,
+  },
+  smallEllipsis: {
+    width: 24,
+  },
+  total: {
+    color: cssVar.colorTextTertiary,
+    fontSize: 12,
+    marginInlineEnd: 8,
+    whiteSpace: 'nowrap',
   },
 });

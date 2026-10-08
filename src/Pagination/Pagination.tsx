@@ -1,15 +1,16 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { memo, useEffect, useRef, useState } from 'react';
 import useControlledState from 'use-merge-value';
 
 import { useEventCallback } from '@/hooks/useEventCallback';
 import Select from '@/Select';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
 import { clampPage, getPageCount, getPaginationItems } from './helpers';
-import { buttonVariants, ellipsisVariants, styles } from './style';
+import { styles } from './style';
 import type { PaginationProps } from './type';
 
 const Pagination = memo<PaginationProps>(
@@ -86,6 +87,7 @@ const Pagination = memo<PaginationProps>(
       onPageSizeChange?.(nextCurrent, nextSize);
     };
 
+    const buttonProps = stylex.props(styles.button, size === 'small' && styles.small);
     const items = getPaginationItems(displayCurrent, pageCount);
     const rangeStart = total === 0 ? 0 : (displayCurrent - 1) * mergedPageSize + 1;
     const rangeEnd = Math.min(displayCurrent * mergedPageSize, total);
@@ -93,18 +95,17 @@ const Pagination = memo<PaginationProps>(
     return (
       <nav
         aria-label="Pagination"
-        className={cx(styles.root, className)}
         ref={ref}
         role="navigation"
-        style={style}
+        {...styleProps(styles.root, className, style)}
         {...rest}
       >
         {showTotal && (
-          <span className={styles.total}>{showTotal(total, [rangeStart, rangeEnd])}</span>
+          <span {...stylex.props(styles.total)}>{showTotal(total, [rangeStart, rangeEnd])}</span>
         )}
         <button
           aria-label="Previous page"
-          className={buttonVariants({ size })}
+          {...buttonProps}
           disabled={disabled || displayCurrent <= 1}
           type="button"
           onClick={() => goTo(displayCurrent - 1)}
@@ -115,7 +116,7 @@ const Pagination = memo<PaginationProps>(
           typeof item === 'number' ? (
             <button
               aria-current={item === displayCurrent ? 'page' : undefined}
-              className={buttonVariants({ size })}
+              {...buttonProps}
               disabled={disabled}
               key={item}
               type="button"
@@ -124,14 +125,17 @@ const Pagination = memo<PaginationProps>(
               {item}
             </button>
           ) : (
-            <span className={ellipsisVariants({ size })} key={item}>
+            <span
+              key={item}
+              {...stylex.props(styles.ellipsis, size === 'small' && styles.smallEllipsis)}
+            >
               ···
             </span>
           ),
         )}
         <button
           aria-label="Next page"
-          className={buttonVariants({ size })}
+          {...buttonProps}
           disabled={disabled || displayCurrent >= pageCount}
           type="button"
           onClick={() => goTo(displayCurrent + 1)}

@@ -1,20 +1,18 @@
 'use client';
 
+import './style.css';
+
+import clsx from 'clsx';
 import { AlertTriangle, CheckCircle, ChevronRight, Info, X, XCircle } from 'lucide-react';
 import { memo, useEffect, useRef, useState } from 'react';
 
 import Icon from '@/Icon';
-import { cx } from '@/styles';
+import { focusRing } from '@/styles/stylex/focusRing';
+import { styleProps } from '@/styles/stylex/props';
 
-import {
-  extraHeaderVariants,
-  extraVariants,
-  integratedVariants,
-  rootVariants,
-  styles,
-  toneVariants,
-} from './style';
-import type { AlertCloseConfig, AlertProps, AlertType } from './type';
+import { alertSummaryMarker } from './marker.stylex';
+import { styles } from './style';
+import type { AlertCloseConfig, AlertProps, AlertType, AlertVariant } from './type';
 
 const typeIcons = {
   error: XCircle,
@@ -23,6 +21,32 @@ const typeIcons = {
   success: CheckCircle,
   warning: AlertTriangle,
 } satisfies Record<AlertType, typeof Info>;
+
+const toneStyles = {
+  error: styles.toneError,
+  info: styles.toneInfo,
+  secondary: styles.toneSecondary,
+  success: styles.toneSuccess,
+  warning: styles.toneWarning,
+} satisfies Record<AlertType, unknown>;
+
+const rootVariantStyles = {
+  borderless: styles.plain,
+  filled: styles.soft,
+  outlined: styles.outlined,
+  plain: styles.plain,
+  soft: styles.soft,
+} satisfies Record<AlertVariant, unknown>;
+
+const integratedVariantStyles = {
+  borderless: styles.extraPlain,
+  filled: styles.soft,
+  outlined: styles.outlined,
+  plain: styles.extraPlain,
+  soft: styles.soft,
+} satisfies Record<AlertVariant, unknown>;
+
+const isPlainVariant = (variant: AlertVariant) => variant === 'borderless' || variant === 'plain';
 
 const Alert = memo<AlertProps>(
   ({
@@ -93,47 +117,45 @@ const Alert = memo<AlertProps>(
         data-alert-variant={variant}
         ref={ref}
         role={role}
-        className={cx(
-          toneVariants({ type }),
-          rootVariants({
-            banner,
-            colorfulText,
-            glass: integratedExtra ? false : glass,
-            hasDescription,
-            hasExtra: integratedExtra,
-            variant,
-          }),
-          classNames?.root,
-          classNames?.alert,
-          rootClassName,
-          className,
+        {...styleProps(
+          [
+            toneStyles[type],
+            styles.root,
+            banner && styles.banner,
+            colorfulText ? styles.colorfulText : styles.neutralText,
+            !integratedExtra && glass && styles.glass,
+            hasDescription ? styles.detailed : styles.centered,
+            rootVariantStyles[variant],
+            integratedExtra && styles.unifiedRoot,
+          ],
+          clsx(classNames?.root, classNames?.alert, rootClassName, className),
+          {
+            ...style,
+            ...customStyles?.root,
+            ...customStyles?.alert,
+          },
         )}
-        style={{
-          ...style,
-          ...customStyles?.root,
-          ...customStyles?.alert,
-        }}
       >
         {showIcon && (
           <span
             aria-hidden="true"
-            className={cx(styles.icon, classNames?.icon)}
-            style={customStyles?.icon}
+            {...styleProps([styles.icon], classNames?.icon, customStyles?.icon)}
           >
             <Icon icon={icon ?? typeIcons[type]} size={hasDescription ? 18 : 16} {...iconProps} />
           </span>
         )}
         <div
-          className={cx(styles.content, classNames?.section, classNames?.content)}
-          style={{ ...customStyles?.section, ...customStyles?.content }}
+          {...styleProps([styles.content], clsx(classNames?.section, classNames?.content), {
+            ...customStyles?.section,
+            ...customStyles?.content,
+          })}
         >
           {resolvedTitle !== undefined && resolvedTitle !== null && (
             <div
-              style={customStyles?.title}
-              className={cx(
-                styles.title,
-                hasDescription && styles.titleDetailed,
+              {...styleProps(
+                [styles.title, hasDescription && styles.titleDetailed],
                 classNames?.title,
+                customStyles?.title,
               )}
             >
               {resolvedTitle}
@@ -141,8 +163,11 @@ const Alert = memo<AlertProps>(
           )}
           {hasDescription && (
             <div
-              className={cx(styles.description, classNames?.description)}
-              style={customStyles?.description}
+              {...styleProps(
+                [styles.description],
+                classNames?.description,
+                customStyles?.description,
+              )}
             >
               {description}
             </div>
@@ -150,8 +175,11 @@ const Alert = memo<AlertProps>(
         </div>
         {action && (
           <div
-            className={cx(styles.action, styles.wrappedAction, classNames?.action)}
-            style={customStyles?.action}
+            {...styleProps(
+              [styles.action, styles.wrappedAction],
+              classNames?.action,
+              customStyles?.action,
+            )}
           >
             {action}
           </div>
@@ -160,9 +188,12 @@ const Alert = memo<AlertProps>(
           <button
             {...closeButtonProps}
             aria-label={closeButtonProps['aria-label'] ?? 'Close alert'}
-            className={cx(styles.close, classNames?.close, closeClassName)}
             disabled={closeDisabled}
-            style={{ ...customStyles?.close, ...closeStyle }}
+            {...styleProps(
+              [focusRing.info, styles.close],
+              clsx(classNames?.close, closeClassName),
+              { ...customStyles?.close, ...closeStyle },
+            )}
             type="button"
             onClick={handleClose}
           >
@@ -177,8 +208,10 @@ const Alert = memo<AlertProps>(
     if (extraIsolate) {
       return (
         <div
-          className={cx(styles.container, toneVariants({ type }), classNames?.container)}
-          style={{ gap: 8, ...customStyles?.container }}
+          {...styleProps([styles.container, toneStyles[type]], classNames?.container, {
+            gap: 8,
+            ...customStyles?.container,
+          })}
         >
           {root}
           {extra}
@@ -188,38 +221,64 @@ const Alert = memo<AlertProps>(
 
     return (
       <div
-        style={customStyles?.container}
-        className={cx(
-          styles.container,
-          toneVariants({ type }),
-          integratedVariants({ banner, glass, variant }),
+        {...styleProps(
+          [
+            styles.container,
+            toneStyles[type],
+            styles.integrated,
+            banner && styles.banner,
+            glass && styles.glass,
+            integratedVariantStyles[variant],
+          ],
           classNames?.container,
+          customStyles?.container,
         )}
       >
         {root}
         <div
-          className={cx(extraVariants({ banner, variant }), classNames?.extra)}
-          style={customStyles?.extra}
+          {...styleProps(
+            [
+              styles.extra,
+              banner && styles.extraBanner,
+              isPlainVariant(variant) && styles.extraPlain,
+            ],
+            classNames?.extra,
+            customStyles?.extra,
+          )}
         >
           <details
             open={extraExpanded}
             onToggle={(event) => setExtraExpanded(event.currentTarget.open)}
           >
             <summary
-              className={cx(extraHeaderVariants({ variant }), classNames?.extraHeader)}
-              style={customStyles?.extraHeader}
+              {...styleProps(
+                [
+                  alertSummaryMarker,
+                  focusRing.info,
+                  styles.extraHeader,
+                  isPlainVariant(variant) && styles.extraHeaderPlain,
+                ],
+                clsx('lobe-alert-extra-header', classNames?.extraHeader),
+                customStyles?.extraHeader,
+              )}
             >
               <ChevronRight
                 aria-hidden="true"
-                className={cx(styles.extraIndicator, classNames?.extraIndicator)}
                 size={14}
-                style={customStyles?.extraIndicator}
+                {...styleProps(
+                  [styles.extraIndicator],
+                  classNames?.extraIndicator,
+                  customStyles?.extraIndicator,
+                )}
               />
               <span>{text?.detail ?? 'Show Details'}</span>
             </summary>
             <div
-              className={cx(styles.extraContent, classNames?.extraContent)}
-              style={customStyles?.extraContent}
+              {...styleProps(
+                [styles.extraContent],
+                classNames?.extraContent,
+                customStyles?.extraContent,
+              )}
             >
               {extra}
             </div>

@@ -1,11 +1,12 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { Upload as UploadIcon } from 'lucide-react';
 import type { ChangeEvent, DragEvent, KeyboardEvent, MouseEvent, Ref } from 'react';
 import { memo, useCallback, useRef, useState } from 'react';
 
 import Icon from '@/Icon';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
 import { filterFilesByAccept } from './helpers';
 import { styles } from './style';
@@ -148,10 +149,9 @@ const Upload = memo<UploadProps>(
       return (
         <div
           aria-disabled={disabled}
-          className={cx(styles.dragger, isDragOver && styles.draggerOver, className)}
           ref={ref as Ref<HTMLDivElement>}
           role="button"
-          style={style}
+          {...styleProps([styles.dragger, isDragOver && styles.draggerOver], className, style)}
           tabIndex={disabled ? -1 : 0}
           onClick={handleClick}
           onDragEnter={handleDragEnter}
@@ -164,11 +164,13 @@ const Upload = memo<UploadProps>(
           {inputEl}
           {children ?? (
             <>
-              <Icon className={styles.draggerIcon} icon={UploadIcon} size={24} />
-              <b className={styles.draggerTitle}>
+              <Icon {...stylex.props(styles.draggerIcon)} icon={UploadIcon} size={24} />
+              <b {...stylex.props(styles.draggerTitle)}>
                 {title ?? 'Click or drag file to this area to upload'}
               </b>
-              {description && <span className={styles.draggerDescription}>{description}</span>}
+              {description && (
+                <span {...stylex.props(styles.draggerDescription)}>{description}</span>
+              )}
             </>
           )}
         </div>
@@ -178,10 +180,9 @@ const Upload = memo<UploadProps>(
     return (
       <span
         aria-disabled={disabled}
-        className={cx(styles.trigger, className)}
         ref={ref as Ref<HTMLSpanElement>}
         role="button"
-        style={style}
+        {...styleProps(styles.trigger, className, style)}
         tabIndex={disabled ? -1 : 0}
         onClick={handleClick}
         onKeyDown={handleKeyDown}

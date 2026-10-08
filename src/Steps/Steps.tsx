@@ -1,12 +1,13 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { Check } from 'lucide-react';
 import { memo, type ReactNode } from 'react';
 
 import Icon from '@/Icon';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
-import { styles } from './style';
+import { indicatorStatusStyles, styles, titleStatusStyles } from './style';
 import type { StepItem, StepsProps, StepStatus } from './type';
 
 const getStatus = (
@@ -46,50 +47,76 @@ const Steps = memo<StepsProps>(
     ...rest
   }) => {
     const isDot = variant === 'dot';
+    const isVertical = orientation === 'vertical';
 
     return (
       <ol
         ref={ref}
-        className={cx(
-          styles.root,
-          orientation === 'vertical' ? styles.vertical : styles.horizontal,
-          isDot && styles.dot,
-          className,
-        )}
         {...rest}
+        {...styleProps(
+          [styles.root, isVertical ? styles.vertical : styles.horizontal],
+          className,
+          rest.style,
+        )}
       >
         {items.map((item, index) => {
           const status = getStatus(index, current, item);
+          const statusKey = status ?? 'guide';
           const isLast = index === items.length - 1;
 
           return (
             <li
               aria-current={current !== undefined && index === current ? 'step' : undefined}
-              className={cx(classNames?.item)}
-              data-status={status ?? 'guide'}
+              data-status={statusKey}
               key={item.key ?? index}
-              style={customStyles?.item}
+              {...styleProps(
+                isVertical
+                  ? [styles.itemVertical, isLast && styles.itemVerticalLast]
+                  : [styles.itemHorizontal, isLast && styles.itemHorizontalLast],
+                classNames?.item,
+                customStyles?.item,
+              )}
             >
               <span
-                className={cx(styles.indicator, classNames?.indicator)}
-                style={customStyles?.indicator}
+                {...styleProps(
+                  [
+                    styles.indicator,
+                    indicatorStatusStyles[statusKey],
+                    isDot && styles.dot,
+                    isDot &&
+                      (statusKey === 'process' || statusKey === 'finish') &&
+                      styles.dotActive,
+                  ],
+                  classNames?.indicator,
+                  customStyles?.indicator,
+                )}
               >
                 {renderIndicator(item, index, status, isDot)}
               </span>
               {(item.title != null || item.description != null) && (
-                <div className={styles.body}>
+                <div {...stylex.props(styles.body)}>
                   {item.title != null && (
                     <div
-                      className={cx(styles.title, classNames?.title)}
-                      style={customStyles?.title}
+                      {...styleProps(
+                        [
+                          styles.title,
+                          titleStatusStyles[statusKey],
+                          isVertical && styles.titleVertical,
+                        ],
+                        classNames?.title,
+                        customStyles?.title,
+                      )}
                     >
                       {item.title}
                     </div>
                   )}
                   {item.description != null && (
                     <div
-                      className={cx(styles.description, classNames?.description)}
-                      style={customStyles?.description}
+                      {...styleProps(
+                        styles.description,
+                        classNames?.description,
+                        customStyles?.description,
+                      )}
                     >
                       {item.description}
                     </div>
@@ -99,8 +126,15 @@ const Steps = memo<StepsProps>(
               {!isLast && (
                 <span
                   aria-hidden="true"
-                  className={styles.connector}
-                  style={isDot ? { insetBlockStart: 20, insetInlineStart: 3 } : undefined}
+                  {...styleProps(
+                    [
+                      styles.connector,
+                      statusKey === 'finish' && styles.connectorFinish,
+                      isVertical && styles.connectorVertical,
+                    ],
+                    undefined,
+                    isDot ? { insetBlockStart: 20, insetInlineStart: 3 } : undefined,
+                  )}
                 />
               )}
             </li>

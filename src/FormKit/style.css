@@ -1,0 +1,17 @@
+@layer lobe-ui {
+  /* borderless until focused or invalid, so the table reads as one surface */
+  .lobe-form-list-cell > *:not(:focus-within, :has([aria-invalid='true']), :hover) {
+    border-color: transparent;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .lobe-form-list-cell > *:hover:not(:focus-within, :has([aria-invalid='true'])) {
+    box-shadow: none;
+  }
+
+  .lobe-form-list-cell
+    > *:hover:not(:focus-within, :has([aria-invalid='true']), [data-variant='filled']) {
+    background: var(--lobe-color-fill-tertiary);
+  }
+}

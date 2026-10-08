@@ -1,11 +1,14 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { memo, type ReactNode } from 'react';
 
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
-import { pillSize, statusColor, styles } from './style';
+import { statusColor, styles } from './style';
 import type { BadgeProps } from './type';
+
+const pillSizeStyles = { default: null, small: styles.pillSmall };
 
 const Badge = memo<BadgeProps>(
   ({
@@ -30,12 +33,15 @@ const Badge = memo<BadgeProps>(
       const dotColor = color ?? statusColor[status ?? 'default'];
 
       return (
-        <span className={cx(styles.statusRoot, className)} ref={ref} style={style} {...rest}>
+        <span ref={ref} {...styleProps([styles.statusRoot], className, style)} {...rest}>
           <span
-            className={cx(styles.statusDot, status === 'processing' && styles.statusDotProcessing)}
-            style={{ background: dotColor, color: dotColor }}
+            {...styleProps(
+              [styles.statusDot, status === 'processing' && styles.statusDotProcessing],
+              undefined,
+              { background: dotColor, color: dotColor },
+            )}
           />
-          {text && <span className={styles.statusText}>{text}</span>}
+          {text && <span {...stylex.props(styles.statusText)}>{text}</span>}
         </span>
       );
     }
@@ -65,9 +71,11 @@ const Badge = memo<BadgeProps>(
 
       return (
         <span
-          className={cx(pillSize({ size }), dot && styles.pillDot, className)}
           ref={ref}
-          style={{ ...pillStyle, ...style }}
+          {...styleProps([styles.pill, pillSizeStyles[size], dot && styles.pillDot], className, {
+            ...pillStyle,
+            ...style,
+          })}
           {...rest}
         >
           {!dot && content}
@@ -76,12 +84,15 @@ const Badge = memo<BadgeProps>(
     }
 
     return (
-      <span className={cx(styles.wrapper, className)} ref={ref} style={style} {...rest}>
+      <span ref={ref} {...styleProps([styles.wrapper], className, style)} {...rest}>
         {children}
         {renderPill && (
           <span
-            className={cx(pillSize({ size }), styles.pillAbsolute, dot && styles.pillDot)}
-            style={pillStyle}
+            {...styleProps(
+              [styles.pill, pillSizeStyles[size], styles.pillAbsolute, dot && styles.pillDot],
+              undefined,
+              pillStyle,
+            )}
           >
             {!dot && content}
           </span>

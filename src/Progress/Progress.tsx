@@ -1,12 +1,14 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { Check, X } from 'lucide-react';
 import { memo, useMemo } from 'react';
 
 import Icon from '@/Icon';
-import { cssVar, cx } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { styleProps } from '@/styles/stylex/props';
 
-import { styles, trackHeight } from './style';
+import { styles } from './style';
 import type { ProgressProps } from './type';
 
 const circleDiameterMap: Record<'small' | 'middle' | 'large', number> = {
@@ -23,6 +25,11 @@ const circleStrokeMap: Record<'small' | 'middle' | 'large', number> = {
   large: 4,
   middle: 3,
   small: 2,
+};
+
+const trackHeightStyles = {
+  block: { large: styles.blockLg, middle: styles.blockMd, small: styles.blockSm },
+  line: { large: styles.lineLg, middle: styles.lineMd, small: styles.lineSm },
 };
 
 const statusColor = {
@@ -86,20 +93,19 @@ const Progress = memo<ProgressProps>(
 
       return (
         <div
-          className={cx(styles.circleRoot, className)}
           ref={ref}
-          style={style}
+          {...styleProps([styles.circleRoot], className, style)}
           {...progressAria}
           {...rest}
         >
           <svg
-            className={styles.circleSvg}
+            {...stylex.props(styles.circleSvg)}
             height={diameter}
             viewBox={`0 0 ${diameter} ${diameter}`}
             width={diameter}
           >
             <circle
-              className={styles.circleTrack}
+              {...stylex.props(styles.circleTrack)}
               cx={diameter / 2}
               cy={diameter / 2}
               r={radius}
@@ -120,8 +126,9 @@ const Progress = memo<ProgressProps>(
           </svg>
           {showInfo && diameter >= 40 && (
             <span
-              className={styles.circleInfo}
-              style={{ fontSize: Math.round(diameter * 0.15 + 6) }}
+              {...styleProps([styles.circleInfo], undefined, {
+                fontSize: Math.round(diameter * 0.15 + 6),
+              })}
             >
               {info}
             </span>
@@ -130,31 +137,33 @@ const Progress = memo<ProgressProps>(
       );
     }
 
-    const heightStyle = typeof size === 'number' ? { height: size } : undefined;
-    const heightClass = (family: 'line' | 'block') =>
-      typeof size === 'number' ? undefined : trackHeight({ family, size });
+    const sizeStyle = typeof size === 'number' ? { height: size } : undefined;
+    const heightStyle = (family: 'line' | 'block') =>
+      typeof size === 'number' ? undefined : trackHeightStyles[family][size];
 
     if (variant === 'segments') {
       const filled = Math.round((segments * clamped) / 100);
 
       return (
         <div
-          className={cx(styles.rowRoot, className)}
           ref={ref}
-          style={style}
+          {...styleProps([styles.rowRoot], className, style)}
           {...progressAria}
           {...rest}
         >
-          <div className={cx(styles.segments, heightClass('block'))} style={heightStyle}>
+          <div {...styleProps([styles.segments, heightStyle('block')], undefined, sizeStyle)}>
             {Array.from({ length: segments }, (_, index) => (
               <span
-                className={cx(styles.segment, index < filled && styles.segmentOn)}
                 key={index}
-                style={index < filled ? { background: barColor } : undefined}
+                {...styleProps(
+                  [styles.segment, index < filled && styles.segmentOn],
+                  undefined,
+                  index < filled ? { background: barColor } : undefined,
+                )}
               />
             ))}
           </div>
-          {showInfo && <span className={styles.rowInfo}>{info}</span>}
+          {showInfo && <span {...stylex.props(styles.rowInfo)}>{info}</span>}
         </div>
       );
     }
@@ -162,50 +171,51 @@ const Progress = memo<ProgressProps>(
     if (variant === 'inset') {
       return (
         <div
-          className={cx(styles.rowRoot, className)}
           ref={ref}
-          style={style}
+          {...styleProps([styles.rowRoot], className, style)}
           {...progressAria}
           {...rest}
         >
-          <div className={cx(styles.split, heightClass('block'))} style={heightStyle}>
+          <div {...styleProps([styles.split, heightStyle('block')], undefined, sizeStyle)}>
             {clamped > 0 && (
               <span
-                className={cx(styles.splitFill, status === 'active' && styles.barActive)}
-                style={{
-                  backgroundColor: barColor,
-                  minWidth: typeof size === 'number' ? size : blockHeightMap[size],
-                  width: clamped === 100 ? '100%' : `calc((100% - 3px) * ${clamped / 100})`,
-                }}
+                {...styleProps(
+                  [styles.splitFill, status === 'active' && styles.barActive],
+                  undefined,
+                  {
+                    backgroundColor: barColor,
+                    minWidth: typeof size === 'number' ? size : blockHeightMap[size],
+                    width: clamped === 100 ? '100%' : `calc((100% - 3px) * ${clamped / 100})`,
+                  },
+                )}
               />
             )}
-            {clamped < 100 && <span className={styles.splitRest} />}
+            {clamped < 100 && <span {...stylex.props(styles.splitRest)} />}
           </div>
-          {showInfo && <span className={styles.rowInfo}>{info}</span>}
+          {showInfo && <span {...stylex.props(styles.rowInfo)}>{info}</span>}
         </div>
       );
     }
 
     return (
       <div
-        className={cx(styles.lineRoot, className)}
         ref={ref}
-        style={style}
+        {...styleProps([styles.lineRoot], className, style)}
         {...progressAria}
         {...rest}
       >
         {(label || showInfo) && (
-          <div className={styles.lineMeta}>
+          <div {...stylex.props(styles.lineMeta)}>
             <span>{label}</span>
-            {showInfo && <span className={styles.lineValue}>{info}</span>}
+            {showInfo && <span {...stylex.props(styles.lineValue)}>{info}</span>}
           </div>
         )}
-        <div className={cx(styles.lineTrack, heightClass('line'))} style={heightStyle}>
+        <div {...styleProps([styles.lineTrack, heightStyle('line')], undefined, sizeStyle)}>
           <div
-            style={{ backgroundColor: barColor, width: `${clamped}%` }}
-            className={cx(
-              styles.bar,
-              variant === 'line' && status === 'active' && styles.barActive,
+            {...styleProps(
+              [styles.bar, variant === 'line' && status === 'active' && styles.barActive],
+              undefined,
+              { backgroundColor: barColor, width: `${clamped}%` },
             )}
           />
         </div>

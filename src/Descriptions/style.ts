@@ -1,60 +1,66 @@
-import { createStaticStyles } from '@/styles';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  bordered: css`
-    gap: 0;
-    border: 1px solid ${cssVar.colorBorderSecondary};
-    border-block-start: 0;
-    border-radius: ${cssVar.borderRadius};
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-    & > dt,
-    & > dd {
-      padding-block: 8px;
-      padding-inline: 12px;
-      border-block-start: 1px solid ${cssVar.colorBorderSecondary};
-    }
-
-    & > dt {
-      border-inline-end: 1px solid ${cssVar.colorBorderSecondary};
-      background: ${cssVar.colorFillQuaternary};
-    }
-  `,
-  content: css`
-    min-width: 0;
-    margin: 0;
-    color: ${cssVar.colorText};
-    overflow-wrap: anywhere;
-  `,
-  extra: css`
-    flex: none;
-  `,
-  header: css`
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    justify-content: space-between;
-
-    margin-block-end: 8px;
-  `,
-  label: css`
-    color: ${cssVar.colorTextDescription};
-    white-space: nowrap;
-  `,
-  list: css`
-    display: grid;
-    gap: 6px 12px;
-
-    margin: 0;
-
-    font-size: 13px;
-    line-height: 1.5;
-  `,
-  root: css`
-    min-width: 0;
-  `,
-  title: css`
-    font-size: 14px;
-    font-weight: 600;
-    color: ${cssVar.colorText};
-  `,
-}));
+export const styles = stylex.create({
+  bordered: {
+    borderColor: cssVar.colorBorderSecondary,
+    borderRadius: cssVar.borderRadius,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    borderBlockStartColor: 'currentcolor',
+    borderBlockStartStyle: 'none',
+    borderBlockStartWidth: 0,
+    columnGap: 0,
+    rowGap: 0,
+  },
+  borderedCell: {
+    paddingBlock: 8,
+    paddingInline: 12,
+    borderBlockStartColor: cssVar.colorBorderSecondary,
+    borderBlockStartStyle: 'solid',
+    borderBlockStartWidth: 1,
+  },
+  borderedLabel: {
+    backgroundColor: cssVar.colorFillQuaternary,
+    borderInlineEndColor: cssVar.colorBorderSecondary,
+    borderInlineEndStyle: 'solid',
+    borderInlineEndWidth: 1,
+  },
+  content: {
+    margin: 0,
+    color: cssVar.colorText,
+    overflowWrap: 'anywhere',
+    minWidth: 0,
+  },
+  extra: {
+    flex: 'none',
+  },
+  header: {
+    gap: 12,
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginBlockEnd: 8,
+  },
+  label: {
+    color: cssVar.colorTextDescription,
+    whiteSpace: 'nowrap',
+  },
+  list: {
+    margin: 0,
+    columnGap: 12,
+    display: 'grid',
+    fontSize: 13,
+    lineHeight: 1.5,
+    rowGap: 6,
+  },
+  root: {
+    minWidth: 0,
+  },
+  title: {
+    color: cssVar.colorText,
+    fontSize: 14,
+    fontWeight: 600,
+  },
+});

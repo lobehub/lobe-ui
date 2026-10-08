@@ -2,11 +2,13 @@
 
 import { type FormEvent, useCallback, useMemo, useRef } from 'react';
 
-import { cx, useResponsive } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
+import { useResponsive } from '@/styles/theme/scope';
 
 import FormFlatGroup from '../Form/components/FormFlatGroup';
 import FormGroup from '../Form/components/FormGroup';
-import { rootVariants } from '../Form/style';
+import { formMarker } from '../Form/marker.stylex';
+import { rootStyles } from '../Form/style';
 import { FormKitContext, type FormKitContextValue } from './context';
 import FormField from './Field';
 import type { FormFieldProps, FormGroupItem, FormProps, FormValues } from './type';
@@ -125,9 +127,12 @@ const Form = <T extends FormValues>({
       <form
         {...rest}
         noValidate
-        className={cx(rootVariants({ variant }), className)}
         ref={mergedRef}
-        style={{ gap: gap ?? (layout === 'vertical' ? 0 : undefined), ...style }}
+        {...styleProps(
+          [formMarker, rootStyles.root, variant === 'borderless' && rootStyles.borderless],
+          className,
+          { gap: gap ?? (layout === 'vertical' ? 0 : undefined), ...style },
+        )}
         onSubmit={handleSubmit}
       >
         {renderedItems}

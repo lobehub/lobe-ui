@@ -1,0 +1,5 @@
+@layer lobe-ui {
+  [data-orientation='horizontal'] .lobe-tabs-indicator:dir(rtl) {
+    --lobe-tabs-indicator-start: var(--active-tab-right);
+  }
+}

@@ -1,5 +1,6 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import {
   cloneElement,
   isValidElement,
@@ -14,11 +15,12 @@ import {
 
 import formMessages from '@/i18n/resources/en/form';
 import { useTranslation } from '@/i18n/useTranslation';
-import { cx, useResponsive } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
+import { useResponsive } from '@/styles/theme/scope';
 
 import FormDivider from '../Form/components/FormDivider';
 import FormTitle from '../Form/components/FormTitle';
-import { fieldStyles, fieldVariants } from '../Form/style';
+import { fieldLayoutStyles, fieldStyles } from '../Form/style';
 import { resolveBinding } from './binding';
 import { useFormKitContext } from './context';
 import type { FieldValidator } from './engine/types';
@@ -133,7 +135,7 @@ const FieldControl = memo<ControlProps>(
 
     const errorNode =
       field.error && !bare ? (
-        <div className={fieldStyles.error} id={errorId}>
+        <div {...stylex.props(fieldStyles.error)} id={errorId}>
           {field.error}
         </div>
       ) : null;
@@ -255,8 +257,8 @@ const FormField = memo<FormFieldProps>(
     return (
       <>
         {divider && <FormDivider visible={mergedVariant !== 'borderless'} />}
-        <div className={cx(fieldVariants({ layout: mergedLayout }), className)} style={style}>
-          <label className={fieldStyles.label} htmlFor={labelFor}>
+        <div {...styleProps([fieldStyles.root, fieldLayoutStyles[mergedLayout]], className, style)}>
+          <label {...stylex.props(fieldStyles.label)} htmlFor={labelFor}>
             <FormTitle
               avatar={avatar}
               desc={desc}
@@ -265,7 +267,7 @@ const FormField = memo<FormFieldProps>(
                 required ? (
                   <>
                     {label}
-                    <span aria-hidden className={fieldKitStyles.required}>
+                    <span aria-hidden {...stylex.props(fieldKitStyles.required)}>
                       *
                     </span>
                   </>
@@ -276,15 +278,15 @@ const FormField = memo<FormFieldProps>(
             />
           </label>
           <div
-            style={controlWidth ? { width: controlWidth } : undefined}
-            className={cx(
+            {...stylex.props(
               fieldStyles.control,
               mergedLayout === 'vertical' && fieldStyles.controlVertical,
-              controlWidth && fieldKitStyles.controlFixed,
+              Boolean(controlWidth) && fieldKitStyles.controlFixed,
             )}
+            style={controlWidth ? { width: controlWidth } : undefined}
           >
             {control}
-            {extra && <div className={fieldKitStyles.extra}>{extra}</div>}
+            {extra && <div {...stylex.props(fieldKitStyles.extra)}>{extra}</div>}
           </div>
         </div>
       </>

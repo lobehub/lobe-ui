@@ -1,5 +1,9 @@
 'use client';
 
+import './style.css';
+
+import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { PlusIcon, XIcon } from 'lucide-react';
 import { cloneElement, memo, type ReactElement, type ReactNode, useCallback, useRef } from 'react';
 
@@ -102,32 +106,39 @@ const FormList = memo<FormListProps>(({ addText, children, columns, emptyText, n
 
   const gridTemplateColumns = `${columns.map((c) => `minmax(0, ${c.flex ?? 1}fr)`).join(' ')} 36px`;
   const addButton = (
-    <button className={listStyles.add} type="button" onClick={() => add(createItem(newItem))}>
+    <button
+      {...stylex.props(listStyles.add)}
+      type="button"
+      onClick={() => add(createItem(newItem))}
+    >
       <PlusIcon size={14} />
       {addText ?? t('form.list.add')}
     </button>
   );
 
   return (
-    <div className={listStyles.table}>
-      <div className={listStyles.head} style={{ gridTemplateColumns }}>
+    <div {...stylex.props(listStyles.table)}>
+      <div {...stylex.props(listStyles.head)} style={{ gridTemplateColumns }}>
         {columns.map((column) => (
-          <div className={listStyles.title} key={column.name}>
+          <div {...stylex.props(listStyles.title)} key={column.name}>
             {column.title}
           </div>
         ))}
       </div>
       {fields.length === 0 ? (
-        <div className={listStyles.empty}>
+        <div {...stylex.props(listStyles.empty)}>
           <span>{emptyText ?? t('form.list.empty')}</span>
           {addButton}
         </div>
       ) : (
         <>
           {fields.map((field) => (
-            <div className={listStyles.row} key={field.key} style={{ gridTemplateColumns }}>
+            <div {...stylex.props(listStyles.row)} key={field.key} style={{ gridTemplateColumns }}>
               {columns.map((column) => (
-                <div className={listStyles.cell} key={column.name}>
+                <div
+                  className={clsx('lobe-form-list-cell', stylex.props(listStyles.cell).className)}
+                  key={column.name}
+                >
                   <FormField
                     bare
                     name={`${field.name}.${column.name}`}
@@ -141,6 +152,7 @@ const FormList = memo<FormListProps>(({ addText, children, columns, emptyText, n
                 </div>
               ))}
               <ActionIcon
+                {...stylex.props(listStyles.remove)}
                 aria-label={t('form.list.remove')}
                 icon={XIcon}
                 size={'small'}
@@ -149,7 +161,7 @@ const FormList = memo<FormListProps>(({ addText, children, columns, emptyText, n
               />
             </div>
           ))}
-          <div className={listStyles.foot}>{addButton}</div>
+          <div {...stylex.props(listStyles.foot)}>{addButton}</div>
         </>
       )}
     </div>

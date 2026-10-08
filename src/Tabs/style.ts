@@ -1,234 +1,181 @@
-import { cva } from 'class-variance-authority';
+import * as stylex from '@stylexjs/stylex';
 
-import { focusRing } from '@/internal/focusRing';
-import { createStaticStyles } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { focusRing } from '@/styles/stylex/focusRing';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  indicator: css`
-    pointer-events: none;
+import type { TabsSize, TabsVariant } from './type';
 
-    position: absolute;
-    z-index: 0;
+const reducedMotion = '@media (prefers-reduced-motion: reduce)';
+const vertical = ':is([data-orientation="vertical"])';
+const indicatorStart = 'var(--lobe-tabs-indicator-start, var(--active-tab-left))';
 
-    transition-timing-function: ${cssVar.motionEaseOut};
-    transition-duration: 240ms;
-    transition-property: inset-inline-start, inset-block-start, width, height, transform;
-
-    @media (prefers-reduced-motion: reduce) {
-      transition-duration: 0s;
-    }
-  `,
-  indicatorPoint: css`
-    inset-block-end: 6px;
-    inset-inline-start: calc(var(--active-tab-left) + var(--active-tab-width) / 2 - 2.5px);
-
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-
-    background: ${cssVar.colorPrimary};
-
-    [data-orientation='horizontal'] &:dir(rtl) {
-      inset-inline-start: calc(var(--active-tab-right) + var(--active-tab-width) / 2 - 2.5px);
-    }
-  `,
-  indicatorRounded: css`
-    inset-block-start: var(--active-tab-top);
-    inset-inline-start: var(--active-tab-left);
-
-    width: var(--active-tab-width);
-    height: var(--active-tab-height);
-    border-radius: ${cssVar.borderRadius};
-
-    background: ${cssVar.colorBgElevated};
-    box-shadow: ${cssVar.boxShadowTertiary};
-
-    [data-orientation='horizontal'] &:dir(rtl) {
-      inset-inline-start: var(--active-tab-right);
-    }
-  `,
-  indicatorSquare: css`
-    inset-block-end: 0;
-    inset-inline-start: var(--active-tab-left);
-
-    width: var(--active-tab-width);
-    height: 2px;
-
-    background: ${cssVar.colorPrimary};
-
-    [data-orientation='horizontal'] &:dir(rtl) {
-      inset-inline-start: var(--active-tab-right);
-    }
-  `,
-  list: css`
-    position: relative;
-
-    display: inline-flex;
-    flex-wrap: nowrap;
-    gap: 2px;
-    align-items: center;
-
-    &[data-orientation='vertical'] {
-      flex-direction: column;
-      align-items: stretch;
-    }
-  `,
-  listRounded: css`
-    gap: 4px;
-    align-self: flex-start;
-
-    padding: 3px;
-    border-radius: ${cssVar.borderRadiusLG};
-
-    background: ${cssVar.colorBgLayout};
-
-    &[data-orientation='vertical'] {
-      align-self: stretch;
-    }
-  `,
-  listSquare: css`
-    gap: 16px;
-    box-shadow: inset 0 -1px 0 ${cssVar.colorBorderSecondary};
-
-    &[data-orientation='vertical'] {
-      box-shadow: inset -1px 0 0 ${cssVar.colorBorderSecondary};
-    }
-  `,
-  panel: css`
-    padding-block-start: 12px;
-    outline: none;
-    border-radius: ${cssVar.borderRadius};
-    ${focusRing};
-  `,
-  root: css`
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-
-    &[data-orientation='vertical'] {
-      flex-direction: row;
-    }
-  `,
-  tab: css`
-    cursor: pointer;
-    user-select: none;
-
-    position: relative;
-    z-index: 1;
-
-    display: inline-flex;
-    flex-shrink: 0;
-    gap: 6px;
-    align-items: center;
-    justify-content: center;
-
-    box-sizing: border-box;
-    border: 0;
-
-    font-weight: 500;
-    color: ${cssVar.colorTextSecondary};
-    white-space: nowrap;
-
-    background: transparent;
-    outline: none;
-
-    transition:
-      color 120ms ${cssVar.motionEaseOut},
-      transform 120ms ${cssVar.motionEaseOut};
-
-    &:hover:not([data-disabled]) {
-      color: ${cssVar.colorText};
-    }
-
-    &:active:not([data-disabled]) {
-      transform: scale(0.98);
-    }
-
-    ${focusRing};
-
-    &[data-active] {
-      color: ${cssVar.colorPrimary};
-    }
-
-    &[data-disabled] {
-      cursor: not-allowed;
-      color: ${cssVar.colorTextDisabled};
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      transition-duration: 0s;
-    }
-  `,
-  tabLarge: css`
-    height: 36px;
-    padding-inline: 16px;
-    border-radius: ${cssVar.borderRadius};
-    font-size: 14px;
-  `,
-  tabMiddle: css`
-    height: 32px;
-    padding-inline: 12px;
-    border-radius: ${cssVar.borderRadius};
-    font-size: 13px;
-  `,
-  tabPoint: css`
-    height: auto;
-    padding-block: 8px 14px;
-  `,
-  tabSmall: css`
-    height: 26px;
-    padding-inline: 10px;
-    border-radius: ${cssVar.borderRadius};
-    font-size: 12px;
-  `,
-  tabSquare: css`
-    height: auto;
-    padding-block: 8px;
-    border-radius: 0;
-  `,
-}));
-
-export const tabVariants = cva(styles.tab, {
-  defaultVariants: {
-    size: 'middle',
-    variant: 'rounded',
+export const styles = stylex.create({
+  indicator: {
+    pointerEvents: 'none',
+    position: 'absolute',
+    transitionDuration: { default: '240ms', [reducedMotion]: '0s' },
+    transitionProperty: 'inset-inline-start, inset-block-start, width, height, transform',
+    transitionTimingFunction: cssVar.motionEaseOut,
+    zIndex: 0,
   },
-  variants: {
-    size: {
-      large: styles.tabLarge,
-      middle: styles.tabMiddle,
-      small: styles.tabSmall,
+  indicatorPoint: {
+    borderRadius: '50%',
+    backgroundColor: cssVar.colorPrimary,
+    insetBlockEnd: 6,
+    insetInlineStart: `calc(${indicatorStart} + var(--active-tab-width) / 2 - 2.5px)`,
+    height: 5,
+    width: 5,
+  },
+  indicatorRounded: {
+    borderRadius: cssVar.borderRadius,
+    backgroundColor: cssVar.colorBgElevated,
+    boxShadow: cssVar.boxShadowTertiary,
+    insetBlockStart: 'var(--active-tab-top)',
+    insetInlineStart: indicatorStart,
+    height: 'var(--active-tab-height)',
+    width: 'var(--active-tab-width)',
+  },
+  indicatorSquare: {
+    backgroundColor: cssVar.colorPrimary,
+    insetBlockEnd: 0,
+    insetInlineStart: indicatorStart,
+    height: 2,
+    width: 'var(--active-tab-width)',
+  },
+  list: {
+    gap: 2,
+    alignItems: { default: 'center', [vertical]: 'stretch' },
+    display: 'inline-flex',
+    flexDirection: { default: null, [vertical]: 'column' },
+    flexWrap: 'nowrap',
+    position: 'relative',
+  },
+  listRounded: {
+    padding: 3,
+    borderRadius: cssVar.borderRadiusLG,
+    gap: 4,
+    alignSelf: { default: 'flex-start', [vertical]: 'stretch' },
+    backgroundColor: cssVar.colorBgLayout,
+  },
+  listSquare: {
+    gap: 16,
+    boxShadow: {
+      default: `inset 0 -1px 0 ${cssVar.colorBorderSecondary}`,
+      [vertical]: `inset -1px 0 0 ${cssVar.colorBorderSecondary}`,
     },
-    variant: {
-      point: styles.tabPoint,
-      rounded: null,
-      square: styles.tabSquare,
+  },
+  panel: {
+    borderRadius: cssVar.borderRadius,
+    outline: 'none',
+    paddingBlockStart: 12,
+  },
+  root: {
+    display: 'flex',
+    flexDirection: { default: 'column', [vertical]: 'row' },
+    width: '100%',
+  },
+  tab: {
+    borderColor: 'currentcolor',
+    borderStyle: 'none',
+    borderWidth: 0,
+    gap: 6,
+    outline: 'none',
+    transition: `color 120ms ${cssVar.motionEaseOut}, transform 120ms ${cssVar.motionEaseOut}`,
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    boxSizing: 'border-box',
+    color: {
+      'default': cssVar.colorTextSecondary,
+      ':hover:not([data-disabled])': cssVar.colorText,
+      ':is([data-active]):not(:hover):not([data-disabled])': cssVar.colorPrimary,
+      ':is([data-disabled])': cssVar.colorTextDisabled,
     },
+    cursor: { 'default': 'pointer', ':is([data-disabled])': 'not-allowed' },
+    display: 'inline-flex',
+    flexShrink: 0,
+    fontWeight: 500,
+    justifyContent: 'center',
+    position: 'relative',
+    transform: { 'default': null, ':active:not([data-disabled])': 'scale(0.98)' },
+    transitionDuration: { default: null, [reducedMotion]: '0s' },
+    userSelect: 'none',
+    whiteSpace: 'nowrap',
+    zIndex: 1,
+  },
+  tabLarge: {
+    borderRadius: cssVar.borderRadius,
+    paddingInline: 16,
+    fontSize: 14,
+    height: 36,
+  },
+  tabMiddle: {
+    borderRadius: cssVar.borderRadius,
+    paddingInline: 12,
+    fontSize: 13,
+    height: 32,
+  },
+  tabPoint: {
+    paddingBlockEnd: 14,
+    paddingBlockStart: 8,
+    height: 'auto',
+  },
+  tabSmall: {
+    borderRadius: cssVar.borderRadius,
+    paddingInline: 10,
+    fontSize: 12,
+    height: 26,
+  },
+  tabSquare: {
+    borderRadius: 0,
+    paddingBlock: 8,
+    height: 'auto',
   },
 });
 
-export const indicatorVariants = cva(styles.indicator, {
-  defaultVariants: {
-    variant: 'rounded',
-  },
-  variants: {
-    variant: {
-      point: styles.indicatorPoint,
-      rounded: styles.indicatorRounded,
-      square: styles.indicatorSquare,
-    },
-  },
-});
+const indicatorVariantStyles = {
+  point: styles.indicatorPoint,
+  rounded: styles.indicatorRounded,
+  square: styles.indicatorSquare,
+};
 
-export const listVariants = cva(styles.list, {
-  defaultVariants: {
-    variant: 'rounded',
-  },
-  variants: {
-    variant: {
-      point: null,
-      rounded: styles.listRounded,
-      square: styles.listSquare,
-    },
-  },
-});
+const tabSizeStyles = {
+  large: styles.tabLarge,
+  middle: styles.tabMiddle,
+  small: styles.tabSmall,
+};
+
+const tabVariantStyles = {
+  point: styles.tabPoint,
+  rounded: null,
+  square: styles.tabSquare,
+};
+
+const listVariantStyles = {
+  point: null,
+  rounded: styles.listRounded,
+  square: styles.listSquare,
+};
+
+export const tabStyles = (size: TabsSize, variant: TabsVariant) => [
+  styles.tab,
+  focusRing.info,
+  tabSizeStyles[size],
+  tabVariantStyles[variant],
+];
+
+export const indicatorStyles = (variant: TabsVariant) => [
+  styles.indicator,
+  indicatorVariantStyles[variant],
+];
+
+export const listStyles = (variant: TabsVariant) => [styles.list, listVariantStyles[variant]];
+
+export const panelStyles = [styles.panel, focusRing.info];
+
+export const tabsStyles = {
+  ...(Object.fromEntries(
+    Object.entries(styles).map(([key, value]) => [key, stylex.props(value).className ?? '']),
+  ) as Record<keyof typeof styles, string>),
+  panel: stylex.props(panelStyles).className ?? '',
+  tab: stylex.props(styles.tab, focusRing.info).className ?? '',
+};

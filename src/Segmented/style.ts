@@ -1,210 +1,126 @@
-import { cva } from 'class-variance-authority';
+import * as stylex from '@stylexjs/stylex';
 
-import { focusRing } from '@/internal/focusRing';
-import { createStaticStyles, lobeStaticStylish } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => {
-  const indicator = css`
-    pointer-events: none;
+import { segmentedMarker } from './marker.stylex';
 
-    position: absolute;
-    z-index: 0;
-    inset-block-start: var(--active-item-top);
-    inset-inline-start: var(--active-item-left);
+const reducedMotion = '@media (prefers-reduced-motion: reduce)';
+const vertical = ':is([data-orientation="vertical"])';
 
-    width: var(--active-item-width);
-    height: var(--active-item-height);
-    border-radius: ${cssVar.borderRadius};
-
-    background: ${cssVar.colorBgElevated};
-    box-shadow: none;
-
-    transition-timing-function: ${cssVar.motionEaseOut};
-    transition-duration: 240ms;
-    transition-property: inset-inline-start, inset-block-start, width, height;
-
-    [data-variant='outlined'] > & {
-      background: ${cssVar.colorFillSecondary};
-    }
-
-    [data-orientation='horizontal'] &:dir(rtl) {
-      inset-inline-start: var(--active-item-right);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      transition-duration: 0s;
-    }
-  `;
-
-  return {
-    indicator,
-    item: css`
-      cursor: pointer;
-      user-select: none;
-
-      position: relative;
-      z-index: 1;
-
-      display: inline-flex;
-      flex-shrink: 0;
-      gap: 6px;
-      align-items: center;
-      justify-content: center;
-
-      box-sizing: border-box;
-      border: 0;
-      border-radius: ${cssVar.borderRadius};
-
-      font-weight: 500;
-      color: ${cssVar.colorTextSecondary};
-      white-space: nowrap;
-
-      background: transparent;
-      outline: none;
-
-      transition:
-        color 120ms ${cssVar.motionEaseOut},
-        transform 120ms ${cssVar.motionEaseOut};
-
-      &:hover:not([data-disabled], [data-pressed]) {
-        color: ${cssVar.colorText};
-      }
-
-      &:active:not([data-disabled]) {
-        transform: scale(0.98);
-      }
-
-      ${focusRing};
-
-      &[data-pressed] {
-        color: ${cssVar.colorText};
-      }
-
-      &[data-disabled] {
-        cursor: not-allowed;
-        color: ${cssVar.colorTextDisabled};
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        transition-duration: 0s;
-      }
-    `,
-    itemBlock: css`
-      flex: 1 1 0;
-    `,
-    itemIcon: css`
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-    `,
-    itemLabel: css`
-      display: inline-flex;
-      align-items: center;
-    `,
-    itemLarge: css`
-      height: 36px;
-      padding-inline: 16px;
-      border-radius: ${cssVar.borderRadius};
-      font-size: 14px;
-    `,
-    itemMiddle: css`
-      height: 32px;
-      padding-inline: 12px;
-      border-radius: ${cssVar.borderRadius};
-      font-size: 13px;
-    `,
-    itemSmall: css`
-      height: 26px;
-      padding-inline: 10px;
-      border-radius: ${cssVar.borderRadius};
-      font-size: 12px;
-    `,
-    list: css`
-      position: relative;
-
-      display: inline-flex;
-      flex-wrap: nowrap;
-      gap: 4px;
-      align-items: center;
-      align-self: flex-start;
-
-      box-sizing: border-box;
-      padding: 3px;
-      border-radius: ${cssVar.borderRadiusLG};
-
-      &[data-orientation='vertical'] {
-        flex-direction: column;
-        align-items: stretch;
-        align-self: stretch;
-      }
-    `,
-    listBlock: css`
-      display: flex;
-      align-self: stretch;
-      width: 100%;
-    `,
-    listFilled: css`
-      border: 1px solid ${cssVar.colorFillQuaternary};
-      background: ${cssVar.colorBgLayout};
-    `,
-    listGlass: lobeStaticStylish.blur,
-    listOutlined: css`
-      border: 1px solid ${cssVar.colorBorderSecondary};
-      background: transparent;
-    `,
-    listShadow: lobeStaticStylish.shadow,
-    root: css`
-      display: inline-flex;
-
-      &[data-block='true'] {
-        display: flex;
-        width: 100%;
-      }
-    `,
-  };
-});
-
-export const listVariants = cva(styles.list, {
-  defaultVariants: {
-    block: false,
-    glass: false,
-    shadow: false,
-    variant: 'filled',
+export const styles = stylex.create({
+  indicator: {
+    borderRadius: cssVar.borderRadius,
+    backgroundColor: {
+      default: cssVar.colorBgElevated,
+      [stylex.when.ancestor('[data-variant="outlined"]', segmentedMarker)]:
+        cssVar.colorFillSecondary,
+    },
+    boxShadow: 'none',
+    insetBlockStart: 'var(--active-item-top)',
+    insetInlineStart: 'var(--lobe-segmented-indicator-start, var(--active-item-left))',
+    pointerEvents: 'none',
+    position: 'absolute',
+    transitionDuration: { default: '240ms', [reducedMotion]: '0s' },
+    transitionProperty: 'inset-inline-start, inset-block-start, width, height',
+    transitionTimingFunction: cssVar.motionEaseOut,
+    zIndex: 0,
+    height: 'var(--active-item-height)',
+    width: 'var(--active-item-width)',
   },
-  variants: {
-    block: {
-      false: null,
-      true: styles.listBlock,
+  item: {
+    borderColor: 'currentcolor',
+    borderRadius: cssVar.borderRadius,
+    borderStyle: 'none',
+    borderWidth: 0,
+    gap: 6,
+    outline: 'none',
+    transition: `color 120ms ${cssVar.motionEaseOut}, transform 120ms ${cssVar.motionEaseOut}`,
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    boxSizing: 'border-box',
+    color: {
+      'default': cssVar.colorTextSecondary,
+      ':hover:not([data-disabled]):not([data-pressed])': cssVar.colorText,
+      ':is([data-disabled])': cssVar.colorTextDisabled,
+      ':is([data-pressed]):not([data-disabled])': cssVar.colorText,
     },
-    glass: {
-      false: null,
-      true: styles.listGlass,
-    },
-    shadow: {
-      false: null,
-      true: styles.listShadow,
-    },
-    variant: {
-      filled: styles.listFilled,
-      outlined: styles.listOutlined,
-    },
+    cursor: { 'default': 'pointer', ':is([data-disabled])': 'not-allowed' },
+    display: 'inline-flex',
+    flexShrink: 0,
+    fontWeight: 500,
+    justifyContent: 'center',
+    position: 'relative',
+    transform: { 'default': null, ':active:not([data-disabled])': 'scale(0.98)' },
+    transitionDuration: { default: null, [reducedMotion]: '0s' },
+    userSelect: 'none',
+    whiteSpace: 'nowrap',
+    zIndex: 1,
   },
-});
-
-export const itemVariants = cva(styles.item, {
-  defaultVariants: {
-    block: false,
-    size: 'middle',
+  itemBlock: {
+    flexBasis: '0',
+    flexGrow: '1',
+    flexShrink: '1',
   },
-  variants: {
-    block: {
-      false: null,
-      true: styles.itemBlock,
-    },
-    size: {
-      large: styles.itemLarge,
-      middle: styles.itemMiddle,
-      small: styles.itemSmall,
-    },
+  itemIcon: {
+    alignItems: 'center',
+    display: 'inline-flex',
+    justifyContent: 'center',
+  },
+  itemLabel: {
+    alignItems: 'center',
+    display: 'inline-flex',
+  },
+  itemLarge: {
+    borderRadius: cssVar.borderRadius,
+    paddingInline: 16,
+    fontSize: 14,
+    height: 36,
+  },
+  itemMiddle: {
+    borderRadius: cssVar.borderRadius,
+    paddingInline: 12,
+    fontSize: 13,
+    height: 32,
+  },
+  itemSmall: {
+    borderRadius: cssVar.borderRadius,
+    paddingInline: 10,
+    fontSize: 12,
+    height: 26,
+  },
+  list: {
+    padding: 3,
+    borderRadius: cssVar.borderRadiusLG,
+    gap: 4,
+    alignItems: { default: 'center', [vertical]: 'stretch' },
+    alignSelf: { default: 'flex-start', [vertical]: 'stretch' },
+    boxSizing: 'border-box',
+    display: 'inline-flex',
+    flexDirection: { default: null, [vertical]: 'column' },
+    flexWrap: 'nowrap',
+    position: 'relative',
+  },
+  listBlock: {
+    alignSelf: 'stretch',
+    display: 'flex',
+    width: '100%',
+  },
+  listFilled: {
+    borderColor: cssVar.colorFillQuaternary,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    backgroundColor: cssVar.colorBgLayout,
+  },
+  listGlass: {
+    backdropFilter: 'saturate(150%) blur(10px)',
+  },
+  listOutlined: {
+    borderColor: cssVar.colorBorderSecondary,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    backgroundColor: 'transparent',
+  },
+  listShadow: {
+    boxShadow: `0 1px 0 -1px ${cssVar.colorBorder}, 0 1px 2px -0.5px ${cssVar.colorBorder}, 0 2px 2px -1px ${cssVar.colorBorderSecondary}, 0 3px 6px -4px ${cssVar.colorBorderSecondary}`,
   },
 });

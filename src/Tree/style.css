@@ -1,0 +1,15 @@
+@layer lobe-ui {
+  .lobe-tree-switcher svg {
+    transition: transform 200ms var(--lobe-motion-ease-out);
+  }
+
+  [aria-expanded='true'] > .lobe-tree-switcher svg {
+    transform: rotate(90deg);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lobe-tree-switcher svg {
+      transition-duration: 0s;
+    }
+  }
+}

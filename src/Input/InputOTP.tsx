@@ -3,9 +3,10 @@
 import { OTPField } from '@base-ui/react/otp-field';
 import { memo } from 'react';
 
-import { cx, useThemeMode } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
+import { useThemeMode } from '@/styles/theme/scope';
 
-import { rootVariants, styles } from './style';
+import { inputRootStyles, styles } from './style';
 import type { InputOTPProps } from './type';
 
 const InputOTP = memo<InputOTPProps>(
@@ -26,20 +27,18 @@ const InputOTP = memo<InputOTPProps>(
 
     return (
       <OTPField.Root
-        className={cx(styles.otpRoot, className)}
         length={length}
-        style={style}
         onValueChange={onChange}
         {...rest}
+        {...styleProps(styles.otpRoot, className, style)}
       >
         {Array.from({ length }, (_, index) => (
           <OTPField.Input
             key={index}
-            style={customStyles?.input}
-            className={cx(
-              rootVariants({ shadow, size, variant: mergedVariant }),
-              styles.otpCell,
+            {...styleProps(
+              [...inputRootStyles({ shadow, size, variant: mergedVariant }), styles.otpCell],
               classNames?.input,
+              customStyles?.input,
             )}
           />
         ))}
