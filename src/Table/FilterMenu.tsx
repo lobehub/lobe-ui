@@ -1,14 +1,14 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { ListFilter } from 'lucide-react';
 import { memo, type ReactNode } from 'react';
 
 import DropdownMenu from '@/DropdownMenu';
 import type { DropdownItem } from '@/DropdownMenu/type';
 import Icon from '@/Icon';
-import { cx } from '@/styles';
 
-import { styles } from './style';
+import { filterButtonStyles, styles } from './style';
 import type { FilterValue } from './type';
 
 interface FilterMenuProps {
@@ -39,8 +39,8 @@ const FilterMenu = memo<FilterMenuProps>(({ filters, label, onChange, value }) =
     <DropdownMenu items={items}>
       <button
         aria-label={`Filter ${label}`}
-        className={cx(styles.filterButton, value.length > 0 && styles.filterActive)}
         type="button"
+        {...stylex.props(filterButtonStyles, value.length > 0 && styles.filterActive)}
       >
         <Icon icon={ListFilter} size={12} />
       </button>
