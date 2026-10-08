@@ -1,351 +1,238 @@
-import { cva } from 'class-variance-authority';
+import * as stylex from '@stylexjs/stylex';
 
-import { focusRing } from '@/internal/focusRing';
-import { createStaticStyles } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  action: css`
-    display: flex;
-    flex-shrink: 0;
-    gap: 4px;
-    align-items: center;
+import {
+  accordionHeaderMarker,
+  accordionPanelMarker,
+  accordionTriggerMarker,
+} from './marker.stylex';
 
-    opacity: 0;
+const reducedMotion = '@media (prefers-reduced-motion: reduce)';
+const animationNone = ':is([style*="animation-name: none"], [style*="animation-name:none"])';
+const startingStyle =
+  ':is([data-starting-style]):not([style*="animation-name: none"], [style*="animation-name:none"])';
+const endingStyle =
+  ':is([data-ending-style]):not([style*="animation-name: none"], [style*="animation-name:none"])';
+const startingAnimationNone =
+  ':is([data-starting-style]):is([style*="animation-name: none"], [style*="animation-name:none"])';
+const enabledHover = ':hover:not(:has([data-disabled]))';
 
-    transition: opacity 150ms ${cssVar.motionEaseOut};
-  `,
-  actionAlwaysVisible: css`
-    opacity: 1;
-  `,
-  actionBorderless: css`
-    padding-inline-end: var(--accordion-hover-inset, 8px);
-  `,
-  actionOutlined: css`
-    padding-inline-end: 16px;
-  `,
-  content: css`
-    font-size: 14px;
-    line-height: 1.6;
-    transition:
-      opacity 200ms ${cssVar.motionEaseOut},
-      translate 200ms ${cssVar.motionEaseOut};
-
-    [data-starting-style] & {
-      translate: 0 6px;
-      opacity: 0;
-    }
-
-    [data-ending-style] & {
-      translate: 0 -6px;
-      opacity: 0;
-    }
-
-    /* Base UI sets animation-name: none on initially-open panels */
-    [style*='animation-name: none'] &,
-    [style*='animation-name:none'] & {
-      translate: none;
-      opacity: 1;
-      transition: none;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      transition-duration: 0s;
-    }
-  `,
-  contentBorderless: css`
-    padding-block: 0 12px;
-  `,
-  contentIndent: css`
-    padding-inline-start: 24px;
-  `,
-  contentIndentOutlined: css`
-    padding-inline-start: 40px;
-  `,
-  contentOutlined: css`
-    padding-block: 4px 14px;
-    padding-inline: 16px;
-  `,
-  header: css`
-    position: relative;
-
-    display: flex;
-    align-items: center;
-
-    margin: 0;
-
-    font-size: inherit;
-    font-weight: inherit;
-
-    transition: background 150ms ${cssVar.motionEaseOut};
-
-    &:hover:not(:has([data-disabled])) {
-      background: ${cssVar.colorFillTertiary};
-    }
-
-    &:hover .accordion-action,
-    &:focus-within .accordion-action {
-      opacity: 1;
-    }
-  `,
-  headerBorderless: css`
-    margin-inline: calc(var(--accordion-hover-inset, 8px) * -1);
-    border-radius: ${cssVar.borderRadius};
-  `,
-  headerFilled: css`
-    border-radius: ${cssVar.borderRadius};
-    background: ${cssVar.colorFillTertiary};
-
-    &:hover:not(:has([data-disabled])) {
-      background: ${cssVar.colorFillSecondary};
-    }
-  `,
-  headerInline: css`
-    margin-inline: 0;
-
-    > .accordion-action {
-      padding-block: 4px;
-    }
-  `,
-  contentInline: css`
-    padding-block: 0;
-  `,
-  indicator: css`
-    display: flex;
-    flex-shrink: 0;
-    align-items: center;
-
-    color: ${cssVar.colorTextDescription};
-
-    transition: transform 200ms ${cssVar.motionEaseOut};
-
-    @media (prefers-reduced-motion: reduce) {
-      transition-duration: 0s;
-    }
-  `,
-  indicatorInline: css`
-    justify-content: center;
-    width: 18px;
-    height: 18px;
-    margin-inline-start: -6px;
-
-    [data-panel-open] & {
-      transform: rotate(90deg);
-    }
-  `,
-  indicatorEnd: css`
-    margin-inline-start: auto;
-
-    [data-panel-open] & {
-      transform: rotate(180deg);
-    }
-  `,
-  indicatorStart: css`
-    [data-panel-open] & {
-      transform: rotate(90deg);
-    }
-  `,
-  item: css`
-    display: flex;
-    flex-direction: column;
-  `,
-  itemOutlined: css`
-    & + & {
-      border-block-start: 1px solid ${cssVar.colorBorderSecondary};
-    }
-  `,
-  panel: css`
-    overflow: hidden;
-    height: auto;
-    transition: height 200ms ${cssVar.motionEaseOut};
-
-    interpolate-size: allow-keywords;
-
-    &[data-starting-style],
-    &[data-ending-style] {
-      height: 0;
-    }
-
-    &[data-starting-style][style*='animation-name: none'],
-    &[data-starting-style][style*='animation-name:none'] {
-      height: auto;
-      transition: none;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      transition-duration: 0s;
-    }
-  `,
-  root: css`
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  `,
-  rootOutlined: css`
-    overflow: hidden;
-    border: 1px solid ${cssVar.colorBorderSecondary};
-    border-radius: ${cssVar.borderRadiusLG};
-  `,
-  trigger: css`
-    cursor: pointer;
-    user-select: none;
-
-    display: flex;
-    flex: 1;
-    gap: 8px;
-    align-items: center;
-
-    min-width: 0;
-    border: 0;
-    border-radius: inherit;
-
-    font: inherit;
-    font-size: 14px;
-    color: ${cssVar.colorText};
-    text-align: start;
-
-    background: none;
-    outline: none;
-
-    ${focusRing};
-
-    &[data-disabled] {
-      cursor: not-allowed;
-      color: ${cssVar.colorTextDisabled};
-    }
-  `,
-  triggerBorderless: css`
-    padding-block: 8px;
-    padding-inline: var(--accordion-hover-inset, 8px);
-  `,
-  triggerFilled: css`
-    padding-block: 8px;
-    padding-inline: 16px;
-  `,
-  triggerOutlined: css`
-    padding-block: 12px;
-    padding-inline: 16px;
-
-    &[data-panel-open] {
-      padding-block-end: 8px;
-    }
-  `,
-}));
-
-export const rootVariants = cva(styles.root, {
-  defaultVariants: { variant: 'borderless' },
-  variants: {
-    variant: {
-      borderless: null,
-      filled: null,
-      outlined: styles.rootOutlined,
+export const styles = stylex.create({
+  action: {
+    gap: 4,
+    transition: `opacity 150ms ${cssVar.motionEaseOut}`,
+    alignItems: 'center',
+    display: 'flex',
+    flexShrink: 0,
+    opacity: {
+      default: 0,
+      [stylex.when.ancestor(':focus-within', accordionHeaderMarker)]: 1,
+      [stylex.when.ancestor(':hover', accordionHeaderMarker)]: 1,
     },
+  },
+  actionAlwaysVisible: {
+    opacity: 1,
+  },
+  actionBorderless: {
+    paddingInlineEnd: 'var(--accordion-hover-inset, 8px)',
+  },
+  actionInline: {
+    paddingBlock: 4,
+  },
+  actionOutlined: {
+    paddingInlineEnd: 16,
+  },
+  content: {
+    transition: `opacity 200ms ${cssVar.motionEaseOut}, translate 200ms ${cssVar.motionEaseOut}`,
+    fontSize: 14,
+    lineHeight: 1.6,
+    opacity: {
+      default: null,
+      [stylex.when.ancestor(startingStyle, accordionPanelMarker)]: 0,
+      [stylex.when.ancestor(endingStyle, accordionPanelMarker)]: 0,
+      [stylex.when.ancestor(animationNone, accordionPanelMarker)]: 1,
+    },
+    transitionDuration: {
+      default: null,
+      [reducedMotion]: '0s',
+      [stylex.when.ancestor(animationNone, accordionPanelMarker)]: '0s',
+    },
+    transitionProperty: {
+      default: null,
+      [stylex.when.ancestor(animationNone, accordionPanelMarker)]: 'none',
+    },
+    transitionTimingFunction: {
+      default: null,
+      [stylex.when.ancestor(animationNone, accordionPanelMarker)]: 'ease',
+    },
+    translate: {
+      default: null,
+      [stylex.when.ancestor(startingStyle, accordionPanelMarker)]: '0 6px',
+      [stylex.when.ancestor(endingStyle, accordionPanelMarker)]: '0 -6px',
+      [stylex.when.ancestor(animationNone, accordionPanelMarker)]: 'none',
+    },
+  },
+  contentBorderless: {
+    paddingBlockEnd: 12,
+    paddingBlockStart: 0,
+  },
+  contentIndent: {
+    paddingInlineStart: 24,
+  },
+  contentIndentOutlined: {
+    paddingInlineStart: 40,
+  },
+  contentInline: {
+    paddingBlockEnd: 0,
+    paddingBlockStart: 0,
+  },
+  contentOutlined: {
+    paddingInline: 16,
+    paddingBlockEnd: 14,
+    paddingBlockStart: 4,
+  },
+  header: {
+    margin: 0,
+    transition: `background 150ms ${cssVar.motionEaseOut}`,
+    alignItems: 'center',
+    backgroundColor: {
+      default: null,
+      [enabledHover]: cssVar.colorFillTertiary,
+    },
+    display: 'flex',
+    fontSize: 'inherit',
+    fontWeight: 'inherit',
+    position: 'relative',
+  },
+  headerBorderless: {
+    borderRadius: cssVar.borderRadius,
+    marginInline: 'calc(var(--accordion-hover-inset,8px) * -1)',
+  },
+  headerFilled: {
+    borderRadius: cssVar.borderRadius,
+    backgroundColor: {
+      default: cssVar.colorFillTertiary,
+      [enabledHover]: cssVar.colorFillSecondary,
+    },
+  },
+  headerInline: {
+    marginInline: 0,
+  },
+  indicator: {
+    transition: `transform 200ms ${cssVar.motionEaseOut}`,
+    alignItems: 'center',
+    color: cssVar.colorTextDescription,
+    display: 'flex',
+    flexShrink: 0,
+    transitionDuration: { default: null, [reducedMotion]: '0s' },
+  },
+  indicatorEnd: {
+    marginInlineStart: 'auto',
+    transform: {
+      default: null,
+      [stylex.when.ancestor('[data-panel-open]', accordionTriggerMarker)]: 'rotate(180deg)',
+    },
+  },
+  indicatorInline: {
+    justifyContent: 'center',
+    marginInlineStart: -6,
+    transform: {
+      default: null,
+      [stylex.when.ancestor('[data-panel-open]', accordionTriggerMarker)]: 'rotate(90deg)',
+    },
+    height: 18,
+    width: 18,
+  },
+  indicatorStart: {
+    transform: {
+      default: null,
+      [stylex.when.ancestor('[data-panel-open]', accordionTriggerMarker)]: 'rotate(90deg)',
+    },
+  },
+  item: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  itemOutlined: {
+    borderBlockStartColor: { 'default': null, ':not(:first-child)': cssVar.colorBorderSecondary },
+    borderBlockStartStyle: { 'default': null, ':not(:first-child)': 'solid' },
+    borderBlockStartWidth: { 'default': null, ':not(:first-child)': 1 },
+  },
+  panel: {
+    interpolateSize: 'allow-keywords',
+    overflow: 'hidden',
+    transition: `height 200ms ${cssVar.motionEaseOut}`,
+    transitionDuration: {
+      default: null,
+      [reducedMotion]: '0s',
+      [startingAnimationNone]: '0s',
+    },
+    transitionProperty: {
+      default: null,
+      [startingAnimationNone]: 'none',
+    },
+    transitionTimingFunction: {
+      default: null,
+      [startingAnimationNone]: 'ease',
+    },
+    height: {
+      'default': 'auto',
+      [startingStyle]: 0,
+      ':is([data-ending-style])': 0,
+    },
+  },
+  root: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+  },
+  rootOutlined: {
+    borderColor: cssVar.colorBorderSecondary,
+    borderRadius: cssVar.borderRadiusLG,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    overflow: 'hidden',
+  },
+  trigger: {
+    font: 'inherit',
+    borderColor: 'currentcolor',
+    borderRadius: 'inherit',
+    borderStyle: 'none',
+    borderWidth: 0,
+    flex: '1',
+    gap: 8,
+    outline: 'none',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    color: { 'default': cssVar.colorText, ':is([data-disabled])': cssVar.colorTextDisabled },
+    cursor: { 'default': 'pointer', ':is([data-disabled])': 'not-allowed' },
+    display: 'flex',
+    fontSize: 14,
+    textAlign: 'start',
+    userSelect: 'none',
+    minWidth: 0,
+  },
+  triggerBorderless: {
+    paddingBlock: 8,
+    paddingInline: 'var(--accordion-hover-inset,8px)',
+  },
+  triggerFilled: {
+    paddingBlock: 8,
+    paddingInline: 16,
+  },
+  triggerOutlined: {
+    paddingBlock: 12,
+    paddingInline: 16,
+    paddingBlockEnd: { 'default': null, ':is([data-panel-open])': 8 },
   },
 });
 
-export const itemVariants = cva(styles.item, {
-  defaultVariants: { variant: 'borderless' },
-  variants: {
-    variant: {
-      borderless: null,
-      filled: null,
-      outlined: styles.itemOutlined,
-    },
-  },
-});
+const classNames = Object.fromEntries(
+  Object.entries(styles).map(([key, value]) => [key, stylex.props(value).className ?? '']),
+) as Record<keyof typeof styles, string>;
 
-export const headerVariants = cva(styles.header, {
-  compoundVariants: [
-    { class: styles.headerInline, inline: true, variant: 'borderless' },
-    { class: styles.headerInline, inline: true, variant: 'filled' },
-  ],
-  defaultVariants: { inline: false, variant: 'borderless' },
-  variants: {
-    inline: {
-      false: null,
-      true: null,
-    },
-    variant: {
-      borderless: styles.headerBorderless,
-      filled: styles.headerFilled,
-      outlined: null,
-    },
-  },
-});
-
-export const triggerVariants = cva(styles.trigger, {
-  defaultVariants: { variant: 'borderless' },
-  variants: {
-    variant: {
-      borderless: styles.triggerBorderless,
-      filled: styles.triggerFilled,
-      outlined: styles.triggerOutlined,
-    },
-  },
-});
-
-export const indicatorVariants = cva(styles.indicator, {
-  defaultVariants: { placement: 'start' },
-  variants: {
-    placement: {
-      end: styles.indicatorEnd,
-      inline: styles.indicatorInline,
-      start: styles.indicatorStart,
-    },
-  },
-});
-
-export const contentVariants = cva(styles.content, {
-  compoundVariants: [
-    {
-      class: styles.contentInline,
-      inline: true,
-      variant: 'borderless',
-    },
-    {
-      class: styles.contentIndent,
-      indent: true,
-      variant: 'borderless',
-    },
-    {
-      class: styles.contentIndent,
-      indent: true,
-      variant: 'filled',
-    },
-    {
-      class: styles.contentIndentOutlined,
-      indent: true,
-      variant: 'outlined',
-    },
-  ],
-  defaultVariants: { indent: true, inline: false, variant: 'borderless' },
-  variants: {
-    indent: {
-      false: null,
-      true: null,
-    },
-    inline: {
-      false: null,
-      true: null,
-    },
-    variant: {
-      borderless: styles.contentBorderless,
-      filled: styles.contentBorderless,
-      outlined: styles.contentOutlined,
-    },
-  },
-});
-
-export const actionVariants = cva(styles.action, {
-  defaultVariants: { alwaysVisible: false, variant: 'borderless' },
-  variants: {
-    alwaysVisible: {
-      false: null,
-      true: styles.actionAlwaysVisible,
-    },
-    variant: {
-      borderless: styles.actionBorderless,
-      filled: styles.actionOutlined,
-      outlined: styles.actionOutlined,
-    },
-  },
-});
+export const accordionStyles = {
+  ...classNames,
+  panel: stylex.props(accordionPanelMarker, styles.panel).className ?? '',
+};
