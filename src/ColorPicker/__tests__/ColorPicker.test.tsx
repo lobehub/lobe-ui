@@ -1,3 +1,4 @@
+import * as stylex from '@stylexjs/stylex';
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import { useState } from 'react';
 
@@ -152,16 +153,16 @@ describe('ColorPicker', () => {
     const track = alphaThumb.parentElement!.parentElement!;
 
     expect(track.style.backgroundImage).toBe('');
-    expect(getComputedStyle(track).backgroundSize.startsWith('100% 100%')).toBe(true);
+    expect(track.className).toContain(stylex.props(styles.alphaTrack).className);
   });
 
   test('hex and alpha fields can shrink to fit the panel', () => {
     render(<ColorPicker alpha defaultValue="#0072f5cc" />);
 
     openPicker();
-    const row = document.querySelector<HTMLElement>(`.${styles.hexRow}`)!;
+    const row = screen.getByLabelText('HEX').parentElement!.parentElement!;
 
-    for (const field of Array.from(row.children)) {
+    for (const field of Array.from(row.children).filter((el) => !el.hasAttribute('aria-hidden'))) {
       expect(getComputedStyle(field).minWidth).toBe('0px');
     }
   });

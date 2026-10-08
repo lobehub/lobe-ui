@@ -1,6 +1,9 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { memo, type PointerEvent, useRef } from 'react';
+
+import { focusRing } from '@/styles/stylex/focusRing';
 
 import { styles } from './style';
 
@@ -36,7 +39,7 @@ const SaturationArea = memo<SaturationAreaProps>(
         aria-valuemin={0}
         aria-valuenow={Math.round(saturation * 100)}
         aria-valuetext={`Saturation ${Math.round(saturation * 100)}%, brightness ${Math.round(value * 100)}%`}
-        className={styles.saturation}
+        {...stylex.props(focusRing.info, styles.saturation)}
         ref={areaRef}
         role="slider"
         tabIndex={0}
@@ -71,7 +74,7 @@ const SaturationArea = memo<SaturationAreaProps>(
         }}
       >
         <span
-          className={styles.thumb}
+          {...stylex.props(styles.thumb)}
           style={{ left: `${saturation * 100}%`, top: `${(1 - value) * 100}%` }}
         />
       </div>
