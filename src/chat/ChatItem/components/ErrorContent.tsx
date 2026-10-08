@@ -15,7 +15,7 @@ export interface ErrorContentProps {
 
 const ErrorContent: FC<ErrorContentProps> = ({ message, error }) => {
   return (
-    <Flexbox {...stylex.props(styles.errorContainer)}>
+    <Flexbox width={'100%'} {...stylex.props(styles.errorContainer)}>
       <Alert showIcon closable={false} extra={message} type={'error'} {...error} />
     </Flexbox>
   );

@@ -24,15 +24,13 @@ const Actions: FC<ActionsProps> = ({
   return (
     <Flexbox
       align={'flex-start'}
+      flex={'none'}
+      justify={placement === 'left' ? 'flex-end' : 'flex-start'}
       ref={ref}
       role="menubar"
       className={
         styleProps(
-          [
-            styles.actions,
-            variant !== 'bubble' && placement === 'left' ? styles.actionsTop : styles.actionsBottom,
-            placement === 'left' ? styles.actionsEnd : styles.actionsStart,
-          ],
+          variant !== 'bubble' && placement === 'left' ? styles.actionsTop : styles.actionsBottom,
           editing ? 'lobe-chat-item-actions-editing' : undefined,
         ).className
       }

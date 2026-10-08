@@ -31,15 +31,19 @@ const ChatHeader = memo<ChatHeaderProps>(
         className={styleProps(styles.container, className).className}
         distribution={'space-between'}
         gap={gap}
+        height={52}
         paddingInline={16}
+        width={'100%'}
         {...rest}
       >
         <Flexbox
           horizontal
           align={'center'}
           className={styleProps(styles.left, classNames?.left).className}
+          flex={1}
           gap={gaps?.left || 12}
           justify={'flex-start'}
+          paddingInline={'8px 0'}
           style={contentStyles?.left}
         >
           {showBackButton && (
@@ -67,6 +71,7 @@ const ChatHeader = memo<ChatHeaderProps>(
           horizontal
           align={'center'}
           className={styleProps(styles.right, classNames?.right).className}
+          flex={'none'}
           gap={gaps?.right || 8}
           justify={'flex-end'}
           style={contentStyles?.right}

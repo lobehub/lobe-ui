@@ -20,19 +20,14 @@ export const styles = stylex.create({
     gridRowStart: 'header',
     position: 'absolute',
     zIndex: 10,
-    height: 52,
     maxHeight: 52,
     minHeight: 52,
-    width: '100%',
   },
   left: {
-    flex: '1',
     overflow: 'hidden',
-    paddingInlineStart: 8,
     position: 'relative',
   },
   right: {
-    flex: 'none',
     overflow: 'hidden',
     position: 'relative',
   },
@@ -40,7 +35,6 @@ export const styles = stylex.create({
 
 export const titleStyles = stylex.create({
   container: {
-    flex: '1',
     overflow: 'hidden',
     position: 'relative',
     maxWidth: '100%',
@@ -52,11 +46,6 @@ export const titleStyles = stylex.create({
     lineHeight: 1,
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
-    width: '100%',
-  },
-  tag: {
-    flex: 'none',
-    alignItems: 'baseline',
   },
   title: {
     overflow: 'hidden',
@@ -67,7 +56,6 @@ export const titleStyles = stylex.create({
     whiteSpace: 'nowrap',
   },
   titleContainer: {
-    flex: '1',
     lineHeight: 1,
   },
   titleWithDesc: {

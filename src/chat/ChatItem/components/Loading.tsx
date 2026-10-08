@@ -19,7 +19,9 @@ const Loading: FC<LoadingProps> = ({ loading, placement = 'left' }) => {
   return (
     <Flexbox
       align={'center'}
+      height={16}
       justify={'center'}
+      width={16}
       {...stylex.props(
         styles.loading,
         placement === 'left' ? styles.loadingLeft : styles.loadingRight,

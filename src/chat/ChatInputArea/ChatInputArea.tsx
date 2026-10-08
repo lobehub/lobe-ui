@@ -33,6 +33,9 @@ const ChatInputArea = memo<ChatInputAreaProps>(
             className={textareaClassName}
             ref={ref}
             style={{
+              alignItems: 'stretch',
+              lineHeight: 1.5,
+              paddingBlock: 0,
               paddingInline: 16,
             }}
             onSend={() => {

@@ -44,12 +44,13 @@ const MessageContent = memo<MessageContentProps>(
     // placement and primary are part of the interface but not used in this component
     void placement;
     void primary;
-    const { mobile } = useResponsive();
+    const { mobile, sm: aboveSm } = useResponsive();
+    const isBubble = variant === 'bubble';
 
     const content = (
       <EditableMessage
         fullFeaturedCodeBlock
-        classNames={{ input: stylex.props(styles.editing).className }}
+        classNames={{ input: stylex.props(styles.editingInput).className }}
         editButtonSize={'small'}
         editing={editing}
         fontSize={fontSize}
@@ -65,15 +66,14 @@ const MessageContent = memo<MessageContentProps>(
 
     return (
       <Flexbox
+        paddingBlock={editing ? '8px 12px' : isBubble ? 8 : '6px 0'}
+        paddingInline={editing || isBubble ? 12 : 0}
+        width={editing || !aboveSm ? '100%' : undefined}
         onDoubleClick={onDoubleClick}
         {...stylex.props(
-          variant === 'bubble' ? styles.messageBubble : styles.messageDocs,
+          isBubble && styles.messageBubble,
           styles.messageBox,
-          editing && [
-            styles.editing,
-            styles.editingContainer,
-            variant === 'docs' && styles.editingContainerDocs,
-          ],
+          editing && [styles.editingContainer, !isBubble && styles.editingContainerDocs],
         )}
       >
         {messageContent}

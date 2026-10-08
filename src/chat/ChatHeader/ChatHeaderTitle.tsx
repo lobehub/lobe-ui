@@ -8,25 +8,31 @@ import type { ChatHeaderTitleProps } from './type';
 
 const ChatHeaderTitle: FC<ChatHeaderTitleProps> = ({ title, desc, tag }) => {
   const tagContent = tag && (
-    <Flexbox horizontal align={'center'} {...stylex.props(styles.tag)}>
+    <Flexbox horizontal align={'baseline'} flex={'none'}>
       {tag}
     </Flexbox>
   );
 
   if (desc)
     return (
-      <Flexbox {...stylex.props(styles.container)} gap={4}>
-        <Flexbox horizontal align={'center'} {...stylex.props(styles.titleContainer)} gap={8}>
+      <Flexbox flex={1} {...stylex.props(styles.container)} gap={4}>
+        <Flexbox
+          horizontal
+          align={'center'}
+          flex={1}
+          {...stylex.props(styles.titleContainer)}
+          gap={8}
+        >
           <div {...stylex.props(styles.titleWithDesc)}>{title}</div>
           {tagContent}
         </Flexbox>
-        <Flexbox horizontal align={'center'} {...stylex.props(styles.desc)}>
+        <Flexbox horizontal align={'center'} width={'100%'} {...stylex.props(styles.desc)}>
           {desc}
         </Flexbox>
       </Flexbox>
     );
   return (
-    <Flexbox horizontal align={'center'} {...stylex.props(styles.container)} gap={8}>
+    <Flexbox horizontal align={'center'} flex={1} {...stylex.props(styles.container)} gap={8}>
       <div {...stylex.props(styles.title)}>{title}</div>
       {tagContent}
     </Flexbox>

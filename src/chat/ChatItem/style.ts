@@ -6,17 +6,8 @@ import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import { media } from '@/styles/stylex/media.stylex';
 
 export const styles = stylex.create({
-  actions: {
-    flex: 'none',
-  },
   actionsBottom: {
     alignSelf: 'flex-end',
-  },
-  actionsEnd: {
-    justifyContent: 'flex-end',
-  },
-  actionsStart: {
-    justifyContent: 'flex-start',
   },
   actionsTop: {
     alignSelf: 'flex-start',
@@ -27,23 +18,15 @@ export const styles = stylex.create({
     height: 'var(--chat-item-avatar-size, 40px)',
     width: 'var(--chat-item-avatar-size, 40px)',
   },
-  avatarGroupContainer: {
-    width: 'var(--chat-item-avatar-size, 40px)',
-  },
   container: {
-    paddingInline: { default: 12, [media.sm]: 8 },
-    paddingBlockEnd: 12,
-    paddingBlockStart: { default: 24, [media.sm]: 12 },
     position: 'relative',
     maxWidth: '100vw',
-    width: '100%',
   },
   containerDocs: {
     transition: `background-color 100ms ${cssVar.motionEaseOut}`,
     marginBlockEnd: -16,
-    paddingBlockStart: { default: 24, [media.sm]: 16 },
   },
-  editing: {
+  editingInput: {
     width: '100%',
   },
   editingContainer: {
@@ -54,9 +37,6 @@ export const styles = stylex.create({
     },
     borderStyle: 'solid',
     borderWidth: 1,
-    paddingInline: 12,
-    paddingBlockEnd: '12px',
-    paddingBlockStart: '8px',
   },
   editingContainerDocs: {
     borderRadius: cssVar.borderRadius,
@@ -65,7 +45,6 @@ export const styles = stylex.create({
   errorContainer: {
     overflow: 'hidden',
     position: 'relative',
-    width: '100%',
   },
   loading: {
     borderRadius: '50%',
@@ -73,8 +52,6 @@ export const styles = stylex.create({
     color: cssVar.colorBgLayout,
     insetBlockEnd: 0,
     position: 'absolute',
-    height: 16,
-    width: 16,
   },
   loadingLeft: {
     insetInlineStart: -4,
@@ -87,10 +64,7 @@ export const styles = stylex.create({
     borderRadius: cssVar.borderRadiusLG,
     borderStyle: 'solid',
     borderWidth: 1,
-    paddingBlock: 8,
-    paddingInline: 12,
     backgroundColor: cssVar.colorBgContainer,
-    width: { default: null, [media.sm]: '100%' },
   },
   messageBox: {
     overflow: 'hidden',
@@ -99,13 +73,6 @@ export const styles = stylex.create({
   },
   messageContainer: {
     overflowX: { default: null, [media.sm]: 'auto' },
-  },
-  messageContent: {
-    flexDirection: { default: null, [media.sm]: 'column' },
-  },
-  messageDocs: {
-    paddingBlockStart: 6,
-    width: { default: null, [media.sm]: '100%' },
   },
   name: {
     color: cssVar.colorTextDescription,

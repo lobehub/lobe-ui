@@ -56,7 +56,7 @@ const Avatar: FC<AvatarProps> = ({
 
   if (!addon) return avatarContent;
   return (
-    <Flexbox align={'center'} gap={8} {...stylex.props(styles.avatarGroupContainer)}>
+    <Flexbox align={'center'} gap={8} width={'var(--chat-item-avatar-size, 40px)'}>
       {avatarContent}
       {addon}
     </Flexbox>

@@ -55,7 +55,7 @@ const ChatItem = memo<ChatItemProps>(
     titleAddon,
     ...rest
   }) => {
-    const { mobile } = useResponsive();
+    const { mobile, sm: aboveSm } = useResponsive();
     const { t } = useTranslation(chatMessages);
 
     const avatarSize = mobile ? MOBILE_AVATAR_SIZE : avatarProps?.size || 40;
@@ -115,7 +115,10 @@ const ChatItem = memo<ChatItemProps>(
         className={containerClassName}
         direction={placement === 'left' ? 'horizontal' : 'horizontal-reverse'}
         gap={mobile ? 6 : 12}
+        paddingBlock={`${aboveSm ? 24 : isDocs ? 16 : 12}px 12px`}
+        paddingInline={aboveSm ? 12 : 8}
         style={cssVariables}
+        width={'100%'}
         {...rest}
       >
         {showAvatar && (
@@ -137,12 +140,8 @@ const ChatItem = memo<ChatItemProps>(
         <Flexbox
           align={placement === 'left' ? 'flex-start' : 'flex-end'}
           ref={containerRef}
-          {...stylex.props(
-            styles.messageBox,
-            styles.messageContainer,
-            editing && styles.editing,
-            hasTime && styles.withTime,
-          )}
+          width={editing ? '100%' : undefined}
+          {...stylex.props(styles.messageBox, styles.messageContainer, hasTime && styles.withTime)}
         >
           <Title
             avatar={avatar}
@@ -156,13 +155,16 @@ const ChatItem = memo<ChatItemProps>(
             align={placement === 'left' ? 'flex-start' : 'flex-end'}
             data-layout={layoutMode}
             gap={8}
-            {...stylex.props(styles.messageBox, styles.messageContent, editing && styles.editing)}
+            width={editing ? '100%' : undefined}
+            {...stylex.props(styles.messageBox)}
             direction={
-              layoutMode === 'horizontal'
-                ? placement === 'left'
-                  ? 'horizontal'
-                  : 'horizontal-reverse'
-                : 'vertical'
+              !aboveSm
+                ? 'vertical'
+                : layoutMode === 'horizontal'
+                  ? placement === 'left'
+                    ? 'horizontal'
+                    : 'horizontal-reverse'
+                  : 'vertical'
             }
           >
             <Flexbox ref={contentRef} width={'100%'}>
