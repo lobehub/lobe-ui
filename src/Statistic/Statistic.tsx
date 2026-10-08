@@ -1,9 +1,10 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { memo } from 'react';
 
 import Skeleton from '@/Skeleton';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
 import { formatStatisticValue } from './formatValue';
 import { styles } from './style';
@@ -19,25 +20,24 @@ const Statistic = memo<StatisticProps>(
     prefix,
     ref,
     styles: customStyles,
+    style,
     suffix,
     title,
     value,
     ...rest
   }) => {
     return (
-      <div className={cx(styles.root, className)} ref={ref} {...rest}>
+      <div ref={ref} {...rest} {...styleProps(styles.root, className, style)}>
         {title != null && (
-          <div className={cx(styles.title, classNames?.title)} style={customStyles?.title}>
-            {title}
-          </div>
+          <div {...styleProps(styles.title, classNames?.title, customStyles?.title)}>{title}</div>
         )}
         {loading ? (
           <Skeleton height={30} width={96} />
         ) : (
-          <div className={cx(styles.value, classNames?.value)} style={customStyles?.value}>
-            {prefix != null && <span className={styles.affix}>{prefix}</span>}
+          <div {...styleProps(styles.value, classNames?.value, customStyles?.value)}>
+            {prefix != null && <span {...stylex.props(styles.affix)}>{prefix}</span>}
             <span>{formatter ? formatter(value) : formatStatisticValue(value, precision)}</span>
-            {suffix != null && <span className={styles.affix}>{suffix}</span>}
+            {suffix != null && <span {...stylex.props(styles.affix)}>{suffix}</span>}
           </div>
         )}
       </div>
