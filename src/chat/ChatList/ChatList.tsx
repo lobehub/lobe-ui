@@ -2,7 +2,7 @@
 
 import { Fragment, memo } from 'react';
 
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 import { ToastHost } from '@/Toast';
 
 import ChatListItem from './components/ChatListItem';
@@ -32,7 +32,7 @@ const ChatList = memo<ChatListProps>(
     ...rest
   }) => {
     return (
-      <div className={cx(styles.container, className)} {...rest}>
+      <div {...styleProps(styles.container, className)} {...rest}>
         {data.map((item, index) => {
           const itemProps = {
             loading: loadingId === item.id,

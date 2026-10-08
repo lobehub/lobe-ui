@@ -4,7 +4,7 @@ import type { FileDiffOptions } from '@pierre/diffs';
 import { PatchDiff as PierrePatchDiff } from '@pierre/diffs/react';
 import { memo, useMemo } from 'react';
 
-import { useThemeMode } from '@/styles';
+import { useThemeMode } from '@/styles/theme/scope';
 
 import { DiffPanel } from './DiffPanel';
 import { getLobeDiffOptions, registerLobeDiffThemes } from './theme';

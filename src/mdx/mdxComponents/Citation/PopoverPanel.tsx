@@ -1,11 +1,13 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { ArrowRightIcon } from 'lucide-react';
 import { type FC, type ReactNode, useMemo } from 'react';
 
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 import Popover from '@/Popover';
+import { styleProps } from '@/styles/stylex/props';
 
 import { styles } from './style';
 
@@ -46,7 +48,7 @@ const PopoverPanel: FC<PopoverPanelProps> = ({ children, usePopover, title, alt,
         <Flexbox gap={8}>
           <Flexbox
             horizontal
-            className={styles.link}
+            {...styleProps(styles.link, 'lobe-mdx-citation-link')}
             gap={12}
             justify={'space-between'}
             onClick={() => {
@@ -61,7 +63,7 @@ const PopoverPanel: FC<PopoverPanelProps> = ({ children, usePopover, title, alt,
                 style={{ borderRadius: 4 }}
                 width={14}
               />
-              <span className={styles.url}>{domain}</span>
+              <span {...stylex.props(styles.url)}>{domain}</span>
             </Flexbox>
             <Icon icon={ArrowRightIcon} />
           </Flexbox>

@@ -2,7 +2,7 @@ import type { FileDiffOptions } from '@pierre/diffs';
 import { registerCustomTheme, resolveTheme } from '@pierre/diffs';
 
 import lobeTheme from '@/Highlighter/theme/lobe-theme';
-import { cssVar } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
 import type { DiffViewMode } from './type';
 

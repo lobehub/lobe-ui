@@ -1,12 +1,13 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { memo } from 'react';
 
 import { DraggablePanel } from '@/DraggablePanel';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
 import ChatInputAreaInner from './components/ChatInputAreaInner';
-import { styles } from './style';
+import { styles, textareaClassName } from './style';
 import type { ChatInputAreaProps } from './type';
 
 const ChatInputArea = memo<ChatInputAreaProps>(
@@ -25,13 +26,16 @@ const ChatInputArea = memo<ChatInputAreaProps>(
     ...rest
   }) => {
     const content = (
-      <section className={styles.container} style={{ minHeight: heights?.minHeight }}>
+      <section {...stylex.props(styles.container)} style={{ minHeight: heights?.minHeight }}>
         {topAddons}
-        <div className={styles.textareaContainer}>
+        <div {...stylex.props(styles.textareaContainer)}>
           <ChatInputAreaInner
-            className={styles.textarea}
+            className={textareaClassName}
             ref={ref}
             style={{
+              alignItems: 'stretch',
+              lineHeight: 1.5,
+              paddingBlock: 0,
               paddingInline: 16,
             }}
             onSend={() => {
@@ -48,8 +52,10 @@ const ChatInputArea = memo<ChatInputAreaProps>(
     if (expand)
       return (
         <div
-          className={cx(styles.fullscreen, className)}
-          style={{ insetBlockStart: heights?.headerHeight ?? 0, ...style }}
+          {...styleProps(styles.fullscreen, className, {
+            insetBlockStart: heights?.headerHeight ?? 0,
+            ...style,
+          })}
         >
           {content}
         </div>

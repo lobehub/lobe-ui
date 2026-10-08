@@ -1,0 +1,33 @@
+@layer lobe-ui {
+  .lobe-mdx-steps h3 {
+    counter-increment: step;
+  }
+
+  .lobe-mdx-steps h3::before {
+    content: counter(step);
+
+    position: absolute;
+    z-index: 1;
+    inset-inline-start: 0;
+
+    display: inline-block;
+
+    width: 1.8em;
+    height: 1.8em;
+    margin-block-start: -0.05em;
+    border-radius: 9999px;
+
+    font-size: 0.8em;
+    font-weight: 500;
+    line-height: 1.8em;
+    color: var(--lobe-color-text-secondary);
+    text-align: center;
+
+    background: var(--lobe-color-bg-elevated);
+    box-shadow: 0 0 0 2px var(--lobe-color-bg-layout);
+  }
+
+  .lobe-mdx-steps.lobe-mdx-steps h3:not(:first-child) {
+    margin-block-start: 2em;
+  }
+}

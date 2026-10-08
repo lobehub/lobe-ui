@@ -1,10 +1,11 @@
-import { memo, type ReactNode, useMemo } from 'react';
+import * as stylex from '@stylexjs/stylex';
+import { memo, type ReactNode } from 'react';
 
 import { type ChatItemProps } from '@/chat/ChatItem';
 import EditableMessage from '@/chat/EditableMessage';
 import { Flexbox } from '@/Flex';
 import { type MarkdownProps } from '@/Markdown';
-import { cx, useResponsive } from '@/styles';
+import { useResponsive } from '@/styles/theme/scope';
 
 import { styles } from '../style';
 
@@ -44,22 +45,12 @@ const MessageContent = memo<MessageContentProps>(
     void placement;
     void primary;
     const { mobile } = useResponsive();
-
-    const messageClassName = useMemo(() => {
-      if (variant === 'bubble') return styles.messageBubble;
-      // For docs variant, we need title info, but we don't have it here
-      // Use withoutTitle as default
-      return styles.messageDocsWithoutTitle;
-    }, [variant]);
-
-    const editingContainerClassName = useMemo(() => {
-      return variant === 'docs' ? styles.editingContainerDocs : styles.editingContainer;
-    }, [variant]);
+    const isBubble = variant === 'bubble';
 
     const content = (
       <EditableMessage
         fullFeaturedCodeBlock
-        classNames={{ input: styles.editingInput }}
+        classNames={{ input: stylex.props(styles.editingInput).className }}
         editButtonSize={'small'}
         editing={editing}
         fontSize={fontSize}
@@ -75,13 +66,19 @@ const MessageContent = memo<MessageContentProps>(
 
     return (
       <Flexbox
-        className={cx(messageClassName, editing && editingContainerClassName)}
+        paddingBlock={editing ? '8px 12px' : isBubble ? 8 : '6px 0'}
+        paddingInline={editing || isBubble ? 12 : 0}
+        width={editing ? '100%' : undefined}
         onDoubleClick={onDoubleClick}
+        {...stylex.props(
+          isBubble && styles.messageBubble,
+          styles.messageBox,
+          styles.narrowFullWidth,
+          editing && [styles.editingContainer, !isBubble && styles.editingContainerDocs],
+        )}
       >
         {messageContent}
-        {messageExtra && !editing ? (
-          <div className={styles.messageExtra}>{messageExtra}</div>
-        ) : null}
+        {messageExtra && !editing ? <div>{messageExtra}</div> : null}
       </Flexbox>
     );
   },

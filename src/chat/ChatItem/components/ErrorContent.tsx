@@ -1,3 +1,4 @@
+import * as stylex from '@stylexjs/stylex';
 import type { FC } from 'react';
 
 import Alert from '@/Alert';
@@ -14,7 +15,7 @@ export interface ErrorContentProps {
 
 const ErrorContent: FC<ErrorContentProps> = ({ message, error }) => {
   return (
-    <Flexbox className={styles.errorContainer}>
+    <Flexbox width={'100%'} {...stylex.props(styles.errorContainer)}>
       <Alert showIcon closable={false} extra={message} type={'error'} {...error} />
     </Flexbox>
   );

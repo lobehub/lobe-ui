@@ -1,6 +1,8 @@
 import { existsSync, globSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 
+import { unscopedSelectors } from '../config/selectorPrefix';
+
 const es = path.resolve(import.meta.dirname, '../es');
 const migrated = [
   'Button',
@@ -13,6 +15,16 @@ const migrated = [
   'dashboard',
   'brand',
   'mobile',
+  'chat',
+  'mdx',
+  'Markdown',
+  'Highlighter',
+  'Mermaid',
+  'CodeDiff',
+  'CodeEditor',
+  'Snippet',
+  'HtmlPreview',
+  'storybook',
 ];
 
 const errors: string[] = [];
@@ -40,12 +52,8 @@ if (existsSync(stylePath)) {
   }
   if (!/@property --lobe-scroll-area-fade-top\b/.test(css))
     fail('ScrollArea @property rules missing');
-  const selectors = css
-    .replaceAll(/@layer[^;{]*/g, '')
-    .replaceAll(/url\([^)]*\)/g, '')
-    .replaceAll(/"[^"]*"|'[^']*'/g, '');
-  for (const [, name] of selectors.matchAll(/\.(-?[A-Z_a-z][\w-]*)/g)) {
-    if (!/^(lb|lobe-)/.test(name)) fail(`class without lb/lobe- prefix: .${name}`);
+  for (const classes of unscopedSelectors(css, stylePath)) {
+    fail(`selector without an lb/lobe- class: ${classes}`);
   }
 } else {
   fail('es/style.css is missing');

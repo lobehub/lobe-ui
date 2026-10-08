@@ -1,0 +1,10 @@
+@layer lobe-ui {
+  .lobe-mdx-cards > div {
+    margin: 0 !important;
+  }
+
+  .lobe-mdx-card h3,
+  .lobe-mdx-card p {
+    margin-block: 0 !important;
+  }
+}

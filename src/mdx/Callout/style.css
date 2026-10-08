@@ -1,0 +1,9 @@
+@layer lobe-ui {
+  .lobe-mdx-callout-content p {
+    color: inherit !important;
+  }
+
+  .lobe-mdx-callout-underline a {
+    text-decoration: underline;
+  }
+}

@@ -7,7 +7,7 @@ import ActionIcon from '@/ActionIcon';
 import chatMessages from '@/i18n/resources/en/chat';
 import { useTranslation } from '@/i18n/useTranslation';
 import Progress from '@/Progress';
-import { cssVar } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
 import type { TokenTagProps } from './type';
 

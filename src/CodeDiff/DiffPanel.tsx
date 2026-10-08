@@ -1,5 +1,7 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import type { CSSProperties, ReactNode } from 'react';
 import { memo, useCallback, useState } from 'react';
@@ -8,12 +10,12 @@ import ActionIcon from '@/ActionIcon';
 import type { FlexboxProps } from '@/Flex';
 import { Flexbox } from '@/Flex';
 import MaterialFileTypeIcon from '@/MaterialFileTypeIcon';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 import Tag from '@/Tag';
 import Text from '@/Text';
 import { stopPropagation } from '@/utils/dom';
 
-import { bodyVariants, headerVariants, prefix, styles, variants } from './style';
+import { compactActionsCls, compactLangCls, prefix, styles, variantStyles } from './style';
 
 interface DiffPanelProps extends Omit<FlexboxProps, 'children'> {
   actions?: ReactNode;
@@ -56,6 +58,7 @@ export const DiffPanel = memo<DiffPanelProps>(
     ...rest
   }) => {
     const [expand, setExpand] = useState(defaultExpand);
+    const rootStyles = [styles.root, variantStyles[variant]];
 
     const handleToggleExpand = useCallback(() => {
       setExpand((prev) => !prev);
@@ -64,34 +67,46 @@ export const DiffPanel = memo<DiffPanelProps>(
     if (!fullFeatured)
       return (
         <Flexbox
-          className={cx(variants({ variant }), className)}
           data-code-type={dataCodeType}
+          width={'100%'}
           {...rest}
+          {...styleProps(rootStyles, clsx(prefix, className), rest.style)}
         >
-          <Flexbox horizontal align="center" className={styles.actionsCompact} flex="none" gap={4}>
+          <Flexbox
+            horizontal
+            align="center"
+            flex="none"
+            gap={4}
+            {...styleProps(styles.actionsCompact, compactActionsCls)}
+          >
             {actions}
           </Flexbox>
-          {showHeader && <Tag className={styles.lang}>{displayName}</Tag>}
-          <div className={cx(styles.body, classNames?.body)} style={customStyles?.body}>
-            {body}
-          </div>
+          {showHeader && <Tag className={compactLangCls}>{displayName}</Tag>}
+          <div {...styleProps(styles.body, classNames?.body, customStyles?.body)}>{body}</div>
         </Flexbox>
       );
 
     return (
       <Flexbox
-        className={cx(variants({ variant }), className)}
         data-code-type={dataCodeType}
+        width={'100%'}
         {...rest}
+        {...styleProps(rootStyles, clsx(prefix, className), rest.style)}
       >
         {showHeader && (
           <Flexbox
             horizontal
             align="center"
-            className={cx(headerVariants({ variant }), classNames?.header)}
+            gap={8}
             justify="space-between"
-            style={customStyles?.header}
+            padding={4}
+            paddingInline={variant === 'borderless' ? 0 : undefined}
             onClick={handleToggleExpand}
+            {...styleProps(
+              [styles.header, variant === 'filled' && styles.headerFilled],
+              classNames?.header,
+              customStyles?.header,
+            )}
           >
             <Flexbox
               horizontal
@@ -118,17 +133,17 @@ export const DiffPanel = memo<DiffPanelProps>(
                 <Flexbox
                   horizontal
                   align="center"
-                  className={cx('panel-actions', `${prefix}-actions`, styles.actions)}
                   flex="none"
                   gap={4}
+                  {...styleProps(styles.actions, `panel-actions ${prefix}-actions`)}
                 >
                   {actions}
                 </Flexbox>
               )}
               {(deletions > 0 || additions > 0) && (
-                <Flexbox horizontal className={styles.stats} gap={8}>
-                  {deletions > 0 && <span className={styles.deletions}>-{deletions}</span>}
-                  {additions > 0 && <span className={styles.additions}>+{additions}</span>}
+                <Flexbox horizontal align="center" gap={8}>
+                  {deletions > 0 && <span {...stylex.props(styles.deletions)}>-{deletions}</span>}
+                  {additions > 0 && <span {...stylex.props(styles.additions)}>+{additions}</span>}
                 </Flexbox>
               )}
               <ActionIcon
@@ -140,8 +155,16 @@ export const DiffPanel = memo<DiffPanelProps>(
           </Flexbox>
         )}
         <div
-          className={cx(bodyVariants({ expand }), `${prefix}-body`, styles.body, classNames?.body)}
-          style={customStyles?.body}
+          {...styleProps(
+            [
+              styles.bodyRoot,
+              !expand && styles.bodyCollapsed,
+              styles.body,
+              showHeader && variant !== 'borderless' && styles.bodyDivider,
+            ],
+            clsx(`${prefix}-body`, classNames?.body),
+            customStyles?.body,
+          )}
         >
           {body}
         </div>

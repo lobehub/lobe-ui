@@ -4,7 +4,7 @@ import { type FC } from 'react';
 import Button from '@/Button';
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
-import { cssVar } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
 import type { ChatSendButtonProps } from '../type';
 
