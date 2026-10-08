@@ -3,35 +3,30 @@
 import { Slider as BaseSlider } from '@base-ui/react/slider';
 import { memo } from 'react';
 
-import { cx } from '@/styles';
+import { focusRing } from '@/styles/stylex/focusRing';
+import { styleProps } from '@/styles/stylex/props';
 
+import { sliderMarker } from './marker.stylex';
 import { styles } from './style';
 import type { SliderProps } from './type';
 
 const Slider = memo<SliderProps>(
   ({ className, classNames, styles: customStyles, style, onChange, onChangeComplete, ...rest }) => (
     <BaseSlider.Root
-      className={cx(styles.root, className)}
-      style={style}
       onValueChange={(value) => onChange?.(value as number)}
       onValueCommitted={(value) => onChangeComplete?.(value as number)}
       {...rest}
+      {...styleProps([sliderMarker, styles.root], className, style)}
     >
       <BaseSlider.Control
-        className={cx(styles.control, classNames?.control)}
-        style={customStyles?.control}
+        {...styleProps(styles.control, classNames?.control, customStyles?.control)}
       >
-        <BaseSlider.Track
-          className={cx(styles.track, classNames?.track)}
-          style={customStyles?.track}
-        >
+        <BaseSlider.Track {...styleProps(styles.track, classNames?.track, customStyles?.track)}>
           <BaseSlider.Indicator
-            className={cx(styles.indicator, classNames?.indicator)}
-            style={customStyles?.indicator}
+            {...styleProps(styles.indicator, classNames?.indicator, customStyles?.indicator)}
           />
           <BaseSlider.Thumb
-            className={cx(styles.thumb, classNames?.thumb)}
-            style={customStyles?.thumb}
+            {...styleProps([styles.thumb, focusRing.info], classNames?.thumb, customStyles?.thumb)}
           />
         </BaseSlider.Track>
       </BaseSlider.Control>
