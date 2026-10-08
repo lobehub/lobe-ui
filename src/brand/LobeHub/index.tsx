@@ -1,5 +1,6 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { memo, type ReactNode } from 'react';
 
 import Divider from '@/brand/components/Divider';
@@ -8,7 +9,7 @@ import Logo3d from '@/brand/Logo3d';
 import LogoFlat from '@/brand/LogoFlat';
 import LogoMono from '@/brand/LogoMono';
 import { Flexbox } from '@/Flex';
-import { cssVar } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import { type DivProps } from '@/types';
 
 import { styles } from './style';
@@ -76,7 +77,7 @@ const LobeHub = memo<LobeHubProps>(
       >
         {logoComponent}
         <Divider size={extraSize} style={{ color: cssVar.colorFill }} />
-        <div className={styles.extraTitle} style={{ fontSize: extraSize }}>
+        <div {...stylex.props(styles.extraTitle)} style={{ fontSize: extraSize }}>
           {extra}
         </div>
       </Flexbox>
