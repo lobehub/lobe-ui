@@ -2,7 +2,7 @@
 
 import { createContext, type HTMLAttributes, type Ref, use, useEffect, useId } from 'react';
 
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
 import { registerScope, setActiveScope, useFocusScopeActive } from './store';
 import { styles } from './style';
@@ -38,7 +38,9 @@ export const FocusScope = ({
         data-scope-active={isActive ? '' : undefined}
         tabIndex={-1}
         {...rest}
-        className={cx(styles.root, debugOutline && styles.debugOutline, className)}
+        className={
+          styleProps([styles.root, debugOutline && styles.debugOutline], className).className
+        }
         onKeyDown={(event) => {
           onKeyDown?.(event);
           if (event.defaultPrevented) return;

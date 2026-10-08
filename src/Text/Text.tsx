@@ -1,12 +1,15 @@
 'use client';
 
+import './style.css';
+
+import clsx from 'clsx';
 import { type CSSProperties, memo, type ReactNode, type RefObject, useRef } from 'react';
 
 import { useTextOverflow } from '@/hooks/useTextOverflow';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 import Tooltip from '@/Tooltip';
 
-import { variants } from './style';
+import { textStyleArray } from './style';
 import { type TextBaseProps, type TextProps } from './type';
 
 type InternalTextProps = TextBaseProps & {
@@ -92,29 +95,30 @@ const InternalText = memo<InternalTextProps>(
         {...rest}
         ref={setNodeRef}
         style={textStyle}
-        className={cx(
-          variants({
-            as: ['h1', 'h2', 'h3', 'h4', 'h5', 'p'].includes(Container as string)
-              ? (Container as 'h1')
-              : undefined,
-            code,
-            delete: deleteStyle,
-            disabled,
-            ellipsis: ellipsis
-              ? typeof ellipsis === 'object' && ellipsis.rows
-                ? 'multi'
-                : true
-              : undefined,
-            italic,
-            mark,
-            shiny,
-            strong,
-            type,
-            underline,
-          }),
-          className,
-          classNames?.root,
-        )}
+        className={
+          styleProps(
+            textStyleArray({
+              as: ['h1', 'h2', 'h3', 'h4', 'h5', 'p'].includes(Container as string)
+                ? (Container as 'h1')
+                : undefined,
+              code,
+              delete: deleteStyle,
+              disabled,
+              ellipsis: ellipsis
+                ? typeof ellipsis === 'object' && ellipsis.rows
+                  ? 'multi'
+                  : true
+                : undefined,
+              italic,
+              mark,
+              shiny,
+              strong,
+              type,
+              underline,
+            }),
+            clsx(shiny && 'lobe-text-shiny', className, classNames?.root),
+          ).className
+        }
       >
         {children}
       </Container>

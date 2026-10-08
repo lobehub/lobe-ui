@@ -1,11 +1,12 @@
 'use client';
 
+import clsx from 'clsx';
 import { memo } from 'react';
 
 import { Flexbox } from '@/Flex';
-import { cssVar, cx } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-import Avatar from '../Avatar';
+import { AvatarImpl as Avatar } from '../Avatar';
 import type { AvatarGroupProps } from '../type';
 import { styles } from './style';
 
@@ -63,8 +64,9 @@ const AvatarGroup = memo<AvatarGroupProps>(
           } = avatar;
           return (
             <Avatar
-              className={cx(classNames?.avatar, avatarClassName, styles.avatar)}
+              className={clsx(classNames?.avatar, avatarClassName)}
               key={key}
+              xstyle={styles.avatar}
               style={{
                 marginLeft: index === 0 ? 0 : gapValue,
                 zIndex: zIndexReverse ? items.length - index : index,
@@ -82,9 +84,10 @@ const AvatarGroup = memo<AvatarGroupProps>(
             {...avatarProps}
             avatar={`+${restAvatars.length}`}
             background={cssVar.colorText}
-            className={cx(styles.avatar, classNames?.count)}
-            classNames={{ content: styles.count }}
+            className={classNames?.count}
+            contentXstyle={styles.count}
             sliceText={false}
+            xstyle={styles.avatar}
             style={{
               marginLeft: gapValue,
               zIndex: zIndexReverse ? 0 : avatars.length,

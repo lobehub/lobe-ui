@@ -1,9 +1,10 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { memo, useEffect, useMemo, useState } from 'react';
 
 import { DraggablePanel } from '@/DraggablePanel';
-import { useResponsive } from '@/styles';
+import { useResponsive } from '@/styles/theme/scope';
 
 import LayoutFooter from './components/LayoutFooter';
 import LayoutHeader from './components/LayoutHeader';
@@ -52,7 +53,7 @@ const Layout = memo<LayoutProps>(
               </DraggablePanel>
             </LayoutSidebar>
           )}
-          <section className={styles.content}>{children}</section>
+          <section {...stylex.props(styles.content)}>{children}</section>
           {!mobile && toc && <LayoutToc tocWidth={tocWidth}>{toc}</LayoutToc>}
         </LayoutMain>
         {footer && <LayoutFooter>{footer}</LayoutFooter>}

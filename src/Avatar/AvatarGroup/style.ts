@@ -1,13 +1,15 @@
-import { createStaticStyles } from '@/styles';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => {
-  return {
-    avatar: css`
-      border: 2px solid ${cssVar.colorBgContainer} !important;
-    `,
-    count: css`
-      font-size: 0.8em;
-      color: ${cssVar.colorBgLayout};
-    `,
-  };
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+
+export const styles = stylex.create({
+  avatar: {
+    borderColor: cssVar.colorBgContainer,
+    borderStyle: 'solid',
+    borderWidth: 2,
+  },
+  count: {
+    color: cssVar.colorBgLayout,
+    fontSize: '0.8em',
+  },
 });

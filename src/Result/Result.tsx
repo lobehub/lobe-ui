@@ -1,9 +1,13 @@
 'use client';
 
+import './style.css';
+
+import * as stylex from '@stylexjs/stylex';
 import { Check, Info, TriangleAlert, X } from 'lucide-react';
 import { memo, useMemo } from 'react';
 
-import { cssVar, cx } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { styleProps } from '@/styles/stylex/props';
 
 import { statusColor, styles } from './style';
 import type { ResultProps } from './type';
@@ -26,17 +30,17 @@ const Result = memo<ResultProps>(
     }, [status]);
 
     return (
-      <section className={cx(styles.root, className)} ref={ref} style={style} {...rest}>
+      <section ref={ref} {...styleProps(styles.root, className, style)} {...rest}>
         {icon ? (
-          <div className={styles.customIcon}>{icon}</div>
+          <div {...stylex.props(styles.customIcon)}>{icon}</div>
         ) : (
-          <div className={styles.icon} style={iconStyle}>
+          <div {...stylex.props(styles.icon)} style={iconStyle}>
             {statusIcon[status]}
           </div>
         )}
-        {title && <h3 className={styles.title}>{title}</h3>}
-        {subTitle && <p className={styles.subTitle}>{subTitle}</p>}
-        {extra && <div className={styles.extra}>{extra}</div>}
+        {title && <h3 {...stylex.props(styles.title)}>{title}</h3>}
+        {subTitle && <p {...stylex.props(styles.subTitle)}>{subTitle}</p>}
+        {extra && <div {...styleProps(styles.extra, 'lobe-result-extra')}>{extra}</div>}
         {children}
       </section>
     );

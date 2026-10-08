@@ -1,44 +1,42 @@
-import { createStaticStyles } from '@/styles';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  action: css`
-    margin-block-start: 8px;
-  `,
-  dashed: css`
-    padding-block: 24px;
-    padding-inline: 16px;
-    border: 1px dashed ${cssVar.colorBorder};
-    border-radius: ${cssVar.borderRadiusLG};
-  `,
-  dashedClickable: css`
-    cursor: pointer;
-    transition:
-      border-color 0.15s,
-      background 0.15s;
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-    &:hover {
-      border-color: ${cssVar.colorTextTertiary};
-      background: ${cssVar.colorFillQuaternary};
-    }
-  `,
-  extraPage: css`
-    display: flex;
-    gap: 8px;
-    margin-block-start: 14px;
-  `,
-  root: css`
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    align-items: center;
-
-    padding-block: 16px;
-    padding-inline: 8px;
-  `,
-  rootPage: css`
-    display: flex;
-    gap: 20px;
-    align-items: flex-start;
-    padding: 8px;
-  `,
-}));
+export const styles = stylex.create({
+  action: {
+    marginBlockStart: 8,
+  },
+  dashed: {
+    borderColor: cssVar.colorBorder,
+    borderRadius: cssVar.borderRadiusLG,
+    borderStyle: 'dashed',
+    borderWidth: 1,
+    paddingBlock: 24,
+    paddingInline: 16,
+  },
+  dashedClickable: {
+    borderColor: { 'default': cssVar.colorBorder, ':hover': cssVar.colorTextTertiary },
+    transition: 'border-color 0.15s, background 0.15s',
+    backgroundColor: { 'default': null, ':hover': cssVar.colorFillQuaternary },
+    cursor: 'pointer',
+  },
+  extraPage: {
+    gap: 8,
+    display: 'flex',
+    marginBlockStart: 14,
+  },
+  root: {
+    gap: 4,
+    paddingBlock: 16,
+    paddingInline: 8,
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  rootPage: {
+    padding: 8,
+    gap: 20,
+    alignItems: 'flex-start',
+    display: 'flex',
+  },
+});

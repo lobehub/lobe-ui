@@ -93,8 +93,8 @@ const stubRect = (element: HTMLElement, rect: Partial<DOMRect>) => {
 const renderWithMotion = (node: ReactNode) =>
   render(<ConfigProvider motion={motion}>{node}</ConfigProvider>);
 
-const getViewerImage = () => document.querySelector<HTMLImageElement>('.viewerImage');
-const getToolbar = () => document.querySelector('.toolbar') as HTMLElement;
+const getViewerImage = () => document.querySelector<HTMLImageElement>('.lobe-image-viewer-image');
+const getToolbar = () => document.querySelector('.lobe-image-viewer-toolbar') as HTMLElement;
 const getToolbarButtons = () =>
   Array.from(getToolbar().querySelectorAll<HTMLElement>('button, [role="button"]'));
 const iconClassOf = (button: HTMLElement) =>

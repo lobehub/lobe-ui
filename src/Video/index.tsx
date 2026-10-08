@@ -1,15 +1,25 @@
 'use client';
 
+import clsx from 'clsx';
 import { PlayIcon } from 'lucide-react';
 import { type CSSProperties, memo, type Ref, useMemo, useState } from 'react';
 
 import ActionIcon from '@/ActionIcon';
 import { Flexbox, type FlexboxProps } from '@/Flex';
 import Skeleton from '@/Skeleton';
-import { cssVar, cx } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { styleProps } from '@/styles/stylex/props';
+import { stylish } from '@/styles/stylex/stylish';
 import { type VideoProps as VProps } from '@/types';
 
-import { styles, variants } from './style';
+import { videoMarker } from './marker.stylex';
+import { maskHoverCls, styles } from './style';
+
+const variantStyles = {
+  borderless: stylish.variantBorderlessWithoutHover,
+  filled: styles.filled,
+  outlined: stylish.variantOutlinedWithoutHover,
+};
 
 export interface VideoProps extends VProps, Pick<FlexboxProps, 'width' | 'height'> {
   autoPlay?: boolean;
@@ -111,10 +121,15 @@ const Video = memo<VideoProps>(
 
     return (
       <Flexbox
-        className={cx(variants({ variant }), className, classNames?.wrapper)}
         height={height}
         ref={ref}
         width={width}
+        className={
+          styleProps(
+            [styles.root, variantStyles[variant], videoMarker],
+            clsx(className, classNames?.wrapper),
+          ).className
+        }
         style={{
           ...cssVariables,
           ...style,
@@ -124,25 +139,23 @@ const Video = memo<VideoProps>(
         {preview && !isPlaying && (
           <Flexbox
             align={'center'}
-            className={cx(styles.mask, classNames?.mask)}
             justify={'center'}
-            style={customStyles?.mask}
+            {...styleProps(styles.mask, clsx(maskHoverCls, classNames?.mask), customStyles?.mask)}
           >
             <ActionIcon color={'#fff'} icon={PlayIcon} variant={'filled'} />
           </Flexbox>
         )}
         <video
           autoPlay={autoPlay}
-          className={cx(styles.video, classNames?.video)}
           controls={showControls}
           height={height}
           preload={preload}
           width={width}
-          style={{
+          {...styleProps(styles.video, classNames?.video, {
             height: 'auto',
             maxWidth: '100%',
             ...customStyles?.video,
-          }}
+          })}
           onEnded={(e) => {
             setIsPlaying(false);
             onEnded?.(e);

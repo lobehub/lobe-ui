@@ -2,8 +2,6 @@
 
 import { memo, useCallback } from 'react';
 
-import { cx } from '@/styles';
-
 import {
   DraggablePanelContent,
   DraggablePanelHandle,
@@ -88,7 +86,7 @@ const DraggablePanel = memo<DraggablePanelProps>(
       >
         <DraggablePanelToggle showHandleWhenCollapsed={showHandleWhenCollapsed} />
         <DraggablePanelContent
-          className={cx(classNames?.content)}
+          className={classNames?.content}
           style={{ ...customStyles?.content, ...style }}
         >
           {children}

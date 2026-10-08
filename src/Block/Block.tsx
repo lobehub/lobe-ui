@@ -3,12 +3,25 @@
 import { type FC } from 'react';
 
 import { Flexbox } from '@/Flex';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
+import { stylish } from '@/styles/stylex/stylish';
 
-import { variants } from './style';
+import { styles } from './style';
 import type { BlockProps } from './type';
 
-const Block: FC<BlockProps> = ({
+const variantStyles = {
+  borderless: stylish.variantBorderlessWithoutHover,
+  filled: stylish.variantFilledWithoutHover,
+  outlined: stylish.variantOutlinedWithoutHover,
+};
+
+const clickableVariantStyles = {
+  borderless: styles.clickableBorderless,
+  filled: styles.clickableFilled,
+  outlined: styles.clickableOutlined,
+};
+
+export const BlockImpl: FC<BlockProps & { xstyle?: Parameters<typeof styleProps>[0] }> = ({
   className,
   variant = 'filled',
   shadow,
@@ -16,19 +29,35 @@ const Block: FC<BlockProps> = ({
   children,
   clickable,
   ref,
+  style,
+  xstyle,
   ...rest
 }) => {
   return (
     <Flexbox
-      className={cx(variants({ clickable, glass, shadow, variant }), className)}
       ref={ref}
       {...rest}
+      {...styleProps(
+        [
+          styles.root,
+          variantStyles[variant],
+          clickable && styles.clickableRoot,
+          glass && styles.glass,
+          shadow && styles.shadow,
+          clickable && clickableVariantStyles[variant],
+          xstyle,
+        ],
+        className,
+        style,
+      )}
     >
       {children}
     </Flexbox>
   );
 };
 
-Block.displayName = 'Block';
+BlockImpl.displayName = 'Block';
+
+const Block = BlockImpl as FC<BlockProps>;
 
 export default Block;

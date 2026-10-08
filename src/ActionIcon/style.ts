@@ -1,62 +1,42 @@
-import { cva } from 'class-variance-authority';
+import * as stylex from '@stylexjs/stylex';
 
-import { createStaticStyles, lobeStaticStylish } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => {
-  return {
-    active: lobeStaticStylish.active,
-    // && outranks base-ui Button's variant classes regardless of style insertion order
-    dangerRoot: css`
-      &&:hover {
-        color: ${cssVar.colorError};
-      }
+const hover = ':hover:not(:active)';
+const pressed = ':active:not(:disabled, [aria-disabled="true"])';
 
-      &&:active {
-        color: ${cssVar.colorErrorActive};
-      }
-    `,
-    glass: lobeStaticStylish.blur,
-    root: css`
-      && {
-        color: ${cssVar.colorTextTertiary};
-      }
-
-      &&:hover {
-        color: ${cssVar.colorTextSecondary};
-      }
-
-      &&:active {
-        color: ${cssVar.colorText};
-      }
-    `,
-    shadow: lobeStaticStylish.shadow,
-  };
-});
-
-export const variants = cva(styles.root, {
-  defaultVariants: {
-    active: false,
-    danger: false,
-    glass: false,
-    shadow: false,
+export const styles = stylex.create({
+  active: {
+    backgroundColor: cssVar.colorFillSecondary,
   },
-
-  variants: {
-    active: {
-      false: null,
-      true: styles.active,
-    },
-    danger: {
-      false: null,
-      true: styles.dangerRoot,
-    },
-    glass: {
-      false: null,
-      true: styles.glass,
-    },
-    shadow: {
-      false: null,
-      true: styles.shadow,
+  activeFill: {
+    backgroundColor: { default: cssVar.colorFillSecondary, [pressed]: cssVar.colorFill },
+  },
+  activeOutlined: {
+    backgroundColor: { 'default': cssVar.colorFillSecondary, ':hover': cssVar.colorFill },
+  },
+  dangerRoot: {
+    color: {
+      'default': cssVar.colorTextTertiary,
+      [hover]: cssVar.colorError,
+      ':active': cssVar.colorErrorActive,
     },
   },
+  glass: {
+    backdropFilter: 'saturate(150%) blur(10px)',
+  },
+  root: {
+    color: {
+      'default': cssVar.colorTextTertiary,
+      [hover]: cssVar.colorTextSecondary,
+      ':active': cssVar.colorText,
+    },
+  },
+  shadow: {
+    boxShadow: `0 1px 0 -1px ${cssVar.colorBorder}, 0 1px 2px -0.5px ${cssVar.colorBorder}, 0 2px 2px -1px ${cssVar.colorBorderSecondary}, 0 3px 6px -4px ${cssVar.colorBorderSecondary}`,
+  },
 });
+
+export const actionIconStyles = Object.fromEntries(
+  Object.entries(styles).map(([key, value]) => [key, stylex.props(value).className ?? '']),
+) as Record<keyof typeof styles, string>;

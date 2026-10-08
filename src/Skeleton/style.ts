@@ -1,81 +1,55 @@
-import { createStaticStyles, keyframes } from '@/styles';
+import * as stylex from '@stylexjs/stylex';
 
-const sweep = keyframes`
-  0% {
-    translate: -100% 0;
-  }
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-  100% {
-    translate: 100% 0;
-  }
-`;
+const reducedMotion = '@media (prefers-reduced-motion: reduce)';
 
-const fade = keyframes`
-  0%,
-  100% {
-    opacity: 1;
-  }
+const sweep = stylex.keyframes({
+  '0%': { translate: '-100% 0' },
+  '100%': { translate: '100% 0' },
+});
 
-  50% {
-    opacity: .5;
-  }
-`;
+const fade = stylex.keyframes({
+  '0%, 100%': { opacity: 1 },
+  '50%': { opacity: 0.5 },
+});
 
-export const styles = createStaticStyles(({ css, cssVar }) => {
-  return {
-    avatar: css`
-      flex: none;
-    `,
-
-    base: css`
-      user-select: none;
-
-      position: relative;
-
-      overflow: hidden;
-
-      border-radius: ${cssVar.borderRadius};
-
-      background: ${cssVar.colorFillContent};
-
-      @media (prefers-reduced-motion: reduce) {
-        animation: none;
-
-        &::after {
-          display: none;
-        }
-      }
-    `,
-
-    fade: css`
-      will-change: opacity;
-      animation: ${fade} 1.6s ease-in-out infinite;
-    `,
-
-    sweep: css`
-      &::after {
-        pointer-events: none;
-        will-change: transform;
-        content: '';
-
-        position: absolute;
-        inset: 0;
-
-        background: linear-gradient(
-          90deg,
-          transparent 0%,
-          ${cssVar.colorFill} 50%,
-          transparent 100%
-        );
-
-        animation: ${sweep} 1.4s ease infinite;
-      }
-    `,
-
-    text: css`
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-    `,
-  };
+export const styles = stylex.create({
+  avatar: {
+    flex: 'none',
+  },
+  base: {
+    borderRadius: cssVar.borderRadius,
+    overflow: 'hidden',
+    backgroundColor: cssVar.colorFillContent,
+    position: 'relative',
+    userSelect: 'none',
+  },
+  fade: {
+    animationDuration: '1.6s',
+    animationIterationCount: 'infinite',
+    animationName: { default: fade, [reducedMotion]: 'none' },
+    animationTimingFunction: 'ease-in-out',
+    willChange: 'opacity',
+  },
+  sweep: {
+    '::after': {
+      inset: 0,
+      animationDuration: '1.4s',
+      animationIterationCount: 'infinite',
+      animationName: sweep,
+      animationTimingFunction: 'ease',
+      backgroundImage: `linear-gradient(90deg, transparent 0%, ${cssVar.colorFill} 50%, transparent 100%)`,
+      content: "''",
+      display: { default: null, [reducedMotion]: 'none' },
+      pointerEvents: 'none',
+      position: 'absolute',
+      willChange: 'transform',
+    },
+  },
+  text: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+  },
 });

@@ -2,7 +2,7 @@
 
 import { type FC } from 'react';
 
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
 import { styles } from './style';
 import type { SkeletonProps } from './type';
@@ -18,11 +18,12 @@ const Skeleton: FC<SkeletonProps> = ({
 }) => (
   <div
     style={{ borderRadius: radius, height, width, ...style }}
-    className={cx(
-      styles.base,
-      animated && styles[animated === true ? 'fade' : animated],
-      className,
-    )}
+    className={
+      styleProps(
+        [styles.base, animated && styles[animated === true ? 'fade' : animated]],
+        className,
+      ).className
+    }
     {...rest}
   />
 );

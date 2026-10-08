@@ -1,22 +1,23 @@
 'use client';
 
-import { type Key, memo, type MouseEvent, useState } from 'react';
+import * as stylex from '@stylexjs/stylex';
+import { type Key, memo, type MouseEvent, type NamedExoticComponent, useState } from 'react';
 
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
-import ListRow from './ListRow';
+import ListRow, { type ListRowXstyle } from './ListRow';
 import { styles } from './style';
 import type { ListDividerType, ListItem, ListItemType, ListProps } from './type';
 
 const isDivider = (item: ListItem): item is ListDividerType => item.type === 'divider';
 
-const variantClass = {
+const variantStyles = {
   borderless: undefined,
   filled: styles.filled,
   outlined: styles.outlined,
 };
 
-const List = memo<ListProps>(
+export const ListImpl = memo<ListProps & { itemXstyle?: ListRowXstyle }>(
   ({
     activeKey,
     className,
@@ -30,6 +31,7 @@ const List = memo<ListProps>(
     selectable = false,
     styles: customStyles,
     variant = 'borderless',
+    itemXstyle,
     ...rest
   }) => {
     const [innerKey, setInnerKey] = useState<Key | undefined>(defaultActiveKey);
@@ -47,21 +49,27 @@ const List = memo<ListProps>(
 
     return (
       <ul
-        className={cx(styles.root, variantClass[variant], compact && styles.compact, className)}
+        className={styleProps([styles.root, variantStyles[variant]], className).className}
         ref={ref}
         role="list"
         {...rest}
       >
         {items.map((item, index) =>
           isDivider(item) ? (
-            <li className={styles.divider} key={item.key ?? `divider-${index}`} role="separator" />
+            <li
+              key={item.key ?? `divider-${index}`}
+              role="separator"
+              {...stylex.props(styles.divider)}
+            />
           ) : (
             <ListRow
               active={currentKey !== undefined && currentKey !== null && item.key === currentKey}
               classNames={classNames}
+              compact={compact}
               item={item}
               key={item.key}
               styles={customStyles}
+              xstyle={itemXstyle}
               onSelect={handleSelect}
             />
           ),
@@ -71,6 +79,8 @@ const List = memo<ListProps>(
   },
 );
 
-List.displayName = 'List';
+ListImpl.displayName = 'List';
+
+const List = ListImpl as NamedExoticComponent<ListProps>;
 
 export default List;

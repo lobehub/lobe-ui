@@ -49,8 +49,8 @@ const stubRect = (element: HTMLElement, rect: Partial<DOMRect>) => {
 const renderWithMotion = (node: ReactNode) =>
   render(<ConfigProvider motion={motion}>{node}</ConfigProvider>);
 
-const getViewerBackdrop = () => document.querySelector<HTMLElement>('.viewerBackdrop');
-const getViewerPopup = () => document.querySelector<HTMLElement>('.viewerPopup');
+const getViewerBackdrop = () => document.querySelector<HTMLElement>('.lobe-image-viewer-backdrop');
+const getViewerPopup = () => document.querySelector<HTMLElement>('.lobe-image-viewer-popup');
 
 const openViewer = () => {
   const thumbnail = screen.getByAltText('cat') as HTMLImageElement;

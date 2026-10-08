@@ -90,28 +90,28 @@ describe('Image', () => {
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
-  it('shows the actions overlay only as `actionsVisible` when alwaysShowActions is set', () => {
+  it('keeps the actions overlay visible only when alwaysShowActions is set', () => {
     const { rerender } = render(
       <Image actions={<span>action</span>} src="https://example.com/cat.png" />,
     );
     const hiddenNode = screen.getByText('action').parentElement as HTMLElement;
-    expect(hiddenNode.className).toContain('actionsHidden');
+    expect(getComputedStyle(hiddenNode).opacity).toBe('0');
     expect(hiddenNode.className).toContain('actions-hidden');
 
     rerender(
       <Image alwaysShowActions actions={<span>action</span>} src="https://example.com/cat.png" />,
     );
     const visibleNode = screen.getByText('action').parentElement as HTMLElement;
-    expect(visibleNode.className).toContain('actionsVisible');
+    expect(getComputedStyle(visibleNode).opacity).not.toBe('0');
     expect(visibleNode.className).not.toContain('actions-hidden');
   });
 
-  it('shows the zoom-in cursor class only when preview is enabled', () => {
+  it('shows the zoom-in cursor only when preview is enabled', () => {
     const { rerender } = render(<Image alt="cat" src="https://example.com/cat.png" />);
-    expect(screen.getByAltText('cat').className).toContain('previewable');
+    expect(getComputedStyle(screen.getByAltText('cat')).cursor).toBe('zoom-in');
 
     rerender(<Image alt="cat" preview={false} src="https://example.com/cat.png" />);
-    expect(screen.getByAltText('cat').className).not.toContain('previewable');
+    expect(getComputedStyle(screen.getByAltText('cat')).cursor).not.toBe('zoom-in');
   });
 
   it('calls openPreview with a resolved entry on click when preview is enabled', () => {
@@ -175,8 +175,8 @@ describe('Image', () => {
       </PreviewGroup>,
     );
 
-    expect(screen.getByAltText('cat').className).not.toContain('previewable');
-    expect(screen.getByAltText('dog').className).toContain('previewable');
+    expect(getComputedStyle(screen.getByAltText('cat')).cursor).not.toBe('zoom-in');
+    expect(getComputedStyle(screen.getByAltText('dog')).cursor).toBe('zoom-in');
 
     fireEvent.click(screen.getByAltText('cat'));
     expect(openPreview).not.toHaveBeenCalled();

@@ -1,16 +1,19 @@
 'use client';
 
 import { getEmoji } from '@lobehub/fluent-emoji';
+import clsx from 'clsx';
 import { Loader2 } from 'lucide-react';
-import { memo, useMemo, useState } from 'react';
+import { memo, type ReactNode, useMemo, useState } from 'react';
 
 import { Center } from '@/Flex';
 import FluentEmoji from '@/FluentEmoji';
 import Icon from '@/Icon';
-import { cssVar, cx } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { styleProps } from '@/styles/stylex/props';
+import { stylish } from '@/styles/stylex/stylish';
 import { safeReadableColor } from '@/utils/safeReadableColor';
 
-import { styles, variants } from './style';
+import { styles } from './style';
 import { type AvatarProps } from './type';
 import {
   calculateEmojiSize,
@@ -19,7 +22,18 @@ import {
   isDefaultAntAvatar,
 } from './utils';
 
-const Avatar = memo<AvatarProps>(
+const variantStyles = {
+  borderless: stylish.variantBorderlessWithoutHover,
+  filled: stylish.variantFilledWithoutHover,
+  outlined: stylish.variantOutlinedWithoutHover,
+};
+
+type AvatarImplProps = AvatarProps & {
+  contentXstyle?: Parameters<typeof styleProps>[0];
+  xstyle?: Parameters<typeof styleProps>[0];
+};
+
+export const AvatarImpl = memo<AvatarImplProps>(
   ({
     alt,
     animation,
@@ -44,6 +58,8 @@ const Avatar = memo<AvatarProps>(
     tooltipProps,
     unoptimized,
     variant = 'borderless',
+    xstyle,
+    contentXstyle,
     ...rest
   }) => {
     const isStringAvatar = typeof avatar === 'string';
@@ -93,8 +109,13 @@ const Avatar = memo<AvatarProps>(
     return (
       <div
         {...rest}
-        className={cx(variants({ shadow, variant }), className, classNames?.root)}
         ref={ref}
+        className={
+          styleProps(
+            [styles.root, variantStyles[variant], shadow && styles.shadow, xstyle],
+            clsx(className, classNames?.root),
+          ).className
+        }
         style={{
           backgroundColor:
             (isUrlOrElement && !isImgError) || emoji
@@ -115,11 +136,10 @@ const Avatar = memo<AvatarProps>(
       >
         {loading && (
           <Center
-            className={cx(styles.loading, classNames?.loading)}
             flex={'none'}
             height={'100%'}
-            style={customStyles?.loading}
             width={'100%'}
+            {...styleProps(styles.loading, classNames?.loading, customStyles?.loading)}
           >
             <Icon spin icon={Loader2} />
           </Center>
@@ -127,19 +147,24 @@ const Avatar = memo<AvatarProps>(
         {typeof avatar === 'string' && showImage && (
           <img
             alt={imgAlt}
-            className={cx(styles.img, classNames?.img)}
             crossOrigin={crossOrigin}
             draggable={draggable}
             height={size}
             loading={'lazy'}
             src={avatar}
-            style={customStyles?.img}
             width={size}
+            {...styleProps(styles.img, classNames?.img, customStyles?.img)}
             onError={() => setIsImgError(true)}
           />
         )}
         {!showImage && (
-          <span className={cx(styles.content, classNames?.content)} style={customStyles?.content}>
+          <span
+            {...styleProps(
+              [styles.content, contentXstyle],
+              classNames?.content,
+              customStyles?.content,
+            )}
+          >
             {showElement ? avatar : customAvatar}
           </span>
         )}
@@ -148,6 +173,8 @@ const Avatar = memo<AvatarProps>(
   },
 );
 
-Avatar.displayName = 'Avatar';
+AvatarImpl.displayName = 'Avatar';
+
+const Avatar = AvatarImpl as (props: AvatarProps) => ReactNode;
 
 export default Avatar;

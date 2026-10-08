@@ -1,47 +1,27 @@
-import { cva } from 'class-variance-authority';
+import * as stylex from '@stylexjs/stylex';
 
-import { createStaticStyles, lobeStaticStylish } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => {
-  return {
-    borderless: lobeStaticStylish.variantBorderless,
-    disabled: lobeStaticStylish.disabled,
-    filled: lobeStaticStylish.variantFilledWithoutHover,
-    glass: lobeStaticStylish.blur,
-    outlined: lobeStaticStylish.variantOutlinedWithoutHover,
-    root: css`
-      position: relative;
-      border-radius: ${cssVar.borderRadius};
-    `,
-    shadow: lobeStaticStylish.shadow,
-  };
-});
-
-export const variants = cva(styles.root, {
-  defaultVariants: {
-    disabled: false,
-    glass: false,
-    shadow: false,
-    variant: 'outlined',
+export const styles = stylex.create({
+  borderless: {
+    borderColor: 'currentcolor',
+    borderStyle: 'none',
+    borderWidth: 'medium',
+    backgroundColor: { 'default': 'transparent', ':hover': cssVar.colorFillTertiary },
+    boxShadow: 'none',
   },
-
-  variants: {
-    variant: {
-      filled: styles.filled,
-      outlined: styles.outlined,
-      borderless: styles.borderless,
-    },
-    glass: {
-      false: null,
-      true: styles.glass,
-    },
-    shadow: {
-      false: null,
-      true: styles.shadow,
-    },
-    disabled: {
-      false: null,
-      true: styles.disabled,
-    },
+  disabled: {
+    cursor: 'not-allowed',
+    opacity: 0.5,
+  },
+  glass: {
+    backdropFilter: 'saturate(150%) blur(10px)',
+  },
+  root: {
+    borderRadius: cssVar.borderRadius,
+    position: 'relative',
+  },
+  shadow: {
+    boxShadow: `0 1px 0 -1px ${cssVar.colorBorder}, 0 1px 2px -0.5px ${cssVar.colorBorder}, 0 2px 2px -1px ${cssVar.colorBorderSecondary}, 0 3px 6px -4px ${cssVar.colorBorderSecondary}`,
   },
 });

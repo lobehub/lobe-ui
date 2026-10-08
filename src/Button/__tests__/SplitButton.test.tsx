@@ -2,7 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { motion } from 'motion/react';
 
 import ConfigProvider from '@/ConfigProvider';
-import { cssVar } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
 import SplitButton from '../SplitButton';
 

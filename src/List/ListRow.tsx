@@ -1,24 +1,37 @@
 'use client';
 
+import './style.css';
+
+import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { memo, type MouseEvent } from 'react';
 
 import A from '@/A';
 import Icon from '@/Icon';
-import { cx } from '@/styles';
+import { focusRing } from '@/styles/stylex/focusRing';
+import { styleProps } from '@/styles/stylex/props';
 
+import { listItemMarker } from './marker.stylex';
 import { styles } from './style';
 import type { ListItemType, ListProps } from './type';
+
+export type ListRowXstyle = (
+  item: ListItemType,
+  active: boolean,
+) => Parameters<typeof styleProps>[0];
 
 interface ListRowProps {
   active: boolean;
   classNames?: ListProps['classNames'];
+  compact: boolean;
   item: ListItemType;
   onSelect: (item: ListItemType, event: MouseEvent<HTMLElement>) => void;
   styles?: ListProps['styles'];
+  xstyle?: ListRowXstyle;
 }
 
 const ListRow = memo<ListRowProps>(
-  ({ active, classNames, item, onSelect, styles: customStyles }) => {
+  ({ active, classNames, compact, item, onSelect, styles: customStyles, xstyle }) => {
     const { actions, avatar, danger, description, disabled, extra, href, icon, label, showAction } =
       item;
 
@@ -30,42 +43,53 @@ const ListRow = memo<ListRowProps>(
       onSelect(item, event);
     };
 
-    const rowClassName = cx(
-      styles.row,
-      active && styles.active,
-      danger && styles.danger,
-      disabled && styles.disabled,
-      classNames?.item,
-      item.className,
-    );
+    const rowClassName = styleProps(
+      [
+        focusRing.info,
+        styles.row,
+        compact && styles.compactRow,
+        active && styles.active,
+        danger && styles.danger,
+        disabled && styles.disabled,
+        xstyle?.(item, active),
+      ],
+      clsx(classNames?.item, item.className),
+    ).className;
     const rowStyle = { ...customStyles?.item, ...item.style };
 
     const content = (
       <>
         {avatar ?? (icon ? <Icon icon={icon} size={16} /> : null)}
-        <span className={styles.body}>
-          <span className={cx(styles.label, classNames?.label)} style={customStyles?.label}>
+        <span {...stylex.props(styles.body)}>
+          <span
+            {...styleProps(
+              styles.label,
+              clsx('lobe-list-label', classNames?.label),
+              customStyles?.label,
+            )}
+          >
             {label}
           </span>
           {description != null && (
             <span
-              className={cx(styles.description, classNames?.description)}
-              style={customStyles?.description}
+              {...styleProps(
+                styles.description,
+                classNames?.description,
+                customStyles?.description,
+              )}
             >
               {description}
             </span>
           )}
         </span>
         {extra != null && (
-          <span className={cx(styles.extra, classNames?.extra)} style={customStyles?.extra}>
-            {extra}
-          </span>
+          <span {...styleProps(styles.extra, classNames?.extra, customStyles?.extra)}>{extra}</span>
         )}
       </>
     );
 
     return (
-      <li className={cx(styles.item, showAction && styles.showAction)}>
+      <li {...stylex.props(styles.item, listItemMarker)}>
         {href && !disabled ? (
           <A
             aria-current={active ? 'page' : undefined}
@@ -89,7 +113,13 @@ const ListRow = memo<ListRowProps>(
           </button>
         )}
         {actions != null && (
-          <span className={cx(styles.actions, classNames?.actions)} style={customStyles?.actions}>
+          <span
+            {...styleProps(
+              [styles.actions, showAction && styles.showAction],
+              classNames?.actions,
+              customStyles?.actions,
+            )}
+          >
             {actions}
           </span>
         )}

@@ -1,5 +1,6 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import chroma from 'chroma-js';
 import { CheckIcon } from 'lucide-react';
 import { type FC, useMemo } from 'react';
@@ -8,7 +9,7 @@ import useMergeState from 'use-merge-value';
 import { ColorPicker } from '@/ColorPicker';
 import { Center, Flexbox } from '@/Flex';
 import Icon from '@/Icon';
-import { cssVar, cx } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import Tooltip from '@/Tooltip';
 import { safeReadableColor } from '@/utils/safeReadableColor';
 
@@ -79,10 +80,10 @@ const ColorSwatches: FC<ColorSwatchesProps> = ({
           return (
             <Tooltip key={c?.key || i} title={c.title}>
               <Center
-                className={cx(
+                {...stylex.props(
                   styles.container,
-                  isTransparent && styles.transparent,
-                  isActive && styles.active,
+                  !!isTransparent && styles.transparent,
+                  isActive && styles.activeContainer,
                 )}
                 style={{
                   background: isTransparent ? undefined : color,
@@ -115,10 +116,10 @@ const ColorSwatches: FC<ColorSwatchesProps> = ({
               <button
                 aria-label={texts?.custom || 'Custom'}
                 type="button"
-                className={cx(
+                {...stylex.props(
                   styles.picker,
                   enableColorSwatches && styles.conic,
-                  isCustomActive && styles.active,
+                  !!isCustomActive && styles.activePicker,
                 )}
                 style={{
                   background: enableColorSwatches ? undefined : active,
