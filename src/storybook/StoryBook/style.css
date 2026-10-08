@@ -1,0 +1,54 @@
+@layer lobe-ui {
+  .lobe-storybook-leva {
+    --leva-sizes-controlWidth: 66%;
+    --leva-colors-elevation1: var(--lobe-color-fill-secondary);
+    --leva-colors-elevation2: transparent;
+    --leva-colors-elevation3: var(--lobe-color-fill-secondary);
+    --leva-colors-accent1: var(--lobe-color-primary);
+    --leva-colors-accent2: var(--lobe-color-primary-hover);
+    --leva-colors-accent3: var(--lobe-color-primary-active);
+    --leva-colors-highlight1: var(--lobe-color-text-tertiary);
+    --leva-colors-highlight2: var(--lobe-color-text-secondary);
+    --leva-colors-highlight3: var(--lobe-color-text);
+    --leva-colors-vivid1: var(--lobe-color-warning);
+    --leva-shadows-level1: unset;
+    --leva-shadows-level2: unset;
+    --leva-fonts-mono: var(--lobe-font-family-code);
+
+    overflow: auto;
+
+    width: 100%;
+    height: 100%;
+    padding-block: 6px;
+    padding-inline: 0;
+  }
+
+  /* leva's stitches styles are unlayered, so only !important beats them from a layer */
+  .lobe-storybook-leva > div,
+  .lobe-storybook-leva > div > div {
+    background: transparent !important;
+  }
+
+  .lobe-storybook-leva input:checked + label > svg {
+    stroke: var(--lobe-color-bg-layout);
+  }
+
+  .lobe-storybook-leva button {
+    --leva-colors-accent2: var(--lobe-color-fill-secondary);
+  }
+
+  /* The panel sets an inline height of 100%. That percentage does not
+     resolve while the preview height comes from min-height, so the
+     sidebar stays content-sized. Stretch it to the editor instead. */
+  .lobe-storybook-right {
+    align-self: stretch;
+    height: auto !important;
+    background: var(--lobe-color-bg-layout);
+  }
+
+  @media (width <= 575.98px) {
+    .lobe-storybook-right .draggable-panel-fixed {
+      width: 100% !important;
+    }
+  }
+}
