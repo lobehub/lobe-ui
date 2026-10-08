@@ -1,7 +1,8 @@
+import * as stylex from '@stylexjs/stylex';
 import { memo } from 'react';
 
 import { Flexbox } from '@/Flex';
-import { cssVar } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import { toast } from '@/Toast';
 import { copyToClipboard } from '@/utils/copyToClipboard';
 
@@ -14,13 +15,13 @@ export interface IScaleRow {
 const ScaleRow = memo<IScaleRow>(({ name }) => {
   return (
     <Flexbox horizontal align={'center'} gap={2}>
-      <div className={styles.scaleRowTitle} key={name}>
-        <div className={styles.text}>cssVar</div>
+      <div {...stylex.props(styles.scaleRowTitle)} key={name}>
+        <div {...stylex.props(styles.text)}>cssVar</div>
       </div>
       {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((color) => {
         return (
           <div
-            className={styles.scaleBox}
+            {...stylex.props(styles.scaleBox)}
             key={color}
             title={(cssVar as any)[`${name}${color}`] as any}
             onClick={async () => {
@@ -33,7 +34,7 @@ const ScaleRow = memo<IScaleRow>(({ name }) => {
             <Flexbox
               horizontal
               align={'center'}
-              className={styles.scaleItem}
+              {...stylex.props(styles.scaleItem)}
               justify={'center'}
               style={{ backgroundColor: (cssVar as any)[`${name}${color}`] as any }}
             />
