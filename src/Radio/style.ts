@@ -1,65 +1,53 @@
-import { focusRing } from '@/internal/focusRing';
-import { createStaticStyles } from '@/styles';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  indicator: css`
-    display: block;
-    flex: none;
-    border-radius: 50%;
-    background: currentcolor;
-  `,
-  label: css`
-    cursor: pointer;
-    user-select: none;
-    display: inline-flex;
-    align-items: center;
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-    &:has([data-disabled]) {
-      cursor: not-allowed;
-    }
-  `,
-  root: css`
-    cursor: pointer;
+const checked = ':is([data-checked]):not([data-disabled])';
+const hover = ':hover:not([data-disabled], [data-checked])';
+const disabled = ':is([data-disabled])';
 
-    display: inline-flex;
-    flex: none;
-    align-items: center;
-    justify-content: center;
+export const styles = stylex.create({
+  indicator: {
+    borderRadius: '50%',
+    flex: 'none',
+    backgroundColor: 'currentcolor',
+    display: 'block',
+  },
+  label: {
+    alignItems: 'center',
+    cursor: { 'default': 'pointer', ':has([data-disabled])': 'not-allowed' },
+    display: 'inline-flex',
+    userSelect: 'none',
+  },
+  root: {
+    margin: 0,
+    padding: 0,
+    borderColor: {
+      [checked]: `var(--lobe-radio-bg, ${cssVar.colorPrimary})`,
+      default: cssVar.colorBorderSecondary,
+      [disabled]: cssVar.colorFill,
+      [hover]: cssVar.colorBorder,
+    },
+    borderRadius: '50%',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    flex: 'none',
+    outline: 'none',
+    transition: `background 150ms ${cssVar.motionEaseOut}, border-color 150ms ${cssVar.motionEaseOut}`,
+    alignItems: 'center',
+    backgroundColor: {
+      [checked]: `var(--lobe-radio-bg, ${cssVar.colorPrimary})`,
+      default: cssVar.colorBgContainer,
+      [disabled]: cssVar.colorFill,
+    },
+    color: { default: cssVar.colorBgLayout, [disabled]: cssVar.colorText },
+    cursor: { default: 'pointer', [disabled]: 'not-allowed' },
+    display: 'inline-flex',
+    justifyContent: 'center',
+    opacity: { default: null, [disabled]: 0.25 },
+  },
+});
 
-    margin: 0;
-    padding: 0;
-    border: 1px solid ${cssVar.colorBorderSecondary};
-    border-radius: 50%;
-
-    color: ${cssVar.colorBgLayout};
-
-    background: ${cssVar.colorBgContainer};
-    outline: none;
-
-    transition:
-      background 150ms ${cssVar.motionEaseOut},
-      border-color 150ms ${cssVar.motionEaseOut};
-
-    &:hover:not([data-disabled], [data-checked]) {
-      border-color: ${cssVar.colorBorder};
-    }
-
-    ${focusRing};
-
-    &[data-checked] {
-      border-color: var(--lobe-radio-bg, ${cssVar.colorPrimary});
-      background: var(--lobe-radio-bg, ${cssVar.colorPrimary});
-    }
-
-    &[data-disabled] {
-      cursor: not-allowed;
-
-      border-color: ${cssVar.colorFill};
-
-      color: ${cssVar.colorText};
-
-      opacity: 0.25;
-      background: ${cssVar.colorFill};
-    }
-  `,
-}));
+export const radioStyles = Object.fromEntries(
+  Object.entries(styles).map(([key, value]) => [key, stylex.props(value).className ?? '']),
+) as Record<keyof typeof styles, string>;

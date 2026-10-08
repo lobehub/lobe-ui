@@ -1,9 +1,12 @@
 'use client';
 
 import { Radio as BaseRadio } from '@base-ui/react/radio';
+import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { type CSSProperties, memo } from 'react';
 
-import { cx } from '@/styles';
+import { focusRing } from '@/styles/stylex/focusRing';
+import { styleProps } from '@/styles/stylex/props';
 import Text from '@/Text';
 
 import { styles } from './style';
@@ -32,13 +35,16 @@ const Radio = memo<RadioProps>(
 
     const dot = (
       <BaseRadio.Root
-        className={cx(styles.root, children ? classNames?.radio : className, classNames?.radio)}
         disabled={disabled}
-        style={dotStyle}
         {...rest}
+        {...styleProps(
+          [styles.root, focusRing.info],
+          clsx(children ? classNames?.radio : className, classNames?.radio),
+          dotStyle,
+        )}
       >
         <BaseRadio.Indicator
-          className={styles.indicator}
+          {...stylex.props(styles.indicator)}
           style={{ height: Math.round(size * 0.375), width: Math.round(size * 0.375) }}
         />
       </BaseRadio.Root>
@@ -48,8 +54,11 @@ const Radio = memo<RadioProps>(
 
     return (
       <label
-        className={cx(styles.label, className, classNames?.wrapper)}
-        style={{ gap: Math.floor(size / 2), ...style, ...customStyles?.wrapper }}
+        {...styleProps(styles.label, clsx(className, classNames?.wrapper), {
+          gap: Math.floor(size / 2),
+          ...style,
+          ...customStyles?.wrapper,
+        })}
       >
         {dot}
         <Text
