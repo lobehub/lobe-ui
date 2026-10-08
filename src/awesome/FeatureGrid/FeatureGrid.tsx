@@ -1,10 +1,11 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { type CSSProperties, Fragment, memo } from 'react';
 
 import { renderLandingLink } from '@/awesome/landingLink';
 import Icon from '@/Icon';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
 import { styles } from './style';
 import type { FeatureGridProps } from './type';
@@ -12,29 +13,35 @@ import type { FeatureGridProps } from './type';
 const FeatureGrid = memo<FeatureGridProps>(
   ({ className, columns = 3, items, renderLink, style, ...rest }) => (
     <div
-      className={cx(styles.grid, className)}
-      style={{ '--feature-grid-columns': columns, ...style } as CSSProperties}
+      {...styleProps(styles.grid, className, {
+        '--feature-grid-columns': columns,
+        ...style,
+      } as CSSProperties)}
       {...rest}
     >
       {items.map(({ description, href, icon, title }, index) => {
         const content = (
           <>
             {icon && (
-              <span className={styles.icon}>
+              <span {...stylex.props(styles.icon)}>
                 <Icon icon={icon} size={16} />
               </span>
             )}
-            <h3 className={styles.title}>{title}</h3>
-            <p className={styles.description}>{description}</p>
+            <h3 {...stylex.props(styles.title)}>{title}</h3>
+            <p {...stylex.props(styles.description)}>{description}</p>
           </>
         );
 
         return (
           <Fragment key={typeof title === 'string' ? title : index}>
             {href ? (
-              renderLandingLink(renderLink, { children: content, className: styles.item, href })
+              renderLandingLink(renderLink, {
+                children: content,
+                className: stylex.props(styles.item).className,
+                href,
+              })
             ) : (
-              <div className={styles.item}>{content}</div>
+              <div {...stylex.props(styles.item)}>{content}</div>
             )}
           </Fragment>
         );

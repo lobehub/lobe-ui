@@ -1,67 +1,55 @@
-import { createStaticStyles, keyframes } from '@/styles';
+import * as stylex from '@stylexjs/stylex';
 
-const slide = keyframes`
-  to {
-    transform: translateX(calc(-100% - var(--logo-marquee-gap)));
-  }
-`;
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  caption: css`
-    margin: 0;
-    font-size: ${cssVar.fontSizeSM};
-    color: ${cssVar.colorTextTertiary};
+import { logoMarqueeMarker } from './marker.stylex';
 
-    a {
-      color: inherit;
-      text-decoration: none;
-      transition: color 140ms ease;
-    }
+const slide = stylex.keyframes({
+  to: { transform: 'translateX(calc(-100% - var(--logo-marquee-gap)))' },
+});
 
-    a:hover {
-      color: ${cssVar.colorText};
-    }
-  `,
-  item: css`
-    display: inline-flex;
-    gap: 8px;
-    align-items: center;
+const reducedMotion = '@media (prefers-reduced-motion: reduce)';
 
-    font-size: ${cssVar.fontSize};
-    color: ${cssVar.colorTextTertiary};
-    white-space: nowrap;
-  `,
-  root: css`
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    align-items: center;
-
-    inline-size: 100%;
-  `,
-  track: css`
-    display: flex;
-    flex: none;
-    gap: var(--logo-marquee-gap);
-    align-items: center;
-
-    animation: ${slide} var(--logo-marquee-duration) linear infinite;
-
-    @media (prefers-reduced-motion: reduce) {
-      animation: none;
-    }
-  `,
-  viewport: css`
-    overflow: hidden;
-    display: flex;
-    gap: var(--logo-marquee-gap);
-
-    inline-size: min(100%, var(--logo-marquee-max-width));
-
-    mask-image: linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent);
-
-    &:hover > * {
-      animation-play-state: paused;
-    }
-  `,
-}));
+export const styles = stylex.create({
+  caption: {
+    margin: 0,
+    color: cssVar.colorTextTertiary,
+    fontSize: cssVar.fontSizeSM,
+  },
+  item: {
+    gap: 8,
+    alignItems: 'center',
+    color: cssVar.colorTextTertiary,
+    display: 'inline-flex',
+    fontSize: cssVar.fontSize,
+    whiteSpace: 'nowrap',
+  },
+  root: {
+    gap: 16,
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    inlineSize: '100%',
+  },
+  track: {
+    flex: 'none',
+    gap: 'var(--logo-marquee-gap)',
+    alignItems: 'center',
+    animationDuration: { default: 'var(--logo-marquee-duration)', [reducedMotion]: '0s' },
+    animationIterationCount: { default: 'infinite', [reducedMotion]: 1 },
+    animationName: { default: slide, [reducedMotion]: 'none' },
+    animationPlayState: {
+      default: null,
+      [stylex.when.ancestor(':hover', logoMarqueeMarker)]: 'paused',
+    },
+    animationTimingFunction: { default: 'linear', [reducedMotion]: 'ease' },
+    display: 'flex',
+  },
+  viewport: {
+    gap: 'var(--logo-marquee-gap)',
+    overflow: 'hidden',
+    display: 'flex',
+    inlineSize: 'min(100%, var(--logo-marquee-max-width))',
+    maskImage: 'linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent)',
+  },
+});

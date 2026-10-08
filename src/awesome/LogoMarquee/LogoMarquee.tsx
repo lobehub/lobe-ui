@@ -1,10 +1,15 @@
 'use client';
 
+import './style.css';
+
+import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { type CSSProperties, memo } from 'react';
 
 import { renderLandingIcon } from '@/awesome/landingIcon';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
+import { logoMarqueeMarker } from './marker.stylex';
 import { styles } from './style';
 import type { LogoMarqueeProps } from './type';
 
@@ -14,9 +19,9 @@ const Track = ({
   iconSize,
   items,
 }: Pick<LogoMarqueeProps, 'iconOnly' | 'items'> & { hidden?: boolean; iconSize: number }) => (
-  <div aria-hidden={hidden || undefined} className={styles.track}>
+  <div aria-hidden={hidden || undefined} {...stylex.props(styles.track)}>
     {items.map(({ icon, label }) => (
-      <span className={styles.item} key={label} title={iconOnly ? label : undefined}>
+      <span key={label} title={iconOnly ? label : undefined} {...stylex.props(styles.item)}>
         {renderLandingIcon(icon, iconSize)}
         {!iconOnly && label}
       </span>
@@ -44,12 +49,16 @@ const LogoMarquee = memo<LogoMarqueeProps>(
     } as CSSProperties;
 
     return (
-      <div className={cx(styles.root, className)} style={{ ...variables, ...style }} {...rest}>
-        <div className={styles.viewport}>
+      <div {...styleProps(styles.root, className, { ...variables, ...style })} {...rest}>
+        <div {...stylex.props(logoMarqueeMarker, styles.viewport)}>
           <Track iconOnly={iconOnly} iconSize={iconSize} items={items} />
           <Track hidden iconOnly={iconOnly} iconSize={iconSize} items={items} />
         </div>
-        {caption && <p className={styles.caption}>{caption}</p>}
+        {caption && (
+          <p className={clsx('lobe-logo-marquee-caption', stylex.props(styles.caption).className)}>
+            {caption}
+          </p>
+        )}
       </div>
     );
   },

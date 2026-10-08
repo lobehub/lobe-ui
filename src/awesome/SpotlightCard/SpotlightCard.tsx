@@ -3,8 +3,9 @@
 import { memo, useEffect, useMemo, useRef } from 'react';
 
 import Grid from '@/Grid';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
+import { spotlightCardMarker } from './marker.stylex';
 import SpotlightCardItem from './SpotlightCardItem';
 import { CHILDREN_CLASSNAME, styles } from './style';
 import type { SpotlightCardProps } from './type';
@@ -54,15 +55,14 @@ const SpotlightCard = memo<SpotlightCardProps>(
 
     return (
       <Grid
-        className={cx(styles.container, styles.grid, className)}
         gap={gap}
         maxItemWidth={maxItemWidth}
         ref={ref}
         rows={columns}
-        style={{
+        {...styleProps([spotlightCardMarker, styles.grid], className, {
           ...cssVariables,
           ...style,
-        }}
+        })}
         {...rest}
       >
         {items.map((item, index) => {

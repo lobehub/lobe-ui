@@ -1,0 +1,7 @@
+@layer lobe-ui {
+  @media (width <= 479.98px) {
+    .lobe-landing-actions[data-size='large'] > * {
+      flex: 1;
+    }
+  }
+}
