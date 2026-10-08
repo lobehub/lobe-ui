@@ -51,6 +51,7 @@ const InputNumber = memo<InputNumberProps>(
     return (
       <NumberField.Root
         allowWheelScrub={changeOnWheel}
+        data-variant={mergedVariant}
         format={mergedFormat}
         onValueChange={onChange}
         {...rest}

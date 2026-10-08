@@ -50,6 +50,7 @@ const Input = memo<InputProps>(
     return (
       <div
         data-disabled={disabled ? '' : undefined}
+        data-variant={mergedVariant}
         {...styleProps(inputRootStyles({ shadow, size, variant: mergedVariant }), className, style)}
       >
         {prefix && (
