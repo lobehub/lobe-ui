@@ -1,17 +1,19 @@
 'use client';
 
+import clsx from 'clsx';
 import { X } from 'lucide-react';
 import type { CSSProperties } from 'react';
 import { memo, useCallback, useMemo } from 'react';
 
-import { cx } from '@/styles';
+import { focusRing } from '@/styles/stylex/focusRing';
+import { styleProps } from '@/styles/stylex/props';
 
 import {
   DrawerBackdrop,
-  DrawerContent,
+  DrawerContentImpl,
   DrawerFooter,
   DrawerHeader,
-  DrawerPopup,
+  DrawerPopupImpl,
   DrawerPortal,
   DrawerRoot,
   type DrawerRootProps,
@@ -89,7 +91,7 @@ const Drawer = memo<DrawerProps>(
     const resolvedHeight = isHorizontal ? height : (height ?? DEFAULT_DRAWER_HEIGHT);
 
     const isFlush = FULL_SIZES.has(String(isHorizontal ? resolvedWidth : resolvedHeight));
-    const surfaceWeightClass = (() => {
+    const surfaceWeight = (() => {
       if (isFlush) return undefined;
       if (pushed) return styles.panelRecessed;
       return mask ? undefined : styles.panelBoosted;
@@ -107,8 +109,7 @@ const Drawer = memo<DrawerProps>(
     const closeNode = closable && (
       <button
         aria-label="Close"
-        className={cx(styles.close, classNames?.close)}
-        style={semanticStyles?.close}
+        {...styleProps([styles.close, focusRing.info], classNames?.close, semanticStyles?.close)}
         type="button"
         onClick={onClose}
       >
@@ -118,8 +119,11 @@ const Drawer = memo<DrawerProps>(
 
     const extraNode = (extra || closeNode) && (
       <div
-        className={cx(styles.extra, !showHeader && styles.extraFloating, classNames?.extra)}
-        style={semanticStyles?.extra}
+        {...styleProps(
+          [styles.extra, !showHeader && styles.extraFloating],
+          classNames?.extra,
+          semanticStyles?.extra,
+        )}
       >
         {extra}
         {closeNode}
@@ -129,14 +133,19 @@ const Drawer = memo<DrawerProps>(
     const bodyNode = hasSidebar ? (
       <>
         <div
-          className={cx(styles.sidebar, classNames?.sidebar)}
-          style={{ width: sidebarWidth, ...semanticStyles?.sidebar }}
+          {...styleProps(styles.sidebar, classNames?.sidebar, {
+            width: sidebarWidth,
+            ...semanticStyles?.sidebar,
+          })}
         >
           {sidebar}
         </div>
         <div
-          className={cx(styles.sidebarContent, classNames?.sidebarContent)}
-          style={semanticStyles?.sidebarContent}
+          {...styleProps(
+            styles.sidebarContent,
+            classNames?.sidebarContent,
+            semanticStyles?.sidebarContent,
+          )}
         >
           {children}
         </div>
@@ -159,13 +168,14 @@ const Drawer = memo<DrawerProps>(
           {mask && (
             <DrawerBackdrop className={classNames?.backdrop} style={semanticStyles?.backdrop} />
           )}
-          <DrawerPopup
+          <DrawerPopupImpl
             className={classNames?.popup}
             flush={isFlush}
             height={resolvedHeight}
             motionProps={{ onAnimationComplete: handleAnimationComplete }}
-            panelClassName={cx(surfaceWeightClass, className, classNames?.panel)}
+            panelClassName={clsx(className, classNames?.panel)}
             panelStyle={{ ...style, ...semanticStyles?.panel }}
+            panelXstyle={surfaceWeight}
             placement={placement}
             popupStyle={semanticStyles?.popup}
             pushOffset={pushOffset}
@@ -174,7 +184,7 @@ const Drawer = memo<DrawerProps>(
             <DrawerPushProvider value={childValue}>
               {showHeader ? (
                 <DrawerHeader className={classNames?.header} style={semanticStyles?.header}>
-                  <div className={styles.containerInner} style={containerStyle}>
+                  <div {...styleProps(styles.containerInner, undefined, containerStyle)}>
                     {showTitle ? (
                       <DrawerTitle className={classNames?.title} style={semanticStyles?.title}>
                         {title}
@@ -188,33 +198,36 @@ const Drawer = memo<DrawerProps>(
               ) : (
                 extraNode
               )}
-              <DrawerContent
-                className={cx(hasSidebar && styles.contentSidebar, classNames?.content)}
+              <DrawerContentImpl
+                className={classNames?.content}
                 style={semanticStyles?.content}
+                xstyle={hasSidebar && styles.contentSidebar}
               >
                 <div
-                  style={{ ...containerStyle, ...semanticStyles?.bodyContent }}
-                  className={cx(
-                    styles.bodyContent,
-                    hasSidebar && styles.bodyContentSidebar,
+                  {...styleProps(
+                    [styles.bodyContent, hasSidebar && styles.bodyContentSidebar],
                     classNames?.bodyContent,
+                    { ...containerStyle, ...semanticStyles?.bodyContent },
                   )}
                 >
                   {bodyNode}
                 </div>
-              </DrawerContent>
+              </DrawerContentImpl>
               {footer && (
                 <DrawerFooter className={classNames?.footer} style={semanticStyles?.footer}>
                   <div
-                    className={cx(styles.containerInner, styles.containerInnerFooter)}
-                    style={containerStyle}
+                    {...styleProps(
+                      [styles.containerInner, styles.containerInnerFooter],
+                      undefined,
+                      containerStyle,
+                    )}
                   >
                     {footer}
                   </div>
                 </DrawerFooter>
               )}
             </DrawerPushProvider>
-          </DrawerPopup>
+          </DrawerPopupImpl>
         </DrawerPortal>
       </DrawerRoot>
     );

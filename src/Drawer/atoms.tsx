@@ -2,6 +2,8 @@
 
 import { Dialog } from '@base-ui/react/dialog';
 import { mergeProps } from '@base-ui/react/merge-props';
+import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { X } from 'lucide-react';
 import { AnimatePresence } from 'motion/react';
 import type React from 'react';
@@ -21,7 +23,8 @@ import { mergeRefs, useMergeRefs } from 'react-merge-refs';
 import { useAppElement } from '@/ConfigProvider/AppElementContext';
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { useMotionComponent } from '@/MotionProvider';
-import { cx } from '@/styles';
+import { focusRing } from '@/styles/stylex/focusRing';
+import { styleProps } from '@/styles/stylex/props';
 
 import { useLayerZIndex } from '../internal/zIndex';
 import { drawerBackdropTransition, getDrawerMotionConfig, pushAxis } from './constants';
@@ -29,29 +32,32 @@ import { DrawerLayerProvider, useDrawerLayer } from './DrawerLayerContext';
 import { styles } from './style';
 import type { DrawerPlacement } from './type';
 
+type XStyle = Parameters<typeof styleProps>[0];
+
 const mergeStateClassName = <TState,>(
-  base: string,
+  xstyle: XStyle,
   className: string | ((state: TState) => string | undefined) | undefined,
 ) => {
-  if (typeof className === 'function') return (state: TState) => cx(base, className(state));
-  return cx(base, className);
+  const base = stylex.props(xstyle).className;
+  if (typeof className === 'function') return (state: TState) => clsx(base, className(state));
+  return clsx(base, className);
 };
 
-const popupPlacementClass: Record<DrawerPlacement, string> = {
+const popupPlacementClass = {
   bottom: styles.popupBottom,
   left: styles.popupLeft,
   right: styles.popupRight,
   top: styles.popupTop,
 };
 
-const panelPlacementClass: Record<DrawerPlacement, string> = {
+const panelPlacementClass = {
   bottom: styles.panelBottom,
   left: styles.panelLeft,
   right: styles.panelRight,
   top: styles.panelTop,
 };
 
-const panelRoundedClass: Record<DrawerPlacement, string> = {
+const panelRoundedClass = {
   bottom: styles.panelRoundedBottom,
   left: styles.panelRoundedLeft,
   right: styles.panelRoundedRight,
@@ -156,7 +162,7 @@ export const DrawerBackdrop = ({ className, style, ...rest }: DrawerBackdropProp
     return (
       <Dialog.Backdrop
         {...rest}
-        className={cx(styles.backdrop, className as string)}
+        className={clsx(stylex.props(styles.backdrop).className, className as string)}
         style={{ ...layerStyle, ...style, transition: 'none' }}
         render={
           <Motion.div
@@ -190,7 +196,7 @@ export type DrawerPopupProps = React.ComponentProps<typeof Dialog.Popup> & {
   width?: number | string;
 };
 
-export const DrawerPopup = ({
+export const DrawerPopupImpl = ({
   className,
   children,
   placement: placementProp = 'right',
@@ -201,10 +207,11 @@ export const DrawerPopup = ({
   motionProps,
   panelClassName,
   panelStyle,
+  panelXstyle,
   popupStyle,
   ref: forwardedRef,
   ...rest
-}: DrawerPopupProps) => {
+}: DrawerPopupProps & { panelXstyle?: XStyle }) => {
   const open = useDrawerOpen();
   const actions = useDrawerActions();
   const layer = useDrawerLayer();
@@ -232,11 +239,14 @@ export const DrawerPopup = ({
     ...sizeStyle,
     ...popupStyle,
   };
-  const popupBaseClassName = cx(styles.popup, popupPlacementClass[placement]);
-  const resolvedPanelClassName = cx(
-    styles.panel,
-    panelPlacementClass[placement],
-    flush ? styles.panelFlush : panelRoundedClass[placement],
+  const popupXstyle = [styles.popup, popupPlacementClass[placement]];
+  const resolvedPanelClassName = clsx(
+    stylex.props(
+      styles.panel,
+      panelPlacementClass[placement],
+      flush ? styles.panelFlush : panelRoundedClass[placement],
+      panelXstyle,
+    ).className,
     panelClassName,
   );
 
@@ -245,7 +255,7 @@ export const DrawerPopup = ({
     return (
       <Dialog.Popup
         {...rest}
-        className={cx(popupBaseClassName, className as string)}
+        className={clsx(stylex.props(popupXstyle).className, className as string)}
         data-drawer-anchor={placement}
         ref={composedRef as any}
         style={resolvedPopupStyle}
@@ -276,7 +286,7 @@ export const DrawerPopup = ({
   return (
     <Dialog.Popup
       {...rest}
-      className={mergeStateClassName(popupBaseClassName, className as any) as any}
+      className={mergeStateClassName(popupXstyle, className as any) as any}
       data-drawer-anchor={placement}
       ref={composedRef as any}
       style={resolvedPopupStyle}
@@ -292,11 +302,13 @@ export const DrawerPopup = ({
   );
 };
 
+export const DrawerPopup: React.FC<DrawerPopupProps> = DrawerPopupImpl;
+
 export type DrawerHeaderProps = React.HTMLAttributes<HTMLDivElement> & {
   ref?: React.Ref<HTMLDivElement>;
 };
-export const DrawerHeader = ({ className, ...rest }: DrawerHeaderProps) => (
-  <div {...rest} className={cx(styles.header, className)} />
+export const DrawerHeader = ({ className, style, ...rest }: DrawerHeaderProps) => (
+  <div {...rest} {...styleProps(styles.header, className, style)} />
 );
 
 export type DrawerTitleProps = React.ComponentProps<typeof Dialog.Title>;
@@ -310,20 +322,29 @@ export const DrawerDescription: React.FC<DrawerDescriptionProps> = Dialog.Descri
 export type DrawerContentProps = React.HTMLAttributes<HTMLDivElement> & {
   ref?: React.Ref<HTMLDivElement>;
 };
-export const DrawerContent = ({ className, ...rest }: DrawerContentProps) => (
-  <div {...rest} className={cx(styles.content, className)} />
+export const DrawerContentImpl = ({
+  className,
+  style,
+  xstyle,
+  ...rest
+}: DrawerContentProps & { xstyle?: XStyle }) => (
+  <div {...rest} {...styleProps([styles.content, xstyle], className, style)} />
 );
+export const DrawerContent: React.FC<DrawerContentProps> = DrawerContentImpl;
 
 export type DrawerFooterProps = React.HTMLAttributes<HTMLDivElement> & {
   ref?: React.Ref<HTMLDivElement>;
 };
-export const DrawerFooter = ({ className, ...rest }: DrawerFooterProps) => (
-  <div {...rest} className={cx(styles.footer, className)} />
+export const DrawerFooter = ({ className, style, ...rest }: DrawerFooterProps) => (
+  <div {...rest} {...styleProps(styles.footer, className, style)} />
 );
 
 export type DrawerCloseProps = React.ComponentProps<typeof Dialog.Close>;
 export const DrawerClose = ({ className, children, ...rest }: DrawerCloseProps) => (
-  <Dialog.Close {...rest} className={mergeStateClassName(styles.close, className as any) as any}>
+  <Dialog.Close
+    {...rest}
+    className={mergeStateClassName([styles.close, focusRing.info], className as any) as any}
+  >
     {children ?? <X size={16} />}
   </Dialog.Close>
 );
