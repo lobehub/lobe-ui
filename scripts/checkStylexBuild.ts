@@ -2,7 +2,24 @@ import { existsSync, globSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 
 const es = path.resolve(import.meta.dirname, '../es');
-const migrated = ['Button', 'Divider', 'Spin', 'Switch', 'Tag', 'Tooltip'];
+const migrated = [
+  'Button',
+  'Divider',
+  'Spin',
+  'Switch',
+  'Tag',
+  'Tooltip',
+  'chat',
+  'mdx',
+  'Markdown',
+  'Highlighter',
+  'Mermaid',
+  'CodeDiff',
+  'CodeEditor',
+  'Snippet',
+  'HtmlPreview',
+  'storybook',
+];
 
 const errors: string[] = [];
 const fail = (message: string) => errors.push(message);
