@@ -1,9 +1,10 @@
 'use client';
 
+import clsx from 'clsx';
 import { type FC } from 'react';
 import useControlledState from 'use-merge-value';
 
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
 import { TabsIndicator, TabsList, TabsPanel, TabsRoot, TabsTab } from './atoms';
 import { styles } from './style';
@@ -36,20 +37,22 @@ const Tabs: FC<TabsProps> = ({
 
   return (
     <TabsRoot
-      className={cx(styles.root, classNames?.root, className)}
+      {...styleProps(styles.root, clsx(classNames?.root, className), {
+        ...style,
+        ...customStyles?.root,
+      })}
       orientation={orientation}
       ref={ref}
       size={size}
-      style={{ ...style, ...customStyles?.root }}
       value={value}
       variant={variant}
       onValueChange={(next) => setValue(next ?? null)}
     >
-      <TabsList className={cx(classNames?.list)} style={customStyles?.list}>
-        <TabsIndicator className={cx(classNames?.indicator)} style={customStyles?.indicator} />
+      <TabsList className={classNames?.list} style={customStyles?.list}>
+        <TabsIndicator className={classNames?.indicator} style={customStyles?.indicator} />
         {items?.map((item) => (
           <TabsTab
-            className={cx(classNames?.tab)}
+            className={classNames?.tab}
             disabled={item.disabled}
             key={item.key}
             style={customStyles?.tab}
@@ -63,7 +66,7 @@ const Tabs: FC<TabsProps> = ({
       {hasPanels &&
         items?.map((item) => (
           <TabsPanel
-            className={cx(classNames?.panel)}
+            className={classNames?.panel}
             key={item.key}
             style={customStyles?.panel}
             value={item.key}
