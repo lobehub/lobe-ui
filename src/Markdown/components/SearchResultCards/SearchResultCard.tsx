@@ -42,6 +42,7 @@ const SearchResultCard = memo<SearchResultCardProps>(({ ref, url, title, alt, ..
         clickable
         className={'lobe-search-result-card'}
         gap={2}
+        height={'100%'}
         justify={'space-between'}
         key={url}
         paddingBlock={6}

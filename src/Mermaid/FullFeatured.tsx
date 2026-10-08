@@ -10,6 +10,7 @@ import { Flexbox } from '@/Flex';
 import {
   bodyStyles,
   expandCls,
+  headerFlexProps,
   headerStyles,
   rootClassName,
   rootStyles,
@@ -117,6 +118,7 @@ export const MermaidFullFeatured = memo<MermaidFullFeaturedProps>(
     return (
       <Flexbox
         data-code-type="mermaid"
+        width={'100%'}
         {...rest}
         {...styleProps(rootStyles({ shadow, variant }), rootClassName(false, className), style)}
       >
@@ -125,6 +127,7 @@ export const MermaidFullFeatured = memo<MermaidFullFeaturedProps>(
           align={'center'}
           justify={'space-between'}
           onClick={handleToggleExpand}
+          {...headerFlexProps(variant)}
           {...styleProps(headerStyles(variant), classNames?.header, customStyles?.header)}
         >
           <MermaidHeaderLanguage
@@ -144,6 +147,7 @@ export const MermaidFullFeatured = memo<MermaidFullFeaturedProps>(
           </Flexbox>
         </Flexbox>
         <Flexbox
+          height={expand ? undefined : 0}
           {...styleProps(
             bodyStyles(expand, variant),
             clsx(expand && expandCls, classNames?.body),

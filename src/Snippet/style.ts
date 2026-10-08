@@ -16,11 +16,7 @@ export const styles = stylex.create({
   root: {
     borderRadius: cssVar.borderRadius,
     overflow: 'hidden',
-    paddingBlock: 0,
-    paddingInlineEnd: 8,
-    paddingInlineStart: 12,
     position: 'relative',
-    height: 38,
     maxWidth: '100%',
   },
   shadow: {

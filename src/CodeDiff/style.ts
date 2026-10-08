@@ -56,19 +56,11 @@ export const styles = stylex.create({
     backgroundColor: cssVar.colorFillQuaternary,
   },
   header: {
-    padding: 4,
-    gap: 8,
-    alignItems: 'center',
     color: cssVar.colorTextSecondary,
     cursor: 'pointer',
-    display: 'flex',
     fontFamily: cssVar.fontFamilyCode,
     fontSize: 13,
-    justifyContent: 'space-between',
     position: 'relative',
-  },
-  headerBorderless: {
-    paddingInline: 0,
   },
   headerFilled: {
     backgroundColor: 'transparent',
@@ -79,11 +71,6 @@ export const styles = stylex.create({
     transition: `background-color 100ms ${cssVar.motionEaseOut}`,
     position: 'relative',
     width: '100%',
-  },
-  stats: {
-    gap: 8,
-    alignItems: 'center',
-    display: 'flex',
   },
 });
 

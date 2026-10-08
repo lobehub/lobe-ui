@@ -147,6 +147,7 @@ export const Highlighter = memo<HighlighterProps>(
     return (
       <Flexbox
         data-code-type="highlighter"
+        width={'100%'}
         {...rest}
         {...styleProps(rootStyles({ shadow, variant }), rootClassName(wrap, className), rest.style)}
       >

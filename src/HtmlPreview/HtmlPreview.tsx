@@ -397,6 +397,7 @@ const HtmlPreview = memo<HtmlPreviewProps>(
           align={'center'}
           flex={'none'}
           gap={4}
+          padding={4}
           onClick={stopPropagation}
           {...styleProps(
             styles.toolbar,

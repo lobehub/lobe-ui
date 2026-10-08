@@ -2,8 +2,6 @@
   .lobe-search-result-card {
     min-width: 160px;
     max-width: 160px;
-    height: 100%;
-
     font-size: 12px;
     color: initial;
   }

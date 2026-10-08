@@ -68,6 +68,7 @@ export const DiffPanel = memo<DiffPanelProps>(
       return (
         <Flexbox
           data-code-type={dataCodeType}
+          width={'100%'}
           {...rest}
           {...styleProps(rootStyles, clsx(prefix, className), rest.style)}
         >
@@ -88,6 +89,7 @@ export const DiffPanel = memo<DiffPanelProps>(
     return (
       <Flexbox
         data-code-type={dataCodeType}
+        width={'100%'}
         {...rest}
         {...styleProps(rootStyles, clsx(prefix, className), rest.style)}
       >
@@ -95,14 +97,13 @@ export const DiffPanel = memo<DiffPanelProps>(
           <Flexbox
             horizontal
             align="center"
+            gap={8}
             justify="space-between"
+            padding={4}
+            paddingInline={variant === 'borderless' ? 0 : undefined}
             onClick={handleToggleExpand}
             {...styleProps(
-              [
-                styles.header,
-                variant === 'filled' && styles.headerFilled,
-                variant === 'borderless' && styles.headerBorderless,
-              ],
+              [styles.header, variant === 'filled' && styles.headerFilled],
               classNames?.header,
               customStyles?.header,
             )}
@@ -140,7 +141,7 @@ export const DiffPanel = memo<DiffPanelProps>(
                 </Flexbox>
               )}
               {(deletions > 0 || additions > 0) && (
-                <Flexbox horizontal gap={8} {...stylex.props(styles.stats)}>
+                <Flexbox horizontal align="center" gap={8}>
                   {deletions > 0 && <span {...stylex.props(styles.deletions)}>-{deletions}</span>}
                   {additions > 0 && <span {...stylex.props(styles.additions)}>+{additions}</span>}
                 </Flexbox>

@@ -31,6 +31,9 @@ const Snippet: FC<SnippetProps> = ({
       align={'center'}
       data-code-type="highlighter"
       gap={8}
+      height={38}
+      paddingBlock={0}
+      paddingInline={'12px 8px'}
       ref={ref}
       {...rest}
       {...styleProps(

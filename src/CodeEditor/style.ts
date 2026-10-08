@@ -16,10 +16,8 @@ export const styles = stylex.create({
     borderRadius: cssVar.borderRadius,
     fontSize: 12,
     position: 'relative',
-    height: 'fit-content',
     overflowX: 'hidden',
     overflowY: 'auto',
-    width: '100%',
   },
   textarea: {
     'padding': 0,

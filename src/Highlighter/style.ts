@@ -27,7 +27,6 @@ export const styles = stylex.create({
   },
   bodyCollapsed: {
     opacity: 0,
-    height: 0,
   },
   bodyDivider: {
     borderBlockStartColor: cssVar.colorFillQuaternary,
@@ -38,12 +37,8 @@ export const styles = stylex.create({
     backgroundColor: cssVar.colorFillQuaternary,
   },
   header: {
-    padding: 4,
     cursor: 'pointer',
     position: 'relative',
-  },
-  headerBorderless: {
-    paddingInline: 0,
   },
   headerFilled: {
     backgroundColor: 'transparent',
@@ -87,8 +82,12 @@ export const rootClassName = (wrap?: boolean, className?: string) =>
 export const headerStyles = (variant: Variant = 'filled') => [
   styles.header,
   variant === 'filled' && styles.headerFilled,
-  variant === 'borderless' && styles.headerBorderless,
 ];
+
+export const headerFlexProps = (variant: Variant = 'filled') => ({
+  padding: 4,
+  paddingInline: variant === 'borderless' ? 0 : undefined,
+});
 
 export const bodyStyles = (expand: boolean, variant: Variant = 'filled') => [
   styles.body,

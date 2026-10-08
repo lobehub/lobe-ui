@@ -41,8 +41,8 @@ const CodeEditor = memo<CodeEditorProps>(
     return (
       <Flexbox
         flex={flex}
-        height={height}
-        width={width}
+        height={height ?? 'fit-content'}
+        width={width ?? '100%'}
         {...styleProps(
           [styles.root, variantStyles[variant]],
           clsx(

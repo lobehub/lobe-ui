@@ -14,7 +14,14 @@ import Text from '@/Text';
 import { stopPropagation } from '@/utils/dom';
 
 import LangSelect from './LangSelect';
-import { bodyStyles, expandCls, headerStyles, rootClassName, rootStyles } from './style';
+import {
+  bodyStyles,
+  expandCls,
+  headerFlexProps,
+  headerStyles,
+  rootClassName,
+  rootStyles,
+} from './style';
 import { type HighlighterProps } from './type';
 
 interface HeaderLanguageProps {
@@ -152,6 +159,7 @@ export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps & { chi
     return (
       <Flexbox
         data-code-type="highlighter"
+        width={'100%'}
         {...rest}
         {...styleProps(rootStyles({ shadow, variant }), rootClassName(wrap, className), style)}
       >
@@ -160,6 +168,7 @@ export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps & { chi
           align={'center'}
           justify={'space-between'}
           onClick={handleToggleExpand}
+          {...headerFlexProps(variant)}
           {...styleProps(headerStyles(variant), classNames?.header, customStyles?.header)}
         >
           <HeaderLanguage
@@ -184,6 +193,7 @@ export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps & { chi
           </Flexbox>
         </Flexbox>
         <Flexbox
+          height={expand ? undefined : 0}
           {...styleProps(
             bodyStyles(expand, variant),
             clsx(expand && expandCls, classNames?.body),

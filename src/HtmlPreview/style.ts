@@ -66,7 +66,6 @@ export const styles = stylex.create({
     height: '100%',
   },
   toolbar: {
-    padding: 4,
     borderRadius: cssVar.borderRadiusLG,
     transition: `opacity 0.2s ${cssVar.motionEaseOut}`,
     backdropFilter: 'blur(8px)',
