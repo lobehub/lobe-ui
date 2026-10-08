@@ -1,10 +1,12 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { Star } from 'lucide-react';
 import { type KeyboardEvent, memo, useState } from 'react';
 import useControlledState from 'use-merge-value';
 
-import { cssVar, cx } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { styleProps } from '@/styles/stylex/props';
 
 import { styles } from './style';
 import type { RateProps } from './type';
@@ -73,8 +75,6 @@ const Rate = memo<RateProps>(
 
     return (
       <div
-        className={cx(styles.root, className)}
-        style={{ gap: gap ?? size / 2, ...style }}
         onKeyDown={handleKeyDown}
         onPointerLeave={(event) => {
           onPointerLeave?.(event);
@@ -82,6 +82,7 @@ const Rate = memo<RateProps>(
         }}
         {...a11yProps}
         {...rest}
+        {...styleProps(styles.root, className, { gap: gap ?? size / 2, ...style })}
       >
         {Array.from({ length: count }, (_, index) => {
           const fill = clamp(displayValue - index, 0, 1);
@@ -90,23 +91,23 @@ const Rate = memo<RateProps>(
           return (
             <span
               aria-hidden="true"
-              className={styles.star}
               data-index={index}
               key={index}
-              style={{ fontSize: size, height: size }}
+              {...styleProps([styles.star, interactive && styles.starInteractive], undefined, {
+                fontSize: size,
+                height: size,
+              })}
             >
-              <span className={cx(styles.icon, styles.empty)} style={{ minWidth: size }}>
+              <span {...styleProps([styles.icon, styles.empty], undefined, { minWidth: size })}>
                 {icon}
               </span>
-              <span className={styles.fill} style={{ color, width: `${fill * 100}%` }}>
-                <span className={styles.icon} style={{ minWidth: size }}>
-                  {icon}
-                </span>
+              <span {...styleProps(styles.fill, undefined, { color, width: `${fill * 100}%` })}>
+                <span {...styleProps(styles.icon, undefined, { minWidth: size })}>{icon}</span>
               </span>
               {interactive &&
                 targets.map((target) => (
                   <span
-                    className={styles.half}
+                    {...stylex.props(styles.half)}
                     data-half={target % 1 === 0 && allowHalf ? 'end' : 'start'}
                     data-value={target}
                     key={target}

@@ -1,77 +1,63 @@
-import { createStaticStyles } from '@/styles';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  empty: css`
-    /* Group opacity instead of the translucent colorFill so the star's stroke and fill don't double up where they overlap. */
-    color: ${cssVar.colorText};
-    opacity: 0.12;
-  `,
-  fill: css`
-    pointer-events: none;
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-    position: absolute;
-    inset-block: 0;
-    inset-inline-start: 0;
+const reducedMotion = '@media (prefers-reduced-motion: reduce)';
+const sliderFocus = ":is([role='slider']):focus-visible";
+const sliderEnabled = ":is([role='slider']):not([aria-disabled='true'])";
+const disabled = ":is([aria-disabled='true'])";
 
-    overflow: hidden;
-    display: flex;
-  `,
-  half: css`
-    position: absolute;
-    inset-block: 0;
-    width: 50%;
-
-    &[data-half='start'] {
-      inset-inline-start: 0;
-    }
-
-    &[data-half='end'] {
-      inset-inline-end: 0;
-    }
-  `,
-  icon: css`
-    display: inline-flex;
-    flex: none;
-    align-items: center;
-    justify-content: center;
-  `,
-  root: css`
-    display: inline-flex;
-    align-items: center;
-    line-height: 1;
-    outline: none;
-
-    &[role='slider'] {
-      cursor: pointer;
-    }
-
-    &[role='slider']:focus-visible {
-      border-radius: 4px;
-      outline: 2px solid ${cssVar.colorText};
-      outline-offset: 2px;
-    }
-
-    &[aria-disabled='true'] {
-      cursor: not-allowed;
-      opacity: 0.5;
-    }
-  `,
-  star: css`
-    position: relative;
-
-    display: inline-flex;
-    flex: none;
-    align-items: center;
-    justify-content: center;
-
-    transition: transform 0.15s ease;
-
-    [role='slider']:not([aria-disabled='true']) > &:hover {
-      transform: scale(1.1);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      transition: none;
-    }
-  `,
-}));
+export const styles = stylex.create({
+  empty: {
+    color: cssVar.colorText,
+    // Group opacity instead of the translucent colorFill so the star's stroke and fill don't double up where they overlap.
+    opacity: 0.12,
+  },
+  fill: {
+    insetBlock: 0,
+    overflow: 'hidden',
+    display: 'flex',
+    insetInlineStart: 0,
+    pointerEvents: 'none',
+    position: 'absolute',
+  },
+  half: {
+    insetBlock: 0,
+    insetInlineEnd: { 'default': null, ":is([data-half='end'])": 0 },
+    insetInlineStart: { 'default': null, ":is([data-half='start'])": 0 },
+    position: 'absolute',
+    width: '50%',
+  },
+  icon: {
+    flex: 'none',
+    alignItems: 'center',
+    display: 'inline-flex',
+    justifyContent: 'center',
+  },
+  root: {
+    borderRadius: { default: null, [sliderFocus]: 4 },
+    outline: { default: 'none', [sliderFocus]: `2px solid ${cssVar.colorText}` },
+    alignItems: 'center',
+    cursor: {
+      default: null,
+      [disabled]: 'not-allowed',
+      [sliderEnabled]: 'pointer',
+    },
+    display: 'inline-flex',
+    lineHeight: 1,
+    opacity: { default: null, [disabled]: 0.5 },
+    outlineOffset: { default: null, [sliderFocus]: 2 },
+  },
+  star: {
+    flex: 'none',
+    transition: 'transform 0.15s ease',
+    alignItems: 'center',
+    display: 'inline-flex',
+    justifyContent: 'center',
+    position: 'relative',
+    transitionDuration: { default: null, [reducedMotion]: '0s' },
+  },
+  starInteractive: {
+    transform: { 'default': null, ':hover': 'scale(1.1)' },
+  },
+});
