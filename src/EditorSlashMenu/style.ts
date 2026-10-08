@@ -1,26 +1,21 @@
-'use client';
+import * as stylex from '@stylexjs/stylex';
 
-import { createStaticStyles } from '@/styles';
-
-export const styles = createStaticStyles(({ css }) => ({
-  // Optional hidden input for keyboard navigation (opt-in).
-  hiddenInput: css`
-    position: absolute;
-
-    overflow: hidden;
-
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    padding: 0;
-    border: 0;
-
-    white-space: nowrap;
-
-    clip: rect(0, 0, 0, 0);
-  `,
-  list: css`
-    overflow: auto;
-    max-height: 320px;
-  `,
-}));
+export const styles = stylex.create({
+  hiddenInput: {
+    margin: -1,
+    padding: 0,
+    borderColor: 'currentcolor',
+    borderStyle: 'none',
+    borderWidth: 0,
+    overflow: 'hidden',
+    clip: 'rect(0, 0, 0, 0)',
+    position: 'absolute',
+    whiteSpace: 'nowrap',
+    height: 1,
+    width: 1,
+  },
+  list: {
+    overflow: 'auto',
+    maxHeight: 320,
+  },
+});
