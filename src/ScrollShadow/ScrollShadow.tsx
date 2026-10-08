@@ -6,11 +6,21 @@ import { mergeRefs } from 'react-merge-refs';
 
 import { Flexbox } from '@/Flex';
 import { useEventCallback } from '@/hooks/useEventCallback';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
-import { variants } from './style';
+import { styles } from './style';
 import type { ScrollShadowProps } from './type';
 import { useScrollOverflow } from './useScrollOverflow';
+
+const scrollPositionStyles = {
+  'bottom': styles.bottom,
+  'left': styles.left,
+  'left-right': styles.leftRight,
+  'none': null,
+  'right': styles.right,
+  'top': styles.top,
+  'top-bottom': styles.topBottom,
+};
 
 const ScrollShadow: FC<ScrollShadowProps> = ({
   className,
@@ -116,8 +126,18 @@ const ScrollShadow: FC<ScrollShadowProps> = ({
 
   return (
     <Flexbox
-      className={cx(variants({ hideScrollBar, orientation, scrollPosition }), className)}
       ref={mergeRefs<HTMLDivElement>([domRef, ref])}
+      className={
+        styleProps(
+          [
+            styles.root,
+            styles[orientation],
+            hideScrollBar && styles.hideScrollBar,
+            scrollPositionStyles[scrollPosition],
+          ],
+          className,
+        ).className
+      }
       style={{
         ...cssVariables,
         ...style,

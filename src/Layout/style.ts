@@ -1,46 +1,39 @@
-import { createStaticStyles, cx, lobeStaticStylish } from '@/styles';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css }) => {
-  return {
-    app: css`
-      overflow: hidden auto;
-      height: 100dvh;
-    `,
-    aside: css`
-      position: sticky;
-      z-index: 2;
-      height: 100%;
-    `,
-    asideInner: css`
-      overflow: hidden auto;
-      width: 100%;
-      height: calc(100dvh - var(--layout-header-height, 64px));
-    `,
-    content: css`
-      position: relative;
-      flex: 1;
-      max-width: 100%;
-    `,
-
-    footer: css`
-      position: relative;
-      max-width: 100%;
-    `,
-    header: cx(
-      lobeStaticStylish.blur,
-      css`
-        position: sticky;
-        z-index: 999;
-        inset-block-start: 0;
-        max-width: 100%;
-      `,
-    ),
-    main: css`
-      position: relative;
-      display: flex;
-      align-items: stretch;
-      max-width: 100vw;
-    `,
-    toc: css``,
-  };
+export const styles = stylex.create({
+  aside: {
+    position: 'sticky',
+    zIndex: 2,
+    height: '100%',
+  },
+  asideInner: {
+    height: 'calc(100dvh - var(--layout-header-height, 64px))',
+    overflowX: 'hidden',
+    overflowY: 'auto',
+    width: '100%',
+  },
+  content: {
+    flexBasis: '0%',
+    flexGrow: 1,
+    flexShrink: 1,
+    position: 'relative',
+    maxWidth: '100%',
+  },
+  footer: {
+    position: 'relative',
+    maxWidth: '100%',
+  },
+  header: {
+    backdropFilter: 'saturate(150%) blur(10px)',
+    insetBlockStart: 0,
+    position: 'sticky',
+    zIndex: 999,
+    maxWidth: '100%',
+  },
+  main: {
+    alignItems: 'stretch',
+    display: 'flex',
+    position: 'relative',
+    maxWidth: '100vw',
+  },
 });
