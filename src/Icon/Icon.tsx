@@ -1,13 +1,14 @@
 'use client';
 
+import clsx from 'clsx';
 import type { LucideIcon } from 'lucide-react';
 import { isValidElement, memo, useMemo } from 'react';
 
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
 import { useIconContext } from './components/IconProvider';
 import { calcSize } from './components/utils';
-import { variants } from './style';
+import { styles } from './style';
 import type { IconProps } from './type';
 
 const Icon = memo<IconProps>(
@@ -44,8 +45,10 @@ const Icon = memo<IconProps>(
 
     return (
       <span
-        className={cx(variants({ spin }), classNameConfig, className)}
         role="img"
+        className={
+          styleProps(spin && styles.spin, clsx('anticon', classNameConfig, className)).className
+        }
         {...restConfig}
         {...rest}
       >
