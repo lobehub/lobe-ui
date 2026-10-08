@@ -3,18 +3,23 @@
 import './global.css';
 
 import { ScrollArea as BaseScrollArea } from '@base-ui/react/scroll-area';
+import clsx from 'clsx';
 import type React from 'react';
+import type { ReactElement } from 'react';
 
-import { cx } from '@/styles';
+import { focusRing } from '@/styles/stylex/focusRing';
+import { styleProps } from '@/styles/stylex/props';
 
 import { styles } from './style';
+
+const classNameOf = (styles: Parameters<typeof styleProps>[0]) => styleProps(styles).className;
 
 const mergeStateClassName = <TState,>(
   base: string,
   className: string | ((state: TState) => string | undefined) | undefined,
 ) => {
-  if (typeof className === 'function') return (state: TState) => cx(base, className(state));
-  return cx(base, className);
+  if (typeof className === 'function') return (state: TState) => clsx(base, className(state));
+  return clsx(base, className);
 };
 
 export type ScrollAreaRootProps = React.ComponentProps<typeof BaseScrollArea.Root>;
@@ -41,7 +46,10 @@ export type ScrollAreaCornerProps = React.ComponentProps<typeof BaseScrollArea.C
 
 export const ScrollAreaRoot = ({ className, ...rest }: ScrollAreaRootProps) => {
   return (
-    <BaseScrollArea.Root {...rest} className={mergeStateClassName(styles.root, className) as any} />
+    <BaseScrollArea.Root
+      {...rest}
+      className={mergeStateClassName(classNameOf(styles.root), className) as any}
+    />
   );
 };
 
@@ -52,27 +60,38 @@ const resolveFadeClass = (
 ): string | undefined => {
   if (!scrollFade) return undefined;
   const orientation: ScrollAreaFadeOrientation = scrollFade === true ? 'vertical' : scrollFade;
-  if (orientation === 'horizontal') return styles.viewportFadeHorizontal;
-  if (orientation === 'both') return styles.viewportFadeBoth;
-  return styles.viewportFade;
+  if (orientation === 'horizontal') return 'lobe-scroll-area-fade-horizontal';
+  if (orientation === 'both') return 'lobe-scroll-area-fade-both';
+  return 'lobe-scroll-area-fade';
 };
 
-export const ScrollAreaViewport = ({
+export const ScrollAreaViewportImpl = ({
   className,
   scrollFade = false,
+  xstyle,
   ...rest
-}: ScrollAreaViewportProps) => {
+}: ScrollAreaViewportProps & { xstyle?: Parameters<typeof styleProps>[0] }) => {
   return (
     <BaseScrollArea.Viewport
       {...rest}
       className={
-        mergeStateClassName(cx(styles.viewport, resolveFadeClass(scrollFade)), className) as any
+        mergeStateClassName(
+          clsx(
+            classNameOf([styles.viewport, focusRing.info, xstyle]),
+            resolveFadeClass(scrollFade),
+          ),
+          className,
+        ) as any
       }
     />
   );
 };
 
-ScrollAreaViewport.displayName = 'ScrollAreaViewport';
+ScrollAreaViewportImpl.displayName = 'ScrollAreaViewport';
+
+export const ScrollAreaViewport = ScrollAreaViewportImpl as (
+  props: ScrollAreaViewportProps,
+) => ReactElement;
 
 export const ScrollAreaContent = BaseScrollArea.Content;
 
@@ -80,7 +99,7 @@ export const ScrollAreaScrollbar = ({ className, ...rest }: ScrollAreaScrollbarP
   return (
     <BaseScrollArea.Scrollbar
       {...rest}
-      className={mergeStateClassName(styles.scrollbar, className) as any}
+      className={mergeStateClassName(classNameOf(styles.scrollbar), className) as any}
     />
   );
 };
@@ -91,7 +110,7 @@ export const ScrollAreaThumb = ({ className, ...rest }: ScrollAreaThumbProps) =>
   return (
     <BaseScrollArea.Thumb
       {...rest}
-      className={mergeStateClassName(styles.thumb, className) as any}
+      className={mergeStateClassName(classNameOf(styles.thumb), className) as any}
     />
   );
 };
@@ -102,7 +121,7 @@ export const ScrollAreaCorner = ({ className, ...rest }: ScrollAreaCornerProps) 
   return (
     <BaseScrollArea.Corner
       {...rest}
-      className={mergeStateClassName(styles.corner, className) as any}
+      className={mergeStateClassName(classNameOf(styles.corner), className) as any}
     />
   );
 };
