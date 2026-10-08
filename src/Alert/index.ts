@@ -1,6 +1,6 @@
 export { default } from './Alert';
 export { default as Alert } from './Alert';
-export { styles as alertStyles } from './style';
+export { alertStyles } from './style';
 export type {
   AlertClassNames,
   AlertCloseConfig,
