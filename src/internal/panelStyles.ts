@@ -39,7 +39,7 @@ const styles = stylex.create({
     borderWidth: 0,
     color: cssVar.colorText,
     cursor: 'pointer',
-    fontFamily: 'inherit',
+    font: 'inherit',
     fontSize: 22,
     fontWeight: 600,
     letterSpacing: '-0.01em',
