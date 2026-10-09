@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.57.2](https://github.com/lobehub/lobe-ui/compare/v5.57.1...v5.57.2) (2026-10-09)
+
+### 🐛 Bug Fixes
+
+- **tooltip**: Stop one-line text wrapping during group trigger switch ([da2215a](https://github.com/lobehub/lobe-ui/commit/da2215a))
+
 ## [5.57.1](https://github.com/lobehub/lobe-ui/compare/v5.57.0...v5.57.1) (2026-10-08)
 
 ### 🎫 Chores
