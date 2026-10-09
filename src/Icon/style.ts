@@ -6,6 +6,12 @@ const spin = stylex.keyframes({
 });
 
 export const styles = stylex.create({
+  root: {
+    alignItems: 'center',
+    display: 'inline-flex',
+    lineHeight: 0,
+    verticalAlign: '-0.125em',
+  },
   spin: {
     animationDuration: '1s',
     animationIterationCount: 'infinite',

@@ -47,7 +47,10 @@ const Icon = memo<IconProps>(
       <span
         role="img"
         className={
-          styleProps(spin && styles.spin, clsx('anticon', classNameConfig, className)).className
+          styleProps(
+            [styles.root, spin && styles.spin],
+            clsx('anticon', classNameConfig, className),
+          ).className
         }
         {...restConfig}
         {...rest}
