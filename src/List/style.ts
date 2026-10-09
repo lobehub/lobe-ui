@@ -91,6 +91,7 @@ export const styles = stylex.create({
   },
   row: {
     font: 'inherit',
+    borderColor: 'currentColor',
     borderRadius: cssVar.borderRadius,
     borderStyle: 'none',
     borderWidth: 0,
