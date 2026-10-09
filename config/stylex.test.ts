@@ -79,6 +79,22 @@ describe('StyleX lightningcss options', () => {
     expect(css).toContain('-webkit-user-select: none');
   });
 
+  it('layers the @property rules emitted by dynamic styles', () => {
+    const css = run(`@layer lobe-ui.priority1, lobe-ui.priority2;
+@property --x-width { syntax: "*"; inherits: false; }
+@property --x-color { syntax: "<color>"; inherits: true; initial-value: red; }
+@layer lobe-ui.priority2{
+.lbw{width:var(--x-width)}
+}`);
+
+    expect(topLevel(css)).toEqual([
+      'layer-block ["lobe-ui","priority1"]',
+      'layer-block ["lobe-ui","priority2"]',
+    ]);
+    expect(css).toContain('@property --x-width');
+    expect(css).toContain('initial-value: red');
+  });
+
   it('leaves output without priority-0 rules or a layer header alone', () => {
     expect(topLevel(run('.lbx{width:var(--w)}'))).toEqual(['style']);
     expect(
