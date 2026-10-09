@@ -1,0 +1,5 @@
+@layer lobe-ui {
+  .lobe-accordion-header-inline > .accordion-action {
+    padding-block: 4px;
+  }
+}

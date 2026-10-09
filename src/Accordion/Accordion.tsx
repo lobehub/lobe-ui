@@ -64,9 +64,6 @@ const Accordion: FC<AccordionProps> = ({
                     styles.action,
                     variant === 'borderless' ? styles.actionBorderless : styles.actionOutlined,
                     item.alwaysShowAction && styles.actionAlwaysVisible,
-                    indicatorPlacement === 'inline' &&
-                      variant !== 'outlined' &&
-                      styles.actionInline,
                   ],
                   clsx('accordion-action', classNames?.action),
                   customStyles?.action,

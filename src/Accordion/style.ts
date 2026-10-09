@@ -37,9 +37,6 @@ export const styles = stylex.create({
   actionBorderless: {
     paddingInlineEnd: 'var(--accordion-hover-inset, 8px)',
   },
-  actionInline: {
-    paddingBlock: 4,
-  },
   actionOutlined: {
     paddingInlineEnd: 16,
   },

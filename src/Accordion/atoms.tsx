@@ -1,7 +1,10 @@
 'use client';
 
+import './style.css';
+
 import { Accordion as BaseUIAccordion } from '@base-ui/react/accordion';
 import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { ChevronDown, ChevronRight, Play } from 'lucide-react';
 import { createContext, type FC, use, useMemo } from 'react';
 
@@ -117,7 +120,7 @@ export const AccordionHeader: FC<AccordionHeaderProps> = ({
 }) => {
   const ctx = useAccordionContext();
   const variant = variantProp ?? ctx.variant;
-  const inline = (placementProp ?? ctx.indicatorPlacement) === 'inline';
+  const inline = (placementProp ?? ctx.indicatorPlacement) === 'inline' && variant !== 'outlined';
 
   return (
     <BaseUIAccordion.Header
@@ -128,9 +131,9 @@ export const AccordionHeader: FC<AccordionHeaderProps> = ({
             styles.header,
             variant === 'borderless' && styles.headerBorderless,
             variant === 'filled' && styles.headerFilled,
-            inline && variant !== 'outlined' && styles.headerInline,
+            inline && styles.headerInline,
           ],
-          className,
+          clsx(inline && 'lobe-accordion-header-inline', className),
         ).className
       }
       {...rest}

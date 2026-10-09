@@ -62,6 +62,23 @@ describe('Accordion', () => {
     expect(getComputedStyle(content).paddingInlineStart).not.toBe('24px');
   });
 
+  test('inline header marks itself so composed .accordion-action children get padded', () => {
+    render(
+      <AccordionRoot indicatorPlacement="inline" variant="borderless">
+        <AccordionItem value="a">
+          <AccordionHeader>
+            <AccordionTrigger>Item A</AccordionTrigger>
+            <div className="accordion-action" data-testid="action" />
+          </AccordionHeader>
+        </AccordionItem>
+      </AccordionRoot>,
+    );
+
+    expect(screen.getByTestId('action').parentElement?.classList).toContain(
+      'lobe-accordion-header-inline',
+    );
+  });
+
   test('default-open panel skips the enter animation', () => {
     render(<Accordion defaultValue={['a']} items={items} />);
 
