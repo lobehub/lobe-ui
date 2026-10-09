@@ -1,10 +1,9 @@
 'use client';
 
-import clsx from 'clsx';
 import { type CSSProperties, memo, type ReactElement, type ReactNode, useRef } from 'react';
 
 import ClearButton from '@/Input/ClearButton';
-import { rootVariants } from '@/Input/style';
+import { inputRootStyles } from '@/Input/style';
 import type { InputSize, InputVariant } from '@/Input/type';
 import { panelStyles } from '@/internal/panelStyles';
 import {
@@ -14,6 +13,7 @@ import {
   PopoverRoot,
   PopoverTriggerElement,
 } from '@/Popover';
+import { styleProps } from '@/styles/stylex/props';
 import { useThemeMode } from '@/styles/theme/scope';
 
 export interface PickerShellProps {
@@ -56,10 +56,14 @@ const PickerShell = memo<PickerShellProps>(
       <div
         data-disabled={disabled ? '' : undefined}
         ref={anchorRef}
-        style={style}
-        className={clsx(
-          rootVariants({ shadow, size, variant: variant || (isDarkMode ? 'filled' : 'outlined') }),
+        {...styleProps(
+          inputRootStyles({
+            shadow,
+            size,
+            variant: variant || (isDarkMode ? 'filled' : 'outlined'),
+          }),
           className,
+          style,
         )}
       >
         <PopoverRoot open={open} onOpenChange={(next) => !disabled && onOpenChange(next)}>
@@ -67,8 +71,8 @@ const PickerShell = memo<PickerShellProps>(
           <PopoverPortal>
             <PopoverPositioner anchor={anchorRef} placement="bottomLeft">
               <PopoverPopup
-                className={panelStyles.popup}
                 ref={popupRef}
+                xstyle={panelStyles.popup}
                 initialFocus={() =>
                   popupRef.current?.querySelector<HTMLElement>('[data-focus-target]') ?? true
                 }

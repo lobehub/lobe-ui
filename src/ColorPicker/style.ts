@@ -16,6 +16,9 @@ export const styles = stylex.create({
     backgroundSize: '100% 100%, 8px 8px, 8px 8px !important',
     height: '10px !important',
   },
+  eyeDropper: {
+    marginInlineStart: 'auto',
+  },
   hexField: {
     minWidth: 0,
   },
@@ -47,7 +50,7 @@ export const styles = stylex.create({
     borderStyle: 'none',
     borderWidth: 0,
     boxShadow: {
-      default: null,
+      'default': null,
       ":is([aria-pressed='true'])": `0 0 0 2px ${cssVar.colorBgElevated}, 0 0 0 4px ${cssVar.colorText}`,
     },
     cursor: 'pointer',
@@ -103,10 +106,10 @@ export const styles = stylex.create({
     borderWidth: 0,
     alignItems: 'center',
     backgroundColor: 'transparent',
-    cursor: { default: 'pointer', ':disabled': 'not-allowed' },
+    cursor: { 'default': 'pointer', ':disabled': 'not-allowed' },
     display: 'inline-flex',
     justifyContent: 'center',
-    opacity: { default: null, ':disabled': 0.5 },
+    opacity: { 'default': null, ':disabled': 0.5 },
     height: 32,
     width: 32,
   },
@@ -114,7 +117,7 @@ export const styles = stylex.create({
     flex: '1',
   },
   textTrigger: {
-    width: 'auto !important',
+    width: 'auto',
   },
   thumb: {
     borderColor: '#fff',

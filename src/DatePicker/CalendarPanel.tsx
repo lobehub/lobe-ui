@@ -1,7 +1,6 @@
 'use client';
 
 import * as stylex from '@stylexjs/stylex';
-import clsx from 'clsx';
 import dayjs from 'dayjs';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { type KeyboardEvent, memo, useEffect, useRef, useState } from 'react';
@@ -114,7 +113,11 @@ const CalendarPanel = memo<CalendarPanelProps>(
           onMouseLeave={() => onHover?.(null)}
         >
           {getWeekdayLabels(weekStart).map((label) => (
-            <span className={clsx(stylex.props(styles.weekday).className, panelStyles.label)} key={label} role="columnheader">
+            <span
+              key={label}
+              role="columnheader"
+              {...stylex.props(styles.weekday, panelStyles.label)}
+            >
               {label}
             </span>
           ))}
@@ -220,7 +223,7 @@ const CalendarPanel = memo<CalendarPanelProps>(
         return (
           <>
             {current.format('MMMM')}{' '}
-            <span className={panelStyles.titleMuted}>{current.format('YYYY')}</span>
+            <span {...stylex.props(panelStyles.titleMuted)}>{current.format('YYYY')}</span>
           </>
         );
       if (view === 'month') return current.format('YYYY');
@@ -231,7 +234,7 @@ const CalendarPanel = memo<CalendarPanelProps>(
       <div {...stylex.props(styles.calendar)}>
         <div {...stylex.props(styles.header)}>
           <button
-            className={panelStyles.title}
+            {...stylex.props(panelStyles.title)}
             disabled={view === 'year'}
             type="button"
             onClick={drillUp}
@@ -242,7 +245,7 @@ const CalendarPanel = memo<CalendarPanelProps>(
             <div {...stylex.props(styles.navGroup)}>
               <button
                 aria-label={t('datePicker.previous')}
-                className={panelStyles.nav}
+                {...stylex.props(panelStyles.nav)}
                 type="button"
                 onClick={() => step(-1)}
               >
@@ -250,7 +253,7 @@ const CalendarPanel = memo<CalendarPanelProps>(
               </button>
               <button
                 aria-label={t('datePicker.next')}
-                className={panelStyles.nav}
+                {...stylex.props(panelStyles.nav)}
                 type="button"
                 onClick={() => step(1)}
               >

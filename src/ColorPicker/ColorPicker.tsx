@@ -1,7 +1,6 @@
 'use client';
 
 import * as stylex from '@stylexjs/stylex';
-import clsx from 'clsx';
 import { Pipette } from 'lucide-react';
 import { type CSSProperties, memo, useEffect, useRef, useState } from 'react';
 import useControlledState from 'use-merge-value';
@@ -10,7 +9,7 @@ import colorPickerMessages from '@/i18n/resources/en/colorPicker';
 import { useTranslation } from '@/i18n/useTranslation';
 import Icon from '@/Icon';
 import { Input, InputNumber } from '@/Input';
-import { rootVariants } from '@/Input/style';
+import { inputRootStyles } from '@/Input/style';
 import { panelStyles } from '@/internal/panelStyles';
 import {
   PopoverPopup,
@@ -94,12 +93,14 @@ const ColorPicker = memo<ColorPickerProps>(
         <button
           aria-label={t('colorPicker.trigger')}
           disabled={disabled}
-          style={{ cursor: 'pointer', ...style }}
           type="button"
-          className={clsx(
-            rootVariants({ size, variant: isDarkMode ? 'filled' : 'outlined' }),
-            stylex.props(styles.textTrigger).className,
+          {...styleProps(
+            [
+              ...inputRootStyles({ size, variant: isDarkMode ? 'filled' : 'outlined' }),
+              styles.textTrigger,
+            ],
             className,
+            { cursor: 'pointer', ...style },
           )}
         >
           {swatch(18)}
@@ -124,8 +125,8 @@ const ColorPicker = memo<ColorPickerProps>(
         <PopoverPortal>
           <PopoverPositioner placement="bottomLeft">
             <PopoverPopup
-              className={panelStyles.popup}
               ref={popupRef}
+              xstyle={panelStyles.popup}
               initialFocus={() =>
                 popupRef.current?.querySelector<HTMLElement>('[role="slider"]') ?? true
               }
@@ -135,15 +136,14 @@ const ColorPicker = memo<ColorPickerProps>(
                   {swatch(40)}
                   <div>
                     <div {...stylex.props(styles.value)}>{hex.toUpperCase()}</div>
-                    <div className={panelStyles.label}>
+                    <div {...stylex.props(panelStyles.label)}>
                       {alpha ? `HEX · ${Math.round(hsva.a * 100)}%` : 'HEX'}
                     </div>
                   </div>
                   {hasEyeDropper() && (
                     <button
                       aria-label={t('colorPicker.eyeDropper')}
-                      className={panelStyles.nav}
-                      style={{ marginInlineStart: 'auto' }}
+                      {...stylex.props(panelStyles.nav, styles.eyeDropper)}
                       type="button"
                       onClick={async () => {
                         const dropper = new (
@@ -204,7 +204,7 @@ const ColorPicker = memo<ColorPickerProps>(
                   <Input
                     aria-label="HEX"
                     className={stylex.props(styles.hexField).className}
-                    prefix={<span className={panelStyles.label}>HEX</span>}
+                    prefix={<span {...stylex.props(panelStyles.label)}>HEX</span>}
                     value={draft}
                     variant="filled"
                     onBlur={commitDraft}

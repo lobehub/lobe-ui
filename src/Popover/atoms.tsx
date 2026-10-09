@@ -178,14 +178,16 @@ export const PopoverPositioner = ({
 
 PopoverPositioner.displayName = 'PopoverPositioner';
 
-export type PopoverPopupAtomProps = ComponentProps<typeof BasePopover.Popup>;
+export type PopoverPopupAtomProps = ComponentProps<typeof BasePopover.Popup> & {
+  xstyle?: stylex.StyleXStyles;
+};
 
-export const PopoverPopup = ({ className, ...rest }: PopoverPopupAtomProps) => {
+export const PopoverPopup = ({ className, xstyle, ...rest }: PopoverPopupAtomProps) => {
   return (
     <BasePopover.Popup
       className={(state) =>
         clsx(
-          stylex.props(styles.popup).className,
+          stylex.props(styles.popup, xstyle).className,
           typeof className === 'function' ? className(state) : className,
         )
       }
