@@ -2,12 +2,12 @@
 
 import { mergeProps } from '@base-ui/react/merge-props';
 import { Popover as BasePopover } from '@base-ui/react/popover';
+import clsx from 'clsx';
 import { cloneElement, type FC, isValidElement, useMemo } from 'react';
 import { use } from 'react';
 import { mergeRefs } from 'react-merge-refs';
 
 import { useNativeButton } from '@/hooks/useNativeButton';
-import { cx } from '@/styles';
 import { parseTrigger } from '@/utils/parseTrigger';
 
 import { PopoverGroupHandleContext } from './groupContext';
@@ -69,7 +69,7 @@ export const PopoverInGroup: FC<PopoverProps> = ({ children, ref: refProp, ...pr
           const mergedProps = mergeProps((children as any).props, resolvedProps);
           return cloneElement(children as any, {
             ...mergedProps,
-            className: cx(mergedProps.className, triggerClassName),
+            className: clsx(mergedProps.className, triggerClassName),
             ref: mergeRefs([(children as any).ref, (renderProps as any).ref, refProp]),
           });
         }}

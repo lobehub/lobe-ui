@@ -1,182 +1,165 @@
-import { createStaticStyles } from '@/styles';
+import * as stylex from '@stylexjs/stylex';
 
-import { TOAST_DODGE_DURATION, TOAST_DODGE_EASE } from '../Toast/dodge';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  body: css`
-    overflow: hidden auto;
-    flex: 1;
-    min-height: 0;
-    padding: 0;
-  `,
-  close: css`
-    position: static;
+const dodgeDuration = '608ms';
+const dodgeEase =
+  'linear(0, 0.08, 0.249, 0.437, 0.607, 0.745, 0.847, 0.917, 0.963, 0.99, 1.004, 1.011, 1.012, 1.011, 1.009, 1.007, 1.005, 1.003, 1.002, 1)';
+const reducedMotion = '@media (prefers-reduced-motion: reduce)';
+const dodge = `${dodgeDuration} ${dodgeEase}`;
+const wrapperTransition = `padding-block-end ${dodge}, padding-block-start ${dodge}, padding-inline-end ${dodge}, padding-inline-start ${dodge}`;
+const handleActive = ':is(:hover, :focus-visible)';
 
-    width: 32px;
-    height: 32px;
-    margin-inline-end: -4px;
-    border-radius: 8px;
-  `,
-  actions: css`
-    display: flex;
-    flex: none;
-    gap: 4px;
-    align-items: center;
-  `,
-  footer: css`
-    flex: none;
-    border-block-start: 1px solid ${cssVar.colorBorderSecondary};
-  `,
-  header: css`
-    flex: none;
-    min-height: 48px;
-    border-block-end: 1px solid ${cssVar.colorBorderSecondary};
-  `,
-  headerActions: css`
-    display: flex;
-    flex: none;
-    gap: 4px;
-    align-items: center;
-  `,
-  panel: css`
-    transform-origin: 100% 100%;
-
-    width: calc(100dvw - 32px);
-    max-height: calc(100dvh - 32px - var(--floating-panel-reserve-block-end, 0px));
-    border-radius: 12px;
-
-    box-shadow: ${cssVar.boxShadowSecondary}, var(--lobe-ring);
-  `,
-  panelTop: css`
-    transform-origin: 100% 0;
-  `,
-  resizeHandle: css`
-    touch-action: none;
-    position: absolute;
-    z-index: 1;
-    background: transparent;
-
-    &::after {
-      content: '';
-
-      position: absolute;
-
-      border-radius: 999px;
-
-      opacity: 0;
-      background: ${cssVar.colorPrimary};
-
-      transition: opacity 120ms ease;
-    }
-
-    &:hover::after,
-    &:focus-visible::after {
-      opacity: 0.55;
-    }
-  `,
-  resizeHandleBottom: css`
-    cursor: ns-resize;
-    inset-block-end: -4px;
-    inset-inline: 16px;
-    height: 8px;
-
-    &::after {
-      inset-block-end: 3px;
-      inset-inline: 0;
-      height: 2px;
-    }
-  `,
-  resizeHandleBottomLeft: css`
-    cursor: nesw-resize;
-
-    inset-block-end: -5px;
-    inset-inline-start: -5px;
-
-    width: 16px;
-    height: 16px;
-  `,
-  resizeHandleBottomRight: css`
-    cursor: nwse-resize;
-
-    inset-block-end: -5px;
-    inset-inline-end: -5px;
-
-    width: 16px;
-    height: 16px;
-  `,
-  resizeHandleLeft: css`
-    cursor: ew-resize;
-    inset-block: 16px;
-    inset-inline-start: -4px;
-    width: 8px;
-
-    &::after {
-      inset-block: 0;
-      inset-inline-start: 3px;
-      width: 2px;
-    }
-  `,
-  resizeHandleRight: css`
-    cursor: ew-resize;
-    inset-block: 16px;
-    inset-inline-end: -4px;
-    width: 8px;
-
-    &::after {
-      inset-block: 0;
-      inset-inline-end: 3px;
-      width: 2px;
-    }
-  `,
-  resizeHandleTop: css`
-    cursor: ns-resize;
-    inset-block-start: -4px;
-    inset-inline: 16px;
-    height: 8px;
-
-    &::after {
-      inset-block-start: 3px;
-      inset-inline: 0;
-      height: 2px;
-    }
-  `,
-  resizeHandleTopLeft: css`
-    cursor: nwse-resize;
-
-    inset-block-start: -5px;
-    inset-inline-start: -5px;
-
-    width: 16px;
-    height: 16px;
-  `,
-  resizeHandleTopRight: css`
-    cursor: nesw-resize;
-
-    inset-block-start: -5px;
-    inset-inline-end: -5px;
-
-    width: 16px;
-    height: 16px;
-  `,
-  title: css`
-    overflow: hidden;
-    flex: 1;
-
-    min-width: 0;
-
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  `,
-  wrapper: css`
-    overflow: hidden;
-    transition:
-      padding-block-end ${TOAST_DODGE_DURATION} ${TOAST_DODGE_EASE},
-      padding-block-start ${TOAST_DODGE_DURATION} ${TOAST_DODGE_EASE},
-      padding-inline-end ${TOAST_DODGE_DURATION} ${TOAST_DODGE_EASE},
-      padding-inline-start ${TOAST_DODGE_DURATION} ${TOAST_DODGE_EASE};
-
-    @media (prefers-reduced-motion: reduce) {
-      transition: none;
-    }
-  `,
-}));
+export const styles = stylex.create({
+  actions: {
+    flex: 'none',
+    gap: 4,
+    alignItems: 'center',
+    display: 'flex',
+  },
+  body: {
+    flex: '1',
+    paddingInline: 0,
+    paddingBlockEnd: 0,
+    paddingBlockStart: 0,
+    minHeight: 0,
+    overflowX: 'hidden',
+    overflowY: 'auto',
+  },
+  close: {
+    borderRadius: 8,
+    marginInlineEnd: -4,
+    position: 'static',
+    height: 32,
+    width: 32,
+  },
+  footer: {
+    flex: 'none',
+    borderBlockStartColor: cssVar.colorBorderSecondary,
+    borderBlockStartStyle: 'solid',
+    borderBlockStartWidth: 1,
+  },
+  header: {
+    flex: 'none',
+    borderBlockEndColor: cssVar.colorBorderSecondary,
+    borderBlockEndStyle: 'solid',
+    borderBlockEndWidth: 1,
+    minHeight: 48,
+  },
+  headerActions: {
+    flex: 'none',
+    gap: 4,
+    alignItems: 'center',
+    display: 'flex',
+  },
+  panel: {
+    borderRadius: 12,
+    boxShadow: `${cssVar.boxShadowSecondary}, var(--lobe-ring)`,
+    transformOrigin: '100% 100%',
+    maxHeight: 'calc(100dvh - 32px - var(--floating-panel-reserve-block-end, 0px))',
+    width: 'calc(100dvw - 32px)',
+  },
+  panelTop: {
+    transformOrigin: '100% 0',
+  },
+  resizeHandle: {
+    'backgroundColor': 'transparent',
+    'position': 'absolute',
+    'touchAction': 'none',
+    'zIndex': 1,
+    '::after': {
+      borderRadius: 999,
+      transition: 'opacity 120ms ease',
+      backgroundColor: cssVar.colorPrimary,
+      content: '""',
+      opacity: { default: 0, [handleActive]: 0.55 },
+      position: 'absolute',
+    },
+  },
+  resizeHandleBottom: {
+    'insetInline': 16,
+    'cursor': 'ns-resize',
+    'insetBlockEnd': -4,
+    'height': 8,
+    '::after': {
+      insetInline: 0,
+      insetBlockEnd: 3,
+      height: 2,
+    },
+  },
+  resizeHandleBottomLeft: {
+    cursor: 'nesw-resize',
+    insetBlockEnd: -5,
+    insetInlineStart: -5,
+    height: 16,
+    width: 16,
+  },
+  resizeHandleBottomRight: {
+    cursor: 'nwse-resize',
+    insetBlockEnd: -5,
+    insetInlineEnd: -5,
+    height: 16,
+    width: 16,
+  },
+  resizeHandleLeft: {
+    'insetBlock': 16,
+    'cursor': 'ew-resize',
+    'insetInlineStart': -4,
+    'width': 8,
+    '::after': {
+      insetBlock: 0,
+      insetInlineStart: 3,
+      width: 2,
+    },
+  },
+  resizeHandleRight: {
+    'insetBlock': 16,
+    'cursor': 'ew-resize',
+    'insetInlineEnd': -4,
+    'width': 8,
+    '::after': {
+      insetBlock: 0,
+      insetInlineEnd: 3,
+      width: 2,
+    },
+  },
+  resizeHandleTop: {
+    'insetInline': 16,
+    'cursor': 'ns-resize',
+    'insetBlockStart': -4,
+    'height': 8,
+    '::after': {
+      insetInline: 0,
+      insetBlockStart: 3,
+      height: 2,
+    },
+  },
+  resizeHandleTopLeft: {
+    cursor: 'nwse-resize',
+    insetBlockStart: -5,
+    insetInlineStart: -5,
+    height: 16,
+    width: 16,
+  },
+  resizeHandleTopRight: {
+    cursor: 'nesw-resize',
+    insetBlockStart: -5,
+    insetInlineEnd: -5,
+    height: 16,
+    width: 16,
+  },
+  title: {
+    flex: '1',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    minWidth: 0,
+  },
+  wrapper: {
+    overflow: 'hidden',
+    transition: wrapperTransition,
+    transitionDuration: { default: null, [reducedMotion]: '0s' },
+    transitionProperty: { default: null, [reducedMotion]: 'none' },
+    transitionTimingFunction: { default: null, [reducedMotion]: 'ease' },
+  },
+});

@@ -86,6 +86,20 @@ const migrated = [
   'SortableList',
   'Text',
   'Video',
+  'AutoComplete',
+  'ColorPicker',
+  'ContextMenu',
+  'DatePicker',
+  'Drawer',
+  'DropdownMenu',
+  'EditorSlashMenu',
+  'EmojiPicker',
+  'FloatingPanel',
+  'FloatingSheet',
+  'Modal',
+  'Popover',
+  'Select',
+  'Toast',
 ];
 
 const errors: string[] = [];

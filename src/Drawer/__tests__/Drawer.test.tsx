@@ -1,3 +1,4 @@
+import * as stylex from '@stylexjs/stylex';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { motion } from 'motion/react';
 import type { ReactNode } from 'react';
@@ -5,24 +6,22 @@ import type { ReactNode } from 'react';
 import ConfigProvider from '@/ConfigProvider';
 
 import Drawer from '../Drawer';
+import { styles } from '../style';
 import type { DrawerPlacement } from '../type';
 
-// Echoes each style key back as its own class name so surface variants stay assertable.
-vi.mock('@/styles/css', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('@/styles/css')>();
-  return {
-    ...actual,
-    createStaticStyles: vi.fn((fn: any) => {
-      const result = fn({ css: () => '', cssVar: new Proxy({}, { get: () => '' }) });
-      return new Proxy(result, { get: (_target, key) => String(key) });
-    }),
-  };
-});
 
 const renderWithProvider = (node: ReactNode) =>
   render(<ConfigProvider motion={motion}>{node}</ConfigProvider>);
 
 const getPanel = () => document.querySelector('[data-drawer-placement]');
+
+const hasStyle = (el: Element | null | undefined, key: keyof typeof styles) =>
+  stylex
+    .props(styles[key])
+    .className!.split(' ')
+    .every((name) => el?.classList.contains(name));
+
+const rounded = ['panelRoundedBottom', 'panelRoundedLeft', 'panelRoundedRight', 'panelRoundedTop'] as const;
 
 describe('Drawer', () => {
   test('renders title, extra, footer, and children when open', () => {
@@ -183,8 +182,8 @@ describe('Drawer', () => {
       </Drawer>,
     );
 
-    expect(getPanel()?.className).toContain('panelRoundedBottom');
-    expect(getPanel()?.className).not.toContain('panelFlush');
+    expect(hasStyle(getPanel(), 'panelRoundedBottom')).toBe(true);
+    expect(hasStyle(getPanel(), 'panelFlush')).toBe(false);
   });
 
   test('drops the cast and the radius once it fills the viewport', () => {
@@ -194,8 +193,8 @@ describe('Drawer', () => {
       </Drawer>,
     );
 
-    expect(getPanel()?.className).toContain('panelFlush');
-    expect(getPanel()?.className).not.toContain('panelRounded');
+    expect(hasStyle(getPanel(), 'panelFlush')).toBe(true);
+    expect(rounded.some((key) => hasStyle(getPanel(), key))).toBe(false);
   });
 
   test('deepens the cast when there is no backdrop to separate it', () => {
@@ -205,7 +204,7 @@ describe('Drawer', () => {
       </Drawer>,
     );
 
-    expect(getPanel()?.className).toContain('panelBoosted');
+    expect(hasStyle(getPanel(), 'panelBoosted')).toBe(true);
   });
 
   test('lightens the cast on an ancestor that a nested drawer pushed aside', () => {
@@ -218,8 +217,8 @@ describe('Drawer', () => {
     );
 
     const [outer, inner] = document.querySelectorAll('[data-drawer-placement]');
-    expect(outer.className).toContain('panelRecessed');
-    expect(inner.className).not.toContain('panelRecessed');
+    expect(hasStyle(outer, 'panelRecessed')).toBe(true);
+    expect(hasStyle(inner, 'panelRecessed')).toBe(false);
   });
 
   test('follows a placement change while it stays open', () => {

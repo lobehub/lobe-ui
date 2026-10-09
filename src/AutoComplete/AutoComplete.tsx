@@ -1,6 +1,7 @@
 'use client';
 
 import { Autocomplete } from '@base-ui/react/autocomplete';
+import clsx from 'clsx';
 import { XIcon } from 'lucide-react';
 import { memo, useMemo, useRef } from 'react';
 
@@ -9,7 +10,7 @@ import Icon from '@/Icon';
 import { inputStyles, inputVariants } from '@/Input';
 import { getFloatingCollisionPadding } from '@/internal/floating';
 import { useLayerZIndex } from '@/internal/zIndex';
-import { cx, useThemeMode } from '@/styles';
+import { useThemeMode } from '@/styles/theme/scope';
 
 import { styles } from './style';
 import type { AutoCompleteOption, AutoCompleteProps } from './type';
@@ -58,14 +59,14 @@ const AutoComplete = memo<AutoCompleteProps>(
         {...rest}
       >
         <div
-          className={cx(inputVariants({ shadow, size, variant: mergedVariant }), className)}
+          className={clsx(inputVariants({ shadow, size, variant: mergedVariant }), className)}
           data-disabled={disabled ? '' : undefined}
           ref={anchorRef}
           style={style}
         >
           {prefix && <span className={inputStyles.slot}>{prefix}</span>}
           <Autocomplete.Input
-            className={cx(inputStyles.input, classNames?.input)}
+            className={clsx(inputStyles.input, classNames?.input)}
             placeholder={placeholder}
             style={customStyles?.input}
           />
@@ -86,7 +87,7 @@ const AutoComplete = memo<AutoCompleteProps>(
             style={zIndex === undefined ? undefined : { zIndex }}
           >
             <Autocomplete.Popup
-              className={cx(styles.popup, classNames?.popup)}
+              className={clsx(styles.popup, classNames?.popup)}
               style={customStyles?.popup}
             >
               {emptyText && (
@@ -95,7 +96,7 @@ const AutoComplete = memo<AutoCompleteProps>(
               <Autocomplete.List className={styles.list}>
                 {(item: AutoCompleteOption) => (
                   <Autocomplete.Item
-                    className={cx(styles.item, classNames?.item)}
+                    className={clsx(styles.item, classNames?.item)}
                     disabled={item.disabled}
                     key={item.value}
                     style={customStyles?.item}

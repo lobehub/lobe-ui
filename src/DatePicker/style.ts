@@ -1,190 +1,160 @@
-import { focusRing } from '@/internal/focusRing';
-import { createStaticStyles } from '@/styles';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  band: css`
-    background: ${cssVar.colorFillSecondary};
-  `,
-  bandEnd: css`
-    background: linear-gradient(to left, transparent 50%, ${cssVar.colorFillSecondary} 50%);
-  `,
-  bandStart: css`
-    background: linear-gradient(to right, transparent 50%, ${cssVar.colorFillSecondary} 50%);
-  `,
-  calendar: css`
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    width: 266px;
-  `,
-  cell: css`
-    display: flex;
-    justify-content: center;
-  `,
-  day: css`
-    ${focusRing};
-    cursor: pointer;
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+const pressed = ":is([aria-pressed='true'])";
+const dayMuted = ":is(:disabled, [data-outside]):not([aria-pressed='true'])";
+const tileMuted = ":disabled:not([aria-pressed='true'])";
+const hoverable = ":hover:not(:disabled, [aria-pressed='true'])";
 
-    width: 34px;
-    height: 34px;
-    padding: 0;
-    border: 0;
-    border-radius: 50%;
-
-    font: inherit;
-    font-size: 13px;
-    font-variant-numeric: tabular-nums;
-    color: ${cssVar.colorText};
-
-    background: none;
-
-    &:hover:not(:disabled, [aria-pressed='true']) {
-      background: ${cssVar.colorFillTertiary};
-    }
-
-    &:disabled {
-      cursor: not-allowed;
-      color: ${cssVar.colorTextQuaternary};
-    }
-
-    &[data-outside] {
-      color: ${cssVar.colorTextQuaternary};
-    }
-
-    &[data-today] {
-      box-shadow: inset 0 0 0 1px ${cssVar.colorText};
-    }
-
-    &[aria-pressed='true'] {
-      font-weight: 600;
-      color: ${cssVar.colorBgContainer};
-      background: ${cssVar.colorText};
-    }
-  `,
-  footer: css`
-    display: flex;
-    justify-content: center;
-
-    margin-block-start: 12px;
-    padding-block-start: 12px;
-    border-block-start: 1px solid ${cssVar.colorBorderSecondary};
-  `,
-  grid: css`
-    display: grid;
-    grid-template-columns: repeat(7, minmax(0, 1fr));
-    row-gap: 2px;
-  `,
-  header: css`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-block-end: 4px;
-  `,
-  icon: css`
-    display: inline-flex;
-    flex: none;
-    color: ${cssVar.colorTextTertiary};
-  `,
-  navGroup: css`
-    display: flex;
-    gap: 2px;
-  `,
-  placeholder: css`
-    color: ${cssVar.colorTextPlaceholder};
-  `,
-  range: css`
-    display: flex;
-    gap: 28px;
-  `,
-  rangeHalf: css`
-    flex: 1;
-    min-width: 0;
-    padding-block: 2px;
-
-    &[data-active] {
-      box-shadow: inset 0 -2px 0 ${cssVar.colorText};
-    }
-  `,
-  rangeTrigger: css`
-    display: flex;
-    flex: 1;
-    gap: 8px;
-    align-items: center;
-
-    min-width: 0;
-  `,
-  tile: css`
-    ${focusRing};
-    cursor: pointer;
-
-    height: 40px;
-    padding: 0;
-    border: 0;
-    border-radius: 999px;
-
-    font: inherit;
-    font-size: 14px;
-    color: ${cssVar.colorText};
-
-    background: none;
-
-    &:hover:not(:disabled, [aria-pressed='true']) {
-      background: ${cssVar.colorFillTertiary};
-    }
-
-    &:disabled {
-      cursor: not-allowed;
-      color: ${cssVar.colorTextQuaternary};
-    }
-
-    &[data-today] {
-      box-shadow: inset 0 0 0 1px ${cssVar.colorText};
-    }
-
-    &[aria-pressed='true'] {
-      font-weight: 600;
-      color: ${cssVar.colorBgContainer};
-      background: ${cssVar.colorText};
-    }
-  `,
-  tiles: css`
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 6px 4px;
-    width: 266px;
-  `,
-  trigger: css`
-    ${focusRing};
-    cursor: pointer;
-
-    display: flex;
-    flex: 1;
-    align-items: center;
-
-    min-width: 0;
-    height: 100%;
-    padding: 0;
-    border: 0;
-
-    font: inherit;
-    color: inherit;
-    text-align: start;
-    white-space: nowrap;
-
-    background: none;
-
-    &:disabled {
-      cursor: not-allowed;
-    }
-  `,
-  weekday: css`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 20px;
-  `,
-}));
+export const styles = stylex.create({
+  band: {
+    backgroundColor: cssVar.colorFillSecondary,
+  },
+  bandEnd: {
+    backgroundImage: `linear-gradient(to left, transparent 50%, ${cssVar.colorFillSecondary} 50%)`,
+  },
+  bandStart: {
+    backgroundImage: `linear-gradient(to right, transparent 50%, ${cssVar.colorFillSecondary} 50%)`,
+  },
+  calendar: {
+    gap: 8,
+    display: 'flex',
+    flexDirection: 'column',
+    width: 266,
+  },
+  cell: {
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  day: {
+    font: 'inherit',
+    padding: 0,
+    borderColor: 'currentcolor',
+    borderRadius: '50%',
+    borderStyle: 'none',
+    borderWidth: 0,
+    alignItems: 'center',
+    backgroundColor: {
+      default: 'transparent',
+      [hoverable]: cssVar.colorFillTertiary,
+      [pressed]: cssVar.colorText,
+    },
+    boxShadow: { default: null, ':is([data-today])': `inset 0 0 0 1px ${cssVar.colorText}` },
+    color: {
+      [dayMuted]: cssVar.colorTextQuaternary,
+      default: cssVar.colorText,
+      [pressed]: cssVar.colorBgContainer,
+    },
+    cursor: { default: 'pointer', ':disabled': 'not-allowed' },
+    display: 'flex',
+    fontSize: 13,
+    fontVariantNumeric: 'tabular-nums',
+    fontWeight: { default: null, [pressed]: 600 },
+    justifyContent: 'center',
+    height: 34,
+    width: 34,
+  },
+  footer: {
+    borderBlockStartColor: cssVar.colorBorderSecondary,
+    borderBlockStartStyle: 'solid',
+    borderBlockStartWidth: 1,
+    display: 'flex',
+    justifyContent: 'center',
+    marginBlockStart: 12,
+    paddingBlockStart: 12,
+  },
+  grid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(7, minmax(0, 1fr))',
+    rowGap: 2,
+  },
+  header: {
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginBlockEnd: 4,
+  },
+  icon: {
+    flex: 'none',
+    color: cssVar.colorTextTertiary,
+    display: 'inline-flex',
+  },
+  navGroup: {
+    gap: 2,
+    display: 'flex',
+  },
+  placeholder: {
+    color: cssVar.colorTextPlaceholder,
+  },
+  range: {
+    gap: 28,
+    display: 'flex',
+  },
+  rangeHalf: {
+    flex: '1',
+    paddingBlock: 2,
+    boxShadow: { default: null, ':is([data-active])': `inset 0 -2px 0 ${cssVar.colorText}` },
+    minWidth: 0,
+  },
+  rangeTrigger: {
+    flex: '1',
+    gap: 8,
+    alignItems: 'center',
+    display: 'flex',
+    minWidth: 0,
+  },
+  tile: {
+    font: 'inherit',
+    padding: 0,
+    borderColor: 'currentcolor',
+    borderRadius: 999,
+    borderStyle: 'none',
+    borderWidth: 0,
+    backgroundColor: {
+      default: 'transparent',
+      [hoverable]: cssVar.colorFillTertiary,
+      [pressed]: cssVar.colorText,
+    },
+    boxShadow: { default: null, ':is([data-today])': `inset 0 0 0 1px ${cssVar.colorText}` },
+    color: {
+      default: cssVar.colorText,
+      [pressed]: cssVar.colorBgContainer,
+      [tileMuted]: cssVar.colorTextQuaternary,
+    },
+    cursor: { default: 'pointer', ':disabled': 'not-allowed' },
+    fontSize: 14,
+    fontWeight: { default: null, [pressed]: 600 },
+    height: 40,
+  },
+  tiles: {
+    columnGap: 4,
+    display: 'grid',
+    gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
+    rowGap: 6,
+    width: 266,
+  },
+  trigger: {
+    font: 'inherit',
+    padding: 0,
+    borderColor: 'currentcolor',
+    borderStyle: 'none',
+    borderWidth: 0,
+    flex: '1',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    color: 'inherit',
+    cursor: { default: 'pointer', ':disabled': 'not-allowed' },
+    display: 'flex',
+    textAlign: 'start',
+    whiteSpace: 'nowrap',
+    height: '100%',
+    minWidth: 0,
+  },
+  weekday: {
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    height: 20,
+  },
+});

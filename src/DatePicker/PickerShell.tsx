@@ -1,5 +1,6 @@
 'use client';
 
+import clsx from 'clsx';
 import { type CSSProperties, memo, type ReactElement, type ReactNode, useRef } from 'react';
 
 import ClearButton from '@/Input/ClearButton';
@@ -13,7 +14,7 @@ import {
   PopoverRoot,
   PopoverTriggerElement,
 } from '@/Popover';
-import { cx, useThemeMode } from '@/styles';
+import { useThemeMode } from '@/styles/theme/scope';
 
 export interface PickerShellProps {
   children: ReactNode;
@@ -56,7 +57,7 @@ const PickerShell = memo<PickerShellProps>(
         data-disabled={disabled ? '' : undefined}
         ref={anchorRef}
         style={style}
-        className={cx(
+        className={clsx(
           rootVariants({ shadow, size, variant: variant || (isDarkMode ? 'filled' : 'outlined') }),
           className,
         )}

@@ -10,17 +10,6 @@ if (!globalThis.ResizeObserver) {
   } as any;
 }
 
-vi.mock('@/styles/css', async (importOriginal) => {
-  const actual = await importOriginal<any>();
-  return {
-    ...actual,
-    createStaticStyles: vi.fn((fn: any) => () => {
-      const result = fn({ css: () => '', cssVar: {} });
-      return new Proxy(result, { get: (target, key) => target[key] || '' });
-    }),
-  };
-});
-
 describe('FloatingSheet', () => {
   test('renders children when open', () => {
     render(

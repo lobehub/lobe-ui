@@ -1,1 +1,1 @@
-export { styles } from '@/DropdownMenu/sharedStyle';
+export { menuClassNames, menuStyles, styles } from '@/DropdownMenu/sharedStyle';

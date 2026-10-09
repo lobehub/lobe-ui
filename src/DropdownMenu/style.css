@@ -1,0 +1,51 @@
+@layer lobe-ui {
+  .lobe-menu-positioner > * {
+    will-change: opacity, transform;
+    transform-origin: var(--transform-origin);
+    animation: none;
+  }
+
+  .lobe-menu-positioner[data-open] > * {
+    transform: scaleY(1);
+    opacity: 1;
+    transition:
+      opacity var(--lobe-dropdown-animation-duration) var(--lobe-dropdown-animation-ease-out),
+      transform var(--lobe-dropdown-animation-duration) var(--lobe-dropdown-animation-ease-out);
+  }
+
+  .lobe-menu-positioner[data-open] > [data-starting-style],
+  .lobe-menu-positioner[data-closed] > * {
+    transform: scaleY(var(--lobe-dropdown-animation-scale-y));
+    opacity: 0;
+  }
+
+  .lobe-menu-positioner[data-closed] > * {
+    transition:
+      opacity var(--lobe-dropdown-animation-duration) var(--lobe-dropdown-animation-ease-in),
+      transform var(--lobe-dropdown-animation-duration) var(--lobe-dropdown-animation-ease-in);
+  }
+
+  /* Base UI moves data-highlighted with the arrow keys, but :hover keeps painting
+     whatever the resting cursor sits on, so two items light up at once. */
+  .lobe-menu-popup:has([data-highlighted])
+    :is([role^='menuitem'], [role='option']):hover:not([data-highlighted]) {
+    background: transparent !important;
+  }
+
+  .lobe-menu-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .lobe-menu-submenu-arrow svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .lobe-menu-label a,
+  .lobe-menu-label a:visited,
+  .lobe-menu-label a:hover,
+  .lobe-menu-label a:active {
+    color: inherit;
+  }
+}

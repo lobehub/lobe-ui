@@ -1,4 +1,5 @@
 import { ConfigProvider } from '@lobehub/ui';
+import * as stylex from '@stylexjs/stylex';
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { motion } from 'motion/react';
 import type { ReactElement } from 'react';
@@ -154,7 +155,7 @@ it('does not override component typography inside an embedded demo', () => {
       <DocsLayout document={alphaDocument} navigation={[]}>
         <h2>Documentation heading</h2>
         <section data-demo-layout="default">
-          <h2 className={modalStyles.title}>Demo modal title</h2>
+          <h2 {...stylex.props(modalStyles.title)}>Demo modal title</h2>
         </section>
       </DocsLayout>
     </MemoryRouter>,

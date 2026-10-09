@@ -1,11 +1,13 @@
 'use client';
 
 import { Select as BaseSelect } from '@base-ui/react/select';
+import clsx from 'clsx';
 import { type MouseEvent } from 'react';
 import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 
-import { styles as menuStyles } from '@/DropdownMenu/sharedStyle';
-import { cx, useThemeMode } from '@/styles';
+import { menuClassNames, menuStyles } from '@/DropdownMenu/sharedStyle';
+import { styleProps } from '@/styles/stylex/props';
+import { useThemeMode } from '@/styles/theme/scope';
 
 import { SelectPositioner } from './atoms';
 import { isValueEmpty } from './helpers';
@@ -26,7 +28,7 @@ import {
   SelectTriggerSuffix,
 } from './parts';
 import { renderOptions } from './renderOptions';
-import { styles, triggerVariants } from './style';
+import { styles, triggerStyles } from './style';
 import { type SelectOption, type SelectProps } from './type';
 
 const Select = memo<SelectProps<any>>(
@@ -200,19 +202,17 @@ const Select = memo<SelectProps<any>>(
       return { ...baseStyle, minWidth: 'max-content' };
     }, [isItemAligned, listHeight, popupMatchSelectWidth]);
 
-    const triggerClassName = cx(
-      triggerVariants({ shadow, size, variant: resolvedVariant }),
-      className,
-      classNames?.root,
-      classNames?.trigger,
+    const triggerProps = styleProps(
+      triggerStyles({ shadow, size, variant: resolvedVariant }),
+      clsx(className, classNames?.root, classNames?.trigger),
+      style,
     );
 
     const isBoldIndicator = selectedIndicatorVariant === 'bold';
-    const itemTextClassName = cx(
+    const itemTextClassName = styleProps(
       optionRender ? menuStyles.itemContent : menuStyles.label,
-      styles.itemText,
-      classNames?.itemText,
-    );
+      clsx(!optionRender && menuClassNames.label, classNames?.itemText),
+    ).className;
 
     const isEmpty = filteredOptions.length === 0;
     const listContent = isEmpty ? (
@@ -244,17 +244,16 @@ const Select = memo<SelectProps<any>>(
       >
         <BaseSelect.Trigger
           autoFocus={!isTags && autoFocus}
-          className={triggerClassName}
+          {...triggerProps}
           disabled={disabled}
           nativeButton={!isTags}
           render={isTags ? <div /> : undefined}
-          style={style}
         >
           {prefixNode !== null && prefixNode !== undefined && (
-            <span className={cx(styles.prefix, classNames?.prefix)}>{prefixNode}</span>
+            <span {...styleProps(styles.prefix, classNames?.prefix)}>{prefixNode}</span>
           )}
           <BaseSelect.Value
-            className={cx(styles.value, isTags && styles.tagsValue, classNames?.value)}
+            {...styleProps([styles.value, isTags && styles.tagsValue], classNames?.value)}
           >
             {renderValue}
           </BaseSelect.Value>
@@ -284,18 +283,14 @@ const Select = memo<SelectProps<any>>(
           <SelectPositioner
             align="start"
             alignItemWithTrigger={isItemAligned}
-            className={styles.positioner}
             side="bottom"
             sideOffset={6}
           >
             <BaseSelect.Popup
-              style={popupStyle}
-              className={cx(
-                menuStyles.popup,
-                styles.popup,
-                popupClassName,
-                classNames?.popup,
-                classNames?.dropdown,
+              {...styleProps(
+                [menuStyles.popup, styles.popup],
+                clsx(menuClassNames.popup, popupClassName, classNames?.popup, classNames?.dropdown),
+                popupStyle,
               )}
             >
               {shouldShowSearch && !isTags && (

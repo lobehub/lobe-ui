@@ -26,13 +26,13 @@ import {
   DropdownMenuGroupLabel,
   DropdownMenuHeader,
   DropdownMenuItem,
-  DropdownMenuItemContent,
+  DropdownMenuItemContentImpl,
   DropdownMenuItemDesc,
   DropdownMenuItemExtra,
-  DropdownMenuItemIcon,
+  DropdownMenuItemIconImpl,
   DropdownMenuItemLabel,
   DropdownMenuItemLabelGroup,
-  DropdownMenuPopup,
+  DropdownMenuPopupImpl,
   DropdownMenuPortal,
   DropdownMenuPositioner,
   DropdownMenuScrollViewport,
@@ -42,7 +42,7 @@ import {
   DropdownMenuSubmenuTrigger,
   DropdownMenuSwitchItem,
 } from './atoms';
-import { styles } from './sharedStyle';
+import { menuStyles } from './style';
 import {
   type DropdownItem,
   type DropdownMenuCheckboxItem as DropdownMenuCheckboxItemType,
@@ -78,14 +78,14 @@ const renderItemContent = (
   );
 
   return (
-    <DropdownMenuItemContent className={alignStart ? styles.itemContentAlignStart : undefined}>
+    <DropdownMenuItemContentImpl xstyle={alignStart && menuStyles.itemContentAlignStart}>
       {shouldRenderIcon ? (
-        <DropdownMenuItemIcon
+        <DropdownMenuItemIconImpl
           aria-hidden={!hasIcon}
-          className={alignStart ? styles.iconAlignStart : undefined}
+          xstyle={alignStart && menuStyles.iconAlignStart}
         >
           {hasCustomIcon ? iconNode : hasIcon ? renderIcon(item.icon) : null}
-        </DropdownMenuItemIcon>
+        </DropdownMenuItemIconImpl>
       ) : null}
       {labelNode}
       {extra ? <DropdownMenuItemExtra>{extra}</DropdownMenuItemExtra> : null}
@@ -95,7 +95,7 @@ const renderItemContent = (
           <SubmenuArrowIcon />
         </DropdownMenuSubmenuArrow>
       ) : null}
-    </DropdownMenuItemContent>
+    </DropdownMenuItemContentImpl>
   );
 };
 
@@ -250,7 +250,7 @@ export const renderDropdownMenuItems = (
           </DropdownMenuSubmenuTrigger>
           <DropdownMenuPortal>
             <DropdownMenuPositioner alignOffset={-4} data-submenu="" sideOffset={-1}>
-              <DropdownMenuPopup className={submenuHasSlots ? styles.popupWithSlots : undefined}>
+              <DropdownMenuPopupImpl xstyle={submenuHasSlots && menuStyles.popupWithSlots}>
                 {submenu.header == null ? null : (
                   <DropdownMenuHeader>{submenu.header}</DropdownMenuHeader>
                 )}
@@ -262,7 +262,7 @@ export const renderDropdownMenuItems = (
                 {submenu.footer == null ? null : (
                   <DropdownMenuFooter>{submenu.footer}</DropdownMenuFooter>
                 )}
-              </DropdownMenuPopup>
+              </DropdownMenuPopupImpl>
             </DropdownMenuPositioner>
           </DropdownMenuPortal>
         </DropdownMenuSubmenuRoot>

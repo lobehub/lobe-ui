@@ -2,6 +2,8 @@
 
 import { Dialog } from '@base-ui/react/dialog';
 import { mergeProps } from '@base-ui/react/merge-props';
+import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { X } from 'lucide-react';
 import { AnimatePresence } from 'motion/react';
 import type React from 'react';
@@ -20,19 +22,23 @@ import { mergeRefs, useMergeRefs } from 'react-merge-refs';
 import { useAppElement } from '@/ConfigProvider/AppElementContext';
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { useMotionComponent } from '@/MotionProvider';
-import { cx } from '@/styles';
+import { focusRing } from '@/styles/stylex/focusRing';
+import { styleProps } from '@/styles/stylex/props';
 
 import { useLayerZIndex } from '../internal/zIndex';
 import { backdropTransition, modalMotionConfig } from './constants';
 import { ModalLayerProvider, useModalLayer } from './ModalLayerContext';
 import { styles } from './style';
 
+type XStyle = Parameters<typeof styleProps>[0];
+
 const mergeStateClassName = <TState,>(
-  base: string,
+  xstyle: XStyle,
   className: string | ((state: TState) => string | undefined) | undefined,
 ) => {
-  if (typeof className === 'function') return (state: TState) => cx(base, className(state));
-  return cx(base, className);
+  const base = stylex.props(xstyle).className;
+  if (typeof className === 'function') return (state: TState) => clsx(base, className(state));
+  return clsx(base, className);
 };
 
 // --- Animation Contexts (granular to minimize re-renders) ---
@@ -148,7 +154,7 @@ export const ModalBackdrop = ({ className, style, ...rest }: ModalBackdropProps)
     return (
       <Dialog.Backdrop
         {...rest}
-        className={cx(styles.backdrop, className as string)}
+        className={clsx(stylex.props(styles.backdrop).className, className as string)}
         style={{ ...layerStyle, ...style, transition: 'none' }}
         render={
           <Motion.div
@@ -177,17 +183,19 @@ export type ModalPopupProps = React.ComponentProps<typeof Dialog.Popup> & {
   popupStyle?: React.CSSProperties;
   width?: number | string;
 };
-export const ModalPopup = ({
+export const ModalPopupImpl = ({
   className,
   children,
   width,
   style,
   motionProps,
   panelClassName,
+  panelXstyle,
   popupStyle,
   ref: forwardedRef,
+  xstyle,
   ...rest
-}: ModalPopupProps) => {
+}: ModalPopupProps & { panelXstyle?: XStyle; xstyle?: XStyle }) => {
   const open = useModalOpen();
   const actions = useModalActions();
   const layer = useModalLayer();
@@ -199,7 +207,7 @@ export const ModalPopup = ({
     return (
       <Dialog.Popup
         {...rest}
-        className={cx(styles.popup, className as string)}
+        className={clsx(stylex.props(styles.popup, xstyle).className, className as string)}
         ref={composedRef as any}
         style={{ ...popupZIndexStyle, ...popupStyle }}
       >
@@ -208,7 +216,7 @@ export const ModalPopup = ({
             <Motion.div
               {...modalMotionConfig}
               {...motionProps}
-              className={cx(styles.popupInner, panelClassName)}
+              className={clsx(stylex.props(styles.popupInner, panelXstyle).className, panelClassName)}
               key="modal-popup-panel"
               style={{ maxWidth: width ?? undefined, transition: 'none', ...style }}
             >
@@ -223,13 +231,15 @@ export const ModalPopup = ({
   return (
     <Dialog.Popup
       {...rest}
-      className={mergeStateClassName(styles.popup, className as any) as any}
+      className={mergeStateClassName([styles.popup, xstyle], className as any) as any}
       ref={composedRef as any}
       style={{ ...popupZIndexStyle, ...popupStyle }}
     >
       <div
-        className={cx(styles.popupInner, panelClassName)}
-        style={{ maxWidth: width ?? undefined, ...style }}
+        {...styleProps([styles.popupInner, panelXstyle], panelClassName, {
+          maxWidth: width ?? undefined,
+          ...style,
+        })}
       >
         {children}
       </div>
@@ -237,19 +247,35 @@ export const ModalPopup = ({
   );
 };
 
+export const ModalPopup: React.FC<ModalPopupProps> = ModalPopupImpl;
+
 // --- Header ---
 export type ModalHeaderProps = React.HTMLAttributes<HTMLDivElement> & {
   ref?: React.Ref<HTMLDivElement>;
 };
-export const ModalHeader = ({ className, ...rest }: ModalHeaderProps) => (
-  <div {...rest} className={cx(styles.header, className)} />
+export const ModalHeaderImpl = ({
+  className,
+  style,
+  xstyle,
+  ...rest
+}: ModalHeaderProps & { xstyle?: XStyle }) => (
+  <div {...rest} {...styleProps([styles.header, xstyle], className, style)} />
 );
+export const ModalHeader: React.FC<ModalHeaderProps> = ModalHeaderImpl;
 
 // --- Title ---
 export type ModalTitleProps = React.ComponentProps<typeof Dialog.Title>;
-export const ModalTitle = ({ className, ...rest }: ModalTitleProps) => (
-  <Dialog.Title {...rest} className={mergeStateClassName(styles.title, className as any) as any} />
+export const ModalTitleImpl = ({
+  className,
+  xstyle,
+  ...rest
+}: ModalTitleProps & { xstyle?: XStyle }) => (
+  <Dialog.Title
+    {...rest}
+    className={mergeStateClassName([styles.title, xstyle], className as any) as any}
+  />
 );
+export const ModalTitle: React.FC<ModalTitleProps> = ModalTitleImpl;
 
 // --- Description ---
 export type ModalDescriptionProps = React.ComponentProps<typeof Dialog.Description>;
@@ -259,25 +285,51 @@ export const ModalDescription: React.FC<ModalDescriptionProps> = Dialog.Descript
 export type ModalContentProps = React.HTMLAttributes<HTMLDivElement> & {
   ref?: React.Ref<HTMLDivElement>;
 };
-export const ModalContent = ({ className, ...rest }: ModalContentProps) => (
-  <div {...rest} className={cx(styles.content, className)} />
+export const ModalContentImpl = ({
+  className,
+  style,
+  xstyle,
+  ...rest
+}: ModalContentProps & { xstyle?: XStyle }) => (
+  <div {...rest} {...styleProps([styles.content, xstyle], className, style)} />
 );
+export const ModalContent: React.FC<ModalContentProps> = ModalContentImpl;
 
 // --- Footer ---
 export type ModalFooterProps = React.HTMLAttributes<HTMLDivElement> & {
   ref?: React.Ref<HTMLDivElement>;
 };
-export const ModalFooter = ({ className, ...rest }: ModalFooterProps) => (
-  <div {...rest} className={cx(styles.footer, className)} />
+export const ModalFooterImpl = ({
+  className,
+  style,
+  xstyle,
+  ...rest
+}: ModalFooterProps & { xstyle?: XStyle }) => (
+  <div {...rest} {...styleProps([styles.footer, xstyle], className, style)} />
 );
+export const ModalFooter: React.FC<ModalFooterProps> = ModalFooterImpl;
 
 // --- Close ---
 export type ModalCloseProps = React.ComponentProps<typeof Dialog.Close>;
-export const ModalClose = ({ className, children, ...rest }: ModalCloseProps) => (
-  <Dialog.Close {...rest} className={mergeStateClassName(styles.close, className as any) as any}>
+export const ModalCloseImpl = ({
+  className,
+  children,
+  xstyle,
+  ...rest
+}: ModalCloseProps & { xstyle?: XStyle }) => (
+  <Dialog.Close
+    {...rest}
+    className={
+      mergeStateClassName(
+        [styles.closeInline, styles.close, focusRing.info, xstyle],
+        className as any,
+      ) as any
+    }
+  >
     {children ?? <X size={16} />}
   </Dialog.Close>
 );
+export const ModalClose: React.FC<ModalCloseProps> = ModalCloseImpl;
 
 // --- Trigger ---
 export type ModalTriggerProps = Omit<

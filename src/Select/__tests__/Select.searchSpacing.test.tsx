@@ -15,7 +15,7 @@ describe('Select popup search spacing', () => {
       </ConfigProvider>,
     );
 
-    expect(getComputedStyle(screen.getByRole('listbox')).paddingBlockStart).toBe('4px');
+    expect(getComputedStyle(screen.getByRole('listbox')).paddingTop).toBe('4px');
 
     cleanup();
 
@@ -25,6 +25,6 @@ describe('Select popup search spacing', () => {
       </ConfigProvider>,
     );
 
-    expect(getComputedStyle(screen.getByRole('listbox')).paddingBlockStart).not.toBe('4px');
+    expect(getComputedStyle(screen.getByRole('listbox')).paddingTop).not.toBe('4px');
   });
 });
