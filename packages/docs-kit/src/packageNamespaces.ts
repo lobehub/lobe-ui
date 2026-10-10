@@ -8,5 +8,4 @@ export const packageNamespaces = [
   'mdx',
   'mobile',
   'storybook',
-  'base-ui',
 ] as const;

@@ -24,6 +24,9 @@ const resolvedStandaloneDemosVirtualId = `\0${standaloneDemosVirtualId}`;
 const documentModulesVirtualId = 'virtual:lobedocs/document-modules';
 const resolvedDocumentModulesVirtualId = `\0${documentModulesVirtualId}`;
 const homePageVirtualId = 'virtual:lobedocs/home-page';
+const stylexVirtualId = 'virtual:lobedocs/stylex';
+const resolvedStylexVirtualId = `\0${stylexVirtualId}`;
+const stylexBuildCssPath = resolve(import.meta.dirname, '../styles/stylex.css');
 const defaultHomePagePath = resolve(import.meta.dirname, '../components/Home/DefaultHome.tsx');
 
 const getMetadataPath = (id: string): string | undefined => {
@@ -41,9 +44,25 @@ const resolveMetadataPath = (path: string, importer?: string): string => {
   return resolve(path);
 };
 
+const stylexModule = (enabled: boolean, command: 'build' | 'serve') => {
+  if (enabled && command === 'serve') {
+    return `export const stylexLinks = [{ href: '/virtual:stylex.css', rel: 'stylesheet' }];
+export const loadStylexRuntime = () => import('virtual:stylex:runtime');`;
+  }
+  return `${enabled ? `import ${JSON.stringify(stylexBuildCssPath)};\n` : ''}export const stylexLinks = [];
+export const loadStylexRuntime = () => {};`;
+};
+
 export function lobeDocsSiteConfigPlugin(root: string = process.cwd()): Plugin {
+  let command: 'build' | 'serve' = 'serve';
   return {
+    configResolved(config) {
+      command = config.command;
+    },
     load(id) {
+      if (id === resolvedStylexVirtualId) {
+        return stylexModule(Boolean(getDocsConfig(root).stylex), command);
+      }
       if (id === resolvedSiteConfigVirtualId) {
         const config = getDocsConfig(root);
         const clientConfig: ClientSiteConfig = {
@@ -81,6 +100,7 @@ export function lobeDocsSiteConfigPlugin(root: string = process.cwd()): Plugin {
       if (source === siteConfigVirtualId) return resolvedSiteConfigVirtualId;
       if (source === compatibilityVirtualId) return resolvedCompatibilityVirtualId;
       if (source === standaloneDemosVirtualId) return resolvedStandaloneDemosVirtualId;
+      if (source === stylexVirtualId) return resolvedStylexVirtualId;
       if (source === homePageVirtualId) {
         const config = getDocsConfig(root);
         if (!config.homePage) return defaultHomePagePath;

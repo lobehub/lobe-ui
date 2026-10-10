@@ -1,7 +1,8 @@
+import * as stylex from '@stylexjs/stylex';
 import { memo } from 'react';
 
-import { toast } from '@/base-ui/Toast';
 import { Flexbox } from '@/Flex';
+import { toast } from '@/Toast';
 import { copyToClipboard } from '@/utils/copyToClipboard';
 
 import { alphaBg, styles } from './style';
@@ -34,15 +35,15 @@ const ScaleRow = memo<IScaleRow>(({ name, title, scale }) => {
 
   return (
     <Flexbox horizontal align={'center'} gap={2}>
-      <div className={styles.scaleRowTitle} key={title}>
-        <div className={styles.text}>{title}</div>
+      <div {...stylex.props(styles.scaleRowTitle)} key={title}>
+        <div {...stylex.props(styles.text)}>{title}</div>
       </div>
       {scale.map((color, index) => {
         if (index === 0 || index === 12) return false;
 
         return (
           <div
-            className={styles.scaleBox}
+            {...stylex.props(styles.scaleBox)}
             key={index}
             style={style}
             title={color}
@@ -56,7 +57,7 @@ const ScaleRow = memo<IScaleRow>(({ name, title, scale }) => {
             <Flexbox
               horizontal
               align={'center'}
-              className={styles.scaleItem}
+              {...stylex.props(styles.scaleItem)}
               justify={'center'}
               style={{ backgroundColor: color }}
             />

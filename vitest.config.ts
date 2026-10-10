@@ -1,19 +1,22 @@
 import { fileURLToPath } from 'node:url';
 
+import stylex from '@stylexjs/unplugin/vite';
 import { defineConfig } from 'vitest/config';
 
+import { stylexOptions } from './config/stylex';
 import { name } from './package.json';
 import { lobeDocsSiteConfigPlugin } from './packages/docs-kit/site/compiler/vitePlugin';
 
 const srcPath = fileURLToPath(new URL('./src', import.meta.url));
-const antdThemePath = fileURLToPath(new URL('./src/styles/theme/antdTheme.ts', import.meta.url));
 
 export default defineConfig({
-  plugins: [lobeDocsSiteConfigPlugin()],
+  plugins: [stylex({ ...stylexOptions, runtimeInjection: true }), lobeDocsSiteConfigPlugin()],
   resolve: {
     alias: [
-      { find: '@lobehub/ui/es/styles/theme/antdTheme', replacement: antdThemePath },
       { find: '@', replacement: srcPath },
+      { find: `${name}/form`, replacement: `${srcPath}/FormKit` },
+      // Published @lobehub/icons still imports the removed `base-ui` subpath.
+      { find: `${name}/base-ui`, replacement: srcPath },
       { find: name, replacement: srcPath },
     ],
   },

@@ -1,19 +1,15 @@
-import { createStaticStyles } from 'antd-style';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => {
-  return {
-    avatar: css`
-      border: 2px solid ${cssVar.colorBgContainer} !important;
-    `,
-    count: css`
-      &[class*='ant-avatar'] {
-        background: ${cssVar.colorText};
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-        > [class*='ant-avatar-string'] {
-          transform: scale(0.8) !important;
-          color: ${cssVar.colorBgLayout};
-        }
-      }
-    `,
-  };
+export const styles = stylex.create({
+  avatar: {
+    borderColor: cssVar.colorBgContainer,
+    borderStyle: 'solid',
+    borderWidth: 2,
+  },
+  count: {
+    color: cssVar.colorBgLayout,
+    fontSize: '0.8em',
+  },
 });

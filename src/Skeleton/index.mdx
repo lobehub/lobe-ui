@@ -1,119 +1,71 @@
 ---
 title: Skeleton
-description: Skeleton component provides a placeholder loading state for content that is being loaded. It displays animated placeholder blocks that mimic the structure of the actual content, improving user experience during data loading.
+description: Placeholder blocks that stand in for content while it loads. One primitive block, plus text-line and avatar helpers.
 category: Data Display
 ---
 
 import DemoIndex from './demos/index.tsx?demo';
-import DemoWithAvatar from './demos/WithAvatar.tsx?demo';
-import DemoCustom from './demos/Custom.tsx?demo';
+import DemoText from './demos/Text.tsx?demo';
 import DemoAvatar from './demos/Avatar.tsx?demo';
-import DemoBlock from './demos/Block.tsx?demo';
-import DemoButton from './demos/Button.tsx?demo';
-import DemoTitle from './demos/Title.tsx?demo';
-import DemoParagraph from './demos/Paragraph.tsx?demo';
-import DemoTags from './demos/Tags.tsx?demo';
+import DemoComposed from './demos/Composed.tsx?demo';
 
 ## Default
 
 <Demo of={DemoIndex} layout="bare" />
 
-## With Avatar
+## Text
 
-<Demo of={DemoWithAvatar} />
-
-## Custom
-
-<Demo of={DemoCustom} />
+<Demo of={DemoText} />
 
 ## Avatar
 
 <Demo of={DemoAvatar} />
 
-## Block
+## Composed
 
-<Demo of={DemoBlock} />
-
-## Button
-
-<Demo of={DemoButton} />
-
-## Title
-
-<Demo of={DemoTitle} />
-
-## Paragraph
-
-<Demo of={DemoParagraph} />
-
-## Tags
-
-<Demo of={DemoTags} />
+<Demo of={DemoComposed} />
 
 ## APIs
 
 ### Skeleton
 
-<Api name="Skeleton" migrationKey="heading:%5B%22Skeleton%22%5D:0" />
+<Api name="Skeleton" from=".." />
 
-### Skeleton.Avatar
+`Skeleton` renders a plain `<div>`; every standard div attribute is forwarded to it. It is the only primitive — a card, a button, an image or a chart placeholder is this block with a `width`, `height` and `radius`.
 
-| Property | Description           | Type                   | Default    |
-| -------- | --------------------- | ---------------------- | ---------- |
-| active   | Show animation effect | `boolean`              | `true`     |
-| shape    | Shape of the avatar   | `'circle' \| 'square'` | `'circle'` |
-| size     | Size of the avatar    | `number \| string`     | `40`       |
-| width    | Width of the avatar   | `number \| string`     | -          |
-| height   | Height of the avatar  | `number \| string`     | -          |
+`animated` picks the motion: `'fade'` (the default, and what `true` resolves to) pulses the block's opacity, `'sweep'` runs a highlight across it at antd's 1.4s cadence, `false` holds it still. Both animate a compositor-only property — opacity and transform — so neither repaints while it runs, and both stop under `prefers-reduced-motion`.
 
-### Skeleton.Block
+### Skeleton.Text
 
-| Property | Description           | Type               | Default  |
-| -------- | --------------------- | ------------------ | -------- |
-| active   | Show animation effect | `boolean`          | -        |
-| height   | Height of the block   | `number \| string` | `'1em'`  |
-| width    | Width of the block    | `number \| string` | `'100%'` |
-
-### Skeleton.Button
-
-| Property | Description           | Type                               | Default     |
-| -------- | --------------------- | ---------------------------------- | ----------- |
-| active   | Show animation effect | `boolean`                          | `true`      |
-| block    | Fill the parent width | `boolean`                          | `false`     |
-| height   | Height of the button  | `number \| string`                 | -           |
-| shape    | Shape of the button   | `'circle' \| 'round' \| 'default'` | `'default'` |
-| size     | Size of the button    | `'large' \| 'small' \| 'default'`  | `'default'` |
-| width    | Width of the button   | `number \| string`                 | -           |
-
-### Skeleton.Title
-
-| Property   | Description           | Type               | Default |
-| ---------- | --------------------- | ------------------ | ------- |
-| active     | Show animation effect | `boolean`          | `true`  |
-| fontSize   | Font size             | `number`           | -       |
-| height     | Height of the title   | `number \| string` | -       |
-| lineHeight | Line height           | `number`           | -       |
-| width      | Width of the title    | `number \| string` | `'60%'` |
-
-### Skeleton.Paragraph
-
-| Property   | Description           | Type                                       | Default |
-| ---------- | --------------------- | ------------------------------------------ | ------- |
-| active     | Show animation effect | `boolean`                                  | `true`  |
-| fontSize   | Font size             | `number`                                   | -       |
-| gap        | Gap between rows      | `number`                                   | -       |
-| height     | Height of each row    | `number \| string`                         | -       |
-| lineHeight | Line height           | `number`                                   | -       |
-| rows       | Number of rows        | `number`                                   | `3`     |
-| width      | Width of rows         | `number \| string \| (number \| string)[]` | -       |
-
-### Skeleton.Tags
+Lines sized from the font metrics, so a placeholder occupies the same box the real text will.
 
 | Property | Description | Type | Default |
 | --- | --- | --- | --- |
-| active | Show animation effect | `boolean` | `true` |
-| count | Number of placeholder tags | `number` | `3` |
-| gap | Spacing between tags | `number` | `theme.paddingXS` |
-| height | Tag height (can override size) | `number \| string` | `size` map (small: 20, middle: 22, large: 28) |
-| size | Tag size | `'small' \| 'middle' \| 'large'` | `'middle'` |
-| width | Width(s) for each tag | `number \| string \| (number \| string)[]` | `size` map (small: 56, middle: 68, large: 88) |
+| rows | Number of lines | `number` | `1` |
+| fontSize | Font size the lines stand in for | `number` | `fontSize` |
+| lineHeight | Line height the lines stand in for | `number` | `1.6` |
+| width | Width of all lines, or one width per line | `number \| string \| (number \| string)[]` | `'100%'`, last line `'66%'` when `rows > 1` |
+| gap | Explicit gap between lines, replacing half-leading | `number` | - |
+| animated | Motion while loading | `boolean \| 'fade' \| 'sweep'` | `'fade'` |
+
+### Skeleton.Avatar
+
+| Property | Description          | Type                           | Default    |
+| -------- | -------------------- | ------------------------------ | ---------- |
+| size     | Width and height     | `number \| string`             | `40`       |
+| shape    | Avatar shape         | `'circle' \| 'square'`         | `'square'` |
+| animated | Motion while loading | `boolean \| 'fade' \| 'sweep'` | `'fade'`   |
+
+## Migration
+
+The antd-shaped API is gone. `active` is now `animated`, defaults to `'fade'`, and also accepts `'sweep'` for antd's highlight motion.
+
+| Before | After |
+| --- | --- |
+| `<Skeleton.Block height={16} width="60%" />` | `<Skeleton height={16} width="60%" />` |
+| `<Skeleton.Button active style={{ height: 16 }} />` | `<Skeleton height={16} />` |
+| `<Skeleton.Button block size="small" />` | `<Skeleton height={28} />` |
+| `<Skeleton active paragraph={{ rows: 3 }} title={false} />` | `<Skeleton.Text rows={3} />` |
+| `<Skeleton.Paragraph rows={3} fontSize={14} />` | `<Skeleton.Text rows={3} fontSize={14} />` |
+| `<Skeleton.Title fontSize={20} width="30%" />` | `<Skeleton.Text fontSize={20} width="30%" />` |
+| `<Skeleton.Tags count={2} />` | two `<Skeleton />` in a `<Flexbox horizontal />` |

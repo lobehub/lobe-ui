@@ -1,6 +1,6 @@
 'use client';
 
-import { cx } from 'antd-style';
+import clsx from 'clsx';
 import { memo } from 'react';
 import useControlledState from 'use-merge-value';
 
@@ -49,7 +49,7 @@ const EditableMessage = memo<EditableMessageProps>(
     const input = (
       <MessageInput
         shortcut
-        className={cx(className, classNames?.input)}
+        className={clsx(className, classNames?.input)}
         classNames={classNames}
         defaultValue={value}
         editButtonSize={editButtonSize}
@@ -79,7 +79,7 @@ const EditableMessage = memo<EditableMessageProps>(
           input
         ) : (
           <Markdown
-            className={cx(className, classNames?.markdown)}
+            className={clsx(className, classNames?.markdown)}
             fontSize={fontSize}
             fullFeaturedCodeBlock={fullFeaturedCodeBlock}
             variant={'chat'}

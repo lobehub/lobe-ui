@@ -1,7 +1,8 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { memo } from 'react';
+
+import { styleProps } from '@/styles/stylex/props';
 
 import { styles } from '../style';
 import type { LayoutHeaderProps } from '../type';
@@ -10,7 +11,7 @@ export const LayoutHeader = memo<LayoutHeaderProps>(
   ({ headerHeight, children, className, style, ...rest }) => {
     return (
       <header
-        className={cx(styles.header, className)}
+        className={styleProps(styles.header, className).className}
         style={{
           height: headerHeight,
           ...style,

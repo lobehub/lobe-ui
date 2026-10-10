@@ -1,43 +1,31 @@
 'use client';
 
-import { cssVar, cx } from 'antd-style';
 import { type FC } from 'react';
 
-import SkeletonBlock from './SkeletonBlock';
+import { styleProps } from '@/styles/stylex/props';
+
+import Skeleton from './Skeleton';
 import { styles } from './style';
 import type { SkeletonAvatarProps } from './type';
 
 const DEFAULT_SIZE = 40;
 
-/**
- * @deprecated Use `Skeleton.Avatar` from `@lobehub/ui/base-ui` instead.
- */
 const SkeletonAvatar: FC<SkeletonAvatarProps> = ({
-  active,
   shape = 'square',
-  size,
+  size = DEFAULT_SIZE,
   width,
   height,
-  style,
   className,
   ...rest
-}) => {
-  const defaultSize = size ?? DEFAULT_SIZE;
-  const finalWidth = width ?? defaultSize;
-  const finalHeight = height ?? defaultSize;
-  const borderRadius = shape === 'circle' ? '50%' : cssVar.borderRadius;
-
-  return (
-    <SkeletonBlock
-      active={active}
-      className={cx(styles.avatar, className)}
-      height={finalHeight}
-      style={{ borderRadius, ...style }}
-      width={finalWidth}
-      {...rest}
-    />
-  );
-};
+}) => (
+  <Skeleton
+    className={styleProps(styles.avatar, className).className}
+    height={height ?? size}
+    radius={shape === 'circle' ? '50%' : undefined}
+    width={width ?? size}
+    {...rest}
+  />
+);
 
 SkeletonAvatar.displayName = 'SkeletonAvatar';
 

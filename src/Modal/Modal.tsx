@@ -1,186 +1,336 @@
 'use client';
 
-import { Button, ConfigProvider, Drawer, type DrawerProps, Modal as AntModal } from 'antd';
-import { cssVar, cx, useResponsive } from 'antd-style';
+import * as stylex from '@stylexjs/stylex';
 import { Maximize2, Minimize2, X } from 'lucide-react';
-import { memo, type ReactNode, useState } from 'react';
+import { useDragControls } from 'motion/react';
+import type { MouseEvent, PointerEvent } from 'react';
+import type React from 'react';
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import ActionIcon from '@/base-ui/ActionIcon';
-import Icon from '@/Icon';
+import { focusRing } from '@/styles/stylex/focusRing';
+import { styleProps } from '@/styles/stylex/props';
+import { stopPropagation } from '@/utils/dom';
 
+import { Button } from '../Button';
+import {
+  ModalBackdrop,
+  ModalContentImpl,
+  ModalFooter,
+  ModalHeaderImpl,
+  ModalPopupImpl,
+  ModalPortal,
+  ModalRoot,
+  ModalTitle,
+} from './atoms';
 import { styles } from './style';
-import { type ModalProps } from './type';
+import type { ModalComponentProps } from './type';
 
-/**
- * @deprecated Use `Modal` from `@lobehub/ui/base-ui` instead.
- */
-const Modal = memo<ModalProps>(
+interface OkBtnProps {
+  confirmLoading?: boolean;
+  okButtonProps?: ModalComponentProps['okButtonProps'];
+  okText?: React.ReactNode;
+  onOk: (e: MouseEvent<HTMLButtonElement>) => void;
+}
+
+const OkBtn: React.FC<OkBtnProps> = ({ confirmLoading, okButtonProps, okText, onOk }) => {
+  const { onClick: userOnClick, ...restOk } = okButtonProps ?? {};
+  return (
+    <Button
+      loading={confirmLoading}
+      type="primary"
+      {...restOk}
+      onClick={(e) => {
+        onOk(e as MouseEvent<HTMLButtonElement>);
+        userOnClick?.(e as never);
+      }}
+    >
+      {okText}
+    </Button>
+  );
+};
+interface CancelBtnProps {
+  cancelButtonProps?: ModalComponentProps['cancelButtonProps'];
+  cancelText?: React.ReactNode;
+  onCancel: (e: MouseEvent<HTMLButtonElement>) => void;
+}
+
+const CancelBtn: React.FC<CancelBtnProps> = ({ cancelButtonProps, cancelText, onCancel }) => {
+  const { onClick: userOnClick, ...restCancel } = cancelButtonProps ?? {};
+  return (
+    <Button
+      {...restCancel}
+      onClick={(e) => {
+        onCancel(e as MouseEvent<HTMLButtonElement>);
+        userOnClick?.(e as never);
+      }}
+    >
+      {cancelText}
+    </Button>
+  );
+};
+
+const Modal = memo<ModalComponentProps>(
   ({
-    panelRef,
-    allowFullscreen,
-    children,
-    title = ' ',
-    className,
-    classNames,
-    width = 700,
-    onCancel,
     open,
-    destroyOnHidden,
-    paddings,
-    height = '75dvh',
-    enableResponsive = true,
-    footer,
-    styles: customStyles,
-    okText,
+    title,
+    children,
     onOk,
-    cancelText,
+    onCancel,
+    okText = 'OK',
+    cancelText = 'Cancel',
     okButtonProps,
     cancelButtonProps,
     confirmLoading,
-    ...rest
+    footer,
+    width,
+    height,
+    maskClosable = true,
+    closable = true,
+    closeIcon,
+    className,
+    style,
+    classNames,
+    styles: semanticStyles,
+    zIndex,
+    afterClose,
+    afterOpenChange,
+    loading,
+    getContainer,
+    mask = true,
+    keyboard,
+    draggable = true,
+    allowFullscreen = false,
   }) => {
-    const [fullscreen, setFullscreen] = useState(false);
-    const { mobile } = useResponsive();
-    const hideFooter = footer === false || footer === null;
-    if (enableResponsive && mobile)
-      return (
-        <ConfigProvider
-          theme={{
-            token: {
-              colorBgElevated: cssVar.colorBgContainer,
-            },
-          }}
-        >
-          <Drawer
-            className={cx(styles.drawerContent, className)}
-            closeIcon={<ActionIcon icon={X} />}
-            destroyOnHidden={destroyOnHidden}
-            height={fullscreen ? 'calc(100% - env(safe-area-inset-top))' : height}
-            open={open}
-            panelRef={panelRef}
-            placement={'bottom'}
-            title={title}
-            classNames={
-              (typeof classNames === 'function'
-                ? classNames
-                : {
-                    ...classNames,
-                    wrapper: cx(styles.wrap, classNames?.wrapper),
-                  }) as DrawerProps['classNames']
-            }
-            extra={
-              allowFullscreen && (
-                <ActionIcon
-                  icon={fullscreen ? Minimize2 : Maximize2}
-                  onClick={() => setFullscreen(!fullscreen)}
-                />
-              )
-            }
-            footer={
-              hideFooter
-                ? null
-                : (footer as ReactNode) || (
-                    <>
-                      <Button
-                        color={'default'}
-                        variant={'filled'}
-                        onClick={onCancel as any}
-                        {...cancelButtonProps}
-                      >
-                        {cancelText || 'Cancel'}
-                      </Button>
-                      <Button
-                        loading={confirmLoading}
-                        type="primary"
-                        onClick={onOk as any}
-                        {...okButtonProps}
-                        style={{
-                          marginInlineStart: 8,
-                          ...okButtonProps?.style,
-                        }}
-                      >
-                        {okText || 'OK'}
-                      </Button>
-                    </>
-                  )
-            }
-            styles={
-              (typeof customStyles === 'function'
-                ? customStyles
-                : {
-                    ...customStyles,
-                    body: {
-                      paddingBlock: `16px ${footer ? 0 : '16px'}`,
-                      paddingInline: paddings?.desktop ?? 16,
-                      ...customStyles?.body,
-                    },
-                  }) as DrawerProps['styles']
-            }
-            onClose={onCancel as any}
-            {...rest}
-          >
-            {children}
-          </Drawer>
-        </ConfigProvider>
-      );
+    const dragControls = useDragControls();
+    const constraintsRef = useRef<HTMLDivElement>(null);
+    const [isFullscreen, setIsFullscreen] = useState(false);
+    const [isDragging, setIsDragging] = useState(false);
+    const [isDenying, setIsDenying] = useState(false);
+    const denyTimerRef = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
 
-    return (
-      <ConfigProvider
-        theme={{
-          token: {
-            colorBgElevated: cssVar.colorBgContainer,
-          },
-        }}
-      >
-        <AntModal
-          closable
+    useEffect(() => () => clearTimeout(denyTimerRef.current), []);
+
+    const triggerDeny = useCallback(() => {
+      clearTimeout(denyTimerRef.current);
+      setIsDenying(true);
+      denyTimerRef.current = setTimeout(() => setIsDenying(false), 300);
+    }, []);
+
+    const handleOpenChange = useCallback(
+      (nextOpen: boolean, eventDetails: { reason: string }) => {
+        if (!open) return;
+        if (!nextOpen && keyboard === false && eventDetails.reason === 'escape-key') return;
+        if (!nextOpen && !maskClosable && eventDetails.reason === 'outside-press') {
+          triggerDeny();
+          return;
+        }
+        if (!nextOpen) {
+          onCancel?.(new MouseEvent('click') as unknown as MouseEvent<HTMLButtonElement>);
+        }
+      },
+      [onCancel, keyboard, maskClosable, open, triggerDeny],
+    );
+
+    const handleExitComplete = useCallback(() => {
+      setIsFullscreen(false);
+      afterClose?.();
+      afterOpenChange?.(false);
+    }, [afterClose, afterOpenChange]);
+
+    const handleAnimationComplete = useCallback(() => {
+      if (open) afterOpenChange?.(true);
+    }, [open, afterOpenChange]);
+
+    const handleDragStart = useCallback(
+      (e: PointerEvent) => {
+        if (draggable && !isFullscreen) {
+          dragControls.start(e);
+          setIsDragging(true);
+        }
+      },
+      [draggable, dragControls, isFullscreen],
+    );
+
+    const handleDragEnd = useCallback(() => {
+      setIsDragging(false);
+    }, []);
+
+    const handleOk = useCallback(
+      (e: MouseEvent<HTMLButtonElement>) => {
+        onOk?.(e);
+      },
+      [onOk],
+    );
+
+    const handleCancel = useCallback(
+      (e: MouseEvent<HTMLButtonElement>) => {
+        onCancel?.(e);
+      },
+      [onCancel],
+    );
+
+    const footerNode = useMemo(() => {
+      if (footer === false || footer === null) return null;
+      const cancelBtnNode = (
+        <CancelBtn
+          cancelButtonProps={cancelButtonProps}
           cancelText={cancelText}
-          className={cx(styles.content, className)}
-          closeIcon={<Icon icon={X} size={20} />}
+          onCancel={handleCancel}
+        />
+      );
+      const okBtnNode = (
+        <OkBtn
           confirmLoading={confirmLoading}
-          destroyOnHidden={destroyOnHidden}
-          footer={hideFooter ? null : footer}
-          mask={{ closable: true }}
           okButtonProps={okButtonProps}
           okText={okText}
-          open={open}
-          panelRef={panelRef}
-          title={title}
-          width={width}
-          cancelButtonProps={{
-            color: 'default',
-            variant: 'filled',
-            ...cancelButtonProps,
-          }}
-          classNames={
-            typeof classNames === 'function'
-              ? classNames
-              : {
-                  ...classNames,
-                  wrapper: cx(styles.wrap, classNames?.wrapper),
-                }
-          }
-          styles={
-            typeof customStyles === 'function'
-              ? customStyles
-              : {
-                  ...customStyles,
-                  body: {
-                    maxHeight: height,
-                    overflow: 'hidden auto',
-                    paddingBlock: `0 ${footer === null ? '16px' : 0}`,
-                    paddingInline: paddings?.desktop ?? 16,
-                    ...customStyles?.body,
-                  },
-                }
-          }
-          onCancel={onCancel}
-          onOk={onOk}
-          {...rest}
-        >
-          {children}
-        </AntModal>
-      </ConfigProvider>
+          onOk={handleOk}
+        />
+      );
+      const defaultFooter = (
+        <>
+          {cancelBtnNode}
+          {okBtnNode}
+        </>
+      );
+
+      if (typeof footer === 'function') {
+        return footer(defaultFooter, { CancelBtn: () => cancelBtnNode, OkBtn: () => okBtnNode });
+      }
+
+      return footer ?? defaultFooter;
+    }, [
+      footer,
+      cancelButtonProps,
+      cancelText,
+      handleCancel,
+      confirmLoading,
+      okButtonProps,
+      okText,
+      handleOk,
+    ]);
+
+    const container = getContainer === false ? undefined : (getContainer ?? undefined);
+
+    const shouldDrag = draggable && !isFullscreen;
+    const dragProps = shouldDrag
+      ? {
+          drag: true as const,
+          dragConstraints: constraintsRef,
+          dragControls,
+          dragElastic: 0,
+          dragListener: false,
+          dragMomentum: false,
+          whileDrag: { cursor: 'grabbing' as const },
+        }
+      : {};
+
+    const showTitle = title !== undefined && title !== false && title !== null;
+    const showHeader = showTitle || closable || allowFullscreen;
+
+    const hasHeight = height !== undefined;
+    const panelStyle: React.CSSProperties = {
+      ...(hasHeight && !isFullscreen ? { height } : {}),
+      ...style,
+    };
+
+    return (
+      <ModalRoot
+        open={open ?? false}
+        zIndex={zIndex}
+        onExitComplete={handleExitComplete}
+        onOpenChange={handleOpenChange}
+      >
+        <ModalPortal container={container}>
+          {mask && <ModalBackdrop className={classNames?.mask} style={semanticStyles?.mask} />}
+          <ModalPopupImpl
+            className={classNames?.wrapper}
+            panelClassName={className}
+            popupStyle={semanticStyles?.wrapper}
+            ref={constraintsRef}
+            style={panelStyle}
+            width={isFullscreen ? undefined : width}
+            motionProps={{
+              ...dragProps,
+              onAnimationComplete: handleAnimationComplete,
+            }}
+            panelXstyle={[
+              isFullscreen && styles.fullscreenPopupInner,
+              isDenying && styles.denyAnimation,
+            ]}
+          >
+            {showHeader && (
+              <ModalHeaderImpl
+                className={classNames?.header}
+                xstyle={shouldDrag && styles.headerDraggable}
+                style={{
+                  ...(isDragging ? { cursor: 'grabbing' } : {}),
+                  ...semanticStyles?.header,
+                }}
+                onPointerCancel={handleDragEnd}
+                onPointerDown={handleDragStart}
+                onPointerUp={handleDragEnd}
+              >
+                {showTitle ? (
+                  <ModalTitle className={classNames?.title} style={semanticStyles?.title}>
+                    {title}
+                  </ModalTitle>
+                ) : (
+                  <span />
+                )}
+                <div {...stylex.props(styles.headerActions)} onPointerDown={stopPropagation}>
+                  {allowFullscreen && (
+                    <button
+                      aria-label={isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
+                      {...stylex.props(styles.fullscreenToggle, focusRing.info)}
+                      type="button"
+                      onClick={() => setIsFullscreen((prev) => !prev)}
+                    >
+                      {isFullscreen ? <Minimize2 size={14} /> : <Maximize2 size={14} />}
+                    </button>
+                  )}
+                  {closable && (
+                    <button
+                      aria-label="Close"
+                      {...stylex.props(styles.closeInline, focusRing.info)}
+                      type="button"
+                      onClick={handleCancel}
+                    >
+                      {closeIcon ?? <X size={16} />}
+                    </button>
+                  )}
+                </div>
+              </ModalHeaderImpl>
+            )}
+            <ModalContentImpl
+              className={classNames?.body}
+              xstyle={!showHeader && styles.contentNoHeader}
+              style={{
+                ...(hasHeight || isFullscreen ? { flex: 1 } : {}),
+                ...semanticStyles?.body,
+              }}
+            >
+              {loading ? (
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    padding: '32px 0',
+                  }}
+                >
+                  <span {...styleProps(styles.loadingSpinner, undefined, { height: 24, width: 24 })} />
+                </div>
+              ) : (
+                children
+              )}
+            </ModalContentImpl>
+            {footerNode !== null && (
+              <ModalFooter className={classNames?.footer} style={semanticStyles?.footer}>
+                {footerNode}
+              </ModalFooter>
+            )}
+          </ModalPopupImpl>
+        </ModalPortal>
+      </ModalRoot>
     );
   },
 );

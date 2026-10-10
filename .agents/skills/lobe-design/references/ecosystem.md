@@ -196,15 +196,15 @@ lobe-ui 根入口另外转出了 `rehypeStreamAnimated`，用于需要自定义 
 
 ## E-06 边界
 
-| 需要                             | 归属                                                                      |
-| -------------------------------- | ------------------------------------------------------------------------- |
-| 图表                             | `@lobehub/charts`                                                         |
-| AI 模型 / 厂商徽标               | `@lobehub/icons`                                                          |
-| OAuth / 社交徽标                 | `@lobehub/ui/icons`                                                       |
-| 通用界面图标（lucide）           | `@lobehub/ui` 的 `Icon`                                                   |
-| emoji                            | `@lobehub/ui` 的 `FluentEmoji`                                            |
-| markdown / 流式输出              | `@lobehub/ui` 的 `Markdown`                                               |
-| 表格 / 徽标 / 进度 / 评分 / 加载 | `@lobehub/ui/base-ui` 的 `Table` / `Badge` / `Progress` / `Rate` / `Spin` |
-| 文档站工程                       | `@lobehub/docs-kit`（`lobedocs` CLI，本仓库 `packages/`）                 |
+| 需要                             | 归属                                                              |
+| -------------------------------- | ----------------------------------------------------------------- |
+| 图表                             | `@lobehub/charts`                                                 |
+| AI 模型 / 厂商徽标               | `@lobehub/icons`                                                  |
+| OAuth / 社交徽标                 | `@lobehub/ui/icons`                                               |
+| 通用界面图标（lucide）           | `@lobehub/ui` 的 `Icon`                                           |
+| emoji                            | `@lobehub/ui` 的 `FluentEmoji`                                    |
+| markdown / 流式输出              | `@lobehub/ui` 的 `Markdown`                                       |
+| 表格 / 徽标 / 进度 / 评分 / 加载 | `@lobehub/ui` 的 `Table` / `Badge` / `Progress` / `Rate` / `Spin` |
+| 文档站工程                       | `@lobehub/docs-kit`（`lobedocs` CLI，本仓库 `packages/`）         |
 
 不要为了一个图表引入第二个图表库，也不要为了一个模型徽标去抓远程 SVG——两者都会让产物脱离主题体系，直接命中 [evaluator.md](evaluator.md) 的「图表不像系统」和「设计系统不一致」。

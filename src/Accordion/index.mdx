@@ -1,97 +1,73 @@
 ---
 title: Accordion
-description: A vertically stacked set of interactive headings whose items reveal titled content with controlled or uncontrolled expansion.
+description: Base UI-powered Accordion with borderless, filled-header and outlined variants.
 category: Data Display
 ---
 
 import DemoIndex from './demos/index.tsx?demo';
-import DemoData from './demos/data.tsx?demo';
-import DemoStandalone from './demos/Standalone.tsx?demo';
-import DemoAction from './demos/Action.tsx?demo';
-
-Accordion is a vertically stacked set of interactive headings that each contain a title and content. Inspired by HeroUI's Accordion component with smooth motion animations and component composition API.
+import DemoFilled from './demos/filled.tsx?demo';
+import DemoInline from './demos/inline.tsx?demo';
+import DemoOutlined from './demos/outlined.tsx?demo';
+import DemoAtoms from './demos/atoms.tsx?demo';
+import DemoDefaultOpen from './demos/defaultOpen.tsx?demo';
 
 ## Default
 
+The title text column is the alignment reference: the hover highlight and hit area extend `8px` (`--accordion-hover-inset`) beyond the component box without shifting layout.
+
 <Demo of={DemoIndex} layout="bare" />
 
-## Simple Example
+## Filled
 
-<Demo of={DemoData} />
+Compact filled headers with panels outside the filled surface.
 
-## Standalone Item
+<Demo of={DemoFilled} layout="bare" />
 
-AccordionItem can be used independently without wrapping in an Accordion component. It supports both controlled and uncontrolled modes.
+## Outlined
 
-<Demo of={DemoStandalone} />
+Container border with dividers between items. The first example is single-open (`multiple={false}`), the second places the indicator at the end.
 
-## With Action
+<Demo of={DemoOutlined} layout="bare" />
 
-AccordionItem supports an `action` prop that allows you to add custom action buttons or icons to the header. The action appears on the right side of the header and can be any ReactNode. You can also set `alwaysShowAction` to make the action visible even when the header is not hovered.
+## Inline indicator
 
-<Demo of={DemoAction} />
+<Demo of={DemoInline} />
+
+## Default-open mount
+
+Sections that start expanded should paint fully open — no height or fade enter. Remount to replay first paint. Click **Pricing** to compare the expand motion.
+
+<Demo of={DemoDefaultOpen} layout="bare" />
+
+## Atom Components
+
+<Demo of={DemoAtoms} layout="bare" />
 
 ## APIs
 
-### Accordion Props
+### Accordion
 
-<Api name="Accordion" migrationKey="heading:%5B%22Accordion%20Props%22%5D:0" />
+<Api name="Accordion" from=".." migrationKey="heading:%5B%22Accordion%22%5D:0" />
 
-### AccordionItem Props
+### AccordionItemType
 
-| Property | Description | Type | Default |
-| --- | --- | --- | --- |
-| itemKey | Unique identifier of the panel (required) | `Key` | - |
-| title | Title of the panel | `ReactNode` | - |
-| children | Content of the panel | `ReactNode` | - |
-| action | Action component (appears on hover) | `ReactNode` | - |
-| alwaysShowAction | Always show action (not only on hover) | `boolean` | `false` |
-| disabled | Whether the item is disabled | `boolean` | `false` |
-| hideIndicator | Whether to hide the indicator | `boolean` | `false` |
-| indicator | Custom indicator component or function | `ReactNode \| ((props: { isOpen: boolean; isDisabled?: boolean }) => ReactNode)` | - |
-| indicatorPlacement | Indicator placement | `'start' \| 'end'` | `'start'` |
-| defaultExpand | Default expanded state (uncontrolled) | `boolean` | - |
-| expand | Controlled expanded state | `boolean` | - |
-| onExpandChange | Callback when expanded state changes | `(expanded: boolean) => void` | - |
-| classNames | Custom classNames for child elements | See below | - |
-| styles | Custom styles for child elements | See below | - |
+| Property         | Description                              | Type        | Default |
+| ---------------- | ---------------------------------------- | ----------- | ------- |
+| key              | Unique value identifying the item        | `string`    | -       |
+| title            | Header title                             | `ReactNode` | -       |
+| children         | Panel content                            | `ReactNode` | -       |
+| action           | Actions shown at the header end on hover | `ReactNode` | -       |
+| alwaysShowAction | Show the action without hovering         | `boolean`   | `false` |
+| disabled         | Whether the item is disabled             | `boolean`   | `false` |
 
-### AccordionItem classNames
+### Indicator placement
 
-| Property  | Description                   | Type     |
-| --------- | ----------------------------- | -------- |
-| base      | Item container className      | `string` |
-| header    | Header container className    | `string` |
-| title     | Title text className          | `string` |
-| action    | Action container className    | `string` |
-| indicator | Indicator container className | `string` |
-| content   | Content container className   | `string` |
+- `start` (default) — chevron before the title; panel content is indented to align with the title.
+- `inline` — small filled arrow right after the title; no panel indent, no hover inset and no trailing panel padding; a hover action adds 4px block padding so a 24px action yields the 32px sidebar header (the compact sidebar look).
+- `end` — chevron pushed to the trailing edge of the header.
 
-### AccordionItem styles
+### Variants
 
-| Property  | Description                | Type            |
-| --------- | -------------------------- | --------------- |
-| base      | Item container styles      | `CSSProperties` |
-| header    | Header container styles    | `CSSProperties` |
-| title     | Title text styles          | `CSSProperties` |
-| action    | Action container styles    | `CSSProperties` |
-| indicator | Indicator container styles | `CSSProperties` |
-| content   | Content container styles   | `CSSProperties` |
-
-## Standalone Usage
-
-`AccordionItem` can be used independently without wrapping in an `Accordion` component. When used standalone, you can control its expanded state using:
-
-- `defaultExpand`: Set the initial expanded state (uncontrolled mode)
-- `expand`: Control the expanded state externally (controlled mode)
-- `onExpandChange`: Callback fired when the expanded state changes
-
-When `expand` or `defaultExpand` props are provided, the item will manage its own state independently. Otherwise, it will use the context from the parent `Accordion` component.
-
-## Animation
-
-The Accordion component uses motion for smooth animations. You can customize the animation behavior with the following props:
-
-- `disableAnimation`: Set to `true` to disable all animations
-- `keepContentMounted`: Keep content DOM mounted when collapsed (useful for forms)
-- `motionProps`: Pass custom motion props to override default animations
+- `borderless` (default) — flush look; hover highlight bleeds `8px` outside via `--accordion-hover-inset`.
+- `filled` — compact filled headers; expanded content remains outside the filled surface.
+- `outlined` — rounded container border with `1px` dividers between items.

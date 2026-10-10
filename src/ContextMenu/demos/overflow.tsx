@@ -1,5 +1,5 @@
 import { Block, type ContextMenuItem, ContextMenuTrigger, type MenuInfo, Text } from '@lobehub/ui';
-import { createStaticStyles } from 'antd-style';
+import { createStaticStyles } from '@lobehub/ui';
 import { useMemo, useState } from 'react';
 
 const MENU_ITEM_COUNT = 24;

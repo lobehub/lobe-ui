@@ -1,35 +1,43 @@
 ---
 title: Tabs
-description: Tabs are used to display multiple sections of content within the same space on a webpage. They allow users to quickly switch between different sections of content without having to navigate away from the current page.
+description: Base UI-powered Tabs with iOS-flavored interactions — no hover background, tap-scale feedback, and a sliding active indicator across rounded / square / point variants.
 category: Navigation
 ---
 
 import DemoIndex from './demos/index.tsx?demo';
+import DemoAtoms from './demos/atoms.tsx?demo';
+import DemoImplicitDefault from './demos/implicitDefault.tsx?demo';
 
 ## Default
 
 <Demo of={DemoIndex} layout="bare" />
 
+## Implicit Initial Selection
+
+<Demo of={DemoImplicitDefault} />
+
+## Atom Components
+
+<Demo of={DemoAtoms} />
+
 ## APIs
 
 ### Tabs
 
-<Api name="Tabs" migrationKey="heading:%5B%22Tabs%22%5D:0" />
+<Api name="Tabs" from=".." migrationKey="heading:%5B%22Tabs%22%5D:0" />
 
-Additionally, Tabs inherits all properties from Ant Design's Tabs component, including commonly used props like:
+### TabsItem
 
-| Property | Description | Type | Default |
-| --- | --- | --- | --- |
-| activeKey | Currently active TabPane's key | `string` | - |
-| defaultActiveKey | Initial active TabPane's key | `string` | First tab |
-| onChange | Callback when active tab is changed | `(activeKey) => void` | - |
-| tabPlacement | Position of tabs | `'top' \| 'right' \| 'bottom' \| 'left'` | `'top'` |
-| size | Size of tabs | `'large' \| 'middle' \| 'small'` | `'middle'` |
+| Property | Description                 | Type        | Default |
+| -------- | --------------------------- | ----------- | ------- |
+| key      | Unique key                  | `string`    | -       |
+| label    | Tab label                   | `ReactNode` | -       |
+| icon     | Leading icon                | `ReactNode` | -       |
+| children | Panel content               | `ReactNode` | -       |
+| disabled | Whether the tab is disabled | `boolean`   | `false` |
 
-### Tab Variants
+### Variants
 
-The component supports the following style variants:
-
-- `rounded`: Tabs with rounded corners (default)
-- `square`: Tabs with square corners
-- `point`: Tabs with point indicators
+- `rounded` (default) — pill-shaped filled background slides between tabs.
+- `square` — underline bar with square ends, anchored to the list bottom.
+- `point` — small dot indicator centered under the active tab.

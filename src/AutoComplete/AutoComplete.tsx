@@ -1,0 +1,119 @@
+'use client';
+
+import { Autocomplete } from '@base-ui/react/autocomplete';
+import clsx from 'clsx';
+import { XIcon } from 'lucide-react';
+import { memo, useMemo, useRef } from 'react';
+
+import { useAppElement } from '@/ConfigProvider/AppElementContext';
+import Icon from '@/Icon';
+import { inputStyles, inputVariants } from '@/Input';
+import { getFloatingCollisionPadding } from '@/internal/floating';
+import { useLayerZIndex } from '@/internal/zIndex';
+import { useThemeMode } from '@/styles/theme/scope';
+
+import { styles } from './style';
+import type { AutoCompleteOption, AutoCompleteProps } from './type';
+
+const AutoComplete = memo<AutoCompleteProps>(
+  ({
+    className,
+    classNames,
+    styles: customStyles,
+    style,
+    variant,
+    shadow,
+    size = 'middle',
+    options = [],
+    onChange,
+    onSearch,
+    allowClear,
+    disabled,
+    placeholder,
+    prefix,
+    suffix,
+    emptyText,
+    ...rest
+  }) => {
+    const { isDarkMode } = useThemeMode();
+    const appElement = useAppElement();
+    const anchorRef = useRef<HTMLDivElement>(null);
+    const { ref: positionerRef, zIndex } = useLayerZIndex<HTMLDivElement>('floating');
+    const mergedVariant = variant || (isDarkMode ? 'filled' : 'outlined');
+
+    const items = useMemo<AutoCompleteOption[]>(
+      () => options.map((option) => (typeof option === 'string' ? { value: option } : option)),
+      [options],
+    );
+
+    return (
+      <Autocomplete.Root
+        openOnInputClick
+        disabled={disabled}
+        itemToStringValue={(item) => (item as AutoCompleteOption).value}
+        items={items}
+        onValueChange={(value) => {
+          onChange?.(value);
+          onSearch?.(value);
+        }}
+        {...rest}
+      >
+        <div
+          className={clsx(inputVariants({ shadow, size, variant: mergedVariant }), className)}
+          data-disabled={disabled ? '' : undefined}
+          ref={anchorRef}
+          style={style}
+        >
+          {prefix && <span className={inputStyles.slot}>{prefix}</span>}
+          <Autocomplete.Input
+            className={clsx(inputStyles.input, classNames?.input)}
+            placeholder={placeholder}
+            style={customStyles?.input}
+          />
+          {allowClear && (
+            <Autocomplete.Clear aria-label={'Clear'} className={styles.clear}>
+              <Icon icon={XIcon} size={14} />
+            </Autocomplete.Clear>
+          )}
+          {suffix && <span className={inputStyles.slot}>{suffix}</span>}
+        </div>
+        <Autocomplete.Portal container={appElement ?? undefined}>
+          <Autocomplete.Positioner
+            anchor={anchorRef}
+            className={styles.positioner}
+            collisionPadding={getFloatingCollisionPadding()}
+            ref={positionerRef}
+            sideOffset={4}
+            style={zIndex === undefined ? undefined : { zIndex }}
+          >
+            <Autocomplete.Popup
+              className={clsx(styles.popup, classNames?.popup)}
+              style={customStyles?.popup}
+            >
+              {emptyText && (
+                <Autocomplete.Empty className={styles.empty}>{emptyText}</Autocomplete.Empty>
+              )}
+              <Autocomplete.List className={styles.list}>
+                {(item: AutoCompleteOption) => (
+                  <Autocomplete.Item
+                    className={clsx(styles.item, classNames?.item)}
+                    disabled={item.disabled}
+                    key={item.value}
+                    style={customStyles?.item}
+                    value={item}
+                  >
+                    {item.label ?? item.value}
+                  </Autocomplete.Item>
+                )}
+              </Autocomplete.List>
+            </Autocomplete.Popup>
+          </Autocomplete.Positioner>
+        </Autocomplete.Portal>
+      </Autocomplete.Root>
+    );
+  },
+);
+
+AutoComplete.displayName = 'AutoComplete';
+
+export default AutoComplete;

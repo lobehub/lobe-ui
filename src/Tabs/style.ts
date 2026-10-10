@@ -1,171 +1,181 @@
-import { createStaticStyles } from 'antd-style';
-import { cva } from 'class-variance-authority';
+import * as stylex from '@stylexjs/stylex';
 
-const prefixCls = 'ant';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { focusRing } from '@/styles/stylex/focusRing';
 
-export const styles = createStaticStyles(({ css, cssVar }) => {
-  return {
-    compact: css`
-      &.${prefixCls}-tabs {
-        .${prefixCls}-tabs-tab {
-          margin: 4px;
+import type { TabsSize, TabsVariant } from './type';
 
-          + [class*='ant-tabs-tab'] {
-            margin: 4px;
-          }
-        }
-      }
-    `,
-    dropdown: css`
-      .${prefixCls}-tabs-dropdown-menu {
-        padding: 4px;
-        border: 1px solid ${cssVar.colorBorderSecondary};
+const reducedMotion = '@media (prefers-reduced-motion: reduce)';
+const vertical = ':is([data-orientation="vertical"])';
+const indicatorStart = 'var(--lobe-tabs-indicator-start, var(--active-tab-left))';
 
-        .${prefixCls}-tabs-dropdown-menu-item {
-          border-radius: ${cssVar.borderRadius};
-        }
-      }
-    `,
-    hideHolder: css`
-      &.${prefixCls}-tabs {
-        .${prefixCls}-tabs-content-holder {
-          display: none;
-        }
-
-        .${prefixCls}-tabs-nav {
-          margin: 0;
-
-          &::before {
-            display: none;
-          }
-        }
-      }
-    `,
-
-    margin: css`
-      &.${prefixCls}-tabs {
-        .${prefixCls}-tabs-tab {
-          margin: 8px;
-
-          + .${prefixCls}-tabs-tab {
-            margin: 8px;
-          }
-        }
-      }
-    `,
-    point: css`
-      &.${prefixCls}-tabs {
-        &.${prefixCls}-tabs-top {
-          .${prefixCls}-tabs-ink-bar {
-            width: 8px !important;
-            height: 4px;
-            border-start-start-radius: 4px;
-            border-start-end-radius: 4px;
-          }
-        }
-
-        &.${prefixCls}-tabs-bottom {
-          .${prefixCls}-tabs-ink-bar {
-            width: 8px !important;
-            height: 4px;
-            border-end-start-radius: 4px;
-            border-end-end-radius: 4px;
-          }
-        }
-
-        &.${prefixCls}-tabs-left {
-          .${prefixCls}-tabs-ink-bar {
-            width: 4px;
-            height: 8px !important;
-            border-start-start-radius: 4px;
-            border-end-start-radius: 4px;
-          }
-        }
-
-        &.${prefixCls}-tabs-right {
-          .${prefixCls}-tabs-ink-bar {
-            width: 4px;
-            height: 8px !important;
-            border-start-end-radius: 4px;
-            border-end-end-radius: 4px;
-          }
-        }
-      }
-    `,
-    root: css`
-      &.${prefixCls}-tabs {
-        .${prefixCls}-tabs-tab {
-          padding-block: 8px;
-          padding-inline: 12px;
-          color: ${cssVar.colorTextSecondary};
-          transition: background-color 100ms ease-out;
-
-          &:hover {
-            border-radius: ${cssVar.borderRadius};
-            color: ${cssVar.colorText};
-            background: ${cssVar.colorFillTertiary};
-          }
-        }
-      }
-    `,
-    rounded: css`
-      &.${prefixCls}-tabs {
-        &.${prefixCls}-tabs-top {
-          .${prefixCls}-tabs-ink-bar {
-            height: 3px;
-            border-start-start-radius: 3px;
-            border-start-end-radius: 3px;
-          }
-        }
-
-        &.${prefixCls}-tabs-bottom {
-          .${prefixCls}-tabs-ink-bar {
-            height: 3px;
-            border-end-start-radius: 3px;
-            border-end-end-radius: 3px;
-          }
-        }
-
-        &.${prefixCls}-tabs-left {
-          .${prefixCls}-tabs-ink-bar {
-            width: 3px;
-            border-start-start-radius: 3px;
-            border-end-start-radius: 3px;
-          }
-        }
-
-        &.${prefixCls}-tabs-right {
-          .${prefixCls}-tabs-ink-bar {
-            width: 3px;
-            border-start-end-radius: 3px;
-            border-end-end-radius: 3px;
-          }
-        }
-      }
-    `,
-  };
-});
-
-export const variants = cva(styles.root, {
-  defaultVariants: {
-    compact: false,
-    underlined: false,
-    variant: 'rounded',
+export const styles = stylex.create({
+  indicator: {
+    pointerEvents: 'none',
+    position: 'absolute',
+    transitionDuration: { default: '240ms', [reducedMotion]: '0s' },
+    transitionProperty: 'inset-inline-start, inset-block-start, width, height, transform',
+    transitionTimingFunction: cssVar.motionEaseOut,
+    zIndex: 0,
   },
-
-  variants: {
-    variant: {
-      square: null,
-      rounded: styles.rounded,
-      point: styles.point,
-    },
-    compact: {
-      false: styles.margin,
-      true: styles.compact,
-    },
-    underlined: {
-      false: styles.hideHolder,
-      true: null,
+  indicatorPoint: {
+    borderRadius: '50%',
+    backgroundColor: cssVar.colorPrimary,
+    insetBlockEnd: 6,
+    insetInlineStart: `calc(${indicatorStart} + var(--active-tab-width) / 2 - 2.5px)`,
+    height: 5,
+    width: 5,
+  },
+  indicatorRounded: {
+    borderRadius: cssVar.borderRadius,
+    backgroundColor: cssVar.colorBgElevated,
+    boxShadow: cssVar.boxShadowTertiary,
+    insetBlockStart: 'var(--active-tab-top)',
+    insetInlineStart: indicatorStart,
+    height: 'var(--active-tab-height)',
+    width: 'var(--active-tab-width)',
+  },
+  indicatorSquare: {
+    backgroundColor: cssVar.colorPrimary,
+    insetBlockEnd: 0,
+    insetInlineStart: indicatorStart,
+    height: 2,
+    width: 'var(--active-tab-width)',
+  },
+  list: {
+    gap: 2,
+    alignItems: { default: 'center', [vertical]: 'stretch' },
+    display: 'inline-flex',
+    flexDirection: { default: null, [vertical]: 'column' },
+    flexWrap: 'nowrap',
+    position: 'relative',
+  },
+  listRounded: {
+    padding: 3,
+    borderRadius: cssVar.borderRadiusLG,
+    gap: 4,
+    alignSelf: { default: 'flex-start', [vertical]: 'stretch' },
+    backgroundColor: cssVar.colorBgLayout,
+  },
+  listSquare: {
+    gap: 16,
+    boxShadow: {
+      default: `inset 0 -1px 0 ${cssVar.colorBorderSecondary}`,
+      [vertical]: `inset -1px 0 0 ${cssVar.colorBorderSecondary}`,
     },
   },
+  panel: {
+    borderRadius: cssVar.borderRadius,
+    outline: 'none',
+    paddingBlockStart: 12,
+  },
+  root: {
+    display: 'flex',
+    flexDirection: { default: 'column', [vertical]: 'row' },
+    width: '100%',
+  },
+  tab: {
+    borderColor: 'currentcolor',
+    borderStyle: 'none',
+    borderWidth: 0,
+    gap: 6,
+    outline: 'none',
+    transition: `color 120ms ${cssVar.motionEaseOut}, transform 120ms ${cssVar.motionEaseOut}`,
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    boxSizing: 'border-box',
+    color: {
+      'default': cssVar.colorTextSecondary,
+      ':hover:not([data-disabled])': cssVar.colorText,
+      ':is([data-active]):not(:hover):not([data-disabled])': cssVar.colorPrimary,
+      ':is([data-disabled])': cssVar.colorTextDisabled,
+    },
+    cursor: { 'default': 'pointer', ':is([data-disabled])': 'not-allowed' },
+    display: 'inline-flex',
+    flexShrink: 0,
+    fontWeight: 500,
+    justifyContent: 'center',
+    position: 'relative',
+    transform: { 'default': null, ':active:not([data-disabled])': 'scale(0.98)' },
+    transitionDuration: { default: null, [reducedMotion]: '0s' },
+    userSelect: 'none',
+    whiteSpace: 'nowrap',
+    zIndex: 1,
+  },
+  tabLarge: {
+    borderRadius: cssVar.borderRadius,
+    paddingInline: 16,
+    fontSize: 14,
+    height: 36,
+  },
+  tabMiddle: {
+    borderRadius: cssVar.borderRadius,
+    paddingInline: 12,
+    fontSize: 13,
+    height: 32,
+  },
+  tabPoint: {
+    paddingBlockEnd: 14,
+    paddingBlockStart: 8,
+    height: 'auto',
+  },
+  tabSmall: {
+    borderRadius: cssVar.borderRadius,
+    paddingInline: 10,
+    fontSize: 12,
+    height: 26,
+  },
+  tabSquare: {
+    borderRadius: 0,
+    paddingBlock: 8,
+    height: 'auto',
+  },
 });
+
+const indicatorVariantStyles = {
+  point: styles.indicatorPoint,
+  rounded: styles.indicatorRounded,
+  square: styles.indicatorSquare,
+};
+
+const tabSizeStyles = {
+  large: styles.tabLarge,
+  middle: styles.tabMiddle,
+  small: styles.tabSmall,
+};
+
+const tabVariantStyles = {
+  point: styles.tabPoint,
+  rounded: null,
+  square: styles.tabSquare,
+};
+
+const listVariantStyles = {
+  point: null,
+  rounded: styles.listRounded,
+  square: styles.listSquare,
+};
+
+export const tabStyles = (size: TabsSize, variant: TabsVariant) => [
+  styles.tab,
+  focusRing.info,
+  tabSizeStyles[size],
+  tabVariantStyles[variant],
+];
+
+export const indicatorStyles = (variant: TabsVariant) => [
+  styles.indicator,
+  indicatorVariantStyles[variant],
+];
+
+export const listStyles = (variant: TabsVariant) => [styles.list, listVariantStyles[variant]];
+
+export const panelStyles = [styles.panel, focusRing.info];
+
+export const tabsStyles = {
+  ...(Object.fromEntries(
+    Object.entries(styles).map(([key, value]) => [key, stylex.props(value).className ?? '']),
+  ) as Record<keyof typeof styles, string>),
+  panel: stylex.props(panelStyles).className ?? '',
+  tab: stylex.props(styles.tab, focusRing.info).className ?? '',
+};

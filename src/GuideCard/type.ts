@@ -1,7 +1,6 @@
-import type { ImageProps } from 'antd';
 import type { CSSProperties, ReactNode, Ref } from 'react';
 
-import type { ActionIconProps } from '@/base-ui/ActionIcon';
+import type { ActionIconProps } from '@/ActionIcon';
 import type { FlexboxProps } from '@/Flex';
 import type { ImgProps } from '@/types';
 
@@ -15,7 +14,7 @@ export interface GuideCardProps extends Omit<FlexboxProps, 'title'> {
   closable?: boolean;
   closeIconProps?: Omit<ActionIconProps, 'icon' | 'onClick'>;
   cover?: string;
-  coverProps?: ImgProps & ImageProps & { priority?: boolean };
+  coverProps?: ImgProps & { priority?: boolean };
   desc?: ReactNode;
   height?: number;
   onClose?: ActionIconProps['onClick'];

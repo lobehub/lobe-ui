@@ -1,0 +1,180 @@
+'use client';
+
+import * as stylex from '@stylexjs/stylex';
+import { type RowData, useTable } from '@tanstack/react-table';
+import { type Key, memo, type ReactNode, useEffect, useMemo } from 'react';
+
+import { useEventCallback } from '@/hooks/useEventCallback';
+import Pagination from '@/Pagination';
+import Spin from '@/Spin';
+import { styleProps } from '@/styles/stylex/props';
+
+import { tableFeatureSet } from './features';
+import FilterMenu from './FilterMenu';
+import { getFixedOffsets } from './fixedOffsets';
+import { styles } from './style';
+import TableBody from './TableBody';
+import TableHead from './TableHead';
+import { toColumnDefs } from './toColumnDefs';
+import type { FilterValue, TableColumn, TableProps } from './type';
+import { useTableState } from './useTableState';
+
+const EMPTY_DATA: any[] = [];
+
+export interface TableInternalProps<T> extends TableProps<T> {
+  renderFilter?: (column: TableColumn<T>, id: string, table: any) => ReactNode;
+}
+
+const TableInner = <T extends RowData>(props: TableInternalProps<T>) => {
+  const {
+    bordered = false,
+    className,
+    classNames,
+    columns,
+    dataSource = EMPTY_DATA as T[],
+    emptyText,
+    loading = false,
+    onChange,
+    onRow,
+    pagination,
+    ref,
+    renderFilter,
+    rowClassName,
+    rowKey,
+    scroll,
+    size = 'middle',
+    style,
+    styles: customStyles,
+    tableLayout,
+  } = props;
+
+  const state = useTableState({ columns, onChange, pagination });
+  const columnDefs = useMemo(() => toColumnDefs(columns), [columns]);
+  const fixedOffsets = useMemo(() => getFixedOffsets(columns), [columns]);
+
+  const table = useTable({
+    columns: columnDefs,
+    data: dataSource,
+    enableMultiSort: false,
+    enableSortingRemoval: true,
+    features: tableFeatureSet,
+    getRowId: (record: T) =>
+      String(typeof rowKey === 'function' ? rowKey(record) : (record[rowKey] as Key)),
+    manualSorting: state.manualSorting,
+    onColumnFiltersChange: state.onColumnFiltersChange,
+    onSortingChange: state.onSortingChange,
+    state: {
+      columnFilters: state.columnFilters,
+      sorting: state.sorting,
+    },
+  } as any);
+
+  const allRows = table.getRowModel().rows as unknown as { id: Key; original: T }[];
+  const { page } = state;
+  const clientPaginated = pagination !== false && state.config?.total === undefined;
+  const total = state.config?.total ?? allRows.length;
+  const pageCount = Math.max(1, Math.ceil(total / page.pageSize));
+  const pageIndex = Math.min(page.pageIndex, pageCount - 1);
+  const rows = clientPaginated
+    ? allRows.slice(pageIndex * page.pageSize, (pageIndex + 1) * page.pageSize)
+    : allRows;
+
+  const syncClampedPage = useEventCallback(() => state.clampPage(pageIndex));
+
+  useEffect(() => {
+    if (clientPaginated && pageIndex !== page.pageIndex) syncClampedPage();
+  }, [clientPaginated, pageIndex, page.pageIndex, syncClampedPage]);
+
+  const minWidth = scroll?.x === 'max-content' ? '100%' : scroll?.x;
+
+  return (
+    <div ref={ref} {...styleProps(styles.root, className, style)}>
+      <div
+        data-table-wrapper=""
+        {...styleProps([styles.wrapper, bordered && styles.bordered], classNames?.wrapper, {
+          maxHeight: scroll?.y,
+          ...customStyles?.wrapper,
+        })}
+      >
+        <table
+          {...styleProps(styles.table, undefined, {
+            minWidth,
+            tableLayout,
+            width: scroll?.x === 'max-content' ? 'max-content' : '100%',
+          })}
+        >
+          <TableHead
+            bordered={bordered}
+            classNames={classNames}
+            columnIds={state.columnIds}
+            columns={columns}
+            fixedOffsets={fixedOffsets}
+            getColumn={(id) => table.getColumn(id) as any}
+            size={size}
+            styles={customStyles}
+            renderFilter={(column, id) => {
+              if (renderFilter) return renderFilter(column, id, table);
+              const tableColumn = table.getColumn(id) as any;
+              const value = (tableColumn?.getFilterValue() as FilterValue[] | undefined) ?? [];
+              return (
+                <FilterMenu
+                  filters={column.filters ?? []}
+                  label={typeof column.title === 'string' ? column.title : id}
+                  value={value}
+                  onChange={(next) =>
+                    tableColumn?.setFilterValue(next.length > 0 ? next : undefined)
+                  }
+                />
+              );
+            }}
+          />
+          <TableBody
+            bordered={bordered}
+            classNames={classNames}
+            columnIds={state.columnIds}
+            columns={columns}
+            emptyText={emptyText}
+            fixedOffsets={fixedOffsets}
+            loading={loading}
+            rowClassName={rowClassName}
+            rows={rows}
+            size={size}
+            styles={customStyles}
+            onRow={onRow}
+          />
+        </table>
+        {loading && rows.length > 0 && (
+          <div data-table-loading="" {...stylex.props(styles.loading)}>
+            <Spin />
+          </div>
+        )}
+      </div>
+      {pagination !== false && total > 0 && (
+        <div {...stylex.props(styles.pagination)}>
+          <Pagination
+            current={pageIndex + 1}
+            pageSize={page.pageSize}
+            pageSizeOptions={state.config?.pageSizeOptions}
+            showSizeChanger={state.config?.showSizeChanger}
+            total={total}
+            onChange={(next, pageSize) =>
+              state.onPaginationChange({ pageIndex: next - 1, pageSize })
+            }
+          />
+        </div>
+      )}
+    </div>
+  );
+};
+
+const Table = memo(TableInner) as unknown as (<T extends RowData>(
+  props: TableProps<T>,
+) => ReactNode) & {
+  displayName?: string;
+};
+
+Table.displayName = 'Table';
+
+export { TableInner };
+
+export default Table;

@@ -1,39 +1,21 @@
-import type { ReactNode } from 'react';
+import type { FC } from 'react';
 
-import type { SkeletonProps } from '@/Skeleton/type';
-
-import SkeletonParent from './Skeleton';
+import SkeletonRoot from './Skeleton';
 import SkeletonAvatar from './SkeletonAvatar';
-import SkeletonBlock from './SkeletonBlock';
-import SkeletonButton from './SkeletonButton';
-import SkeletonParagraph from './SkeletonParagraph';
-import SkeletonTags from './SkeletonTags';
-import SkeletonTitle from './SkeletonTitle';
+import SkeletonText from './SkeletonText';
+import type { SkeletonProps } from './type';
 
-interface ISkeleton {
-  (props: SkeletonProps): ReactNode;
+interface ISkeleton extends FC<SkeletonProps> {
   Avatar: typeof SkeletonAvatar;
-  Block: typeof SkeletonBlock;
-  Button: typeof SkeletonButton;
-  Paragraph: typeof SkeletonParagraph;
-  Tags: typeof SkeletonTags;
-  Title: typeof SkeletonTitle;
+  Text: typeof SkeletonText;
 }
 
-const Skeleton = SkeletonParent as unknown as ISkeleton;
-Skeleton.Block = SkeletonBlock;
+const Skeleton = SkeletonRoot as ISkeleton;
 Skeleton.Avatar = SkeletonAvatar;
-Skeleton.Title = SkeletonTitle;
-Skeleton.Paragraph = SkeletonParagraph;
-Skeleton.Button = SkeletonButton;
-Skeleton.Tags = SkeletonTags;
+Skeleton.Text = SkeletonText;
 
 export default Skeleton;
 
 export { default as SkeletonAvatar } from './SkeletonAvatar';
-export { default as SkeletonBlock } from './SkeletonBlock';
-export { default as SkeletonButton } from './SkeletonButton';
-export { default as SkeletonParagraph } from './SkeletonParagraph';
-export { default as SkeletonTags } from './SkeletonTags';
-export { default as SkeletonTitle } from './SkeletonTitle';
+export { default as SkeletonText } from './SkeletonText';
 export type * from './type';

@@ -1,26 +1,18 @@
-import { createStaticStyles } from 'antd-style';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => {
-  return {
-    container: css`
-      margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
-      padding-block: 0.75em;
-      padding-inline: 1em;
-      border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-      color: ${cssVar.colorTextSecondary};
-
-      box-shadow: 0 0 0 1px var(--lobe-markdown-border-color);
-    `,
-    folder: css`
-      cursor: pointer;
-
-      &:hover {
-        color: ${cssVar.colorText};
-      }
-    `,
-    folderChildren: css`
-      padding-inline-start: 1em;
-    `,
-  };
+export const styles = stylex.create({
+  container: {
+    borderRadius: 'calc(var(--lobe-markdown-border-radius) * 1px)',
+    marginBlock: 'calc(var(--lobe-markdown-margin-multiple) * 1em)',
+    paddingBlock: '0.75em',
+    paddingInline: '1em',
+    boxShadow: '0 0 0 1px var(--lobe-markdown-border-color)',
+    color: cssVar.colorTextSecondary,
+  },
+  folder: {
+    color: { 'default': null, ':hover': cssVar.colorText },
+    cursor: 'pointer',
+  },
 });

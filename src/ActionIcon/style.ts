@@ -1,105 +1,42 @@
-import { createStaticStyles } from 'antd-style';
-import { cva } from 'class-variance-authority';
+import * as stylex from '@stylexjs/stylex';
 
-import { lobeStaticStylish } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => {
-  return {
-    active: lobeStaticStylish.active,
-    borderless: lobeStaticStylish.variantBorderless,
-    dangerBorderless: lobeStaticStylish.variantBorderlessDanger,
-    dangerFilled: lobeStaticStylish.variantFilledDanger,
-    dangerOutlined: lobeStaticStylish.variantOutlinedDanger,
-    dangerRoot: css`
-      &:hover {
-        color: ${cssVar.colorError};
-      }
+const hover = ':hover:not(:active)';
+const pressed = ':active:not(:disabled, [aria-disabled="true"])';
 
-      &:active {
-        color: ${cssVar.colorErrorActive};
-      }
-    `,
-    disabled: lobeStaticStylish.disabled,
-    filled: lobeStaticStylish.variantFilled,
-    glass: lobeStaticStylish.blur,
-    outlined: lobeStaticStylish.variantOutlined,
-    root: css`
-      cursor: pointer;
-
-      position: relative;
-
-      overflow: hidden;
-
-      color: ${cssVar.colorTextTertiary};
-
-      transition:
-        color 400ms ${cssVar.motionEaseOut},
-        background 100ms ${cssVar.motionEaseOut};
-
-      &:hover {
-        color: ${cssVar.colorTextSecondary};
-      }
-
-      &:active {
-        color: ${cssVar.colorText};
-      }
-    `,
-    shadow: lobeStaticStylish.shadow,
-  };
-});
-
-export const variants = cva(styles.root, {
-  compoundVariants: [
-    {
-      className: styles.dangerFilled,
-      danger: true,
-      variant: 'filled',
-    },
-    {
-      className: styles.dangerBorderless,
-      danger: true,
-      variant: 'borderless',
-    },
-    {
-      className: styles.dangerOutlined,
-      danger: true,
-      variant: 'outlined',
-    },
-  ],
-  defaultVariants: {
-    active: false,
-    danger: false,
-    disabled: false,
-    glass: false,
-    shadow: false,
-    variant: 'borderless',
+export const styles = stylex.create({
+  active: {
+    backgroundColor: cssVar.colorFillSecondary,
   },
-
-  variants: {
-    variant: {
-      filled: styles.filled,
-      outlined: styles.outlined,
-      borderless: styles.borderless,
-    },
-    glass: {
-      false: null,
-      true: styles.glass,
-    },
-    shadow: {
-      false: null,
-      true: styles.shadow,
-    },
-    active: {
-      false: null,
-      true: styles.active,
-    },
-    danger: {
-      false: null,
-      true: styles.dangerRoot,
-    },
-    disabled: {
-      false: null,
-      true: styles.disabled,
+  activeFill: {
+    backgroundColor: { default: cssVar.colorFillSecondary, [pressed]: cssVar.colorFill },
+  },
+  activeOutlined: {
+    backgroundColor: { 'default': cssVar.colorFillSecondary, ':hover': cssVar.colorFill },
+  },
+  dangerRoot: {
+    color: {
+      'default': cssVar.colorTextTertiary,
+      [hover]: cssVar.colorError,
+      ':active': cssVar.colorErrorActive,
     },
   },
+  glass: {
+    backdropFilter: 'saturate(150%) blur(10px)',
+  },
+  root: {
+    color: {
+      'default': cssVar.colorTextTertiary,
+      [hover]: cssVar.colorTextSecondary,
+      ':active': cssVar.colorText,
+    },
+  },
+  shadow: {
+    boxShadow: `0 1px 0 -1px ${cssVar.colorBorder}, 0 1px 2px -0.5px ${cssVar.colorBorder}, 0 2px 2px -1px ${cssVar.colorBorderSecondary}, 0 3px 6px -4px ${cssVar.colorBorderSecondary}`,
+  },
 });
+
+export const actionIconStyles = Object.fromEntries(
+  Object.entries(styles).map(([key, value]) => [key, stylex.props(value).className ?? '']),
+) as Record<keyof typeof styles, string>;

@@ -1,7 +1,9 @@
 'use client';
 
-import { cx, useThemeMode } from 'antd-style';
 import { memo, useMemo } from 'react';
+
+import { styleProps } from '@/styles/stylex/props';
+import { useThemeMode } from '@/styles/theme/scope';
 
 import { styles } from './style';
 import type { SpotlightProps } from './type';
@@ -21,17 +23,12 @@ const Spotlight = memo<SpotlightProps>(({ className, size = 64, ...properties })
     [offset, size, outside],
   );
 
-  const spotlightStyle = isDarkMode
-    ? outside
-      ? styles.spotlightDarkOutside
-      : styles.spotlightDark
-    : outside
-      ? styles.spotlightLightOutside
-      : styles.spotlightLight;
-
   return (
     <div
-      className={cx(spotlightStyle, className)}
+      {...styleProps(
+        [styles.root, isDarkMode ? styles.dark : styles.light, outside && styles.outside],
+        className,
+      )}
       ref={reference}
       style={cssVariables}
       {...properties}

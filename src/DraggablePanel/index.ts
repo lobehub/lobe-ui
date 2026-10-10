@@ -1,44 +1,21 @@
-'use client';
-
-import { type ReactNode, type RefAttributes } from 'react';
-
-import DraggablePanelBody from './components/DraggablePanelBody';
-import DraggablePanelContainer from './components/DraggablePanelContainer';
-import DraggablePanelFooter from './components/DraggablePanelFooter';
-import DraggablePanelHeader from './components/DraggablePanelHeader';
-import DraggablePanelParent from './DraggablePanel';
-import { type DraggablePanelProps } from './type';
-
-interface IDraggablePanel {
-  (props: DraggablePanelProps & RefAttributes<HTMLDivElement>): ReactNode;
-  Body: typeof DraggablePanelBody;
-  Container: typeof DraggablePanelContainer;
-  Footer: typeof DraggablePanelFooter;
-  Header: typeof DraggablePanelHeader;
-}
-
-const DraggablePanel = DraggablePanelParent as unknown as IDraggablePanel;
-
-DraggablePanel.Body = DraggablePanelBody;
-DraggablePanel.Container = DraggablePanelContainer;
-DraggablePanel.Footer = DraggablePanelFooter;
-DraggablePanel.Header = DraggablePanelHeader;
-
-export default DraggablePanel;
 export {
-  default as DraggablePanelBody,
+  DraggablePanelBody,
   type DraggablePanelBodyProps,
-} from './components/DraggablePanelBody';
-export {
-  default as DraggablePanelContainer,
+  DraggablePanelContainer,
   type DraggablePanelContainerProps,
-} from './components/DraggablePanelContainer';
-export {
-  default as DraggablePanelFooter,
+  DraggablePanelContent,
+  type DraggablePanelContentProps,
+  DraggablePanelFooter,
   type DraggablePanelFooterProps,
-} from './components/DraggablePanelFooter';
-export {
-  default as DraggablePanelHeader,
+  DraggablePanelHandle,
+  type DraggablePanelHandleProps,
+  DraggablePanelHeader,
   type DraggablePanelHeaderProps,
-} from './components/DraggablePanelHeader';
+  DraggablePanelRoot,
+  type DraggablePanelRootProps,
+  DraggablePanelToggle,
+  type DraggablePanelToggleProps,
+} from './atoms';
+export { useDraggablePanelContext } from './context';
+export { default as DraggablePanel } from './DraggablePanel';
 export type * from './type';

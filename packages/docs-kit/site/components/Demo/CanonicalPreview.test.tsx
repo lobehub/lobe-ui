@@ -1,9 +1,19 @@
+import { ConfigProvider } from '@lobehub/ui';
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { motion } from 'motion/react';
+import type { ReactElement, ReactNode } from 'react';
 import { useState } from 'react';
 import { renderToString } from 'react-dom/server';
 
 import type { DemoModule } from '../../types/demo';
 import { CanonicalPreview } from './CanonicalPreview';
+
+const ConfigWrapper = ({ children }: { children: ReactNode }) => (
+  <ConfigProvider enableCustomFonts={false} motion={motion}>
+    {children}
+  </ConfigProvider>
+);
+const renderWithConfig = (ui: ReactElement) => render(ui, { wrapper: ConfigWrapper });
 
 const createDescriptor = (load: DemoModule['load'], id = 'hook-demo'): DemoModule => ({
   editable: true,
@@ -40,8 +50,16 @@ it('renders a deterministic placeholder without loading the demo during SSR', ()
   const load = vi.fn<DemoModule['load']>();
   const descriptor = createDescriptor(load);
 
-  const firstHtml = renderToString(<CanonicalPreview demo={descriptor} />);
-  const secondHtml = renderToString(<CanonicalPreview demo={descriptor} />);
+  const firstHtml = renderToString(
+    <ConfigWrapper>
+      <CanonicalPreview demo={descriptor} />
+    </ConfigWrapper>,
+  );
+  const secondHtml = renderToString(
+    <ConfigWrapper>
+      <CanonicalPreview demo={descriptor} />
+    </ConfigWrapper>,
+  );
 
   expect(firstHtml).toBe(secondHtml);
   expect(firstHtml).toContain('data-demo-placeholder');
@@ -55,7 +73,7 @@ it('renders the Vite-loaded default as a component after hydration', async () =>
   }
 
   const descriptor = createDescriptor(vi.fn(async () => HookDemo));
-  render(<CanonicalPreview appearance="dark" demo={descriptor} />);
+  renderWithConfig(<CanonicalPreview appearance="dark" demo={descriptor} />);
 
   expect(await screen.findByText('Hook-bearing canonical demo')).toBeTruthy();
   expect(document.getElementById('lobe-demo-hook-demo')).toBeTruthy();
@@ -79,7 +97,7 @@ it('retries only the rejected canonical demo load', async () => {
   });
   const healthyLoad = vi.fn(async () => HealthyDemo);
 
-  render(
+  renderWithConfig(
     <>
       <CanonicalPreview demo={createDescriptor(failedLoad, 'failed-demo')} />
       <CanonicalPreview demo={createDescriptor(healthyLoad, 'healthy-demo')} />
@@ -101,7 +119,9 @@ it('contains a component that throws during canonical rendering', async () => {
     throw new Error('Throwing demo fixture');
   }
 
-  render(<CanonicalPreview demo={createDescriptor(async () => ThrowingDemo, 'throws')} />);
+  renderWithConfig(
+    <CanonicalPreview demo={createDescriptor(async () => ThrowingDemo, 'throws')} />,
+  );
 
   expect(await screen.findByRole('alert')).toBeTruthy();
   expect(screen.getByText('Throwing demo fixture')).toBeTruthy();

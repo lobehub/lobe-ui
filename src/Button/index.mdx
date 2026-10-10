@@ -1,29 +1,49 @@
 ---
 title: Button
-description: Button is a powerful component that supports multiple style variants, sizes, and interaction states. It extends Ant Design's Button with enhanced styling and icon support.
+description: Polished Button built on Base UI. API-compatible drop-in for antd Button core props.
 category: General
-order: -1
 ---
 
-import Basic from './demos/index.tsx?demo';
-import Variants from './demos/Variant.tsx?demo';
+import DemoIndex from './demos/index.tsx?demo';
+import DemoSizes from './demos/sizes.tsx?demo';
+import DemoIcons from './demos/icons.tsx?demo';
+import DemoOutdent from './demos/outdent.tsx?demo';
+import DemoSplit from './demos/split.tsx?demo';
 
-## Introduction
+## Type, danger & ghost
 
-Button is a fundamental component that provides rich styling and interaction options. It's suitable for various button interaction scenarios.
+<Demo of={DemoIndex} layout="bare" />
 
-## Basic Usage
+## Sizes, shapes & block
 
-<Demo of={Basic} title="Basic usage" layout="bare" />
+<Demo of={DemoSizes} layout="bare" />
 
-## Variants
+## Icons, loading & link
 
-Button supports multiple style variants, including default, filled, outlined, and dashed styles.
+<Demo of={DemoIcons} layout="bare" />
 
-<Demo of={Variants} title="Variants" />
+## Outdent text
+
+`outdent` is typed onto `type="text"` only. It applies a negative margin equal to that size's `padding-inline` (`small` 8, `middle` 14, `large` 16), so a text action such as **Attach screenshot** lines up with the field above it.
+
+<Demo of={DemoOutdent} layout="bare" />
+
+## Split button
+
+Compose a primary action and a dropdown menu sharing the same visual props.
+
+<Demo of={DemoSplit} layout="bare" />
 
 ## API
 
-<Api name="Button" />
+<Api name="Button" from=".." migrationKey="unheaded:0" />
 
-Additionally, Button supports all properties from Ant Design's Button component except `icon`, which has been replaced with a more flexible implementation.
+The component forwards all standard `<button>` (or `<a>` when `href` is set) HTML attributes including `onClick`, `aria-*`, `data-*`, and `ref`.
+
+`loading` preserves the native state of the underlying element while blocking new user activations. In particular, setting `loading` during the first click of an `htmlType="submit"` button does not cancel that form submission or remove its submitter data. Use `disabled` when native disabled semantics are required.
+
+## Migrating from `antd`'s `Button`
+
+The props listed above match antd `Button`'s behaviour, so most call sites swap import only. Styling matches the rest of the library — tighter heights (`24 / 32 / 40` for `small / middle / large`) and a subtle hover micro-lift, no hover shadow.
+
+`ghost` is the one deviation. antd treats it as an on-dark-background variant, which left `ghost danger` indistinguishable from plain `danger` on a light surface. Here it strips the fill and the border instead, leaving the type's semantic color — the borderless icon button an inline delete action wants.

@@ -4,14 +4,6 @@ declare module '*?demo' {
   export default demo;
 }
 
-declare module '@lobehub/ui/es/styles/theme/antdTheme' {
-  export const createLobeAntdTheme: (options: {
-    appearance: 'dark' | 'light';
-    neutralColor?: string;
-    primaryColor?: string;
-  }) => import('antd').ThemeConfig;
-}
-
 declare module 'virtual:lobedocs/compatibility' {
   const compatibility: import('../compiler/types').DocumentationInventory;
 
@@ -28,6 +20,11 @@ declare module 'virtual:lobedocs/site-config' {
   const siteConfig: import('../../src/config').ClientSiteConfig;
 
   export default siteConfig;
+}
+
+declare module 'virtual:lobedocs/stylex' {
+  export const stylexLinks: import('react-router').LinkDescriptor[];
+  export const loadStylexRuntime: () => unknown;
 }
 
 declare module 'virtual:lobedocs/home-page' {

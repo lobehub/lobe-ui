@@ -1,92 +1,40 @@
-import { Accordion, AccordionItem, type AccordionProps } from '@lobehub/ui';
-import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
+import { Flexbox } from '@lobehub/ui';
+import { Accordion, type AccordionProps, ActionIcon } from '@lobehub/ui';
+import { PencilIcon, Trash2Icon } from 'lucide-react';
 
-import { Flexbox } from '@/Flex';
+const items: AccordionProps['items'] = [
+  {
+    children:
+      'The title text is flush with the body text above, while the hover highlight extends 8px beyond it — no layout shift, larger hit area.',
+    key: 'advanced',
+    title: 'Advanced options',
+  },
+  {
+    action: (
+      <>
+        <ActionIcon icon={PencilIcon} size="small" title="Edit" />
+        <ActionIcon icon={Trash2Icon} size="small" title="Delete" />
+      </>
+    ),
+    children: 'Hover the header to reveal the actions on the right.',
+    key: 'publish',
+    title: 'Publish settings',
+  },
+  {
+    children: 'This item cannot be toggled.',
+    disabled: true,
+    key: 'danger',
+    title: 'Danger zone',
+  },
+];
 
 export default () => {
-  const store = useCreateStore();
-
-  const control = useControls(
-    {
-      accordion: {
-        label: 'Accordion Mode',
-        value: false,
-      },
-      disableAnimation: {
-        label: 'Disable Animation',
-        value: false,
-      },
-      gap: {
-        label: 'Gap',
-        max: 32,
-        min: 0,
-        step: 4,
-        value: 8,
-      },
-      hideIndicator: {
-        label: 'Hide Indicator',
-        value: false,
-      },
-      indicatorPlacement: {
-        label: 'Indicator Placement',
-        options: ['start', 'end'],
-        value: 'start',
-      },
-      keepContentMounted: {
-        label: 'Keep Content Mounted',
-        value: true,
-      },
-      showDivider: {
-        label: 'Show Divider',
-        value: false,
-      },
-      variant: {
-        label: 'Variant',
-        options: ['filled', 'outlined', 'borderless'],
-        value: 'borderless',
-      },
-    },
-    { store },
-  ) as Partial<AccordionProps>;
-
   return (
-    <StoryBook levaStore={store}>
-      <Accordion style={{ width: '100%' }} {...control}>
-        <AccordionItem itemKey="1" title="Accordion Panel 1">
-          <Flexbox padding={16}>
-            <div>This is the content of panel 1.</div>
-            <div>You can put any React component here.</div>
-          </Flexbox>
-        </AccordionItem>
-        <AccordionItem itemKey="2" title="Accordion Panel 2">
-          <Flexbox padding={16}>
-            <div>This is the content of panel 2.</div>
-            <div>You can put any React component here.</div>
-          </Flexbox>
-        </AccordionItem>
-        <AccordionItem itemKey="3" title="Accordion Panel 3">
-          <Flexbox padding={16}>
-            <div>This is the content of panel 3.</div>
-            <div>You can put any React component here.</div>
-          </Flexbox>
-        </AccordionItem>
-        <AccordionItem disabled itemKey="4" title="Disabled Panel">
-          <Flexbox padding={16}>
-            <div>This is the content of panel 4.</div>
-            <div>You can put any React component here.</div>
-          </Flexbox>
-        </AccordionItem>
-        <AccordionItem
-          allowExpand={false}
-          itemKey="5"
-          title="Non-expandable Panel (allowExpand=false)"
-        >
-          <Flexbox padding={16}>
-            <div>This panel has allowExpand set to false.</div>
-            <div>The indicator arrow is hidden.</div>
-          </Flexbox>
-        </AccordionItem>
-      </Accordion>
-    </StoryBook>
+    <Flexbox gap={16} padding={16} style={{ maxWidth: 480 }}>
+      <div style={{ fontSize: 14, lineHeight: 1.6, opacity: 0.65 }}>
+        A paragraph of regular body text, as an alignment reference for the accordion titles below.
+      </div>
+      <Accordion defaultValue={['advanced']} items={items} />
+    </Flexbox>
   );
 };

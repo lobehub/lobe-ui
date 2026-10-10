@@ -1,5 +1,4 @@
-import { Button, Markdown } from '@lobehub/ui';
-import { cssVar } from 'antd-style';
+import { Button, cssVar, Markdown } from '@lobehub/ui';
 import { type PropsWithChildren, useState } from 'react';
 
 import { Flexbox } from '@/Flex';

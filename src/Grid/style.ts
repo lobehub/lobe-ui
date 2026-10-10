@@ -1,18 +1,12 @@
-import { createStaticStyles } from 'antd-style';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css }) => {
-  return css`
-    --rows: var(--grid-rows, 3);
-    --max-item-width: var(--grid-max-item-width, 240px);
-    --gap: var(--grid-gap, 1em);
-
-    display: grid !important;
-    grid-template-columns: repeat(
-      auto-fill,
-      minmax(
-        max(var(--max-item-width), calc((100% - var(--gap) * (var(--rows) - 1)) / var(--rows))),
-        1fr
-      )
-    );
-  `;
+export const styles = stylex.create({
+  root: {
+    '--gap': 'var(--grid-gap, 1em)',
+    '--max-item-width': 'var(--grid-max-item-width, 240px)',
+    '--rows': 'var(--grid-rows, 3)',
+    'display': 'grid',
+    'gridTemplateColumns':
+      'repeat(auto-fill, minmax(max(var(--max-item-width), calc((100% - var(--gap) * (var(--rows) - 1)) / var(--rows))), 1fr))',
+  },
 });

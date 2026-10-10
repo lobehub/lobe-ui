@@ -1,0 +1,5 @@
+@layer lobe-ui {
+  .lobe-draggable-side-nav-body::-webkit-scrollbar-thumb:hover {
+    background-color: var(--lobe-color-border);
+  }
+}

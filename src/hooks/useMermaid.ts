@@ -1,10 +1,10 @@
 'use client';
 
-import { useThemeMode } from 'antd-style';
 import { renderMermaidSVG, type RenderOptions, type ThemeName, THEMES } from 'beautiful-mermaid';
 import { useEffect, useId, useMemo, useState } from 'react';
 
 import { prepareInlineMermaidSvg } from '@/Mermaid/SyntaxMermaid/prepareInlineSvg';
+import { useThemeMode } from '@/styles';
 
 import { createCdnMermaidConfig, renderWithCdnMermaid } from './useMermaidCdn';
 
@@ -23,13 +23,13 @@ export interface MermaidRenderResult {
  * no re-render (or re-layout) when the appearance changes.
  */
 const LOBE_THEME_OPTIONS: RenderOptions = {
-  accent: 'var(--ant-color-primary)',
-  bg: 'var(--ant-color-bg-container)',
-  border: 'var(--ant-color-border)',
-  fg: 'var(--ant-color-text)',
-  line: 'var(--ant-color-text-secondary)',
-  muted: 'var(--ant-color-text-description)',
-  surface: 'var(--ant-color-fill-tertiary)',
+  accent: 'var(--lobe-color-primary)',
+  bg: 'var(--lobe-color-bg-container)',
+  border: 'var(--lobe-color-border)',
+  fg: 'var(--lobe-color-text)',
+  line: 'var(--lobe-color-text-secondary)',
+  muted: 'var(--lobe-color-text-description)',
+  surface: 'var(--lobe-color-fill-tertiary)',
   transparent: true,
 };
 

@@ -1,46 +1,48 @@
-import { createStaticStyles } from 'antd-style';
+import * as stylex from '@stylexjs/stylex';
+import type { CSSProperties } from 'react';
 
-export const styles = createStaticStyles(({ css, cssVar, responsive }) => ({
-  code: css`
-    overflow: auto;
-    min-inline-size: 0;
-    min-block-size: var(--code-showcase-min-height);
-  `,
-  panes: css`
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 12px;
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { media } from '@/styles/stylex/media.stylex';
 
-    ${responsive.mobile} {
-      grid-template-columns: 1fr;
-    }
-  `,
-  preview: css`
-    display: flex;
-    align-items: center;
-    justify-content: center;
+export const styles = stylex.create({
+  panes: {
+    gap: 12,
+    display: 'grid',
+    gridTemplateColumns: {
+      default: 'repeat(2, minmax(0, 1fr))',
+      [media.mobile]: '1fr',
+    },
+  },
+  preview: {
+    padding: 20,
+    borderColor: cssVar.colorBorderSecondary,
+    borderRadius: cssVar.borderRadiusLG,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    alignItems: 'center',
+    backgroundColor: `color-mix(in srgb, ${cssVar.colorBgElevated} 25%, transparent)`,
+    boxShadow: cssVar.boxShadowTertiary,
+    display: 'flex',
+    justifyContent: 'center',
+    minBlockSize: 'var(--code-showcase-min-height)',
+    minInlineSize: 0,
+  },
+  root: {
+    gap: 20,
+    alignItems: 'stretch',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+});
 
-    min-inline-size: 0;
-    min-block-size: var(--code-showcase-min-height);
-    padding: 20px;
-    border: 1px solid ${cssVar.colorBorderSecondary};
-    border-radius: ${cssVar.borderRadiusLG};
-
-    background: color-mix(in srgb, ${cssVar.colorBgElevated} 25%, transparent);
-    box-shadow: ${cssVar.boxShadowTertiary};
-
-    > * {
-      max-inline-size: 100%;
-    }
-  `,
-  root: css`
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: stretch;
-  `,
-  tabs: css`
-    align-self: center;
-    max-inline-size: 100%;
-  `,
-}));
+export const childStyles = {
+  code: {
+    minBlockSize: 'var(--code-showcase-min-height)',
+    minInlineSize: 0,
+    overflow: 'auto',
+  },
+  tabs: {
+    alignSelf: 'center',
+    maxInlineSize: '100%',
+  },
+} satisfies Record<string, CSSProperties>;

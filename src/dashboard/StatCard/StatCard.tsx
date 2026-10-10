@@ -1,11 +1,12 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { Minus, TrendingDown, TrendingUp } from 'lucide-react';
 
-import Text from '@/base-ui/Text';
-import Block from '@/Block';
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import Text from '@/Text';
 
 import { styles as surfaceStyles } from '../Surface/style';
 import { styles } from './style';
@@ -16,6 +17,19 @@ const deltaIcon = {
   flat: Minus,
   up: TrendingUp,
 } satisfies Record<StatDirection, typeof Minus>;
+
+const deltaStyles = {
+  down: styles.deltaDown,
+  flat: styles.deltaFlat,
+  up: styles.deltaUp,
+};
+
+const textStyles = {
+  hint: { color: cssVar.colorTextTertiary, fontSize: cssVar.fontSizeSM },
+  label: { color: cssVar.colorTextSecondary, fontSize: cssVar.fontSizeSM },
+  metricHint: { color: cssVar.colorText, fontSize: cssVar.fontSize },
+  metricLabel: { color: cssVar.colorText, fontSize: cssVar.fontSize, fontWeight: 500 },
+};
 
 function StatCard({
   action,
@@ -28,54 +42,52 @@ function StatCard({
   value,
   wash,
 }: StatCardProps) {
-  const deltaClass = {
-    down: styles.deltaDown,
-    flat: styles.deltaFlat,
-    up: styles.deltaUp,
-  }[direction];
-
   return (
-    <div className={styles.lift}>
-      <Block
-        className={`${styles.root} ${surfaceStyles.card}${wash ? ` ${styles.wash} ${styles[wash]}` : ''} ${styles.frame}`}
-        variant="borderless"
+    <div {...stylex.props(styles.lift)}>
+      <Flexbox
+        {...stylex.props(
+          styles.root,
+          surfaceStyles.card,
+          wash && [styles.wash, styles[wash]],
+          styles.frame,
+        )}
       >
-        <Flexbox className={styles.body} gap={prominent ? 0 : 8}>
+        <Flexbox gap={prominent ? 0 : 8} {...stylex.props(styles.body)}>
           <Flexbox horizontal align="center" justify="space-between">
-            <Flexbox horizontal align="center" className={styles.copy} gap={6}>
-              <Text ellipsis className={prominent ? styles.metricLabel : styles.label}>
+            <Flexbox horizontal align="center" gap={6} {...stylex.props(styles.copy)}>
+              <Text ellipsis style={prominent ? textStyles.metricLabel : textStyles.label}>
                 {label}
               </Text>
               {action}
             </Flexbox>
             {mark ? (
-              <span aria-hidden className={styles.badge}>
+              <span aria-hidden {...stylex.props(styles.badge)}>
                 <Icon icon={mark} size={14} />
               </span>
             ) : null}
           </Flexbox>
-          <div className={prominent ? styles.metricValue : styles.value}>{value}</div>
+          <div {...stylex.props(prominent ? styles.metricValue : styles.value)}>{value}</div>
           {delta || hint ? (
             <Flexbox
               horizontal
               align="center"
-              className={prominent ? styles.metricFoot : undefined}
               gap={8}
               wrap="wrap"
+              {...stylex.props(prominent && styles.metricFoot)}
             >
               {delta ? (
-                <span className={`${styles.delta} ${deltaClass}`}>
+                <span {...stylex.props(styles.delta, deltaStyles[direction])}>
                   <Icon icon={deltaIcon[direction]} size={14} />
                   {delta}
                 </span>
               ) : null}
               {hint ? (
-                <Text className={prominent ? styles.metricHint : styles.hint}>{hint}</Text>
+                <Text style={prominent ? textStyles.metricHint : textStyles.hint}>{hint}</Text>
               ) : null}
             </Flexbox>
           ) : null}
         </Flexbox>
-      </Block>
+      </Flexbox>
     </div>
   );
 }

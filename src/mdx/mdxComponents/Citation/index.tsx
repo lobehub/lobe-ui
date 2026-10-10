@@ -1,10 +1,12 @@
 'use client';
 
-import { cx } from 'antd-style';
+import './style.css';
+
 import { isEmpty } from 'es-toolkit/compat';
 import type { FC, ReactNode } from 'react';
 
 import PopoverPanel from '@/mdx/mdxComponents/Citation/PopoverPanel';
+import { styleProps } from '@/styles/stylex/props';
 import type { CitationItem } from '@/types/citation';
 
 import { styles } from './style';
@@ -26,7 +28,7 @@ const Citation: FC<CitationProps> = ({ children, href, inSup, id, citationDetail
   if (inSup) {
     return (
       <PopoverPanel {...citationDetail} usePopover={usePopover}>
-        <span className={styles.container}>
+        <span {...styleProps(styles.container, 'lobe-mdx-citation')}>
           <a
             aria-describedby="footnote-label"
             data-footnote-ref="true"
@@ -44,7 +46,7 @@ const Citation: FC<CitationProps> = ({ children, href, inSup, id, citationDetail
 
   return (
     <PopoverPanel {...citationDetail} usePopover={usePopover}>
-      <sup className={cx(styles.container, styles.supContainer)}>
+      <sup {...styleProps([styles.container, styles.supContainer], 'lobe-mdx-citation')}>
         {url ? (
           <a
             aria-describedby="footnote-label"

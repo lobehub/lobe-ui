@@ -2,6 +2,7 @@
 
 import {
   createContext,
+  type CSSProperties,
   type ElementType,
   memo,
   type ReactNode,
@@ -12,6 +13,7 @@ import {
   useState,
 } from 'react';
 
+import FontLoader from '@/FontLoader';
 import { installGlobalFocusRing } from '@/GlobalFocusRing';
 import {
   type I18nContextValue,
@@ -21,6 +23,12 @@ import {
 } from '@/i18n/types';
 import { MotionComponent, type MotionComponentType } from '@/MotionProvider';
 import { type CDN, type CdnApi, genCdnUrl } from '@/utils/genCdnUrl';
+
+import AppElementContext from './AppElementContext';
+
+export const LOBE_THEME_APP_ID = 'lobe-ui-theme-app';
+
+export type Direction = 'ltr' | 'rtl';
 
 export interface Config {
   aAs?: ElementType;
@@ -33,6 +41,8 @@ export interface Config {
 
 export const ConfigContext = createContext<Config | null>(null);
 
+const DirectionContext = createContext<Direction>('ltr');
+
 // Internal i18n context
 const I18nContextInternal = createContext<I18nContextValue>({
   locale: 'en',
@@ -42,6 +52,9 @@ const I18nContextInternal = createContext<I18nContextValue>({
 export interface ConfigProviderProps {
   children: ReactNode;
   config?: Config;
+  customFonts?: string[];
+  direction?: Direction;
+  enableCustomFonts?: boolean;
   // i18n props - flattened at top level
   locale?: string;
   motion: MotionComponentType;
@@ -52,7 +65,18 @@ const isThenable = (value: unknown): value is Promise<TranslationResourcesMap> =
   typeof (value as { then?: unknown })?.then === 'function';
 
 const ConfigProvider = memo<ConfigProviderProps>(
-  ({ children, config, locale, resources, motion }) => {
+  ({
+    children,
+    config,
+    customFonts,
+    direction = 'ltr',
+    enableCustomFonts = true,
+    locale,
+    resources,
+    motion,
+  }) => {
+    const [portalHost, setPortalHost] = useState<HTMLDivElement | null>(null);
+
     useEffect(() => {
       if (config?.globalFocusRing === false) return;
       return installGlobalFocusRing();
@@ -109,12 +133,64 @@ const ConfigProvider = memo<ConfigProviderProps>(
     return (
       <I18nContextInternal value={i18nValue}>
         <ConfigContext value={config ?? null}>
-          <MotionComponent value={motion}>{children}</MotionComponent>
+          <DirectionContext value={direction}>
+            <MotionComponent value={motion}>
+              <AppElementContext value={portalHost}>
+                {enableCustomFonts && <WebFonts customFonts={customFonts} />}
+                {children}
+                <div
+                  data-lobe-portal-host=""
+                  id={LOBE_THEME_APP_ID}
+                  ref={setPortalHost}
+                  style={portalHostStyle}
+                />
+              </AppElementContext>
+            </MotionComponent>
+          </DirectionContext>
         </ConfigContext>
       </I18nContextInternal>
     );
   },
 );
+
+// `position: fixed` + `right: 0` gives base-ui Positioners a viewport-wide containing block and a
+// stacking context; no `pointer-events: none`, which popup descendants would inherit
+const portalHostStyle: CSSProperties = {
+  height: 0,
+  left: 0,
+  position: 'fixed',
+  right: 0,
+  top: 0,
+  zIndex: 1100,
+};
+
+const WebFonts = ({ customFonts }: { customFonts?: string[] }) => {
+  const genCdnUrl = useCdnFn();
+  const urls = useMemo(
+    () =>
+      customFonts || [
+        genCdnUrl({ path: 'css/index.css', pkg: '@lobehub/webfont-mono', version: '1.0.0' }),
+        genCdnUrl({
+          path: 'css/index-full.css',
+          pkg: '@lobehub/webfont-harmony-sans',
+          version: '1.0.0',
+        }),
+        genCdnUrl({
+          path: 'css/index.css',
+          pkg: '@lobehub/webfont-harmony-sans-sc',
+          version: '1.0.0',
+        }),
+        genCdnUrl({ path: 'dist/katex.min.css', pkg: 'katex', version: '0.18.1' }),
+      ],
+    [customFonts, genCdnUrl],
+  );
+
+  return urls.map((url) => <FontLoader key={url} url={url} />);
+};
+
+export const useDirection = () => use(DirectionContext);
+
+export { useAppElement } from './AppElementContext';
 
 // useCdnFn
 export type CdnFn = ({ pkg, version, path }: CdnApi) => string;

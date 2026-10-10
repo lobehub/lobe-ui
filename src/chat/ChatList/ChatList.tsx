@@ -1,9 +1,9 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { Fragment, memo } from 'react';
 
-import { ToastHost } from '@/base-ui/Toast';
+import { styleProps } from '@/styles/stylex/props';
+import { ToastHost } from '@/Toast';
 
 import ChatListItem from './components/ChatListItem';
 import HistoryDivider from './components/HistoryDivider';
@@ -32,7 +32,7 @@ const ChatList = memo<ChatListProps>(
     ...rest
   }) => {
     return (
-      <div className={cx(styles.container, className)} {...rest}>
+      <div {...styleProps(styles.container, className)} {...rest}>
         {data.map((item, index) => {
           const itemProps = {
             loading: loadingId === item.id,

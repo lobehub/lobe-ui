@@ -1,9 +1,9 @@
 import { fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { toast } from '@/base-ui/Toast';
-import { __resetToastHostRegistryForTests } from '@/base-ui/Toast/hostGuard';
-import { __resetToastStateForTests } from '@/base-ui/Toast/imperative';
+import { toast } from '@/Toast';
+import { __resetToastHostRegistryForTests } from '@/Toast/hostGuard';
+import { __resetToastStateForTests } from '@/Toast/imperative';
 
 import AvatarUploader from './AvatarUploader';
 

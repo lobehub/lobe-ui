@@ -1,5 +1,6 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import {
   Copy,
   Download,
@@ -14,16 +15,18 @@ import {
 import type { MotionValue } from 'motion/react';
 import { memo, type ReactNode, useCallback, useMemo, useState, useSyncExternalStore } from 'react';
 
-import ActionIcon from '@/base-ui/ActionIcon';
-import DropdownMenu, { type DropdownItem } from '@/base-ui/DropdownMenu';
-import { toast } from '@/base-ui/Toast';
+import { ActionIconImpl as ActionIcon } from '@/ActionIcon/ActionIcon';
+import DropdownMenu, { type DropdownItem } from '@/DropdownMenu';
 import { Center, Flexbox } from '@/Flex';
 import imageMessages from '@/i18n/resources/en/image';
 import { useTranslation } from '@/i18n/useTranslation';
+import { styleProps } from '@/styles/stylex/props';
+import { toast } from '@/Toast';
 import { TooltipGroup } from '@/Tooltip';
 import { getClipboardBlob } from '@/utils/blobToPng';
 import { downloadBlob } from '@/utils/downloadBlob';
 
+import { actualSizeMarker } from '../marker.stylex';
 import { styles } from '../style';
 import ActualSizeIcon from './ActualSizeIcon';
 import { naturalScale, type Rect, type Rotation, type Size } from './geometry';
@@ -197,8 +200,8 @@ const Toolbar = memo<ToolbarProps>(
 
     return (
       <TooltipGroup popupContainer={containerEl ?? undefined}>
-        <div className={styles.toolbar} ref={setContainerEl}>
-          <Flexbox horizontal align="center" className={styles.toolbarRow} gap={8}>
+        <div {...styleProps(styles.toolbar, 'lobe-image-viewer-toolbar')} ref={setContainerEl}>
+          <Flexbox horizontal align="center" gap={8} {...stylex.props(styles.toolbarRow)}>
             <ActionIcon
               disabled={!canZoomOut}
               icon={ZoomOut}
@@ -206,7 +209,7 @@ const Toolbar = memo<ToolbarProps>(
               title={t('image.zoomOut')}
               onClick={zoomOut}
             />
-            <Center horizontal className={styles.toolbarPercentage}>
+            <Center horizontal {...stylex.props(styles.toolbarPercentage)}>
               {percentage}%
             </Center>
             <ActionIcon
@@ -222,6 +225,7 @@ const Toolbar = memo<ToolbarProps>(
               icon={ActualSizeIcon}
               style={{ borderRadius: 999 }}
               title={showFitAffordance ? t('image.fitToScreen') : t('image.actualSize')}
+              xstyle={actualSizeMarker}
               onClick={toggleActualSize}
             />
             <ActionIcon

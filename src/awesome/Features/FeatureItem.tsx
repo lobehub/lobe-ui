@@ -1,15 +1,19 @@
 'use client';
 
-import { cx } from 'antd-style';
+import './style.css';
+
+import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { type CSSProperties, memo, useMemo } from 'react';
 
 import A from '@/A';
 import { Center, Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 import Img from '@/Img';
+import { styleProps } from '@/styles/stylex/props';
 import Text from '@/Text';
 
-import { styles } from './style';
+import { childStyles, styles } from './style';
 import type { FeatureItemProps } from './type';
 
 const Image = memo<{ className?: string; image: string; style?: CSSProperties; title: string }>(
@@ -52,31 +56,36 @@ const Item = memo<FeatureItemProps>(
 
     return (
       <div
-        className={cx(hasLink ? styles.containerHasLink : styles.container, className)}
-        style={{
+        {...styleProps(styles.container, clsx('lobe-features-item', className), {
           ...cssVariables,
           gridColumn: `span ${column || 1}`,
           gridRow: `span ${rowNumber}`,
           ...style,
-        }}
+        })}
         {...rest}
       >
-        <div className={styles.cell}>
+        <div {...stylex.props(styles.cell)}>
           {image ||
             (icon && (
-              <Center className={styles.imgContainer} style={imageStyle}>
-                {icon && <Icon className={styles.img} icon={icon} />}
-                {image && <Image className={styles.img} image={image} title={title} />}
+              <Center {...styleProps(styles.imgContainer, undefined, imageStyle)}>
+                {icon && <Icon icon={icon} style={childStyles.img} />}
+                {image && <Image image={image} style={childStyles.img} title={title} />}
               </Center>
             ))}
           {title && (
-            <Flexbox horizontal align={'center'} as={'h3'} className={styles.title} gap={8}>
+            <Flexbox
+              horizontal
+              align={'center'}
+              as={'h3'}
+              className={stylex.props(styles.title).className}
+              gap={8}
+            >
               {title}
             </Flexbox>
           )}
           {description && (
             <Text
-              className={styles.desc}
+              style={childStyles.desc}
               ellipsis={{
                 rows: 4,
               }}
@@ -85,7 +94,7 @@ const Item = memo<FeatureItemProps>(
             </Text>
           )}
           {link && (
-            <div className={styles.link}>
+            <div {...stylex.props(styles.link)}>
               <A href={link} rel="noreferrer" target={openExternal ? '_blank' : undefined}>
                 Read More
               </A>

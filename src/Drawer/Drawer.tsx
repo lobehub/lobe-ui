@@ -1,199 +1,235 @@
 'use client';
 
-import { Drawer as AntdDrawer } from 'antd';
-import { cssVar } from 'antd-style';
-import { XIcon } from 'lucide-react';
-import { type CSSProperties, memo, useMemo } from 'react';
+import clsx from 'clsx';
+import { X } from 'lucide-react';
+import type { CSSProperties } from 'react';
+import { memo, useCallback, useMemo } from 'react';
 
-import ActionIcon from '@/base-ui/ActionIcon';
-import { Flexbox } from '@/Flex';
+import { focusRing } from '@/styles/stylex/focusRing';
+import { styleProps } from '@/styles/stylex/props';
 
-import type { DrawerProps } from './type';
+import {
+  DrawerBackdrop,
+  DrawerContentImpl,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerPopupImpl,
+  DrawerPortal,
+  DrawerRoot,
+  type DrawerRootProps,
+  DrawerTitle,
+} from './atoms';
+import {
+  DEFAULT_CONTAINER_MAX_WIDTH,
+  DEFAULT_DRAWER_HEIGHT,
+  DEFAULT_DRAWER_WIDTH,
+  DEFAULT_PUSH_DISTANCE,
+  DEFAULT_SIDEBAR_WIDTH,
+} from './constants';
+import { DrawerPushProvider, useDrawerPush } from './DrawerPushContext';
+import { styles } from './style';
+import type { DrawerProps, DrawerPush } from './type';
+
+const resolvePushDistance = (push: DrawerPush) => {
+  if (push === false) return 0;
+  if (push === true) return DEFAULT_PUSH_DISTANCE;
+  return push.distance ?? DEFAULT_PUSH_DISTANCE;
+};
+
+const FULL_SIZES = new Set(['100%', '100dvh', '100dvw', '100vh', '100vw']);
 
 const Drawer = memo<DrawerProps>(
   ({
-    onClose,
-    containerMaxWidth = 1024,
-    classNames,
-    title,
-    placement,
-    styles,
-    children,
-    height,
+    open,
+    placement = 'right',
     width,
-    extra,
-    closeIconProps,
-    noHeader,
-    sidebarWidth = 280,
-    sidebar,
+    height,
+    mask = true,
+    maskClosable = true,
+    keyboard = true,
+    closable = true,
     closeIcon,
-    ref,
-    ...rest
+    extra,
+    title,
+    footer,
+    noHeader,
+    sidebar,
+    sidebarWidth = DEFAULT_SIDEBAR_WIDTH,
+    containerMaxWidth = DEFAULT_CONTAINER_MAX_WIDTH,
+    push = true,
+    zIndex,
+    getContainer,
+    className,
+    classNames,
+    style,
+    styles: semanticStyles,
+    afterOpenChange,
+    onClose,
+    children,
   }) => {
-    const headerBorder: CSSProperties = useMemo(() => {
-      if (height === '100%' || width === '100%' || height === '100vh' || width === '100vw')
-        return {};
+    const isOpen = open ?? false;
+    const { childValue, pushed } = useDrawerPush(isOpen);
+    const pushOffset = pushed ? resolvePushDistance(push) : 0;
 
-      switch (placement) {
-        case 'top': {
-          return {
-            borderBottom: `1px solid ${cssVar.colorBorder}`,
-          };
-        }
-        case 'bottom': {
-          return {
-            borderTop: `1px solid ${cssVar.colorBorder}`,
-          };
-        }
-        case 'left': {
-          return {
-            borderRight: `1px solid ${cssVar.colorBorder}`,
-          };
-        }
-        case 'right': {
-          return {
-            borderLeft: `1px solid ${cssVar.colorBorder}`,
-          };
-        }
-        default: {
-          return {};
-        }
-      }
-    }, [placement, height, width]);
+    const handleOpenChange = useCallback<NonNullable<DrawerRootProps['onOpenChange']>>(
+      (nextOpen, eventDetails) => {
+        if (nextOpen || !isOpen) return;
+        if (!keyboard && eventDetails.reason === 'escape-key') return;
+        if (!maskClosable && eventDetails.reason === 'outside-press') return;
+        onClose?.();
+      },
+      [isOpen, keyboard, maskClosable, onClose],
+    );
 
-    const extraNode = (
-      <Flexbox
-        horizontal
-        align={'center'}
-        className={classNames?.extra}
-        gap={4}
-        justify={'flex-end'}
-        style={{
-          position: 'absolute',
-          right: 4,
-          top: 4,
-          ...styles?.extra,
-        }}
+    const handleExitComplete = useCallback(() => afterOpenChange?.(false), [afterOpenChange]);
+    const handleAnimationComplete = useCallback(() => {
+      if (isOpen) afterOpenChange?.(true);
+    }, [isOpen, afterOpenChange]);
+
+    const isHorizontal = placement === 'left' || placement === 'right';
+    const resolvedWidth = isHorizontal ? (width ?? DEFAULT_DRAWER_WIDTH) : width;
+    const resolvedHeight = isHorizontal ? height : (height ?? DEFAULT_DRAWER_HEIGHT);
+
+    const isFlush = FULL_SIZES.has(String(isHorizontal ? resolvedWidth : resolvedHeight));
+    const surfaceWeight = (() => {
+      if (isFlush) return undefined;
+      if (pushed) return styles.panelRecessed;
+      return mask ? undefined : styles.panelBoosted;
+    })();
+
+    const showTitle = title !== undefined && title !== null;
+    const showHeader = !noHeader && (showTitle || closable || !!extra);
+    const hasSidebar = !!sidebar;
+
+    const containerStyle = useMemo<CSSProperties>(
+      () => ({ maxWidth: containerMaxWidth }),
+      [containerMaxWidth],
+    );
+
+    const closeNode = closable && (
+      <button
+        aria-label="Close"
+        {...styleProps([styles.close, focusRing.info], classNames?.close, semanticStyles?.close)}
+        type="button"
+        onClick={onClose}
+      >
+        {closeIcon ?? <X size={16} />}
+      </button>
+    );
+
+    const extraNode = (extra || closeNode) && (
+      <div
+        {...styleProps(
+          [styles.extra, !showHeader && styles.extraFloating],
+          classNames?.extra,
+          semanticStyles?.extra,
+        )}
       >
         {extra}
-        {closeIcon || <ActionIcon icon={XIcon} onClick={onClose} {...closeIconProps} />}
-      </Flexbox>
+        {closeNode}
+      </div>
     );
 
-    const sidebarContent = (
+    const bodyNode = hasSidebar ? (
       <>
-        <Flexbox
-          className={classNames?.sidebar}
-          paddingBlock={12}
-          paddingInline={16}
-          width={sidebarWidth}
-          style={{
-            background: cssVar.colorBgLayout,
-            borderRight: `1px solid ${cssVar.colorBorderSecondary}`,
-            height: '100vh',
-            overflowX: 'hidden',
-            overflowY: 'auto',
-            position: 'sticky',
-            top: 0,
-            ...styles?.sidebar,
-          }}
+        <div
+          {...styleProps(styles.sidebar, classNames?.sidebar, {
+            width: sidebarWidth,
+            ...semanticStyles?.sidebar,
+          })}
         >
           {sidebar}
-        </Flexbox>
-        <Flexbox
-          className={classNames?.sidebarContent}
-          flex={1}
-          paddingBlock={12}
-          paddingInline={16}
-          style={{
-            background: cssVar.colorBgContainer,
-            overflowX: 'hidden',
-            overflowY: 'auto',
-            ...styles?.sidebarContent,
-          }}
+        </div>
+        <div
+          {...styleProps(
+            styles.sidebarContent,
+            classNames?.sidebarContent,
+            semanticStyles?.sidebarContent,
+          )}
         >
           {children}
-        </Flexbox>
+        </div>
       </>
+    ) : (
+      children
     );
 
+    const container = getContainer === false ? undefined : (getContainer ?? undefined);
+
     return (
-      <AntdDrawer
-        classNames={classNames}
-        closable={false}
-        extra={noHeader ? undefined : extraNode}
-        height={height}
-        keyboard={true}
-        panelRef={ref}
-        placement={placement}
-        width={width}
-        styles={
-          typeof styles === 'function'
-            ? styles
-            : {
-                ...styles,
-                body: {
-                  background: 'transparent',
-                  paddingBlock: sidebar ? 0 : 12,
-                  paddingInline: sidebar ? 0 : 16,
-                  ...styles?.body,
-                },
-                header: {
-                  background: 'transparent',
-                  display: noHeader ? 'none' : undefined,
-                  padding: 4,
-                  ...styles?.header,
-                },
-                section: {
-                  background: sidebar
-                    ? `linear-gradient(to right, ${cssVar.colorBgLayout} 49.9%, ${cssVar.colorBgContainer} 50%)`
-                    : cssVar.colorBgContainer,
-                  ...styles?.section,
-                },
-                wrapper: {
-                  background: cssVar.colorBgContainer,
-                  ...headerBorder,
-                  ...styles?.wrapper,
-                },
-              }
-        }
-        title={
-          <Flexbox
-            horizontal
-            align={'center'}
-            className={classNames?.title}
-            justify={'flex-start'}
-            paddingBlock={8}
-            paddingInline={16}
-            style={{
-              justifySelf: 'center',
-              maxWidth: containerMaxWidth,
-              width: '100%',
-              ...styles?.title,
-            }}
-          >
-            {title}
-          </Flexbox>
-        }
-        onClose={onClose}
-        {...rest}
+      <DrawerRoot
+        modal={mask}
+        open={isOpen}
+        zIndex={zIndex}
+        onExitComplete={handleExitComplete}
+        onOpenChange={handleOpenChange}
       >
-        <Flexbox
-          className={classNames?.bodyContent}
-          horizontal={!!sidebar}
-          style={{
-            justifySelf: 'center',
-            maxWidth: containerMaxWidth,
-            minHeight: '100%',
-            overflow: sidebar ? 'visible' : undefined,
-            width: '100%',
-            ...styles?.bodyContent,
-          }}
-        >
-          {noHeader && extraNode}
-          {sidebar ? sidebarContent : children}
-        </Flexbox>
-      </AntdDrawer>
+        <DrawerPortal container={container}>
+          {mask && (
+            <DrawerBackdrop className={classNames?.backdrop} style={semanticStyles?.backdrop} />
+          )}
+          <DrawerPopupImpl
+            className={classNames?.popup}
+            flush={isFlush}
+            height={resolvedHeight}
+            motionProps={{ onAnimationComplete: handleAnimationComplete }}
+            panelClassName={clsx(className, classNames?.panel)}
+            panelStyle={{ ...style, ...semanticStyles?.panel }}
+            panelXstyle={surfaceWeight}
+            placement={placement}
+            popupStyle={semanticStyles?.popup}
+            pushOffset={pushOffset}
+            width={resolvedWidth}
+          >
+            <DrawerPushProvider value={childValue}>
+              {showHeader ? (
+                <DrawerHeader className={classNames?.header} style={semanticStyles?.header}>
+                  <div {...styleProps(styles.containerInner, undefined, containerStyle)}>
+                    {showTitle ? (
+                      <DrawerTitle className={classNames?.title} style={semanticStyles?.title}>
+                        {title}
+                      </DrawerTitle>
+                    ) : (
+                      <span />
+                    )}
+                    {extraNode}
+                  </div>
+                </DrawerHeader>
+              ) : (
+                extraNode
+              )}
+              <DrawerContentImpl
+                className={classNames?.content}
+                style={semanticStyles?.content}
+                xstyle={hasSidebar && styles.contentSidebar}
+              >
+                <div
+                  {...styleProps(
+                    [styles.bodyContent, hasSidebar && styles.bodyContentSidebar],
+                    classNames?.bodyContent,
+                    { ...containerStyle, ...semanticStyles?.bodyContent },
+                  )}
+                >
+                  {bodyNode}
+                </div>
+              </DrawerContentImpl>
+              {footer && (
+                <DrawerFooter className={classNames?.footer} style={semanticStyles?.footer}>
+                  <div
+                    {...styleProps(
+                      [styles.containerInner, styles.containerInnerFooter],
+                      undefined,
+                      containerStyle,
+                    )}
+                  >
+                    {footer}
+                  </div>
+                </DrawerFooter>
+              )}
+            </DrawerPushProvider>
+          </DrawerPopupImpl>
+        </DrawerPortal>
+      </DrawerRoot>
     );
   },
 );

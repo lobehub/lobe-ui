@@ -1,4 +1,4 @@
-import { ActionIcon, Avatar, Menu, type MenuItemType, Text } from '@lobehub/ui';
+import { ActionIcon, Avatar, List, type ListItemType, Text } from '@lobehub/ui';
 import { ChevronDown, Home, SquareDashedBottom, Users } from 'lucide-react';
 import type { FC } from 'react';
 
@@ -9,7 +9,7 @@ export const DemoHeader: FC<{
   expand: boolean;
   onSelect: (key: string) => void;
 }> = ({ activeKey, expand, onSelect }) => {
-  const mainItems: MenuItemType[] = [
+  const mainItems: ListItemType[] = [
     {
       icon: Home,
       key: 'home',
@@ -58,16 +58,10 @@ export const DemoHeader: FC<{
           </>
         )}
       </Flexbox>
-      <Menu
-        selectable
-        inlineCollapsed={!expand}
-        items={mainItems}
-        mode={'inline'}
-        selectedKeys={[activeKey]}
-        variant={'borderless'}
-        onSelect={({ key }) => {
-          onSelect(key);
-        }}
+      <List
+        activeKey={activeKey}
+        items={mainItems.map((item) => (expand ? item : { ...item, label: null }))}
+        onClick={({ key }) => onSelect(String(key))}
       />
     </Flexbox>
   );

@@ -5,10 +5,14 @@ export default () => {
   const store = useCreateStore();
   const control = useControls(
     {
-      active: true,
-      avatar: true,
-      paragraph: true,
-      title: true,
+      animated: {
+        label: 'Animation',
+        options: ['fade', 'sweep', false],
+        value: 'fade',
+      },
+      height: 32,
+      radius: 8,
+      width: '100%',
     },
     { store },
   );

@@ -1,4 +1,4 @@
-import { createStaticStyles } from 'antd-style';
+import * as stylex from '@stylexjs/stylex';
 
 export const LOGO_3D = {
   path: 'assets/logo-3d.webp',
@@ -6,11 +6,9 @@ export const LOGO_3D = {
   version: '1.2.0',
 };
 
-export const styles = createStaticStyles(({ css }) => {
-  return {
-    extraTitle: css`
-      font-weight: 300;
-      white-space: nowrap;
-    `,
-  };
+export const styles = stylex.create({
+  extraTitle: {
+    fontWeight: 300,
+    whiteSpace: 'nowrap',
+  },
 });

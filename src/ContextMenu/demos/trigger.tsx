@@ -5,7 +5,7 @@ import {
   ContextMenuTrigger,
   Text,
 } from '@lobehub/ui';
-import { createStaticStyles } from 'antd-style';
+import { createStaticStyles } from '@lobehub/ui';
 import { useMemo } from 'react';
 
 const styles = createStaticStyles(({ css, cssVar }) => ({

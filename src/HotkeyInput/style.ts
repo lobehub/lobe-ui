@@ -1,84 +1,66 @@
-import { createStaticStyles } from 'antd-style';
-import { cva } from 'class-variance-authority';
+import * as stylex from '@stylexjs/stylex';
 
-import { lobeStaticStylish } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => {
-  return {
-    borderless: lobeStaticStylish.variantBorderless,
-    disabled: lobeStaticStylish.disabled,
-    error: css`
-      border: 1px solid ${cssVar.colorError};
-    `,
-    errorText: css`
-      font-size: 12px;
-      color: ${cssVar.colorError};
-    `,
-    filled: lobeStaticStylish.variantFilled,
-    focused: css`
-      background: ${cssVar.colorFillSecondary} !important;
-    `,
-    hiddenInput: css`
-      cursor: text;
-
-      position: absolute;
-      z-index: -1;
-      inset-block-start: 0;
-      inset-inline-start: 0;
-
-      width: 100%;
-      height: 100%;
-
-      opacity: 0;
-    `,
-    outlined: lobeStaticStylish.variantOutlined,
-    placeholder: css`
-      color: ${cssVar.colorTextDescription};
-    `,
-    root: css`
-      cursor: pointer;
-
-      position: relative;
-
-      max-width: 100%;
-      height: 36px;
-      padding-block: 0;
-      padding-inline: 12px;
-      border-radius: ${cssVar.borderRadius};
-    `,
-    shadow: lobeStaticStylish.shadow,
-  };
-});
-
-export const variants = cva(styles.root, {
-  defaultVariants: {
-    disabled: false,
-    error: false,
-    shadow: false,
-    variant: 'outlined',
+export const styles = stylex.create({
+  borderless: {
+    borderColor: 'currentcolor',
+    borderStyle: 'none',
+    borderWidth: 'medium',
+    backgroundColor: { 'default': 'transparent', ':hover': cssVar.colorFillTertiary },
+    boxShadow: 'none',
   },
-
-  variants: {
-    variant: {
-      filled: styles.filled,
-      outlined: styles.outlined,
-      borderless: styles.borderless,
-    },
-    shadow: {
-      false: null,
-      true: styles.shadow,
-    },
-    focused: {
-      false: null,
-      true: styles.focused,
-    },
-    error: {
-      fales: null,
-      true: styles.error,
-    },
-    disabled: {
-      false: null,
-      true: styles.disabled,
-    },
+  disabled: {
+    cursor: 'not-allowed',
+    opacity: 0.5,
+  },
+  error: {
+    borderColor: cssVar.colorError,
+    borderStyle: 'solid',
+    borderWidth: 1,
+  },
+  errorOutlined: {
+    borderColor: { 'default': cssVar.colorError, ':hover': cssVar.colorBorder },
+  },
+  errorText: {
+    color: cssVar.colorError,
+    fontSize: 12,
+  },
+  filled: {
+    backgroundColor: { 'default': cssVar.colorFillTertiary, ':hover': cssVar.colorFillSecondary },
+  },
+  focused: {
+    backgroundColor: cssVar.colorFillSecondary,
+  },
+  hiddenInput: {
+    cursor: 'text',
+    insetBlockStart: 0,
+    insetInlineStart: 0,
+    opacity: 0,
+    position: 'absolute',
+    zIndex: -1,
+    height: '100%',
+    width: '100%',
+  },
+  outlined: {
+    borderColor: { 'default': cssVar.colorBorderSecondary, ':hover': cssVar.colorBorder },
+    borderStyle: 'solid',
+    borderWidth: 1,
+    backgroundColor: cssVar.colorBgContainer,
+  },
+  placeholder: {
+    color: cssVar.colorTextDescription,
+  },
+  root: {
+    borderRadius: cssVar.borderRadius,
+    paddingBlock: 0,
+    paddingInline: 12,
+    cursor: 'pointer',
+    position: 'relative',
+    height: 36,
+    maxWidth: '100%',
+  },
+  shadow: {
+    boxShadow: `0 1px 0 -1px ${cssVar.colorBorder}, 0 1px 2px -0.5px ${cssVar.colorBorder}, 0 2px 2px -1px ${cssVar.colorBorderSecondary}, 0 3px 6px -4px ${cssVar.colorBorderSecondary}`,
   },
 });

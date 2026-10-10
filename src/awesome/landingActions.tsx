@@ -1,10 +1,15 @@
-import { createStaticStyles, cx } from 'antd-style';
+import './landingActions.css';
+
+import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { Fragment, type ReactNode } from 'react';
 
 import BottomGradientButton from '@/awesome/BottomGradientButton';
 import { isExternalHref, type LandingLinkRender, renderLandingLink } from '@/awesome/landingLink';
-import { accentGradient } from '@/awesome/landingTokens';
 import Icon, { type IconProps } from '@/Icon';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { media } from '@/styles/stylex/media.stylex';
+import { styleProps } from '@/styles/stylex/props';
 
 export interface LandingAction {
   /** Opens in a new tab. Inferred from absolute URLs when omitted. */
@@ -18,81 +23,47 @@ export interface LandingAction {
   primary?: boolean;
 }
 
-const styles = createStaticStyles(({ css, cssVar, responsive }) => ({
-  action: css`
-    display: inline-flex;
-    gap: 8px;
-    align-items: center;
-    justify-content: center;
-
-    min-block-size: 44px;
-    padding-block: 0;
-    padding-inline: 22px;
-    border: 1px solid transparent;
-    border-radius: 999px;
-
-    font-size: ${cssVar.fontSize};
-    font-weight: 600;
-    color: ${cssVar.colorText};
-    text-decoration: none;
-    white-space: nowrap;
-
-    background-image:
-      linear-gradient(${cssVar.colorBgContainer}, ${cssVar.colorBgContainer}), ${accentGradient};
-    background-clip: padding-box, border-box;
-    background-origin: border-box;
-
-    transition:
-      filter 140ms ease,
-      transform 90ms ease;
-
-    &:hover {
-      color: ${cssVar.colorText};
-      filter: brightness(1.06);
-    }
-
-    &:active {
-      transform: scale(0.97);
-    }
-  `,
-  actionPrimary: css`
-    && {
-      color: ${cssVar.colorBgContainer};
-      background: ${cssVar.colorText};
-    }
-
-    &&:hover {
-      color: ${cssVar.colorBgContainer};
-    }
-  `,
-  actionSmall: css`
-    && {
-      gap: 6px;
-      min-block-size: 34px;
-      padding-inline: 14px;
-      font-size: ${cssVar.fontSizeSM};
-    }
-  `,
-  group: css`
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-
-    &[data-size='small'] {
-      gap: 8px;
-    }
-
-    ${responsive.mobile} {
-      &[data-size='large'] {
-        align-self: stretch;
-      }
-
-      &[data-size='large'] > * {
-        flex: 1;
-      }
-    }
-  `,
-}));
+const styles = stylex.create({
+  action: {
+    gap: 8,
+    borderColor: 'transparent',
+    borderRadius: 999,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    paddingBlock: 0,
+    paddingInline: 22,
+    transition: 'filter 140ms ease, transform 90ms ease',
+    alignItems: 'center',
+    backgroundColor: cssVar.colorText,
+    color: cssVar.colorBgContainer,
+    display: 'inline-flex',
+    filter: { 'default': null, ':hover': 'brightness(1.06)' },
+    fontSize: cssVar.fontSize,
+    fontWeight: 600,
+    justifyContent: 'center',
+    minBlockSize: 44,
+    textDecoration: 'none',
+    transform: { 'default': null, ':active': 'scale(0.97)' },
+    whiteSpace: 'nowrap',
+  },
+  actionSmall: {
+    gap: 6,
+    paddingInline: 14,
+    fontSize: cssVar.fontSizeSM,
+    minBlockSize: 34,
+  },
+  group: {
+    gap: 12,
+    display: 'flex',
+    flexWrap: 'wrap',
+  },
+  groupLarge: {
+    alignSelf: { default: null, [media.mobile]: 'stretch' },
+  },
+  groupSmall: {
+    gap: 8,
+  },
+});
 
 export type LandingNavigate = (href: string) => void;
 
@@ -103,6 +74,7 @@ export interface LandingActionsProps {
   onNavigate?: LandingNavigate;
   renderLink?: LandingLinkRender;
   size?: 'large' | 'small';
+  xstyle?: Parameters<typeof styleProps>[0];
 }
 
 export const LandingActions = ({
@@ -111,8 +83,15 @@ export const LandingActions = ({
   onNavigate,
   renderLink,
   size = 'large',
+  xstyle,
 }: LandingActionsProps) => (
-  <div className={cx(styles.group, className)} data-size={size}>
+  <div
+    {...styleProps(
+      [styles.group, size === 'small' ? styles.groupSmall : styles.groupLarge, xstyle],
+      clsx('lobe-landing-actions', className),
+    )}
+    data-size={size}
+  >
     {actions.map(({ external, href, icon, iconPlacement = 'start', label, primary }) => {
       const iconNode = icon && <Icon icon={icon} size={size === 'small' ? 14 : 16} />;
       if (!primary) {
@@ -149,11 +128,8 @@ export const LandingActions = ({
                 {iconPlacement === 'end' && iconNode}
               </>
             ),
-            className: cx(
-              styles.action,
-              styles.actionPrimary,
-              size === 'small' && styles.actionSmall,
-            ),
+            className: stylex.props(styles.action, size === 'small' && styles.actionSmall)
+              .className,
             external,
             href,
           })}

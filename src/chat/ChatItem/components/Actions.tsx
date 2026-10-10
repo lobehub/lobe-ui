@@ -1,8 +1,8 @@
-import { cx } from 'antd-style';
-import { type FC, type Ref, useMemo } from 'react';
+import { type FC, type Ref } from 'react';
 
 import { type ChatItemProps } from '@/chat/ChatItem';
 import { Flexbox } from '@/Flex';
+import { styleProps } from '@/styles/stylex/props';
 
 import { styles } from '../style';
 
@@ -21,19 +21,19 @@ const Actions: FC<ActionsProps> = ({
   editing,
   ref,
 }) => {
-  const actionsClassName = useMemo(() => {
-    if (variant === 'bubble') {
-      return placement === 'left' ? styles.actionsBubbleLeft : styles.actionsBubbleRight;
-    }
-    return placement === 'left' ? styles.actionsDocsLeft : styles.actionsDocsRight;
-  }, [placement, variant]);
-
   return (
     <Flexbox
       align={'flex-start'}
-      className={cx(actionsClassName, editing && styles.actionsEditing)}
+      flex={'none'}
+      justify={placement === 'left' ? 'flex-end' : 'flex-start'}
       ref={ref}
       role="menubar"
+      className={
+        styleProps(
+          variant !== 'bubble' && placement === 'left' ? styles.actionsTop : styles.actionsBottom,
+          editing ? 'lobe-chat-item-actions-editing' : undefined,
+        ).className
+      }
     >
       {actions}
     </Flexbox>

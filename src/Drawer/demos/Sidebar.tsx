@@ -1,91 +1,59 @@
-import { Drawer, type DrawerProps } from '@lobehub/ui';
-import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
-import { useRef } from 'react';
+import { Button, cssVar, Drawer,Flexbox, Text  } from '@lobehub/ui';
+import { useState } from 'react';
+
+const SECTIONS = {
+  'Appearance':
+    'Theme, density, and font preferences applied across every workspace you belong to.',
+  'Data controls': 'Retention windows, export requests, and training opt-out for this workspace.',
+  'General': 'Workspace name, default locale, and the landing surface members see on sign-in.',
+  'Members': 'Seat allocation, invite links, and per-role permission overrides.',
+  'Models': 'Provider keys, routing rules, and fallbacks used when a primary model is unavailable.',
+};
+
+type SectionKey = keyof typeof SECTIONS;
 
 export default () => {
-  const store = useCreateStore();
-  const ref = useRef(null);
-  const control = useControls(
-    {
-      containerMaxWidth: {
-        step: 1,
-        value: 1024,
-      },
-      height: {
-        step: 1,
-        value: 600,
-      },
-      noHeader: true,
-      open: true,
-      placement: {
-        options: ['left', 'right', 'top', 'bottom'],
-        value: 'bottom',
-      },
-      sidebarWidth: {
-        step: 1,
-        value: 280,
-      },
-      title: 'Drawer',
-    },
-    { store },
-  ) as DrawerProps;
-
-  const sidebarContent = (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-      <div>
-        <h3 style={{ fontSize: '14px', fontWeight: 600, margin: '0 0 8px 0' }}>Navigation</h3>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-          <div
-            style={{
-              background: '#f0f0f0',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              padding: '8px 12px',
-            }}
-          >
-            Dashboard
-          </div>
-          <div style={{ cursor: 'pointer', padding: '8px 12px' }}>Settings</div>
-          <div style={{ cursor: 'pointer', padding: '8px 12px' }}>Profile</div>
-        </div>
-      </div>
-
-      <div>
-        <h3 style={{ fontSize: '14px', fontWeight: 600, margin: '0 0 8px 0' }}>Quick Actions</h3>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-          <div style={{ cursor: 'pointer', padding: '8px 12px' }}>Create New</div>
-          <div style={{ cursor: 'pointer', padding: '8px 12px' }}>Import Data</div>
-          <div style={{ cursor: 'pointer', padding: '8px 12px' }}>Export</div>
-        </div>
-      </div>
-
-      <div>
-        <h3 style={{ fontSize: '14px', fontWeight: 600, margin: '0 0 8px 0' }}>Recent Items</h3>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
-          <div style={{ color: '#666', fontSize: '12px', padding: '6px 12px' }}>Project Alpha</div>
-          <div style={{ color: '#666', fontSize: '12px', padding: '6px 12px' }}>Document Beta</div>
-          <div style={{ color: '#666', fontSize: '12px', padding: '6px 12px' }}>Task Gamma</div>
-        </div>
-      </div>
-    </div>
-  );
-
-  const mainContent = Array.from({ length: 100 }).map((_, i) => (
-    <div key={i} style={{ borderBottom: '1px solid #f0f0f0', padding: '12px 0' }}>
-      <h4 style={{ margin: '0 0 8px 0' }}>Content Section {i + 1}</h4>
-      <p style={{ color: '#666', margin: 0 }}>
-        This is a long piece of content to demonstrate that the sidebar stays sticky while the main
-        content scrolls. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua.
-      </p>
-    </div>
-  ));
+  const [open, setOpen] = useState(false);
+  const [active, setActive] = useState<SectionKey>('General');
 
   return (
-    <StoryBook noPadding height={800} levaStore={store} ref={ref}>
-      <Drawer getContainer={false} sidebar={sidebarContent} {...control}>
-        {mainContent}
+    <>
+      <Button onClick={() => setOpen(true)}>Workspace settings</Button>
+
+      <Drawer
+        open={open}
+        title="Settings"
+        width="min(920px, 90vw)"
+        sidebar={
+          <Flexbox gap={2}>
+            {(Object.keys(SECTIONS) as SectionKey[]).map((key) => (
+              <Flexbox
+                key={key}
+                paddingBlock={8}
+                paddingInline={12}
+                style={{
+                  background: active === key ? cssVar.colorFillSecondary : 'transparent',
+                  borderRadius: 8,
+                  cursor: 'pointer',
+                }}
+                onClick={() => setActive(key)}
+              >
+                <Text weight={active === key ? 600 : 400}>{key}</Text>
+              </Flexbox>
+            ))}
+          </Flexbox>
+        }
+        onClose={() => setOpen(false)}
+      >
+        <Flexbox gap={12}>
+          <Text as="h3" style={{ margin: 0 }}>
+            {active}
+          </Text>
+          <Text as="p" style={{ margin: 0, opacity: 0.65 }}>
+            {SECTIONS[active]}
+          </Text>
+        </Flexbox>
       </Drawer>
-    </StoryBook>
+    </>
   );
 };

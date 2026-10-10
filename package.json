@@ -77,34 +77,17 @@
       "types": "./es/storybook/index.d.mts",
       "import": "./es/storybook/index.mjs"
     },
-    "./base-ui": {
-      "types": "./es/base-ui/index.d.mts",
-      "import": "./es/base-ui/index.mjs"
-    },
-    "./base-ui/form": {
-      "types": "./es/base-ui/FormKit/index.d.mts",
-      "import": "./es/base-ui/FormKit/index.mjs"
-    },
     "./eslint": {
       "types": "./es/eslint/index.d.mts",
       "import": "./es/eslint/index.mjs"
     },
-    "./static-css": {
-      "types": "./es/static-css/index.d.mts",
-      "import": "./es/static-css/index.mjs"
+    "./form": {
+      "types": "./es/FormKit/index.d.mts",
+      "import": "./es/FormKit/index.mjs"
     },
-    "./static-css/emit": {
-      "types": "./es/static-css/emit/index.d.mts",
-      "import": "./es/static-css/emit/index.mjs"
-    },
-    "./static-css/runtime": {
-      "types": "./es/static-css/runtime/index.d.mts",
-      "import": "./es/static-css/runtime/index.mjs"
-    },
-    "./static-css/vite": {
-      "types": "./es/static-css/vite/index.d.mts",
-      "import": "./es/static-css/vite/index.mjs"
-    },
+    "./global.css": "./es/global.css",
+    "./theme.css": "./es/theme.css",
+    "./style.css": "./es/style.css",
     "./es/*": {
       "types": "./es/*.d.mts",
       "import": "./es/*.mjs"
@@ -117,8 +100,9 @@
     "es"
   ],
   "scripts": {
-    "build": "tsdown && npm run build:packages",
+    "build": "tsdown && tsx ./scripts/buildThemeCss.ts && tsx ./scripts/checkStylexBuild.ts && npm run build:packages",
     "build:packages": "tsx ./scripts/build.ts",
+    "build:stylex-vars": "tsx ./scripts/buildStylexVars.ts",
     "build:watch": "tsdown --watch",
     "ci": "npm run lint:circular && npm run lint && npm run type-check",
     "clean": "rm -r es lib dist coverage .eslintcache node_modules/.cache",
@@ -163,7 +147,6 @@
     ]
   },
   "dependencies": {
-    "@ant-design/cssinjs": "^2.1.2",
     "@base-ui/react": "1.8.0",
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/modifiers": "^9.0.0",
@@ -171,7 +154,9 @@
     "@dnd-kit/utilities": "^3.2.2",
     "@emoji-mart/data": "^1.2.1",
     "@emoji-mart/react": "^1.1.1",
+    "@emotion/css": "^11.13.5",
     "@emotion/is-prop-valid": "^1.4.0",
+    "@emotion/serialize": "^1.3.3",
     "@floating-ui/react": "^0.27.19",
     "@giscus/react": "^3.1.0",
     "@lobehub/streamdown": "^1.3.0",
@@ -183,10 +168,10 @@
     "@shikijs/stream": "^4.3.1",
     "@shikijs/transformers": "^4.3.1",
     "@splinetool/runtime": "1.12.98",
+    "@stylexjs/stylex": "0.19.1",
     "@tanstack/form-core": "^1.33.5",
     "@tanstack/react-table": "^9.2.4",
     "ahooks": "^3.9.7",
-    "antd-style": "^4.1.0",
     "beautiful-mermaid": "^1.1.3",
     "chroma-js": "^3.2.0",
     "class-variance-authority": "^0.7.1",
@@ -204,15 +189,10 @@
     "leva": "^0.10.1",
     "lucide-react": "^1.24.0",
     "marked": "^18.0.6",
-    "motion": "^12.0.0",
+    "motion": "^13.0.0",
     "numeral": "^2.0.6",
     "polished": "^4.3.1",
     "query-string": "^9.4.1",
-    "rc-collapse": "^4.0.0",
-    "rc-footer": "^0.6.8",
-    "rc-image": "^7.12.0",
-    "rc-input-number": "^9.5.0",
-    "rc-menu": "^9.16.1",
     "re-resizable": "^6.11.2",
     "react-avatar-editor": "^15.1.0",
     "react-error-boundary": "^6.1.2",
@@ -245,7 +225,6 @@
     "virtua": "^0.52.0"
   },
   "devDependencies": {
-    "@ant-design/icons": "^6.3.2",
     "@commitlint/cli": "^21.2.1",
     "@lobehub/docs-kit": "workspace:*",
     "@lobehub/eslint-config": "2.1.5",
@@ -255,31 +234,30 @@
     "@mdx-js/rollup": "3.1.1",
     "@playwright/test": "1.61.1",
     "@react-router/dev": "8.2.0",
+    "@stylexjs/eslint-plugin": "0.19.1",
+    "@stylexjs/unplugin": "0.19.1",
     "@testing-library/react": "^16.3.2",
     "@types/chroma-js": "^3.1.2",
     "@types/hast": "^3.0.5",
     "@types/mdx": "^2.0.14",
     "@types/node": "26.1.1",
     "@types/numeral": "^2.0.5",
-    "@types/pangu": "^4.0.2",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "@types/unist": "^3.0.3",
     "@typescript-eslint/eslint-plugin": "^8.63.0",
     "@typescript-eslint/parser": "^8.63.0",
-    "@vitest/coverage-v8": "^4.1.10",
-    "antd": "^6.5.0",
+    "@vitest/coverage-v8": "^5.0.2",
     "cheerio": "^1.2.0",
     "clean-package": "^2.2.0",
-    "code-inspector-plugin": "^1.6.6",
+    "code-inspector-plugin": "^2.0.9",
     "commitlint": "^21.2.1",
     "concurrently": "^10.0.3",
     "conventional-changelog-gitmoji-config": "1.5.2",
     "cross-env": "^10.1.0",
-    "dotenv": "^17.4.2",
+    "dotenv": "^18.0.4",
     "dpdm": "^4.2.0",
-    "eslint": "^9.39.5",
-    "eslint-plugin-sort-keys-fix": "^1.1.2",
+    "eslint": "^10.11.0",
     "figma-js": "1.16.1-0",
     "husky": "^9.1.7",
     "jsdom": "^29.1.1",
@@ -289,35 +267,34 @@
     "pagefind": "1.5.2",
     "prettier": "^3.9.5",
     "prettier-plugin-packagejson": "^3.0.2",
-    "prettier-plugin-sh": "^0.19.0",
+    "prettier-plugin-sh": "^0.20.2",
     "prettier-plugin-sort-json": "^4.2.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
-    "react-live": "4.1.8",
+    "react-live": "5.0.0",
     "react-router": "8.2.0",
     "remark": "^15.0.1",
     "remark-cli": "^12.0.1",
     "remark-frontmatter": "^5.0.0",
-    "remark-mdx-frontmatter": "^5.2.0",
+    "remark-mdx-frontmatter": "^6.0.0",
     "rollup-plugin-visualizer": "7.0.1",
     "semantic-release": "^25.0.6",
     "stylelint": "^16.26.1",
     "svgo": "^4.0.1",
-    "tsdown": "^0.22.4",
+    "tsdown": "^0.23.0",
     "tsx": "^4.23.0",
     "typescript": "^6.0.3",
     "unist-util-is": "^6.0.1",
     "unist-util-visit": "^5.1.0",
     "vite": "8.1.4",
-    "vitest": "^4.1.10",
+    "vitest": "^5.0.2",
     "yaml": "^2.9.0",
     "zod": "^4.4.3"
   },
   "peerDependencies": {
     "@lobehub/fluent-emoji": "^4.0.0",
     "@lobehub/icons": "^5.0.0",
-    "antd": "^6.1.1",
-    "motion": "^12.0.0",
+    "motion": "^13.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },

@@ -1,10 +1,31 @@
-import type { TagProps as AntTagProps } from 'antd';
-import type { Ref } from 'react';
+import type { ComponentProps, CSSProperties, MouseEvent, ReactNode, Ref } from 'react';
 
-export interface TagProps extends Omit<AntTagProps, 'color' | 'variant'> {
-  color?: AntTagProps['color'] | 'info';
-  ref?: Ref<HTMLDivElement>;
-  shape?: 'normal' | 'round';
-  size?: 'small' | 'middle' | 'large';
-  variant?: 'filled' | 'outlined' | 'borderless' | 'solid';
+export type TagShape = 'normal' | 'round';
+
+export type TagSize = 'small' | 'middle' | 'large';
+
+export type TagVariant = 'filled' | 'outlined' | 'borderless' | 'solid';
+
+export interface TagClassNames {
+  closeIcon?: string;
+  root?: string;
+}
+
+export interface TagStyles {
+  closeIcon?: CSSProperties;
+  root?: CSSProperties;
+}
+
+export interface TagProps extends Omit<ComponentProps<'span'>, 'color'> {
+  classNames?: TagClassNames;
+  closable?: boolean;
+  closeIcon?: ReactNode;
+  color?: string;
+  icon?: ReactNode;
+  onClose?: (e: MouseEvent<HTMLSpanElement>) => void;
+  ref?: Ref<HTMLSpanElement>;
+  shape?: TagShape;
+  size?: TagSize;
+  styles?: TagStyles;
+  variant?: TagVariant;
 }

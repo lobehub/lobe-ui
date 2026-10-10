@@ -1,71 +1,39 @@
 'use client';
 
 import type { ReactNode } from 'react';
-import { memo, useEffect, useSyncExternalStore } from 'react';
+import { memo, useCallback, useEffect, useState, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 
+import { useAppElement } from '@/ConfigProvider/AppElementContext';
 import { useIsClient } from '@/hooks/useIsClient';
-import { useAppElement } from '@/ThemeProvider';
 import { registerDevSingleton } from '@/utils/devSingleton';
 
-import { ModalStackItem } from './ModalStackItem';
-import { RawModalStackItem } from './RawModalStackItem';
-import type {
-  ImperativeModalProps,
-  ModalInstance,
-  RawModalComponent,
-  RawModalComponentProps,
-  RawModalInstance,
-  RawModalKeyOptions,
-  RawModalOptions,
-} from './type';
+import { Button } from '../Button';
+import {
+  ModalBackdrop,
+  ModalClose,
+  ModalContentImpl,
+  ModalFooter,
+  ModalHeader,
+  ModalPopup,
+  ModalPortal,
+  ModalRoot,
+  ModalTitle,
+} from './atoms';
+import { ModalContext, useModalContext } from './context';
+import { styles } from './style';
+import type { ImperativeModalProps, ModalConfirmConfig, ModalInstance } from './type';
 
-type ModalStackItemBase = {
+// --- Shared types ---
+
+type ModalStackEntry = {
   id: string;
-};
-
-type ModalStackItemModal = ModalStackItemBase & {
-  kind: 'modal';
   props: ImperativeModalProps;
 };
 
-type ModalStackItemRaw = ModalStackItemBase & {
-  component: RawModalComponent;
-  kind: 'raw';
-  open: boolean;
-  options?: RawModalOptions<PropertyKey, PropertyKey>;
-  props: Record<string, unknown>;
-};
+// --- Shared components (stack-independent) ---
 
-type TModalStackItem = ModalStackItemModal | ModalStackItemRaw;
-
-type ModalStackProps = {
-  stack: TModalStackItem[];
-};
-
-export type ModalHostProps = {
-  root?: HTMLElement | ShadowRoot | null;
-};
-
-let modalStack: TModalStackItem[] = [];
-let modalSeed = 0;
-const listeners = new Set<() => void>();
-const rawDestroyTimers = new Map<string, number>();
-
-const notify = () => {
-  listeners.forEach((listener) => listener());
-};
-
-const subscribe = (listener: () => void) => {
-  listeners.add(listener);
-  return () => listeners.delete(listener);
-};
-
-const EMPTY_STACK: TModalStackItem[] = [];
-const getSnapshot = () => modalStack;
-const getServerSnapshot = () => EMPTY_STACK;
-
-const ModalPortal = ({
+const ModalPortalWrapper = ({
   children,
   root,
 }: {
@@ -74,204 +42,252 @@ const ModalPortal = ({
 }) => {
   const appElement = useAppElement();
   const container = root ?? appElement ?? document.body;
-
   return createPortal(children, container);
 };
 
-const updateModal = (id: string, nextProps: Partial<ImperativeModalProps>) => {
-  let changed = false;
-  modalStack = modalStack.map((item) => {
-    if (item.id !== id) return item;
-    if (item.kind !== 'modal') return item;
-    changed = true;
-    return {
-      ...item,
-      props: { ...item.props, ...nextProps },
-    };
-  });
+const ConfirmBody = ({ config }: { config: ModalConfirmConfig }) => {
+  const { close } = useModalContext();
+  const [loading, setLoading] = useState(false);
 
-  if (changed) notify();
-};
+  const { cancelText = 'Cancel', content, okButtonProps, okText = 'OK', onCancel, onOk } = config;
 
-const updateRawProps = (id: string, nextProps: Record<string, unknown>) => {
-  let changed = false;
-  modalStack = modalStack.map((item) => {
-    if (item.id !== id) return item;
-    if (item.kind !== 'raw') return item;
-    changed = true;
-    return {
-      ...item,
-      props: { ...item.props, ...nextProps },
-    };
-  });
+  const handleCancel = useCallback(() => {
+    close();
+    onCancel?.();
+  }, [close, onCancel]);
 
-  if (changed) notify();
-};
-
-const setRawOpen = (id: string, open: boolean) => {
-  let changed = false;
-  modalStack = modalStack.map((item) => {
-    if (item.id !== id) return item;
-    if (item.kind !== 'raw') return item;
-    if (item.open === open) return item;
-    changed = true;
-    return { ...item, open };
-  });
-
-  if (open) {
-    const timer = rawDestroyTimers.get(id);
-    if (timer) {
-      clearTimeout(timer);
-      rawDestroyTimers.delete(id);
+  const handleOk = useCallback(async () => {
+    if (onOk) {
+      try {
+        const result = onOk();
+        if (result && typeof (result as any).then === 'function') {
+          setLoading(true);
+          await result;
+          setLoading(false);
+        }
+      } catch {
+        setLoading(false);
+        return;
+      }
     }
-  }
-
-  if (changed) notify();
-};
-
-const closeModal = (id: string) => {
-  const target = modalStack.find((item) => item.id === id);
-  if (!target) return;
-
-  if (target.kind === 'modal') {
-    updateModal(id, { open: false });
-    return;
-  }
-
-  setRawOpen(id, false);
-
-  const shouldDestroy = target.options?.destroyOnClose ?? true;
-  if (!shouldDestroy) return;
-
-  const delay = target.options?.destroyDelay ?? 200;
-  const existing = rawDestroyTimers.get(id);
-  if (existing) clearTimeout(existing);
-  const timer = window.setTimeout(() => {
-    rawDestroyTimers.delete(id);
-
-    destroyModal(id);
-  }, delay);
-  rawDestroyTimers.set(id, timer);
-};
-
-const destroyModal = (id: string) => {
-  const timer = rawDestroyTimers.get(id);
-  if (timer) {
-    clearTimeout(timer);
-    rawDestroyTimers.delete(id);
-  }
-  const nextStack = modalStack.filter((item) => item.id !== id);
-  if (nextStack.length === modalStack.length) return;
-  modalStack = nextStack;
-  notify();
-};
-
-const ModalStack = memo(({ stack }: ModalStackProps) => {
-  const isClient = useIsClient();
-  if (!isClient) return null;
-  return stack.map((item) => {
-    if (item.kind === 'modal') {
-      return (
-        <ModalStackItem
-          id={item.id}
-          key={item.id}
-          props={item.props}
-          onClose={closeModal}
-          onDestroy={destroyModal}
-          onUpdate={updateModal}
-        />
-      );
-    }
-
-    return (
-      <RawModalStackItem
-        component={item.component}
-        id={item.id}
-        key={item.id}
-        open={item.open}
-        options={item.options}
-        props={item.props}
-        onClose={closeModal}
-        onUpdate={updateRawProps}
-      />
-    );
-  });
-});
-
-ModalStack.displayName = 'ModalStack';
-
-export const ModalHost = ({ root }: ModalHostProps) => {
-  const stack = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
-  const isClient = useIsClient();
-
-  useEffect(() => {
-    if (!isClient) return;
-    // Enforce singleton per portal root (dev-only).
-    const scope = root ?? document.body;
-    return registerDevSingleton('ModalHost', scope);
-  }, [isClient, root]);
-
-  if (!isClient) return null;
-  if (stack.length === 0) return null;
+    close();
+  }, [close, onOk]);
 
   return (
-    <ModalPortal root={root}>
-      <ModalStack stack={stack} />
-    </ModalPortal>
+    <>
+      {content && <div style={{ padding: '12px 16px' }}>{content}</div>}
+      <ModalFooter>
+        <Button onClick={handleCancel}>{cancelText}</Button>
+        <Button loading={loading} type="primary" {...okButtonProps} onClick={handleOk}>
+          {okText}
+        </Button>
+      </ModalFooter>
+    </>
   );
 };
+ConfirmBody.displayName = 'ConfirmBody';
 
-export const createModal = (props: ImperativeModalProps): ModalInstance => {
-  const id = `modal-${Date.now()}-${modalSeed++}`;
-  modalStack = [
-    ...modalStack,
-    { id, kind: 'modal', props: { ...props, open: props.open ?? true } },
-  ];
-  notify();
+// --- Factory ---
 
-  return {
-    close: () => closeModal(id),
-    destroy: () => destroyModal(id),
-    setCanDismissByClickOutside: (value) => updateModal(id, { mask: { closable: value } }),
-    update: (nextProps) => updateModal(id, nextProps),
-  };
-};
-
-export function createRawModal<P extends RawModalComponentProps>(
-  component: RawModalComponent<P>,
-  props: Omit<P, 'open' | 'onClose'>,
-  options?: RawModalOptions,
-): RawModalInstance<P>;
-
-export function createRawModal<P, OpenKey extends keyof P, CloseKey extends keyof P>(
-  component: RawModalComponent<P>,
-  props: Omit<P, OpenKey | CloseKey>,
-  options: RawModalKeyOptions<OpenKey, CloseKey>,
-): RawModalInstance<P, OpenKey, CloseKey>;
-
-export function createRawModal<P, OpenKey extends keyof P, CloseKey extends keyof P>(
-  component: RawModalComponent<P>,
-  props: Omit<P, OpenKey | CloseKey>,
-  options?: RawModalOptions<OpenKey, CloseKey>,
-): RawModalInstance<P, OpenKey, CloseKey> {
-  const id = `modal-${Date.now()}-${modalSeed++}`;
-  modalStack = [
-    ...modalStack,
-    {
-      component,
-      id,
-      kind: 'raw',
-      open: true,
-      options,
-      props: props as Record<string, unknown>,
-    },
-  ];
-  notify();
-
-  return {
-    close: () => closeModal(id),
-    destroy: () => destroyModal(id),
-    setCanDismissByClickOutside: (value) => updateRawProps(id, { mask: { closable: value } }),
-    update: (nextProps) => updateRawProps(id, nextProps as Record<string, unknown>),
-  };
+export interface ModalHostProps {
+  root?: HTMLElement | ShadowRoot | null;
 }
+
+export interface ModalSystem {
+  confirmModal: (config: ModalConfirmConfig) => { close: () => void; destroy: () => void };
+  createModal: (props: ImperativeModalProps) => ModalInstance;
+  ModalHost: React.FC<ModalHostProps>;
+}
+
+let systemSeed = 0;
+
+export function createModalSystem(): ModalSystem {
+  const systemId = systemSeed++;
+  const singletonName = systemId === 0 ? 'BaseModalHost' : `BaseModalHost-${systemId}`;
+
+  // --- Stack state (isolated per system) ---
+  let modalStack: ModalStackEntry[] = [];
+  let modalSeed = 0;
+  const listeners = new Set<() => void>();
+
+  const notify = () => listeners.forEach((l) => l());
+  const subscribe = (l: () => void) => {
+    listeners.add(l);
+    return () => listeners.delete(l);
+  };
+  const EMPTY: ModalStackEntry[] = [];
+  const getSnapshot = () => modalStack;
+  const getServerSnapshot = () => EMPTY;
+
+  // --- Stack operations ---
+
+  const updateModal = (id: string, next: Partial<ImperativeModalProps>) => {
+    let changed = false;
+    modalStack = modalStack.map((item) => {
+      if (item.id !== id) return item;
+      changed = true;
+      return { ...item, props: { ...item.props, ...next } };
+    });
+    if (changed) notify();
+  };
+
+  const closeModal = (id: string) => {
+    updateModal(id, { open: false });
+  };
+
+  const destroyModal = (id: string) => {
+    const next = modalStack.filter((item) => item.id !== id);
+    if (next.length === modalStack.length) return;
+    modalStack = next;
+    notify();
+  };
+
+  // --- Stack Item (captures operations via closure) ---
+
+  const StackItem = memo(({ entry }: { entry: ModalStackEntry }) => {
+    const { id, props } = entry;
+    const {
+      children,
+      classNames,
+      content,
+      footer,
+      maskClosable,
+      onOpenChange,
+      onOpenChangeComplete,
+      open,
+      styles: semanticStyles,
+      title,
+      width,
+    } = props;
+
+    const isOpen = open ?? true;
+
+    const handleOpenChange = useCallback(
+      (nextOpen: boolean, eventDetails?: { reason: string }) => {
+        if (!nextOpen && maskClosable === false && eventDetails?.reason === 'outside-press') return;
+        if (!nextOpen) closeModal(id);
+        onOpenChange?.(nextOpen);
+      },
+      [id, maskClosable, onOpenChange],
+    );
+
+    const handleExitComplete = useCallback(() => {
+      onOpenChangeComplete?.(false);
+      destroyModal(id);
+    }, [id, onOpenChangeComplete]);
+
+    const close = useCallback(() => closeModal(id), [id]);
+    const setCanDismissByClickOutside = useCallback(
+      (value: boolean) => updateModal(id, { maskClosable: value }),
+      [id],
+    );
+
+    const showTitle = title !== undefined && title !== false && title !== null;
+
+    return (
+      <ModalContext value={{ close, setCanDismissByClickOutside }}>
+        <ModalRoot
+          open={isOpen}
+          onExitComplete={handleExitComplete}
+          onOpenChange={handleOpenChange}
+        >
+          <ModalPortal>
+            <ModalBackdrop className={classNames?.backdrop} style={semanticStyles?.backdrop} />
+            <ModalPopup
+              className={classNames?.popup}
+              popupStyle={semanticStyles?.popup}
+              width={width}
+            >
+              {showTitle && (
+                <ModalHeader className={classNames?.header} style={semanticStyles?.header}>
+                  <ModalTitle className={classNames?.title} style={semanticStyles?.title}>
+                    {title}
+                  </ModalTitle>
+                  <ModalClose className={classNames?.close} style={semanticStyles?.close} />
+                </ModalHeader>
+              )}
+              <ModalContentImpl
+                className={classNames?.content}
+                style={semanticStyles?.content}
+                xstyle={!showTitle && styles.contentNoHeader}
+              >
+                {content ?? children}
+              </ModalContentImpl>
+              {footer}
+            </ModalPopup>
+          </ModalPortal>
+        </ModalRoot>
+      </ModalContext>
+    );
+  });
+  StackItem.displayName = 'ModalStackItem';
+
+  const StackRenderer = memo(({ stack }: { stack: ModalStackEntry[] }) => {
+    const isClient = useIsClient();
+    if (!isClient) return null;
+    return stack.map((entry) => <StackItem entry={entry} key={entry.id} />);
+  });
+  StackRenderer.displayName = 'ModalStackRenderer';
+
+  // --- ModalHost ---
+
+  const Host = ({ root }: ModalHostProps) => {
+    const stack = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
+    const isClient = useIsClient();
+
+    useEffect(() => {
+      if (!isClient) return;
+      const scope = root ?? document.body;
+      return registerDevSingleton(singletonName, scope);
+    }, [isClient, root]);
+
+    if (!isClient) return null;
+    if (stack.length === 0) return null;
+
+    return (
+      <ModalPortalWrapper root={root}>
+        <StackRenderer stack={stack} />
+      </ModalPortalWrapper>
+    );
+  };
+
+  // --- createModal ---
+
+  const create = (props: ImperativeModalProps): ModalInstance => {
+    const id = `base-modal-${Date.now()}-${modalSeed++}`;
+    modalStack = [...modalStack, { id, props: { ...props, open: props.open ?? true } }];
+    notify();
+
+    return {
+      close: () => closeModal(id),
+      destroy: () => destroyModal(id),
+      setCanDismissByClickOutside: (value) => updateModal(id, { maskClosable: value }),
+      update: (nextProps) => updateModal(id, nextProps),
+    };
+  };
+
+  // --- confirmModal ---
+
+  const confirm = (config: ModalConfirmConfig) => {
+    const instance = create({
+      content: <ConfirmBody config={config} />,
+      styles: { content: { padding: 0 } },
+      title: config.title,
+      width: config.width ?? 420,
+    });
+
+    return {
+      close: instance.close,
+      destroy: instance.destroy,
+    };
+  };
+
+  return { ModalHost: Host, confirmModal: confirm, createModal: create };
+}
+
+// --- Default global instance (backward compatible) ---
+
+const defaultSystem = createModalSystem();
+export const ModalHost = defaultSystem.ModalHost;
+export const createModal = defaultSystem.createModal;
+export const confirmModal = defaultSystem.confirmModal;

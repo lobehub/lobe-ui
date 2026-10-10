@@ -1,41 +1,24 @@
-import { createStaticStyles, cx } from 'antd-style';
+import * as stylex from '@stylexjs/stylex';
 
-import { lobeStaticStylish } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) =>
-  cx(
-    lobeStaticStylish.resetLinkColor,
-    css`
-      overflow: hidden;
-      font-weight: bold;
-      transition: all 0.2s ease-in-out;
-
-      &::before {
-        content: '';
-
-        position: absolute;
-        inset-block-end: 0;
-
-        display: block;
-
-        width: 50%;
-        height: 1px;
-
-        opacity: 0;
-        background-image: linear-gradient(to right, transparent, ${cssVar.gold}, transparent);
-
-        transition: all 0.2s ease-in-out;
-      }
-
-      &&:not(:hover) {
-        color: ${cssVar.colorTextSecondary};
-      }
-
-      &:hover {
-        &::before {
-          opacity: 1;
-        }
-      }
-    `,
-  ),
-);
+export const styles = stylex.create({
+  root: {
+    'overflow': 'hidden',
+    'transition': 'all 0.2s ease-in-out',
+    'color': { 'default': cssVar.colorTextSecondary, ':hover': cssVar.colorText },
+    'cursor': 'pointer',
+    'fontWeight': 'bold',
+    '::before': {
+      transition: 'all 0.2s ease-in-out',
+      backgroundImage: `linear-gradient(to right, transparent, ${cssVar.gold}, transparent)`,
+      content: "''",
+      display: 'block',
+      insetBlockEnd: 0,
+      opacity: { 'default': 0, ':hover': 1 },
+      position: 'absolute',
+      height: 1,
+      width: '50%',
+    },
+  },
+});

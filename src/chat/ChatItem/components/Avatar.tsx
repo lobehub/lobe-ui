@@ -1,6 +1,7 @@
+import * as stylex from '@stylexjs/stylex';
 import { type CSSProperties, type FC, useMemo } from 'react';
 
-import A from '@/base-ui/Avatar';
+import A from '@/Avatar';
 import { Flexbox } from '@/Flex';
 
 import { styles } from '../style';
@@ -38,7 +39,7 @@ const Avatar: FC<AvatarProps> = ({
   );
 
   const avatarContent = (
-    <div className={styles.avatarContainer} style={{ ...cssVariables, ...style }}>
+    <div {...stylex.props(styles.avatarContainer)} style={{ ...cssVariables, ...style }}>
       <A
         alt={alt || avatar.title}
         animation={loading}
@@ -55,7 +56,7 @@ const Avatar: FC<AvatarProps> = ({
 
   if (!addon) return avatarContent;
   return (
-    <Flexbox align={'center'} className={styles.avatarGroupContainer} gap={8}>
+    <Flexbox align={'center'} gap={8} width={'var(--chat-item-avatar-size, 40px)'}>
       {avatarContent}
       {addon}
     </Flexbox>

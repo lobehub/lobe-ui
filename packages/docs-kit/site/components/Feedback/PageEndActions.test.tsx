@@ -1,9 +1,18 @@
+import { ConfigProvider } from '@lobehub/ui';
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
-import type { ComponentType } from 'react';
+import { motion } from 'motion/react';
+import type { ComponentType, ReactElement, ReactNode } from 'react';
 import { useEffect } from 'react';
 import siteConfig from 'virtual:lobedocs/site-config';
 
 import { type GiscusModule, PageEndActions } from './PageEndActions';
+
+const ConfigWrapper = ({ children }: { children: ReactNode }) => (
+  <ConfigProvider enableCustomFonts={false} motion={motion}>
+    {children}
+  </ConfigProvider>
+);
+const renderWithConfig = (ui: ReactElement) => render(ui, { wrapper: ConfigWrapper });
 
 const themeMocks = vi.hoisted(() => ({ appearance: 'light' as 'dark' | 'light' }));
 
@@ -47,7 +56,7 @@ afterEach(() => {
 });
 
 it('records a local helpful response with icon actions', () => {
-  const { container } = render(<PageEndActions pathname="/components/button" />);
+  const { container } = renderWithConfig(<PageEndActions pathname="/components/button" />);
 
   expect(screen.getByText('Helpful?')).toBeTruthy();
   fireEvent.click(screen.getByRole('button', { name: 'Yes, this page was helpful' }));
@@ -57,7 +66,7 @@ it('records a local helpful response with icon actions', () => {
 });
 
 it('resets the local confirmation when the documentation pathname changes', () => {
-  const { rerender } = render(<PageEndActions pathname="/components/button" />);
+  const { rerender } = renderWithConfig(<PageEndActions pathname="/components/button" />);
   fireEvent.click(screen.getByRole('button', { name: 'No, this page was not helpful' }));
   expect(screen.getByRole('status')).toBeTruthy();
 
@@ -73,7 +82,7 @@ it('resets the local confirmation when the documentation pathname changes', () =
 
 it('does not load giscus until discussion is opened and maps by page title', async () => {
   const loadGiscus = vi.fn(async () => moduleFixture);
-  render(<PageEndActions loadGiscus={loadGiscus} pathname="/components/button" />);
+  renderWithConfig(<PageEndActions loadGiscus={loadGiscus} pathname="/components/button" />);
 
   expect(loadGiscus).not.toHaveBeenCalled();
   expect(screen.queryByText('Discussion loaded')).toBeNull();
@@ -91,7 +100,9 @@ it('passes the real docs.config.ts giscus settings through to the Giscus compone
   const giscusConfig = siteConfig.themeConfig?.giscus;
   expect(giscusConfig).toBeDefined();
 
-  render(<PageEndActions loadGiscus={async () => moduleFixture} pathname="/components/button" />);
+  renderWithConfig(
+    <PageEndActions loadGiscus={async () => moduleFixture} pathname="/components/button" />,
+  );
   openDiscussion();
 
   const discussion = await screen.findByText('Discussion loaded');
@@ -100,7 +111,7 @@ it('passes the real docs.config.ts giscus settings through to the Giscus compone
 });
 
 it('synchronizes the rendered discussion theme with React theme state', async () => {
-  const { rerender } = render(
+  const { rerender } = renderWithConfig(
     <PageEndActions loadGiscus={async () => moduleFixture} pathname="/components/button" />,
   );
   openDiscussion();
@@ -114,7 +125,7 @@ it('synchronizes the rendered discussion theme with React theme state', async ()
 
 it('closes discussion on SPA navigation and remounts when reopened', async () => {
   const loadGiscus = vi.fn(async () => moduleFixture);
-  const { rerender } = render(
+  const { rerender } = renderWithConfig(
     <PageEndActions loadGiscus={loadGiscus} pathname="/components/button" />,
   );
   openDiscussion();
@@ -136,7 +147,7 @@ it('retries a rejected import from the compact error row', async () => {
     .fn<() => Promise<GiscusModule>>()
     .mockRejectedValueOnce(new Error('network unavailable'))
     .mockResolvedValueOnce(moduleFixture);
-  render(<PageEndActions loadGiscus={loadGiscus} pathname="/components/button" />);
+  renderWithConfig(<PageEndActions loadGiscus={loadGiscus} pathname="/components/button" />);
 
   openDiscussion();
   expect((await screen.findByRole('alert')).textContent).toContain(
@@ -158,7 +169,7 @@ it('ignores a stale pending module when the loader changes', async () => {
   );
   const NewGiscus = () => <output>New discussion loaded</output>;
   const newLoad = vi.fn(async () => ({ default: NewGiscus }) as GiscusModule);
-  const { rerender } = render(
+  const { rerender } = renderWithConfig(
     <PageEndActions loadGiscus={oldLoad} pathname="/components/button" />,
   );
   openDiscussion();
@@ -184,7 +195,7 @@ it('invalidates the old loader when props change while a request is pending', as
       }),
   );
   const newLoad = vi.fn(async () => moduleFixture);
-  const { rerender } = render(
+  const { rerender } = renderWithConfig(
     <PageEndActions loadGiscus={oldLoad} pathname="/components/button" />,
   );
   openDiscussion();

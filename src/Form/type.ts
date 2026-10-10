@@ -1,21 +1,25 @@
-import { type DividerProps, type FormInstance, type FormProps as AntFormProps } from 'antd';
-import { type FormItemProps as AntdFormItemProps } from 'antd/es/form/FormItem';
-import { type CSSProperties, type ReactNode, type Ref } from 'react';
+import type { Field } from '@base-ui/react/field';
+import type { Form as BaseForm } from '@base-ui/react/form';
+import type { ComponentProps, CSSProperties, ReactNode, Ref } from 'react';
 
-import { type ButtonProps } from '@/Button';
-import { type CollapseProps } from '@/Collapse';
-import { type FlexboxProps } from '@/Flex';
-import { type IconProps } from '@/Icon';
-import { type TagProps } from '@/Tag';
-import { type DivProps } from '@/types';
+import type { ButtonProps } from '@/Button';
+import type { FlexboxProps } from '@/Flex';
+import type { IconProps } from '@/Icon';
+import type { TagProps } from '@/Tag';
+import type { DivProps } from '@/types';
 
 export type FormVariant = 'filled' | 'outlined' | 'borderless';
+export type FormLayout = 'horizontal' | 'vertical';
 export type ItemsType = 'group' | 'flat';
 
-export interface FormProps extends Omit<AntFormProps, 'variant' | 'styles' | 'classNames'> {
+export type FormValues = Record<string, any>;
+
+type BaseFormProps = Omit<ComponentProps<typeof BaseForm>, 'render' | 'className' | 'style'>;
+
+export interface FormProps extends BaseFormProps {
   activeKey?: (string | number)[];
-  children?: ReactNode;
-  classNames?: FormGroupProps['classNames'] & {
+  className?: string;
+  classNames?: {
     group?: string;
     item?: string;
   };
@@ -23,33 +27,53 @@ export interface FormProps extends Omit<AntFormProps, 'variant' | 'styles' | 'cl
   defaultActiveKey?: (string | number)[];
   footer?: ReactNode;
   gap?: number | string;
-  itemMinWidth?: FormItemProps['minWidth'];
-  items?: FormGroupItemType[] | FormItemProps[];
+  /**
+   * Initial values distributed to fields as `defaultValue` by name.
+   * Also the baseline for unsaved-changes detection and native reset.
+   */
+  initialValues?: FormValues;
+  itemMinWidth?: FormFieldProps['minWidth'];
+  items?: FormGroupItemType[] | FormFieldProps[];
   itemsType?: ItemsType;
-  itemVariant?: AntFormProps['variant'];
+  layout?: FormLayout;
   onCollapse?: (key: (string | number)[]) => void;
-  ref?: Ref<FormInstance>;
-  styles?: FormGroupProps['styles'] & {
+  /**
+   * Called with collected field values on submit. Async callbacks drive submit loading state.
+   */
+  onFinish?: (
+    values: FormValues,
+    eventDetails: Parameters<NonNullable<BaseFormProps['onFormSubmit']>>[1],
+  ) => void | Promise<void>;
+  ref?: Ref<HTMLFormElement>;
+  style?: CSSProperties;
+  styles?: {
     group?: CSSProperties;
     item?: CSSProperties;
   };
   variant?: FormVariant;
 }
 
-export interface FormDividerProps extends DividerProps {
-  visible?: boolean;
-}
-
-export interface FormFlatGroupProps extends FlexboxProps {
+export interface FormFieldProps extends Omit<
+  ComponentProps<typeof Field.Root>,
+  'render' | 'children' | 'className' | 'style'
+> {
+  avatar?: ReactNode;
+  children?: ReactNode;
+  className?: string;
+  desc?: ReactNode;
+  divider?: boolean;
+  hidden?: boolean;
+  label?: ReactNode;
+  layout?: FormLayout;
+  minWidth?: string | number;
+  required?: boolean;
+  style?: CSSProperties;
+  tag?: string;
   variant?: FormVariant;
 }
 
-export type FormFooterProps = DivProps;
-
-export type { FormInstance } from 'antd';
-
 export interface FormGroupItemType {
-  children: FormItemProps[] | ReactNode;
+  children: FormFieldProps[] | ReactNode;
   collapsible?: boolean;
   defaultActive?: boolean;
   desc?: ReactNode;
@@ -60,12 +84,8 @@ export interface FormGroupItemType {
   variant?: FormVariant;
 }
 
-export interface FormGroupProps extends Omit<
-  CollapseProps,
-  'collapsible' | 'items' | 'defaultActiveKey' | 'activeKey' | 'variant'
-> {
+export interface FormGroupProps extends Omit<DivProps, 'title'> {
   active?: boolean;
-  children: ReactNode;
   collapsible?: boolean;
   defaultActive?: boolean;
   desc?: ReactNode;
@@ -77,23 +97,22 @@ export interface FormGroupProps extends Omit<
   variant?: FormVariant;
 }
 
-export interface FormItemProps extends AntdFormItemProps {
-  avatar?: FormTitleProps['avatar'];
-  desc?: FormTitleProps['desc'];
-  divider?: boolean;
-  hidden?: boolean;
-  minWidth?: string | number;
-  tag?: FormTitleProps['tag'];
+export interface FormFlatGroupProps extends FlexboxProps {
   variant?: FormVariant;
 }
 
+export interface FormDividerProps extends DivProps {
+  visible?: boolean;
+}
+
+export type FormFooterProps = FlexboxProps;
+
 export interface FormSubmitFooterProps extends Omit<FlexboxProps, 'onReset'> {
   buttonProps?: Omit<ButtonProps, 'children'>;
-  children?: ReactNode;
   enableReset?: boolean;
   enableUnsavedWarning?: boolean;
   float?: boolean;
-  onReset?: (value: any, preValue: any) => void;
+  onReset?: () => void;
   resetButtonProps?: Omit<ButtonProps, 'children'>;
   saveButtonProps?: Omit<ButtonProps, 'children'>;
   texts?: {
@@ -122,4 +141,14 @@ export interface FormTitleProps extends Omit<FlexboxProps, 'title'> {
   tag?: string;
   tagProps?: Omit<TagProps, 'children'>;
   title: ReactNode;
+}
+
+export interface FormContextValue {
+  hasUnsavedChanges: boolean;
+  initialValues?: FormValues;
+  itemMinWidth?: FormFieldProps['minWidth'];
+  layout: FormLayout;
+  requestReset: () => void;
+  submitLoading: boolean;
+  variant: FormVariant;
 }

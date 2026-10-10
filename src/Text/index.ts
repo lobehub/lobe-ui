@@ -1,2 +1,4 @@
+export { groupStyles as textGroupStyles, textStyles, variants as textVariants } from './style';
 export { default } from './Text';
-export type * from './type';
+export { default as Text } from './Text';
+export type { TextClassNames, TextProps, TextStyles } from './type';

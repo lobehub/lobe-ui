@@ -1,0 +1,44 @@
+@layer lobe-ui {
+  :where(.lobe-code-editor) pre,
+  :where(.lobe-code-editor) textarea {
+    margin: 0;
+    padding: 16px;
+  }
+
+  :where(.lobe-code-editor) textarea,
+  :where(.lobe-code-editor) pre,
+  :where(.lobe-code-editor) code {
+    overflow: hidden;
+
+    font-family: var(--lobe-font-family-code);
+    font-size: inherit;
+    line-height: inherit;
+    word-break: inherit;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+  }
+
+  .lobe-code-editor-borderless pre,
+  .lobe-code-editor-borderless textarea {
+    padding: 0;
+  }
+
+  .lobe-code-editor-highlight.lobe-code-editor-highlight pre code {
+    display: block;
+  }
+
+  .lobe-code-editor-highlight.lobe-code-editor-highlight pre code::after {
+    content: '\200b';
+  }
+
+  .lobe-code-editor-highlight.lobe-code-editor-highlight pre code .line {
+    display: inline;
+    margin: 0;
+    padding: 0;
+  }
+
+  .lobe-code-editor-highlight.lobe-code-editor-highlight pre code span {
+    font-weight: inherit !important;
+    font-style: inherit !important;
+  }
+}

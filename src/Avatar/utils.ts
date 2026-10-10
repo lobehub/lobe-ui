@@ -1,9 +1,5 @@
 import { isValidElement, type ReactNode } from 'react';
 
-/**
- * 判断 avatar 是否是默认的 Ant Design Avatar 类型
- * (URL 路径或 React 元素)
- */
 export const isDefaultAntAvatar = (avatar: ReactNode): boolean => {
   if (!avatar) return false;
 
@@ -14,9 +10,6 @@ export const isDefaultAntAvatar = (avatar: ReactNode): boolean => {
   return Boolean(isUrlOrDataUri || isValidElement(avatar));
 };
 
-/**
- * 判断是否有有效的背景色
- */
 export const hasValidBackground = (background?: string | null): boolean => {
   return Boolean(
     background &&
@@ -26,9 +19,6 @@ export const hasValidBackground = (background?: string | null): boolean => {
   );
 };
 
-/**
- * 格式化头像文本（转大写并可选切片）
- */
 export const formatAvatarText = (text: string | undefined, sliceText: boolean): string => {
   if (!text) return '';
 
@@ -36,9 +26,6 @@ export const formatAvatarText = (text: string | undefined, sliceText: boolean): 
   return sliceText ? upperText.slice(0, 2) : upperText;
 };
 
-/**
- * 计算 emoji 大小
- */
 export const calculateEmojiSize = (
   size: number,
   hasBackground: boolean,

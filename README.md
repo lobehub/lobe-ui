@@ -88,20 +88,57 @@ const nextConfig = {
 
 ## 🤯 Usage
 
-> \[!NOTE]\
-> The LobeUI components are developed based on [Antd](https://ant.design/components/overview/), fully compatible with Antd components,
-> and it is recommended to use [antd-style](https://ant-design.github.io/antd-style/) as the default css-in-js styling solution.
+Import the theme stylesheet once, then wrap the app in `ConfigProvider`:
 
 ```tsx
-import { ThemeProvider, Button } from '@lobehub/ui';
-import { Button } from 'antd';
+import '@lobehub/ui/theme.css';
+import '@lobehub/ui/style.css';
+// optional document resets (body font, background, scrollbars)
+import '@lobehub/ui/global.css';
+
+import { Button, ConfigProvider } from '@lobehub/ui';
+import { motion } from 'motion/react';
 
 export default () => (
-  <ThemeProvider>
+  <ConfigProvider motion={motion}>
     <Button>Hello AIGC</Button>
-  </ThemeProvider>
+  </ConfigProvider>
 );
 ```
+
+Lobe UI CSS is emitted inside the `lobe-base`, `lobe-popup` and `lobe-ui` cascade layers, so unlayered CSS always wins over it. Put global resets (`button { font: inherit }`, normalize.css, ...) in a layer declared before them:
+
+```css
+@layer reset, lobe-base, lobe-popup, lobe-ui;
+
+@layer reset {
+  button {
+    font: inherit;
+  }
+}
+```
+
+This `@layer` statement must be the first CSS your app loads, before `theme.css` and `style.css`: the first declaration of a layer fixes its order and later order statements are ignored.
+
+With Tailwind v4, use one merged statement as the very first CSS, before `@import 'tailwindcss'`, `theme.css` and `style.css`:
+
+```css
+@layer theme, base, lobe-base, lobe-popup, lobe-ui, components, utilities;
+```
+
+The lobe layers sit after Tailwind's `base` (preflight), so preflight loses to Lobe UI, and before `components` / `utilities`, so Tailwind utilities still beat Lobe UI. These layering guarantees cover components already migrated to StyleX; the remaining components still inject runtime styles until the migration completes.
+
+### Theming
+
+Appearance and colors are plain attributes, read by `theme.css`:
+
+```html
+<html data-theme="dark" data-primary-color="blue" data-neutral-color="slate"></html>
+```
+
+- `setLobeTheme({ appearance, primaryColor, neutralColor })` updates them at runtime; `<LobeThemeScript appearance="system" />` sets them before first paint. With `next-themes`, use `attribute="data-theme"`.
+- `<ThemeScope appearance="dark">` themes a subtree (e.g. a dark island in a light page).
+- Style with `createStaticStyles` / `cssVar` / `cx` from `@lobehub/ui`; `useTheme()` / `useThemeMode()` return the current tokens when JS needs concrete values.
 
 ### I18n
 
@@ -119,17 +156,15 @@ import hotkeyMessages from '@lobehub/ui/i18n/resources/hotkey';
 
 ### ConfigProvider (Motion)
 
-You must pass a motion component via `ConfigProvider`, and `ConfigProvider` must wrap `ThemeProvider` — never the other way round. `ThemeProvider` renders the antd `App` that hosts the static `notification` / `modal` holders and reads the CDN config for its webfonts, so both need the contexts from `ConfigProvider` above them.
+You must pass a motion component via `ConfigProvider`. It also loads the web fonts (`enableCustomFonts`, `customFonts`), sets `direction`, and hosts the portal container for popups.
 
 ```tsx
-import { ConfigProvider, ThemeProvider } from '@lobehub/ui';
+import { ConfigProvider } from '@lobehub/ui';
 import { motion } from 'motion/react';
 
 export default () => (
   <ConfigProvider motion={motion}>
-    <ThemeProvider>
-      <App />
-    </ThemeProvider>
+    <App />
   </ConfigProvider>
 );
 ```
@@ -137,16 +172,14 @@ export default () => (
 If your app uses `LazyMotion`, pass `m`:
 
 ```tsx
-import { ConfigProvider, ThemeProvider } from '@lobehub/ui';
+import { ConfigProvider } from '@lobehub/ui';
 import { LazyMotion, domAnimation } from 'motion/react';
 import * as m from 'motion/react-m';
 
 export default () => (
   <LazyMotion features={domAnimation}>
     <ConfigProvider motion={m}>
-      <ThemeProvider>
-        <App />
-      </ThemeProvider>
+      <App />
     </ConfigProvider>
   </LazyMotion>
 );

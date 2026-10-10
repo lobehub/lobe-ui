@@ -1,58 +1,12 @@
 'use client';
 
-import { createStaticStyles, cx } from 'antd-style';
 import { memo, useCallback, useRef } from 'react';
 
 import CopyButton from '@/CopyButton';
+import { styleProps } from '@/styles/stylex/props';
 
 import { hastTableToMarkdown } from './hastTableToMarkdown';
-
-const styles = createStaticStyles(({ css, cssVar }) => ({
-  copyButton: css`
-    position: absolute;
-    z-index: 1;
-
-    /* Vertical center of the header row = top padding (0.75em) + half of
-       the text line-box (line-height * 0.5em). Pulling the button up by
-       50% of its own height with transform parks it on that exact line. */
-    inset-block-start: calc(0.75em + (var(--lobe-markdown-line-height) * 0.5em));
-    inset-inline-end: 0.5em;
-    transform: translateY(-50%);
-
-    opacity: 0;
-    background: ${cssVar.colorBgContainer};
-    box-shadow: 0 0 0 1px ${cssVar.colorBorderSecondary};
-
-    transition: opacity ${cssVar.motionDurationMid} ${cssVar.motionEaseInOut};
-  `,
-  wrapper: css`
-    position: relative;
-
-    display: block;
-
-    width: max-content;
-    max-width: 100%;
-    margin-block: calc(var(--lobe-markdown-margin-multiple) * 0.5em);
-
-    &:hover .table-copy-button,
-    &:focus-within .table-copy-button {
-      opacity: 1;
-    }
-
-    /* Hand spacing to the wrapper so the absolutely-positioned copy
-       button anchors against the visible table edge instead of empty
-       margin space. */
-    > table {
-      margin-block: 0;
-    }
-
-    /* Reserve room for the copy button so right-aligned header text
-       doesn't slide under it. */
-    > table thead th:last-child {
-      padding-inline-end: calc(1em + 32px);
-    }
-  `,
-}));
+import { styles } from './style';
 
 interface MarkdownTableProps {
   children?: React.ReactNode;
@@ -66,9 +20,9 @@ const MarkdownTable = memo<MarkdownTableProps>(({ node, children, ...rest }) => 
   const getMarkdown = useCallback(() => hastTableToMarkdown(nodeRef.current), []);
 
   return (
-    <div className={styles.wrapper}>
+    <div {...styleProps(styles.wrapper, 'lobe-markdown-table')}>
       <CopyButton
-        className={cx(styles.copyButton, 'table-copy-button')}
+        className={'lobe-markdown-table-copy table-copy-button'}
         content={getMarkdown}
         glass={false}
         size={{ blockSize: 24, size: 14 }}

@@ -1477,7 +1477,7 @@
 
 ### 💥 BREAKING CHANGES
 
-- LobeSelect/LobeSwitch removed from main entry. Use `@lobehub/ui/base-ui` instead.
+- LobeSelect/LobeSwitch removed from main entry. Use `@lobehub/ui` instead.
 
 - refactor(base-ui): move ContextMenu/DropdownMenu/ScrollArea/Toast impl into base-ui, re-export from original paths
 

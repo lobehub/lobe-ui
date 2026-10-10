@@ -1,4 +1,4 @@
-import { createStaticStyles, injectGlobal } from 'antd-style';
+import { createStaticStyles, injectGlobal } from '@lobehub/ui';
 
 export const styles = createStaticStyles(({ css, cssVar }) => ({
   actionGroup: css`
@@ -351,8 +351,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       grid-template-rows: minmax(min-content, 1fr);
       padding: 0;
 
-      > *,
-      .ant-app:has([data-lobe-storybook]) {
+      > * {
         height: 100%;
         min-height: 100%;
       }

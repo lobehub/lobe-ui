@@ -2,13 +2,13 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { motion } from 'motion/react';
 import { type ReactNode, useState } from 'react';
 
-import { Drawer } from '@/base-ui/Drawer';
 import ConfigProvider from '@/ConfigProvider';
+import { Drawer } from '@/Drawer';
 
 import ImageComponent from '../Image';
 
-vi.mock('antd-style', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('antd-style')>();
+vi.mock('@/styles/css', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/styles/css')>();
   return {
     ...actual,
     createStaticStyles: vi.fn((fn: any) => {
@@ -49,8 +49,8 @@ const stubRect = (element: HTMLElement, rect: Partial<DOMRect>) => {
 const renderWithMotion = (node: ReactNode) =>
   render(<ConfigProvider motion={motion}>{node}</ConfigProvider>);
 
-const getViewerBackdrop = () => document.querySelector<HTMLElement>('.viewerBackdrop');
-const getViewerPopup = () => document.querySelector<HTMLElement>('.viewerPopup');
+const getViewerBackdrop = () => document.querySelector<HTMLElement>('.lobe-image-viewer-backdrop');
+const getViewerPopup = () => document.querySelector<HTMLElement>('.lobe-image-viewer-popup');
 
 const openViewer = () => {
   const thumbnail = screen.getByAltText('cat') as HTMLImageElement;

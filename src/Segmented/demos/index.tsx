@@ -1,45 +1,37 @@
-import { Icon, Segmented, type SegmentedProps } from '@lobehub/ui';
+import { Segmented, type SegmentedProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
-import { Moon, Sun } from 'lucide-react';
+import { CatIcon, DogIcon, RabbitIcon } from 'lucide-react';
+
+const options: SegmentedProps['options'] = [
+  { icon: <CatIcon size={14} />, label: 'Cat', value: 'cat' },
+  { icon: <DogIcon size={14} />, label: 'Dog', value: 'dog' },
+  { icon: <RabbitIcon size={14} />, label: 'Rabbit', value: 'rabbit' },
+];
 
 export default () => {
   const store = useCreateStore();
-  const control = useControls(
+
+  const controls = useControls(
     {
+      block: false,
       glass: false,
       shadow: false,
-      shape: {
-        options: ['default', 'round'],
-        value: 'default',
+      size: {
+        options: ['small', 'middle', 'large'],
+        value: 'middle',
       },
       variant: {
-        options: ['filled', 'outlined', 'borderless'],
+        options: ['filled', 'outlined'],
         value: 'filled',
       },
+      vertical: false,
     },
     { store },
   ) as SegmentedProps;
 
   return (
     <StoryBook levaStore={store}>
-      <Segmented
-        {...control}
-        options={[
-          {
-            icon: <Icon icon={Moon} />,
-            label: 'Option 1',
-            value: 'option1',
-          },
-          {
-            icon: <Icon icon={Sun} />,
-            label: 'Option 2',
-            value: 'option2',
-          },
-        ]}
-        onChange={(value) => {
-          console.info(value);
-        }}
-      />
+      <Segmented defaultValue="cat" options={options} {...controls} />
     </StoryBook>
   );
 };

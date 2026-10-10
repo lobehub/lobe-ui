@@ -1,42 +1,37 @@
-import { AutoComplete, type AutoCompleteProps } from '@lobehub/ui';
-import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
+import { AutoComplete,Flexbox  } from '@lobehub/ui';
 import { useState } from 'react';
 
-export default () => {
-  const store = useCreateStore();
-  const controls = useControls(
-    {
-      shadow: false,
-      variant: {
-        options: ['outlined', 'borderless', 'filled'],
-        value: 'filled',
-      },
-    },
-    { store },
-  ) as AutoCompleteProps;
+const models = [
+  'claude-fable-5',
+  'claude-opus-4-8',
+  'claude-sonnet-5',
+  'claude-haiku-4-5',
+  'gpt-5.2',
+  'gemini-3-pro',
+];
 
-  const [options, setOptions] = useState<AutoCompleteProps['options']>([]);
-  const handleSearch = (value: string) => {
-    setOptions(() => {
-      if (!value || value.includes('@')) {
-        return [];
-      }
-      return ['gmail.com', '163.com', 'qq.com'].map((domain) => ({
-        label: `${value}@${domain}`,
-        value: `${value}@${domain}`,
-      }));
-    });
-  };
+export default () => {
+  const [value, setValue] = useState('');
 
   return (
-    <StoryBook gap={16} levaStore={store}>
+    <Flexbox gap={16} padding={16} style={{ maxWidth: 480 }} width={'100%'}>
       <AutoComplete
-        options={options}
-        placeholder="input here"
-        style={{ width: 200 }}
-        onSearch={handleSearch}
-        {...controls}
+        allowClear
+        emptyText={'No matching model'}
+        options={models}
+        placeholder={'Search a model...'}
+        value={value}
+        onChange={setValue}
       />
-    </StoryBook>
+      <AutoComplete
+        placeholder={'Object options'}
+        variant={'filled'}
+        options={[
+          { label: 'Production', value: 'prod' },
+          { label: 'Staging', value: 'staging' },
+          { disabled: true, label: 'Legacy (read-only)', value: 'legacy' },
+        ]}
+      />
+    </Flexbox>
   );
 };

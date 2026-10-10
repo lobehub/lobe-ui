@@ -1,2 +1,2 @@
 export { default } from './Burger';
-export type * from './type';
+export type { BurgerProps } from './type';

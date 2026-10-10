@@ -1,78 +1,249 @@
 'use client';
 
-import { Button as AntdButton } from 'antd';
-import { cx, useThemeMode } from 'antd-style';
-import { Loader2Icon } from 'lucide-react';
-import { type FC, isValidElement } from 'react';
+import * as stylex from '@stylexjs/stylex';
+import {
+  isValidElement,
+  type MouseEvent,
+  type ReactElement,
+  type ReactNode,
+  type Ref,
+} from 'react';
 
-import Icon from '@/Icon';
+import Icon, { type IconProps } from '@/Icon';
+import { useMotionComponent } from '@/MotionProvider';
+import { focusRing } from '@/styles/stylex/focusRing';
+import { styleProps } from '@/styles/stylex/props';
 
-import { variants } from './style';
-import type { ButtonProps } from './type';
+import { styles } from './style';
+import type { ButtonOutdent, ButtonProps, ButtonType } from './type';
 
-/**
- * @deprecated Use `Button` from `@lobehub/ui/base-ui` instead.
- */
-const Button: FC<ButtonProps> = ({
-  icon,
-  variant,
-  glass,
-  shadow,
-  loading,
-  className,
-  type,
-  color,
+const resolveIconNode = (node: ReactNode | IconProps['icon'] | undefined | null) => {
+  if (node === undefined || node === null) return null;
+  if (isValidElement(node) || typeof node === 'string' || typeof node === 'number') {
+    return node;
+  }
+  return <Icon icon={node as any} size={'small'} />;
+};
+
+const resolveSizeCls = (size: ButtonProps['size']) => {
+  if (size === 'small') return styles.sizeSmall;
+  if (size === 'large') return styles.sizeLarge;
+  return styles.sizeMiddle;
+};
+
+const resolveIconOnlySizeCls = (size: ButtonProps['size']) => {
+  if (size === 'small') return styles.iconOnlySmall;
+  if (size === 'large') return styles.iconOnlyLarge;
+  return styles.iconOnlyMiddle;
+};
+
+const resolveVariantCls = ({
   danger,
-  children,
-  iconProps,
-  ref,
-  ...rest
+  ghost,
+  type,
+}: {
+  danger: boolean;
+  ghost: boolean;
+  type: NonNullable<ButtonProps['type']>;
 }) => {
-  const { isDarkMode } = useThemeMode();
+  // `text` and `link` already drop the surface, so `ghost` there would only cost them
+  // their own traits (link's zero inline padding).
+  if (ghost && type !== 'text' && type !== 'link') {
+    if (danger) return styles.ghostDanger;
+    if (type === 'primary') return styles.ghostPrimary;
+    return styles.ghostDefault;
+  }
 
-  const defaultVariant = type ? undefined : variant || (isDarkMode ? 'filled' : 'outlined');
+  switch (type) {
+    case 'primary': {
+      return danger ? styles.dangerSolid : styles.variantPrimary;
+    }
+    case 'dashed': {
+      return danger ? [styles.variantDashed, styles.dangerOutlined] : styles.variantDashed;
+    }
+    case 'fill': {
+      return danger ? styles.dangerFill : styles.variantFill;
+    }
+    case 'text': {
+      return danger ? [styles.variantText, styles.dangerInline] : styles.variantText;
+    }
+    case 'link': {
+      return danger ? [styles.variantLink, styles.dangerInline] : styles.variantLink;
+    }
+    default: {
+      return danger ? [styles.variantDefault, styles.dangerOutlined] : styles.variantDefault;
+    }
+  }
+};
+
+const tapAnim = { scale: 0.98 };
+const motionTransition = {
+  damping: 26,
+  mass: 0.6,
+  stiffness: 600,
+  type: 'spring' as const,
+};
+
+type ButtonImplProps = Omit<ButtonProps, 'outdent' | 'type'> & {
+  outdent?: ButtonOutdent;
+  type?: ButtonType;
+  xstyle?: Parameters<typeof styleProps>[0];
+};
+
+const ButtonImpl = ({
+  block,
+  children,
+  className,
+  classNames,
+  danger = false,
+  disabled,
+  outdent,
+  ghost = false,
+  href,
+  htmlType = 'button',
+  icon,
+  iconPosition = 'start',
+  loading,
+  onClick,
+  ref,
+  shape = 'default',
+  size = 'middle',
+  styles: userStyles,
+  target,
+  type = 'default',
+  xstyle,
+  ...rest
+}: ButtonImplProps) => {
+  const Motion = useMotionComponent();
+  const isInteractionDisabled = disabled || loading;
+  const sizeCls = resolveSizeCls(size);
+  const variantCls = resolveVariantCls({ danger, ghost, type });
+  const shapeCls =
+    shape === 'circle' ? styles.shapeCircle : shape === 'round' ? styles.shapeRound : undefined;
+
+  const hasChildren =
+    children !== undefined && children !== null && children !== false && children !== '';
+  const renderIcon = loading || icon;
+  const iconOnly = !hasChildren && !!renderIcon;
+  const iconOnlySizeCls = iconOnly ? resolveIconOnlySizeCls(size) : undefined;
+
+  const outdentCls =
+    type === 'text' && outdent
+      ? outdent === 'end'
+        ? styles.outdentEnd
+        : styles.outdentStart
+      : undefined;
+
+  const composedClassName = styleProps(
+    [
+      styles.base,
+      focusRing.info,
+      sizeCls,
+      variantCls,
+      shapeCls,
+      block && styles.block,
+      iconPosition === 'end' && styles.iconEnd,
+      iconOnlySizeCls,
+      outdentCls,
+      xstyle,
+    ],
+    className,
+  ).className;
+
+  const spinnerNode = (
+    <span
+      aria-hidden={!loading}
+      {...styleProps(
+        [
+          styles.iconBox,
+          styles.spinnerSlot,
+          iconPosition === 'end' && styles.spinnerSlotEnd,
+          loading && styles.spinnerSlotShow,
+        ],
+        classNames?.icon,
+        userStyles?.icon,
+      )}
+    >
+      <span {...stylex.props(styles.spinner)} />
+    </span>
+  );
+
+  const iconNode =
+    icon && !loading ? (
+      <span {...styleProps(styles.iconBox, classNames?.icon, userStyles?.icon)}>
+        {resolveIconNode(icon)}
+      </span>
+    ) : null;
+
+  const inner = (
+    <>
+      {spinnerNode}
+      {iconNode}
+      {children}
+    </>
+  );
+
+  const motionGestures = isInteractionDisabled
+    ? {}
+    : { transition: motionTransition, whileTap: tapAnim };
+
+  if (href !== undefined) {
+    const handleAnchorClick = (e: MouseEvent<HTMLAnchorElement>) => {
+      if (isInteractionDisabled) {
+        e.preventDefault();
+        return;
+      }
+      onClick?.(e as unknown as MouseEvent<HTMLButtonElement>);
+    };
+
+    return (
+      <Motion.a
+        aria-busy={loading || undefined}
+        aria-disabled={isInteractionDisabled || undefined}
+        href={disabled ? undefined : href}
+        target={target}
+        {...(rest as any)}
+        className={composedClassName}
+        ref={ref as Ref<HTMLAnchorElement>}
+        onClick={handleAnchorClick}
+        {...motionGestures}
+      >
+        {inner}
+      </Motion.a>
+    );
+  }
+
+  const handleButtonClick = (e: MouseEvent<HTMLButtonElement>) => {
+    if (isInteractionDisabled) {
+      e.preventDefault();
+      return;
+    }
+    onClick?.(e);
+  };
 
   return (
-    <AntdButton
-      color={color || (defaultVariant === 'filled' ? 'default' : undefined)}
-      danger={danger}
-      ref={ref}
-      type={type}
-      variant={defaultVariant}
-      className={cx(
-        variants({
-          glass,
-          shadow,
-        }),
-        className,
-      )}
-      icon={
-        icon &&
-        (isValidElement(icon) ? (
-          icon
-        ) : (
-          <Icon icon={icon} {...iconProps} size={iconProps?.size || { size: '1.2em' }} />
-        ))
-      }
-      loading={
-        loading
-          ? {
-              icon: (
-                <Icon
-                  icon={Loader2Icon}
-                  {...iconProps}
-                  spin
-                  size={iconProps?.size || { size: '1.2em' }}
-                />
-              ),
-            }
-          : false
-      }
-      {...rest}
+    <Motion.button
+      type={htmlType}
+      {...(rest as any)}
+      aria-busy={loading || undefined}
+      aria-disabled={isInteractionDisabled || undefined}
+      className={composedClassName}
+      disabled={disabled}
+      ref={ref as Ref<HTMLButtonElement>}
+      onClick={handleButtonClick}
+      {...motionGestures}
     >
-      {children}
-    </AntdButton>
+      {inner}
+    </Motion.button>
   );
 };
+
+ButtonImpl.displayName = 'BaseButton';
+
+export { ButtonImpl };
+
+const Button = ButtonImpl as <T extends ButtonType = 'default'>(
+  props: ButtonProps<T>,
+) => ReactElement;
 
 export default Button;

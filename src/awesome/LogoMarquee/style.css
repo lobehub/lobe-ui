@@ -1,0 +1,11 @@
+@layer lobe-ui {
+  .lobe-logo-marquee-caption a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 140ms ease;
+  }
+
+  .lobe-logo-marquee-caption a:hover {
+    color: var(--lobe-color-text);
+  }
+}

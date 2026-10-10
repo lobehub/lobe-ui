@@ -1,312 +1,266 @@
-import { createStaticStyles, responsive } from 'antd-style';
-import { cva } from 'class-variance-authority';
+import * as stylex from '@stylexjs/stylex';
 
-import { lobeStaticStylish } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { media } from '@/styles/stylex/media.stylex';
 
-const prefixCls = 'ant';
+import { formGroupTriggerMarker, formMarker } from './marker.stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  borderless: css`
-    gap: 48px;
-    .${prefixCls}-collapse .${prefixCls}-collapse-header {
-      padding-block-end: 16px;
-      border-block-end: 1px solid ${cssVar.colorBorderSecondary};
-    }
+const reducedMotion = '@media (prefers-reduced-motion: reduce)';
 
-    .${prefixCls}-collapse-body {
-      padding-inline: 0 !important;
-    }
-  `,
-  filled: css`
-    .${prefixCls}-collapse-body {
-      padding-block: 0 !important;
-    }
-  `,
-  outlined: css`
-    .${prefixCls}-collapse-body {
-      padding-block: 0 !important;
-    }
-  `,
-  root: css`
-    position: relative;
-
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-
-    width: 100%;
-
-    .${prefixCls}-form-item {
-      margin: 0 !important;
-    }
-
-    .${prefixCls}-form-item .${prefixCls}-form-item-label > label {
-      height: unset;
-    }
-
-    .${prefixCls}-row {
-      position: relative;
-      flex-wrap: nowrap;
-    }
-
-    .${prefixCls}-form-item-label {
-      position: relative;
-      flex: 1;
-      max-width: 100%;
-    }
-
-    .${prefixCls}-form-item-row {
-      align-items: center;
-    }
-
-    .${prefixCls}-form-item-control {
-      position: relative;
-      flex: 0;
-      min-width: unset !important;
-    }
-
-    .${prefixCls}-collapse-item {
-      border-radius: ${cssVar.borderRadius} !important;
-    }
-
-    ${responsive.sm} {
-      gap: 0 !important;
-    }
-  `,
-}));
-
-export const variants = cva(styles.root, {
-  defaultVariants: {
-    variant: 'borderless',
+export const rootStyles = stylex.create({
+  borderless: {
+    gap: { default: 48, [media.sm]: '0 !important' },
   },
+  root: {
+    gap: { default: 16, [media.sm]: '0 !important' },
+    display: 'flex',
+    flexDirection: 'column',
+    position: 'relative',
+    width: '100%',
+  },
+});
 
-  variants: {
-    variant: {
-      filled: styles.filled,
-      outlined: styles.outlined,
-      borderless: styles.borderless,
+export const fieldStyles = stylex.create({
+  control: {
+    gap: 4,
+    alignItems: 'flex-end',
+    display: 'flex',
+    flexDirection: 'column',
+    minWidth: 'var(--form-field-min-width, unset)',
+  },
+  controlVertical: {
+    alignItems: 'stretch',
+    width: '100%',
+  },
+  error: {
+    color: cssVar.colorError,
+    fontSize: 12,
+  },
+  horizontal: {
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  label: {
+    flex: '1',
+    display: 'block',
+    textAlign: 'start',
+    maxWidth: '100%',
+  },
+  root: {
+    gap: 12,
+    paddingBlock: 16,
+    boxSizing: 'border-box',
+    display: 'flex',
+    width: '100%',
+  },
+  vertical: {
+    gap: 8,
+    alignItems: 'stretch',
+    flexDirection: 'column',
+  },
+});
+
+export const fieldLayoutStyles = {
+  horizontal: fieldStyles.horizontal,
+  vertical: fieldStyles.vertical,
+};
+
+export const dividerStyles = stylex.create({
+  root: {
+    margin: 0,
+    borderColor: 'currentcolor',
+    borderStyle: 'none',
+    borderWidth: 'medium',
+    backgroundColor: cssVar.colorBorderSecondary,
+    height: 1,
+    width: '100%',
+  },
+});
+
+export const groupStyles = stylex.create({
+  body: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  bodyBoxed: {
+    paddingBlock: { default: 16, [stylex.when.ancestor(':is(*)', formMarker)]: 0 },
+    paddingInline: 16,
+  },
+  bodyFilled: {
+    borderRadius: cssVar.borderRadius,
+    marginInline: 3,
+    marginBlockEnd: 3,
+  },
+  bodyFilledLight: {
+    boxShadow: `0 1px 0 -1px ${cssVar.colorBorder}, 0 1px 2px -0.5px ${cssVar.colorBorder}, 0 2px 2px -1px ${cssVar.colorBorderSecondary}, 0 3px 6px -4px ${cssVar.colorBorderSecondary}`,
+  },
+  chevron: {
+    flex: 'none',
+    transition: `transform 200ms ${cssVar.motionEaseOut}`,
+    color: cssVar.colorTextDescription,
+    transform: {
+      default: null,
+      [stylex.when.ancestor('[data-panel-open]', formGroupTriggerMarker)]: 'rotate(180deg)',
     },
   },
-});
-
-export const flatGroupStyles = createStaticStyles(({ cx, css, cssVar }) => {
-  return {
-    borderless: cx(
-      lobeStaticStylish.variantBorderlessWithoutHover,
-      css`
-        padding-inline: 0;
-      `,
-    ),
-    filled: cx(
-      lobeStaticStylish.variantFilledWithoutHover,
-      css`
-        background: ${cssVar.colorFillQuaternary};
-      `,
-    ),
-    mobile: css`
-      padding-block: 0;
-      padding-inline: 16px;
-      border-radius: 0;
-      background: ${cssVar.colorBgContainer};
-    `,
-    outlined: lobeStaticStylish.variantOutlinedWithoutHover,
-    root: css`
-      padding-inline: 16px;
-      border-radius: ${cssVar.borderRadiusLG};
-    `,
-  };
-});
-
-export const flatGroupVariants = cva(flatGroupStyles.root, {
-  defaultVariants: {
-    variant: 'borderless',
+  desc: {
+    color: cssVar.colorTextDescription,
+    fontSize: 12,
+    fontWeight: 400,
   },
-
-  variants: {
-    variant: {
-      filled: flatGroupStyles.filled,
-      outlined: flatGroupStyles.outlined,
-      borderless: flatGroupStyles.borderless,
+  header: {
+    gap: 12,
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+  headerBorderless: {
+    borderBlockEndColor: cssVar.colorBorderSecondary,
+    borderBlockEndStyle: 'solid',
+    borderBlockEndWidth: 1,
+    paddingBlockEnd: 16,
+  },
+  headerBoxed: {
+    padding: 16,
+  },
+  mobileBody: {
+    paddingBlock: 0,
+    paddingInline: 16,
+    backgroundColor: cssVar.colorBgContainer,
+  },
+  mobileHeader: {
+    padding: 16,
+    backgroundColor: cssVar.colorBgLayout,
+  },
+  mobileTitle: {
+    fontSize: 14,
+    fontWeight: 400,
+    opacity: 0.5,
+  },
+  panel: {
+    overflow: 'hidden',
+    transition: `height 200ms ${cssVar.motionEaseOut}`,
+    transitionDuration: { default: null, [reducedMotion]: '0s' },
+    height: {
+      'default': 'var(--collapsible-panel-height)',
+      ':is([data-starting-style], [data-ending-style])': 0,
     },
   },
-});
-
-export const footerStyles = createStaticStyles(({ css, cssVar }) => {
-  return {
-    root: css`
-      ${responsive.sm} {
-        padding: 16px;
-        border-block-start: 1px solid ${cssVar.colorBorderSecondary};
-        background: ${cssVar.colorBgContainer};
-      }
-    `,
-  };
-});
-
-export const groupStyles = createStaticStyles(({ css, cssVar }) => {
-  return {
-    mobileGroupBody: css`
-      padding-block: 0;
-      padding-inline: 16px;
-      background: ${cssVar.colorBgContainer};
-    `,
-    mobileGroupHeader: css`
-      padding: 16px;
-      background: ${cssVar.colorBgLayout};
-    `,
-    title: css`
-      align-items: center;
-      font-size: 16px;
-      font-weight: bold;
-    `,
-    titleBorderless: css`
-      font-size: 18px;
-      font-weight: bold;
-    `,
-    titleMobile: css`
-      ${responsive.sm} {
-        font-size: 14px;
-        font-weight: 400;
-        opacity: 0.5;
-      }
-    `,
-  };
-});
-
-export const titleVariants = cva(groupStyles.title, {
-  defaultVariants: {
-    variant: 'borderless',
+  rootFilled: {
+    borderRadius: cssVar.borderRadiusLG,
+    backgroundColor: cssVar.colorFillQuaternary,
   },
-
-  variants: {
-    variant: {
-      filled: null,
-      outlined: null,
-      borderless: groupStyles.titleBorderless,
-    },
+  rootFilledDark: {
+    backgroundColor: cssVar.colorBgLayout,
+  },
+  rootOutlined: {
+    borderRadius: cssVar.borderRadiusLG,
+  },
+  title: {
+    gap: 8,
+    alignItems: 'center',
+    color: cssVar.colorText,
+    display: 'flex',
+    flexShrink: 0,
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  titleBorderless: {
+    fontSize: 18,
+  },
+  trigger: {
+    margin: 0,
+    padding: 0,
+    borderColor: 'currentcolor',
+    borderRadius: cssVar.borderRadius,
+    borderStyle: 'none',
+    borderWidth: 'medium',
+    flex: '1',
+    gap: 12,
+    outline: 'none',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    backgroundImage: 'none',
+    cursor: 'pointer',
+    display: 'flex',
+    textAlign: 'start',
   },
 });
 
-export const itemStyles = createStaticStyles(({ css }) => ({
-  itemMinWidth: css`
-    &.${prefixCls}-form-item .${prefixCls}-form-item-control {
-      width: var(--form-item-min-width) !important;
-    }
-  `,
-  itemNoDivider: css`
-    &:not(:first-child) {
-      padding-block-start: 0;
-    }
-  `,
-  root: css`
-    &.${prefixCls}-form-item {
-      padding-block: 16px;
-      padding-inline: 0;
-
-      .${prefixCls}-form-item-label {
-        text-align: start;
-      }
-
-      .${prefixCls}-row {
-        gap: 12px;
-        justify-content: space-between;
-
-        > div {
-          flex: unset;
-          flex-grow: unset;
-        }
-      }
-
-      .${prefixCls}-form-item-required::before {
-        align-self: flex-start;
-      }
-
-      ${responsive.sm} {
-        &.${prefixCls}-form-item-horizontal {
-          .${prefixCls}-form-item-label {
-            flex: 1 !important;
-          }
-          .${prefixCls}-form-item-control {
-            flex: none !important;
-          }
-        }
-      }
-    }
-  `,
-  verticalLayout: css`
-    &.${prefixCls}-form-item {
-      .${prefixCls}-row {
-        align-items: stretch;
-      }
-    }
-  `,
-}));
-
-export const itemVariants = cva(itemStyles.root, {
-  defaultVariants: {
-    divider: false,
-    itemMinWidth: false,
-    layout: 'vertical',
+export const flatGroupStyles = stylex.create({
+  borderless: {
+    paddingInline: 0,
   },
-
-  variants: {
-    itemMinWidth: {
-      true: itemStyles.itemMinWidth,
-      false: null,
-    },
-    divider: {
-      true: null,
-      false: itemStyles.itemNoDivider,
-    },
-    layout: {
-      vertical: itemStyles.verticalLayout,
-      horizontal: null,
-    },
+  filled: {
+    backgroundColor: cssVar.colorFillQuaternary,
+  },
+  mobile: {
+    borderRadius: 0,
+    paddingBlock: 0,
+    paddingInline: 16,
+    backgroundColor: cssVar.colorBgContainer,
+  },
+  root: {
+    borderRadius: cssVar.borderRadiusLG,
+    paddingInline: 16,
   },
 });
 
-export const submitFooterStyles = createStaticStyles(({ css, cssVar }) => ({
-  floatFooter: css`
-    position: fixed;
-    z-index: 1000;
-    inset-block-end: 24px;
-    inset-inline-start: 50%;
-    transform: translateX(-50%);
+export const footerStyles = stylex.create({
+  root: {
+    padding: { default: null, [media.sm]: 16 },
+    backgroundColor: { default: null, [media.sm]: cssVar.colorBgContainer },
+    borderBlockStartColor: { default: null, [media.sm]: cssVar.colorBorderSecondary },
+    borderBlockStartStyle: { default: null, [media.sm]: 'solid' },
+    borderBlockStartWidth: { default: null, [media.sm]: 1 },
+  },
+});
 
-    width: max-content;
-    padding: 8px;
-    border: 1px solid ${cssVar.colorBorderSecondary};
-    border-radius: 48px;
+export const submitFooterStyles = stylex.create({
+  floatFooter: {
+    padding: 8,
+    borderColor: cssVar.colorBorderSecondary,
+    borderRadius: 48,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    backgroundColor: cssVar.colorBgContainer,
+    boxShadow: cssVar.boxShadowSecondary,
+    insetBlockEnd: 24,
+    insetInlineStart: '50%',
+    position: 'fixed',
+    transform: 'translateX(-50%)',
+    zIndex: 1000,
+    width: 'max-content',
+  },
+  footer: {
+    padding: { default: null, [media.sm]: 16 },
+    backgroundColor: { default: null, [media.sm]: cssVar.colorBgContainer },
+    borderBlockStartColor: { default: null, [media.sm]: cssVar.colorBorderSecondary },
+    borderBlockStartStyle: { default: null, [media.sm]: 'solid' },
+    borderBlockStartWidth: { default: null, [media.sm]: 1 },
+    marginBlockStart: { default: null, [media.sm]: `calc(-1 * ${cssVar.borderRadius})` },
+  },
+});
 
-    background: ${cssVar.colorBgContainer};
-    box-shadow: ${cssVar.boxShadowSecondary};
-  `,
-  footer: css`
-    ${responsive.sm} {
-      margin-block-start: calc(-1 * ${cssVar.borderRadius});
-      padding: 16px;
-      border-block-start: 1px solid ${cssVar.colorBorderSecondary};
-      background: ${cssVar.colorBgContainer};
-    }
-  `,
-}));
-
-export const titleStyles = createStaticStyles(({ css, cssVar }) => ({
-  content: css`
-    position: relative;
-    text-align: start;
-  `,
-
-  desc: css`
-    display: block;
-
-    line-height: 1.44;
-    color: ${cssVar.colorTextDescription};
-    word-wrap: break-word;
-    white-space: pre-wrap;
-  `,
-  title: css`
-    font-weight: 500;
-    line-height: 1;
-  `,
-}));
+export const titleStyles = stylex.create({
+  content: {
+    position: 'relative',
+    textAlign: 'start',
+  },
+  desc: {
+    color: cssVar.colorTextDescription,
+    display: 'block',
+    fontSize: 12,
+    fontWeight: 400,
+    lineHeight: 1.44,
+    overflowWrap: 'break-word',
+    whiteSpace: 'pre-wrap',
+  },
+  title: {
+    color: cssVar.colorText,
+    fontWeight: 500,
+    lineHeight: 1,
+  },
+});

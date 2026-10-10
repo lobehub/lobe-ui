@@ -1,4 +1,4 @@
-import type { ButtonProps } from '@/base-ui/Button';
+import type { ButtonProps } from '@/Button';
 
 export interface GradientButtonProps extends ButtonProps {
   glow?: boolean;

@@ -1,158 +1,101 @@
-import type { CSSProperties, HTMLAttributes, Key, ReactNode } from 'react';
+import { type Accordion as BaseUIAccordion } from '@base-ui/react/accordion';
+import { type ComponentProps, type CSSProperties, type ReactNode, type Ref } from 'react';
 
-import type { BlockProps } from '@/Block';
+export type AccordionVariant = 'borderless' | 'filled' | 'outlined';
+export type AccordionIndicatorPlacement = 'end' | 'inline' | 'start';
 
-export interface AccordionItemProps extends Pick<
-  BlockProps,
-  'padding' | 'paddingBlock' | 'paddingInline' | 'variant' | 'ref'
-> {
-  /**
-   * Action component that appears on hover
-   */
+export interface AccordionClassNames {
+  action?: string;
+  content?: string;
+  header?: string;
+  item?: string;
+  panel?: string;
+  root?: string;
+  trigger?: string;
+}
+
+export interface AccordionStyles {
+  action?: CSSProperties;
+  content?: CSSProperties;
+  header?: CSSProperties;
+  item?: CSSProperties;
+  panel?: CSSProperties;
+  root?: CSSProperties;
+  trigger?: CSSProperties;
+}
+
+export interface AccordionItemType {
   action?: ReactNode;
-  /**
-   * Whether to allow expanding (hide indicator when false)
-   * @default true
-   */
-  allowExpand?: boolean;
-  /**
-   * Whether to always show the action (not only on hover)
-   * @default false
-   */
   alwaysShowAction?: boolean;
-  /**
-   * Content of the accordion item
-   */
   children?: ReactNode;
-  /**
-   * Custom classNames for child elements
-   */
-  classNames?: {
-    action?: string;
-    base?: string;
-    content?: string;
-    header?: string;
-    indicator?: string;
-    title?: string;
-  };
-  /**
-   * Default expanded state (uncontrolled)
-   */
-  defaultExpand?: boolean;
-  /**
-   * Whether the item is disabled
-   */
   disabled?: boolean;
-  /**
-   * Controlled expanded state
-   */
-  expand?: boolean;
-  headerWrapper?: (header: ReactNode) => ReactNode;
-  /**
-   * Whether to hide the chevron indicator
-   * @default false
-   */
-  hideIndicator?: boolean;
-  /**
-   * Custom indicator component or function
-   */
-  indicator?: ReactNode | ((props: { isDisabled?: boolean; isOpen: boolean }) => ReactNode);
-  /**
-   * Indicator placement
-   * @default 'start'
-   */
-  indicatorPlacement?: 'end' | 'start';
-  /**
-   * Unique identifier for the item (use as React key)
-   */
-  itemKey: Key;
-  /**
-   * Callback when expanded state changes
-   */
-  onExpandChange?: (expanded: boolean) => void;
-  /**
-   * Custom styles for child elements
-   */
-  styles?: {
-    action?: CSSProperties;
-    base?: CSSProperties;
-    content?: CSSProperties;
-    header?: CSSProperties;
-    indicator?: CSSProperties;
-    title?: CSSProperties;
-  };
-  /**
-   * Title of the accordion item
-   */
+  key: string;
   title: ReactNode;
 }
 
-export interface AccordionProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>, Pick<BlockProps, 'variant' | 'ref'> {
-  /**
-   * Whether only one item can be expanded at a time
-   * @default false
-   */
-  accordion?: boolean;
-  /**
-   * Accordion items
-   */
-  children?: ReactNode;
-  /**
-   * Custom classNames for child elements
-   */
-  classNames?: {
-    base?: string;
-  };
-  /**
-   * Default expanded keys (uncontrolled)
-   */
-  defaultExpandedKeys?: Key[];
-  /**
-   * Disable animation
-   * @default false
-   */
-  disableAnimation?: boolean;
-  /**
-   * Controlled expanded keys
-   */
-  expandedKeys?: Key[];
-  /**
-   * Gap between accordion items
-   */
-  gap?: number;
-  /**
-   * Whether to hide the chevron indicator for all items
-   * @default false
-   */
+export type AccordionRootProps = Omit<
+  ComponentProps<typeof BaseUIAccordion.Root>,
+  'className' | 'render'
+> & {
+  className?: string;
   hideIndicator?: boolean;
-  /**
-   * Indicator placement for all items
-   * @default 'start'
-   */
-  indicatorPlacement?: 'end' | 'start';
-  /**
-   * Keep content mounted when collapsed
-   * @default true
-   */
-  keepContentMounted?: boolean;
-  /**
-   * Motion props for motion animation
-   */
-  motionProps?: any;
-  /**
-   * Callback when expanded keys change
-   */
-  onExpandedChange?: (keys: Key[]) => void;
-  /**
-   * Whether to show dividers between items
-   * @default false
-   */
-  showDivider?: boolean;
-  /**
-   * Custom styles for child elements
-   */
-  styles?: {
-    base?: CSSProperties;
-  };
+  indicatorPlacement?: AccordionIndicatorPlacement;
+  variant?: AccordionVariant;
+};
+
+export type AccordionItemProps = Omit<
+  ComponentProps<typeof BaseUIAccordion.Item>,
+  'className' | 'render'
+> & {
+  className?: string;
+  variant?: AccordionVariant;
+};
+
+export type AccordionHeaderProps = Omit<
+  ComponentProps<typeof BaseUIAccordion.Header>,
+  'className' | 'render'
+> & {
+  className?: string;
+  indicatorPlacement?: AccordionIndicatorPlacement;
+  variant?: AccordionVariant;
+};
+
+export type AccordionTriggerProps = Omit<
+  ComponentProps<typeof BaseUIAccordion.Trigger>,
+  'className' | 'render'
+> & {
+  className?: string;
+  hideIndicator?: boolean;
+  indicatorPlacement?: AccordionIndicatorPlacement;
+  variant?: AccordionVariant;
+};
+
+export type AccordionPanelProps = Omit<
+  ComponentProps<typeof BaseUIAccordion.Panel>,
+  'className' | 'render'
+> & {
+  className?: string;
+  contentClassName?: string;
+  contentStyle?: CSSProperties;
+  hideIndicator?: boolean;
+  indicatorPlacement?: AccordionIndicatorPlacement;
+  variant?: AccordionVariant;
+};
+
+export interface AccordionProps {
+  className?: string;
+  classNames?: AccordionClassNames;
+  defaultValue?: string[];
+  gap?: number;
+  hideIndicator?: boolean;
+  indicatorPlacement?: AccordionIndicatorPlacement;
+  items?: AccordionItemType[];
+  keepMounted?: boolean;
+  multiple?: boolean;
+  onValueChange?: (value: string[]) => void;
+  ref?: Ref<HTMLDivElement>;
+  style?: CSSProperties;
+  styles?: AccordionStyles;
+  value?: string[];
+  variant?: AccordionVariant;
 }

@@ -1,18 +1,18 @@
 'use client';
 
-import { useResponsive } from 'antd-style';
 import { memo, useState } from 'react';
 import useControlledState from 'use-merge-value';
 
-import Button from '@/base-ui/Button';
-import { TextArea } from '@/base-ui/Input';
-import { Modal } from '@/base-ui/Modal';
-import { styles as textStyles } from '@/chat/MessageInput/style';
+import Button from '@/Button';
+import { styles as textStyles, textAreaStyle } from '@/chat/MessageInput/style';
 import CodeEditor from '@/CodeEditor';
 import { Flexbox } from '@/Flex';
 import messageModalMessages from '@/i18n/resources/en/messageModal';
 import { useTranslation } from '@/i18n/useTranslation';
+import { TextArea } from '@/Input';
 import Markdown from '@/Markdown';
+import { Modal } from '@/Modal';
+import { useResponsive } from '@/styles/theme/scope';
 
 import { type MessageModalProps } from './type';
 
@@ -98,6 +98,7 @@ const MessageModal = memo<MessageModalProps>(
               className={textStyles}
               defaultValue={temporaryValue}
               placeholder={placeholder}
+              style={textAreaStyle}
               value={temporaryValue}
               variant={'borderless'}
               onBlur={(e) => setMessage(e.target.value)}

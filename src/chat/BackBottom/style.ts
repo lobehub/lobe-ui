@@ -1,38 +1,25 @@
-import { createStaticStyles } from 'antd-style';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css, responsive }) => ({
-  hidden: css`
-    pointer-events: none;
+import { media } from '@/styles/stylex/media.stylex';
 
-    position: absolute;
-    inset-block-end: 16px;
-    inset-inline-end: 16px;
-    transform: translateY(16px);
-
-    opacity: 0;
-
-    ${responsive.sm} {
-      inset-inline-end: 0;
-      border-inline-end: none;
-      border-start-end-radius: 0 !important;
-      border-end-end-radius: 0 !important;
-    }
-  `,
-  visible: css`
-    pointer-events: all;
-
-    position: absolute;
-    inset-block-end: 16px;
-    inset-inline-end: 16px;
-    transform: translateY(0);
-
-    opacity: 1;
-
-    ${responsive.sm} {
-      inset-inline-end: 0;
-      border-inline-end: none;
-      border-start-end-radius: 0 !important;
-      border-end-end-radius: 0 !important;
-    }
-  `,
-}));
+export const styles = stylex.create({
+  hidden: {
+    opacity: 0,
+    pointerEvents: 'none',
+    transform: 'translateY(16px)',
+  },
+  root: {
+    backdropFilter: 'saturate(150%) blur(10px)',
+    borderEndEndRadius: { default: null, [media.sm]: 0 },
+    borderInlineEndStyle: { default: null, [media.sm]: 'none' },
+    borderStartEndRadius: { default: null, [media.sm]: 0 },
+    insetBlockEnd: 16,
+    insetInlineEnd: { default: 16, [media.sm]: 0 },
+    position: 'absolute',
+  },
+  visible: {
+    opacity: 1,
+    pointerEvents: 'all',
+    transform: 'translateY(0)',
+  },
+});

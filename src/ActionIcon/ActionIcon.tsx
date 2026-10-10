@@ -1,43 +1,70 @@
 'use client';
 
-import { cx } from 'antd-style';
-import { Loader2 } from 'lucide-react';
-import { memo, type MouseEventHandler, useCallback, useMemo } from 'react';
+import clsx from 'clsx';
+import type { MouseEvent, ReactElement, Ref } from 'react';
+import { memo, useMemo } from 'react';
 
-import { Center } from '@/Flex';
+import type { ButtonProps } from '@/Button';
+import { ButtonImpl } from '@/Button/Button';
 import Icon from '@/Icon';
+import type { styleProps } from '@/styles/stylex/props';
 import Tooltip from '@/Tooltip';
 
-import { calcSize } from './components/utils';
-import { variants } from './style';
-import { type ActionIconProps } from './type';
+import { styles } from './style';
+import type { ActionIconOutdent, ActionIconProps, ActionIconVariant } from './type';
+import { calcOutdent, calcSize } from './utils';
 
-/**
- * @deprecated Use `ActionIcon` from `@lobehub/ui/base-ui` instead.
- */
-const ActionIcon = memo<ActionIconProps>(
+const resolveButtonType = (variant: ActionIconProps['variant']) => {
+  if (variant === 'filled') return 'fill' as const;
+  if (variant === 'outlined') return 'default' as const;
+  return 'text' as const;
+};
+
+const activeStyles = {
+  borderless: styles.active,
+  filled: styles.activeFill,
+  outlined: styles.activeOutlined,
+};
+
+const resolveButtonSize = (size: ActionIconProps['size']) => {
+  if (size === 'small') return 'small' as const;
+  if (size === 'large') return 'large' as const;
+  return 'middle' as const;
+};
+
+type ActionIconImplProps = Omit<ActionIconProps, 'outdent' | 'variant'> & {
+  outdent?: ActionIconOutdent;
+  variant?: ActionIconVariant;
+  xstyle?: Parameters<typeof styleProps>[0];
+};
+
+export const ActionIconImpl = memo<ActionIconImplProps>(
   ({
-    color,
-    fill,
-    className,
     active,
-    icon,
-    size = 'middle',
-    variant = 'borderless',
-    style,
-    glass,
-    title,
-    onClick,
-    loading,
+    className,
+    classNames,
+    color,
+    danger,
+    disabled,
+    fill,
     fillOpacity,
     fillRule,
     focusable,
-    shadow,
-    disabled,
-    spin: iconSpinning,
-    tooltipProps,
-    danger,
+    glass,
+    icon,
+    loading,
+    onClick,
+    outdent,
     ref,
+    shadow,
+    size = 'middle',
+    spin: iconSpinning,
+    style,
+    styles: slotStyles,
+    title,
+    tooltipProps,
+    variant = 'borderless',
+    xstyle,
     ...rest
   }) => {
     const { blockSize, borderRadius } = useMemo(() => calcSize(size), [size]);
@@ -53,43 +80,64 @@ const ActionIcon = memo<ActionIconProps>(
       popupTriggerAria['aria-label'] ??
       (isPopupTrigger && typeof title === 'string' ? title : undefined);
 
-    const handleClick = useCallback<MouseEventHandler<HTMLDivElement>>(
-      (event) => {
-        if (loading || disabled) return;
-        onClick?.(event);
-      },
-      [loading, disabled, onClick],
-    );
+    const handleClick: ButtonProps['onClick'] = (event) => {
+      onClick?.(event as unknown as MouseEvent<HTMLDivElement>);
+    };
+
+    const iconNode = icon ? (
+      <Icon
+        className={classNames?.icon}
+        color={color}
+        fill={fill}
+        fillOpacity={fillOpacity}
+        fillRule={fillRule}
+        focusable={focusable}
+        icon={icon}
+        size={size}
+        spin={iconSpinning}
+        style={{ pointerEvents: 'none', ...slotStyles?.icon }}
+      />
+    ) : undefined;
+
+    const outdentAmount = variant === 'borderless' && outdent ? calcOutdent(size) : undefined;
+    const outdentMargin = outdentAmount
+      ? outdent === 'end'
+        ? { marginInlineEnd: `-${outdentAmount}` }
+        : { marginInlineStart: `-${outdentAmount}` }
+      : undefined;
 
     const node = (
-      <Center
-        horizontal
-        className={cx(variants({ active, danger, disabled, glass, shadow, variant }), className)}
-        flex={'none'}
-        ref={ref}
-        role="button"
-        style={{ borderRadius, height: blockSize, width: blockSize, ...style }}
-        tabIndex={disabled ? -1 : 0}
-        onClick={handleClick}
-        {...rest}
+      <ButtonImpl
+        {...(rest as unknown as ButtonProps)}
         aria-label={popupTriggerLabel}
-      >
-        {icon && (
-          <Icon
-            color={color}
-            fill={fill}
-            fillOpacity={fillOpacity}
-            fillRule={fillRule}
-            focusable={focusable}
-            icon={loading ? Loader2 : icon}
-            size={size}
-            spin={loading ? true : iconSpinning}
-            style={{
-              pointerEvents: 'none',
-            }}
-          />
-        )}
-      </Center>
+        className={clsx(classNames?.root, className)}
+        danger={danger}
+        disabled={disabled}
+        htmlType="button"
+        icon={iconNode}
+        loading={loading}
+        ref={ref as unknown as Ref<HTMLButtonElement>}
+        size={resolveButtonSize(size)}
+        tabIndex={disabled ? -1 : 0}
+        type={resolveButtonType(variant)}
+        style={{
+          ...outdentMargin,
+          borderRadius,
+          height: blockSize,
+          width: blockSize,
+          ...slotStyles?.root,
+          ...style,
+        }}
+        xstyle={[
+          styles.root,
+          active && activeStyles[variant],
+          danger && styles.dangerRoot,
+          glass && styles.glass,
+          shadow && styles.shadow,
+          xstyle,
+        ]}
+        onClick={handleClick}
+      />
     );
 
     if (!title) return node;
@@ -98,14 +146,10 @@ const ActionIcon = memo<ActionIconProps>(
       <Tooltip
         title={title}
         {...tooltipProps}
-        styles={
-          typeof tooltipProps?.styles === 'function'
-            ? tooltipProps.styles
-            : {
-                ...tooltipProps?.styles,
-                container: { pointerEvents: 'none', ...tooltipProps?.styles?.container },
-              }
-        }
+        styles={{
+          ...tooltipProps?.styles,
+          container: { pointerEvents: 'none', ...tooltipProps?.styles?.container },
+        }}
       >
         {node}
       </Tooltip>
@@ -113,6 +157,10 @@ const ActionIcon = memo<ActionIconProps>(
   },
 );
 
-ActionIcon.displayName = 'ActionIcon';
+ActionIconImpl.displayName = 'BaseActionIcon';
+
+const ActionIcon = ActionIconImpl as unknown as <V extends ActionIconVariant = 'borderless'>(
+  props: ActionIconProps<V>,
+) => ReactElement;
 
 export default ActionIcon;

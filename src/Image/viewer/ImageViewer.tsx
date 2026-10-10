@@ -1,5 +1,7 @@
 'use client';
 
+import '../style.css';
+
 import { Dialog, type DialogRootProps } from '@base-ui/react/dialog';
 import {
   memo,
@@ -12,9 +14,10 @@ import {
 } from 'react';
 import { useMergeRefs } from 'react-merge-refs';
 
-import { ToastHost } from '@/base-ui/Toast';
-import { useLayerZIndex } from '@/base-ui/zIndex';
-import { useAppElement } from '@/ThemeProvider/AppElementContext';
+import { useAppElement } from '@/ConfigProvider/AppElementContext';
+import { useLayerZIndex } from '@/internal/zIndex';
+import { styleProps } from '@/styles/stylex/props';
+import { ToastHost } from '@/Toast';
 
 import { styles } from '../style';
 import { computeFit, type Size, unrotatedRect } from './geometry';
@@ -290,14 +293,14 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
             page straight through the letterbox around the image. */}
         <Dialog.Backdrop
           forceRender
-          className={styles.viewerBackdrop}
+          {...styleProps(styles.viewerBackdrop, 'lobe-image-viewer-backdrop')}
           ref={backdropRef}
           style={zIndex === undefined ? undefined : { zIndex }}
           onClick={gestures.onSurfaceClick}
         />
         <Dialog.Popup
           aria-label={currentEntry.element.alt || undefined}
-          className={styles.viewerPopup}
+          {...styleProps(styles.viewerPopup, 'lobe-image-viewer-popup')}
           finalFocus={finalFocus}
           // Focus the popup itself instead of Base UI's default (the first
           // tabbable — the close button): a focus-visible close button pins
@@ -314,7 +317,7 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
         >
           <img
             alt={currentEntry.element.alt}
-            className={styles.viewerImage}
+            {...styleProps(styles.viewerImage, 'lobe-image-viewer-image')}
             ref={imageRef}
             src={source}
             style={{

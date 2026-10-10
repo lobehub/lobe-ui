@@ -1,15 +1,16 @@
 'use client';
 
-import { cx } from 'antd-style';
+import * as stylex from '@stylexjs/stylex';
 import { LucideLoader2, Search } from 'lucide-react';
 import { memo, useMemo, useRef, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import useControlledState from 'use-merge-value';
 
 import Spotlight from '@/awesome/Spotlight';
-import { Input } from '@/base-ui/Input';
 import Hotkey from '@/Hotkey';
 import Icon from '@/Icon';
+import { Input } from '@/Input';
+import { styleProps } from '@/styles/stylex/props';
 
 import { styles } from './style';
 import { type SearchBarProps } from './type';
@@ -62,7 +63,7 @@ const SearchBar = memo<SearchBarProps>(
     );
 
     return (
-      <div className={cx(styles.search, className)} style={style}>
+      <div {...styleProps(styles.search, className, style)}>
         {spotlight && <Spotlight />}
         <Input
           allowClear
@@ -73,7 +74,7 @@ const SearchBar = memo<SearchBarProps>(
           value={inputValue}
           prefix={
             <Icon
-              className={styles.icon}
+              {...stylex.props(styles.icon)}
               icon={loading ? LucideLoader2 : Search}
               size="small"
               spin={loading}
@@ -102,9 +103,9 @@ const SearchBar = memo<SearchBarProps>(
         {enableShortKey && showTag && !inputValue && (
           <Hotkey
             compact
-            className={cx(styles.tag, shortKeyClassName)}
             keys={hotkey}
-            style={shortKeyStyle}
+            styles={{ kbdStyle: { color: 'inherit' } }}
+            {...styleProps(styles.tag, shortKeyClassName, shortKeyStyle)}
           />
         )}
       </div>

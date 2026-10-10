@@ -33,7 +33,7 @@ const renderDocument = async (source: string) => {
 };
 
 it('compiles GFM markdown tables in component docs into real table markup', async () => {
-  const html = await renderDocument('/src/base-ui/Popover/index.mdx');
+  const html = await renderDocument('/src/Popover/index.mdx');
 
   expect(html).toContain('<table>');
   expect(html).toContain('<thead>');
@@ -44,7 +44,7 @@ it('compiles GFM markdown tables in component docs into real table markup', asyn
 }, 120_000);
 
 it('preserves escaped pipes inside GFM table cells', async () => {
-  const html = await renderDocument('/src/base-ui/Popover/index.mdx');
+  const html = await renderDocument('/src/Popover/index.mdx');
 
   expect(html).toContain('Omit&lt;PopoverProps, &#x27;children&#x27;');
   expect(html).toMatch(/defaultOpen/);

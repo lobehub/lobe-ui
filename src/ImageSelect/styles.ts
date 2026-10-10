@@ -1,32 +1,26 @@
-import { createStaticStyles, cx } from 'antd-style';
+import * as stylex from '@stylexjs/stylex';
 
-import { lobeStaticStylish } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => {
-  return {
-    active: css`
-      color: ${cssVar.colorText};
-    `,
-    container: css`
-      cursor: pointer;
-      color: ${cssVar.colorTextDescription};
-    `,
-
-    img: cx(
-      lobeStaticStylish.variantFilled,
-      css`
-        border-radius: ${cssVar.borderRadius};
-
-        &:hover {
-          box-shadow: 0 0 0 2px ${cssVar.colorText};
-        }
-      `,
-    ),
-    imgActive: cx(
-      lobeStaticStylish.active,
-      css`
-        box-shadow: 0 0 0 2px ${cssVar.colorTextTertiary};
-      `,
-    ),
-  };
+export const styles = stylex.create({
+  active: {
+    color: cssVar.colorText,
+  },
+  container: {
+    color: cssVar.colorTextDescription,
+    cursor: 'pointer',
+  },
+  img: {
+    borderRadius: cssVar.borderRadius,
+    backgroundColor: { 'default': cssVar.colorFillTertiary, ':hover': cssVar.colorFillSecondary },
+    boxShadow: { 'default': null, ':hover': `0 0 0 2px ${cssVar.colorText}` },
+  },
+  imgActive: {
+    backgroundColor: { 'default': cssVar.colorFillSecondary, ':hover': cssVar.colorFill },
+    boxShadow: {
+      'default': `0 0 0 2px ${cssVar.colorTextTertiary}`,
+      ':hover': `0 0 0 2px ${cssVar.colorText}`,
+    },
+    color: cssVar.colorText,
+  },
 });

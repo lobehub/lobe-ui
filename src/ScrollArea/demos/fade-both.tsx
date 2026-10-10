@@ -1,4 +1,5 @@
 import {
+  cssVar,
   ScrollAreaContent,
   ScrollAreaCorner,
   ScrollAreaRoot,
@@ -6,7 +7,6 @@ import {
   ScrollAreaThumb,
   ScrollAreaViewport,
 } from '@lobehub/ui';
-import { cssVar } from 'antd-style';
 
 const items = Array.from({ length: 64 }, (_, index) => index + 1);
 

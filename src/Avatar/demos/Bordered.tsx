@@ -1,18 +1,9 @@
-import { Avatar } from '@lobehub/ui';
-import { cssVar } from 'antd-style';
+import { Avatar,Flexbox  } from '@lobehub/ui';
 
-import { Center } from '@/Flex';
-
-const url = 'https://avatars.githubusercontent.com/u/17870709?v=4';
-
-export default () => {
-  return (
-    <Center horizontal gap={16} wrap={'wrap'}>
-      <Avatar bordered avatar={url} />
-      <Avatar bordered avatar={url} borderedColor={cssVar.colorInfo} />
-      <Avatar bordered avatar={url} borderedColor={cssVar.colorError} />
-      <Avatar bordered avatar={url} borderedColor={cssVar.colorWarning} />
-      <Avatar bordered avatar={url} borderedColor={cssVar.colorSuccess} />
-    </Center>
-  );
-};
+export default () => (
+  <Flexbox horizontal gap={16} padding={16}>
+    <Avatar bordered avatar="B1" size={48} />
+    <Avatar bordered avatar="B2" borderedColor="#1677ff" shape="circle" size={48} />
+    <Avatar bordered loading avatar="B3" size={48} />
+  </Flexbox>
+);

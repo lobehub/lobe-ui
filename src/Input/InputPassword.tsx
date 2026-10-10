@@ -1,23 +1,37 @@
 'use client';
 
-import { Input as AntInput } from 'antd';
-import { cx, useThemeMode } from 'antd-style';
-import { memo } from 'react';
+import * as stylex from '@stylexjs/stylex';
+import { Eye, EyeOff } from 'lucide-react';
+import { memo, useState } from 'react';
 
-import { variants } from './style';
+import Icon from '@/Icon';
+
+import Input from './Input';
+import { styles } from './style';
 import type { InputPasswordProps } from './type';
 
-const InputPassword = memo<InputPasswordProps>(({ ref, variant, shadow, className, ...rest }) => {
-  const { isDarkMode } = useThemeMode();
+const InputPassword = memo<InputPasswordProps>(({ visibilityToggle = true, suffix, ...rest }) => {
+  const [visible, setVisible] = useState(false);
 
   return (
-    <AntInput.Password
-      ref={ref}
-      variant={variant || (isDarkMode ? 'filled' : 'outlined')}
-      className={cx(
-        variants({ shadow, variant: variant || (isDarkMode ? 'filled' : 'outlined') }),
-        className,
-      )}
+    <Input
+      type={visible ? 'text' : 'password'}
+      suffix={
+        <>
+          {suffix}
+          {visibilityToggle && (
+            <button
+              aria-label={visible ? 'Hide password' : 'Show password'}
+              tabIndex={-1}
+              type={'button'}
+              onClick={() => setVisible((v) => !v)}
+              {...stylex.props(styles.passwordToggle)}
+            >
+              <Icon icon={visible ? Eye : EyeOff} size={16} />
+            </button>
+          )}
+        </>
+      }
       {...rest}
     />
   );
@@ -25,4 +39,4 @@ const InputPassword = memo<InputPasswordProps>(({ ref, variant, shadow, classNam
 
 InputPassword.displayName = 'InputPassword';
 
-export default InputPassword;
+export default Object.assign(InputPassword, { formBinding: { emptyValue: '' } as const });

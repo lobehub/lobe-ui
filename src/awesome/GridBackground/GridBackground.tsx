@@ -1,10 +1,14 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { useSize } from 'ahooks';
-import { cssVar, cx, useTheme } from 'antd-style';
 import chroma from 'chroma-js';
 import { shuffle } from 'es-toolkit/compat';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { styleProps } from '@/styles/stylex/props';
+import { useTheme } from '@/styles/theme/scope';
 
 import Grid, { type GridProps } from './components/Grid';
 import { styles } from './style';
@@ -52,7 +56,7 @@ const GridBackground = memo<GridBackgroundProps>(
 
     const gridProps: GridProps = useMemo(
       () => ({
-        className: reverse ? styles.highlightReverse : styles.highlight,
+        className: stylex.props(styles.highlight, reverse && styles.highlightReverse).className,
         color: colorFront || cssVar.colorText,
         strokeWidth,
       }),
@@ -91,9 +95,12 @@ const GridBackground = memo<GridBackgroundProps>(
 
     return (
       <div
-        className={cx(styles.container, className)}
+        {...styleProps(
+          styles.container,
+          className,
+          flip ? { transform: 'scaleY(-1)', ...style } : style,
+        )}
         ref={ref}
-        style={flip ? { transform: 'scaleY(-1)', ...style } : style}
         {...rest}
       >
         <Grid
@@ -104,13 +111,13 @@ const GridBackground = memo<GridBackgroundProps>(
         {animation && <HighlightGrid />}
         {showBackground && (
           <div
-            className={styles.backgroundContainer}
+            {...stylex.props(styles.backgroundContainer)}
             style={{
               ...(size ? { fontSize: size.width / 80 } : {}),
               ...backgroundCssVariables,
             }}
           >
-            <div className={styles.background} />
+            <div {...stylex.props(styles.backgroundShape)} />
           </div>
         )}
       </div>

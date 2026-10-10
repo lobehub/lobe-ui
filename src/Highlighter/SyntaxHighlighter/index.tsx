@@ -1,14 +1,21 @@
 'use client';
 
-import { cx } from 'antd-style';
-import { memo } from 'react';
+import { STREAM_FADE_DURATION } from '@lobehub/streamdown';
+import clsx from 'clsx';
+import { type CSSProperties, memo } from 'react';
+
+import { styleProps } from '@/styles/stylex/props';
 
 import type { SyntaxHighlighterProps } from '../type';
 import StaticRenderer from './StaticRenderer';
 import StreamRenderer from './StreamRenderer';
-import { variants } from './style';
+import { styles } from './style';
 
-const SyntaxHighlighter = memo<SyntaxHighlighterProps>(
+type SyntaxHighlighterImplProps = SyntaxHighlighterProps & {
+  xstyle?: Parameters<typeof styleProps>[0];
+};
+
+export const SyntaxHighlighterImpl = memo<SyntaxHighlighterImplProps>(
   ({
     animated,
     children,
@@ -18,51 +25,60 @@ const SyntaxHighlighter = memo<SyntaxHighlighterProps>(
     style,
     theme,
     variant = 'borderless',
+    xstyle,
   }) => {
     const isDefaultTheme = theme === 'lobe-theme' || !theme;
     const showBackground = !isDefaultTheme && variant === 'filled';
     const resolvedTheme = isDefaultTheme ? undefined : theme;
 
-    const shikiClassName = cx(
-      variants({ animated, shiki: true, showBackground, variant }),
-      className,
+    const classes = clsx(
+      'lobe-syntax-highlighter',
+      !showBackground && 'lobe-syntax-highlighter-transparent',
+      animated && 'lobe-syntax-highlighter-animated',
+      variant === 'borderless'
+        ? 'lobe-syntax-highlighter-unpadded'
+        : 'lobe-syntax-highlighter-padded',
     );
-    const fallbackClassName = cx(
-      variants({ animated, shiki: false, showBackground, variant }),
-      className,
+    const mergedStyle = animated
+      ? ({
+          '--lobe-syntax-highlighter-stream-fade': `${STREAM_FADE_DURATION}ms`,
+          ...style,
+        } as CSSProperties)
+      : style;
+
+    const shiki = styleProps(
+      [styles.root, xstyle],
+      clsx(classes, 'ant-highlighter-highlighter-shiki lobe-syntax-highlighter-shiki', className),
+      mergedStyle,
+    );
+    const fallback = styleProps(
+      [styles.root, styles.unshiki, xstyle],
+      clsx(classes, className),
+      mergedStyle,
     );
 
-    if (animated) {
-      return (
-        <StreamRenderer
-          className={shikiClassName}
-          enableTransformer={enableTransformer}
-          fallbackClassName={fallbackClassName}
-          language={language}
-          style={style}
-          theme={resolvedTheme}
-        >
-          {children}
-        </StreamRenderer>
-      );
-    }
+    const Renderer = animated ? StreamRenderer : StaticRenderer;
 
     return (
-      <StaticRenderer
-        className={shikiClassName}
+      <Renderer
+        className={shiki.className}
         enableTransformer={enableTransformer}
-        fallbackClassName={fallbackClassName}
+        fallbackClassName={fallback.className}
         language={language}
-        style={style}
+        style={shiki.style}
         theme={resolvedTheme}
       >
         {children}
-      </StaticRenderer>
+      </Renderer>
     );
   },
   (prevProps, nextProps) =>
     prevProps.children === nextProps.children && prevProps.language === nextProps.language,
 );
+
+const SyntaxHighlighter = memo<SyntaxHighlighterProps>((props) => (
+  <SyntaxHighlighterImpl {...props} />
+));
 
 SyntaxHighlighter.displayName = 'SyntaxHighlighter';
 

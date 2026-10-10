@@ -1,14 +1,17 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { PanelLeft } from 'lucide-react';
 import { useEffect, useId, useRef, useState } from 'react';
 
-import Button from '@/base-ui/Button';
-import { Drawer } from '@/base-ui/Drawer';
+import Button from '@/Button';
+import { Drawer } from '@/Drawer';
 import { Flexbox } from '@/Flex';
+import { styleProps } from '@/styles/stylex/props';
 
 import { useIsCompact, useLocalStorage, usePrefersReducedMotion } from '../hooks';
 import { ConsoleShellContext } from './context';
+import { consoleBrandMarker } from './marker.stylex';
 import { styles } from './style';
 import type { ConsoleShellProps, ConsoleShellState } from './type';
 
@@ -34,6 +37,7 @@ function ConsoleShell({
   openNavigationLabel = 'Open navigation',
   skipToContentLabel = 'Skip to content',
   storageKey,
+  style,
   tools,
   ...rest
 }: ConsoleShellProps) {
@@ -91,12 +95,12 @@ function ConsoleShell({
   const sidebar = (rail: boolean) => (
     <ConsoleShellContext value={stateFor(rail)}>
       {brand ? (
-        <div className={styles.brand} data-collapsed={rail}>
+        <div data-collapsed={rail} {...stylex.props(styles.brand, consoleBrandMarker)}>
           {brand}
         </div>
       ) : null}
-      {navigation ? <div className={styles.navSlot}>{navigation}</div> : null}
-      {footer ? <div className={styles.sidebarBottom}>{footer}</div> : null}
+      {navigation ? <div {...stylex.props(styles.navSlot)}>{navigation}</div> : null}
+      {footer ? <div {...stylex.props(styles.sidebarBottom)}>{footer}</div> : null}
     </ConsoleShellContext>
   );
 
@@ -104,22 +108,30 @@ function ConsoleShell({
 
   return (
     <div
-      className={className ? `${styles.shell} ${className}` : styles.shell}
       data-console-shell=""
       ref={shellRef}
+      {...styleProps(styles.shell, className, style)}
       {...rest}
     >
       <a
-        className={styles.skipLink}
         href={`#${mainId}`}
         onClick={(event) => {
           event.preventDefault();
           document.getElementById(mainId)?.focus();
         }}
+        {...stylex.props(styles.skipLink)}
       >
         {skipToContentLabel}
       </a>
-      <aside className={styles.sidebar} data-collapsed={railed} data-instant={reducedMotion}>
+      <aside
+        data-collapsed={railed}
+        data-instant={reducedMotion}
+        {...stylex.props(
+          styles.sidebar,
+          railed && styles.sidebarCollapsed,
+          reducedMotion && styles.sidebarInstant,
+        )}
+      >
         {!isCompact && sidebar(railed)}
       </aside>
       {isCompact ? (
@@ -127,19 +139,19 @@ function ConsoleShell({
           <Flexbox height="100%">{sidebar(false)}</Flexbox>
         </Drawer>
       ) : null}
-      <div className={styles.workspace}>
-        <header className={styles.topbar}>
+      <div {...stylex.props(styles.workspace)}>
+        <header {...stylex.props(styles.topbar)}>
           <Button
             aria-label={toggleLabel}
             icon={PanelLeft}
             type="text"
             onClick={toggleNavigation}
           />
-          <span aria-hidden className={styles.topbarDivider} />
-          <div className={styles.topbarMain}>{breadcrumb}</div>
-          {tools ? <div className={styles.tools}>{tools}</div> : null}
+          <span aria-hidden {...stylex.props(styles.topbarDivider)} />
+          <div {...stylex.props(styles.topbarMain)}>{breadcrumb}</div>
+          {tools ? <div {...stylex.props(styles.tools)}>{tools}</div> : null}
         </header>
-        <main className={styles.main} id={mainId} tabIndex={-1}>
+        <main id={mainId} tabIndex={-1} {...stylex.props(styles.main)}>
           {children}
         </main>
       </div>

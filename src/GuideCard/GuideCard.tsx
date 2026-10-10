@@ -1,14 +1,17 @@
 'use client';
 
-import { cx, useThemeMode } from 'antd-style';
+import * as stylex from '@stylexjs/stylex';
 import { X } from 'lucide-react';
 import { memo, useState } from 'react';
 
-import ActionIcon from '@/base-ui/ActionIcon';
+import { ActionIconImpl as ActionIcon } from '@/ActionIcon/ActionIcon';
 import { Flexbox } from '@/Flex';
 import Img from '@/Img';
+import { styleProps } from '@/styles/stylex/props';
+import { stylish } from '@/styles/stylex/stylish';
+import { useThemeMode } from '@/styles/theme/scope';
 
-import { styles, variants } from './style';
+import { styles } from './style';
 import type { GuideCardProps } from './type';
 
 const GuideCard = memo<GuideCardProps>(
@@ -39,16 +42,27 @@ const GuideCard = memo<GuideCardProps>(
 
     return (
       <Flexbox
-        className={cx(variants({ isDarkMode, shadow, variant }), className)}
         ref={ref}
+        className={
+          styleProps(
+            [
+              styles.root,
+              variant === 'borderless' && stylish.variantBorderlessWithoutHover,
+              variant === 'outlined' && stylish.variantOutlinedWithoutHover,
+              shadow && styles.shadow,
+              variant === 'filled' && (isDarkMode ? styles.filledDark : styles.filledLight),
+            ],
+            className,
+          ).className
+        }
         {...rest}
       >
         {closable && (
           <ActionIcon
             size={'small'}
             {...closeIconProps}
-            className={cx(styles.close, closeIconProps?.className)}
             icon={X}
+            xstyle={styles.close}
             onClick={(e) => {
               setShow(false);
               onClose?.(e);
@@ -59,21 +73,19 @@ const GuideCard = memo<GuideCardProps>(
         {cover && (
           <Img
             alt={alt}
-            className={cx(styles.cover, classNames?.cover)}
             height={height}
             src={cover}
-            style={customStyles?.cover}
             width={width}
+            {...styleProps(styles.cover, classNames?.cover, customStyles?.cover)}
             {...coverProps}
           />
         )}
         <Flexbox
-          className={cx(styles.content, classNames?.content)}
           gap={8}
-          style={customStyles?.content}
+          {...styleProps(styles.content, classNames?.content, customStyles?.content)}
         >
-          {title && <div className={styles.title}>{title}</div>}
-          {desc && <div className={styles.desc}>{desc}</div>}
+          {title && <div {...stylex.props(styles.title)}>{title}</div>}
+          {desc && <div {...stylex.props(styles.desc)}>{desc}</div>}
         </Flexbox>
       </Flexbox>
     );

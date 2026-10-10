@@ -1,86 +1,65 @@
-import { ActionIcon, Avatar, List, type ListItemProps } from '@lobehub/ui';
-import { Dropdown, type MenuProps } from 'antd';
-import { MoreHorizontalIcon } from 'lucide-react';
-import { useState } from 'react';
-
-const dropdownItems: MenuProps['items'] = [
-  {
-    children: [
-      {
-        key: '1-1',
-        label: '1st menu item',
-      },
-      {
-        key: '1-2',
-        label: '2nd menu item',
-      },
-    ],
-    key: '1',
-    label: 'Group title',
-    type: 'group',
-  },
-  {
-    children: [
-      {
-        key: '2-1',
-        label: '3rd menu item',
-      },
-      {
-        key: '2-2',
-        label: '4th menu item',
-      },
-    ],
-    key: '2',
-    label: 'sub menu',
-  },
-  {
-    children: [
-      {
-        key: '3-1',
-        label: '5d menu item',
-      },
-      {
-        key: '3-2',
-        label: '6th menu item',
-      },
-    ],
-    disabled: true,
-    key: '3',
-    label: 'disabled sub menu',
-  },
-];
-
-const items: ListItemProps[] = [
-  {
-    actions: (
-      <Dropdown menu={{ items: dropdownItems }} trigger={['click']}>
-        <ActionIcon icon={MoreHorizontalIcon} />
-      </Dropdown>
-    ),
-    avatar: <Avatar avatar={'😊'} />,
-    date: Date.now(),
-    description: 'Description 1',
-    key: '1',
-    pin: true,
-    showAction: true,
-    title: 'Item 1',
-  },
-  {
-    actions: (
-      <Dropdown menu={{ items: dropdownItems }} trigger={['click']}>
-        <ActionIcon icon={MoreHorizontalIcon} />
-      </Dropdown>
-    ),
-    avatar: <Avatar avatar={'😊'} />,
-    date: Date.now(),
-    description: 'Description 2',
-    key: '2',
-    title: 'Item 2',
-  },
-];
+import { ActionIcon, Avatar, Flexbox, List  } from '@lobehub/ui';
+import {
+  BookOpenIcon,
+  LayoutGridIcon,
+  LogOutIcon,
+  PencilIcon,
+  SettingsIcon,
+  UserIcon,
+  XIcon,
+} from 'lucide-react';
+import { type Key, useState } from 'react';
 
 export default () => {
-  const [active, setActive] = useState(items[0].key);
+  const [active, setActive] = useState<Key>('info');
 
-  return <List activeKey={active} items={items} onClick={({ key }) => setActive(key)} />;
+  return (
+    <Flexbox horizontal gap={32} padding={16} wrap="wrap">
+      <Flexbox style={{ width: 220 }}>
+        <List
+          selectable
+          activeKey={active}
+          items={[
+            { icon: UserIcon, key: 'info', label: 'Assistant info' },
+            { icon: PencilIcon, key: 'role', label: 'Role' },
+            { icon: SettingsIcon, key: 'model', label: 'Model' },
+            { icon: LayoutGridIcon, key: 'plugins', label: 'Plugins & skills' },
+          ]}
+          onActiveChange={setActive}
+        />
+      </Flexbox>
+      <Flexbox style={{ width: 220 }}>
+        <List
+          items={[
+            { extra: '⌘ ,', icon: SettingsIcon, key: 'settings', label: 'Settings' },
+            { icon: BookOpenIcon, key: 'docs', label: 'Docs' },
+            { type: 'divider' },
+            { danger: true, icon: LogOutIcon, key: 'logout', label: 'Log out' },
+          ]}
+        />
+      </Flexbox>
+      <Flexbox style={{ width: 280 }}>
+        <List
+          variant="outlined"
+          items={[
+            {
+              actions: <ActionIcon icon={XIcon} size="small" title="Remove" />,
+              avatar: <Avatar avatar="✍️" size={28} />,
+              description: 'Long-form writing and polishing',
+              extra: 'Host',
+              key: 'writer',
+              label: 'Writer',
+            },
+            {
+              actions: <ActionIcon icon={XIcon} size="small" title="Remove" />,
+              avatar: <Avatar avatar="🧑‍💻" size={28} />,
+              description: 'Edge cases and performance',
+              key: 'reviewer',
+              label: 'Code reviewer',
+            },
+          ]}
+        />
+      </Flexbox>
+    </Flexbox>
+  );
 };

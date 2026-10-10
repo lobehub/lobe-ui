@@ -1,0 +1,8 @@
+@layer lobe-ui {
+  @media (width <= 479.98px) {
+    .lobe-page-header-actions button,
+    .lobe-page-header-actions a {
+      min-block-size: 44px;
+    }
+  }
+}

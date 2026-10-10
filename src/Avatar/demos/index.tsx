@@ -1,38 +1,11 @@
-import { Avatar, type AvatarProps } from '@lobehub/ui';
-import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
+import { Avatar,Flexbox  } from '@lobehub/ui';
 
-export default () => {
-  const store = useCreateStore();
-  const control = useControls(
-    {
-      animation: false,
-      avatar: '😀',
-      background: '#FEE064',
-      bordered: false,
-      loading: false,
-      shadow: false,
-      shape: {
-        options: ['circle', 'square'],
-        value: 'square',
-      },
-      size: {
-        max: 128,
-        min: 16,
-        step: 1,
-        value: 100,
-      },
-      title: 'cm',
-      variant: {
-        options: ['borderless', 'filled', 'outlined'],
-        value: 'borderless',
-      },
-    },
-    { store },
-  ) as AvatarProps;
-
-  return (
-    <StoryBook levaStore={store}>
-      <Avatar {...control} />
-    </StoryBook>
-  );
-};
+export default () => (
+  <Flexbox horizontal align="center" gap={16} padding={16} wrap={'wrap'}>
+    <Avatar avatar="Lobe" size={48} />
+    <Avatar avatar="Chat" shape="circle" size={48} />
+    <Avatar avatar="AI" background="#1677ff" size={40} />
+    <Avatar avatar="Tiny" size={20} />
+    <Avatar shadow avatar="Full Text" shape="circle" size={64} variant="outlined" />
+  </Flexbox>
+);

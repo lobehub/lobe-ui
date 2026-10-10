@@ -8,57 +8,41 @@ export default () => {
   const control = useControls(
     {
       defaultExpand: true,
-      destroyOnClose: false,
       expandable: true,
-      minHeight: {
-        step: 1,
-        value: 0,
-      },
-      minWidth: {
-        step: 1,
-        value: 100,
-      },
-      mode: {
-        options: ['fixed', 'float'],
-        value: 'fixed',
-      },
-      pin: true,
-      placement: {
-        options: ['left', 'right', 'top', 'bottom'],
-        value: 'left',
-      },
+      minHeight: { step: 1, value: 0 },
+      minWidth: { step: 1, value: 100 },
+      mode: { options: ['fixed', 'float'], value: 'fixed' },
+      placement: { options: ['left', 'right', 'top', 'bottom'], value: 'left' },
       showBorder: true,
-      showHandleHighlight: false,
       showHandleWhenCollapsed: false,
-      stableLayout: true,
     },
     { store },
   ) as DraggablePanelProps;
 
+  const placement = control.placement ?? 'left';
+  const panel = (
+    <DraggablePanel {...control}>
+      <Flexbox padding={24}>Draggable Panel</Flexbox>
+    </DraggablePanel>
+  );
+  const content = (
+    <Flexbox padding={24} style={{ flex: 1 }}>
+      Content
+    </Flexbox>
+  );
+
   return (
     <StoryBook noPadding levaStore={store}>
-      <Flexbox
-        height={'100%'}
-        horizontal={['left', 'right'].includes(control.placement)}
-        width={'100%'}
-      >
-        {['top', 'left'].includes(control.placement) ? (
+      <Flexbox height={'100%'} horizontal={!['top', 'bottom'].includes(placement)} width={'100%'}>
+        {['top', 'left'].includes(placement) ? (
           <>
-            <DraggablePanel {...control}>
-              <Flexbox padding={24}>Draggable Panel</Flexbox>
-            </DraggablePanel>
-            <Flexbox padding={24} style={{ flex: 1 }}>
-              Content
-            </Flexbox>
+            {panel}
+            {content}
           </>
         ) : (
           <>
-            <Flexbox padding={24} style={{ flex: 1 }}>
-              Content
-            </Flexbox>
-            <DraggablePanel {...control}>
-              <Flexbox padding={24}>Draggable Panel</Flexbox>
-            </DraggablePanel>
+            {content}
+            {panel}
           </>
         )}
       </Flexbox>

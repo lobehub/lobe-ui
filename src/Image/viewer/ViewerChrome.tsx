@@ -1,10 +1,11 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { X } from 'lucide-react';
 import type { MotionValue } from 'motion/react';
 import { memo, type MouseEvent, type ReactNode, useCallback } from 'react';
 
-import ActionIcon from '@/base-ui/ActionIcon';
+import { ActionIconImpl as ActionIcon } from '@/ActionIcon/ActionIcon';
 import imageMessages from '@/i18n/resources/en/image';
 import { useTranslation } from '@/i18n/useTranslation';
 
@@ -51,16 +52,17 @@ const ViewerChrome = memo<ViewerChromeProps>(
     }, []);
 
     return (
-      <div className={styles.viewerChrome} ref={chromeRef} onClick={handleChromeClick}>
+      <div {...stylex.props(styles.viewerChrome)} ref={chromeRef} onClick={handleChromeClick}>
         <div
-          className={styles.viewerChromeIdle}
+          {...stylex.props(styles.viewerChromeIdle)}
           data-idle-hidden={idle.hidden ? '' : undefined}
           ref={idle.ref}
         >
           <ActionIcon
-            className={styles.viewerClose}
+            className="lobe-image-viewer-close"
             icon={X}
             title={t('image.close')}
+            xstyle={styles.viewerClose}
             onClick={onClose}
           />
           {total > 1 && (

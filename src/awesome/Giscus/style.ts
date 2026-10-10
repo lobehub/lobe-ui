@@ -1,7 +1,7 @@
-import { css, useTheme } from 'antd-style';
 import { rgba } from 'polished';
 import { useMemo } from 'react';
 
+import { useTheme } from '@/styles/theme/scope';
 import { safeReadableColor } from '@/utils/safeReadableColor';
 
 export const useStyles = () => {
@@ -19,7 +19,7 @@ export const useStyles = () => {
   const loadingImage = theme.isDarkMode
     ? 'https://github.githubassets.com/images/mona-loading-dark.gif'
     : 'https://github.githubassets.com/images/mona-loading-default.gif';
-  const { styles } = css`
+  const styles = `
     main {
       --color-prettylights-syntax-comment: ${colorTextTertiary};
       --color-prettylights-syntax-constant: ${colorGreen};

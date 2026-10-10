@@ -1,0 +1,93 @@
+'use client';
+
+import { type CSSProperties, memo, type ReactElement, type ReactNode, useRef } from 'react';
+
+import ClearButton from '@/Input/ClearButton';
+import { inputRootStyles } from '@/Input/style';
+import type { InputSize, InputVariant } from '@/Input/type';
+import { panelStyles } from '@/internal/panelStyles';
+import {
+  PopoverPopup,
+  PopoverPortal,
+  PopoverPositioner,
+  PopoverRoot,
+  PopoverTriggerElement,
+} from '@/Popover';
+import { styleProps } from '@/styles/stylex/props';
+import { useThemeMode } from '@/styles/theme/scope';
+
+export interface PickerShellProps {
+  children: ReactNode;
+  className?: string;
+  disabled?: boolean;
+  icon: ReactNode;
+  onClear: () => void;
+  onOpenChange: (open: boolean) => void;
+  open: boolean;
+  shadow?: boolean;
+  showClear: boolean;
+  size?: InputSize;
+  style?: CSSProperties;
+  trigger: ReactElement;
+  variant?: InputVariant;
+}
+
+const PickerShell = memo<PickerShellProps>(
+  ({
+    children,
+    className,
+    disabled,
+    icon,
+    onClear,
+    onOpenChange,
+    open,
+    shadow,
+    showClear,
+    size = 'middle',
+    style,
+    trigger,
+    variant,
+  }) => {
+    const { isDarkMode } = useThemeMode();
+    const anchorRef = useRef<HTMLDivElement>(null);
+    const popupRef = useRef<HTMLDivElement>(null);
+
+    return (
+      <div
+        data-disabled={disabled ? '' : undefined}
+        ref={anchorRef}
+        {...styleProps(
+          inputRootStyles({
+            shadow,
+            size,
+            variant: variant || (isDarkMode ? 'filled' : 'outlined'),
+          }),
+          className,
+          style,
+        )}
+      >
+        <PopoverRoot open={open} onOpenChange={(next) => !disabled && onOpenChange(next)}>
+          <PopoverTriggerElement>{trigger}</PopoverTriggerElement>
+          <PopoverPortal>
+            <PopoverPositioner anchor={anchorRef} placement="bottomLeft">
+              <PopoverPopup
+                ref={popupRef}
+                xstyle={panelStyles.popup}
+                initialFocus={() =>
+                  popupRef.current?.querySelector<HTMLElement>('[data-focus-target]') ?? true
+                }
+              >
+                {children}
+              </PopoverPopup>
+            </PopoverPositioner>
+          </PopoverPortal>
+        </PopoverRoot>
+        {showClear && !disabled ? <ClearButton onClear={onClear} /> : icon}
+      </div>
+    );
+  },
+);
+
+PickerShell.displayName = 'PickerShell';
+
+export default PickerShell;

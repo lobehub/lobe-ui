@@ -4,21 +4,24 @@ import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
 import { getLobeIconCDN } from '@lobehub/icons/es/features/getLobeIconCDN';
 import { toc } from '@lobehub/icons/es/toc';
-import { cx, useTheme } from 'antd-style';
+import * as stylex from '@stylexjs/stylex';
 import chroma from 'chroma-js';
+import clsx from 'clsx';
 import { SmileIcon, TrashIcon, UploadIcon } from 'lucide-react';
 import { memo, useMemo, useRef, useState } from 'react';
 import useSWR from 'swr';
 import useMergeState from 'use-merge-value';
 
-import ActionIcon from '@/base-ui/ActionIcon';
-import Avatar from '@/base-ui/Avatar';
-import Tabs, { type TabsProps } from '@/base-ui/Tabs';
+import ActionIcon from '@/ActionIcon';
+import Avatar from '@/Avatar';
 import { Flexbox } from '@/Flex';
 import emojiPickerMessages from '@/i18n/resources/en/emojiPicker';
 import { useTranslation } from '@/i18n/useTranslation';
 import Icon from '@/Icon';
 import Popover from '@/Popover';
+import { styleProps } from '@/styles/stylex/props';
+import { useTheme } from '@/styles/theme/scope';
+import Tabs, { type TabsProps } from '@/Tabs';
 import Tooltip from '@/Tooltip';
 
 import AvatarUploader from './AvatarUploader';
@@ -141,21 +144,20 @@ const EmojiPicker = memo<EmojiPickerProps>(
 
     const content = (
       <Flexbox
-        className={cx(styles.picker, popupClassName)}
         ref={ref}
-        style={{
+        {...styleProps(styles.picker, clsx('lobe-emoji-picker', popupClassName), {
           minWidth: 310,
           paddingTop: showTabs ? 4 : 0,
           ...pickerCssVariables,
           ...popupStyle,
-        }}
+        })}
         {...contentProps}
       >
         {showTabs && (
           <Flexbox
             horizontal
             align={'center'}
-            className={styles.tabs}
+            {...stylex.props(styles.tabs)}
             justify={'space-between'}
             paddingInline={10}
           >
@@ -164,10 +166,10 @@ const EmojiPicker = memo<EmojiPickerProps>(
               items={items}
               variant={'square'}
               classNames={{
-                indicator: styles.tabsIndicator,
-                list: styles.tabsList,
-                root: styles.tabsRoot,
-                tab: styles.tab,
+                indicator: 'lobe-emoji-picker-tabs-indicator',
+                list: 'lobe-emoji-picker-tabs-list',
+                root: 'lobe-emoji-picker-tabs-root',
+                tab: 'lobe-emoji-picker-tab',
               }}
               onChange={(key) => setTab(key as any)}
             />
@@ -223,15 +225,15 @@ const EmojiPicker = memo<EmojiPickerProps>(
 
     return (
       <Popover
-        className={cx(styles.popover)}
+        className="lobe-emoji-picker-popover"
         content={content}
         defaultOpen={defaultOpen}
         open={visible}
         placement={'bottom'}
         trigger={'click'}
         classNames={{
-          content: styles.popover,
-          root: styles.positioner,
+          content: 'lobe-emoji-picker-popover',
+          root: 'lobe-emoji-picker-positioner',
         }}
         onOpenChange={(v) => {
           if (loading) return;
@@ -244,7 +246,7 @@ const EmojiPicker = memo<EmojiPickerProps>(
         ) : (
           <Avatar
             avatar={ava}
-            className={cx(styles.root, className)}
+            className={clsx('lobe-emoji-picker-avatar', className)}
             loading={loading}
             shape={shape}
             {...rest}

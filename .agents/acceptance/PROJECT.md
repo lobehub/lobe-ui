@@ -7,12 +7,12 @@ ESM only, from `src/**` to `es/**` via tsdown, and publishes nothing else.
 
 Repo layout that matters for testing:
 
-| Path                 | What it is                                                                |
-| -------------------- | ------------------------------------------------------------------------- |
-| `src/<Component>/`   | One component: implementation, `style.ts`, `index.mdx`, `demos/`          |
-| `src/base-ui/`       | Components built on `@base-ui/react` — published as `@lobehub/ui/base-ui` |
-| `packages/docs-kit/` | `lobedocs`, the React Router + Vite toolkit that builds the docs site     |
-| `es/`                | Build output; the only directory published to npm                         |
+| Path                 | What it is                                                            |
+| -------------------- | --------------------------------------------------------------------- |
+| `src/<Component>/`   | One component: implementation, `style.ts`, `index.mdx`, `demos/`      |
+| `src/base-ui/`       | Components built on `@base-ui/react` — published as `@lobehub/ui`     |
+| `packages/docs-kit/` | `lobedocs`, the React Router + Vite toolkit that builds the docs site |
+| `es/`                | Build output; the only directory published to npm                     |
 
 A component change has two proving surfaces: the **docs site**, which renders every
 component's demos, and a **consuming app** running the built package. Library changes

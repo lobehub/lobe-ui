@@ -1,90 +1,99 @@
 'use client';
 
-import { Drawer, Menu } from 'antd';
-import { cx } from 'antd-style';
-import { MenuIcon, X } from 'lucide-react';
-import { memo, useMemo } from 'react';
+import * as stylex from '@stylexjs/stylex';
+import { Menu, X } from 'lucide-react';
+import { memo } from 'react';
 
-import ActionIcon from '@/base-ui/ActionIcon';
-import { Center } from '@/Flex';
+import ActionIcon from '@/ActionIcon';
+import { Drawer } from '@/Drawer';
+import burgerMessages from '@/i18n/resources/en/burger';
+import { useTranslation } from '@/i18n/useTranslation';
+import { type ListItem } from '@/List';
+import { ListImpl as List } from '@/List/List';
+import type { ListRowXstyle } from '@/List/ListRow';
 
 import { styles } from './style';
 import type { BurgerProps } from './type';
 
+const withoutIcons = (items: ListItem[]): ListItem[] =>
+  items.flatMap((item) => (item.type === 'divider' ? [] : [{ ...item, icon: undefined }]));
+
+const bodyStyle = { paddingBlock: 8, paddingInline: 12 };
+
+const rowXstyle: ListRowXstyle = (item, active) => {
+  const current = active && (!item.href || !!item.disabled);
+  return [styles.row, current && styles.rowCurrent];
+};
+
+const largeRowXstyle: ListRowXstyle = (item, active) => {
+  const current = active && (!item.href || !!item.disabled);
+  return [styles.largeRow, current && styles.largeRowCurrent];
+};
+
 const Burger = memo<BurgerProps>(
   ({
-    items,
-    openKeys,
-    selectedKeys,
-    opened,
-    setOpened,
+    activeKey,
     className,
+    footer,
+    fullscreen = false,
     headerHeight = 64,
-    onClick,
-    iconProps,
+    items,
+    onOpenChange,
+    onSelect,
+    opened,
     size,
+    style,
     variant,
-    rootClassName,
-    fullscreen,
-    drawerProps,
-    ...rest
   }) => {
-    // Convert props to CSS variables
-    const cssVariables = useMemo<Record<string, string>>(() => {
-      const vars: Record<string, string> = {
-        '--burger-header-height': `${headerHeight}px`,
-      };
-      if (fullscreen) {
-        vars['--burger-drawer-top'] = '0';
-        vars['--burger-menu-padding-top'] = '0px';
-      } else {
-        vars['--burger-drawer-top'] = `calc(var(--burger-header-height, ${headerHeight}px) + 1px)`;
-        vars['--burger-menu-padding-top'] = `${headerHeight}px`;
-      }
-      return vars;
-    }, [fullscreen, headerHeight]);
+    const { t } = useTranslation(burgerMessages);
+    const close = () => onOpenChange(false);
+
+    const toggle = (
+      <ActionIcon
+        aria-expanded={opened}
+        aria-label={opened ? t('burger.close') : t('burger.open')}
+        className={className}
+        icon={opened ? X : Menu}
+        size={size}
+        style={style}
+        variant={variant}
+        onClick={() => onOpenChange(!opened)}
+      />
+    );
 
     return (
-      <Center
-        className={cx(styles.container, className)}
-        onClick={() => {
-          setOpened(!opened);
-        }}
-        {...rest}
-      >
-        <ActionIcon icon={opened ? X : MenuIcon} size={size} variant={variant} {...iconProps} />
+      <>
+        {toggle}
         <Drawer
-          closeIcon={undefined}
+          noHeader
+          height={fullscreen ? '100dvh' : `calc(100dvh - ${headerHeight}px)`}
           open={opened}
-          placement={'left'}
-          width={'100vw'}
-          {...drawerProps}
-          className={styles.drawer}
-          rootClassName={cx(
-            fullscreen ? styles.drawerRootFullscreen : styles.drawerRoot,
-            rootClassName,
-          )}
-          rootStyle={{
-            ...cssVariables,
-            ...drawerProps?.rootStyle,
-          }}
-          styles={{
-            body: { padding: 0 },
-            header: { display: 'none' },
-          }}
+          placement="top"
+          styles={
+            fullscreen
+              ? { bodyContent: bodyStyle }
+              : { bodyContent: bodyStyle, popup: { insetBlockStart: headerHeight } }
+          }
+          onClose={close}
         >
-          <Menu
-            className={styles.menu}
-            items={items}
-            mode={'inline'}
-            openKeys={openKeys}
-            selectedKeys={selectedKeys}
-            style={cssVariables}
-            onClick={onClick}
+          {fullscreen && (
+            <div {...stylex.props(styles.fullHeader)} style={{ height: headerHeight }}>
+              <ActionIcon aria-label={t('burger.close')} icon={X} size={size} onClick={close} />
+            </div>
+          )}
+          <List
+            selectable
+            activeKey={activeKey ?? null}
+            itemXstyle={fullscreen ? largeRowXstyle : rowXstyle}
+            items={fullscreen ? withoutIcons(items) : items}
+            onClick={({ key }) => {
+              onSelect?.(key);
+              close();
+            }}
           />
-          <div className={styles.fillRect} />
+          {fullscreen && footer && <div {...stylex.props(styles.footer)}>{footer}</div>}
         </Drawer>
-      </Center>
+      </>
     );
   },
 );

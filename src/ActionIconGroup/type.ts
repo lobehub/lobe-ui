@@ -1,9 +1,9 @@
 import type { Ref } from 'react';
 
-import type { ActionIconProps } from '@/base-ui/ActionIcon';
+import type { ActionIconProps } from '@/ActionIcon';
 import type { DropdownMenuProps } from '@/DropdownMenu';
 import type { CenterProps } from '@/Flex';
-import type { MenuInfo, MenuItemType } from '@/Menu';
+import type { MenuInfo, MenuItemType } from '@/internal/menu';
 
 export type ActionIconGroupEvent = Pick<MenuInfo, 'key' | 'keyPath' | 'domEvent'>;
 
@@ -24,4 +24,4 @@ export interface ActionIconGroupProps extends Omit<CenterProps, 'children'> {
   variant?: 'filled' | 'outlined' | 'borderless';
 }
 
-export type { MenuItemType as ActionIconGroupItemType } from '@/Menu';
+export type { MenuItemType as ActionIconGroupItemType } from '@/internal/menu';

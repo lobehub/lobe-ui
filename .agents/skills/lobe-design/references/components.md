@@ -8,9 +8,9 @@
 
 ## C-01 base-ui 优先（硬性规则）
 
-`@lobehub/ui/base-ui` 是当前的规范命名空间，基于 `@base-ui/react`。顶层的同名组件是早期的 antd 包装层。`@lobehub/ui/eslint` 会直接报错，不要靠记忆二选一。
+`@lobehub/ui` 是当前的规范命名空间，基于 `@base-ui/react`。顶层的同名组件是早期的 antd 包装层。`@lobehub/ui/eslint` 会直接报错，不要靠记忆二选一。
 
-**这些顶层导出不要用，改从 `@lobehub/ui/base-ui` 导入：**
+**这些顶层导出不要用，改从 `@lobehub/ui` 导入：**
 
 ```
 Accordion · AccordionItem · ActionIcon · Alert · AutoComplete · Avatar · AvatarGroup
@@ -54,28 +54,28 @@ import restrictedImports from '@lobehub/ui/eslint';
 
 ### 表单与输入
 
-| 需要                                 | 用                                                                       | 来源                       |
-| ------------------------------------ | ------------------------------------------------------------------------ | -------------------------- |
-| 文本 / 多行 / 数字 / 密码 / 验证码   | `Input` · `TextArea` · `InputNumber` · `InputPassword` · `InputOTP`      | `base-ui`                  |
-| 从固定选项里选                       | `Select`                                                                 | `base-ui`                  |
-| 自由输入 + 建议                      | `AutoComplete`                                                           | `base-ui`                  |
-| 开关（立即生效的设置）               | `Switch`                                                                 | `base-ui`                  |
-| 勾选 / 单选                          | `Checkbox` · `CheckboxGroup` · `Radio` · `RadioGroup`                    | `base-ui`                  |
-| 区间取值                             | `Slider`，要配数字输入用 `SliderWithInput`                               | `base-ui`                  |
-| 结构化表单骨架                       | `Form` + `useForm` + `Form.Field` / `.Group` / `.List` / `.SubmitFooter` | `@lobehub/ui/base-ui/form` |
-| 日期 / 月份 / 年份 / 范围            | `DatePicker`（值为原生 `Date`）                                          | `base-ui`                  |
-| 点击就地改文字                       | `EditableText`                                                           | 顶层                       |
-| 录制键盘快捷键                       | `HotkeyInput`                                                            | 顶层                       |
-| 搜索框（带 spotlight 和 `mod+k`）    | `SearchBar`                                                              | 顶层                       |
-| 从一组预设色里点选                   | `ColorSwatches`                                                          | 顶层                       |
-| 拾取任意 hex（饱和度 / 色相 / 吸管） | `ColorPicker`（`onChange` 拖动中，`onChangeComplete` 落笔）              | `base-ui`                  |
-| 选头像 / emoji                       | `EmojiPicker`                                                            | 顶层                       |
-| 选文件 / 拖拽上传                    | `Upload`（`dragger` 时根节点是 `div`）                                   | `base-ui`                  |
+| 需要                                 | 用                                                                       | 来源               |
+| ------------------------------------ | ------------------------------------------------------------------------ | ------------------ |
+| 文本 / 多行 / 数字 / 密码 / 验证码   | `Input` · `TextArea` · `InputNumber` · `InputPassword` · `InputOTP`      | `base-ui`          |
+| 从固定选项里选                       | `Select`                                                                 | `base-ui`          |
+| 自由输入 + 建议                      | `AutoComplete`                                                           | `base-ui`          |
+| 开关（立即生效的设置）               | `Switch`                                                                 | `base-ui`          |
+| 勾选 / 单选                          | `Checkbox` · `CheckboxGroup` · `Radio` · `RadioGroup`                    | `base-ui`          |
+| 区间取值                             | `Slider`，要配数字输入用 `SliderWithInput`                               | `base-ui`          |
+| 结构化表单骨架                       | `Form` + `useForm` + `Form.Field` / `.Group` / `.List` / `.SubmitFooter` | `@lobehub/ui/form` |
+| 日期 / 月份 / 年份 / 范围            | `DatePicker`（值为原生 `Date`）                                          | `base-ui`          |
+| 点击就地改文字                       | `EditableText`                                                           | 顶层               |
+| 录制键盘快捷键                       | `HotkeyInput`                                                            | 顶层               |
+| 搜索框（带 spotlight 和 `mod+k`）    | `SearchBar`                                                              | 顶层               |
+| 从一组预设色里点选                   | `ColorSwatches`                                                          | 顶层               |
+| 拾取任意 hex（饱和度 / 色相 / 吸管） | `ColorPicker`（`onChange` 拖动中，`onChangeComplete` 落笔）              | `base-ui`          |
+| 选头像 / emoji                       | `EmojiPicker`                                                            | 顶层               |
+| 选文件 / 拖拽上传                    | `Upload`（`dragger` 时根节点是 `div`）                                   | `base-ui`          |
 
 表单从自己的入口导入，这样没有表单的页面不会带上表单引擎：
 
 ```tsx
-import { Form, useForm, useWatch } from '@lobehub/ui/base-ui/form';
+import { Form, useForm, useWatch } from '@lobehub/ui/form';
 
 const form = useForm<Values>({ schema, initialValues, onSubmit });
 
@@ -193,7 +193,7 @@ const form = useForm<Values>({ schema, initialValues, onSubmit });
 | ----------------------------------------------------- | -------------- | --------------------------------------------------------------------------------------------------- |
 | `Tag` / `Badge`                                       | 都是小标签     | `Tag`（base-ui）表分类、独立、可移除；`Badge`（base-ui）附着在别的元素上、表计数或状态              |
 | `Modal` / `Drawer` / `FloatingSheet`                  | 都是弹出层     | 打断程度、信息密度、退出方式递减；Modal 最强打断                                                    |
-| `Modal` 里的表单 / 旧 `FormModal`                     | 都是对话框     | 新代码用 `Modal` 包 `@lobehub/ui/base-ui/form` 的 `Form`。`FormModal` 已废弃                        |
+| `Modal` 里的表单 / 旧 `FormModal`                     | 都是对话框     | 新代码用 `Modal` 包 `@lobehub/ui/form` 的 `Form`。`FormModal` 已废弃                                |
 | `Tabs` / `Segmented`                                  | 都能切换       | Tabs 管同空间内的多个面板；Segmented 管少量互斥选项，没有独立面板区                                 |
 | `DropdownMenu` / `ContextMenu` / `Menu`               | 都是菜单       | DropdownMenu 挂在 trigger 上；ContextMenu 命令式、出现在指针处；Menu 是常驻导航                     |
 | `Tooltip` / `Popover`                                 | 都是浮层       | Tooltip 只放简短提示、不能含可交互内容；要放链接或按钮必须用 Popover                                |
@@ -275,18 +275,18 @@ BackBottom                        ← 浮层，指向滚动容器
 
 ## C-06 其他命名空间
 
-| 命名空间                   | 装什么                                                                                                                                                                                   |
-| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `@lobehub/ui/base-ui/form` | 受控表单：`Form` · `useForm` · `useWatch`。不要从别的入口导入 `Form`                                                                                                                     |
-| `@lobehub/ui/dashboard`    | 控制台骨架，见 C-07                                                                                                                                                                      |
-| `@lobehub/ui/awesome`      | 营销页。整页组合交给 `building-landing-home`。效果件：`AuroraBackground` · `GradientButton` · `Spotlight` · `SpotlightCard` · `FluidGradient` · `TypewriterEffect` · `Spline` · `Giscus` |
-| `@lobehub/ui/brand`        | `LobeHub` · `LobeChat` 及其文字标 · `Logo3d` / `LogoFlat` / `LogoMono` · `BrandLoading`                                                                                                  |
-| `@lobehub/ui/mdx`          | 文档渲染：`Mdx` · `mdxComponents` · `Callout` · `Cards` · `Steps` · `FileTree` · `Tabs`                                                                                                  |
-| `@lobehub/ui/color`        | 色阶数据：`colors` / `colorScales` / `neutrals`（见 [design.md](design.md)）                                                                                                             |
-| `@lobehub/ui/i18n`         | `I18nProvider` · `useTranslation` · `en` / `zhCn` 资源                                                                                                                                   |
-| `@lobehub/ui/storybook`    | 演示用：`StoryBook` · `useControls`（不是生产 UI）                                                                                                                                       |
-| `@lobehub/ui/eslint`       | 强制 C-01 各项迁移规则的 eslint 配置，另有 `no-inline-form-schema`                                                                                                                       |
-| `@lobehub/ui/static-css`   | 构建期抽取 antd CSS（SSR 优化，需 antd v6 cssVar 模式）                                                                                                                                  |
+| 命名空间                 | 装什么                                                                                                                                                                                   |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `@lobehub/ui/form`       | 受控表单：`Form` · `useForm` · `useWatch`。不要从别的入口导入 `Form`                                                                                                                     |
+| `@lobehub/ui/dashboard`  | 控制台骨架，见 C-07                                                                                                                                                                      |
+| `@lobehub/ui/awesome`    | 营销页。整页组合交给 `building-landing-home`。效果件：`AuroraBackground` · `GradientButton` · `Spotlight` · `SpotlightCard` · `FluidGradient` · `TypewriterEffect` · `Spline` · `Giscus` |
+| `@lobehub/ui/brand`      | `LobeHub` · `LobeChat` 及其文字标 · `Logo3d` / `LogoFlat` / `LogoMono` · `BrandLoading`                                                                                                  |
+| `@lobehub/ui/mdx`        | 文档渲染：`Mdx` · `mdxComponents` · `Callout` · `Cards` · `Steps` · `FileTree` · `Tabs`                                                                                                  |
+| `@lobehub/ui/color`      | 色阶数据：`colors` / `colorScales` / `neutrals`（见 [design.md](design.md)）                                                                                                             |
+| `@lobehub/ui/i18n`       | `I18nProvider` · `useTranslation` · `en` / `zhCn` 资源                                                                                                                                   |
+| `@lobehub/ui/storybook`  | 演示用：`StoryBook` · `useControls`（不是生产 UI）                                                                                                                                       |
+| `@lobehub/ui/eslint`     | 强制 C-01 各项迁移规则的 eslint 配置，另有 `no-inline-form-schema`                                                                                                                       |
+| `@lobehub/ui/static-css` | 构建期抽取 antd CSS（SSR 优化，需 antd v6 cssVar 模式）                                                                                                                                  |
 
 `awesome` 里的东西是给落地页的。**不要把 `AuroraBackground`、`GradientButton`、`SpotlightCard`、`FluidGradient` 搬进控制台或应用内页面**——那正是 AI 味的来源之一（见 [craft.md](craft.md) 的 K-01）。
 

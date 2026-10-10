@@ -1,13 +1,22 @@
 'use client';
 
-import { cx } from 'antd-style';
+import * as stylex from '@stylexjs/stylex';
 
-import Text from '@/base-ui/Text';
 import { Flexbox } from '@/Flex';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { styleProps } from '@/styles/stylex/props';
+import Text from '@/Text';
 
 import { styles as surfaceStyles } from '../Surface/style';
 import { styles } from './style';
 import type { AuthLayoutProps } from './type';
+
+const titleStyle = {
+  fontSize: cssVar.fontSizeHeading3,
+  lineHeight: cssVar.lineHeightHeading3,
+  margin: 0,
+};
+const descriptionStyle = { color: cssVar.colorTextSecondary, lineHeight: 1.6 };
 
 function AuthLayout({
   aside,
@@ -15,34 +24,35 @@ function AuthLayout({
   children,
   className,
   description,
+  style,
   title,
   tools,
   ...rest
 }: AuthLayoutProps) {
   const split = Boolean(aside);
   return (
-    <div className={className ? `${styles.page} ${className}` : styles.page} {...rest}>
-      <header className={styles.header}>
+    <div {...styleProps(styles.page, className, style)} {...rest}>
+      <header {...stylex.props(styles.header)}>
         {brand}
-        {tools ? <div className={styles.tools}>{tools}</div> : null}
+        {tools ? <div {...stylex.props(styles.tools)}>{tools}</div> : null}
       </header>
-      <main className={styles.main}>
-        <div className={cx(styles.lift, split && styles.liftSplit, surfaceStyles.card)}>
-          <div className={cx(styles.frame, split && styles.split)}>
-            <div className={cx(styles.form, split && styles.formSplit)}>
+      <main {...stylex.props(styles.main)}>
+        <div {...stylex.props(styles.lift, split && styles.liftSplit, surfaceStyles.card)}>
+          <div {...stylex.props(styles.frame, split && styles.split)}>
+            <div {...stylex.props(styles.form, split && styles.formSplit)}>
               <Flexbox gap={8}>
-                <Text as="h1" className={styles.title} weight="bold">
+                <Text as="h1" style={titleStyle} weight="bold">
                   {title}
                 </Text>
                 {description ? (
-                  <Text className={styles.description} type="secondary">
+                  <Text style={descriptionStyle} type="secondary">
                     {description}
                   </Text>
                 ) : null}
               </Flexbox>
               {children}
             </div>
-            {aside ? <div className={styles.aside}>{aside}</div> : null}
+            {aside ? <div {...stylex.props(styles.aside)}>{aside}</div> : null}
           </div>
         </div>
       </main>

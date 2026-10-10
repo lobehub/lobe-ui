@@ -1,50 +1,61 @@
-import { Form, type FormProps } from '@lobehub/ui';
-import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
-import { useState } from 'react';
+import { toast, ToastHost } from '@lobehub/ui';
+import { Form, type FormGroupItemType, Input, Switch, TextArea } from '@lobehub/ui';
+import { SettingsIcon, SparklesIcon } from 'lucide-react';
 
-import { items } from '@/Form/demos/data';
-
-const setting = {
-  i18n: 'en',
-  liteAnimation: false,
-  sidebarExpand: true,
-  sidebarFixedMode: 'float',
-  sidebarWidth: 300,
-};
-
-export default () => {
-  const store = useCreateStore();
-  const [form] = Form.useForm();
-  const [data, setData] = useState(setting);
-
-  const controls = useControls(
-    {
-      collapsible: true,
-      variant: {
-        options: ['borderless', 'filled', 'outlined'],
-        value: 'borderless',
+const items: FormGroupItemType[] = [
+  {
+    children: [
+      {
+        children: <Input placeholder={'Display name'} />,
+        desc: 'Shown to other members',
+        label: 'Name',
+        name: 'name',
+        required: true,
       },
-    },
-    { store },
-  ) as FormProps;
+      {
+        children: (
+          <TextArea
+            autoSize={{ maxRows: 4, minRows: 2 }}
+            placeholder={'Introduce yourself'}
+            style={{ width: 320 }}
+          />
+        ),
+        label: 'Bio',
+        name: 'bio',
+      },
+    ],
+    icon: SettingsIcon,
+    title: 'Profile',
+  },
+  {
+    children: [
+      {
+        children: <Switch />,
+        desc: 'Enable experimental features',
+        label: 'Beta features',
+        name: 'beta',
+        tag: 'beta',
+      },
+    ],
+    icon: SparklesIcon,
+    title: 'Advanced',
+  },
+];
 
-  const handleSubmit = async (values: any) => {
-    setData(values);
-    console.info('submit:', values);
-  };
-
-  return (
-    <StoryBook levaStore={store}>
-      <Form
-        defaultActiveKey={['theme']}
-        form={form}
-        initialValues={data}
-        itemMinWidth={'max(30%,240px)'}
-        items={items}
-        onCollapse={console.info}
-        onFinish={handleSubmit}
-        {...controls}
-      />
-    </StoryBook>
-  );
-};
+export default () => (
+  <>
+    <Form
+      footer={<Form.SubmitFooter />}
+      initialValues={{ bio: 'Hello there', name: 'Innei' }}
+      itemMinWidth={240}
+      items={items}
+      style={{ maxWidth: 640, paddingInline: 16 }}
+      variant={'borderless'}
+      onFinish={async (values) => {
+        await new Promise((resolve) => setTimeout(resolve, 800));
+        toast.success(JSON.stringify(values));
+      }}
+    />
+    <ToastHost />
+  </>
+);

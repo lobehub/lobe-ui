@@ -1,40 +1,69 @@
-import { Drawer, type DrawerProps } from '@lobehub/ui';
-import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
-import { useRef } from 'react';
+import { cssVar, Flexbox, Text } from '@lobehub/ui';
+import { Button, Drawer, type DrawerPlacement } from '@lobehub/ui';
+import { useState } from 'react';
+
+const PLACEMENTS: DrawerPlacement[] = ['left', 'right', 'top', 'bottom'];
+
+const RELEASES = [
+  { date: 'Mar 12', status: 'Shipped', title: 'Streaming tool calls' },
+  { date: 'Mar 08', status: 'Shipped', title: 'Workspace-level model routing' },
+  { date: 'Mar 01', status: 'Rolled back', title: 'Inline citation previews' },
+  { date: 'Feb 24', status: 'Shipped', title: 'Prompt library sharing' },
+];
 
 export default () => {
-  const store = useCreateStore();
-  const ref = useRef(null);
-  const control = useControls(
-    {
-      containerMaxWidth: {
-        step: 1,
-        value: 1024,
-      },
-      height: {
-        step: 1,
-        value: 600,
-      },
-      noHeader: true,
-      open: true,
-      placement: {
-        options: ['left', 'right', 'top', 'bottom'],
-        value: 'bottom',
-      },
-      title: 'Drawer',
-    },
-    { store },
-  ) as DrawerProps;
+  const [placement, setPlacement] = useState<DrawerPlacement>('right');
+  const [open, setOpen] = useState(false);
 
   return (
-    <StoryBook noPadding height={800} levaStore={store} ref={ref}>
-      <Drawer getContainer={false} {...control}>
-        {Array.from({ length: 50 })
-          .fill('')
-          .map((_, i) => (
-            <div key={i}>content</div>
+    <>
+      <Flexbox horizontal gap={8} wrap="wrap">
+        {PLACEMENTS.map((item) => (
+          <Button
+            key={item}
+            onClick={() => {
+              setPlacement(item);
+              setOpen(true);
+            }}
+          >
+            Open from {item}
+          </Button>
+        ))}
+      </Flexbox>
+
+      <Drawer
+        open={open}
+        placement={placement}
+        title="Release history"
+        footer={
+          <>
+            <Button onClick={() => setOpen(false)}>Close</Button>
+            <Button type="primary">Export changelog</Button>
+          </>
+        }
+        onClose={() => setOpen(false)}
+      >
+        <Flexbox gap={16}>
+          <Text as="p" style={{ margin: 0, opacity: 0.65 }}>
+            Deployments to production over the last three weeks.
+          </Text>
+          {RELEASES.map((release) => (
+            <Flexbox
+              gap={4}
+              key={release.title}
+              style={{
+                borderInlineStart: `2px solid ${cssVar.colorBorderSecondary}`,
+                paddingInlineStart: 12,
+              }}
+            >
+              <Text weight={600}>{release.title}</Text>
+              <Text style={{ fontSize: 12, opacity: 0.55 }}>
+                {release.date} · {release.status}
+              </Text>
+            </Flexbox>
           ))}
+        </Flexbox>
       </Drawer>
-    </StoryBook>
+    </>
   );
 };

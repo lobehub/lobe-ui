@@ -1,13 +1,13 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { Edit3 } from 'lucide-react';
 import { memo, useMemo } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 import useControlledState from 'use-merge-value';
 
-import ActionIcon from '@/base-ui/ActionIcon';
+import ActionIcon from '@/ActionIcon';
 import { Flexbox } from '@/Flex';
+import { cx } from '@/styles';
 
 import ControlInput from './ControlInput';
 import type { EditableTextProps } from './type';

@@ -1,5 +1,4 @@
 import { type StreamAnimationGranularity, type StreamSmoothingPreset } from '@lobehub/streamdown';
-import { type AnchorProps } from 'antd';
 import { type CSSProperties, type ElementType, type FC, type ReactNode, type Ref } from 'react';
 import { type Components, type Options as ReactMarkdownOptions } from 'react-markdown';
 import { type Pluggable } from 'unified';
@@ -30,7 +29,7 @@ export interface SyntaxMarkdownProps {
   children: string;
   citations?: CitationItem[];
   componentProps?: {
-    a?: Partial<AProps & AnchorProps>;
+    a?: Partial<AProps>;
     highlight?: Partial<HighlighterProps>;
     html?: Partial<HtmlPreviewProps>;
     img?: Partial<ImageProps>;

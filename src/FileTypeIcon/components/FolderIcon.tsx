@@ -1,6 +1,7 @@
-import { cssVar, cx } from 'antd-style';
 import { type FC } from 'react';
 
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { styleProps } from '@/styles/stylex/props';
 import type { SvgProps } from '@/types';
 
 import { styles } from '../style';
@@ -27,9 +28,8 @@ const FolderIcon: FC<FolderIconProps> = ({
 }) => {
   return (
     <svg
-      className={cx(styles.icon, !hasIcon && className)}
       height={size}
-      style={hasIcon ? undefined : style}
+      {...styleProps(styles.icon, hasIcon ? undefined : className, hasIcon ? undefined : style)}
       viewBox="0 0 24 24"
       width={size}
       xmlns="http://www.w3.org/2000/svg"

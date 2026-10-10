@@ -3,9 +3,9 @@
 import { memo, useMemo } from 'react';
 import { bundledLanguagesInfo } from 'shiki';
 
-import Select, { type SelectProps } from '@/base-ui/Select';
 import { Flexbox } from '@/Flex';
 import MaterialFileTypeIcon from '@/MaterialFileTypeIcon';
+import Select, { type SelectProps } from '@/Select';
 import Text from '@/Text';
 import { stopPropagation } from '@/utils/dom';
 

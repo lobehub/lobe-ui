@@ -1,13 +1,13 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { memo } from 'react';
 
-import ActionIcon from '@/base-ui/ActionIcon';
+import { ActionIconImpl as ActionIcon } from '@/ActionIcon/ActionIcon';
 import { Center } from '@/Flex';
 import imageMessages from '@/i18n/resources/en/image';
 import { useTranslation } from '@/i18n/useTranslation';
+import { styleProps } from '@/styles/stylex/props';
 
 import { styles } from '../style';
 
@@ -27,23 +27,25 @@ const GalleryNav = memo<GalleryNavProps>(({ current, hasNext, hasPrev, next, pre
     <>
       {hasPrev && (
         <ActionIcon
-          className={cx(styles.viewerNavButton, styles.viewerNavPrev)}
+          className="lobe-image-viewer-nav-prev"
           icon={ChevronLeft}
           size={'large'}
           title={t('image.prev')}
+          xstyle={[styles.viewerNavButton, styles.viewerNavPrev]}
           onClick={prev}
         />
       )}
       {hasNext && (
         <ActionIcon
-          className={cx(styles.viewerNavButton, styles.viewerNavNext)}
+          className="lobe-image-viewer-nav-next"
           icon={ChevronRight}
           size={'large'}
           title={t('image.next')}
+          xstyle={[styles.viewerNavButton, styles.viewerNavNext]}
           onClick={next}
         />
       )}
-      <Center horizontal className={styles.viewerCounter}>
+      <Center horizontal {...styleProps(styles.viewerCounter, 'lobe-image-viewer-counter')}>
         {current + 1} / {total}
       </Center>
     </>

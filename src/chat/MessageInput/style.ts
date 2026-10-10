@@ -1,13 +1,15 @@
-import { createStaticStyles } from 'antd-style';
+import './style.css';
 
-export const styles = createStaticStyles(
-  ({ css, cssVar }) => css`
-    position: relative;
+import type { CSSProperties } from 'react';
 
-    height: 100%;
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-    font-family: ${cssVar.fontFamilyCode};
-    font-size: 13px;
-    line-height: 1.8;
-  `,
-);
+export const styles = 'lobe-message-input-editor';
+
+export const textAreaStyle: CSSProperties = {
+  fontFamily: cssVar.fontFamilyCode,
+  fontSize: 13,
+  height: '100%',
+  lineHeight: 1.8,
+  position: 'relative',
+};

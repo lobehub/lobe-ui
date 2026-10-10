@@ -1,29 +1,22 @@
-import { Checkbox, type CheckboxProps } from '@lobehub/ui';
-import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
+import { Checkbox, CheckboxGroup,Flexbox  } from '@lobehub/ui';
+import { useState } from 'react';
 
 export default () => {
-  const store = useCreateStore();
-  const control = useControls(
-    {
-      children: 'Checkbox',
-      disabled: false,
-      shape: {
-        options: ['square', 'circle'],
-        value: 'square',
-      },
-      size: {
-        max: 32,
-        min: 8,
-        step: 2,
-        value: 16,
-      },
-    },
-    { store },
-  ) as CheckboxProps;
+  const [fruits, setFruits] = useState<string[]>(['apple']);
 
   return (
-    <StoryBook levaStore={store}>
-      <Checkbox {...control} />
-    </StoryBook>
+    <Flexbox gap={16} padding={16}>
+      <Checkbox defaultChecked>Default checked</Checkbox>
+      <Checkbox indeterminate>Indeterminate</Checkbox>
+      <Checkbox shape={'circle'}>Circle shape</Checkbox>
+      <Checkbox defaultChecked backgroundColor={'#f59e0b'}>
+        Custom color
+      </Checkbox>
+      <Checkbox defaultChecked disabled>
+        Disabled
+      </Checkbox>
+      <Checkbox size={20}>Bigger box</Checkbox>
+      <CheckboxGroup options={['apple', 'banana', 'cherry']} value={fruits} onChange={setFruits} />
+    </Flexbox>
   );
 };
