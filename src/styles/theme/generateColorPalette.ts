@@ -1,17 +1,32 @@
-import type { AliasToken } from 'antd/es/theme/interface';
 import { capitalize } from 'es-toolkit/compat';
 
 import type { ColorScaleItem } from '@/color/types';
 
-export const generateColorPalette = ({
+type PaletteSuffix =
+  | 'Fill'
+  | 'FillSecondary'
+  | 'FillTertiary'
+  | 'FillQuaternary'
+  | 'Bg'
+  | 'BgHover'
+  | 'Border'
+  | 'BorderHover'
+  | 'Hover'
+  | ''
+  | 'Active'
+  | 'TextHover'
+  | 'Text'
+  | 'TextActive';
+
+export const generateColorPalette = <T extends string>({
   type,
   scale,
   appearance,
 }: {
   appearance: 'light' | 'dark';
   scale: ColorScaleItem;
-  type: 'Primary' | 'Success' | 'Warning' | 'Error' | 'Info' | string;
-}): Partial<AliasToken> => {
+  type: T;
+}): Record<`color${Capitalize<T>}${PaletteSuffix}`, string> => {
   const name = capitalize(type);
   const isDarkMode = appearance === 'dark';
   return {
@@ -29,7 +44,7 @@ export const generateColorPalette = ({
     [`color${name}TextHover`]: scale[appearance][isDarkMode ? 10 : 8],
     [`color${name}Text`]: scale[appearance][9],
     [`color${name}TextActive`]: scale[appearance][isDarkMode ? 7 : 10],
-  };
+  } as Record<`color${Capitalize<T>}${PaletteSuffix}`, string>;
 };
 
 export const generateColorNeutralPalette = ({
@@ -38,7 +53,7 @@ export const generateColorNeutralPalette = ({
 }: {
   appearance: 'light' | 'dark';
   scale: ColorScaleItem;
-}): Partial<AliasToken> => {
+}) => {
   return {
     colorBgContainer: appearance === 'dark' ? scale[appearance][1] : scale[appearance][0],
     colorBgElevated: appearance === 'dark' ? scale[appearance][2] : scale[appearance][0],

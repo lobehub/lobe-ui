@@ -1,5 +1,3 @@
-import type { AliasToken } from 'antd/es/theme/interface';
-
 const joinFontFamily = (fonts: string[]) =>
   fonts.map((font) => (font.includes(' ') ? `"${font}"` : font)).join(',');
 
@@ -48,7 +46,7 @@ const FALLBACK = ['/* FALLBACK */', 'ui-sans-serif', 'system-ui', 'sans-serif'];
 
 const FALLBACK_CODE = ['/* FALLBACK */', 'monospace'];
 
-export const baseToken: Partial<AliasToken> = {
+export const baseToken = {
   borderRadius: 8,
   borderRadiusLG: 12,
   borderRadiusSM: 6,
