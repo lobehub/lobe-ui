@@ -24,8 +24,8 @@ injectGlobal`
     --docs-border-subtle: #e9e9eb;
     --docs-border-default: #dedee1;
     --docs-border-strong: #c9c9ce;
-    --docs-accent: var(--ant-color-primary);
-    --docs-accent-contrast: var(--ant-color-bg-layout);
+    --docs-accent: var(--lobe-color-primary);
+    --docs-accent-contrast: var(--lobe-color-bg-layout);
     --docs-overlay: rgb(8 8 12 / 38%);
     --docs-aurora-violet: rgb(140 100 255 / 16%);
     --docs-aurora-blue: rgb(70 180 240 / 14%);
@@ -57,8 +57,8 @@ injectGlobal`
     --docs-border-subtle: #26262b;
     --docs-border-default: #333338;
     --docs-border-strong: #45454b;
-    --docs-accent: var(--ant-color-primary);
-    --docs-accent-contrast: var(--ant-color-bg-layout);
+    --docs-accent: var(--lobe-color-primary);
+    --docs-accent-contrast: var(--lobe-color-bg-layout);
     --docs-overlay: rgb(0 0 0 / 62%);
     --docs-aurora-violet: rgb(120 84 255 / 26%);
     --docs-aurora-blue: rgb(56 168 235 / 20%);

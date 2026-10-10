@@ -2,8 +2,9 @@ import type { Checkbox as BaseCheckbox } from '@base-ui/react/checkbox';
 import type { CheckboxGroup as BaseCheckboxGroup } from '@base-ui/react/checkbox-group';
 import type { ComponentProps, CSSProperties, ReactNode } from 'react';
 
+import type { TextProps } from '@/base-ui/Text';
 import type { FlexboxProps } from '@/Flex';
-import type { TextProps } from '@/Text';
+import type { DistributiveOmit } from '@/types';
 
 export type CheckboxShape = 'square' | 'circle';
 
@@ -34,7 +35,7 @@ export interface CheckboxProps extends BaseCheckboxProps {
     text?: CSSProperties;
     wrapper?: CSSProperties;
   };
-  textProps?: Omit<TextProps, 'children' | 'className' | 'style'>;
+  textProps?: DistributiveOmit<TextProps, 'children' | 'className' | 'style'>;
 }
 
 export interface CheckboxGroupOption {

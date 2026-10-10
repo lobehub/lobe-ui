@@ -1,6 +1,6 @@
 import { act, render, screen, waitFor } from '@testing-library/react';
 
-import AppElementContext from '@/ThemeProvider/AppElementContext';
+import AppElementContext from '@/ConfigProvider/AppElementContext';
 
 import { Z_INDEX_LAYER } from '../../zIndex/constants';
 import { __resetLayerZIndexForTests, __seedMainTopForTests } from '../../zIndex/manager';

@@ -1,11 +1,20 @@
+import { ConfigProvider } from '@lobehub/ui';
 import { cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
-import type { ComponentType } from 'react';
+import { motion } from 'motion/react';
+import type { ComponentType, ReactElement, ReactNode } from 'react';
 import { renderToString } from 'react-dom/server';
 
 import { SiteProviders, useSiteTheme } from '../../app/providers/SiteProviders';
 import type { DemoModule } from '../../types/demo';
 import { Demo } from './Demo';
 import { styles } from './style';
+
+const ConfigWrapper = ({ children }: { children: ReactNode }) => (
+  <ConfigProvider enableCustomFonts={false} motion={motion}>
+    {children}
+  </ConfigProvider>
+);
+const renderWithConfig = (ui: ReactElement) => render(ui, { wrapper: ConfigWrapper });
 
 const openMenu = (trigger: HTMLElement) => {
   fireEvent.pointerDown(trigger);
@@ -101,7 +110,11 @@ afterAll(() => {
 });
 
 it('preserves an explicit zero preview height', () => {
-  const html = renderToString(<Demo height={0} of={descriptor} />);
+  const html = renderToString(
+    <ConfigWrapper>
+      <Demo height={0} of={descriptor} />
+    </ConfigWrapper>,
+  );
 
   expect(html).toContain('--demo-frame-height:0px');
 });
@@ -116,7 +129,7 @@ it('does not load editable scope until source editing is explicitly expanded', a
   const loadScope = vi.fn(async () => ({}));
   const editableDescriptor = { ...descriptor, id: 'explicit-expand', loadScope };
 
-  render(<Demo of={editableDescriptor} />);
+  renderWithConfig(<Demo of={editableDescriptor} />);
 
   expect(loadScope).not.toHaveBeenCalled();
   fireEvent.click(screen.getByRole('button', { name: 'Show source editor' }));
@@ -130,7 +143,7 @@ it('replaces the canonical preview in place once the live preview is ready', asy
     load: async () => () => <div>Canonical result</div>,
     source: 'export default () => <div>Edited result</div>;',
   };
-  const { container } = render(<Demo of={canonicalDescriptor} />);
+  const { container } = renderWithConfig(<Demo of={canonicalDescriptor} />);
 
   expect(await screen.findByText('Canonical result')).toBeTruthy();
   fireEvent.click(screen.getByRole('button', { name: 'Show source editor' }));
@@ -148,12 +161,12 @@ it('replaces the canonical preview in place once the live preview is ready', asy
 
 it('persists source expansion as a per-demo local preference', async () => {
   const persistedDescriptor = { ...descriptor, id: 'persisted-editor' };
-  const first = render(<Demo of={persistedDescriptor} />);
+  const first = renderWithConfig(<Demo of={persistedDescriptor} />);
   fireEvent.click(screen.getByRole('button', { name: 'Show source editor' }));
   await screen.findByRole('button', { name: 'Hide source editor' });
   first.unmount();
 
-  render(<Demo of={persistedDescriptor} />);
+  renderWithConfig(<Demo of={persistedDescriptor} />);
 
   expect(await screen.findByRole('button', { name: 'Hide source editor' })).toBeTruthy();
 });
@@ -161,7 +174,7 @@ it('persists source expansion as a per-demo local preference', async () => {
 it('keeps the edited session mounted and inaccessible while the editor is collapsed', async () => {
   const loadScope = vi.fn(async () => ({}));
   const editableDescriptor = { ...descriptor, id: 'persistent-session', loadScope };
-  render(<Demo of={editableDescriptor} />);
+  renderWithConfig(<Demo of={editableDescriptor} />);
 
   fireEvent.click(screen.getByRole('button', { name: 'Show source editor' }));
   const textarea = await screen.findByRole('textbox', { name: 'Demo source editor' });
@@ -201,7 +214,7 @@ it('disconnects editor effects while collapsed and reconnects them without losin
     loadScope,
     source: 'export default () => <div>Effect lifecycle</div>;',
   };
-  render(<Demo of={editableDescriptor} />);
+  renderWithConfig(<Demo of={editableDescriptor} />);
 
   fireEvent.click(screen.getByRole('button', { name: 'Show source editor' }));
   const textarea = await screen.findByRole('textbox', { name: 'Demo source editor' });
@@ -237,7 +250,7 @@ it('preserves edited preview state when Activity reconnects after collapse', asy
     id: 'stateful-activity-session',
     source: 'export default () => <button>Stateful preview</button>;',
   };
-  render(<Demo of={editableDescriptor} />);
+  renderWithConfig(<Demo of={editableDescriptor} />);
 
   fireEvent.click(screen.getByRole('button', { name: 'Show source editor' }));
   const preview = await screen.findByLabelText('Edited demo preview');
@@ -269,7 +282,7 @@ it('keeps source and every non-edit action available for read-only demos', async
     loadScope: vi.fn(async () => ({})),
     source: 'export default () => <div>Read-only source</div>;',
   };
-  render(<Demo of={readOnlyDescriptor} />);
+  renderWithConfig(<Demo of={readOnlyDescriptor} />);
 
   expect(screen.getByRole('button', { name: 'Show source' })).toBeTruthy();
   expect(screen.getByRole('button', { name: 'Copy source' })).toBeTruthy();
@@ -287,7 +300,7 @@ it('keeps source and every non-edit action available for read-only demos', async
 });
 
 it('applies an independent dark canvas and keeps it in standalone URLs', async () => {
-  const { container } = render(<Demo of={{ ...descriptor, id: 'dark-canvas' }} />);
+  const { container } = renderWithConfig(<Demo of={{ ...descriptor, id: 'dark-canvas' }} />);
 
   await waitFor(() => expect(document.getElementById('lobe-demo-dark-canvas')).toBeTruthy());
 
@@ -304,7 +317,7 @@ it('applies an independent dark canvas and keeps it in standalone URLs', async (
 });
 
 it('defaults the demo theme control to auto', async () => {
-  render(<Demo of={{ ...descriptor, id: 'auto-default' }} />);
+  renderWithConfig(<Demo of={{ ...descriptor, id: 'auto-default' }} />);
 
   await waitFor(() => expect(document.getElementById('lobe-demo-auto-default')).toBeTruthy());
 
@@ -321,7 +334,7 @@ it('follows the site theme while the demo theme is auto, and stops once pinned',
     return <button onClick={() => setPreference('dark')}>force site dark</button>;
   }
 
-  render(
+  renderWithConfig(
     <SiteProviders>
       <ThemeToggle />
       <Demo of={{ ...descriptor, id: 'auto-follow' }} />
@@ -344,7 +357,7 @@ it('follows the site theme while the demo theme is auto, and stops once pinned',
 });
 
 it('scopes an explicit demo theme choice to its own theme provider instead of only recoloring the canvas', async () => {
-  render(
+  renderWithConfig(
     <SiteProviders>
       <Demo of={{ ...descriptor, id: 'scoped-theme' }} />
     </SiteProviders>,
@@ -370,7 +383,11 @@ it('scopes an explicit demo theme choice to its own theme provider instead of on
 });
 
 it('renders an embedded isolated demo through the standalone route', () => {
-  const html = renderToString(<Demo isolated of={{ ...descriptor, id: 'isolated-demo' }} />);
+  const html = renderToString(
+    <ConfigWrapper>
+      <Demo isolated of={{ ...descriptor, id: 'isolated-demo' }} />
+    </ConfigWrapper>,
+  );
 
   expect(html).toContain('<iframe');
   expect(html).toContain('/~demos/isolated-demo');
@@ -378,7 +395,7 @@ it('renders an embedded isolated demo through the standalone route', () => {
 });
 
 it('excludes controls, rendered previews, and source while retaining the demo title for search', async () => {
-  const { container } = render(
+  const { container } = renderWithConfig(
     <Demo of={{ ...descriptor, editable: false }} title="Searchable demo title" />,
   );
 

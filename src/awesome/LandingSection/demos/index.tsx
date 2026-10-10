@@ -3,7 +3,7 @@ import { Palette, SunMoon, Zap } from 'lucide-react';
 
 export default () => (
   <LandingSection
-    actions={[{ href: '/components/theme-provider', label: 'Theming guide' }]}
+    actions={[{ href: '/components/config-provider', label: 'Theming guide' }]}
     description="Design foundations that hold up beyond the demo."
     divider={false}
     eyebrow="Why Lobe UI"

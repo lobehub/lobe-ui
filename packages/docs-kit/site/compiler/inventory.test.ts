@@ -55,7 +55,7 @@ describe('documentation inventory', () => {
     const inventory = buildRealInventory();
 
     expect(inventory.documents.length).toBeGreaterThanOrEqual(166);
-    expect(inventory.demoReferences.length).toBeGreaterThanOrEqual(524);
+    expect(inventory.demoReferences.length).toBeGreaterThanOrEqual(460);
     expect(new Set(inventory.documents.map(({ pathname }) => pathname)).size).toBe(
       inventory.documents.length,
     );

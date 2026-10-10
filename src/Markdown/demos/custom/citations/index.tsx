@@ -15,8 +15,8 @@ export default () => {
   return (
     <Flexbox gap={16} padding={16}>
       <Tabs
-        compact
         activeKey={current}
+        size={'small'}
         items={[
           { key: 'general', label: '普通case' },
           { key: 'withThinking', label: '带 thinking' },

@@ -5,9 +5,9 @@ import { memo, useEffect, useMemo, useSyncExternalStore } from 'react';
 
 import { getFloatingCollisionPadding } from '@/base-ui/floating';
 import { MenuVirtualList } from '@/base-ui/virtual';
+import { useAppElement } from '@/ConfigProvider/AppElementContext';
 import { useIsClient } from '@/hooks/useIsClient';
 import { cx } from '@/styles';
-import { useAppElement } from '@/ThemeProvider/AppElementContext';
 import { registerDevSingleton } from '@/utils/devSingleton';
 import { preventDefaultAndStopPropagation } from '@/utils/dom';
 

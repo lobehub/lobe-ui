@@ -187,7 +187,7 @@ export default () => <Default value={renamed} namespace={Namespace} />;`;
     const repositoryRoot = resolve(import.meta.dirname, '../../../../..');
     const sources = [
       'src/Flex/demos/basic.tsx',
-      'src/Button/demos/index.tsx',
+      'src/base-ui/Button/demos/index.tsx',
       'tests/fixtures/site/demos/local-import.tsx',
     ].map((path) => readFileSync(resolve(repositoryRoot, path), 'utf8'));
 

@@ -25,10 +25,6 @@ const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
   header: css`
     padding-block: 4px;
-
-    .ant-input-affix-wrapper {
-      padding-inline: 0;
-    }
   `,
   popup: css`
     width: 300px;

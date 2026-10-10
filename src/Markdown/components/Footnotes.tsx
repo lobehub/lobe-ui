@@ -3,9 +3,9 @@
 import { memo, type ReactNode, useMemo } from 'react';
 
 import A from '@/A';
+import Text from '@/base-ui/Text';
 import Block from '@/Block';
 import { Flexbox } from '@/Flex';
-import Text from '@/Text';
 
 import SearchResultCards from './SearchResultCards';
 

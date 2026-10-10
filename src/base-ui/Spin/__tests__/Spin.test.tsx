@@ -78,6 +78,6 @@ describe('Spin', () => {
   test('returns null when spinning is false and there are no children', () => {
     const { container } = renderSpin({ spinning: false });
 
-    expect(container.firstChild).toBeNull();
+    expect(container.querySelector(':scope > :not([data-lobe-portal-host])')).toBeNull();
   });
 });

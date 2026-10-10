@@ -10,7 +10,7 @@ import {
   useState,
 } from 'react';
 
-import { useAppElement } from '@/ThemeProvider/AppElementContext';
+import { useAppElement } from '@/ConfigProvider/AppElementContext';
 
 import {
   countVirtualItems,
@@ -395,12 +395,9 @@ export function useSelectVirtual({
 
 export function usePortalContainer() {
   const appElement = useAppElement();
-  // `appElement` is the ThemeProvider wrapper div, which uses `display: contents`
-  // so it has no layout box. `@base-ui/react/select` fails to mount its Popup
-  // into a `display: contents` container in certain hosts (editor/chat inputs
-  // with focus traps). Fall back to `document.body` in that case; keep the
-  // original behavior when the wrapper has a real layout (older themes, SSR
-  // snapshot, etc.).
+  // `@base-ui/react/select` fails to mount its Popup into a `display: contents`
+  // container in certain hosts (editor/chat inputs with focus traps), so a
+  // portal host without a layout box falls back to `document.body`.
   return useMemo(() => {
     if (typeof window === 'undefined') return appElement;
     if (!(appElement instanceof HTMLElement)) return undefined;

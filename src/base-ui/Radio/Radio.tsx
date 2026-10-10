@@ -3,8 +3,8 @@
 import { Radio as BaseRadio } from '@base-ui/react/radio';
 import { type CSSProperties, memo } from 'react';
 
+import Text from '@/base-ui/Text';
 import { cx } from '@/styles';
-import Text from '@/Text';
 
 import { styles } from './style';
 import type { RadioProps } from './type';

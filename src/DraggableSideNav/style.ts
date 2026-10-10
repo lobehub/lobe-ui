@@ -7,8 +7,6 @@ const LAYOUT = {
   toggleShort: 16,
 };
 
-const prefixCls = 'ant';
-
 export const styles = createStaticStyles(({ css, cssVar }) => ({
   body: css`
     /* Smooth scroll behavior */
@@ -78,68 +76,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
   header: css`
     flex-shrink: 0;
-  `,
-  menuOverride: css`
-    .${prefixCls}-menu {
-      .${prefixCls}-menu-item {
-        display: flex;
-        gap: 8px;
-        align-items: center;
-        justify-content: center;
-
-        height: unset;
-        min-height: 36px;
-        padding-block: 4px;
-        padding-inline: 8px !important;
-      }
-
-      .${prefixCls}-menu-item-group-title {
-        overflow: hidden;
-        padding-inline: 8px;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-
-      .${prefixCls}-menu-item-icon {
-        position: absolute;
-        inset-inline-start: 0;
-
-        display: flex !important;
-        flex: none;
-        align-items: center;
-        justify-content: center;
-
-        width: 36px;
-        height: 36px;
-      }
-
-      .${prefixCls}-menu-title-content {
-        overflow: hidden;
-        flex: 1;
-
-        margin: 0 !important;
-        padding-inline-start: 36px;
-
-        line-height: 1.5;
-      }
-
-      &.${prefixCls}-menu-inline-collapsed {
-        .ant-menu-title-content {
-          display: none;
-          width: 0;
-          opacity: 0;
-        }
-
-        .${prefixCls}-menu-item {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-
-          width: 36px !important;
-          height: 36px !important;
-        }
-      }
-    }
   `,
   resizeHandle: css`
     cursor: col-resize;

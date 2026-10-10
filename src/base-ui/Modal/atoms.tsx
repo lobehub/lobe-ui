@@ -17,10 +17,10 @@ import {
 } from 'react';
 import { mergeRefs, useMergeRefs } from 'react-merge-refs';
 
+import { useAppElement } from '@/ConfigProvider/AppElementContext';
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { useMotionComponent } from '@/MotionProvider';
 import { cx } from '@/styles';
-import { useAppElement } from '@/ThemeProvider/AppElementContext';
 
 import { useLayerZIndex } from '../zIndex';
 import { backdropTransition, modalMotionConfig } from './constants';

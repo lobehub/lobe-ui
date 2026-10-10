@@ -13,114 +13,6 @@
       "source": "docs/index.tsx"
     },
     {
-      "document": "src/Accordion/index.mdx",
-      "legacyId": "src-accordion-demo-action",
-      "legacyRouteId": "components/Accordion/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "default"
-      },
-      "pathname": "/components/accordion",
-      "source": "src/Accordion/demos/Action.tsx"
-    },
-    {
-      "document": "src/Accordion/index.mdx",
-      "legacyId": "src-accordion-demo-standalone",
-      "legacyRouteId": "components/Accordion/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "default"
-      },
-      "pathname": "/components/accordion",
-      "source": "src/Accordion/demos/Standalone.tsx"
-    },
-    {
-      "document": "src/Accordion/index.mdx",
-      "legacyId": "src-accordion-demo-data",
-      "legacyRouteId": "components/Accordion/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "default"
-      },
-      "pathname": "/components/accordion",
-      "source": "src/Accordion/demos/data.tsx"
-    },
-    {
-      "document": "src/Accordion/index.mdx",
-      "legacyId": "src-accordion-demo-demos",
-      "legacyRouteId": "components/Accordion/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/accordion",
-      "source": "src/Accordion/demos/index.tsx"
-    },
-    {
-      "document": "src/ActionIcon/index.mdx",
-      "legacyId": "src-action-icon-demo-customsize",
-      "legacyRouteId": "components/ActionIcon/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/action-icon",
-      "source": "src/ActionIcon/demos/CustomSize.tsx"
-    },
-    {
-      "document": "src/ActionIcon/index.mdx",
-      "legacyId": "src-action-icon-demo-dropdownmenu",
-      "legacyRouteId": "components/ActionIcon/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/action-icon",
-      "source": "src/ActionIcon/demos/DropdownMenu.tsx"
-    },
-    {
-      "document": "src/ActionIcon/index.mdx",
-      "legacyId": "src-action-icon-demo-size",
-      "legacyRouteId": "components/ActionIcon/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/action-icon",
-      "source": "src/ActionIcon/demos/Size.tsx"
-    },
-    {
-      "document": "src/ActionIcon/index.mdx",
-      "legacyId": "src-action-icon-demo-variant",
-      "legacyRouteId": "components/ActionIcon/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/action-icon",
-      "source": "src/ActionIcon/demos/Variant.tsx"
-    },
-    {
-      "document": "src/ActionIcon/index.mdx",
-      "legacyId": "src-action-icon-demo-demos",
-      "legacyRouteId": "components/ActionIcon/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/action-icon",
-      "source": "src/ActionIcon/demos/index.tsx"
-    },
-    {
       "document": "src/ActionIconGroup/index.mdx",
       "legacyId": "src-action-icon-group-demo-demos",
       "legacyRouteId": "components/ActionIconGroup/index",
@@ -133,102 +25,6 @@
       "source": "src/ActionIconGroup/demos/index.tsx"
     },
     {
-      "document": "src/Alert/index.mdx",
-      "legacyId": "src-alert-demo-extra",
-      "legacyRouteId": "components/Alert/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/alert",
-      "source": "src/Alert/demos/Extra.tsx"
-    },
-    {
-      "document": "src/Alert/index.mdx",
-      "legacyId": "src-alert-demo-demos",
-      "legacyRouteId": "components/Alert/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/alert",
-      "source": "src/Alert/demos/index.tsx"
-    },
-    {
-      "document": "src/AutoComplete/index.mdx",
-      "legacyId": "src-auto-complete-demo-demos",
-      "legacyRouteId": "components/AutoComplete/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/auto-complete",
-      "source": "src/AutoComplete/demos/index.tsx"
-    },
-    {
-      "document": "src/Avatar/index.mdx",
-      "legacyId": "src-avatar-demo-bordered",
-      "legacyRouteId": "components/Avatar/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/avatar",
-      "source": "src/Avatar/demos/Bordered.tsx"
-    },
-    {
-      "document": "src/Avatar/index.mdx",
-      "legacyId": "src-avatar-demo-errorfallback",
-      "legacyRouteId": "components/Avatar/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/avatar",
-      "source": "src/Avatar/demos/ErrorFallback.tsx"
-    },
-    {
-      "document": "src/Avatar/index.mdx",
-      "legacyId": "src-avatar-demo-group",
-      "legacyRouteId": "components/Avatar/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/avatar",
-      "source": "src/Avatar/demos/Group.tsx"
-    },
-    {
-      "document": "src/Avatar/index.mdx",
-      "legacyId": "src-avatar-demo-text",
-      "legacyRouteId": "components/Avatar/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/avatar",
-      "source": "src/Avatar/demos/Text.tsx"
-    },
-    {
-      "document": "src/Avatar/index.mdx",
-      "legacyId": "src-avatar-demo-demos",
-      "legacyRouteId": "components/Avatar/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/avatar",
-      "source": "src/Avatar/demos/index.tsx"
-    },
-    {
       "document": "src/Block/index.mdx",
       "legacyId": "src-block-demo-demos",
       "legacyRouteId": "components/Block/index",
@@ -239,138 +35,6 @@
       },
       "pathname": "/components/block",
       "source": "src/Block/demos/index.tsx"
-    },
-    {
-      "document": "src/Burger/index.mdx",
-      "legacyId": "src-burger-demo-demos",
-      "legacyRouteId": "components/Burger/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/burger",
-      "source": "src/Burger/demos/index.tsx"
-    },
-    {
-      "document": "src/Button/index.mdx",
-      "legacyId": "src-button-demo-variant",
-      "legacyRouteId": "components/Button/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "default"
-      },
-      "pathname": "/components/button",
-      "source": "src/Button/demos/Variant.tsx"
-    },
-    {
-      "document": "src/Button/index.mdx",
-      "legacyId": "src-button-demo-demos",
-      "legacyRouteId": "components/Button/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/button",
-      "source": "src/Button/demos/index.tsx"
-    },
-    {
-      "document": "src/Checkbox/index.mdx",
-      "legacyId": "src-checkbox-demo-checkboxgroup",
-      "legacyRouteId": "components/Checkbox/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/checkbox",
-      "source": "src/Checkbox/demos/CheckboxGroup.tsx"
-    },
-    {
-      "document": "src/Checkbox/index.mdx",
-      "legacyId": "src-checkbox-demo-checkboxgroupdisabled",
-      "legacyRouteId": "components/Checkbox/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/checkbox",
-      "source": "src/Checkbox/demos/CheckboxGroupDisabled.tsx"
-    },
-    {
-      "document": "src/Checkbox/index.mdx",
-      "legacyId": "src-checkbox-demo-checkboxgroupoptions",
-      "legacyRouteId": "components/Checkbox/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/checkbox",
-      "source": "src/Checkbox/demos/CheckboxGroupOptions.tsx"
-    },
-    {
-      "document": "src/Checkbox/index.mdx",
-      "legacyId": "src-checkbox-demo-checkboxgroupusage",
-      "legacyRouteId": "components/Checkbox/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/checkbox",
-      "source": "src/Checkbox/demos/CheckboxGroupUsage.tsx"
-    },
-    {
-      "document": "src/Checkbox/index.mdx",
-      "legacyId": "src-checkbox-demo-indeterminate",
-      "legacyRouteId": "components/Checkbox/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/checkbox",
-      "source": "src/Checkbox/demos/Indeterminate.tsx"
-    },
-    {
-      "document": "src/Checkbox/index.mdx",
-      "legacyId": "src-checkbox-demo-size",
-      "legacyRouteId": "components/Checkbox/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/checkbox",
-      "source": "src/Checkbox/demos/Size.tsx"
-    },
-    {
-      "document": "src/Checkbox/index.mdx",
-      "legacyId": "src-checkbox-demo-withtext",
-      "legacyRouteId": "components/Checkbox/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/checkbox",
-      "source": "src/Checkbox/demos/WithText.tsx"
-    },
-    {
-      "document": "src/Checkbox/index.mdx",
-      "legacyId": "src-checkbox-demo-demos",
-      "legacyRouteId": "components/Checkbox/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/checkbox",
-      "source": "src/Checkbox/demos/index.tsx"
     },
     {
       "document": "src/CodeDiff/index.mdx",
@@ -455,30 +119,6 @@
       },
       "pathname": "/components/code-editor",
       "source": "src/CodeEditor/demos/index.tsx"
-    },
-    {
-      "document": "src/Collapse/index.mdx",
-      "legacyId": "src-collapse-demo-padding",
-      "legacyRouteId": "components/Collapse/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/collapse",
-      "source": "src/Collapse/demos/Padding.tsx"
-    },
-    {
-      "document": "src/Collapse/index.mdx",
-      "legacyId": "src-collapse-demo-demos",
-      "legacyRouteId": "components/Collapse/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/collapse",
-      "source": "src/Collapse/demos/index.tsx"
     },
     {
       "document": "src/ColorSwatches/index.mdx",
@@ -697,18 +337,6 @@
       "source": "src/CopyButton/demos/index.tsx"
     },
     {
-      "document": "src/DatePicker/index.mdx",
-      "legacyId": "src-date-picker-demo-demos",
-      "legacyRouteId": "components/DatePicker/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/date-picker",
-      "source": "src/DatePicker/demos/index.tsx"
-    },
-    {
       "document": "src/DownloadButton/index.mdx",
       "legacyId": "src-download-button-demo-customfile",
       "legacyRouteId": "components/DownloadButton/index",
@@ -733,54 +361,6 @@
       "source": "src/DownloadButton/demos/index.tsx"
     },
     {
-      "document": "src/DraggablePanel/index.mdx",
-      "legacyId": "src-draggable-panel-demo-dragtocollapse",
-      "legacyRouteId": "components/DraggablePanel/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/draggable-panel",
-      "source": "src/DraggablePanel/demos/DragToCollapse.tsx"
-    },
-    {
-      "document": "src/DraggablePanel/index.mdx",
-      "legacyId": "src-draggable-panel-demo-layout",
-      "legacyRouteId": "components/DraggablePanel/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/draggable-panel",
-      "source": "src/DraggablePanel/demos/Layout.tsx"
-    },
-    {
-      "document": "src/DraggablePanel/index.mdx",
-      "legacyId": "src-draggable-panel-demo-stablelayout",
-      "legacyRouteId": "components/DraggablePanel/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/draggable-panel",
-      "source": "src/DraggablePanel/demos/StableLayout.tsx"
-    },
-    {
-      "document": "src/DraggablePanel/index.mdx",
-      "legacyId": "src-draggable-panel-demo-demos",
-      "legacyRouteId": "components/DraggablePanel/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/draggable-panel",
-      "source": "src/DraggablePanel/demos/index.tsx"
-    },
-    {
       "document": "src/DraggableSideNav/index.mdx",
       "legacyId": "src-draggable-side-nav-demo-demos",
       "legacyRouteId": "components/DraggableSideNav/index",
@@ -791,54 +371,6 @@
       },
       "pathname": "/components/draggable-side-nav",
       "source": "src/DraggableSideNav/demos/index.tsx"
-    },
-    {
-      "document": "src/Drawer/index.mdx",
-      "legacyId": "src-drawer-demo-sidebar",
-      "legacyRouteId": "components/Drawer/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/drawer",
-      "source": "src/Drawer/demos/Sidebar.tsx"
-    },
-    {
-      "document": "src/Drawer/index.mdx",
-      "legacyId": "src-drawer-demo-demos",
-      "legacyRouteId": "components/Drawer/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/drawer",
-      "source": "src/Drawer/demos/index.tsx"
-    },
-    {
-      "document": "src/Dropdown/index.mdx",
-      "legacyId": "src-dropdown-demo-contextmenu",
-      "legacyRouteId": "components/Dropdown/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/dropdown",
-      "source": "src/Dropdown/demos/ContextMenu.tsx"
-    },
-    {
-      "document": "src/Dropdown/index.mdx",
-      "legacyId": "src-dropdown-demo-demos",
-      "legacyRouteId": "components/Dropdown/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/dropdown",
-      "source": "src/Dropdown/demos/index.tsx"
     },
     {
       "document": "src/DropdownMenu/index.mdx",
@@ -1333,102 +865,6 @@
       "source": "src/FluentEmoji/demos/index.tsx"
     },
     {
-      "document": "src/Footer/index.mdx",
-      "legacyId": "src-footer-demo-demos",
-      "legacyRouteId": "components/Footer/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/footer",
-      "source": "src/Footer/demos/index.tsx"
-    },
-    {
-      "document": "src/Form/index.mdx",
-      "legacyId": "src-form-demo-flat",
-      "legacyRouteId": "components/Form/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/form",
-      "source": "src/Form/demos/Flat.tsx"
-    },
-    {
-      "document": "src/Form/index.mdx",
-      "legacyId": "src-form-demo-statecontrol",
-      "legacyRouteId": "components/Form/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/form",
-      "source": "src/Form/demos/StateControl.tsx"
-    },
-    {
-      "document": "src/Form/index.mdx",
-      "legacyId": "src-form-demo-submitfooter",
-      "legacyRouteId": "components/Form/index",
-      "options": {
-        "inline": false,
-        "isolated": true,
-        "layout": "bare"
-      },
-      "pathname": "/components/form",
-      "source": "src/Form/demos/SubmitFooter.tsx"
-    },
-    {
-      "document": "src/Form/index.mdx",
-      "legacyId": "src-form-demo-demos",
-      "legacyRouteId": "components/Form/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/form",
-      "source": "src/Form/demos/index.tsx"
-    },
-    {
-      "document": "src/FormModal/index.mdx",
-      "legacyId": "src-form-modal-demo-error",
-      "legacyRouteId": "components/FormModal/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/form-modal",
-      "source": "src/FormModal/demos/Error.tsx"
-    },
-    {
-      "document": "src/FormModal/index.mdx",
-      "legacyId": "src-form-modal-demo-flat",
-      "legacyRouteId": "components/FormModal/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/form-modal",
-      "source": "src/FormModal/demos/Flat.tsx"
-    },
-    {
-      "document": "src/FormModal/index.mdx",
-      "legacyId": "src-form-modal-demo-demos",
-      "legacyRouteId": "components/FormModal/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/form-modal",
-      "source": "src/FormModal/demos/index.tsx"
-    },
-    {
       "document": "src/Freeze/index.mdx",
       "legacyId": "src-freeze-demo-demos",
       "legacyRouteId": "components/Freeze/index",
@@ -1813,66 +1249,6 @@
       "source": "src/ImageSelect/demos/index.tsx"
     },
     {
-      "document": "src/Input/index.mdx",
-      "legacyId": "input-demo-inputnumber",
-      "legacyRouteId": "components/Input/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/input",
-      "source": "src/Input/demos/InputNumber.tsx"
-    },
-    {
-      "document": "src/Input/index.mdx",
-      "legacyId": "input-demo-inputopt",
-      "legacyRouteId": "components/Input/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/input",
-      "source": "src/Input/demos/InputOPT.tsx"
-    },
-    {
-      "document": "src/Input/index.mdx",
-      "legacyId": "input-demo-inputpassword",
-      "legacyRouteId": "components/Input/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/input",
-      "source": "src/Input/demos/InputPassword.tsx"
-    },
-    {
-      "document": "src/Input/index.mdx",
-      "legacyId": "input-demo-textarea",
-      "legacyRouteId": "components/Input/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/input",
-      "source": "src/Input/demos/TextArea.tsx"
-    },
-    {
-      "document": "src/Input/index.mdx",
-      "legacyId": "input-demo-demos",
-      "legacyRouteId": "components/Input/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/input",
-      "source": "src/Input/demos/index.tsx"
-    },
-    {
       "document": "src/Layout/index.mdx",
       "legacyId": "src-layout-demo-demos",
       "legacyRouteId": "components/Layout/index",
@@ -1883,18 +1259,6 @@
       },
       "pathname": "/components/layout",
       "source": "src/Layout/demos/index.tsx"
-    },
-    {
-      "document": "src/List/index.mdx",
-      "legacyId": "src-list-demo-demos",
-      "legacyRouteId": "components/List/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/list",
-      "source": "src/List/demos/index.tsx"
     },
     {
       "document": "src/Markdown/index.mdx",
@@ -2317,18 +1681,6 @@
       "source": "src/MaterialFileTypeIcon/demos/index.tsx"
     },
     {
-      "document": "src/Menu/index.mdx",
-      "legacyId": "src-menu-demo-demos",
-      "legacyRouteId": "components/Menu/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/menu",
-      "source": "src/Menu/demos/index.tsx"
-    },
-    {
       "document": "src/Mermaid/index.mdx",
       "legacyId": "src-mermaid-demo-actionsrender",
       "legacyRouteId": "components/Mermaid/index",
@@ -2581,42 +1933,6 @@
       "source": "src/Mermaid/demos/mermaid.tsx"
     },
     {
-      "document": "src/Modal/index.mdx",
-      "legacyId": "src-modal-demo-imperative",
-      "legacyRouteId": "components/Modal/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/modal",
-      "source": "src/Modal/demos/imperative.tsx"
-    },
-    {
-      "document": "src/Modal/index.mdx",
-      "legacyId": "src-modal-demo-demos",
-      "legacyRouteId": "components/Modal/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/modal",
-      "source": "src/Modal/demos/index.tsx"
-    },
-    {
-      "document": "src/Modal/index.mdx",
-      "legacyId": "src-modal-demo-raw",
-      "legacyRouteId": "components/Modal/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/modal",
-      "source": "src/Modal/demos/raw.tsx"
-    },
-    {
       "document": "src/MotionProvider/index.mdx",
       "legacyId": "motionprovider-demo-config-provider",
       "legacyRouteId": "components/MotionProvider/index",
@@ -2737,42 +2053,6 @@
       "source": "src/SearchBar/demos/index.tsx"
     },
     {
-      "document": "src/Segmented/index.mdx",
-      "legacyId": "src-segmented-demo-demos",
-      "legacyRouteId": "components/Segmented/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/segmented",
-      "source": "src/Segmented/demos/index.tsx"
-    },
-    {
-      "document": "src/Segmented/index.mdx",
-      "legacyId": "src-segmented-demo-tooltip",
-      "legacyRouteId": "components/Segmented/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/segmented",
-      "source": "src/Segmented/demos/tooltip.tsx"
-    },
-    {
-      "document": "src/Select/index.mdx",
-      "legacyId": "src-select-demo-demos",
-      "legacyRouteId": "components/Select/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/select",
-      "source": "src/Select/demos/index.tsx"
-    },
-    {
       "document": "src/SideNav/index.mdx",
       "legacyId": "src-side-nav-demo-demos",
       "legacyRouteId": "components/SideNav/index",
@@ -2783,126 +2063,6 @@
       },
       "pathname": "/components/side-nav",
       "source": "src/SideNav/demos/index.tsx"
-    },
-    {
-      "document": "src/Skeleton/index.mdx",
-      "legacyId": "src-skeleton-demo-avatar",
-      "legacyRouteId": "components/Skeleton/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "default"
-      },
-      "pathname": "/components/skeleton",
-      "source": "src/Skeleton/demos/Avatar.tsx"
-    },
-    {
-      "document": "src/Skeleton/index.mdx",
-      "legacyId": "src-skeleton-demo-block",
-      "legacyRouteId": "components/Skeleton/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "default"
-      },
-      "pathname": "/components/skeleton",
-      "source": "src/Skeleton/demos/Block.tsx"
-    },
-    {
-      "document": "src/Skeleton/index.mdx",
-      "legacyId": "src-skeleton-demo-button",
-      "legacyRouteId": "components/Skeleton/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "default"
-      },
-      "pathname": "/components/skeleton",
-      "source": "src/Skeleton/demos/Button.tsx"
-    },
-    {
-      "document": "src/Skeleton/index.mdx",
-      "legacyId": "src-skeleton-demo-custom",
-      "legacyRouteId": "components/Skeleton/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "default"
-      },
-      "pathname": "/components/skeleton",
-      "source": "src/Skeleton/demos/Custom.tsx"
-    },
-    {
-      "document": "src/Skeleton/index.mdx",
-      "legacyId": "src-skeleton-demo-paragraph",
-      "legacyRouteId": "components/Skeleton/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "default"
-      },
-      "pathname": "/components/skeleton",
-      "source": "src/Skeleton/demos/Paragraph.tsx"
-    },
-    {
-      "document": "src/Skeleton/index.mdx",
-      "legacyId": "src-skeleton-demo-tags",
-      "legacyRouteId": "components/Skeleton/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "default"
-      },
-      "pathname": "/components/skeleton",
-      "source": "src/Skeleton/demos/Tags.tsx"
-    },
-    {
-      "document": "src/Skeleton/index.mdx",
-      "legacyId": "src-skeleton-demo-title",
-      "legacyRouteId": "components/Skeleton/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "default"
-      },
-      "pathname": "/components/skeleton",
-      "source": "src/Skeleton/demos/Title.tsx"
-    },
-    {
-      "document": "src/Skeleton/index.mdx",
-      "legacyId": "src-skeleton-demo-withavatar",
-      "legacyRouteId": "components/Skeleton/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "default"
-      },
-      "pathname": "/components/skeleton",
-      "source": "src/Skeleton/demos/WithAvatar.tsx"
-    },
-    {
-      "document": "src/Skeleton/index.mdx",
-      "legacyId": "src-skeleton-demo-demos",
-      "legacyRouteId": "components/Skeleton/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/skeleton",
-      "source": "src/Skeleton/demos/index.tsx"
-    },
-    {
-      "document": "src/SliderWithInput/index.mdx",
-      "legacyId": "src-slider-with-input-demo-demos",
-      "legacyRouteId": "components/SliderWithInput/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/slider-with-input",
-      "source": "src/SliderWithInput/demos/index.tsx"
     },
     {
       "document": "src/Snippet/index.mdx",
@@ -2927,150 +2087,6 @@
       },
       "pathname": "/components/sortable-list",
       "source": "src/SortableList/demos/index.tsx"
-    },
-    {
-      "document": "src/Tabs/index.mdx",
-      "legacyId": "src-tabs-demo-demos",
-      "legacyRouteId": "components/Tabs/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/tabs",
-      "source": "src/Tabs/demos/index.tsx"
-    },
-    {
-      "document": "src/Tag/index.mdx",
-      "legacyId": "tag-demo-color",
-      "legacyRouteId": "components/Tag/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/tag",
-      "source": "src/Tag/demos/Color.tsx"
-    },
-    {
-      "document": "src/Tag/index.mdx",
-      "legacyId": "tag-demo-demos",
-      "legacyRouteId": "components/Tag/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/tag",
-      "source": "src/Tag/demos/index.tsx"
-    },
-    {
-      "document": "src/Text/index.mdx",
-      "legacyId": "src-text-demo-tooltipwhenoverflow",
-      "legacyRouteId": "components/Text/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/text",
-      "source": "src/Text/demos/TooltipWhenOverflow.tsx"
-    },
-    {
-      "document": "src/Text/index.mdx",
-      "legacyId": "src-text-demo-demos",
-      "legacyRouteId": "components/Text/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/text",
-      "source": "src/Text/demos/index.tsx"
-    },
-    {
-      "document": "src/Text/index.mdx",
-      "legacyId": "src-text-demo-text-2",
-      "legacyRouteId": "components/Text/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "default"
-      },
-      "pathname": "/components/text",
-      "source": "src/Text/demos/text-2.tsx"
-    },
-    {
-      "document": "src/Text/index.mdx",
-      "legacyId": "src-text-demo-text",
-      "legacyRouteId": "components/Text/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "default"
-      },
-      "pathname": "/components/text",
-      "source": "src/Text/demos/text.tsx"
-    },
-    {
-      "document": "src/ThemeProvider/index.mdx",
-      "legacyId": "src-theme-provider-demo-customfonts",
-      "legacyRouteId": "components/ThemeProvider/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/theme-provider",
-      "source": "src/ThemeProvider/demos/CustomFonts.tsx"
-    },
-    {
-      "document": "src/ThemeProvider/index.mdx",
-      "legacyId": "src-theme-provider-demo-demos",
-      "legacyRouteId": "components/ThemeProvider/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "center"
-      },
-      "pathname": "/components/theme-provider",
-      "source": "src/ThemeProvider/demos/index.tsx"
-    },
-    {
-      "document": "src/ThemeProvider/index.mdx",
-      "legacyId": "src-theme-provider-demo-theme-provider",
-      "legacyRouteId": "components/ThemeProvider/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "default"
-      },
-      "pathname": "/components/theme-provider",
-      "source": "src/ThemeProvider/demos/theme-provider.tsx"
-    },
-    {
-      "document": "src/ThemeSwitch/index.mdx",
-      "legacyId": "src-theme-switch-demo-demos",
-      "legacyRouteId": "components/ThemeSwitch/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/theme-switch",
-      "source": "src/ThemeSwitch/demos/index.tsx"
-    },
-    {
-      "document": "src/Toc/index.mdx",
-      "legacyId": "src-toc-demo-demos",
-      "legacyRouteId": "components/Toc/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/toc",
-      "source": "src/Toc/demos/index.tsx"
     },
     {
       "document": "src/Video/index.mdx",
@@ -6486,23 +5502,6 @@
       "source": "docs/index.mdx"
     },
     {
-      "category": "Data Display",
-      "legacyRouteId": "components/Accordion/index",
-      "pathname": "/components/accordion",
-      "section": "Components",
-      "source": "src/Accordion/index.mdx",
-      "title": "Accordion"
-    },
-    {
-      "category": "General",
-      "description": "ActionIcon is a component for rendering icon buttons with background, supporting multiple style variants, sizes, and interaction states. It integrates with the Lucide icon library and provides tooltip capabilities.",
-      "legacyRouteId": "components/ActionIcon/index",
-      "pathname": "/components/action-icon",
-      "section": "Components",
-      "source": "src/ActionIcon/index.mdx",
-      "title": "ActionIcon"
-    },
-    {
       "category": "General",
       "description": "ActionIconGroup is a component for rendering multiple buttons with unified styling and layout control. It handles groups of ActionIcon components with consistent appearance and behavior.",
       "legacyRouteId": "components/ActionIconGroup/index",
@@ -6512,64 +5511,12 @@
       "title": "ActionIconGroup"
     },
     {
-      "category": "Feedback",
-      "description": "Alert is a component used to display important messages or notifications to the user. It can be customized with different types, icons, and actions.",
-      "legacyRouteId": "components/Alert/index",
-      "pathname": "/components/alert",
-      "section": "Components",
-      "source": "src/Alert/index.mdx",
-      "title": "Alert"
-    },
-    {
-      "category": "Data Entry",
-      "legacyRouteId": "components/AutoComplete/index",
-      "pathname": "/components/auto-complete",
-      "section": "Components",
-      "source": "src/AutoComplete/index.mdx",
-      "title": "AutoComplete"
-    },
-    {
-      "category": "Data Display",
-      "description": "Avatar is a component that displays a user's profile picture or initials. It can be customized with props like size, shape, background color, and image source. If no image source is provided, it will display the user's initials. This component is typically used in user profile pages, comment sections, or messaging applications.",
-      "legacyRouteId": "components/Avatar/index",
-      "pathname": "/components/avatar",
-      "section": "Components",
-      "source": "src/Avatar/index.mdx",
-      "title": "Avatar"
-    },
-    {
       "category": "General",
       "legacyRouteId": "components/Block/index",
       "pathname": "/components/block",
       "section": "Components",
       "source": "src/Block/index.mdx",
       "title": "Block"
-    },
-    {
-      "category": "Navigation",
-      "legacyRouteId": "components/Burger/index",
-      "pathname": "/components/burger",
-      "section": "Components",
-      "source": "src/Burger/index.mdx",
-      "title": "Burger"
-    },
-    {
-      "category": "General",
-      "description": "Button is a powerful component that supports multiple style variants, sizes, and interaction states. It extends Ant Design's Button with enhanced styling and icon support.",
-      "legacyRouteId": "components/Button/index",
-      "pathname": "/components/button",
-      "section": "Components",
-      "source": "src/Button/index.mdx",
-      "title": "Button"
-    },
-    {
-      "category": "General",
-      "description": "Checkbox is a component for rendering checkbox inputs with customizable size, styling, and optional text labels. It supports controlled and uncontrolled modes. CheckboxGroup allows you to manage multiple checkboxes together.",
-      "legacyRouteId": "components/Checkbox/index",
-      "pathname": "/components/checkbox",
-      "section": "Components",
-      "source": "src/Checkbox/index.mdx",
-      "title": "Checkbox"
     },
     {
       "category": "Data Display",
@@ -6587,14 +5534,6 @@
       "section": "Components",
       "source": "src/CodeEditor/index.mdx",
       "title": "CodeEditor"
-    },
-    {
-      "category": "Data Display",
-      "legacyRouteId": "components/Collapse/index",
-      "pathname": "/components/collapse",
-      "section": "Components",
-      "source": "src/Collapse/index.mdx",
-      "title": "Collapse"
     },
     {
       "category": "Data Entry",
@@ -6632,30 +5571,12 @@
     },
     {
       "category": "Data Entry",
-      "description": "A DatePicker component that extends Ant Design's DatePicker with additional styling options. It provides different visual variants and an optional shadow effect.",
-      "legacyRouteId": "components/DatePicker/index",
-      "pathname": "/components/date-picker",
-      "section": "Components",
-      "source": "src/DatePicker/index.mdx",
-      "title": "DatePicker"
-    },
-    {
-      "category": "Data Entry",
       "description": "DownloadButton is a React component used to download content from a Blob URL. It provides a button with a download icon that, when clicked, triggers a download of the specified content. It also displays a tooltip indicating the file type being downloaded.",
       "legacyRouteId": "components/DownloadButton/index",
       "pathname": "/components/download-button",
       "section": "Components",
       "source": "src/DownloadButton/index.mdx",
       "title": "DownloadButton"
-    },
-    {
-      "category": "Layout",
-      "description": "DraggablePanel is a panel that can be dragged and resized. It supports pinning, fixed or floating mode, placement in four directions, minimum width and height, expandable or not, default and customizable size, and destroy on close. It also provides a handler for expanding and collapsing the panel.",
-      "legacyRouteId": "components/DraggablePanel/index",
-      "pathname": "/components/draggable-panel",
-      "section": "Components",
-      "source": "src/DraggablePanel/index.mdx",
-      "title": "DraggablePanel"
     },
     {
       "category": "Navigation",
@@ -6665,24 +5586,6 @@
       "section": "Components",
       "source": "src/DraggableSideNav/index.mdx",
       "title": "DraggableSideNav"
-    },
-    {
-      "category": "Feedback",
-      "description": "Drawer is a panel that slides in from the edge of the screen. It can be used to display additional content or provide user interaction options without navigating away from the current view.",
-      "legacyRouteId": "components/Drawer/index",
-      "pathname": "/components/drawer",
-      "section": "Components",
-      "source": "src/Drawer/index.mdx",
-      "title": "Drawer"
-    },
-    {
-      "category": "Navigation",
-      "description": "Dropdown displays a list of options that appear when users click or hover over a trigger element. It's commonly used for showing context menus, additional actions, or navigation options.",
-      "legacyRouteId": "components/Dropdown/index",
-      "pathname": "/components/dropdown",
-      "section": "Components",
-      "source": "src/Dropdown/index.mdx",
-      "title": "Dropdown"
     },
     {
       "category": "Navigation",
@@ -6764,33 +5667,6 @@
       "section": "Components",
       "source": "src/FontLoader/index.mdx",
       "title": "FontLoader"
-    },
-    {
-      "category": "Layout",
-      "description": "The Footer component is used to display a website footer. It supports various customization options like column layout, bottom content, and theme selection.",
-      "legacyRouteId": "components/Footer/index",
-      "pathname": "/components/footer",
-      "section": "Components",
-      "source": "src/Footer/index.mdx",
-      "title": "Footer"
-    },
-    {
-      "category": "Data Entry",
-      "description": "High performance Form component with data scope management. Including data collection, verification, and styles.",
-      "legacyRouteId": "components/Form/index",
-      "pathname": "/components/form",
-      "section": "Components",
-      "source": "src/Form/index.mdx",
-      "title": "Form"
-    },
-    {
-      "category": "Data Entry",
-      "description": "FormModal combines Form and Modal components to create a modal dialog with an integrated form. It provides a convenient way to collect user input in a popup interface.",
-      "legacyRouteId": "components/FormModal/index",
-      "pathname": "/components/form-modal",
-      "section": "Components",
-      "source": "src/FormModal/index.mdx",
-      "title": "FormModal"
     },
     {
       "category": "General",
@@ -6900,15 +5776,6 @@
       "title": "ImageSelect"
     },
     {
-      "category": "Data Entry",
-      "description": "A basic widget for getting the user input is a text field. Keyboard and mouse can be used for providing or changing data.",
-      "legacyRouteId": "components/Input/index",
-      "pathname": "/components/input",
-      "section": "Components",
-      "source": "src/Input/index.mdx",
-      "title": "Input"
-    },
-    {
       "category": "Layout",
       "description": "The Layout component is used to create a basic layout structure with header, footer, sidebar and content areas. It provides customizable props such as headerHeight, asideWidth and tocWidth to adjust the size of each area. It also includes sub-components such as LayoutHeader, LayoutMain, LayoutSidebar, LayoutToc and LayoutFooter, which can be used independently for more flexibility. The component is responsive to different screen sizes with the help of useResponsive hook.",
       "legacyRouteId": "components/Layout/index",
@@ -6916,14 +5783,6 @@
       "section": "Components",
       "source": "src/Layout/index.mdx",
       "title": "Layout"
-    },
-    {
-      "category": "Data Display",
-      "legacyRouteId": "components/List/index",
-      "pathname": "/components/list",
-      "section": "Components",
-      "source": "src/List/index.mdx",
-      "title": "List"
     },
     {
       "category": "Data Display",
@@ -6953,15 +5812,6 @@
       "title": "MaterialFileTypeIcon"
     },
     {
-      "category": "Navigation",
-      "description": "Menu is a navigation component that provides a list of options for user selection. It supports various item types including normal items, sub-menus, dividers, and item groups with customizable icons and styles.",
-      "legacyRouteId": "components/Menu/index",
-      "pathname": "/components/menu",
-      "section": "Components",
-      "source": "src/Menu/index.mdx",
-      "title": "Menu"
-    },
-    {
       "category": "Data Display",
       "description": "Mermaid is a component for rendering Mermaid diagrams in React. It supports various diagram types like flowcharts, sequence diagrams, class diagrams, and more with customizable styling and interactive features.",
       "legacyRouteId": "components/Mermaid/index",
@@ -6969,15 +5819,6 @@
       "section": "Components",
       "source": "src/Mermaid/index.mdx",
       "title": "Mermaid"
-    },
-    {
-      "category": "Feedback",
-      "description": "Modal component displays content in a layer that appears above the page, requiring user interaction before continuing. It provides a focused and contextual way to present information or gather input.",
-      "legacyRouteId": "components/Modal/index",
-      "pathname": "/components/modal",
-      "section": "Components",
-      "source": "src/Modal/index.mdx",
-      "title": "Modal"
     },
     {
       "category": "Theme",
@@ -7016,23 +5857,6 @@
       "title": "SearchBar"
     },
     {
-      "category": "Data Display",
-      "legacyRouteId": "components/Segmented/index",
-      "pathname": "/components/segmented",
-      "section": "Components",
-      "source": "src/Segmented/index.mdx",
-      "title": "Segmented"
-    },
-    {
-      "category": "Data Entry",
-      "description": "Select component lets users choose from a list of options in a dropdown menu. It supports various styling options and custom suffix icons.",
-      "legacyRouteId": "components/Select/index",
-      "pathname": "/components/select",
-      "section": "Components",
-      "source": "src/Select/index.mdx",
-      "title": "Select"
-    },
-    {
       "category": "Navigation",
       "description": "The SideNav component is a customizable side navigation bar. It takes in an optional avatar and top actions to be displayed at the top, and a required bottom actions prop to be displayed at the bottom.",
       "legacyRouteId": "components/SideNav/index",
@@ -7040,24 +5864,6 @@
       "section": "Components",
       "source": "src/SideNav/index.mdx",
       "title": "SideNav"
-    },
-    {
-      "category": "Data Display",
-      "description": "Skeleton component provides a placeholder loading state for content that is being loaded. It displays animated placeholder blocks that mimic the structure of the actual content, improving user experience during data loading.",
-      "legacyRouteId": "components/Skeleton/index",
-      "pathname": "/components/skeleton",
-      "section": "Components",
-      "source": "src/Skeleton/index.mdx",
-      "title": "Skeleton"
-    },
-    {
-      "category": "Data Entry",
-      "description": "SliderWithInput combines a slider with an input number field, allowing users to adjust values either by dragging the slider or entering a precise number in the input field.",
-      "legacyRouteId": "components/SliderWithInput/index",
-      "pathname": "/components/slider-with-input",
-      "section": "Components",
-      "source": "src/SliderWithInput/index.mdx",
-      "title": "SliderWithInput"
     },
     {
       "category": "Data Display",
@@ -7076,60 +5882,6 @@
       "section": "Components",
       "source": "src/SortableList/index.mdx",
       "title": "SortableList"
-    },
-    {
-      "category": "Navigation",
-      "description": "Tabs are used to display multiple sections of content within the same space on a webpage. They allow users to quickly switch between different sections of content without having to navigate away from the current page.",
-      "legacyRouteId": "components/Tabs/index",
-      "pathname": "/components/tabs",
-      "section": "Components",
-      "source": "src/Tabs/index.mdx",
-      "title": "Tabs"
-    },
-    {
-      "category": "Data Display",
-      "description": "Tag is used for marking and categorizing content with small colorful labels. It offers multiple styles, sizes, and color options for different scenarios.",
-      "legacyRouteId": "components/Tag/index",
-      "pathname": "/components/tag",
-      "section": "Components",
-      "source": "src/Tag/index.mdx",
-      "title": "Tag"
-    },
-    {
-      "category": "Typography",
-      "description": "Text component is used to display text content with various styles and formatting options. It supports text decoration, colors, ellipsis, and other typography features.",
-      "legacyRouteId": "components/Text/index",
-      "pathname": "/components/text",
-      "section": "Components",
-      "source": "src/Text/index.mdx",
-      "title": "Text"
-    },
-    {
-      "category": "Theme",
-      "description": "ThemeProvider is a component that provides a theme to all the child components. It supports theme customization, custom stylish objects, and font loading.",
-      "legacyRouteId": "components/ThemeProvider/index",
-      "pathname": "/components/theme-provider",
-      "section": "Components",
-      "source": "src/ThemeProvider/index.mdx",
-      "title": "ThemeProvider"
-    },
-    {
-      "category": "Data Entry",
-      "description": "ThemeSwitch component is a dropdown menu that allows users to switch between different theme modes.",
-      "legacyRouteId": "components/ThemeSwitch/index",
-      "pathname": "/components/theme-switch",
-      "section": "Components",
-      "source": "src/ThemeSwitch/index.mdx",
-      "title": "ThemeSwitch"
-    },
-    {
-      "category": "Navigation",
-      "description": "The Toc component is used to display a table of contents with clickable anchor links to different sections of a page. It can be customized with a specific height and width, and can be displayed differently on mobile devices. The component utilizes the Ant Design Anchor component to create the clickable anchor links.",
-      "legacyRouteId": "components/Toc/index",
-      "pathname": "/components/toc",
-      "section": "Components",
-      "source": "src/Toc/index.mdx",
-      "title": "Toc"
     },
     {
       "category": "Data Display",

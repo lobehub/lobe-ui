@@ -56,16 +56,16 @@ afterEach(() => {
 });
 
 it('resolves exclusively by a frozen demo id and treats routeId as metadata', () => {
-  expect(resolveStandaloneDemo('src-button-demo-demos', 'wrong/route')).toMatchObject({
+  expect(resolveStandaloneDemo('src-base-ui-button-demo-demos', 'wrong/route')).toMatchObject({
     requestedRouteId: 'wrong/route',
-    routeId: 'components/Button/index',
-    sourcePath: 'src/Button/demos/index.tsx',
+    routeId: 'components/base-ui/Button/index',
+    sourcePath: 'src/base-ui/Button/demos/index.tsx',
   });
 });
 
 it('also resolves the deterministic canonical id for a source', () => {
-  expect(resolveStandaloneDemo('src-button-demos-index')).toMatchObject({
-    sourcePath: 'src/Button/demos/index.tsx',
+  expect(resolveStandaloneDemo('src-base-ui-button-demos-index')).toMatchObject({
+    sourcePath: 'src/base-ui/Button/demos/index.tsx',
   });
 });
 
@@ -85,18 +85,18 @@ it('emits noindex metadata for standalone demos', () => {
     location: {
       hash: '',
       key: 'standalone',
-      pathname: '/~demos/src-button-demo-demos',
+      pathname: '/~demos/src-base-ui-button-demo-demos',
       search: '?routeId=wrong%2Froute',
       state: null,
     },
     matches: [],
-    params: { demoId: 'src-button-demo-demos' },
+    params: { demoId: 'src-base-ui-button-demo-demos' },
   });
 
   expect(descriptors).toEqual(
     expect.arrayContaining([
       { content: 'noindex, nofollow', name: 'robots' },
-      { title: 'src-button-demo-demos demo - Test Docs' },
+      { title: 'src-base-ui-button-demo-demos demo - Test Docs' },
     ]),
   );
 });

@@ -477,14 +477,12 @@ const DraggableSideNav = memo<DraggableSideNavProps>(
       () =>
         cx(
           showBorder ? styles.contentContainer : styles.contentContainerNoBorder,
-          styles.menuOverride,
           classNames?.content,
         ),
       [
         cx,
         styles.contentContainer,
         styles.contentContainerNoBorder,
-        styles.menuOverride,
         classNames?.content,
         showBorder,
       ],

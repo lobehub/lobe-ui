@@ -4,9 +4,9 @@ import type { ReactNode } from 'react';
 import { memo, useCallback, useEffect, useState, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 
+import { useAppElement } from '@/ConfigProvider/AppElementContext';
 import { useIsClient } from '@/hooks/useIsClient';
 import { cx } from '@/styles';
-import { useAppElement } from '@/ThemeProvider/AppElementContext';
 import { registerDevSingleton } from '@/utils/devSingleton';
 
 import { Button } from '../Button';

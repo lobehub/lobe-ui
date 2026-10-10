@@ -3,10 +3,10 @@
 import { Plus } from 'lucide-react';
 import { type KeyboardEvent, memo, useMemo } from 'react';
 
+import Text from '@/base-ui/Text';
 import FluentEmoji from '@/FluentEmoji';
 import Icon from '@/Icon';
 import { cssVar, cx } from '@/styles';
-import Text from '@/Text';
 
 import { styles } from './style';
 import type { EmptyProps } from './type';
