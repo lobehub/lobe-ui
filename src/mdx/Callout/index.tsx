@@ -1,12 +1,11 @@
 'use client';
 
-import { useTheme } from 'antd-style';
 import { AlertOctagon, AlertTriangle, Info, Lightbulb, MessageSquareWarning } from 'lucide-react';
 import { type FC, useMemo } from 'react';
 
 import { Flexbox, type FlexboxProps } from '@/Flex';
 import Icon from '@/Icon';
-import { cssVar, cx } from '@/styles';
+import { cssVar, cx, useTheme } from '@/styles';
 
 import { styles } from './style';
 

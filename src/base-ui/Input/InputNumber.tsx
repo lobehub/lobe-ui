@@ -1,12 +1,11 @@
 'use client';
 
 import { NumberField } from '@base-ui/react/number-field';
-import { useThemeMode } from 'antd-style';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { memo } from 'react';
 
 import Icon from '@/Icon';
-import { cx } from '@/styles';
+import { cx, useThemeMode } from '@/styles';
 
 import { isPressEnter } from './pressEnter';
 import { rootVariants, styles } from './style';

@@ -1,12 +1,11 @@
 'use client';
 
 import { Select as AntSelect } from 'antd';
-import { useThemeMode } from 'antd-style';
 import { ChevronDownIcon } from 'lucide-react';
 import { memo } from 'react';
 
 import Icon from '@/Icon';
-import { cx } from '@/styles';
+import { cx, useThemeMode } from '@/styles';
 
 import { variants } from './style';
 import type { SelectProps } from './type';

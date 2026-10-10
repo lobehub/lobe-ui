@@ -1,10 +1,9 @@
 'use client';
 
 import { Field } from '@base-ui/react/field';
-import { useResponsive } from 'antd-style';
 import { cloneElement, isValidElement, memo, useMemo } from 'react';
 
-import { cx } from '@/styles';
+import { cx, useResponsive } from '@/styles';
 
 import { useFormContext } from '../context';
 import { fieldStyles, fieldVariants } from '../style';

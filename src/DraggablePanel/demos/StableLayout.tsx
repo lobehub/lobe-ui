@@ -1,6 +1,5 @@
-import { DraggablePanel, Tag } from '@lobehub/ui';
+import { DraggablePanel, Tag, useTheme } from '@lobehub/ui';
 import { StoryBook, useCreateStore } from '@lobehub/ui/storybook';
-import { useTheme } from 'antd-style';
 import {
   BarChart3,
   FileText,

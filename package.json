@@ -105,6 +105,8 @@
       "types": "./es/static-css/vite/index.d.mts",
       "import": "./es/static-css/vite/index.mjs"
     },
+    "./global.css": "./es/global.css",
+    "./theme.css": "./es/theme.css",
     "./es/*": {
       "types": "./es/*.d.mts",
       "import": "./es/*.mjs"
@@ -117,7 +119,7 @@
     "es"
   ],
   "scripts": {
-    "build": "tsdown && npm run build:packages",
+    "build": "tsdown && tsx ./scripts/buildThemeCss.ts && npm run build:packages",
     "build:packages": "tsx ./scripts/build.ts",
     "build:watch": "tsdown --watch",
     "ci": "npm run lint:circular && npm run lint && npm run type-check",

@@ -1,9 +1,9 @@
 'use client';
 
-import { useResponsive } from 'antd-style';
 import { type FC } from 'react';
 
 import { Flexbox } from '@/Flex';
+import { useResponsive } from '@/styles';
 
 import { actionBarStyles as styles } from '../style';
 import type { ChatInputActionBarProps } from '../type';

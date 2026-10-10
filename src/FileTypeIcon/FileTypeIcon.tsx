@@ -1,10 +1,9 @@
 'use client';
 
-import { useThemeMode } from 'antd-style';
 import { type FC, useMemo } from 'react';
 
 import { Center } from '@/Flex';
-import { cssVar, cx } from '@/styles';
+import { cssVar, cx, useThemeMode } from '@/styles';
 
 import FileIcon from './components/FileIcon';
 import FolderIcon from './components/FolderIcon';

@@ -1,13 +1,12 @@
 'use client';
 
-import { useThemeMode } from 'antd-style';
 import { X } from 'lucide-react';
 import { memo, useState } from 'react';
 
 import ActionIcon from '@/base-ui/ActionIcon';
 import { Flexbox } from '@/Flex';
 import Img from '@/Img';
-import { cx } from '@/styles';
+import { cx, useThemeMode } from '@/styles';
 
 import { styles, variants } from './style';
 import type { GuideCardProps } from './type';

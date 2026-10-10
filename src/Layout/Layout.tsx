@@ -1,9 +1,9 @@
 'use client';
 
-import { useResponsive } from 'antd-style';
 import { memo, useEffect, useMemo, useState } from 'react';
 
 import DraggablePanel from '@/DraggablePanel';
+import { useResponsive } from '@/styles';
 
 import LayoutFooter from './components/LayoutFooter';
 import LayoutHeader from './components/LayoutHeader';

@@ -1,6 +1,6 @@
+import { useTheme } from '@lobehub/ui';
 import { GridBackground, type GridBackgroundProps } from '@lobehub/ui/awesome';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
-import { useTheme } from 'antd-style';
 import { rgba } from 'polished';
 
 export default () => {

@@ -2,7 +2,6 @@
 
 import { mergeProps } from '@base-ui/react/merge-props';
 import { Select } from '@base-ui/react/select';
-import { useThemeMode } from 'antd-style';
 import {
   cloneElement,
   type ComponentProps,
@@ -14,7 +13,7 @@ import { mergeRefs, useMergeRefs } from 'react-merge-refs';
 import { styles as menuStyles } from '@/base-ui/DropdownMenu/sharedStyle';
 import { getFloatingCollisionPadding } from '@/base-ui/floating';
 import { useNativeButton } from '@/hooks/useNativeButton';
-import { cx } from '@/styles';
+import { cx, useThemeMode } from '@/styles';
 import { useAppElement } from '@/ThemeProvider/AppElementContext';
 
 import { useLayerZIndex } from '../zIndex';

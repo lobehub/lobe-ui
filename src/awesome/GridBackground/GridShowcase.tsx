@@ -1,10 +1,10 @@
 'use client';
 
-import { useTheme } from 'antd-style';
 import { rgba } from 'polished';
 import { memo } from 'react';
 
 import { Flexbox } from '@/Flex';
+import { useTheme } from '@/styles';
 
 import GridBackground from './GridBackground';
 import type { GridShowcaseProps } from './type';

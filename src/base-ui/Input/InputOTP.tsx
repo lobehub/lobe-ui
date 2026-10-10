@@ -1,10 +1,9 @@
 'use client';
 
 import { OTPField } from '@base-ui/react/otp-field';
-import { useThemeMode } from 'antd-style';
 import { memo } from 'react';
 
-import { cx } from '@/styles';
+import { cx, useThemeMode } from '@/styles';
 
 import { rootVariants, styles } from './style';
 import type { InputOTPProps } from './type';

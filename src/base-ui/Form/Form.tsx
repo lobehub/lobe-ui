@@ -1,11 +1,10 @@
 'use client';
 
 import { Form as BaseForm } from '@base-ui/react/form';
-import { useResponsive } from 'antd-style';
 import { isUndefined } from 'es-toolkit/compat';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { cx } from '@/styles';
+import { cx, useResponsive } from '@/styles';
 
 import FormField from './components/FormField';
 import FormFlatGroup from './components/FormFlatGroup';

@@ -1,7 +1,6 @@
 'use client';
 
 import { Autocomplete } from '@base-ui/react/autocomplete';
-import { useThemeMode } from 'antd-style';
 import { XIcon } from 'lucide-react';
 import { memo, useMemo, useRef } from 'react';
 
@@ -9,7 +8,7 @@ import { getFloatingCollisionPadding } from '@/base-ui/floating';
 import { inputStyles, inputVariants } from '@/base-ui/Input';
 import { useLayerZIndex } from '@/base-ui/zIndex';
 import Icon from '@/Icon';
-import { cx } from '@/styles';
+import { cx, useThemeMode } from '@/styles';
 import { useAppElement } from '@/ThemeProvider/AppElementContext';
 
 import { styles } from './style';

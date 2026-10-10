@@ -2,8 +2,9 @@
 
 import type { FileDiffOptions } from '@pierre/diffs';
 import { MultiFileDiff } from '@pierre/diffs/react';
-import { useThemeMode } from 'antd-style';
 import { memo, useMemo } from 'react';
+
+import { useThemeMode } from '@/styles';
 
 import { DiffPanel } from './DiffPanel';
 import { getLobeDiffOptions, registerLobeDiffThemes } from './theme';

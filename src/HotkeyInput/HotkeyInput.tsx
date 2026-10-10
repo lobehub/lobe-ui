@@ -1,7 +1,6 @@
 'use client';
 
 import { type InputRef } from 'antd';
-import { useThemeMode } from 'antd-style';
 import { isEqual } from 'es-toolkit/compat';
 import { Undo2Icon, XIcon } from 'lucide-react';
 import {
@@ -23,7 +22,7 @@ import Hotkey from '@/Hotkey';
 import { checkIsAppleDevice, NORMATIVE_MODIFIER, splitKeysByPlus } from '@/Hotkey/utils';
 import hotkeyMessages from '@/i18n/resources/en/hotkey';
 import { useTranslation } from '@/i18n/useTranslation';
-import { cx } from '@/styles';
+import { cx, useThemeMode } from '@/styles';
 
 import { styles, variants } from './style';
 import { type HotkeyInputProps } from './type';

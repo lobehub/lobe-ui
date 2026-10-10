@@ -1,10 +1,9 @@
 'use client';
 
 import { Input as AntInput } from 'antd';
-import { useThemeMode } from 'antd-style';
 import { memo } from 'react';
 
-import { cx } from '@/styles';
+import { cx, useThemeMode } from '@/styles';
 
 import { variants } from './style';
 import type { InputProps } from './type';

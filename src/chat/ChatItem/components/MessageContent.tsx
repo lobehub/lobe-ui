@@ -1,11 +1,10 @@
-import { useResponsive } from 'antd-style';
 import { memo, type ReactNode, useMemo } from 'react';
 
 import { type ChatItemProps } from '@/chat/ChatItem';
 import EditableMessage from '@/chat/EditableMessage';
 import { Flexbox } from '@/Flex';
 import { type MarkdownProps } from '@/Markdown';
-import { cx } from '@/styles';
+import { cx, useResponsive } from '@/styles';
 
 import { styles } from '../style';
 

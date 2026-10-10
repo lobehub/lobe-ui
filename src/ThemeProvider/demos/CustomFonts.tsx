@@ -1,5 +1,4 @@
-import { ConfigProvider, ThemeProvider } from '@lobehub/ui';
-import { useTheme } from 'antd-style';
+import { ConfigProvider, ThemeProvider, useTheme } from '@lobehub/ui';
 import { motion } from 'motion/react';
 
 import { Flexbox } from '@/Flex';
