@@ -40,9 +40,12 @@ export default defineConfig({
     'src/static-css/vite/index.ts',
   ],
   external,
+  fixedExtension: true,
   format: ['esm'],
 
   outDir: 'es',
+  // platform 'node' leaks `import "node:module"` into the shared runtime chunk: https://github.com/rolldown/rolldown/issues/11182
+  platform: 'neutral',
 
   sourcemap: true,
   unbundle: true,
