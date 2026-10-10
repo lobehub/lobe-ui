@@ -1,12 +1,12 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { X } from 'lucide-react';
 import { memo } from 'react';
 
 import common from '@/i18n/resources/en/common';
 import { useTranslation } from '@/i18n/useTranslation';
 import Icon from '@/Icon';
+import { cx } from '@/styles';
 
 import { styles } from './style';
 

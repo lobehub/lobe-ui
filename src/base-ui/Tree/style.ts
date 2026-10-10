@@ -1,6 +1,5 @@
-import { createStaticStyles } from 'antd-style';
-
 import { focusRing } from '@/base-ui/focusRing';
+import { createStaticStyles } from '@/styles';
 
 export const styles = createStaticStyles(({ css, cssVar }) => ({
   checkbox: css`
@@ -8,32 +7,41 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
   guide: css`
     pointer-events: none;
+
     position: absolute;
     inset-block-start: 0;
     inset-inline-start: 0;
-    height: 100%;
+
     overflow: visible;
+
+    height: 100%;
 
     path {
       fill: none;
       stroke: ${cssVar.colorBorderSecondary};
-      stroke-width: 1;
       stroke-linecap: round;
+      stroke-width: 1;
     }
   `,
   icon: css`
     display: inline-flex;
     flex: none;
     align-items: center;
+
     margin-inline-end: 6px;
+
     color: ${cssVar.colorTextSecondary};
   `,
   node: css`
     position: relative;
+
     display: flex;
     align-items: center;
+
     border-radius: ${cssVar.borderRadius};
+
     color: ${cssVar.colorText};
+
     outline: none;
     ${focusRing}
   `,
@@ -57,8 +65,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
   `,
   panel: css`
-    height: var(--collapsible-panel-height);
     overflow: hidden;
+    height: var(--collapsible-panel-height);
     transition: height 200ms ${cssVar.motionEaseOut};
 
     &[data-starting-style],
@@ -71,27 +79,31 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
   `,
   root: css`
+    user-select: none;
     display: flex;
     flex-direction: column;
-    user-select: none;
     outline: none;
   `,
   switcher: css`
+    cursor: pointer;
+
     display: grid;
     flex: none;
     place-items: center;
+
     width: 24px;
     height: 24px;
     padding: 0;
     border: 0;
     border-radius: ${cssVar.borderRadiusSM};
-    background: none;
+
     color: ${cssVar.colorTextSecondary};
-    cursor: pointer;
+
+    background: none;
 
     &:hover {
-      background: ${cssVar.colorFillSecondary};
       color: ${cssVar.colorText};
+      background: ${cssVar.colorFillSecondary};
     }
 
     svg {
@@ -109,20 +121,22 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
   `,
   switcherLeaf: css`
-    visibility: hidden;
     pointer-events: none;
+    visibility: hidden;
   `,
   title: css`
+    overflow: hidden;
     display: inline-flex;
-    align-items: center;
     gap: 6px;
+    align-items: center;
+
     min-width: 0;
     padding-block: 2px;
     padding-inline: 6px;
     border-radius: ${cssVar.borderRadiusSM};
-    overflow: hidden;
-    white-space: nowrap;
+
     text-overflow: ellipsis;
+    white-space: nowrap;
   `,
   titleBlock: css`
     flex: 1;

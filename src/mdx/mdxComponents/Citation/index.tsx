@@ -1,10 +1,10 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { isEmpty } from 'es-toolkit/compat';
 import type { FC, ReactNode } from 'react';
 
 import PopoverPanel from '@/mdx/mdxComponents/Citation/PopoverPanel';
+import { cx } from '@/styles';
 import type { CitationItem } from '@/types/citation';
 
 import { styles } from './style';

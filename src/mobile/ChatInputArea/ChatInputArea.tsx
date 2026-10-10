@@ -1,7 +1,6 @@
 'use client';
 
 import { useSize } from 'ahooks';
-import { cx } from 'antd-style';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import {
   type FC,
@@ -18,6 +17,7 @@ import ActionIcon from '@/base-ui/ActionIcon';
 import ChatInputAreaInner from '@/chat/ChatInputArea/components/ChatInputAreaInner';
 import { Flexbox } from '@/Flex';
 import SafeArea from '@/mobile/SafeArea';
+import { cx } from '@/styles';
 
 import { styles } from './style';
 import { type ChatInputAreaProps } from './type';

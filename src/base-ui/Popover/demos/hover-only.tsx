@@ -1,6 +1,5 @@
-import { Flexbox, Popover, Tag, Text } from '@lobehub/ui';
+import { cssVar, Flexbox, Popover, Tag, Text } from '@lobehub/ui';
 import { Button } from '@lobehub/ui/base-ui';
-import { cssVar } from 'antd-style';
 import { MousePointerClick, Move, Pointer } from 'lucide-react';
 import { type ElementType, useState } from 'react';
 

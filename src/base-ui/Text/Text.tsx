@@ -1,10 +1,10 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { type CSSProperties, memo, type ReactNode, type RefObject, useRef } from 'react';
 
 import Tooltip from '@/base-ui/Tooltip';
 import { useTextOverflow } from '@/hooks/useTextOverflow';
+import { cx } from '@/styles';
 
 import { variants } from './style';
 import { type TextBaseProps, type TextProps } from './type';

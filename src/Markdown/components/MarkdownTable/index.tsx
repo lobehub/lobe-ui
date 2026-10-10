@@ -1,9 +1,9 @@
 'use client';
 
-import { createStaticStyles, cx } from 'antd-style';
 import { memo, useCallback, useRef } from 'react';
 
 import CopyButton from '@/CopyButton';
+import { createStaticStyles, cx } from '@/styles';
 
 import { hastTableToMarkdown } from './hastTableToMarkdown';
 

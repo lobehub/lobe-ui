@@ -1,11 +1,12 @@
 'use client';
 
 import { Collapsible } from '@base-ui/react/collapsible';
-import { cx, useResponsive, useThemeMode } from 'antd-style';
+import { useResponsive, useThemeMode } from 'antd-style';
 import { ChevronDown } from 'lucide-react';
 import { memo, type ReactNode } from 'react';
 
 import Icon from '@/Icon';
+import { cx } from '@/styles';
 
 import { groupStyles, groupVariants } from '../style';
 import type { FormGroupProps } from '../type';

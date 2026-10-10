@@ -1,12 +1,12 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { Maximize2, Minimize2, X } from 'lucide-react';
 import { useDragControls } from 'motion/react';
 import type { MouseEvent, PointerEvent } from 'react';
 import type React from 'react';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import { cx } from '@/styles';
 import { stopPropagation } from '@/utils/dom';
 
 import { Button } from '../Button';

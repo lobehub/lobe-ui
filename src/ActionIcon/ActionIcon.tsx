@@ -1,11 +1,11 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { Loader2 } from 'lucide-react';
 import { memo, type MouseEventHandler, useCallback, useMemo } from 'react';
 
 import { Center } from '@/Flex';
 import Icon from '@/Icon';
+import { cx } from '@/styles';
 import Tooltip from '@/Tooltip';
 
 import { calcSize } from './components/utils';

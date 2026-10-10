@@ -1,10 +1,10 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { Check } from 'lucide-react';
 import { memo, type ReactNode } from 'react';
 
 import Icon from '@/Icon';
+import { cx } from '@/styles';
 
 import { styles } from './style';
 import type { StepItem, StepsProps, StepStatus } from './type';

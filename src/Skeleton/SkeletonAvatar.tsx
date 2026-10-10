@@ -1,7 +1,8 @@
 'use client';
 
-import { cssVar, cx } from 'antd-style';
 import { type FC } from 'react';
+
+import { cssVar, cx } from '@/styles';
 
 import SkeletonBlock from './SkeletonBlock';
 import { styles } from './style';

@@ -1,11 +1,11 @@
 'use client';
 
-import { cx } from 'antd-style';
 import type { ReactNode } from 'react';
 import { memo, useCallback, useEffect, useState, useSyncExternalStore } from 'react';
 import { createPortal } from 'react-dom';
 
 import { useIsClient } from '@/hooks/useIsClient';
+import { cx } from '@/styles';
 import { useAppElement } from '@/ThemeProvider/AppElementContext';
 import { registerDevSingleton } from '@/utils/devSingleton';
 

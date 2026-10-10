@@ -1,10 +1,10 @@
 'use client';
 
-import { cssVar, cx } from 'antd-style';
 import { Loader2 } from 'lucide-react';
 import { memo } from 'react';
 
 import Icon from '@/Icon';
+import { cssVar, cx } from '@/styles';
 
 import { SwitchIcon, SwitchRoot, SwitchThumb } from './atoms';
 import { styles } from './style';

@@ -1,6 +1,7 @@
-import { css, type Theme } from 'antd-style';
+import { type Theme } from 'antd-style';
 import { rgba } from 'polished';
 
+import { css } from '@/styles';
 import { safeReadableColor } from '@/utils/safeReadableColor';
 
 export default (token: Theme) => {
@@ -57,14 +58,15 @@ export default (token: Theme) => {
       font-size: ${token.fontSizeSM}px;
       line-height: 1.2;
       color: ${token.colorTextSecondary} !important;
-      word-break: break-word;
+      word-break: normal;
+      overflow-wrap: anywhere;
       white-space: normal;
 
       background: ${token.colorBgElevated} !important;
       box-shadow:
-        0 1px 2px 0 rgba(0, 0, 0, 3%),
-        0 1px 6px -1px rgba(0, 0, 0, 2%),
-        0 2px 4px 0 rgba(0, 0, 0, 2%) !important;
+        0 1px 2px 0 rgb(0 0 0 / 3%),
+        0 1px 6px -1px rgb(0 0 0 / 2%),
+        0 2px 4px 0 rgb(0 0 0 / 2%) !important;
     }
 
     .${token.prefixCls}-switch-handle::before {

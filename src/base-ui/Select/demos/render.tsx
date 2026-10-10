@@ -1,6 +1,5 @@
-import { Flexbox, Icon, Tag } from '@lobehub/ui';
+import { cssVar, Flexbox, Icon, Tag } from '@lobehub/ui';
 import { Select } from '@lobehub/ui/base-ui';
-import { cssVar } from 'antd-style';
 import { Palette, Sparkles, Zap } from 'lucide-react';
 import { useMemo } from 'react';
 

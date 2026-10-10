@@ -1,12 +1,12 @@
 'use client';
 
-import { cx } from 'antd-style';
 import type { FC } from 'react';
 
 import Spotlight from '@/awesome/Spotlight';
 import CopyButton from '@/CopyButton';
 import { Flexbox } from '@/Flex';
 import SyntaxHighlighter from '@/Highlighter/SyntaxHighlighter';
+import { cx } from '@/styles';
 
 import { styles, variants } from './style';
 import { type SnippetProps } from './type';

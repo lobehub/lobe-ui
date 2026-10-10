@@ -1,11 +1,11 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { Upload as UploadIcon } from 'lucide-react';
 import type { ChangeEvent, DragEvent, KeyboardEvent, MouseEvent, Ref } from 'react';
 import { memo, useCallback, useRef, useState } from 'react';
 
 import Icon from '@/Icon';
+import { cx } from '@/styles';
 
 import { filterFilesByAccept } from './helpers';
 import { styles } from './style';

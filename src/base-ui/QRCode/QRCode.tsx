@@ -1,6 +1,5 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { RotateCw } from 'lucide-react';
 import { memo, useMemo } from 'react';
 import { encode } from 'uqr';
@@ -10,6 +9,7 @@ import Spin from '@/base-ui/Spin';
 import qrCodeMessages from '@/i18n/resources/en/qrCode';
 import { useTranslation } from '@/i18n/useTranslation';
 import Icon from '@/Icon';
+import { cx } from '@/styles';
 
 import { buildQrPath } from './qrPath';
 import { styles } from './style';

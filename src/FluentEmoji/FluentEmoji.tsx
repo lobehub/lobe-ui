@@ -1,11 +1,11 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { type FC, useMemo, useState } from 'react';
 
 import { useCdnFn } from '@/ConfigProvider';
 import { Center } from '@/Flex';
 import Img from '@/Img';
+import { cx } from '@/styles';
 
 import { styles } from './style';
 import type { FluentEmojiProps } from './type';

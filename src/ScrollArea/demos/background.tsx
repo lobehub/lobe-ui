@@ -1,5 +1,4 @@
-import { ScrollArea } from '@lobehub/ui';
-import { cssVar } from 'antd-style';
+import { cssVar, ScrollArea } from '@lobehub/ui';
 
 const blocks = [
   {

@@ -1,6 +1,5 @@
-import { Flexbox, Text, toast, ToastHost } from '@lobehub/ui';
+import { cssVar, Flexbox, Text, toast, ToastHost } from '@lobehub/ui';
 import { Button, FloatingPanel } from '@lobehub/ui/base-ui';
-import { cssVar } from 'antd-style';
 import { Bell, MessageCirclePlus } from 'lucide-react';
 import { useState } from 'react';
 

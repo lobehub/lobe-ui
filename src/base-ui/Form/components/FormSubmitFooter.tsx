@@ -1,6 +1,5 @@
 'use client';
 
-import { cssVar, cx } from 'antd-style';
 import { InfoIcon } from 'lucide-react';
 import { memo, useEffect } from 'react';
 
@@ -10,6 +9,7 @@ import formMessages from '@/i18n/resources/en/form';
 import { useTranslation } from '@/i18n/useTranslation';
 import Icon from '@/Icon';
 import { useMotionComponent } from '@/MotionProvider';
+import { cssVar, cx } from '@/styles';
 
 import { useFormContext } from '../context';
 import { submitFooterStyles as styles } from '../style';

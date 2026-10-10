@@ -1,8 +1,9 @@
 'use client';
 
 import { Slider as BaseSlider } from '@base-ui/react/slider';
-import { cx } from 'antd-style';
 import { memo } from 'react';
+
+import { cx } from '@/styles';
 
 import { styles } from './style';
 import type { SliderProps } from './type';

@@ -1,9 +1,9 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
-import { cssVar } from 'antd-style';
 import { motion } from 'motion/react';
 import { type ReactNode } from 'react';
 
 import ConfigProvider from '@/ConfigProvider';
+import { cssVar } from '@/styles';
 import { safeReadableColor } from '@/utils/safeReadableColor';
 
 import Tag from '../Tag';

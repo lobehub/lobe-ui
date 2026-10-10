@@ -1,6 +1,5 @@
-import { Flexbox, Popover, PopoverGroup, Tag } from '@lobehub/ui';
+import { cssVar, Flexbox, Popover, PopoverGroup, Tag } from '@lobehub/ui';
 import { Button } from '@lobehub/ui/base-ui';
-import { cssVar } from 'antd-style';
 import { ArrowDown, ArrowLeft, ArrowRight, ArrowUp } from 'lucide-react';
 
 const content = (placement: string, icon: React.ReactNode) => (

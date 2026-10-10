@@ -1,6 +1,5 @@
-import { createStaticStyles } from 'antd-style';
-
 import { focusRing } from '@/base-ui/focusRing';
+import { createStaticStyles } from '@/styles';
 
 export const panelStyles = createStaticStyles(({ css, cssVar }) => ({
   label: css`

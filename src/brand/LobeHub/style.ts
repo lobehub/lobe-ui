@@ -1,4 +1,4 @@
-import { createStaticStyles } from 'antd-style';
+import { createStaticStyles } from '@/styles';
 
 export const LOGO_3D = {
   path: 'assets/logo-3d.webp',

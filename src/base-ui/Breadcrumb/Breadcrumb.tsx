@@ -1,11 +1,11 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { ChevronRight } from 'lucide-react';
 import { memo, type ReactNode } from 'react';
 
 import A from '@/A';
 import Icon from '@/Icon';
+import { cx } from '@/styles';
 
 import { styles } from './style';
 import type { BreadcrumbItem, BreadcrumbProps } from './type';

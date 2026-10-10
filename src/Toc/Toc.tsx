@@ -1,8 +1,9 @@
 'use client';
 
 import { Anchor } from 'antd';
-import { cx } from 'antd-style';
 import { memo, useMemo } from 'react';
+
+import { cx } from '@/styles';
 
 import { styles } from './style';
 import { default as TocMobile } from './TocMobile';

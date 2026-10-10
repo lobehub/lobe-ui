@@ -1,8 +1,9 @@
 'use client';
 
 import { Separator } from '@base-ui/react/separator';
-import { cx } from 'antd-style';
 import { memo } from 'react';
+
+import { cx } from '@/styles';
 
 import { styles } from './style';
 import type { DividerProps } from './type';

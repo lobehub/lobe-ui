@@ -1,4 +1,4 @@
-import { createStaticStyles } from 'antd-style';
+import { createStaticStyles } from '@/styles';
 
 const prefixCls = 'ant';
 
@@ -41,7 +41,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
         font-size: 16px;
         line-height: 1.2;
         text-align: start;
-        word-break: break-word;
+        word-break: normal;
+        overflow-wrap: anywhere;
       }
 
       &:hover {
@@ -83,7 +84,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
         font-size: 16px;
         line-height: 1.2;
         text-align: start;
-        word-break: break-word;
+        word-break: normal;
+        overflow-wrap: anywhere;
       }
 
       &:hover {

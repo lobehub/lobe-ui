@@ -6,13 +6,21 @@ import {
   type CustomTokenParams,
   type GetAntdTheme,
   ThemeProvider as AntdThemeProvider,
+  useThemeMode,
 } from 'antd-style';
 import { merge } from 'es-toolkit/compat';
-import { memo, useCallback, useMemo, useState } from 'react';
+import { type CSSProperties, memo, type ReactNode, useCallback, useMemo, useState } from 'react';
 
 import { useCdnFn } from '@/ConfigProvider';
 import FontLoader from '@/FontLoader';
-import { lobeCustomStylish, lobeCustomToken } from '@/styles';
+import {
+  createLobeToken,
+  lobeCustomStylish,
+  lobeCustomToken,
+  type NeutralColors,
+  type PrimaryColors,
+} from '@/styles';
+import { toCssVariables } from '@/styles/css';
 import { createLobeAntdTheme } from '@/styles/theme/antdTheme';
 import { type LobeCustomToken } from '@/types/customToken';
 
@@ -105,9 +113,11 @@ const ThemeProvider = memo<ThemeProviderProps>(
             <EssentialStyle />
             {enableGlobalStyle && <GlobalStyle />}
 
-            <App
+            <LobeApp
               className={className}
-              style={{ isolation: 'isolate', minHeight: 'inherit', width: 'inherit', ...style }}
+              neutralColor={customTheme.neutralColor}
+              primaryColor={customTheme.primaryColor}
+              style={style}
             >
               <div id={appId} style={contentsStyle}>
                 <AppElementContext value={appRef}>
@@ -123,7 +133,7 @@ const ThemeProvider = memo<ThemeProviderProps>(
                   <div data-lobe-portal-host="" ref={setAppRef} style={hostPortalHostStyle} />
                 </AppElementContext>
               </div>
-            </App>
+            </LobeApp>
           </AntdConfigProvider>
         </AntdThemeProvider>
       </>
@@ -132,6 +142,38 @@ const ThemeProvider = memo<ThemeProviderProps>(
 );
 
 ThemeProvider.displayName = 'LobeThemeProvider';
+
+interface LobeAppProps {
+  children: ReactNode;
+  className?: string;
+  neutralColor?: NeutralColors;
+  primaryColor?: PrimaryColors;
+  style?: CSSProperties;
+}
+
+const LobeApp = ({ children, className, neutralColor, primaryColor, style }: LobeAppProps) => {
+  const { appearance } = useThemeMode();
+  const vars = useMemo(
+    () =>
+      toCssVariables(
+        createLobeToken({
+          appearance: appearance === 'dark' ? 'dark' : 'light',
+          neutralColor,
+          primaryColor,
+        }),
+      ),
+    [appearance, neutralColor, primaryColor],
+  );
+
+  return (
+    <App
+      className={className}
+      style={{ ...vars, isolation: 'isolate', minHeight: 'inherit', width: 'inherit', ...style }}
+    >
+      {children}
+    </App>
+  );
+};
 
 export default ThemeProvider;
 

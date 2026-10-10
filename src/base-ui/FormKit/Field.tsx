@@ -1,6 +1,6 @@
 'use client';
 
-import { cx, useResponsive } from 'antd-style';
+import { useResponsive } from 'antd-style';
 import {
   cloneElement,
   isValidElement,
@@ -15,6 +15,7 @@ import {
 
 import formMessages from '@/i18n/resources/en/form';
 import { useTranslation } from '@/i18n/useTranslation';
+import { cx } from '@/styles';
 
 import FormDivider from '../Form/components/FormDivider';
 import FormTitle from '../Form/components/FormTitle';

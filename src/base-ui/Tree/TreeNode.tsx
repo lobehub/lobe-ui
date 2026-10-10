@@ -1,13 +1,13 @@
 'use client';
 
 import { Collapsible } from '@base-ui/react/collapsible';
-import { cx } from 'antd-style';
 import { ChevronRight, File, Folder } from 'lucide-react';
 import { type CSSProperties, memo, type MouseEvent } from 'react';
 
 import { Checkbox } from '@/base-ui/Checkbox';
 import { controlHeight } from '@/base-ui/controlSize';
 import Icon from '@/Icon';
+import { cx } from '@/styles';
 
 import { useTreeContext } from './context';
 import { styles } from './style';

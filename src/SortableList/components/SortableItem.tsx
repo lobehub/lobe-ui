@@ -3,11 +3,11 @@
 import type { DraggableSyntheticListeners } from '@dnd-kit/core';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { cx } from 'antd-style';
 import { createContext, memo, useMemo } from 'react';
 
 import { type FlexboxProps } from '@/Flex';
 import { Flexbox } from '@/Flex';
+import { cx } from '@/styles';
 
 import { variants } from '../style';
 

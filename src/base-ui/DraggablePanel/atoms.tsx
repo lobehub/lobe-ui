@@ -1,6 +1,5 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { ChevronLeft } from 'lucide-react';
 import type { HTMLMotionProps, MotionStyle } from 'motion/react';
 import { useTransform } from 'motion/react';
@@ -19,6 +18,7 @@ import useControlledState from 'use-merge-value';
 
 import ActionIcon from '@/base-ui/ActionIcon';
 import { useMotionComponent } from '@/MotionProvider';
+import { cx } from '@/styles';
 import type { DivProps } from '@/types';
 
 import { DraggablePanelContext, useDraggablePanelContext } from './context';

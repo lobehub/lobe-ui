@@ -1,10 +1,10 @@
-import { cssVar } from 'antd-style';
 import { ArrowBigUp, CornerDownLeft, Loader2 } from 'lucide-react';
 import { type FC } from 'react';
 
 import Button from '@/base-ui/Button';
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
+import { cssVar } from '@/styles';
 
 import type { ChatSendButtonProps } from '../type';
 

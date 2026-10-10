@@ -1,7 +1,6 @@
-import { Flexbox, Text } from '@lobehub/ui';
+import { cssVar, Flexbox, Text } from '@lobehub/ui';
 import { Button, Modal } from '@lobehub/ui/base-ui';
 import { Tag } from 'antd';
-import { cssVar } from 'antd-style';
 import { useState } from 'react';
 
 // ─── 1. Basic Modal：行内预览链接 ───────────────────────────────

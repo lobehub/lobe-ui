@@ -1,7 +1,9 @@
 'use client';
 
-import { cx, useResponsive } from 'antd-style';
+import { useResponsive } from 'antd-style';
 import { type FormEvent, useCallback, useMemo, useRef } from 'react';
+
+import { cx } from '@/styles';
 
 import FormFlatGroup from '../Form/components/FormFlatGroup';
 import FormGroup from '../Form/components/FormGroup';

@@ -1,6 +1,5 @@
-import { Flexbox, Text } from '@lobehub/ui';
+import { cssVar, Flexbox, Text } from '@lobehub/ui';
 import { Button, Drawer, type DrawerPlacement } from '@lobehub/ui/base-ui';
-import { cssVar } from 'antd-style';
 import { useState } from 'react';
 
 const PLACEMENTS: DrawerPlacement[] = ['left', 'right', 'top', 'bottom'];

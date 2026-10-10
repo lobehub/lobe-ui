@@ -1,9 +1,9 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { memo, useEffect, useMemo, useRef } from 'react';
 
 import Grid from '@/Grid';
+import { cx } from '@/styles';
 
 import SpotlightCardItem from './SpotlightCardItem';
 import { CHILDREN_CLASSNAME, styles } from './style';

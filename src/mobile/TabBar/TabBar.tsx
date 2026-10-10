@@ -1,11 +1,11 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { memo } from 'react';
 import useMergeState from 'use-merge-value';
 
 import { Flexbox } from '@/Flex';
 import SafeArea from '@/mobile/SafeArea';
+import { cx } from '@/styles';
 
 import { styles } from './style';
 import type { TabBarProps } from './type';

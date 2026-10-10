@@ -1,12 +1,12 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { type CSSProperties, memo, useMemo } from 'react';
 
 import A from '@/A';
 import { Center, Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 import Img from '@/Img';
+import { cx } from '@/styles';
 import Text from '@/Text';
 
 import { styles } from './style';

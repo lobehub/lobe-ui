@@ -1,7 +1,8 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { createContext, type HTMLAttributes, type Ref, use, useEffect, useId } from 'react';
+
+import { cx } from '@/styles';
 
 import { registerScope, setActiveScope, useFocusScopeActive } from './store';
 import { styles } from './style';

@@ -1,12 +1,12 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { ListFilter } from 'lucide-react';
 import { memo, type ReactNode } from 'react';
 
 import DropdownMenu from '@/base-ui/DropdownMenu';
 import type { DropdownItem } from '@/base-ui/DropdownMenu/type';
 import Icon from '@/Icon';
+import { cx } from '@/styles';
 
 import { styles } from './style';
 import type { FilterValue } from './type';

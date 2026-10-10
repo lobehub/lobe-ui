@@ -1,8 +1,9 @@
 'use client';
 
 import { ScrollArea as BaseScrollArea } from '@base-ui/react/scroll-area';
-import { cx } from 'antd-style';
 import type React from 'react';
+
+import { cx } from '@/styles';
 
 import ScrollAreaGlobalStyle from './globalStyle';
 import { styles } from './style';

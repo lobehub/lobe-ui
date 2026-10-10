@@ -1,7 +1,15 @@
-import { ActionIcon, Avatar, Flexbox, Header, Popover, PopoverGroup, Tag } from '@lobehub/ui';
+import {
+  ActionIcon,
+  Avatar,
+  cssVar,
+  Flexbox,
+  Header,
+  Popover,
+  PopoverGroup,
+  Tag,
+} from '@lobehub/ui';
 import { Button } from '@lobehub/ui/base-ui';
 import { LobeHub } from '@lobehub/ui/brand';
-import { cssVar } from 'antd-style';
 import {
   Bell,
   BookOpen,

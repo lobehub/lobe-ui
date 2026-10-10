@@ -48,7 +48,7 @@ export const prepareInlineMermaidSvg = (svg: string, scopeId: string): string =>
 };
 
 /**
- * Inline SVG resolves `var(--ant-*)` from the page, but a Blob-loaded copy is an
+ * Inline SVG resolves `var(--lobe-*)` from the page, but a Blob-loaded copy is an
  * isolated document with no access to them, so the root variables are baked in
  * as literal values before serializing for preview or download.
  */

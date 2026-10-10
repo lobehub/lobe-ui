@@ -2,7 +2,6 @@
 
 import { Dialog } from '@base-ui/react/dialog';
 import { mergeProps } from '@base-ui/react/merge-props';
-import { cx } from 'antd-style';
 import { X } from 'lucide-react';
 import { AnimatePresence } from 'motion/react';
 import type React from 'react';
@@ -21,6 +20,7 @@ import { mergeRefs, useMergeRefs } from 'react-merge-refs';
 
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { useMotionComponent } from '@/MotionProvider';
+import { cx } from '@/styles';
 import { useAppElement } from '@/ThemeProvider/AppElementContext';
 
 import { useLayerZIndex } from '../zIndex';

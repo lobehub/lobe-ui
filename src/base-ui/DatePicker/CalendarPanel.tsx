@@ -1,6 +1,5 @@
 'use client';
 
-import { cx } from 'antd-style';
 import dayjs from 'dayjs';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { type KeyboardEvent, memo, useEffect, useRef, useState } from 'react';
@@ -9,6 +8,7 @@ import { panelStyles } from '@/base-ui/panelStyles';
 import datePickerMessages from '@/i18n/resources/en/datePicker';
 import { useTranslation } from '@/i18n/useTranslation';
 import Icon from '@/Icon';
+import { cx } from '@/styles';
 
 import {
   buildMonthGrid,

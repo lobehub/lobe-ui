@@ -1,8 +1,9 @@
 'use client';
 
 import { ConfigProvider as AntdConfigProvider } from 'antd';
-import { cssVar } from 'antd-style';
 import { memo, type PropsWithChildren } from 'react';
+
+import { cssVar } from '@/styles';
 
 const ConfigProvider = memo<PropsWithChildren>(({ children }) => {
   return (

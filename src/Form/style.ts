@@ -1,7 +1,6 @@
-import { createStaticStyles, responsive } from 'antd-style';
 import { cva } from 'class-variance-authority';
 
-import { lobeStaticStylish } from '@/styles';
+import { createStaticStyles, lobeStaticStylish, responsive } from '@/styles';
 
 const prefixCls = 'ant';
 

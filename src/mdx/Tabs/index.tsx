@@ -1,10 +1,10 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { type FC, type ReactNode, useState } from 'react';
 
 import LobeTabs, { type TabsProps as LobeTabsProps } from '@/base-ui/Tabs';
 import { Flexbox, type FlexboxProps } from '@/Flex';
+import { cx } from '@/styles';
 
 import { styles } from './style';
 

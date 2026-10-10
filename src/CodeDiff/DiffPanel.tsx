@@ -1,6 +1,5 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import type { CSSProperties, ReactNode } from 'react';
 import { memo, useCallback, useState } from 'react';
@@ -10,6 +9,7 @@ import Tag from '@/base-ui/Tag';
 import type { FlexboxProps } from '@/Flex';
 import { Flexbox } from '@/Flex';
 import MaterialFileTypeIcon from '@/MaterialFileTypeIcon';
+import { cx } from '@/styles';
 import Text from '@/Text';
 import { stopPropagation } from '@/utils/dom';
 

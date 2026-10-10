@@ -1,9 +1,8 @@
-import { createStaticStyles, cx } from 'antd-style';
 import { cva } from 'class-variance-authority';
 
 import { controlHeight } from '@/base-ui/controlSize';
 import { focusRing } from '@/base-ui/focusRing';
-import { lobeStaticStylish } from '@/styles';
+import { createStaticStyles, cx, lobeStaticStylish } from '@/styles';
 
 export const styles = createStaticStyles(({ css, cssVar }) => ({
   arrow: css`

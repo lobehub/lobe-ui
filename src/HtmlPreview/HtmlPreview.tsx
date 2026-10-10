@@ -1,6 +1,5 @@
 'use client';
 
-import { createStaticStyles, cx, keyframes } from 'antd-style';
 import { Download, Expand } from 'lucide-react';
 import { memo, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
@@ -11,6 +10,7 @@ import CopyButton from '@/CopyButton';
 import { Flexbox } from '@/Flex';
 import { actionsHoverCls, variants } from '@/Highlighter/style';
 import SyntaxHighlighter from '@/Highlighter/SyntaxHighlighter';
+import { createStaticStyles, cx, keyframes } from '@/styles';
 import { stopPropagation } from '@/utils/dom';
 import { downloadBlob } from '@/utils/downloadBlob';
 

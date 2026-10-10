@@ -1,6 +1,6 @@
-import { createStaticStyles, keyframes } from 'antd-style';
-
 import type { LobeCustomStylish } from '@/types/customStylish';
+
+import { createStaticStyles, keyframes } from '../css';
 
 /**
  * Static version of custom stylish utilities.

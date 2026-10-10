@@ -1,6 +1,5 @@
 'use client';
 
-import { cx } from 'antd-style';
 import type { MouseEvent, ReactElement, Ref } from 'react';
 import { memo, useMemo } from 'react';
 
@@ -8,6 +7,7 @@ import type { ButtonProps } from '@/base-ui/Button';
 import Button from '@/base-ui/Button';
 import Tooltip from '@/base-ui/Tooltip';
 import Icon from '@/Icon';
+import { cx } from '@/styles';
 
 import { variants } from './style';
 import type { ActionIconOutdent, ActionIconProps, ActionIconVariant } from './type';

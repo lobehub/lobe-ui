@@ -1,5 +1,5 @@
-import { Icon } from '@lobehub/ui';
-import { createStaticStyles, cssVar, useThemeMode } from 'antd-style';
+import { createStaticStyles, cssVar, Icon } from '@lobehub/ui';
+import { useThemeMode } from 'antd-style';
 import { ChevronDown, ChevronRight, SparkleIcon } from 'lucide-react';
 import { memo, type PropsWithChildren, useState } from 'react';
 

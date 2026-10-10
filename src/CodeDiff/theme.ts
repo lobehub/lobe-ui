@@ -1,8 +1,8 @@
 import type { FileDiffOptions } from '@pierre/diffs';
 import { registerCustomTheme, resolveTheme } from '@pierre/diffs';
-import { cssVar } from 'antd-style';
 
 import lobeTheme from '@/Highlighter/theme/lobe-theme';
+import { cssVar } from '@/styles';
 
 import type { DiffViewMode } from './type';
 

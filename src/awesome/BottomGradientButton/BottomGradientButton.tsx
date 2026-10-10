@@ -1,9 +1,9 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { memo } from 'react';
 
 import Button from '@/base-ui/Button';
+import { cx } from '@/styles';
 
 import { styles } from './style';
 import type { BottomGradientButtonProps } from './type';

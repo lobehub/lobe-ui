@@ -1,9 +1,9 @@
 'use client';
 
 import { Tag as AntTag } from 'antd';
-import { cssVar, cx } from 'antd-style';
 import { type FC, useMemo } from 'react';
 
+import { cssVar, cx } from '@/styles';
 import { colorsPreset, colorsPresetSystem, presetColors, presetSystemColors } from '@/Tag/utils';
 import { safeReadableColor } from '@/utils/safeReadableColor';
 

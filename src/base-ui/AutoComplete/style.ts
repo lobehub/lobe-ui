@@ -1,6 +1,5 @@
-import { createStaticStyles } from 'antd-style';
-
 import { styles as menuStyles } from '@/base-ui/DropdownMenu/sharedStyle';
+import { createStaticStyles } from '@/styles';
 
 const ownStyles = createStaticStyles(({ css, cssVar }) => ({
   clear: css`

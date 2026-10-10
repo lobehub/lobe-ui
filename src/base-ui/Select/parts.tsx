@@ -1,7 +1,6 @@
 'use client';
 
 import { Select as BaseSelect } from '@base-ui/react/select';
-import { cx } from 'antd-style';
 import { ChevronDown, Loader2, X } from 'lucide-react';
 import {
   type ChangeEvent,
@@ -14,6 +13,7 @@ import {
 import { styles as menuStyles } from '@/base-ui/DropdownMenu/sharedStyle';
 import { useMenuVirtualList, VirtualScrollArea } from '@/base-ui/virtual';
 import Icon, { type IconProps } from '@/Icon';
+import { cx } from '@/styles';
 
 import { isValueEmpty } from './helpers';
 import { type useSelectVirtual } from './hooks';

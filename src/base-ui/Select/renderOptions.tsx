@@ -1,11 +1,11 @@
 'use client';
 
 import { Select as BaseSelect } from '@base-ui/react/select';
-import { cx } from 'antd-style';
 import { Check } from 'lucide-react';
 
 import { styles as menuStyles } from '@/base-ui/DropdownMenu/sharedStyle';
 import Icon from '@/Icon';
+import { cx } from '@/styles';
 
 import { getOptionSearchText, isGroupOption } from './helpers';
 import { styles } from './style';

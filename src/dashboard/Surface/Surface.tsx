@@ -1,6 +1,6 @@
 'use client';
 
-import { cx } from 'antd-style';
+import { cx } from '@/styles';
 
 import { styles } from './style';
 import type { SurfaceProps } from './type';

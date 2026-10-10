@@ -1,7 +1,6 @@
 'use client';
 
 import { Form } from 'antd';
-import { cssVar, cx } from 'antd-style';
 import isEqual from 'fast-deep-equal';
 import { InfoIcon } from 'lucide-react';
 import { memo, useEffect, useMemo, useState } from 'react';
@@ -12,6 +11,7 @@ import formMessages from '@/i18n/resources/en/form';
 import { useTranslation } from '@/i18n/useTranslation';
 import Icon from '@/Icon';
 import { useMotionComponent } from '@/MotionProvider';
+import { cssVar, cx } from '@/styles';
 
 import { submitFooterStyles } from '../style';
 import { type FormSubmitFooterProps } from '../type';

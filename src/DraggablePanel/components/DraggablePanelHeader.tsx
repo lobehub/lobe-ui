@@ -1,12 +1,12 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { PanelLeft, Pin, PinOff } from 'lucide-react';
 import { memo } from 'react';
 import useControlledState from 'use-merge-value';
 
 import ActionIcon from '@/base-ui/ActionIcon';
 import { Flexbox } from '@/Flex';
+import { cx } from '@/styles';
 import { type DivProps } from '@/types';
 
 import { styles } from './style';

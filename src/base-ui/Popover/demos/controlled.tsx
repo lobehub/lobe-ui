@@ -1,6 +1,5 @@
-import { ActionIcon, Flexbox, Popover, Tag } from '@lobehub/ui';
+import { ActionIcon, cssVar, Flexbox, Popover, Tag } from '@lobehub/ui';
 import { Button, Input } from '@lobehub/ui/base-ui';
-import { cssVar } from 'antd-style';
 import { AlertTriangle, Check, Edit3, Trash2, X } from 'lucide-react';
 import { useState } from 'react';
 

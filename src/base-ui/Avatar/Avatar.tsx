@@ -1,13 +1,13 @@
 'use client';
 
 import { getEmoji } from '@lobehub/fluent-emoji';
-import { cssVar, cx } from 'antd-style';
 import { Loader2 } from 'lucide-react';
 import { memo, useMemo, useState } from 'react';
 
 import { Center } from '@/Flex';
 import FluentEmoji from '@/FluentEmoji';
 import Icon from '@/Icon';
+import { cssVar, cx } from '@/styles';
 import { safeReadableColor } from '@/utils/safeReadableColor';
 
 import { styles, variants } from './style';

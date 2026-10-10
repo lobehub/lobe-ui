@@ -1,11 +1,11 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { Loader2, MessageSquare } from 'lucide-react';
 import { memo } from 'react';
 
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
+import { cx } from '@/styles';
 import Text from '@/Text';
 import { preventDefaultAndStopPropagation } from '@/utils/dom';
 

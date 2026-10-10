@@ -1,5 +1,6 @@
-import { createStaticStyles, cx } from 'antd-style';
 import { cva } from 'class-variance-authority';
+
+import { createStaticStyles, cx } from '@/styles';
 
 // Layout constants
 const LAYOUT = {
@@ -52,7 +53,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       float,
       css`
         inset-block-end: 0;
-        inset-inline: 0 0;
+        inset-inline: 0;
         width: 100%;
       `,
     ),
@@ -76,7 +77,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       float,
       css`
         inset-block-start: var(--draggable-panel-header-height, 0);
-        inset-inline: 0 0;
+        inset-inline: 0;
         width: 100%;
       `,
     ),

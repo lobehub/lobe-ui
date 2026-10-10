@@ -1,12 +1,12 @@
 'use client';
 
 import { getTokenStyleObject } from '@shikijs/core';
-import { cx } from 'antd-style';
 import type { CSSProperties } from 'react';
 import { memo, useRef } from 'react';
 import type { BuiltinTheme, ThemedToken } from 'shiki';
 
 import { useStreamHighlight } from '@/hooks/useStreamHighlight';
+import { cx } from '@/styles';
 
 import {
   createTokenFadeStore,

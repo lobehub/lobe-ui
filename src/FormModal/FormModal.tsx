@@ -1,12 +1,13 @@
 'use client';
 
-import { cx, useResponsive } from 'antd-style';
+import { useResponsive } from 'antd-style';
 import { memo } from 'react';
 
 import Button from '@/Button';
 import { Flexbox } from '@/Flex';
 import Form from '@/Form';
 import Modal from '@/Modal';
+import { cx } from '@/styles';
 
 import { styles as staticStyles } from './style';
 import type { FormModalProps } from './type';

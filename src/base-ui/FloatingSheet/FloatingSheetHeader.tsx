@@ -1,5 +1,6 @@
-import { cx } from 'antd-style';
 import { type ReactNode } from 'react';
+
+import { cx } from '@/styles';
 
 import { styles } from './style';
 

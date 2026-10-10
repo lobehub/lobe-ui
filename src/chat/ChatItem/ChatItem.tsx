@@ -1,11 +1,12 @@
 'use client';
 
-import { cx, useResponsive } from 'antd-style';
+import { useResponsive } from 'antd-style';
 import { memo, useEffect, useMemo, useRef, useState } from 'react';
 
 import { Flexbox } from '@/Flex';
 import chatMessages from '@/i18n/resources/en/chat';
 import { useTranslation } from '@/i18n/useTranslation';
+import { cx } from '@/styles';
 
 import Actions from './components/Actions';
 import Avatar from './components/Avatar';

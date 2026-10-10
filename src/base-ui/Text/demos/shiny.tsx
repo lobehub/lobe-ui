@@ -1,6 +1,5 @@
-import { Flexbox } from '@lobehub/ui';
+import { createStaticStyles, cssVar, cx, Flexbox } from '@lobehub/ui';
 import { Text, textGroupStyles, textStyles } from '@lobehub/ui/base-ui';
-import { createStaticStyles, cssVar, cx } from 'antd-style';
 import { Check, SquareChevronRight } from 'lucide-react';
 
 const styles = createStaticStyles(({ css, cssVar }) => ({

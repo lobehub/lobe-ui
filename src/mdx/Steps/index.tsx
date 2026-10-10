@@ -1,8 +1,8 @@
 'use client';
 
-import { cx } from 'antd-style';
 import type { FC } from 'react';
 
+import { cx } from '@/styles';
 import type { DivProps } from '@/types';
 
 import { styles } from './style';

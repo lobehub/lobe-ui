@@ -1,5 +1,4 @@
-import { Layout } from '@lobehub/ui';
-import { createStaticStyles } from 'antd-style';
+import { createStaticStyles, Layout } from '@lobehub/ui';
 
 import { Flexbox } from '@/Flex';
 

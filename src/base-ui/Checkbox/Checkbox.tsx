@@ -1,10 +1,10 @@
 'use client';
 
 import { Checkbox as BaseCheckbox } from '@base-ui/react/checkbox';
-import { cx } from 'antd-style';
 import { CheckIcon, Minus } from 'lucide-react';
 import { type CSSProperties, memo } from 'react';
 
+import { cx } from '@/styles';
 import Text from '@/Text';
 
 import { styles } from './style';

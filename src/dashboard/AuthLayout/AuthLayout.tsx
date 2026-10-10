@@ -1,9 +1,8 @@
 'use client';
 
-import { cx } from 'antd-style';
-
 import Text from '@/base-ui/Text';
 import { Flexbox } from '@/Flex';
+import { cx } from '@/styles';
 
 import { styles as surfaceStyles } from '../Surface/style';
 import { styles } from './style';

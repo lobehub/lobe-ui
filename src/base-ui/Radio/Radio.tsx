@@ -1,9 +1,9 @@
 'use client';
 
 import { Radio as BaseRadio } from '@base-ui/react/radio';
-import { cx } from 'antd-style';
 import { type CSSProperties, memo } from 'react';
 
+import { cx } from '@/styles';
 import Text from '@/Text';
 
 import { styles } from './style';

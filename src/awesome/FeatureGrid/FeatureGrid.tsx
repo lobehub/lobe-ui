@@ -1,10 +1,10 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { type CSSProperties, Fragment, memo } from 'react';
 
 import { renderLandingLink } from '@/awesome/landingLink';
 import Icon from '@/Icon';
+import { cx } from '@/styles';
 
 import { styles } from './style';
 import type { FeatureGridProps } from './type';

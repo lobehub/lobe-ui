@@ -1,6 +1,5 @@
-import { Flexbox, Tag } from '@lobehub/ui';
+import { cssVar, Flexbox, Tag } from '@lobehub/ui';
 import { Select } from '@lobehub/ui/base-ui';
-import { cssVar } from 'antd-style';
 import { useMemo, useState } from 'react';
 
 export default () => {

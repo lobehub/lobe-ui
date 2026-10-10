@@ -1,7 +1,6 @@
-import { createStaticStyles } from 'antd-style';
 import { cva } from 'class-variance-authority';
 
-import { lobeStaticStylish } from '@/styles';
+import { createStaticStyles, lobeStaticStylish } from '@/styles';
 
 export const DEFAULT_PADDING = '12px 16px';
 

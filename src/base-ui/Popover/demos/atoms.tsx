@@ -1,4 +1,5 @@
 import {
+  cssVar,
   Flexbox,
   PopoverArrow,
   PopoverPopup,
@@ -10,7 +11,6 @@ import {
   Tag,
 } from '@lobehub/ui';
 import { Button } from '@lobehub/ui/base-ui';
-import { cssVar } from 'antd-style';
 import { Blocks } from 'lucide-react';
 import { useState } from 'react';
 

@@ -1,9 +1,9 @@
 'use client';
 
-import { cx } from 'antd-style';
 import type { FC } from 'react';
 
 import Grid, { type GridProps } from '@/Grid';
+import { cx } from '@/styles';
 
 import { styles } from './style';
 

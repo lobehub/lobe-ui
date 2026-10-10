@@ -1,11 +1,11 @@
 'use client';
 
 import { Toast as BaseToast } from '@base-ui/react/toast';
-import { cssVar, cx } from 'antd-style';
 import { AlertTriangle, CheckCircle, Info, Loader2, X, XCircle } from 'lucide-react';
 import { memo, type ReactNode } from 'react';
 
 import Icon from '@/Icon';
+import { cssVar, cx } from '@/styles';
 
 import { useToastContext } from './context';
 import { actionVariants, rootVariants, styles } from './style';

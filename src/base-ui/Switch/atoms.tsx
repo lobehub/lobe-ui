@@ -1,11 +1,12 @@
 'use client';
 
 import { Switch } from '@base-ui/react/switch';
-import { cx } from 'antd-style';
 import { animate, motionValue } from 'motion';
 import type { CSSProperties, KeyboardEvent, MouseEvent, PointerEvent } from 'react';
 import { createContext, use, useEffect, useMemo, useRef, useState } from 'react';
 import useControlledState from 'use-merge-value';
+
+import { cx } from '@/styles';
 
 import { rootVariants, styles, thumbVariants } from './style';
 import type {

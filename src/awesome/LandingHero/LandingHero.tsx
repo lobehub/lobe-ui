@@ -1,9 +1,9 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { memo } from 'react';
 
 import { LandingActions } from '@/awesome/landingActions';
+import { cx } from '@/styles';
 
 import { styles } from './style';
 import type { LandingHeroProps } from './type';

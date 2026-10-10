@@ -1,10 +1,11 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { X } from 'lucide-react';
 import type { MotionProps } from 'motion/react';
 import type { CSSProperties, PointerEvent as ReactPointerEvent } from 'react';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
+
+import { cx } from '@/styles';
 
 import type { ModalRootProps } from '../Modal';
 import {

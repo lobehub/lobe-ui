@@ -1,8 +1,9 @@
 'use client';
 
 import { Divider as AntDivider } from 'antd';
-import { createStaticStyles, cx } from 'antd-style';
 import { type FC } from 'react';
+
+import { createStaticStyles, cx } from '@/styles';
 
 import type { FormDividerProps } from '../type';
 

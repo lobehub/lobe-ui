@@ -8,8 +8,8 @@ import Drawer from '../Drawer';
 import type { DrawerPlacement } from '../type';
 
 // Echoes each style key back as its own class name so surface variants stay assertable.
-vi.mock('antd-style', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('antd-style')>();
+vi.mock('@/styles/css', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/styles/css')>();
   return {
     ...actual,
     createStaticStyles: vi.fn((fn: any) => {

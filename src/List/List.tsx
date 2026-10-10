@@ -1,9 +1,9 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { memo } from 'react';
 
 import { Flexbox } from '@/Flex';
+import { cx } from '@/styles';
 
 import ListItem from './ListItem';
 import type { ListProps } from './type';

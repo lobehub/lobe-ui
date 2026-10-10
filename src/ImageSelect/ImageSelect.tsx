@@ -1,12 +1,12 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { memo } from 'react';
 import useControlledState from 'use-merge-value';
 
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 import Img from '@/Img';
+import { cx } from '@/styles';
 
 import { styles } from './styles';
 import type { ImageSelectProps } from './type';

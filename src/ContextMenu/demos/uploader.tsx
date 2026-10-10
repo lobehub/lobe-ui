@@ -8,8 +8,8 @@ import {
   Icon,
   Text,
 } from '@lobehub/ui';
+import { createStaticStyles } from '@lobehub/ui';
 import { Upload, type UploadFile, type UploadProps } from 'antd';
-import { createStaticStyles } from 'antd-style';
 import { FileIcon, UploadIcon, XIcon } from 'lucide-react';
 import { useMemo, useState } from 'react';
 

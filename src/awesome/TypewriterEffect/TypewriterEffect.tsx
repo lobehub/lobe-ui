@@ -1,9 +1,9 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { createElement, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useMotionComponent } from '@/MotionProvider';
+import { cx } from '@/styles';
 
 import { styles } from './style';
 import type { TypewriterEffectProps } from './type';

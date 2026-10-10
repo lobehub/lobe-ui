@@ -1,7 +1,8 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { type FC, useMemo } from 'react';
+
+import { cx } from '@/styles';
 
 import { styles } from './style';
 import type { LoadingDotsProps } from './type';

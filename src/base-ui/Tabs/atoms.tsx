@@ -1,8 +1,9 @@
 'use client';
 
 import { Tabs as BaseUITabs } from '@base-ui/react/tabs';
-import { cx } from 'antd-style';
 import { createContext, type FC, use, useMemo } from 'react';
+
+import { cx } from '@/styles';
 
 import { indicatorVariants, listVariants, styles, tabVariants } from './style';
 import type {

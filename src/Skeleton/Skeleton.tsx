@@ -1,9 +1,9 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { type FC } from 'react';
 
 import { Flexbox } from '@/Flex';
+import { cx } from '@/styles';
 
 import SkeletonAvatar from './SkeletonAvatar';
 import SkeletonParagraph from './SkeletonParagraph';

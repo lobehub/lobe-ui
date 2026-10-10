@@ -1,8 +1,9 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { useMemo } from 'react';
 import useControlledState from 'use-merge-value';
+
+import { cx } from '@/styles';
 
 import {
   ToggleGroupItem,

@@ -1,8 +1,9 @@
 'use client';
 
 import { Collapsible as BaseUICollapsible } from '@base-ui/react/collapsible';
-import { cx } from 'antd-style';
 import { memo } from 'react';
+
+import { cx } from '@/styles';
 
 import { accordionStyles } from '../Accordion/atoms';
 import type { CollapsibleProps } from './type';

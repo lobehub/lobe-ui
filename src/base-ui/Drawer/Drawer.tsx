@@ -1,9 +1,10 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { X } from 'lucide-react';
 import type { CSSProperties } from 'react';
 import { memo, useCallback, useMemo } from 'react';
+
+import { cx } from '@/styles';
 
 import {
   DrawerBackdrop,

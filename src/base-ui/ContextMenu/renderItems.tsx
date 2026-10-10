@@ -1,5 +1,4 @@
 import { ContextMenu } from '@base-ui/react/context-menu';
-import { cx } from 'antd-style';
 import { Check } from 'lucide-react';
 import {
   type ComponentProps,
@@ -27,6 +26,7 @@ import {
   type RenderOptions,
 } from '@/Menu/renderUtils';
 import type { MenuDividerType, MenuInfo, MenuItemType } from '@/Menu/type';
+import { cx } from '@/styles';
 import { preventDefaultAndStopPropagation } from '@/utils/dom';
 
 import { useLayerZIndex } from '../zIndex';

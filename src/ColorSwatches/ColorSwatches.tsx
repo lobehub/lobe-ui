@@ -1,6 +1,5 @@
 'use client';
 
-import { cssVar, cx } from 'antd-style';
 import chroma from 'chroma-js';
 import { CheckIcon } from 'lucide-react';
 import { type FC, useMemo } from 'react';
@@ -9,6 +8,7 @@ import useMergeState from 'use-merge-value';
 import { ColorPicker } from '@/base-ui/ColorPicker';
 import { Center, Flexbox } from '@/Flex';
 import Icon from '@/Icon';
+import { cssVar, cx } from '@/styles';
 import Tooltip from '@/Tooltip';
 import { safeReadableColor } from '@/utils/safeReadableColor';
 

@@ -1,6 +1,5 @@
-import { Flexbox, Popover, Tag, usePopoverContext } from '@lobehub/ui';
+import { cssVar, Flexbox, Popover, Tag, usePopoverContext } from '@lobehub/ui';
 import { Button } from '@lobehub/ui/base-ui';
-import { cssVar } from 'antd-style';
 import { Check, Code2 } from 'lucide-react';
 
 const Content = () => {

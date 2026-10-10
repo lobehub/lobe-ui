@@ -1,6 +1,6 @@
 'use client';
 
-import { cx, useThemeMode } from 'antd-style';
+import { useThemeMode } from 'antd-style';
 import {
   memo,
   type MouseEvent,
@@ -16,6 +16,7 @@ import {
 
 import Skeleton from '@/base-ui/Skeleton';
 import { Flexbox } from '@/Flex';
+import { cx } from '@/styles';
 
 import { usePreviewGroupContext } from './PreviewGroup';
 import { FALLBACK_DARK, FALLBACK_LIGHT, styles, variants } from './style';

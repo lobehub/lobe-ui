@@ -1,7 +1,8 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { type CSSProperties, memo } from 'react';
+
+import { cx } from '@/styles';
 
 import { styles } from './style';
 import type { BentoGridProps } from './type';

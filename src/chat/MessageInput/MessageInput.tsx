@@ -1,6 +1,6 @@
 'use client';
 
-import { cx, useResponsive } from 'antd-style';
+import { useResponsive } from 'antd-style';
 import { memo, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 
@@ -10,6 +10,7 @@ import CodeEditor from '@/CodeEditor';
 import { Flexbox } from '@/Flex';
 import { KeyMapEnum } from '@/Hotkey/const';
 import { combineKeys } from '@/Hotkey/utils';
+import { cx } from '@/styles';
 import Tooltip from '@/Tooltip';
 
 import { styles } from './style';

@@ -1,6 +1,5 @@
 'use client';
 
-import { createStaticStyles, cx } from 'antd-style';
 import type { FC } from 'react';
 
 import A from '@/A';
@@ -9,6 +8,7 @@ import Block, { type BlockProps } from '@/Block';
 import { Flexbox } from '@/Flex';
 import Icon, { type IconProps } from '@/Icon';
 import Img from '@/Img';
+import { createStaticStyles, cx } from '@/styles';
 
 const styles = createStaticStyles(({ css, cssVar }) => {
   return {

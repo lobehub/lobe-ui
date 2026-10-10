@@ -1,10 +1,10 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { memo, useCallback } from 'react';
 
 import { useStableValue } from '@/hooks/useStableValue';
 import { PreviewGroup } from '@/Image';
+import { cx } from '@/styles';
 
 import { MarkdownProvider } from './components/MarkdownProvider';
 import { useDelayedAnimated } from './components/useDelayedAnimated';

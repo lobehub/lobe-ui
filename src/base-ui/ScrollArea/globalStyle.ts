@@ -1,6 +1,8 @@
 'use client';
 
-import { createGlobalStyle, css } from 'antd-style';
+import { createGlobalStyle } from 'antd-style';
+
+import { css } from '@/styles';
 
 /**
  * Register animatable custom properties used by scroll-driven animations.

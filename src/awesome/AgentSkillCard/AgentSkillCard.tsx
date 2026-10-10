@@ -1,6 +1,5 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { Bot, UserRound } from 'lucide-react';
 import { memo, useState } from 'react';
 
@@ -8,6 +7,7 @@ import { renderLandingIcon } from '@/awesome/landingIcon';
 import Segmented from '@/base-ui/Segmented';
 import Icon from '@/Icon';
 import Snippet from '@/Snippet';
+import { cx } from '@/styles';
 
 import { DEFAULT_SKILL_AGENTS } from './agents';
 import { styles } from './style';

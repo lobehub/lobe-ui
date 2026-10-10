@@ -1,9 +1,9 @@
 'use client';
 
-import { cssVar, cx } from 'antd-style';
 import { memo } from 'react';
 
 import { Flexbox } from '@/Flex';
+import { cssVar, cx } from '@/styles';
 
 import Avatar from '../Avatar';
 import type { AvatarGroupProps } from '../type';

@@ -10,7 +10,7 @@ if (!globalThis.ResizeObserver) {
   } as any;
 }
 
-vi.mock('antd-style', async (importOriginal) => {
+vi.mock('@/styles/css', async (importOriginal) => {
   const actual = await importOriginal<any>();
   return {
     ...actual,

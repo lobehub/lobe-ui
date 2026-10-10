@@ -1,9 +1,10 @@
 'use client';
 
-import { cssVar, cx, useThemeMode } from 'antd-style';
+import { useThemeMode } from 'antd-style';
 import { memo, useMemo } from 'react';
 
 import Button from '@/base-ui/Button';
+import { cssVar, cx } from '@/styles';
 
 import { styles } from './style';
 import type { GradientButtonProps } from './type';

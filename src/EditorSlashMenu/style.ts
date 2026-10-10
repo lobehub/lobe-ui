@@ -1,6 +1,6 @@
 'use client';
 
-import { createStaticStyles } from 'antd-style';
+import { createStaticStyles } from '@/styles';
 
 export const styles = createStaticStyles(({ css }) => ({
   // Optional hidden input for keyboard navigation (opt-in).
