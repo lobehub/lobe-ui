@@ -1,16 +1,17 @@
 ---
-name: building-with-lobe-ui
+name: lobe-design
 description: >
-  Build UI with the LobeHub design ecosystem — @lobehub/ui (plus its base-ui, chat, mobile,
-  awesome, brand, mdx, i18n namespaces), @lobehub/icons, @lobehub/charts, @lobehub/fluent-emoji
-  and @lobehub/streamdown. Covers provider setup, component selection and semantics, design
-  tokens via cssVar, craft rules against AI-generated blandness, and a six-dimension acceptance
-  check. Trigger on lobe-ui, lobehub, LobeChat UI, AIGC app UI, build a page / component /
-  chat interface / dashboard with lobe-ui, pick a lobe-ui component, lobe-ui theme or tokens,
-  组件选择, 设计准则.
+  Build UI with the LobeHub design system — @lobehub/ui/base-ui, the controlled form at
+  @lobehub/ui/base-ui/form, and the chat, mobile, dashboard, awesome, brand, mdx, and i18n
+  namespaces, plus @lobehub/icons, @lobehub/charts, @lobehub/fluent-emoji and
+  @lobehub/streamdown. Covers provider setup, component selection, cssVar tokens, craft rules
+  against AI-generated blandness, and a six-dimension acceptance check. Trigger on lobe-design,
+  lobe-ui, lobehub, LobeChat UI, AIGC app UI, dashboard, console, build a page / component /
+  chat interface with lobe-ui, pick a lobe-ui component, lobe-ui theme or tokens, 组件选择,
+  设计准则, 控制台.
 ---
 
-# 用 lobe-ui 构建界面
+# lobe-design
 
 这份 skill 让「用 lobe-ui 写界面」从碰运气变成可控：把组件语义、视觉取值、工艺标准和验收机制显式化，在生成的每一步介入，而不是在最后靠一条 prompt 补救。
 
@@ -22,6 +23,7 @@ description: >
 | ------------------------------------ | ------------------------------------- |
 | 这个界面该是什么、为什么             | 上游的产品设计判断，不在本 skill 范围 |
 | 用哪个组件、取哪个 token、算不算合格 | **本 skill**                          |
+| 营销落地页的楼层怎么排               | `building-landing-home`               |
 | 浏览器里真实跑起来的证据             | 本仓库的 `local-testing` skill        |
 
 ## 选最小运行模式
@@ -39,9 +41,9 @@ description: >
 
 ## 硬性前提：搞对这三件事，否则全是白工
 
-**一、`@lobehub/ui/base-ui` 是当前的规范命名空间。** 顶层的 `Button`、`Modal`、`Select`、`Tabs`、`Text`、`Tag`、`Avatar`、`ActionIcon`、`Segmented`、`Skeleton`、`Dropdown` 等 27 个经典组件已标记 `@deprecated`，它们是 antd 包装层。新代码一律从 `@lobehub/ui/base-ui` 导入，`@lobehub/ui/eslint` 会强制这条规则。完整清单见 [components.md](references/components.md) 的 C-01。
+**一、新代码从 `@lobehub/ui/base-ui` 进，表单单独从 `@lobehub/ui/base-ui/form` 进。** 顶层同名组件是 antd 包装层，已被 `@lobehub/ui/eslint` 标成 deprecated。antd 里已有 base-ui 对应实现的组件同样禁掉，包括 `Table`、`Badge`、`Progress`、`Spin`、`Result`、`Empty`、`Card`、`Typography`。`Form` 不要从 `@lobehub/ui` 或 `base-ui` 桶导入——桶里那份是即将删除的非受控实现。完整清单见 [components.md](references/components.md) 的 C-01。
 
-**二、样式只写 `createStaticStyles` + `cssVar`。** `createStyles` 已被 eslint 禁用。仓库里约 170 个 `style.ts` 全部是这个写法，零例外：
+**二、样式只写 `createStaticStyles` + `cssVar`。** `createStyles` 已被 eslint 禁用。组件的 `style.ts` 一律这个写法：
 
 ```ts
 import { createStaticStyles } from 'antd-style';
@@ -107,14 +109,15 @@ L6 验收标准     Given/When/Then · 完成的定义
 
 先判断这是哪类页面，再选骨架，不要从空白页拼组件：
 
-| 场景                  | 起点                                                                                      |
-| --------------------- | ----------------------------------------------------------------------------------------- |
-| 文档 / 应用页面外壳   | `Layout` + `LayoutHeader` / `LayoutSidebar` / `LayoutMain` / `LayoutToc` / `LayoutFooter` |
-| 对话界面              | `ChatHeader` → `ChatList` → `ChatInputArea`（组合顺序见 C-04）                            |
-| 移动端外壳            | `@lobehub/ui/mobile` 的 `ChatHeader` / `ChatInputArea` / `TabBar` / `SafeArea`            |
-| 固定窄导航栏          | `SideNav`；需要可拖拽伸缩用 `DraggableSideNav`                                            |
-| 可伸缩侧栏 / 浮动面板 | `base-ui` 的 `DraggablePanel`                                                             |
-| 营销落地页            | `@lobehub/ui/awesome` 的 `Hero` / `Features` / `GridShowcase`                             |
+| 场景                  | 起点                                                                                                         |
+| --------------------- | ------------------------------------------------------------------------------------------------------------ |
+| 文档 / 应用页面外壳   | `Layout` + `LayoutHeader` / `LayoutSidebar` / `LayoutMain` / `LayoutToc` / `LayoutFooter`                    |
+| 产品控制台            | `@lobehub/ui/dashboard`：`ConsoleShell` + `ConsoleNav` + `PageHeader` + `Surface`。指标、筛选、登录框见 C-07 |
+| 对话界面              | `ChatHeader` → `ChatList` → `ChatInputArea`（组合顺序见 C-04）                                               |
+| 移动端外壳            | `@lobehub/ui/mobile` 的 `ChatHeader` / `ChatInputArea` / `TabBar` / `SafeArea`                               |
+| 固定窄导航栏          | `SideNav`；需要可拖拽伸缩用 `DraggableSideNav`                                                               |
+| 可伸缩侧栏 / 浮动面板 | `base-ui` 的 `DraggablePanel`                                                                                |
+| 营销落地页            | `building-landing-home` skill。组件在 `@lobehub/ui/awesome`，不要在这里现拼 `Hero`                           |
 
 骨架决定主区、侧栏、操作区、状态区的关系。**这一步错了整个页面都偏**——一个列表页被做成卡片墙、一个批量任务页没有批量操作区，后面怎么改组件都救不回来。
 
@@ -144,23 +147,26 @@ L6 验收标准     Given/When/Then · 完成的定义
 
 发现问题时不要在最外层改 prompt 然后等下一次结果。按下表定位到环节和规则编号：
 
-| 症状                            | 回到哪一步     | 规则                                           |
-| ------------------------------- | -------------- | ---------------------------------------------- |
-| 空态 / 加载 / 错误 / 权限态缺失 | 规划的 L5      | [craft.md](references/craft.md) K-05           |
-| 页面结构像卡片墙，不像看板      | 搭骨架         | 本文第 2 步 + K-09                             |
-| 组件外观像但语义用错            | 填充           | [components.md](references/components.md) C-03 |
-| 用了已废弃的顶层组件            | 填充           | [components.md](references/components.md) C-01 |
-| 裸 hex、裸 rgba                 | 细化的视觉取值 | [design.md](references/design.md) D-01 / D-10  |
-| 状态色是新造的                  | 细化的视觉取值 | [design.md](references/design.md) D-03         |
-| 一眼是 AI 模板                  | 细化的工艺     | [craft.md](references/craft.md) K-01           |
-| 落地页效果被搬进控制台          | 填充           | [components.md](references/components.md) C-06 |
-| 图表颜色与主题脱节              | 填充的生态选型 | [ecosystem.md](references/ecosystem.md) E-02   |
-| 说不清哪里不对                  | 评估           | [evaluator.md](references/evaluator.md)        |
+| 症状                                     | 回到哪一步     | 规则                                           |
+| ---------------------------------------- | -------------- | ---------------------------------------------- |
+| 空态 / 加载 / 错误 / 权限态缺失          | 规划的 L5      | [craft.md](references/craft.md) K-05           |
+| 页面结构像卡片墙，不像看板               | 搭骨架         | 本文第 2 步 + K-09                             |
+| 组件外观像但语义用错                     | 填充           | [components.md](references/components.md) C-03 |
+| 用了已废弃的顶层组件或 antd 对应件       | 填充           | [components.md](references/components.md) C-01 |
+| 表单从错误入口导入，或 schema 写在渲染里 | 填充           | [components.md](references/components.md) C-02 |
+| 裸 hex、裸 rgba                          | 细化的视觉取值 | [design.md](references/design.md) D-01 / D-10  |
+| 状态色是新造的                           | 细化的视觉取值 | [design.md](references/design.md) D-03         |
+| 一眼是 AI 模板                           | 细化的工艺     | [craft.md](references/craft.md) K-01           |
+| 落地页效果被搬进控制台                   | 填充           | [components.md](references/components.md) C-06 |
+| 图表颜色与主题脱节                       | 填充的生态选型 | [ecosystem.md](references/ecosystem.md) E-02   |
+| 说不清哪里不对                           | 评估           | [evaluator.md](references/evaluator.md)        |
 
 ## Anti-patterns
 
-- 从 `antd` 直接导入 `Button` / `Select` / `Modal` 等有 base-ui 对应实现的组件，或用 antd 的 `message` / `notification` 而不是 base-ui 的 `toast`。
+- 从 `antd` 导入已有 base-ui 实现的组件（`Button`、`Table`、`Select`、`Modal`、`Badge`、`Spin`、`Empty`、`Card`、`Typography` 等），或用 antd 的 `message` / `notification` 而不是 base-ui 的 `toast`。
+- 从 `@lobehub/ui` 或 `@lobehub/ui/base-ui` 桶导入 `Form`。受控表单只从 `@lobehub/ui/base-ui/form` 导入。
 - 凭直觉在顶层和 `base-ui` 之间二选一。顶层的同名组件大多是 deprecated 的 antd 包装层。
+- 手写 spinner、用 `Icon` 的 spin、或引入 `thinking-orbs`。等待指示按 [components.md](references/components.md) C-02 的分档选 `Spin` / `Skeleton` / `LoadingDots`。
 - 把示例和模板当抄板。骨架是起点，业务字段、内容密度、状态清单都要按真实需求调。
 - 在需要 `cssVar` 的地方写死值。找不到对应 token 时明示缺口（[design.md](references/design.md) 的 D-11），不要悄悄写一个 hex 绕过系统。
 - 为了一个图表引第二个图表库，或为了一个模型徽标去抓远程 SVG。
