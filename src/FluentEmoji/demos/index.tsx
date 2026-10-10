@@ -1,7 +1,6 @@
 import { getEmoji, getEmojiNameByCharacter } from '@lobehub/fluent-emoji';
-import { FluentEmoji, type FluentEmojiProps } from '@lobehub/ui';
+import { Button, FluentEmoji, type FluentEmojiProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
-import { Button } from 'antd';
 
 import { Flexbox } from '@/Flex';
 

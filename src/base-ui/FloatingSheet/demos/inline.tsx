@@ -1,6 +1,5 @@
-import { Avatar, cssVar, Flexbox, Text } from '@lobehub/ui';
+import { Avatar, cssVar, Flexbox, Tag, Text } from '@lobehub/ui';
 import { Button, FloatingSheet, type FloatingSheetProps } from '@lobehub/ui/base-ui';
-import { Tag } from 'antd';
 import { Bookmark, Heart, MessageCircle, Send, Share2 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -141,12 +140,8 @@ export default () => {
         <article style={articleStyle}>
           <header style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             <Flexbox horizontal gap={8}>
-              <Tag bordered={false} color="geekblue" style={{ margin: 0 }}>
-                Design Engineering
-              </Tag>
-              <Tag bordered={false} color="purple" style={{ margin: 0 }}>
-                Layout
-              </Tag>
+              <Tag color="geekblue">Design Engineering</Tag>
+              <Tag color="purple">Layout</Tag>
             </Flexbox>
             <Text style={{ fontSize: 22, fontWeight: 700, lineHeight: 1.3 }}>
               Anchoring, not overlaying: a quieter kind of bottom sheet

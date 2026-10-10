@@ -1,4 +1,4 @@
-import { cssVar, Flexbox, Text } from '@lobehub/ui';
+import { cssVar, Flexbox, Switch, Text } from '@lobehub/ui';
 import {
   Button,
   ModalBackdrop,
@@ -11,7 +11,6 @@ import {
   ModalRoot,
   ModalTitle,
 } from '@lobehub/ui/base-ui';
-import { Switch } from 'antd';
 import { useState } from 'react';
 
 const notificationItems = [

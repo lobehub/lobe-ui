@@ -1,4 +1,4 @@
-import { createStaticStyles, injectGlobal } from 'antd-style';
+import { createStaticStyles, injectGlobal } from '@lobehub/ui';
 
 export const styles = createStaticStyles(({ css, cssVar }) => ({
   actionGroup: css`

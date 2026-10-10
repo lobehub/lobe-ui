@@ -253,7 +253,7 @@ const LobeUiWrappedCase = () => {
       <div className={styles.triggerRow}>
         <TooltipGroup openDelay={0}>
           <DropdownMenuRoot open={rootOpen} onOpenChange={handleRootOpenChange}>
-            <DropdownMenuTrigger nativeButton={false}>
+            <DropdownMenuTrigger>
               <ActionIcon
                 icon={PlusIcon}
                 title="Add files, skills, and more context"

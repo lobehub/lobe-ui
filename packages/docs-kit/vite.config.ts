@@ -85,7 +85,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: createAliasEntries(docsConfig.alias),
-    dedupe: ['@lobehub/ui', 'antd', 'antd-style', 'react', 'react-dom'],
+    dedupe: ['@lobehub/ui', 'react', 'react-dom'],
     tsconfigPaths: true,
   },
   ssr: {

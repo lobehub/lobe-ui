@@ -1,4 +1,4 @@
-import { extractStaticStyle } from 'antd-style';
+import { extractStaticStyle } from '@lobehub/ui';
 import { prerender } from 'react-dom/static';
 import { type EntryContext, ServerRouter } from 'react-router';
 
@@ -40,7 +40,7 @@ export default async function handleRequest(
     }
 
     const html = await new Response(prelude).text();
-    const styles = extractStaticStyle(html, { includeAntd: false })
+    const styles = extractStaticStyle(html)
       .map(({ tag }) => tag)
       .join('');
     // replacer fn: extracted CSS can contain `$'` (e.g. content:'$ ') which

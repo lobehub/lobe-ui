@@ -4,7 +4,6 @@ import { ThemeProvider as NextThemeProvider, useTheme } from 'next-themes';
 import { type PropsWithChildren, useEffect, useState } from 'react';
 import siteConfig from 'virtual:lobedocs/site-config';
 
-import { StyleRegistry } from './StyleRegistry';
 import { THEME_STORAGE_KEY } from './themeConstants';
 
 export type ThemePreference = 'light' | 'system' | 'dark';
@@ -61,9 +60,7 @@ export function SiteProviders({ children }: PropsWithChildren) {
       forcedTheme={forcedTheme}
       storageKey={THEME_STORAGE_KEY}
     >
-      <StyleRegistry>
-        <LibraryProviders>{children}</LibraryProviders>
-      </StyleRegistry>
+      <LibraryProviders>{children}</LibraryProviders>
     </NextThemeProvider>
   );
 }

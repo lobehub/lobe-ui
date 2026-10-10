@@ -1,14 +1,11 @@
-import { Button, useTranslation } from '@lobehub/ui';
+import { Block, Button, Flexbox, Grid, Tag, Text, useTranslation } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
-import { Card, Col, Row, Space, Tag, Typography } from 'antd';
 import { motion } from 'motion/react';
 
 import { I18nProvider } from '@/i18n';
 import * as enResources from '@/i18n/resources/en';
 import * as zhCnResources from '@/i18n/resources/zhCn';
 import type { TranslationKey } from '@/i18n/types';
-
-const { Text } = Typography;
 
 type Section = {
   actions?: readonly string[];
@@ -52,49 +49,50 @@ const LocalePreview = () => {
   const { t } = useTranslation();
 
   return (
-    <Row gutter={[20, 20]}>
+    <Grid gap={20} maxItemWidth={320} rows={2}>
       {sections.map((section) => (
-        <Col key={section.title} lg={12} xs={24}>
-          <Card title={section.title}>
+        <Block gap={16} key={section.title} padding={16} variant="outlined">
+          <Flexbox gap={4}>
+            <Text strong>{section.title}</Text>
             <Text type="secondary">{section.description}</Text>
-            {section.actions ? (
-              <Space wrap size={[8, 8]} style={{ marginTop: 16 }}>
-                {section.actions.map((key, index) => (
-                  <Button
-                    danger={key.includes('delete')}
-                    key={key}
-                    size="small"
-                    type={index === 0 ? 'primary' : 'default'}
+          </Flexbox>
+          {section.actions ? (
+            <Flexbox horizontal gap={8} wrap="wrap">
+              {section.actions.map((key, index) => (
+                <Button
+                  danger={key.includes('delete')}
+                  key={key}
+                  size="small"
+                  type={index === 0 ? 'primary' : 'default'}
+                >
+                  {t(key as TranslationKey)}
+                </Button>
+              ))}
+            </Flexbox>
+          ) : null}
+          {section.details ? (
+            <Flexbox gap={8}>
+              {section.details.map((key) => (
+                <Flexbox gap={2} key={key}>
+                  <Text
+                    fontSize={12}
+                    type="secondary"
+                    wordBreak="break-word"
+                    style={{
+                      fontFamily:
+                        'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
+                    }}
                   >
-                    {t(key as TranslationKey)}
-                  </Button>
-                ))}
-              </Space>
-            ) : null}
-            {section.details ? (
-              <Space direction="vertical" size={8} style={{ marginTop: 16 }}>
-                {section.details.map((key) => (
-                  <Space direction="vertical" key={key} size={2}>
-                    <Text
-                      type="secondary"
-                      style={{
-                        fontFamily:
-                          'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace',
-                        fontSize: 12,
-                        wordBreak: 'break-word',
-                      }}
-                    >
-                      {key}
-                    </Text>
-                    <Text>{t(key as TranslationKey)}</Text>
-                  </Space>
-                ))}
-              </Space>
-            ) : null}
-          </Card>
-        </Col>
+                    {key}
+                  </Text>
+                  <Text>{t(key as TranslationKey)}</Text>
+                </Flexbox>
+              ))}
+            </Flexbox>
+          ) : null}
+        </Block>
       ))}
-    </Row>
+    </Grid>
   );
 };
 
@@ -114,19 +112,17 @@ export default () => {
 
   return (
     <StoryBook levaStore={store}>
-      <Space direction="vertical" size={16} style={{ width: '100%' }}>
-        <Card size="small">
-          <Space wrap align="center">
-            <Text type="secondary">Active locale</Text>
-            <Tag color="blue">{control.locale}</Tag>
-            <Text type="secondary">Resources</Text>
-            <Tag color="geekblue">Static</Tag>
-          </Space>
-        </Card>
+      <Flexbox gap={16} width="100%">
+        <Block horizontal align="center" gap={8} padding={12} variant="outlined" wrap="wrap">
+          <Text type="secondary">Active locale</Text>
+          <Tag color="blue">{control.locale}</Tag>
+          <Text type="secondary">Resources</Text>
+          <Tag color="geekblue">Static</Tag>
+        </Block>
         <I18nProvider locale={control.locale} motion={motion} resources={resources}>
           <LocalePreview />
         </I18nProvider>
-      </Space>
+      </Flexbox>
     </StoryBook>
   );
 };

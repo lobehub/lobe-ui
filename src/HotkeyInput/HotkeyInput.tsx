@@ -1,6 +1,5 @@
 'use client';
 
-import { type InputRef } from 'antd';
 import { isEqual } from 'es-toolkit/compat';
 import { Undo2Icon, XIcon } from 'lucide-react';
 import {
@@ -53,7 +52,7 @@ const HotkeyInput = memo<HotkeyInputProps>(
     const [isFocused, setIsFocused] = useState(false);
     const [hasConflict, setHasConflict] = useState(false);
     const [hasInvalidCombination, setHasInvalidCombination] = useState(false);
-    const inputRef = useRef<InputRef>(null);
+    const inputRef = useRef<HTMLInputElement>(null);
     const { isDarkMode } = useThemeMode();
     const { t } = useTranslation(hotkeyMessages);
     const isAppleDevice = useMemo(() => checkIsAppleDevice(isApple), [isApple]);

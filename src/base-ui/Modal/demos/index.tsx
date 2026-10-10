@@ -1,6 +1,5 @@
-import { cssVar, Flexbox, Text } from '@lobehub/ui';
+import { cssVar, Flexbox, Tag, Text } from '@lobehub/ui';
 import { Button, Modal } from '@lobehub/ui/base-ui';
-import { Tag } from 'antd';
 import { useState } from 'react';
 
 // ─── 1. Basic Modal：行内预览链接 ───────────────────────────────
@@ -134,9 +133,7 @@ const NoFooterDemo = () => {
         <Text style={{ flex: 1, fontSize: 13 }}>
           <strong>What's new in v2.4</strong> — Draggable modals, fullscreen support & more
         </Text>
-        <Tag color="orange" style={{ margin: 0 }}>
-          New
-        </Tag>
+        <Tag color="orange">New</Tag>
       </Flexbox>
 
       <Modal
