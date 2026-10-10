@@ -2,6 +2,28 @@
 
 # Changelog
 
+## [5.57.2](https://github.com/lobehub/lobe-ui/compare/v5.57.1...v5.57.2) (2026-10-09)
+
+### 🐛 Bug Fixes
+
+- **tooltip**: Stop one-line text wrapping during group trigger switch ([da2215a](https://github.com/lobehub/lobe-ui/commit/da2215a))
+
+## [5.57.1](https://github.com/lobehub/lobe-ui/compare/v5.57.0...v5.57.1) (2026-10-08)
+
+### 🎫 Chores
+
+- **release**: Docs-kit@5.27.5 [skip ci] ([6b4ecd3](https://github.com/lobehub/lobe-ui/commit/6b4ecd3))
+
+### 🐛 Bug Fixes
+
+- **button**: Remove dark seam between disabled solid SplitButton halves ([03edf5a](https://github.com/lobehub/lobe-ui/commit/03edf5a))
+
+# [5.57.0](https://github.com/lobehub/lobe-ui/compare/v5.56.0...v5.57.0) (2026-10-06)
+
+### ✨ Features
+
+- **eslint**: Point old Form imports at @lobehub/ui/base-ui/form, closes [#693](https://github.com/lobehub/lobe-ui/issues/693) ([d792417](https://github.com/lobehub/lobe-ui/commit/d792417))
+
 # [5.56.0](https://github.com/lobehub/lobe-ui/compare/v5.55.0...v5.56.0) (2026-10-05)
 
 ### ✨ Features
