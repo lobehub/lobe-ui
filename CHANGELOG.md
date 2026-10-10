@@ -2,6 +2,40 @@
 
 # Changelog
 
+# [6.0.0-beta.1](https://github.com/lobehub/lobe-ui/compare/v5.57.3...v6.0.0-beta.1) (2026-10-10)
+
+### ♻ Code Refactoring
+
+- **styles**: Migrate the remaining components to StyleX, closes [#705](https://github.com/lobehub/lobe-ui/issues/705) ([4ee89e4](https://github.com/lobehub/lobe-ui/commit/4ee89e4))
+- **styles**: Own the design token engine with createLobeToken, closes [#695](https://github.com/lobehub/lobe-ui/issues/695) ([d88deae](https://github.com/lobehub/lobe-ui/commit/d88deae))
+- Flatten src/base-ui into src and drop the base-ui subpaths, closes [#702](https://github.com/lobehub/lobe-ui/issues/702) ([b8b0921](https://github.com/lobehub/lobe-ui/commit/b8b0921))
+
+### ✨ Features
+
+- **styles**: Compile component styles with StyleX (core + pilot), closes [#701](https://github.com/lobehub/lobe-ui/issues/701) ([815ccb6](https://github.com/lobehub/lobe-ui/commit/815ccb6))
+- **styles**: Own the antd-style static styling API on --lobe-* variables, closes [#697](https://github.com/lobehub/lobe-ui/issues/697) ([c944276](https://github.com/lobehub/lobe-ui/commit/c944276))
+- **styles**: Theme.css, ThemeScope and provider-free theme hooks, closes [#698](https://github.com/lobehub/lobe-ui/issues/698) ([e3d49c6](https://github.com/lobehub/lobe-ui/commit/e3d49c6))
+- Drop antd components, ThemeProvider and merge base-ui into the root export, closes [#699](https://github.com/lobehub/lobe-ui/issues/699) ([86977ad](https://github.com/lobehub/lobe-ui/commit/86977ad))
+- Remove antd, antd-style, [@ant-design](https://github.com/ant-design) and rc-* dependencies, closes [#700](https://github.com/lobehub/lobe-ui/issues/700) ([aba687a](https://github.com/lobehub/lobe-ui/commit/aba687a))
+
+### 🎫 Chores
+
+- **deps**: Require motion ^13, closes [#683](https://github.com/lobehub/lobe-ui/issues/683) ([545acc7](https://github.com/lobehub/lobe-ui/commit/545acc7))
+- **deps**: Upgrade eslint 10, vitest 5, tsdown 0.23 and docs-kit toolchain majors, closes [#682](https://github.com/lobehub/lobe-ui/issues/682) ([0e4abe7](https://github.com/lobehub/lobe-ui/commit/0e4abe7))
+- **release**: Force major release ([6d9ed20](https://github.com/lobehub/lobe-ui/commit/6d9ed20))
+
+### 🐛 Bug Fixes
+
+- **styles**: Restore root typography that antd App used to apply, closes [#703](https://github.com/lobehub/lobe-ui/issues/703) ([3a6e79e](https://github.com/lobehub/lobe-ui/commit/3a6e79e))
+
+### 💥 BREAKING CHANGES
+
+- the `@lobehub/ui/base-ui` and `@lobehub/ui/base-ui/form` subpaths are removed; import from `@lobehub/ui` and `@lobehub/ui/form`. The `@lobehub/ui/no-base-ui-subpath` eslint rule autofixes old imports.
+- `antd` and `antd-style` are no longer dependencies or peers. Import `createStaticStyles`, `cssVar`, `cx`, `css`, `keyframes`, `responsive`, `createGlobalStyle`, `useTheme`, `useThemeMode`, `useResponsive` and `extractStaticStyle` from `@lobehub/ui` instead of `antd-style`; antd type re-exports (`ImageProps`, `SelectProps`, `InputProps`, `InputRef`, …) are replaced by React types.
+- `@lobehub/ui` now exports the base-ui component set; the antd-based components (Alert, AutoComplete, Avatar, Burger, Button, Collapse, DatePicker, Drawer, Dropdown, Input family, Modal, Segmented, Select, Tabs, Tag, Form / FormModal, Menu, Footer, Toc, ThemeSwitch, SliderWithInput) and the legacy Accordion, ActionIcon, Checkbox, DraggablePanel, List, Skeleton, Text are replaced by their base-ui versions. `ThemeProvider` is removed: import `@lobehub/ui/theme.css`, set `data-theme` / `data-primary-color` / `data-neutral-color` on `<html>` (`setLobeTheme`, `LobeThemeScript`) or wrap a subtree in `ThemeScope`. `@lobehub/ui/static-css*`, `lobeCustomToken`, `lobeCustomStylish` and `createLobeAntdTheme` are removed; `cssVar` resolves to `var(--lobe-*)` only.
+- **styles**: `controlOutline` is dropped from the lobe token; `generateColorPalette` / `generateColorNeutralPalette` return precise key types instead of `Partial<AliasToken>`.
+- **deps**: `motion` peer dependency is now ^13.
+
 ## [5.57.3](https://github.com/lobehub/lobe-ui/compare/v5.57.2...v5.57.3) (2026-10-10)
 
 ### 🐛 Bug Fixes
