@@ -4,30 +4,16 @@
 
 ## 安装清单
 
-`lobe-bench` 是一个实际在跑的消费方应用，它的依赖组合是这套生态的可信参考：
+按 `@lobehub/ui` 自己声明的 peer 装，不要另锁一套旧版本：
 
-```jsonc
-{
-  "@lobehub/ui": "^5.47.1",
-  "@lobehub/icons": "^5.18.0",
-  "@lobehub/charts": "^5.5.1",
-  "@lobehub/fluent-emoji": "^4.1.1",
-  "antd": "^6.6.4",
-  "antd-style": "^4.1.0",
-  "motion": "^13.4.0",
-  "react": "^19.3.0",
-  "react-dom": "^19.3.0",
-}
-```
+- `react` / `react-dom` `^19`
+- `antd` `^6.1.1` —— `ThemeProvider` 和少数还没迁走的顶层组件仍然需要它。组件从 `base-ui` 导入，不要从 antd 导入 [components.md](components.md) C-01 禁掉的那些。
+- `motion` `^12`
+- `@lobehub/icons` `^5` 与 `@lobehub/fluent-emoji` `^4` —— 两者是 peer。不装的话 `Avatar`、`FluentEmoji`、`EmojiPicker` 会在运行时失败。`@lobehub/icons` 和 `@lobehub/ui` 互为 peer，必须同时安装。
 
-`@lobehub/icons` 和 `@lobehub/fluent-emoji` 是 `@lobehub/ui` 的 **peerDependency**——不装它们，`Avatar`、`FluentEmoji`、`EmojiPicker` 会在运行时失败。
+写 `style.ts` 时直接从 `antd-style` 导入 `createStaticStyles`（`^4`）。它是 `@lobehub/ui` 的依赖，应用侧自己写样式时仍要装上。
 
-两处已知的宽松/过时 peer 声明，按上面的实际组合装即可，不要被声明误导：
-
-- `@lobehub/ui` 的 peer 写 `motion ^12.0.0`，实际应用跑在 `^13.4.0`。
-- `@lobehub/charts` 的 peer 写 `@lobehub/ui ^4.3.3`，实际配的是 v5。
-
-`@lobehub/icons` 和 `@lobehub/ui` 互为 peer（都要求对方 `^5.0.0`），必须同时安装。
+`@lobehub/charts` 是独立包，不是 `@lobehub/ui` 的依赖。`@lobehub/streamdown` 是直接依赖，不要再单独接一份去驱动 markdown。
 
 ## E-01 `@lobehub/charts` —— 图表
 
@@ -210,15 +196,15 @@ lobe-ui 根入口另外转出了 `rehypeStreamAnimated`，用于需要自定义 
 
 ## E-06 边界
 
-| 需要                      | 归属                                                      |
-| ------------------------- | --------------------------------------------------------- |
-| 图表                      | `@lobehub/charts`                                         |
-| AI 模型 / 厂商徽标        | `@lobehub/icons`                                          |
-| OAuth / 社交徽标          | `@lobehub/ui/icons`                                       |
-| 通用界面图标（lucide）    | `@lobehub/ui` 的 `Icon`                                   |
-| emoji                     | `@lobehub/ui` 的 `FluentEmoji`                            |
-| markdown / 流式输出       | `@lobehub/ui` 的 `Markdown`                               |
-| 表格 / 徽标 / 进度 / 评分 | **antd**（这个生态不提供）                                |
-| 文档站工程                | `@lobehub/docs-kit`（`lobedocs` CLI，本仓库 `packages/`） |
+| 需要                             | 归属                                                              |
+| -------------------------------- | ----------------------------------------------------------------- |
+| 图表                             | `@lobehub/charts`                                                 |
+| AI 模型 / 厂商徽标               | `@lobehub/icons`                                                  |
+| OAuth / 社交徽标                 | `@lobehub/ui/icons`                                               |
+| 通用界面图标（lucide）           | `@lobehub/ui` 的 `Icon`                                           |
+| emoji                            | `@lobehub/ui` 的 `FluentEmoji`                                    |
+| markdown / 流式输出              | `@lobehub/ui` 的 `Markdown`                                       |
+| 表格 / 徽标 / 进度 / 评分 / 加载 | `@lobehub/ui` 的 `Table` / `Badge` / `Progress` / `Rate` / `Spin` |
+| 文档站工程                       | `@lobehub/docs-kit`（`lobedocs` CLI，本仓库 `packages/`）         |
 
 不要为了一个图表引入第二个图表库，也不要为了一个模型徽标去抓远程 SVG——两者都会让产物脱离主题体系，直接命中 [evaluator.md](evaluator.md) 的「图表不像系统」和「设计系统不一致」。
