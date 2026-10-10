@@ -1,0 +1,7 @@
+@layer lobe-ui {
+  .lobe-snippet-highlight pre {
+    display: flex;
+    align-items: center;
+    height: 100%;
+  }
+}

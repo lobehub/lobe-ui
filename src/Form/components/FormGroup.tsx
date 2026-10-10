@@ -1,13 +1,18 @@
 'use client';
 
 import { Collapsible } from '@base-ui/react/collapsible';
+import * as stylex from '@stylexjs/stylex';
 import { ChevronDown } from 'lucide-react';
 import { memo, type ReactNode } from 'react';
 
 import Icon from '@/Icon';
-import { cx, useResponsive, useThemeMode } from '@/styles';
+import { focusRing } from '@/styles/stylex/focusRing';
+import { styleProps } from '@/styles/stylex/props';
+import { stylish } from '@/styles/stylex/stylish';
+import { useResponsive, useThemeMode } from '@/styles/theme/scope';
 
-import { groupStyles, groupVariants } from '../style';
+import { formGroupTriggerMarker } from '../marker.stylex';
+import { groupStyles } from '../style';
 import type { FormGroupProps } from '../type';
 
 const GroupTitle = memo<{
@@ -18,7 +23,7 @@ const GroupTitle = memo<{
   variant?: FormGroupProps['variant'];
 }>(({ icon, title, desc, variant, mobile }) => (
   <div
-    className={cx(
+    {...stylex.props(
       groupStyles.title,
       variant === 'borderless' && !mobile && groupStyles.titleBorderless,
       mobile && groupStyles.mobileTitle,
@@ -27,7 +32,7 @@ const GroupTitle = memo<{
     {icon && <Icon icon={icon} />}
     <div>
       {title}
-      {desc && <div className={groupStyles.desc}>{desc}</div>}
+      {desc && <div {...stylex.props(groupStyles.desc)}>{desc}</div>}
     </div>
   </div>
 ));
@@ -54,40 +59,47 @@ const FormGroup = memo<FormGroupProps>(
     const isBorderless = variant === 'borderless';
     const isCollapsible = collapsible === undefined ? !isBorderless : collapsible;
     const { isDarkMode } = useThemeMode();
-    const rootClassName = cx(groupVariants({ isDarkMode, variant }), className);
-    const bodyClassName = cx(
+    const isFilled = variant === 'filled';
+    const rootProps = styleProps(
+      [
+        isFilled && groupStyles.rootFilled,
+        isFilled && isDarkMode && groupStyles.rootFilledDark,
+        variant === 'outlined' && [stylish.variantOutlinedWithoutHover, groupStyles.rootOutlined],
+      ],
+      className,
+    );
+    const bodyProps = stylex.props(
       groupStyles.body,
       !isBorderless && groupStyles.bodyBoxed,
-      variant === 'filled' && groupStyles.bodyFilled,
-      variant === 'filled' && !isDarkMode && groupStyles.bodyFilledLight,
+      isFilled && [stylish.variantOutlinedWithoutHover, groupStyles.bodyFilled],
+      isFilled && !isDarkMode && groupStyles.bodyFilledLight,
+    );
+    const headerProps = stylex.props(
+      groupStyles.header,
+      isBorderless ? groupStyles.headerBorderless : groupStyles.headerBoxed,
     );
 
     if (mobile)
       return (
         <div className={className} {...rest}>
-          <div className={cx(groupStyles.header, groupStyles.mobileHeader)}>
+          <div {...stylex.props(groupStyles.header, groupStyles.mobileHeader)}>
             <GroupTitle mobile desc={desc} icon={icon} title={title} />
             {extra}
           </div>
-          <div className={groupStyles.mobileBody}>{children}</div>
+          <div {...stylex.props(groupStyles.mobileBody)}>{children}</div>
         </div>
       );
 
     if (!isCollapsible)
       return (
-        <div className={rootClassName} {...rest}>
+        <div {...rootProps} {...rest}>
           {title && (
-            <div
-              className={cx(
-                groupStyles.header,
-                isBorderless ? groupStyles.headerBorderless : groupStyles.headerBoxed,
-              )}
-            >
+            <div {...headerProps}>
               <GroupTitle desc={desc} icon={icon} title={title} variant={variant} />
               {extra}
             </div>
           )}
-          <div data-form-group-body className={bodyClassName}>
+          <div data-form-group-body {...bodyProps}>
             {children}
           </div>
         </div>
@@ -95,26 +107,23 @@ const FormGroup = memo<FormGroupProps>(
 
     return (
       <Collapsible.Root
-        className={rootClassName}
+        {...rootProps}
         defaultOpen={defaultActive}
         open={active}
         onOpenChange={onCollapse}
         {...rest}
       >
-        <div
-          className={cx(
-            groupStyles.header,
-            isBorderless ? groupStyles.headerBorderless : groupStyles.headerBoxed,
-          )}
-        >
-          <Collapsible.Trigger className={groupStyles.trigger}>
+        <div {...headerProps}>
+          <Collapsible.Trigger
+            {...stylex.props(formGroupTriggerMarker, focusRing.info, groupStyles.trigger)}
+          >
             <GroupTitle desc={desc} icon={icon} title={title} variant={variant} />
-            <Icon className={groupStyles.chevron} icon={ChevronDown} />
+            <Icon {...stylex.props(groupStyles.chevron)} icon={ChevronDown} />
           </Collapsible.Trigger>
           {extra}
         </div>
-        <Collapsible.Panel className={groupStyles.panel}>
-          <div data-form-group-body className={bodyClassName}>
+        <Collapsible.Panel {...stylex.props(groupStyles.panel)}>
+          <div data-form-group-body {...bodyProps}>
             {children}
           </div>
         </Collapsible.Panel>

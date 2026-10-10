@@ -1,16 +1,20 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import type { CSSProperties, Key, ReactNode } from 'react';
 
 import Empty from '@/Empty';
 import Spin from '@/Spin';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
-import { styles } from './style';
+import { tableRowMarker } from './marker.stylex';
+import { cellSizeStyles, styles } from './style';
 import { getCellValue } from './toColumnDefs';
 import type { TableColumn, TableProps } from './type';
 
 interface TableBodyProps<T> {
+  bordered: boolean;
   classNames?: TableProps<T>['classNames'];
   columnIds: string[];
   columns: TableColumn<T>[];
@@ -20,10 +24,12 @@ interface TableBodyProps<T> {
   onRow?: TableProps<T>['onRow'];
   rowClassName?: TableProps<T>['rowClassName'];
   rows: { id: Key; original: T }[];
+  size: NonNullable<TableProps<T>['size']>;
   styles?: TableProps<T>['styles'];
 }
 
 const TableBody = <T,>({
+  bordered,
   classNames,
   columnIds,
   columns,
@@ -33,13 +39,14 @@ const TableBody = <T,>({
   onRow,
   rowClassName,
   rows,
+  size,
   styles: customStyles,
 }: TableBodyProps<T>) => {
   if (rows.length === 0) {
     return (
       <tbody className={classNames?.body} style={customStyles?.body}>
         <tr>
-          <td className={styles.empty} colSpan={columns.length}>
+          <td colSpan={columns.length} {...stylex.props(styles.empty, cellSizeStyles[size])}>
             {loading ? <Spin /> : (emptyText ?? <Empty description="No data" />)}
           </td>
         </tr>
@@ -59,13 +66,10 @@ const TableBody = <T,>({
           <tr
             {...rowProps}
             key={row.id}
-            style={{ ...customStyles?.row, ...rowProps.style }}
-            className={cx(
-              styles.row,
-              rowProps.onClick && styles.clickable,
-              extraClassName,
-              classNames?.row,
-              rowProps.className,
+            {...styleProps(
+              [tableRowMarker, rowProps.onClick && styles.clickable],
+              clsx(extraClassName, classNames?.row, rowProps.className),
+              { ...customStyles?.row, ...rowProps.style },
             )}
           >
             {columns.map((column, columnIndex) => {
@@ -80,21 +84,24 @@ const TableBody = <T,>({
                   {...cellProps}
                   key={columnIds[columnIndex]}
                   title={column.ellipsis && typeof content === 'string' ? content : cellProps.title}
-                  className={cx(
-                    styles.cell,
-                    column.ellipsis && styles.ellipsis,
-                    column.fixed && styles.fixed,
-                    column.className,
-                    classNames?.cell,
-                    cellProps.className,
+                  {...styleProps(
+                    [
+                      styles.cell,
+                      column.ellipsis && styles.ellipsis,
+                      column.fixed && styles.fixed,
+                      cellSizeStyles[size],
+                      bordered && columnIndex < columns.length - 1 && styles.borderedCell,
+                      rowIndex === rows.length - 1 && styles.cellLastRow,
+                    ],
+                    clsx(column.className, classNames?.cell, cellProps.className),
+                    {
+                      textAlign: column.align,
+                      width: column.width,
+                      ...fixedOffsets[columnIndex],
+                      ...customStyles?.cell,
+                      ...cellProps.style,
+                    },
                   )}
-                  style={{
-                    textAlign: column.align,
-                    width: column.width,
-                    ...fixedOffsets[columnIndex],
-                    ...customStyles?.cell,
-                    ...cellProps.style,
-                  }}
                 >
                   {content}
                 </td>

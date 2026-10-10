@@ -74,10 +74,10 @@ const stubRect = (element: HTMLElement, rect: Partial<DOMRect>) => {
 const renderWithMotion = (node: ReactNode) =>
   render(<ConfigProvider motion={motion}>{node}</ConfigProvider>);
 
-const getViewerImage = () => document.querySelector<HTMLImageElement>('.viewerImage');
-const getBackdrop = () => document.querySelector<HTMLElement>('.viewerBackdrop');
-const getPopup = () => document.querySelector<HTMLElement>('.viewerPopup');
-const getCloseButton = () => document.querySelector<HTMLElement>('.viewerClose');
+const getViewerImage = () => document.querySelector<HTMLImageElement>('.lobe-image-viewer-image');
+const getBackdrop = () => document.querySelector<HTMLElement>('.lobe-image-viewer-backdrop');
+const getPopup = () => document.querySelector<HTMLElement>('.lobe-image-viewer-popup');
+const getCloseButton = () => document.querySelector<HTMLElement>('.lobe-image-viewer-close');
 const isOpen = () => screen.queryByRole('dialog') !== null;
 
 const readTransform = () => {

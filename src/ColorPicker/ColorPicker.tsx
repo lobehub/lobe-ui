@@ -1,5 +1,6 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { Pipette } from 'lucide-react';
 import { type CSSProperties, memo, useEffect, useRef, useState } from 'react';
 import useControlledState from 'use-merge-value';
@@ -8,7 +9,7 @@ import colorPickerMessages from '@/i18n/resources/en/colorPicker';
 import { useTranslation } from '@/i18n/useTranslation';
 import Icon from '@/Icon';
 import { Input, InputNumber } from '@/Input';
-import { rootVariants } from '@/Input/style';
+import { inputRootStyles } from '@/Input/style';
 import { panelStyles } from '@/internal/panelStyles';
 import {
   PopoverPopup,
@@ -18,7 +19,9 @@ import {
   PopoverTriggerElement,
 } from '@/Popover';
 import { Slider } from '@/Slider';
-import { cx, useThemeMode } from '@/styles';
+import { focusRing } from '@/styles/stylex/focusRing';
+import { styleProps } from '@/styles/stylex/props';
+import { useThemeMode } from '@/styles/theme/scope';
 
 import { formatColor, type Hsva, normalizeHexInput, parseColor } from './color';
 import SaturationArea from './SaturationArea';
@@ -79,8 +82,8 @@ const ColorPicker = memo<ColorPickerProps>(
     };
 
     const swatch = (dimension: number) => (
-      <span className={styles.swatch} style={{ height: dimension, width: dimension }}>
-        <span style={{ background: hex }} />
+      <span {...stylex.props(styles.swatch)} style={{ height: dimension, width: dimension }}>
+        <span {...stylex.props(styles.swatchFill)} style={{ background: hex }} />
       </span>
     );
 
@@ -90,12 +93,14 @@ const ColorPicker = memo<ColorPickerProps>(
         <button
           aria-label={t('colorPicker.trigger')}
           disabled={disabled}
-          style={style}
           type="button"
-          className={cx(
-            rootVariants({ size, variant: isDarkMode ? 'filled' : 'outlined' }),
-            styles.textTrigger,
+          {...styleProps(
+            [
+              ...inputRootStyles({ size, variant: isDarkMode ? 'filled' : 'outlined' }),
+              styles.textTrigger,
+            ],
             className,
+            { cursor: 'pointer', ...style },
           )}
         >
           {swatch(18)}
@@ -106,10 +111,9 @@ const ColorPicker = memo<ColorPickerProps>(
       ) : (
         <button
           aria-label={t('colorPicker.trigger')}
-          className={cx(styles.swatchButton, className)}
           disabled={disabled}
-          style={style}
           type="button"
+          {...styleProps([focusRing.info, styles.swatchButton], className, style)}
         >
           {swatch(24)}
         </button>
@@ -121,26 +125,25 @@ const ColorPicker = memo<ColorPickerProps>(
         <PopoverPortal>
           <PopoverPositioner placement="bottomLeft">
             <PopoverPopup
-              className={panelStyles.popup}
               ref={popupRef}
+              xstyle={panelStyles.popup}
               initialFocus={() =>
                 popupRef.current?.querySelector<HTMLElement>('[role="slider"]') ?? true
               }
             >
-              <div className={styles.panel}>
-                <div className={styles.summary}>
+              <div {...stylex.props(styles.panel)}>
+                <div {...stylex.props(styles.summary)}>
                   {swatch(40)}
                   <div>
-                    <div className={styles.value}>{hex.toUpperCase()}</div>
-                    <div className={panelStyles.label}>
+                    <div {...stylex.props(styles.value)}>{hex.toUpperCase()}</div>
+                    <div {...stylex.props(panelStyles.label)}>
                       {alpha ? `HEX · ${Math.round(hsva.a * 100)}%` : 'HEX'}
                     </div>
                   </div>
                   {hasEyeDropper() && (
                     <button
                       aria-label={t('colorPicker.eyeDropper')}
-                      className={panelStyles.nav}
-                      style={{ marginInlineStart: 'auto' }}
+                      {...stylex.props(panelStyles.nav, styles.eyeDropper)}
                       type="button"
                       onClick={async () => {
                         const dropper = new (
@@ -170,9 +173,9 @@ const ColorPicker = memo<ColorPickerProps>(
                   min={0}
                   value={hsva.h}
                   classNames={{
-                    indicator: styles.hidden,
-                    thumb: styles.sliderThumb,
-                    track: styles.hueTrack,
+                    indicator: stylex.props(styles.hidden).className,
+                    thumb: stylex.props(styles.sliderThumb).className,
+                    track: stylex.props(styles.hueTrack).className,
                   }}
                   onChange={(h) => update({ ...hsva, h })}
                   onChangeComplete={(h) => commit({ ...hsva, h })}
@@ -184,9 +187,9 @@ const ColorPicker = memo<ColorPickerProps>(
                     min={0}
                     value={Math.round(hsva.a * 100)}
                     classNames={{
-                      indicator: styles.hidden,
-                      thumb: styles.sliderThumb,
-                      track: styles.alphaTrack,
+                      indicator: stylex.props(styles.hidden).className,
+                      thumb: stylex.props(styles.sliderThumb).className,
+                      track: stylex.props(styles.alphaTrack).className,
                     }}
                     styles={{
                       track: {
@@ -197,10 +200,11 @@ const ColorPicker = memo<ColorPickerProps>(
                     onChangeComplete={(a) => commit({ ...hsva, a: a / 100 })}
                   />
                 )}
-                <div className={styles.hexRow}>
+                <div {...stylex.props(styles.hexRow)}>
                   <Input
                     aria-label="HEX"
-                    prefix={<span className={panelStyles.label}>HEX</span>}
+                    className={stylex.props(styles.hexField).className}
+                    prefix={<span {...stylex.props(panelStyles.label)}>HEX</span>}
                     value={draft}
                     variant="filled"
                     onBlur={commitDraft}
@@ -210,7 +214,7 @@ const ColorPicker = memo<ColorPickerProps>(
                   {alpha && (
                     <InputNumber
                       aria-label={t('colorPicker.alpha')}
-                      className={styles.alphaField}
+                      className={stylex.props(styles.hexField, styles.alphaField).className}
                       controls={false}
                       max={100}
                       min={0}
@@ -224,14 +228,14 @@ const ColorPicker = memo<ColorPickerProps>(
                 {presets && presets.length > 0 && (
                   <div
                     aria-label={t('colorPicker.presets')}
-                    className={styles.presets}
+                    {...stylex.props(styles.presets)}
                     role="group"
                   >
                     {presets.map((color) => (
                       <button
                         aria-label={color}
                         aria-pressed={color.toLowerCase() === hex.slice(0, 7).toLowerCase()}
-                        className={styles.preset}
+                        {...stylex.props(focusRing.info, styles.preset)}
                         key={color}
                         style={{ background: color }}
                         type="button"

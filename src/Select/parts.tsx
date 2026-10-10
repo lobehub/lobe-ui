@@ -1,6 +1,7 @@
 'use client';
 
 import { Select as BaseSelect } from '@base-ui/react/select';
+import * as stylex from '@stylexjs/stylex';
 import { ChevronDown, Loader2, X } from 'lucide-react';
 import {
   type ChangeEvent,
@@ -10,10 +11,10 @@ import {
   type ReactNode,
 } from 'react';
 
-import { styles as menuStyles } from '@/DropdownMenu/sharedStyle';
+import { menuStyles } from '@/DropdownMenu/sharedStyle';
 import Icon, { type IconProps } from '@/Icon';
 import { useMenuVirtualList, VirtualScrollArea } from '@/internal/virtual';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
 import { isValueEmpty } from './helpers';
 import { type useSelectVirtual } from './hooks';
@@ -77,19 +78,21 @@ export function createTriggerValueRenderer({
   return function renderValue(currentValue: any): ReactNode {
     const resolved = normalizeValue(currentValue);
     const placeholderNode =
-      placeholder === undefined ? null : <span className={styles.valueText}>{placeholder}</span>;
+      placeholder === undefined ? null : (
+        <span {...stylex.props(styles.valueText)}>{placeholder}</span>
+      );
 
     if (isMultiple) {
       const values = Array.isArray(resolved) ? resolved : [];
       if (values.length === 0) return placeholderNode;
       return (
-        <span className={styles.tags}>
+        <span {...stylex.props(styles.tags)}>
           {values.map((val, index) => {
             const option = getOption(val);
             const content = labelRender ? labelRender(option) : (option.label ?? String(val));
             return (
               <span
-                className={styles.tag}
+                {...stylex.props(styles.tag)}
                 data-role="lobe-select-tag"
                 key={`${String(val)}-${index}`}
               >
@@ -97,7 +100,7 @@ export function createTriggerValueRenderer({
                 {isTags && (
                   <span
                     aria-label={`Remove ${String(val)}`}
-                    className={styles.tagClose}
+                    {...stylex.props(styles.tagClose)}
                     data-role="lobe-select-tag-remove"
                     role="button"
                     tabIndex={0}
@@ -124,7 +127,7 @@ export function createTriggerValueRenderer({
     if (isValueEmpty(resolved)) return placeholderNode;
     const option = getOption(resolved);
     const content = labelRender ? labelRender(option) : (option.label ?? String(resolved));
-    return <span className={styles.valueText}>{content}</span>;
+    return <span {...stylex.props(styles.valueText)}>{content}</span>;
   };
 }
 
@@ -149,7 +152,10 @@ export function SelectListSection({
   virtual,
   virtualState,
 }: SelectListSectionProps) {
-  const listClassName = cx(styles.list, hasSearch && styles.listWithSearch, classNames?.list);
+  const listClassName = styleProps(
+    [styles.list, hasSearch && styles.listWithSearch],
+    classNames?.list,
+  ).className;
   const enabled = Boolean(virtual) && !isEmpty;
   const { keepMountedIndices, viewportProps, viewportRef, virtualChildren, virtualizerRef } =
     useMenuVirtualList({
@@ -186,7 +192,7 @@ interface EmptyContentProps {
 
 export function EmptyContent({ classNames }: EmptyContentProps) {
   return (
-    <div className={cx(menuStyles.item, menuStyles.empty, styles.empty, classNames?.empty)}>
+    <div {...styleProps([menuStyles.item, menuStyles.empty, styles.empty], classNames?.empty)}>
       No data
     </div>
   );
@@ -218,10 +224,10 @@ export function SelectSearchInput({
   value,
 }: SelectSearchInputProps) {
   return (
-    <div className={cx(inline ? styles.tagsSearch : styles.search, classNames?.search)}>
+    <div {...styleProps(inline ? styles.tagsSearch : styles.search, classNames?.search)}>
       <input
         autoFocus={autoFocus}
-        className={styles.searchInput}
+        {...stylex.props(styles.searchInput)}
         disabled={disabled}
         placeholder={typeof placeholder === 'string' ? placeholder : undefined}
         readOnly={readOnly}
@@ -249,10 +255,10 @@ export function SelectTriggerSuffix({
   suffixIconNode,
 }: SelectTriggerSuffixProps) {
   return (
-    <span className={cx(styles.suffix, classNames?.suffix)}>
+    <span {...styleProps(styles.suffix, classNames?.suffix)}>
       {showClear && (
         <span
-          className={cx(styles.clear, classNames?.clear)}
+          {...styleProps(styles.clear, classNames?.clear)}
           data-role="lobe-select-clear"
           onClick={onClear}
         >
@@ -260,7 +266,7 @@ export function SelectTriggerSuffix({
         </span>
       )}
       {suffixIconNode !== null && suffixIconNode !== undefined && (
-        <BaseSelect.Icon className={cx(styles.icon, classNames?.icon)}>
+        <BaseSelect.Icon {...styleProps(styles.icon, classNames?.icon)}>
           {suffixIconNode}
         </BaseSelect.Icon>
       )}

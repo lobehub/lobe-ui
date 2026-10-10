@@ -1,0 +1,5 @@
+@layer lobe-ui {
+  .lobe-image-viewer-image {
+    -webkit-user-drag: none;
+  }
+}

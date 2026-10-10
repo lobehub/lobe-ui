@@ -1,17 +1,15 @@
-import { createStaticStyles } from '@/styles';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css }) => {
-  return {
-    bottom: css`
-      padding-block-end: env(safe-area-inset-bottom);
-    `,
-    container: css`
-      overflow: hidden;
-      flex: none;
-      width: 100vw;
-    `,
-    top: css`
-      padding-block-start: env(safe-area-inset-top);
-    `,
-  };
+export const styles = stylex.create({
+  bottom: {
+    paddingBlockEnd: 'env(safe-area-inset-bottom)',
+  },
+  container: {
+    flex: 'none',
+    overflow: 'hidden',
+    width: '100vw',
+  },
+  top: {
+    paddingBlockStart: 'env(safe-area-inset-top)',
+  },
 });

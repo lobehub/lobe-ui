@@ -1,4 +1,7 @@
-import { Button, createStaticStyles,   DropdownMenuFooter,
+import {
+  Button,
+  createStaticStyles,
+  DropdownMenuFooter,
   DropdownMenuHeader,
   DropdownMenuItem,
   DropdownMenuItemContent,
@@ -11,7 +14,10 @@ import { Button, createStaticStyles,   DropdownMenuFooter,
   DropdownMenuPositioner,
   DropdownMenuRoot,
   DropdownMenuScrollViewport,
-  DropdownMenuTrigger,Icon, Input } from '@lobehub/ui';
+  DropdownMenuTrigger,
+  Icon,
+  Input,
+} from '@lobehub/ui';
 import { CheckIcon, GitBranchIcon, GitBranchPlusIcon, SearchIcon } from 'lucide-react';
 import { type KeyboardEvent, useMemo, useState } from 'react';
 

@@ -3,19 +3,19 @@
 import { type FC } from 'react';
 
 import { Flexbox } from '@/Flex';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
 import { footerStyles } from '../style';
 import type { FormFooterProps } from '../type';
 
-const FormFooter: FC<FormFooterProps> = ({ className, children, ...rest }) => (
+const FormFooter: FC<FormFooterProps> = ({ className, children, style, ...rest }) => (
   <Flexbox
     horizontal
     align={'center'}
-    className={cx(footerStyles.root, className)}
     gap={8}
     justify={'flex-end'}
     {...rest}
+    {...styleProps(footerStyles.root, className, style)}
   >
     {children}
   </Flexbox>

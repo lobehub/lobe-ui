@@ -3,7 +3,7 @@ import { motion } from 'motion/react';
 import { type ReactNode, useState } from 'react';
 
 import ConfigProvider from '@/ConfigProvider';
-import { cssVar } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
 import Button from '../Button';
 import { buttonPaddingInline, buttonStyles } from '../index';

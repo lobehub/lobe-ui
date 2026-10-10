@@ -1,9 +1,8 @@
-import { cva } from 'class-variance-authority';
+import * as stylex from '@stylexjs/stylex';
 
-import { createStaticStyles, cx } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-const TOGGLE_HIT_SHORT = 26;
-const TOGGLE_HIT_LONG = 40;
+import { draggablePanelMarker, draggablePanelToggleMarker } from './marker.stylex';
 
 export const SEAM_ARROW = {
   depth: 6.5,
@@ -12,373 +11,246 @@ export const SEAM_ARROW = {
   stroke: 1.25,
 };
 
-const prefix = 'base-draggable-panel';
+const expandable = ':is([data-expandable="true"])';
+const engaged = `${expandable}:is(:hover, :focus-within, [data-expand="false"])`;
+const open = `${engaged}:not([data-resizing="true"])`;
+const hovered = `${expandable}:is(:hover, :focus-within)`;
 
-export const styles = createStaticStyles(({ css, cssVar }) => {
-  const float = css`
-    position: absolute;
-    z-index: 200;
-  `;
+const seamBorder = ':is([data-border="false"])';
+const seamResizing = ':is([data-resizing]):not([data-border="false"])';
+const seamHover = ':hover:not([data-resizing], [data-border="false"])';
 
-  const toggleRoot = cx(
-    `${prefix}-toggle`,
-    css`
-      pointer-events: none;
+const seamTransition = `width 0.25s ${cssVar.motionEaseOut}, height 0.25s ${cssVar.motionEaseOut}, background 0.16s ${cssVar.motionEaseOut}`;
 
-      position: absolute;
-      z-index: 110;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      > button {
-        pointer-events: all;
-        cursor: pointer;
-
-        position: relative;
-
-        width: ${TOGGLE_HIT_SHORT}px;
-        height: ${TOGGLE_HIT_LONG}px;
-        padding: 0;
-        border: none;
-
-        background: none;
-
-        &:focus-visible {
-          outline: 2px solid ${cssVar.colorPrimary};
-          outline-offset: 3px;
-        }
-      }
-
-      svg {
-        pointer-events: none;
-
-        position: absolute;
-        inset-block-start: 50%;
-        inset-inline-start: 50%;
-        transform: translate(-50%, -50%);
-
-        overflow: visible;
-
-        opacity: 0;
-
-        transition: opacity 0.18s ${cssVar.motionEaseOut};
-      }
-
-      path {
-        transform-origin: center;
-        transform: scaleX(0);
-        vector-effect: non-scaling-stroke;
-        transition: transform 0.24s ${cssVar.motionEaseOut};
-      }
-
-      /* The ends fade into the seam so the bend reads as the seam itself, not a drawn icon. */
-      stop[data-end] {
-        stop-color: ${cssVar.colorBorderSecondary};
-        transition: stop-opacity 0.18s ${cssVar.motionEaseOut};
-      }
-
-      stop[data-tip] {
-        stop-color: ${cssVar.colorTextTertiary};
-        transition: stop-color 0.16s ${cssVar.motionEaseOut};
-      }
-
-      button:hover stop[data-tip] {
-        stop-color: ${cssVar.colorTextSecondary};
-      }
-    `,
-  );
-
-  return {
-    body: css`
-      overflow: hidden auto;
-      padding: 16px;
-    `,
-    bottomFloat: cx(
-      float,
-      css`
-        inset-block-end: 0;
-        inset-inline: 0;
-        width: 100%;
-      `,
-    ),
-    container: css`
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    `,
-    content: cx(
-      `${prefix}-content`,
-      css`
-        display: flex;
-        flex-direction: column;
-        flex-shrink: 0;
-
-        min-width: 0;
-        min-height: 0;
-
-        background: var(--draggable-panel-bg, transparent);
-      `,
-    ),
-    fixed: css`
-      position: relative;
-    `,
-    footer: css`
-      display: flex;
-      flex: none;
-      gap: 8px;
-      align-items: center;
-
-      padding-block: 8px;
-      padding-inline: 16px;
-      border-block-start: 1px solid ${cssVar.colorBorderSecondary};
-    `,
-    handle: cx(
-      `${prefix}-handle`,
-      css`
-        touch-action: none;
-        position: absolute;
-        z-index: 100;
-
-        &::before,
-        &::after {
-          content: '';
-          position: absolute;
-          background: ${cssVar.colorBorderSecondary};
-          transition:
-            width 0.25s ${cssVar.motionEaseOut},
-            height 0.25s ${cssVar.motionEaseOut},
-            background 0.16s ${cssVar.motionEaseOut};
-        }
-
-        &:hover::before,
-        &:hover::after {
-          background: ${cssVar.colorFill};
-        }
-
-        &[data-resizing]::before,
-        &[data-resizing]::after {
-          background: ${cssVar.colorPrimary};
-        }
-
-        &[data-border='false']::before,
-        &[data-border='false']::after {
-          background: transparent;
-        }
-
-        &:focus-visible {
-          outline: 2px solid ${cssVar.colorPrimary};
-          outline-offset: -2px;
-        }
-      `,
-    ),
-    handleHorizontal: css`
-      cursor: row-resize;
-      inset-inline: 0;
-      height: var(--draggable-panel-handle-size);
-
-      &::before,
-      &::after {
-        inset-block-start: 50%;
-        height: 1px;
-        margin-block-start: -0.5px;
-      }
-
-      &::before {
-        inset-inline-start: 0;
-        width: calc(50% - var(--draggable-panel-gap, 0px));
-      }
-
-      &::after {
-        inset-inline-end: 0;
-        width: calc(50% - var(--draggable-panel-gap, 0px));
-      }
-    `,
-    handleVertical: css`
-      cursor: col-resize;
-      inset-block: 0;
-      width: var(--draggable-panel-handle-size);
-
-      &::before,
-      &::after {
-        inset-inline-start: 50%;
-        width: 1px;
-        margin-inline-start: -0.5px;
-      }
-
-      &::before {
-        inset-block-start: 0;
-        height: calc(50% - var(--draggable-panel-gap, 0px));
-      }
-
-      &::after {
-        inset-block-end: 0;
-        height: calc(50% - var(--draggable-panel-gap, 0px));
-      }
-    `,
-    header: css`
-      display: flex;
-      flex: none;
-      gap: 8px;
-      align-items: center;
-      justify-content: space-between;
-
-      padding-block: 8px;
-      padding-inline: 16px;
-      border-block-end: 1px solid ${cssVar.colorBorderSecondary};
-
-      font-weight: 500;
-    `,
-    leftFloat: cx(
-      float,
-      css`
-        inset-block: 0;
-        inset-inline-start: 0;
-        height: 100%;
-      `,
-    ),
-    rightFloat: cx(
-      float,
-      css`
-        inset-block: 0;
-        inset-inline-end: 0;
-        height: 100%;
-      `,
-    ),
-    root: cx(
-      prefix,
-      css`
-        --draggable-panel-gap: 0px;
-
-        display: flex;
-        flex-shrink: 0;
-        min-width: 0;
-        min-height: 0;
-
-        &[data-expandable='true']:hover,
-        &[data-expandable='true']:focus-within,
-        &[data-expandable='true'][data-expand='false'] {
-          --draggable-panel-gap: ${SEAM_ARROW.half + SEAM_ARROW.lead}px;
-        }
-
-        /* The wrapper carries an inline opacity when collapsed, so beat it. */
-        &[data-expandable='true']:hover
-          .${prefix}-toggle,
-          &[data-expandable='true']:focus-within
-          .${prefix}-toggle {
-          opacity: 1 !important;
-        }
-
-        &[data-expandable='true']:hover .${prefix}-toggle svg,
-        &[data-expandable='true']:focus-within .${prefix}-toggle svg,
-        &[data-expandable='true'][data-expand='false'] .${prefix}-toggle svg {
-          opacity: 1;
-        }
-
-        &[data-expandable='true']:hover .${prefix}-toggle path,
-        &[data-expandable='true']:focus-within .${prefix}-toggle path,
-        &[data-expandable='true'][data-expand='false'] .${prefix}-toggle path {
-          transform: scaleX(var(--seam-bend));
-        }
-
-        &[data-expandable='true'][data-resizing='true'] {
-          --draggable-panel-gap: 0px;
-        }
-
-        &[data-expandable='true'][data-resizing='true'] .${prefix}-toggle svg {
-          opacity: 0;
-        }
-      `,
-    ),
-    toggleBottom: cx(
-      `${prefix}-toggle-bottom`,
-      css`
-        inset-block-end: -${TOGGLE_HIT_SHORT / 2}px;
-        inset-inline: 0;
-        height: ${TOGGLE_HIT_SHORT}px;
-
-        > button {
-          width: ${TOGGLE_HIT_LONG}px;
-          height: ${TOGGLE_HIT_SHORT}px;
-        }
-      `,
-    ),
-    toggleLeft: cx(
-      `${prefix}-toggle-left`,
-      css`
-        inset-block: 0;
-        inset-inline-start: -${TOGGLE_HIT_SHORT / 2}px;
-        width: ${TOGGLE_HIT_SHORT}px;
-      `,
-    ),
-    toggleRight: cx(
-      `${prefix}-toggle-right`,
-      css`
-        inset-block: 0;
-        inset-inline-end: -${TOGGLE_HIT_SHORT / 2}px;
-        width: ${TOGGLE_HIT_SHORT}px;
-      `,
-    ),
-    toggleRoot,
-    toggleTop: cx(
-      `${prefix}-toggle-top`,
-      css`
-        inset-block-start: -${TOGGLE_HIT_SHORT / 2}px;
-        inset-inline: 0;
-        height: ${TOGGLE_HIT_SHORT}px;
-
-        > button {
-          width: ${TOGGLE_HIT_LONG}px;
-          height: ${TOGGLE_HIT_SHORT}px;
-        }
-      `,
-    ),
-
-    topFloat: cx(
-      float,
-      css`
-        inset-block-start: 0;
-        inset-inline: 0;
-        width: 100%;
-      `,
-    ),
-  };
-});
-
-export const rootVariants = cva(styles.root, {
-  compoundVariants: [
-    { class: styles.leftFloat, mode: 'float', placement: 'left' },
-    { class: styles.rightFloat, mode: 'float', placement: 'right' },
-    { class: styles.topFloat, mode: 'float', placement: 'top' },
-    { class: styles.bottomFloat, mode: 'float', placement: 'bottom' },
-  ],
-  defaultVariants: { mode: 'fixed', placement: 'right' },
-  variants: {
-    mode: { fixed: styles.fixed, float: null },
-    placement: { bottom: null, left: null, right: null, top: null },
+export const styles = stylex.create({
+  body: {
+    padding: 16,
+    overflowX: 'hidden',
+    overflowY: 'auto',
   },
-});
-
-export const handleVariants = cva(styles.handle, {
-  variants: {
-    edge: {
-      bottom: styles.handleHorizontal,
-      left: styles.handleVertical,
-      right: styles.handleVertical,
-      top: styles.handleHorizontal,
+  bottomFloat: {
+    insetInline: 0,
+    insetBlockEnd: 0,
+    position: 'absolute',
+    zIndex: 200,
+    width: '100%',
+  },
+  container: {
+    overflow: 'hidden',
+    display: 'flex',
+    flexDirection: 'column',
+    position: 'relative',
+  },
+  content: {
+    backgroundColor: 'var(--draggable-panel-bg, transparent)',
+    display: 'flex',
+    flexDirection: 'column',
+    flexShrink: 0,
+    minHeight: 0,
+    minWidth: 0,
+  },
+  fixed: {
+    position: 'relative',
+  },
+  footer: {
+    flex: 'none',
+    gap: 8,
+    paddingBlock: 8,
+    paddingInline: 16,
+    alignItems: 'center',
+    borderBlockStartColor: cssVar.colorBorderSecondary,
+    borderBlockStartStyle: 'solid',
+    borderBlockStartWidth: 1,
+    display: 'flex',
+  },
+  handle: {
+    'outline': { 'default': null, ':focus-visible': `2px solid ${cssVar.colorPrimary}` },
+    'outlineOffset': { 'default': null, ':focus-visible': -2 },
+    'position': 'absolute',
+    'touchAction': 'none',
+    'zIndex': 100,
+    '::after': {
+      transition: seamTransition,
+      backgroundColor: {
+        default: cssVar.colorBorderSecondary,
+        [seamBorder]: 'transparent',
+        [seamHover]: cssVar.colorFill,
+        [seamResizing]: cssVar.colorPrimary,
+      },
+      content: "''",
+      position: 'absolute',
+    },
+    '::before': {
+      transition: seamTransition,
+      backgroundColor: {
+        default: cssVar.colorBorderSecondary,
+        [seamBorder]: 'transparent',
+        [seamHover]: cssVar.colorFill,
+        [seamResizing]: cssVar.colorPrimary,
+      },
+      content: "''",
+      position: 'absolute',
     },
   },
-});
-
-export const toggleVariants = cva(styles.toggleRoot, {
-  variants: {
-    placement: {
-      bottom: styles.toggleTop,
-      left: styles.toggleRight,
-      right: styles.toggleLeft,
-      top: styles.toggleBottom,
+  handleHorizontal: {
+    'insetInline': 0,
+    'cursor': 'row-resize',
+    'height': 'var(--draggable-panel-handle-size)',
+    '::after': {
+      insetBlockStart: '50%',
+      insetInlineEnd: 0,
+      marginBlockStart: -0.5,
+      height: 1,
+      width: 'calc(50% - var(--draggable-panel-gap, 0px))',
     },
+    '::before': {
+      insetBlockStart: '50%',
+      insetInlineStart: 0,
+      marginBlockStart: -0.5,
+      height: 1,
+      width: 'calc(50% - var(--draggable-panel-gap, 0px))',
+    },
+  },
+  handleVertical: {
+    'insetBlock': 0,
+    'cursor': 'col-resize',
+    'width': 'var(--draggable-panel-handle-size)',
+    '::after': {
+      insetBlockEnd: 0,
+      insetInlineStart: '50%',
+      marginInlineStart: -0.5,
+      height: 'calc(50% - var(--draggable-panel-gap, 0px))',
+      width: 1,
+    },
+    '::before': {
+      insetBlockStart: 0,
+      insetInlineStart: '50%',
+      marginInlineStart: -0.5,
+      height: 'calc(50% - var(--draggable-panel-gap, 0px))',
+      width: 1,
+    },
+  },
+  header: {
+    flex: 'none',
+    gap: 8,
+    paddingBlock: 8,
+    paddingInline: 16,
+    alignItems: 'center',
+    borderBlockEndColor: cssVar.colorBorderSecondary,
+    borderBlockEndStyle: 'solid',
+    borderBlockEndWidth: 1,
+    display: 'flex',
+    fontWeight: 500,
+    justifyContent: 'space-between',
+  },
+  leftFloat: {
+    insetBlock: 0,
+    insetInlineStart: 0,
+    position: 'absolute',
+    zIndex: 200,
+    height: '100%',
+  },
+  rightFloat: {
+    insetBlock: 0,
+    insetInlineEnd: 0,
+    position: 'absolute',
+    zIndex: 200,
+    height: '100%',
+  },
+  root: {
+    '--draggable-panel-gap': {
+      default: '0px',
+      [open]: `${SEAM_ARROW.half + SEAM_ARROW.lead}px`,
+    },
+    'display': 'flex',
+    'flexShrink': 0,
+    'minHeight': 0,
+    'minWidth': 0,
+  },
+  toggleBottom: {
+    insetInline: 0,
+    insetBlockEnd: -13,
+    height: 26,
+  },
+  toggleButton: {
+    padding: 0,
+    borderStyle: 'none',
+    borderWidth: 'medium',
+    outline: { 'default': null, ':focus-visible': `2px solid ${cssVar.colorPrimary}` },
+    backgroundColor: 'transparent',
+    cursor: 'pointer',
+    outlineOffset: { 'default': null, ':focus-visible': 3 },
+    pointerEvents: 'all',
+    position: 'relative',
+    height: 40,
+    width: 26,
+  },
+  toggleButtonHorizontal: {
+    height: 26,
+    width: 40,
+  },
+  toggleLeft: {
+    insetBlock: 0,
+    insetInlineStart: -13,
+    width: 26,
+  },
+  togglePath: {
+    vectorEffect: 'non-scaling-stroke',
+    transition: `transform 0.24s ${cssVar.motionEaseOut}`,
+    transform: {
+      default: 'scaleX(0)',
+      [stylex.when.ancestor(engaged, draggablePanelMarker)]: 'scaleX(var(--seam-bend))',
+    },
+    transformOrigin: 'center',
+  },
+  toggleRight: {
+    insetBlock: 0,
+    insetInlineEnd: -13,
+    width: 26,
+  },
+  toggleRoot: {
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    opacity: {
+      default: null,
+      [stylex.when.ancestor(hovered, draggablePanelMarker)]: '1 !important',
+    },
+    pointerEvents: 'none',
+    position: 'absolute',
+    zIndex: 110,
+  },
+  toggleStopEnd: {
+    stopColor: cssVar.colorBorderSecondary,
+    transition: `stop-opacity 0.18s ${cssVar.motionEaseOut}`,
+  },
+  toggleStopTip: {
+    stopColor: {
+      default: cssVar.colorTextTertiary,
+      [stylex.when.ancestor(':hover', draggablePanelToggleMarker)]: cssVar.colorTextSecondary,
+    },
+    transition: `stop-color 0.16s ${cssVar.motionEaseOut}`,
+  },
+  toggleSvg: {
+    overflow: 'visible',
+    transition: `opacity 0.18s ${cssVar.motionEaseOut}`,
+    insetBlockStart: '50%',
+    insetInlineStart: '50%',
+    opacity: { default: 0, [stylex.when.ancestor(open, draggablePanelMarker)]: 1 },
+    pointerEvents: 'none',
+    position: 'absolute',
+    transform: 'translate(-50%, -50%)',
+  },
+  toggleTop: {
+    insetInline: 0,
+    insetBlockStart: -13,
+    height: 26,
+  },
+  topFloat: {
+    insetInline: 0,
+    insetBlockStart: 0,
+    position: 'absolute',
+    zIndex: 200,
+    width: '100%',
   },
 });

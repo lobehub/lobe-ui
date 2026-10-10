@@ -1,0 +1,37 @@
+@layer lobe-ui {
+  @keyframes lobe-mermaid-fade-in {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  .lobe-mermaid img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+
+  .lobe-mermaid svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 480px;
+  }
+
+  .lobe-mermaid svg text {
+    font-family: var(--lobe-font-family);
+  }
+
+  .lobe-mermaid-transparent img {
+    background: transparent !important;
+  }
+
+  .lobe-mermaid-animated img {
+    opacity: 1;
+    animation: lobe-mermaid-fade-in 0.5s ease-in-out;
+  }
+}

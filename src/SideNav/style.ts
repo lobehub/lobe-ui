@@ -1,14 +1,17 @@
-import { createStaticStyles } from '@/styles';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(
-  ({ css, cssVar }) => css`
-    width: 58px;
-    height: 100%;
-    min-height: 640px;
-    padding-block: 12px;
-    padding-inline: 0;
-    border-inline-end: 1px solid ${cssVar.colorBorderSecondary};
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-    background: ${cssVar.colorBgContainer};
-  `,
-);
+export const styles = stylex.create({
+  root: {
+    paddingBlock: 12,
+    paddingInline: 0,
+    backgroundColor: cssVar.colorBgContainer,
+    borderInlineEndColor: cssVar.colorBorderSecondary,
+    borderInlineEndStyle: 'solid',
+    borderInlineEndWidth: 1,
+    height: '100%',
+    minHeight: 640,
+    width: 58,
+  },
+});

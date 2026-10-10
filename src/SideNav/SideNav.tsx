@@ -3,7 +3,7 @@
 import { memo } from 'react';
 
 import { Flexbox } from '@/Flex';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
 import { styles } from './style';
 import type { SideNavProps } from './type';
@@ -12,7 +12,7 @@ const SideNav = memo<SideNavProps>(({ className, avatar, topActions, bottomActio
   return (
     <Flexbox
       align={'center'}
-      className={cx(styles, className)}
+      className={styleProps(styles.root, className).className}
       flex={'none'}
       justify={'space-between'}
       {...rest}

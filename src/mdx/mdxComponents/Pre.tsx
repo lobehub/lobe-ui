@@ -1,5 +1,8 @@
 'use client';
 
+import './style.css';
+
+import clsx from 'clsx';
 import type { FC } from 'react';
 
 import Highlighter, { type HighlighterProps } from '@/Highlighter';
@@ -7,16 +10,6 @@ import { FALLBACK_LANG } from '@/Highlighter/const';
 import HtmlPreview, { type HtmlPreviewProps } from '@/HtmlPreview';
 import Mermaid, { type MermaidProps } from '@/Mermaid';
 import Snippet, { type SnippetProps } from '@/Snippet';
-import { createStaticStyles, cx } from '@/styles';
-
-const styles = createStaticStyles(({ css }) => ({
-  container: css`
-    overflow: hidden;
-    margin-block: calc(var(--lobe-markdown-margin-multiple) * 0.5em);
-    border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
-    box-shadow: 0 0 0 1px var(--lobe-markdown-border-color) inset;
-  `,
-}));
 
 export type PreProps = HighlighterProps;
 
@@ -36,7 +29,7 @@ export const Pre: FC<PreProps> = ({
   return (
     <Highlighter
       allowChangeLanguage={allowChangeLanguage}
-      className={cx(styles.container, className)}
+      className={clsx('lobe-mdx-pre', className)}
       fileName={fileName}
       fullFeatured={fullFeatured}
       icon={icon}
@@ -61,7 +54,7 @@ export const PreSingleLine: FC<SnippetProps> = ({
 }) => {
   return (
     <Snippet
-      className={cx(styles.container, className)}
+      className={clsx('lobe-mdx-pre', className)}
       data-code-type="highlighter"
       language={language}
       style={style}
@@ -86,7 +79,7 @@ export const PreMermaid: FC<MermaidProps> = ({
   return (
     <Mermaid
       animated={animated}
-      className={cx(styles.container, className)}
+      className={clsx('lobe-mdx-pre', className)}
       fullFeatured={fullFeatured}
       style={style}
       theme={theme}
@@ -111,7 +104,7 @@ export const PreHtmlPreview: FC<HtmlPreviewProps> = ({
   return (
     <HtmlPreview
       animated={animated}
-      className={cx(styles.container, className)}
+      className={clsx('lobe-mdx-pre', className)}
       fullFeatured={fullFeatured}
       style={style}
       theme={theme}

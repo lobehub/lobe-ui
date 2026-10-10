@@ -1,4 +1,6 @@
 import { ContextMenu } from '@base-ui/react/context-menu';
+import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { Check } from 'lucide-react';
 import {
   type ComponentProps,
@@ -8,7 +10,7 @@ import {
 } from 'react';
 import { memo, useCallback, useState } from 'react';
 
-import { styles } from '@/DropdownMenu/sharedStyle';
+import { menuClassNames, menuStyles, styles } from '@/DropdownMenu/sharedStyle';
 import common from '@/i18n/resources/en/common';
 import { useTranslation } from '@/i18n/useTranslation';
 import Icon from '@/Icon';
@@ -25,7 +27,6 @@ import {
 } from '@/internal/menu/renderUtils';
 import type { MenuDividerType, MenuInfo, MenuItemType } from '@/internal/menu/type';
 import { SubmenuArrowIcon } from '@/internal/SubmenuArrowIcon';
-import { cx } from '@/styles';
 import Switch from '@/Switch';
 import { preventDefaultAndStopPropagation } from '@/utils/dom';
 
@@ -74,7 +75,10 @@ export type { IconAlign, IconSpaceMode } from '@/internal/menu/renderUtils';
 const EmptyMenuItem = memo(() => {
   const { t } = useTranslation(common);
   return (
-    <ContextMenu.Item disabled className={cx(styles.item, styles.empty)}>
+    <ContextMenu.Item
+      disabled
+      className={stylex.props(menuStyles.item, menuStyles.empty).className}
+    >
       <div className={styles.itemContent}>
         <span className={styles.label}>{t('common.empty')}</span>
       </div>
@@ -121,7 +125,7 @@ const ContextMenuSwitchItemInternal = ({
 
   return (
     <ContextMenu.Item
-      className={cx(styles.item, danger && styles.danger)}
+      className={stylex.props(menuStyles.item, danger && menuStyles.danger).className}
       closeOnClick={closeOnClick}
       disabled={disabled}
       label={label}
@@ -176,11 +180,19 @@ const renderItemContent = (
   );
 
   return (
-    <div className={cx(styles.itemContent, alignStart && styles.itemContentAlignStart)}>
+    <div
+      className={
+        stylex.props(menuStyles.itemContent, alignStart && menuStyles.itemContentAlignStart)
+          .className
+      }
+    >
       {shouldRenderIcon ? (
         <span
           aria-hidden={!hasIcon}
-          className={cx(styles.icon, alignStart && styles.iconAlignStart)}
+          className={clsx(
+            stylex.props(menuStyles.icon, alignStart && menuStyles.iconAlignStart).className,
+            menuClassNames.icon,
+          )}
         >
           {hasCustomIcon ? iconNode : hasIcon ? renderIcon(item.icon, 'small') : null}
         </span>
@@ -245,7 +257,7 @@ export const renderContextMenuItems = (
       return (
         <ContextMenu.CheckboxItem
           checked={checkboxItem.checked}
-          className={cx(styles.item, isDanger && styles.danger)}
+          className={stylex.props(menuStyles.item, isDanger && menuStyles.danger).className}
           closeOnClick={checkboxItem.closeOnClick}
           defaultChecked={checkboxItem.defaultChecked}
           disabled={checkboxItem.disabled}
@@ -344,7 +356,7 @@ export const renderContextMenuItems = (
         >
           <ContextMenu.SubmenuTrigger
             {...submenu.triggerProps}
-            className={cx(styles.item, isDanger && styles.danger)}
+            className={stylex.props(menuStyles.item, isDanger && menuStyles.danger).className}
             closeDelay={submenu.closeDelay}
             delay={submenu.delay}
             disabled={submenu.disabled}
@@ -367,7 +379,11 @@ export const renderContextMenuItems = (
               onContextMenu={preventDefaultAndStopPropagation}
             >
               <ContextMenu.Popup
-                className={submenuHasSlots ? cx(styles.popup, styles.popupWithSlots) : styles.popup}
+                className={clsx(
+                  stylex.props(menuStyles.popup, submenuHasSlots && menuStyles.popupWithSlots)
+                    .className,
+                  menuClassNames.popup,
+                )}
               >
                 {submenu.header == null ? null : (
                   <div className={styles.header}>{submenu.header}</div>
@@ -394,7 +410,7 @@ export const renderContextMenuItems = (
 
     return (
       <ContextMenu.Item
-        className={cx(styles.item, isDanger && styles.danger)}
+        className={stylex.props(menuStyles.item, isDanger && menuStyles.danger).className}
         closeOnClick={menuItem.closeOnClick}
         disabled={menuItem.disabled}
         key={itemKey}

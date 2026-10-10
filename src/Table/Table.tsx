@@ -1,12 +1,13 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { type RowData, useTable } from '@tanstack/react-table';
 import { type Key, memo, type ReactNode, useEffect, useMemo } from 'react';
 
 import { useEventCallback } from '@/hooks/useEventCallback';
 import Pagination from '@/Pagination';
 import Spin from '@/Spin';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
 import { tableFeatureSet } from './features';
 import FilterMenu from './FilterMenu';
@@ -87,26 +88,29 @@ const TableInner = <T extends RowData>(props: TableInternalProps<T>) => {
   const minWidth = scroll?.x === 'max-content' ? '100%' : scroll?.x;
 
   return (
-    <div className={cx(styles.root, className)} ref={ref} style={style}>
+    <div ref={ref} {...styleProps(styles.root, className, style)}>
       <div
-        className={cx(styles.wrapper, bordered && styles.bordered, classNames?.wrapper)}
         data-table-wrapper=""
-        style={{ maxHeight: scroll?.y, ...customStyles?.wrapper }}
+        {...styleProps([styles.wrapper, bordered && styles.bordered], classNames?.wrapper, {
+          maxHeight: scroll?.y,
+          ...customStyles?.wrapper,
+        })}
       >
         <table
-          className={cx(styles.table, size === 'small' ? styles.small : styles.middle)}
-          style={{
+          {...styleProps(styles.table, undefined, {
             minWidth,
             tableLayout,
             width: scroll?.x === 'max-content' ? 'max-content' : '100%',
-          }}
+          })}
         >
           <TableHead
+            bordered={bordered}
             classNames={classNames}
             columnIds={state.columnIds}
             columns={columns}
             fixedOffsets={fixedOffsets}
             getColumn={(id) => table.getColumn(id) as any}
+            size={size}
             styles={customStyles}
             renderFilter={(column, id) => {
               if (renderFilter) return renderFilter(column, id, table);
@@ -125,6 +129,7 @@ const TableInner = <T extends RowData>(props: TableInternalProps<T>) => {
             }}
           />
           <TableBody
+            bordered={bordered}
             classNames={classNames}
             columnIds={state.columnIds}
             columns={columns}
@@ -133,18 +138,19 @@ const TableInner = <T extends RowData>(props: TableInternalProps<T>) => {
             loading={loading}
             rowClassName={rowClassName}
             rows={rows}
+            size={size}
             styles={customStyles}
             onRow={onRow}
           />
         </table>
         {loading && rows.length > 0 && (
-          <div className={styles.loading} data-table-loading="">
+          <div data-table-loading="" {...stylex.props(styles.loading)}>
             <Spin />
           </div>
         )}
       </div>
       {pagination !== false && total > 0 && (
-        <div className={styles.pagination}>
+        <div {...stylex.props(styles.pagination)}>
           <Pagination
             current={pageIndex + 1}
             pageSize={page.pageSize}

@@ -1,246 +1,165 @@
-import { cva } from 'class-variance-authority';
+import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 
-import { createStaticStyles, keyframes } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { styleProps } from '@/styles/stylex/props';
 
-const shine = keyframes`
-  0% {
-    background-position: 100%;
-  }
+const shine = stylex.keyframes({
+  '0%': { backgroundPosition: '100%' },
+  '100%': { backgroundPosition: '-100%' },
+});
 
-  100% {
-    background-position: -100%;
-  }
-`;
-
-const sweep = keyframes`
-  0% {
-    translate: -100% 0;
-  }
-
-  100% {
-    translate: 100% 0;
-  }
-`;
-
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  code: css`
-    font-family: ${cssVar.fontFamilyCode};
-  `,
-  danger: css`
-    color: ${cssVar.colorError};
-  `,
-  delete: css`
-    text-decoration: line-through;
-  `,
-  disabled: css`
-    cursor: not-allowed;
-    color: ${cssVar.colorTextDisabled};
-  `,
-  ellipsis: css`
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  `,
-  ellipsisMulti: css`
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    text-overflow: ellipsis;
-  `,
-  h1: css`
-    font-size: calc(${cssVar.fontSize} * 2.5);
-    font-weight: bold;
-    line-height: 1.25;
-  `,
-
-  h2: css`
-    font-size: calc(${cssVar.fontSize} * 2);
-    font-weight: bold;
-    line-height: 1.25;
-  `,
-
-  h3: css`
-    font-size: calc(${cssVar.fontSize} * 1.5);
-    font-weight: bold;
-    line-height: 1.25;
-  `,
-
-  h4: css`
-    font-size: calc(${cssVar.fontSize} * 1.25);
-    font-weight: bold;
-    line-height: 1.25;
-  `,
-
-  h5: css`
-    font-size: ${cssVar.fontSize};
-    font-weight: bold;
-    line-height: 1.25;
-  `,
-  info: css`
-    color: ${cssVar.colorInfo};
-  `,
-
-  italic: css`
-    font-style: italic;
-  `,
-
-  mark: css`
-    color: #000;
-    background-color: ${cssVar.yellow};
-  `,
-
-  p: css`
-    margin-block: 0;
-  `,
-
-  secondary: css`
-    color: ${cssVar.colorTextDescription};
-  `,
-
-  shiny: css`
-    --shiny-duration: 1.5s;
-
-    /* The sweep peaks at this color. Override it to match the static text the
-     * shimmering label sits next to. currentColor cannot serve here: the
-     * dimmed color declared below would feed back into the sweep overlay. */
-    --shiny-color: ${cssVar.colorText};
-
-    user-select: none;
-
-    color: color-mix(in srgb, var(--shiny-color) 28%, transparent);
-
-    background: linear-gradient(120deg, transparent 25%, var(--shiny-color) 50%, transparent 75%);
-    background-clip: text;
-    background-size: 200% 100%;
-
-    animation: ${shine} var(--shiny-duration) linear infinite;
-
-    /* Animating background-position repaints every glyph each frame. Where
-     * mask-clip: text is supported, clip a transform-animated overlay to the
-     * glyphs instead so the sweep stays on the compositor. The mask clips every
-     * descendant too, so rows that also render icons or chips keep the
-     * background-clip path — masking would erase that non-text paint. */
-    @supports (-webkit-mask-clip: text) {
-      &:not(:has(*)) {
-        position: var(--shiny-origin, relative);
-
-        background: none;
-
-        animation: none;
-
-        /* stylelint-disable-next-line declaration-property-value-no-unknown */
-        mask-clip: text;
-        mask-image: linear-gradient(#fff, #fff);
-
-        &::after {
-          pointer-events: none;
-          will-change: transform;
-          content: '';
-
-          position: absolute;
-          inset: 0;
-
-          background: linear-gradient(
-            90deg,
-            transparent 25%,
-            var(--shiny-color) 50%,
-            transparent 75%
-          );
-
-          animation: ${sweep} var(--shiny-duration) linear infinite;
-        }
-      }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      animation: none;
-
-      &::after {
-        display: none;
-      }
-    }
-  `,
-
-  strong: css`
-    font-weight: bold;
-  `,
-  success: css`
-    color: ${cssVar.colorSuccess};
-  `,
-  text: css`
-    color: ${cssVar.colorText};
-  `,
-  underline: css`
-    text-decoration: underline;
-  `,
-  warning: css`
-    color: ${cssVar.colorWarning};
-  `,
-}));
-
-/**
- * Coordinate layer for a row that shimmers several separate text spans. Each
- * span's sweep overlay resolves against the nearest positioned ancestor, so
- * dropping `position` on the spans and holding it here gives every span the
- * same row-wide overlay — one continuous wave instead of one sweep per span.
- */
-export const groupStyles = createStaticStyles(({ css }) => ({
-  shinyGroup: css`
-    @supports (-webkit-mask-clip: text) {
-      & {
-        --shiny-origin: static;
-
-        position: relative;
-      }
-    }
-  `,
-}));
-
-export const variants = cva(styles.text, {
-  defaultVariants: {},
-  variants: {
-    as: {
-      h1: styles.h1,
-      h2: styles.h2,
-      h3: styles.h3,
-      h4: styles.h4,
-      h5: styles.h5,
-      p: styles.p,
-    },
-    code: {
-      true: styles.code,
-    },
-    delete: {
-      true: styles.delete,
-    },
-    disabled: {
-      true: styles.disabled,
-    },
-    ellipsis: {
-      multi: styles.ellipsisMulti,
-      true: styles.ellipsis,
-    },
-    italic: {
-      true: styles.italic,
-    },
-    mark: {
-      true: styles.mark,
-    },
-    shiny: {
-      true: styles.shiny,
-    },
-    strong: {
-      true: styles.strong,
-    },
-    type: {
-      danger: styles.danger,
-      info: styles.info,
-      secondary: styles.secondary,
-      success: styles.success,
-      warning: styles.warning,
-    },
-    underline: {
-      true: styles.underline,
-    },
+export const styles = stylex.create({
+  code: {
+    fontFamily: cssVar.fontFamilyCode,
+  },
+  danger: {
+    color: cssVar.colorError,
+  },
+  delete: {
+    textDecoration: 'line-through',
+  },
+  disabled: {
+    color: cssVar.colorTextDisabled,
+    cursor: 'not-allowed',
+  },
+  ellipsis: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+  },
+  ellipsisMulti: {
+    overflow: 'hidden',
+    WebkitBoxOrient: 'vertical',
+    display: '-webkit-box',
+    textOverflow: 'ellipsis',
+  },
+  h1: {
+    fontSize: `calc(${cssVar.fontSize} * 2.5)`,
+    fontWeight: 'bold',
+    lineHeight: 1.25,
+  },
+  h2: {
+    fontSize: `calc(${cssVar.fontSize} * 2)`,
+    fontWeight: 'bold',
+    lineHeight: 1.25,
+  },
+  h3: {
+    fontSize: `calc(${cssVar.fontSize} * 1.5)`,
+    fontWeight: 'bold',
+    lineHeight: 1.25,
+  },
+  h4: {
+    fontSize: `calc(${cssVar.fontSize} * 1.25)`,
+    fontWeight: 'bold',
+    lineHeight: 1.25,
+  },
+  h5: {
+    fontSize: cssVar.fontSize,
+    fontWeight: 'bold',
+    lineHeight: 1.25,
+  },
+  info: {
+    color: cssVar.colorInfo,
+  },
+  italic: {
+    fontStyle: 'italic',
+  },
+  mark: {
+    backgroundColor: cssVar.yellow,
+    color: '#000',
+  },
+  p: {
+    marginBlock: 0,
+  },
+  secondary: {
+    color: cssVar.colorTextDescription,
+  },
+  // The sweep peaks at --shiny-color. Override it to match the static text the
+  // shimmering label sits next to. currentColor cannot serve here: the dimmed
+  // color declared below would feed back into the sweep overlay.
+  shiny: {
+    '--shiny-color': cssVar.colorText,
+    '--shiny-duration': '1.5s',
+    'animationDuration': 'var(--shiny-duration)',
+    'animationIterationCount': 'infinite',
+    'animationName': shine,
+    'animationTimingFunction': 'linear',
+    'backgroundClip': 'text',
+    'backgroundImage':
+      'linear-gradient(120deg, transparent 25%, var(--shiny-color) 50%, transparent 75%)',
+    'backgroundSize': '200% 100%',
+    'color': 'color-mix(in srgb, var(--shiny-color) 28%, transparent)',
+    'userSelect': 'none',
+  },
+  strong: {
+    fontWeight: 'bold',
+  },
+  success: {
+    color: cssVar.colorSuccess,
+  },
+  text: {
+    color: cssVar.colorText,
+  },
+  underline: {
+    textDecoration: 'underline',
+  },
+  warning: {
+    color: cssVar.colorWarning,
   },
 });
+
+const shinyClassName = 'lobe-text-shiny';
+
+const classNameOf = (style: Parameters<typeof styleProps>[0]) => styleProps(style).className;
+
+export const textStyles = {
+  ...(Object.fromEntries(
+    Object.entries(styles).map(([key, value]) => [key, classNameOf(value)]),
+  ) as Record<keyof typeof styles, string>),
+  shiny: clsx(classNameOf(styles.shiny), shinyClassName),
+};
+
+export const groupStyles = {
+  shinyGroup: 'lobe-text-shiny-group',
+};
+
+type TextVariantProps = {
+  as?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'p' | null;
+  class?: string;
+  className?: string;
+  code?: boolean | null;
+  delete?: boolean | null;
+  disabled?: boolean | null;
+  ellipsis?: 'multi' | boolean | null;
+  italic?: boolean | null;
+  mark?: boolean | null;
+  shiny?: boolean | null;
+  strong?: boolean | null;
+  type?: 'danger' | 'info' | 'secondary' | 'success' | 'warning' | null;
+  underline?: boolean | null;
+};
+
+export const textStyleArray = (props: TextVariantProps = {}) => [
+  styles.text,
+  props.as && styles[props.as],
+  props.code && styles.code,
+  props.delete && styles.delete,
+  props.disabled && styles.disabled,
+  props.ellipsis === 'multi' && styles.ellipsisMulti,
+  props.ellipsis === true && styles.ellipsis,
+  props.italic && styles.italic,
+  props.mark && styles.mark,
+  props.shiny && styles.shiny,
+  props.strong && styles.strong,
+  props.type && styles[props.type],
+  props.underline && styles.underline,
+];
+
+export const variants = (props: TextVariantProps = {}) =>
+  clsx(
+    classNameOf(textStyleArray(props)),
+    props.shiny && shinyClassName,
+    props.class,
+    props.className,
+  );

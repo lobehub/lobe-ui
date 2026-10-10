@@ -1,53 +1,37 @@
-import { createStaticStyles } from '@/styles';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css, cssVar, responsive }) => ({
-  count: css`
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { media } from '@/styles/stylex/media.stylex';
 
-    min-inline-size: 1.5em;
-    padding-inline: ${cssVar.paddingXXS};
-    border-radius: ${cssVar.borderRadiusXS};
-
-    font-size: ${cssVar.fontSizeSM};
-    font-weight: 500;
-    font-variant-numeric: tabular-nums;
-    line-height: 1.4;
-    color: ${cssVar.colorTextSecondary};
-
-    background: ${cssVar.colorFillSecondary};
-  `,
-  list: css`
-    scrollbar-width: none;
-    overflow-x: auto;
-    flex-wrap: nowrap;
-    max-inline-size: 100%;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
-
-    && {
-      gap: ${cssVar.paddingXXS};
-      padding: ${cssVar.paddingXXS};
-    }
-  `,
-  panel: css`
-    padding-block-start: 16px;
-  `,
-  root: css`
-    min-inline-size: 0;
-  `,
-  tab: css`
-    flex: none;
-
-    && {
-      gap: ${cssVar.paddingXS};
-    }
-
-    ${responsive.mobile} {
-      min-block-size: 44px;
-    }
-  `,
-}));
+export const styles = stylex.create({
+  count: {
+    borderRadius: cssVar.borderRadiusXS,
+    paddingInline: cssVar.paddingXXS,
+    alignItems: 'center',
+    backgroundColor: cssVar.colorFillSecondary,
+    color: cssVar.colorTextSecondary,
+    display: 'inline-flex',
+    fontSize: cssVar.fontSizeSM,
+    fontVariantNumeric: 'tabular-nums',
+    fontWeight: 500,
+    justifyContent: 'center',
+    lineHeight: 1.4,
+    minInlineSize: '1.5em',
+  },
+  list: {
+    'flexWrap': 'nowrap',
+    'maxInlineSize': '100%',
+    'scrollbarWidth': 'none',
+    'overflowX': 'auto',
+    '::-webkit-scrollbar': {
+      display: 'none',
+    },
+  },
+  root: {
+    minInlineSize: 0,
+  },
+  tab: {
+    flex: 'none',
+    minBlockSize: { default: null, [media.mobile]: 44 },
+  },
+});

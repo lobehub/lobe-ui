@@ -1,9 +1,10 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { createElement, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useMotionComponent } from '@/MotionProvider';
-import { cx } from '@/styles';
 
 import { styles } from './style';
 import type { TypewriterEffectProps } from './type';
@@ -37,7 +38,6 @@ const TypewriterEffect = memo<TypewriterEffectProps>(
     ...props
   }: TypewriterEffectProps) => {
     const Motion = useMotionComponent();
-    const cxStyles = cx;
     const [displayedText, setDisplayedText] = useState('');
     const [currentCharIndex, setCurrentCharIndex] = useState(0);
     const [isDeleting, setIsDeleting] = useState(false);
@@ -238,12 +238,12 @@ const TypewriterEffect = memo<TypewriterEffectProps>(
     return createElement(
       Component,
       {
-        className: cxStyles(styles.container, className),
+        className: clsx(stylex.props(styles.container).className, className),
         ref: containerRef,
         ...props,
       },
       <>
-        <span className={styles.text} style={textColor ? { color: textColor } : undefined}>
+        <span {...stylex.props(styles.text)} style={textColor ? { color: textColor } : undefined}>
           {characters.map((char, index) => (
             <Motion.span
               animate={{ opacity: 1 }}
@@ -263,7 +263,7 @@ const TypewriterEffect = memo<TypewriterEffectProps>(
           (cursorFade ? (
             <Motion.span
               animate={{ opacity: shouldHideCursor ? 0 : 1 }}
-              className={cxStyles(getCursorStyle(), cursorClassName)}
+              className={clsx(stylex.props(getCursorStyle()).className, cursorClassName)}
               initial={{ opacity: 0 }}
               style={finalCursorColor ? { backgroundColor: finalCursorColor } : undefined}
               transition={{
@@ -277,7 +277,7 @@ const TypewriterEffect = memo<TypewriterEffectProps>(
             </Motion.span>
           ) : (
             <span
-              className={cxStyles(getCursorStyle(), cursorClassName)}
+              className={clsx(stylex.props(getCursorStyle()).className, cursorClassName)}
               style={{
                 backgroundColor: finalCursorColor,
                 opacity: shouldHideCursor ? 0 : 1,

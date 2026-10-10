@@ -4,8 +4,7 @@ import { useScroll } from 'ahooks';
 import { ListEnd } from 'lucide-react';
 import { memo, type MouseEventHandler, useEffect, useRef, useState } from 'react';
 
-import Button from '@/Button';
-import { cx, lobeStaticStylish } from '@/styles';
+import { ButtonImpl } from '@/Button/Button';
 
 import { styles } from './style';
 import { type BackBottomProps } from './type';
@@ -31,18 +30,19 @@ const BackBottom = memo<BackBottomProps>(
     };
 
     return (
-      <Button
-        className={cx(lobeStaticStylish.blur, visible ? styles.visible : styles.hidden, className)}
+      <ButtonImpl
+        className={className}
         icon={ListEnd}
         ref={ref}
         shape={'round'}
         size={'small'}
         style={style}
         type={'fill'}
+        xstyle={[styles.root, visible ? styles.visible : styles.hidden]}
         onClick={scrollToBottom}
       >
         {text || 'Back to bottom'}
-      </Button>
+      </ButtonImpl>
     );
   },
 );

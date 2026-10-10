@@ -1,6 +1,7 @@
 'use client';
 
 import { evaluate } from '@mdx-js/mdx';
+import clsx from 'clsx';
 import { memo, type ReactNode, useEffect, useMemo, useState } from 'react';
 import jsxDevRuntime from 'react/jsx-dev-runtime';
 import jsxRuntime from 'react/jsx-runtime';
@@ -15,7 +16,6 @@ import { PreviewGroup } from '@/Image';
 import { Typography, type TypographyProps } from '@/Markdown';
 import { rehypeKatex } from '@/Markdown/plugins/rehypeKatex';
 import { styles } from '@/Markdown/style';
-import { cx } from '@/styles';
 
 import mdxComponents from '../mdxComponents';
 import CodeBlock from '../mdxComponents/CodeBlock';
@@ -131,7 +131,7 @@ const Mdx = memo<MdxProps>(
 
     return (
       <Typography
-        className={cx(enableLatex && styles.latex, isChatMode && styles.chat, className)}
+        className={clsx(enableLatex && styles.latex, isChatMode && styles.chat, className)}
         data-code-type="mdx"
         fontSize={fontSize}
         headerMultiple={headerMultiple}

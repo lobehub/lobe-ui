@@ -1,0 +1,6 @@
+@layer lobe-ui {
+  .lobe-alert-extra-header::-webkit-details-marker {
+    content: '';
+    display: none;
+  }
+}

@@ -1,6 +1,10 @@
 'use client';
 
+import './style.css';
+
+import * as stylex from '@stylexjs/stylex';
 import { useHover } from 'ahooks';
+import clsx from 'clsx';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Resizable, type ResizeCallback } from 're-resizable';
 import {
@@ -16,7 +20,7 @@ import useControlledState from 'use-merge-value';
 
 import { Center, Flexbox } from '@/Flex';
 import Icon from '@/Icon';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
 import { styles } from './style';
 import type { DraggableSideNavProps } from './type';
@@ -383,15 +387,26 @@ const DraggableSideNav = memo<DraggableSideNavProps>(
         showHandle &&
         expandable && (
           <div
-            style={handleRootStyle}
-            className={cx(
+            {...stylex.props(
               styles.toggleRoot,
               placement === 'left' ? styles.toggleLeft : styles.toggleRight,
             )}
+            style={handleRootStyle}
           >
-            <Center className={classNames?.handle} style={handleCenterStyle} onClick={toggleExpand}>
+            <Center
+              {...styleProps(
+                [styles.handle, placement === 'left' ? styles.handleLeft : styles.handleRight],
+                classNames?.handle,
+                handleCenterStyle,
+              )}
+              onClick={toggleExpand}
+            >
               <div style={handleIconWrapperStyle}>
-                <Icon className={styles.handlerIcon} icon={ArrowIcon} size={16} />
+                <Icon
+                  className={stylex.props(styles.handlerIcon).className}
+                  icon={ArrowIcon}
+                  size={16}
+                />
               </div>
             </Center>
           </div>
@@ -399,10 +414,6 @@ const DraggableSideNav = memo<DraggableSideNavProps>(
       [
         showHandle,
         expandable,
-        styles.toggleRoot,
-        styles.toggleLeft,
-        styles.toggleRight,
-        styles.handlerIcon,
         placement,
         handleRootStyle,
         classNames?.handle,
@@ -410,7 +421,6 @@ const DraggableSideNav = memo<DraggableSideNavProps>(
         handleCenterStyle,
         handleIconWrapperStyle,
         ArrowIcon,
-        cx,
       ],
     );
 
@@ -443,13 +453,13 @@ const DraggableSideNav = memo<DraggableSideNavProps>(
     // Memoize handle classes to prevent recreation
     const handleClasses = useMemo(
       () => ({
-        [placement === 'left' ? 'right' : 'left']: cx(
+        [placement === 'left' ? 'right' : 'left']: stylex.props(
           styles.resizeHandle,
           showHandleHighlight && styles.resizeHandleHighlight,
           placement === 'left' ? styles.resizeHandleLeft : styles.resizeHandleRight,
-        ),
+        ).className,
       }),
-      [placement, styles, showHandleHighlight, cx],
+      [placement, showHandleHighlight],
     );
 
     // Memoize container style to prevent recreation
@@ -468,40 +478,24 @@ const DraggableSideNav = memo<DraggableSideNavProps>(
     );
 
     // Memoize class names
-    const containerClassName = useMemo(
-      () => cx(styles.container, classNames?.container, className),
-      [cx, styles.container, classNames?.container, className],
-    );
+    const containerClassName = styleProps(
+      styles.container,
+      clsx(classNames?.container, className),
+    ).className;
 
-    const contentClassName = useMemo(
-      () =>
-        cx(
-          showBorder ? styles.contentContainer : styles.contentContainerNoBorder,
-          classNames?.content,
-        ),
-      [
-        cx,
-        styles.contentContainer,
-        styles.contentContainerNoBorder,
-        classNames?.content,
-        showBorder,
-      ],
-    );
+    const contentClassName = styleProps(
+      [styles.contentContainer, !showBorder && styles.contentContainerNoBorder],
+      classNames?.content,
+    ).className;
 
-    const headerClassName = useMemo(
-      () => cx(styles.header, classNames?.header),
-      [cx, styles.header, classNames?.header],
-    );
+    const headerClassName = styleProps(styles.header, classNames?.header).className;
 
-    const bodyClassName = useMemo(
-      () => cx(styles.body, classNames?.body),
-      [cx, styles.body, classNames?.body],
-    );
+    const bodyClassName = styleProps(
+      styles.body,
+      clsx('lobe-draggable-side-nav-body', classNames?.body),
+    ).className;
 
-    const footerClassName = useMemo(
-      () => cx(styles.footer, classNames?.footer),
-      [cx, styles.footer, classNames?.footer],
-    );
+    const footerClassName = styleProps(styles.footer, classNames?.footer).className;
 
     // Cleanup timeouts on unmount
     useEffect(() => {

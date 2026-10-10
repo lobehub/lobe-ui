@@ -1,5 +1,6 @@
 'use client';
 
+import clsx from 'clsx';
 import {
   type CSSProperties,
   useCallback,
@@ -9,8 +10,6 @@ import {
   useRef,
 } from 'react';
 import useControlledState from 'use-merge-value';
-
-import { cx } from '@/styles';
 
 import {
   SegmentedIndicator,
@@ -111,7 +110,7 @@ const Segmented = <Value extends string = string>({
   return (
     <SegmentedRoot<Value>
       block={block}
-      className={cx(classNames?.root, className)}
+      className={clsx(classNames?.root, className)}
       disabled={disabled}
       glass={glass}
       id={id}
@@ -131,7 +130,7 @@ const Segmented = <Value extends string = string>({
         <SegmentedItem<Value>
           aria-label={typeof opt.label === 'string' ? opt.label : undefined}
           block={block}
-          className={cx(classNames?.item, opt.className)}
+          className={clsx(classNames?.item, opt.className)}
           data-segmented-item=""
           disabled={disabled || opt.disabled}
           key={opt.value}

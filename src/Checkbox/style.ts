@@ -1,64 +1,51 @@
-import { focusRing } from '@/internal/focusRing';
-import { createStaticStyles } from '@/styles';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  indicator: css`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  `,
-  label: css`
-    cursor: pointer;
-    user-select: none;
-    display: inline-flex;
-    align-items: center;
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-    &:has([data-disabled]) {
-      cursor: not-allowed;
-    }
-  `,
-  root: css`
-    cursor: pointer;
+const checked = ':is([data-checked], [data-indeterminate]):not([data-disabled])';
+const hover = ':hover:not([data-disabled], [data-checked], [data-indeterminate])';
+const disabled = ':is([data-disabled])';
 
-    display: inline-flex;
-    flex: none;
-    align-items: center;
-    justify-content: center;
+export const styles = stylex.create({
+  indicator: {
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  label: {
+    alignItems: 'center',
+    cursor: { 'default': 'pointer', ':has([data-disabled])': 'not-allowed' },
+    display: 'inline-flex',
+    userSelect: 'none',
+  },
+  root: {
+    margin: 0,
+    padding: 0,
+    borderColor: {
+      [checked]: `var(--lobe-checkbox-bg, ${cssVar.colorPrimary})`,
+      default: cssVar.colorBorderSecondary,
+      [disabled]: cssVar.colorFill,
+      [hover]: cssVar.colorBorder,
+    },
+    borderStyle: 'solid',
+    borderWidth: 1,
+    flex: 'none',
+    outline: 'none',
+    transition: `background 150ms ${cssVar.motionEaseOut}, border-color 150ms ${cssVar.motionEaseOut}`,
+    alignItems: 'center',
+    backgroundColor: {
+      [checked]: `var(--lobe-checkbox-bg, ${cssVar.colorPrimary})`,
+      default: cssVar.colorBgContainer,
+      [disabled]: cssVar.colorFill,
+    },
+    color: { default: cssVar.colorBgLayout, [disabled]: cssVar.colorText },
+    cursor: { default: 'pointer', [disabled]: 'not-allowed' },
+    display: 'inline-flex',
+    justifyContent: 'center',
+    opacity: { default: null, [disabled]: 0.25 },
+  },
+});
 
-    margin: 0;
-    padding: 0;
-    border: 1px solid ${cssVar.colorBorderSecondary};
-
-    color: ${cssVar.colorBgLayout};
-
-    background: ${cssVar.colorBgContainer};
-    outline: none;
-
-    transition:
-      background 150ms ${cssVar.motionEaseOut},
-      border-color 150ms ${cssVar.motionEaseOut};
-
-    &:hover:not([data-disabled], [data-checked], [data-indeterminate]) {
-      border-color: ${cssVar.colorBorder};
-    }
-
-    ${focusRing};
-
-    &[data-checked],
-    &[data-indeterminate] {
-      border-color: var(--lobe-checkbox-bg, ${cssVar.colorPrimary});
-      background: var(--lobe-checkbox-bg, ${cssVar.colorPrimary});
-    }
-
-    &[data-disabled] {
-      cursor: not-allowed;
-
-      border-color: ${cssVar.colorFill};
-
-      color: ${cssVar.colorText};
-
-      opacity: 0.25;
-      background: ${cssVar.colorFill};
-    }
-  `,
-}));
+export const checkboxStyles = Object.fromEntries(
+  Object.entries(styles).map(([key, value]) => [key, stylex.props(value).className ?? '']),
+) as Record<keyof typeof styles, string>;

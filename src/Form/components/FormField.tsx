@@ -1,12 +1,14 @@
 'use client';
 
 import { Field } from '@base-ui/react/field';
+import * as stylex from '@stylexjs/stylex';
 import { cloneElement, isValidElement, memo, useMemo } from 'react';
 
-import { cx, useResponsive } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
+import { useResponsive } from '@/styles/theme/scope';
 
 import { useFormContext } from '../context';
-import { fieldStyles, fieldVariants } from '../style';
+import { fieldLayoutStyles, fieldStyles } from '../style';
 import type { FormFieldProps } from '../type';
 import FormDivider from './FormDivider';
 import FormTitle from './FormTitle';
@@ -60,16 +62,15 @@ const FormField = memo<FormFieldProps>(
       <>
         {divider && <FormDivider visible={mergedVariant !== 'borderless'} />}
         <Field.Root
-          className={cx(fieldVariants({ layout: mergedLayout }), className)}
           name={name}
-          style={style}
+          {...styleProps([fieldStyles.root, fieldLayoutStyles[mergedLayout]], className, style)}
           {...rest}
         >
-          <Field.Label className={fieldStyles.label}>
+          <Field.Label {...stylex.props(fieldStyles.label)}>
             <FormTitle avatar={avatar} desc={desc} tag={tag} title={label} />
           </Field.Label>
           <div
-            className={cx(
+            {...stylex.props(
               fieldStyles.control,
               mergedLayout === 'vertical' && fieldStyles.controlVertical,
             )}
@@ -83,7 +84,7 @@ const FormField = memo<FormFieldProps>(
             }
           >
             {control}
-            <Field.Error className={fieldStyles.error} />
+            <Field.Error {...stylex.props(fieldStyles.error)} />
           </div>
         </Field.Root>
       </>

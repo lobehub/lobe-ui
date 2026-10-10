@@ -1,9 +1,8 @@
 'use client';
 
+import clsx from 'clsx';
 import { useMemo } from 'react';
 import useControlledState from 'use-merge-value';
-
-import { cx } from '@/styles';
 
 import {
   ToggleGroupItem,
@@ -48,7 +47,7 @@ const ToggleGroup = <Value extends string = string>({
 
   return (
     <ToggleGroupRoot<Value>
-      className={cx(classNames?.root, className)}
+      className={clsx(classNames?.root, className)}
       disabled={disabled}
       ref={ref}
       style={{ ...style, ...customStyles?.root }}
@@ -62,7 +61,7 @@ const ToggleGroup = <Value extends string = string>({
       {normalizedOptions.map((opt) => (
         <ToggleGroupItem<Value>
           aria-label={typeof opt.label === 'string' ? opt.label : opt.title}
-          className={cx(classNames?.item, opt.className)}
+          className={clsx(classNames?.item, opt.className)}
           disabled={disabled || opt.disabled}
           key={opt.value}
           size={size}

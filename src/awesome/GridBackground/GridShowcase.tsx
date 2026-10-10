@@ -4,7 +4,7 @@ import { rgba } from 'polished';
 import { memo } from 'react';
 
 import { Flexbox } from '@/Flex';
-import { useTheme } from '@/styles';
+import { useTheme } from '@/styles/theme/scope';
 
 import GridBackground from './GridBackground';
 import type { GridShowcaseProps } from './type';

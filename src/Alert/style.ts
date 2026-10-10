@@ -1,388 +1,247 @@
-import { cva } from 'class-variance-authority';
+import * as stylex from '@stylexjs/stylex';
 
-import { focusRing } from '@/internal/focusRing';
-import { createStaticStyles, lobeStaticStylish } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  action: css`
-    display: flex;
-    flex-shrink: 0;
-    align-items: center;
+import { alertSummaryMarker } from './marker.stylex';
 
-    min-height: 32px;
-    margin-inline-start: auto;
-  `,
-  centered: css`
-    align-items: center;
-  `,
-  close: css`
-    cursor: pointer;
+const reducedMotion = '@media (prefers-reduced-motion: reduce)';
+const narrow = '@media (width <= 480px)';
+const enabledHover = ':hover:not(:disabled)';
 
-    position: relative;
-    scale: 1;
-
-    display: inline-flex;
-    flex-shrink: 0;
-    align-items: center;
-    justify-content: center;
-
-    width: 32px;
-    height: 32px;
-    margin: 0;
-    padding: 0;
-    border: none;
-    border-radius: ${cssVar.borderRadiusSM};
-
-    color: ${cssVar.colorTextTertiary};
-
-    background: transparent;
-
-    transition:
-      color 160ms ${cssVar.motionEaseOut},
-      background-color 160ms ${cssVar.motionEaseOut},
-      scale 160ms ${cssVar.motionEaseOut};
-
-    &::after {
-      content: '';
-
-      position: absolute;
-      inset-block-start: 50%;
-      inset-inline-start: 50%;
-      translate: -50% -50%;
-
-      width: 40px;
-      height: 40px;
-    }
-
-    &:hover:not(:disabled) {
-      color: ${cssVar.colorText};
-      background: ${cssVar.colorFillTertiary};
-    }
-
-    &:active:not(:disabled) {
-      scale: 0.96;
-    }
-
-    ${focusRing};
-
-    &:disabled {
-      cursor: not-allowed;
-      opacity: 0.45;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      transition-duration: 0s;
-    }
-  `,
-  colorfulText: css`
-    color: var(--lobe-alert-accent);
-  `,
-  container: css`
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    max-width: 100%;
-  `,
-  content: css`
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    min-width: 0;
-  `,
-  description: css`
-    font-size: 13px;
-    line-height: 20px;
-    color: ${cssVar.colorTextSecondary};
-    text-wrap: pretty;
-    overflow-wrap: anywhere;
-  `,
-  detailed: css`
-    padding-block: 12px;
-    padding-inline: 14px;
-  `,
-  extra: css`
-    position: relative;
-    max-width: 100%;
-    color: ${cssVar.colorText};
-  `,
-  extraBanner: css`
-    border-radius: 0;
-  `,
-  extraContent: css`
-    overflow: hidden;
-
-    margin-block: 0 12px;
-    margin-inline: 12px;
-    padding: 8px;
-    border-radius: ${cssVar.borderRadiusSM};
-
-    font-size: 12px;
-    color: ${cssVar.colorText};
-
-    background: ${cssVar.colorFillQuaternary};
-  `,
-  extraHeader: css`
-    cursor: pointer;
-    user-select: none;
-
-    display: flex;
-    gap: 6px;
-    align-items: center;
-
-    min-height: 40px;
-    padding-block: 8px;
-    padding-inline: 14px;
-    border-block-start: 1px solid ${cssVar.colorBorderSecondary};
-    border-radius: 0;
-
-    font-size: 12px;
-    font-weight: 500;
-    line-height: 20px;
-    color: ${cssVar.colorTextSecondary};
-
-    background: transparent;
-
-    transition:
-      color 160ms ${cssVar.motionEaseOut},
-      background-color 160ms ${cssVar.motionEaseOut};
-
-    &::marker,
-    &::-webkit-details-marker {
-      content: '';
-      display: none;
-    }
-
-    &:hover {
-      color: ${cssVar.colorText};
-      background: ${cssVar.colorFillQuaternary};
-    }
-
-    ${focusRing};
-  `,
-  extraHeaderPlain: css`
-    margin-block-start: 6px;
-    padding-inline: 0;
-    border-block-start-color: ${cssVar.colorBorderSecondary};
-  `,
-  extraIndicator: css`
-    flex-shrink: 0;
-    color: ${cssVar.colorTextTertiary};
-    transition: transform 160ms ${cssVar.motionEaseOut};
-
-    details[open] > summary > & {
-      transform: rotate(90deg);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      transition-duration: 0s;
-    }
-  `,
-  extraPlain: css`
-    background: transparent;
-  `,
-  icon: css`
-    display: inline-flex;
-    flex-shrink: 0;
-    align-items: center;
-    justify-content: center;
-
-    height: 20px;
-
-    color: var(--lobe-alert-accent);
-  `,
-  integrated: css`
-    overflow: hidden;
-    border-radius: ${cssVar.borderRadius};
-  `,
-  neutralText: css`
-    color: ${cssVar.colorText};
-  `,
-  root: css`
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-    align-items: flex-start;
-
-    box-sizing: border-box;
-    width: 100%;
-    max-width: 100%;
-    padding-block: 10px;
-    padding-inline: 12px;
-    border: none;
-    border-radius: ${cssVar.borderRadius};
-
-    font-size: 14px;
-    color: ${cssVar.colorText};
-
-    background: var(--lobe-alert-background);
-    box-shadow: inset 0 0 0 1px var(--lobe-alert-soft-border);
-
-    @media (width <= 480px) {
-      flex-wrap: wrap;
-    }
-  `,
-  soft: css`
-    background: var(--lobe-alert-background);
-    box-shadow: inset 0 0 0 1px var(--lobe-alert-soft-border);
-  `,
-  outlined: css`
-    background: transparent;
-    box-shadow: inset 0 0 0 1px ${cssVar.colorBorderSecondary};
-  `,
-  plain: css`
-    padding-block: 2px;
-    padding-inline: 0;
-    background: transparent;
-    box-shadow: none;
-  `,
-  title: css`
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 20px;
-    color: inherit;
-    text-wrap: pretty;
-    overflow-wrap: anywhere;
-  `,
-  titleDetailed: css`
-    font-weight: 500;
-  `,
-  toneError: css`
-    --lobe-alert-accent: ${cssVar.colorError};
-    --lobe-alert-background: color-mix(
-      in srgb,
-      ${cssVar.colorError} 5%,
-      ${cssVar.colorBgContainer}
-    );
-    --lobe-alert-soft-border: color-mix(in srgb, ${cssVar.colorError} 14%, transparent);
-  `,
-  toneInfo: css`
-    --lobe-alert-accent: ${cssVar.colorInfo};
-    --lobe-alert-background: color-mix(in srgb, ${cssVar.colorInfo} 5%, ${cssVar.colorBgContainer});
-    --lobe-alert-soft-border: color-mix(in srgb, ${cssVar.colorInfo} 14%, transparent);
-  `,
-  toneSecondary: css`
-    --lobe-alert-accent: ${cssVar.colorTextSecondary};
-    --lobe-alert-background: color-mix(
-      in srgb,
-      ${cssVar.colorTextSecondary} 4%,
-      ${cssVar.colorBgContainer}
-    );
-    --lobe-alert-soft-border: color-mix(in srgb, ${cssVar.colorTextSecondary} 12%, transparent);
-  `,
-  toneSuccess: css`
-    --lobe-alert-accent: ${cssVar.colorSuccess};
-    --lobe-alert-background: color-mix(
-      in srgb,
-      ${cssVar.colorSuccess} 5%,
-      ${cssVar.colorBgContainer}
-    );
-    --lobe-alert-soft-border: color-mix(in srgb, ${cssVar.colorSuccess} 14%, transparent);
-  `,
-  toneWarning: css`
-    --lobe-alert-accent: ${cssVar.colorWarning};
-    --lobe-alert-background: color-mix(
-      in srgb,
-      ${cssVar.colorWarning} 5%,
-      ${cssVar.colorBgContainer}
-    );
-    --lobe-alert-soft-border: color-mix(in srgb, ${cssVar.colorWarning} 14%, transparent);
-  `,
-  unifiedRoot: css`
-    border-radius: 0;
-    background: transparent;
-    box-shadow: none;
-  `,
-  banner: css`
-    border-radius: 0;
-    box-shadow: none;
-  `,
-  wrappedAction: css`
-    @media (width <= 480px) {
-      order: 4;
-      width: calc(100% - 30px);
-      margin-block-start: -2px;
-      margin-inline-start: 30px;
-    }
-  `,
-}));
-
-export const toneVariants = cva('', {
-  defaultVariants: { type: 'info' },
-  variants: {
-    type: {
-      error: styles.toneError,
-      info: styles.toneInfo,
-      secondary: styles.toneSecondary,
-      success: styles.toneSuccess,
-      warning: styles.toneWarning,
+export const styles = stylex.create({
+  action: {
+    alignItems: 'center',
+    display: 'flex',
+    flexShrink: 0,
+    marginInlineStart: 'auto',
+    minHeight: 32,
+  },
+  banner: {
+    borderRadius: 0,
+    boxShadow: 'none',
+  },
+  centered: {
+    alignItems: 'center',
+  },
+  close: {
+    'margin': 0,
+    'padding': 0,
+    'borderColor': 'currentcolor',
+    'borderRadius': cssVar.borderRadiusSM,
+    'borderStyle': 'none',
+    'borderWidth': 'medium',
+    'transition': `color 160ms ${cssVar.motionEaseOut}, background-color 160ms ${cssVar.motionEaseOut}, scale 160ms ${cssVar.motionEaseOut}`,
+    'alignItems': 'center',
+    'backgroundColor': { default: 'transparent', [enabledHover]: cssVar.colorFillTertiary },
+    'color': { default: cssVar.colorTextTertiary, [enabledHover]: cssVar.colorText },
+    'cursor': { 'default': 'pointer', ':disabled': 'not-allowed' },
+    'display': 'inline-flex',
+    'flexShrink': 0,
+    'justifyContent': 'center',
+    'opacity': { 'default': null, ':disabled': 0.45 },
+    'position': 'relative',
+    'scale': { 'default': 1, ':active:not(:disabled)': 0.96 },
+    'transitionDuration': { default: null, [reducedMotion]: '0s' },
+    'height': 32,
+    'width': 32,
+    '::after': {
+      content: "''",
+      insetBlockStart: '50%',
+      insetInlineStart: '50%',
+      position: 'absolute',
+      translate: '-50% -50%',
+      height: 40,
+      width: 40,
     },
+  },
+  colorfulText: {
+    color: 'var(--lobe-alert-accent)',
+  },
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    maxWidth: '100%',
+    width: '100%',
+  },
+  content: {
+    flex: '1',
+    display: 'flex',
+    flexDirection: 'column',
+    minWidth: 0,
+  },
+  description: {
+    color: cssVar.colorTextSecondary,
+    fontSize: 13,
+    lineHeight: '20px',
+    overflowWrap: 'anywhere',
+    textWrap: 'pretty',
+  },
+  detailed: {
+    paddingBlock: 12,
+    paddingInline: 14,
+  },
+  extra: {
+    color: cssVar.colorText,
+    position: 'relative',
+    maxWidth: '100%',
+  },
+  extraBanner: {
+    borderRadius: 0,
+  },
+  extraContent: {
+    padding: 8,
+    borderRadius: cssVar.borderRadiusSM,
+    marginInline: 12,
+    overflow: 'hidden',
+    backgroundColor: cssVar.colorFillQuaternary,
+    color: cssVar.colorText,
+    fontSize: 12,
+    marginBlockEnd: 12,
+    marginBlockStart: 0,
+  },
+  extraHeader: {
+    'borderRadius': 0,
+    'gap': 6,
+    'paddingBlock': 8,
+    'paddingInline': 14,
+    'transition': `color 160ms ${cssVar.motionEaseOut}, background-color 160ms ${cssVar.motionEaseOut}`,
+    'alignItems': 'center',
+    'backgroundColor': { 'default': 'transparent', ':hover': cssVar.colorFillQuaternary },
+    'borderBlockStartColor': cssVar.colorBorderSecondary,
+    'borderBlockStartStyle': 'solid',
+    'borderBlockStartWidth': 1,
+    'color': { 'default': cssVar.colorTextSecondary, ':hover': cssVar.colorText },
+    'cursor': 'pointer',
+    'display': 'flex',
+    'fontSize': 12,
+    'fontWeight': 500,
+    'lineHeight': '20px',
+    'userSelect': 'none',
+    'minHeight': 40,
+    '::marker': {
+      content: "''",
+      display: 'none',
+    },
+  },
+  extraHeaderPlain: {
+    paddingInline: 0,
+    borderBlockStartColor: cssVar.colorBorderSecondary,
+    marginBlockStart: 6,
+  },
+  extraIndicator: {
+    transition: `transform 160ms ${cssVar.motionEaseOut}`,
+    color: cssVar.colorTextTertiary,
+    flexShrink: 0,
+    transform: {
+      default: null,
+      [stylex.when.ancestor(':is(details[open] > *)', alertSummaryMarker)]: 'rotate(90deg)',
+    },
+    transitionDuration: { default: null, [reducedMotion]: '0s' },
+  },
+  extraPlain: {
+    backgroundColor: 'transparent',
+  },
+  glass: {
+    backdropFilter: 'saturate(150%) blur(10px)',
+  },
+  icon: {
+    alignItems: 'center',
+    color: 'var(--lobe-alert-accent)',
+    display: 'inline-flex',
+    flexShrink: 0,
+    justifyContent: 'center',
+    height: 20,
+  },
+  integrated: {
+    borderRadius: cssVar.borderRadius,
+    overflow: 'hidden',
+  },
+  neutralText: {
+    color: cssVar.colorText,
+  },
+  outlined: {
+    backgroundColor: 'transparent',
+    boxShadow: `inset 0 0 0 1px ${cssVar.colorBorderSecondary}`,
+  },
+  plain: {
+    paddingBlock: 2,
+    paddingInline: 0,
+    backgroundColor: 'transparent',
+    boxShadow: 'none',
+  },
+  root: {
+    borderColor: 'currentcolor',
+    borderRadius: cssVar.borderRadius,
+    borderStyle: 'none',
+    borderWidth: 'medium',
+    gap: 10,
+    paddingBlock: 10,
+    paddingInline: 12,
+    alignItems: 'flex-start',
+    backgroundColor: 'var(--lobe-alert-background)',
+    boxShadow: 'inset 0 0 0 1px var(--lobe-alert-soft-border)',
+    boxSizing: 'border-box',
+    color: cssVar.colorText,
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: { default: null, [narrow]: 'wrap' },
+    fontSize: 14,
+    maxWidth: '100%',
+    width: '100%',
+  },
+  soft: {
+    backgroundColor: 'var(--lobe-alert-background)',
+    boxShadow: 'inset 0 0 0 1px var(--lobe-alert-soft-border)',
+  },
+  title: {
+    color: 'inherit',
+    fontSize: 14,
+    fontWeight: 500,
+    lineHeight: '20px',
+    overflowWrap: 'anywhere',
+    textWrap: 'pretty',
+  },
+  titleDetailed: {
+    fontWeight: 500,
+  },
+  toneError: {
+    '--lobe-alert-accent': cssVar.colorError,
+    '--lobe-alert-background': `color-mix(in srgb, ${cssVar.colorError} 5%, ${cssVar.colorBgContainer})`,
+    '--lobe-alert-soft-border': `color-mix(in srgb, ${cssVar.colorError} 14%, transparent)`,
+  },
+  toneInfo: {
+    '--lobe-alert-accent': cssVar.colorInfo,
+    '--lobe-alert-background': `color-mix(in srgb, ${cssVar.colorInfo} 5%, ${cssVar.colorBgContainer})`,
+    '--lobe-alert-soft-border': `color-mix(in srgb, ${cssVar.colorInfo} 14%, transparent)`,
+  },
+  toneSecondary: {
+    '--lobe-alert-accent': cssVar.colorTextSecondary,
+    '--lobe-alert-background': `color-mix(in srgb, ${cssVar.colorTextSecondary} 4%, ${cssVar.colorBgContainer})`,
+    '--lobe-alert-soft-border': `color-mix(in srgb, ${cssVar.colorTextSecondary} 12%, transparent)`,
+  },
+  toneSuccess: {
+    '--lobe-alert-accent': cssVar.colorSuccess,
+    '--lobe-alert-background': `color-mix(in srgb, ${cssVar.colorSuccess} 5%, ${cssVar.colorBgContainer})`,
+    '--lobe-alert-soft-border': `color-mix(in srgb, ${cssVar.colorSuccess} 14%, transparent)`,
+  },
+  toneWarning: {
+    '--lobe-alert-accent': cssVar.colorWarning,
+    '--lobe-alert-background': `color-mix(in srgb, ${cssVar.colorWarning} 5%, ${cssVar.colorBgContainer})`,
+    '--lobe-alert-soft-border': `color-mix(in srgb, ${cssVar.colorWarning} 14%, transparent)`,
+  },
+  unifiedRoot: {
+    borderRadius: 0,
+    backgroundColor: 'transparent',
+    boxShadow: 'none',
+  },
+  wrappedAction: {
+    marginBlockStart: { default: null, [narrow]: -2 },
+    marginInlineStart: { default: 'auto', [narrow]: 30 },
+    order: { default: null, [narrow]: 4 },
+    width: { default: null, [narrow]: 'calc(100% - 30px)' },
   },
 });
 
-export const rootVariants = cva(styles.root, {
-  compoundVariants: [{ class: styles.unifiedRoot, hasExtra: true }],
-  defaultVariants: {
-    banner: false,
-    colorfulText: false,
-    glass: false,
-    hasDescription: false,
-    hasExtra: false,
-    variant: 'soft',
-  },
-  variants: {
-    banner: { false: null, true: styles.banner },
-    colorfulText: { false: styles.neutralText, true: styles.colorfulText },
-    glass: { false: null, true: lobeStaticStylish.blur },
-    hasDescription: { false: styles.centered, true: styles.detailed },
-    hasExtra: { false: null, true: null },
-    variant: {
-      borderless: styles.plain,
-      filled: styles.soft,
-      outlined: styles.outlined,
-      plain: styles.plain,
-      soft: styles.soft,
-    },
-  },
-});
-
-export const integratedVariants = cva(styles.integrated, {
-  defaultVariants: { banner: false, glass: false, variant: 'soft' },
-  variants: {
-    banner: { false: null, true: styles.banner },
-    glass: { false: null, true: lobeStaticStylish.blur },
-    variant: {
-      borderless: styles.extraPlain,
-      filled: styles.soft,
-      outlined: styles.outlined,
-      plain: styles.extraPlain,
-      soft: styles.soft,
-    },
-  },
-});
-
-export const extraVariants = cva(styles.extra, {
-  defaultVariants: { banner: false, variant: 'soft' },
-  variants: {
-    banner: { false: null, true: styles.extraBanner },
-    variant: {
-      borderless: styles.extraPlain,
-      filled: null,
-      outlined: null,
-      plain: styles.extraPlain,
-      soft: null,
-    },
-  },
-});
-
-export const extraHeaderVariants = cva(styles.extraHeader, {
-  defaultVariants: { variant: 'soft' },
-  variants: {
-    variant: {
-      borderless: styles.extraHeaderPlain,
-      filled: null,
-      outlined: null,
-      plain: styles.extraHeaderPlain,
-      soft: null,
-    },
-  },
-});
+export const alertStyles = Object.fromEntries(
+  Object.entries(styles).map(([key, value]) => [key, stylex.props(value).className ?? '']),
+) as Record<keyof typeof styles, string>;

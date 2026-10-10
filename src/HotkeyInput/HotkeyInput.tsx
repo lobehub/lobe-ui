@@ -1,5 +1,6 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { isEqual } from 'es-toolkit/compat';
 import { Undo2Icon, XIcon } from 'lucide-react';
 import {
@@ -21,9 +22,9 @@ import Hotkey from '@/Hotkey';
 import { checkIsAppleDevice, NORMATIVE_MODIFIER, splitKeysByPlus } from '@/Hotkey/utils';
 import hotkeyMessages from '@/i18n/resources/en/hotkey';
 import { useTranslation } from '@/i18n/useTranslation';
-import { cx, useThemeMode } from '@/styles';
+import { useThemeMode } from '@/styles/theme/scope';
 
-import { styles, variants } from './style';
+import { styles } from './style';
 import { type HotkeyInputProps } from './type';
 
 const HotkeyInput = memo<HotkeyInputProps>(
@@ -217,6 +218,9 @@ const HotkeyInput = memo<HotkeyInputProps>(
       inputRef.current?.focus();
     };
 
+    const resolvedVariant = variant || (isDarkMode ? 'filled' : 'outlined');
+    const hasError = hasConflict || hasInvalidCombination;
+
     const placeholderText = placeholder ?? t('hotkey.placeholder');
     const resetTitle = texts?.reset ?? t('hotkey.reset');
     const clearTitle = texts?.clear ?? t('hotkey.clear');
@@ -236,33 +240,33 @@ const HotkeyInput = memo<HotkeyInputProps>(
           horizontal
           align={'center'}
           justify={'space-between'}
-          className={cx(
-            variants({
-              disabled,
-              error: hasConflict || hasInvalidCombination,
-              focused: isFocused,
-              shadow,
-              variant: variant || (isDarkMode ? 'filled' : 'outlined'),
-            }),
+          {...stylex.props(
+            styles.root,
+            styles[resolvedVariant],
+            shadow && styles.shadow,
+            isFocused && styles.focused,
+            hasError && styles.error,
+            hasError && resolvedVariant === 'outlined' && styles.errorOutlined,
+            disabled && styles.disabled,
           )}
           onClick={handleClick}
         >
           <div style={{ pointerEvents: 'none' }}>
             {isRecording ? (
-              <span className={styles.placeholder}>
+              <span {...stylex.props(styles.placeholder)}>
                 {keys.length > 0 ? <Hotkey keys={keysString} /> : placeholderText}
               </span>
             ) : hotkeyValue ? (
               <Hotkey keys={hotkeyValue} />
             ) : (
-              <span className={styles.placeholder}>{placeholderText}</span>
+              <span {...stylex.props(styles.placeholder)}>{placeholderText}</span>
             )}
           </div>
 
           {/* 隐藏的输入框，用于接收焦点 */}
           <input
             readOnly
-            className={styles.hiddenInput}
+            {...stylex.props(styles.hiddenInput)}
             disabled={disabled}
             ref={inputRef as any}
             style={{ pointerEvents: 'none' }}
@@ -293,8 +297,8 @@ const HotkeyInput = memo<HotkeyInputProps>(
             </Flexbox>
           )}
         </Flexbox>
-        {hasConflict && <div className={styles.errorText}>{conflictText}</div>}
-        {hasInvalidCombination && <div className={styles.errorText}>{invalidText}</div>}
+        {hasConflict && <div {...stylex.props(styles.errorText)}>{conflictText}</div>}
+        {hasInvalidCombination && <div {...stylex.props(styles.errorText)}>{invalidText}</div>}
       </Flexbox>
     );
   },

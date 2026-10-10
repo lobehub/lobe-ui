@@ -4,20 +4,19 @@ import { Menu } from '@base-ui/react/menu';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useNativeButton } from '@/hooks/useNativeButton';
-import { cx } from '@/styles';
 import { parseTrigger } from '@/utils/parseTrigger';
 
 import {
   DropdownMenuFooter,
   DropdownMenuHeader,
-  DropdownMenuPopup,
+  DropdownMenuPopupImpl,
   DropdownMenuPortal,
   DropdownMenuPositioner,
   DropdownMenuScrollViewport,
   DropdownMenuTrigger,
 } from './atoms';
 import { renderDropdownMenuItems } from './renderItems';
-import { styles } from './sharedStyle';
+import { menuStyles } from './style';
 import type { DropdownMenuProps } from './type';
 
 const DropdownMenu = memo<DropdownMenuProps>(
@@ -122,15 +121,11 @@ const DropdownMenu = memo<DropdownMenuProps>(
             hoverTrigger={resolvedOpenOnHover}
             placement={placement}
           >
-            <DropdownMenuPopup
+            <DropdownMenuPopupImpl
               {...popupProps}
               data-has-footer={footer == null ? undefined : ''}
               data-has-header={header == null ? undefined : ''}
-              className={
-                hasSlots
-                  ? (cx(styles.popupWithSlots, popupProps?.className as string) as any)
-                  : popupProps?.className
-              }
+              xstyle={hasSlots && menuStyles.popupWithSlots}
             >
               {header == null ? null : <DropdownMenuHeader>{header}</DropdownMenuHeader>}
               {hasSlots || virtual ? (
@@ -141,7 +136,7 @@ const DropdownMenu = memo<DropdownMenuProps>(
                 menuItems
               )}
               {footer == null ? null : <DropdownMenuFooter>{footer}</DropdownMenuFooter>}
-            </DropdownMenuPopup>
+            </DropdownMenuPopupImpl>
           </DropdownMenuPositioner>
         </DropdownMenuPortal>
       </Menu.Root>

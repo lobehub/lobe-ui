@@ -6,11 +6,18 @@ import { type FC, useMemo } from 'react';
 import ActionIcon from '@/ActionIcon';
 import DropdownMenu from '@/DropdownMenu';
 import { Center } from '@/Flex';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
+import { stylish } from '@/styles/stylex/stylish';
 import { TooltipGroup } from '@/Tooltip';
 
-import { variants } from './style';
+import { styles } from './style';
 import type { ActionIconGroupProps } from './type';
+
+const variantStyles = {
+  borderless: styles.borderless,
+  filled: stylish.variantFilledWithoutHover,
+  outlined: stylish.variantOutlinedWithoutHover,
+};
 
 const ActionIconGroup: FC<ActionIconGroupProps> = ({
   variant = 'filled',
@@ -47,10 +54,21 @@ const ActionIconGroup: FC<ActionIconGroupProps> = ({
   return (
     <TooltipGroup>
       <Center
-        className={cx(variants({ disabled, glass, shadow, variant }), className)}
         horizontal={horizontal}
         padding={2}
         ref={ref}
+        className={
+          styleProps(
+            [
+              styles.root,
+              variantStyles[variant],
+              glass && styles.glass,
+              shadow && styles.shadow,
+              disabled && styles.disabled,
+            ],
+            className,
+          ).className
+        }
         {...rest}
       >
         {items?.length > 0 &&

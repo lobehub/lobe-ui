@@ -1,18 +1,16 @@
-import { createStaticStyles } from '@/styles';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css }) => {
-  return {
-    container: css`
-      position: relative;
-    `,
-    icon: css`
-      position: relative;
-      flex: none;
-      line-height: 1;
-    `,
-    inner: css`
-      position: absolute;
-      z-index: 1;
-    `,
-  };
+export const styles = stylex.create({
+  container: {
+    position: 'relative',
+  },
+  icon: {
+    flex: 'none',
+    lineHeight: 1,
+    position: 'relative',
+  },
+  inner: {
+    position: 'absolute',
+    zIndex: 1,
+  },
 });

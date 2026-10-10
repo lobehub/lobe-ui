@@ -1,10 +1,11 @@
 'use client';
 
+import clsx from 'clsx';
 import { memo, useId, useMemo, useRef, useState } from 'react';
 import useControlledState from 'use-merge-value';
 
 import { FocusScope, focusScopeItem, useScopeArrowNav } from '@/FocusScope';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
 import { TreeContext, type TreeContextValue } from './context';
 import { styles } from './style';
@@ -210,10 +211,12 @@ const Tree = memo<TreeProps>(
     return (
       <TreeContext value={ctx}>
         <FocusScope
-          className={cx(styles.root, classNames.root, className)}
           id={scopeId}
           role="tree"
-          style={{ ...customStyles.root, ...style }}
+          {...styleProps(styles.root, clsx(classNames.root, className), {
+            ...customStyles.root,
+            ...style,
+          })}
         >
           {treeData.map((node, i) => (
             <TreeNode

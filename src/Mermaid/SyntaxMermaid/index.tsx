@@ -1,13 +1,14 @@
 'use client';
 
+import clsx from 'clsx';
 import { memo } from 'react';
 
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
 import type { SyntaxMermaidProps } from '../type';
 import StaticMermaid from './StaticMermaid';
 import StreamMermaid from './StreamMermaid';
-import { variants } from './style';
+import { styles } from './style';
 
 const SyntaxMermaid = memo<SyntaxMermaidProps>(
   ({
@@ -24,14 +25,19 @@ const SyntaxMermaid = memo<SyntaxMermaidProps>(
     const showBackground = !isDefaultTheme && variant === 'filled';
     const resolvedTheme = isDefaultTheme ? undefined : customTheme;
 
-    const mermaidClassName = cx(
-      variants({ animated, mermaid: true, showBackground, variant }),
-      className,
+    const classes = clsx(
+      !showBackground && 'lobe-mermaid-transparent',
+      animated && 'lobe-mermaid-animated',
     );
-    const fallback = cx(
-      variants({ animated, mermaid: false, showBackground, variant }),
-      fallbackClassName,
-    );
+    const padded = variant !== 'borderless' && styles.padded;
+    const mermaidClassName = styleProps(
+      [styles.root, padded],
+      clsx('ant-mermaid-mermaid lobe-mermaid', classes, className),
+    ).className;
+    const fallback = styleProps(
+      [styles.root, styles.unmermaid, padded],
+      clsx(classes, fallbackClassName),
+    ).className;
 
     if (animated) {
       return (

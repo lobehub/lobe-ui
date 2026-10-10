@@ -1,13 +1,15 @@
 'use client';
 
+import clsx from 'clsx';
 import { memo } from 'react';
 import useMergeState from 'use-merge-value';
 
-import { styles, variants } from '@/CodeEditor/style';
 import { Flexbox } from '@/Flex';
-import SyntaxHighlighter from '@/Highlighter/SyntaxHighlighter';
-import { cssVar, cx } from '@/styles';
+import { SyntaxHighlighterImpl } from '@/Highlighter/SyntaxHighlighter';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { styleProps } from '@/styles/stylex/props';
 
+import { styles, variantStyles } from './style';
 import type { CodeEditorProps } from './type';
 
 const CodeEditor = memo<CodeEditorProps>(
@@ -38,27 +40,38 @@ const CodeEditor = memo<CodeEditorProps>(
 
     return (
       <Flexbox
-        className={cx(variants({ variant }), className)}
         flex={flex}
-        height={height}
-        style={style}
-        width={width}
+        height={height ?? 'fit-content'}
+        width={width ?? '100%'}
+        {...styleProps(
+          [styles.root, variantStyles[variant]],
+          clsx(
+            'lobe-code-editor',
+            variant === 'borderless' && 'lobe-code-editor-borderless',
+            className,
+          ),
+          style,
+        )}
       >
         {value ? (
-          <SyntaxHighlighter
-            className={cx(styles.highlight, classNames?.highlight)}
+          <SyntaxHighlighterImpl
+            className={clsx('lobe-code-editor-highlight', classNames?.highlight)}
             language={language}
             style={customStyles?.highlight}
             variant={variant}
+            xstyle={styles.highlight}
           >
             {value}
-          </SyntaxHighlighter>
+          </SyntaxHighlighterImpl>
         ) : (
           <pre
-            className={cx(styles.highlight, classNames?.highlight)}
-            style={{
-              color: cssVar.colorTextDescription,
-            }}
+            {...styleProps(
+              styles.highlight,
+              clsx('lobe-code-editor-highlight', classNames?.highlight),
+              {
+                color: cssVar.colorTextDescription,
+              },
+            )}
           >
             {placeholder || ' '}
           </pre>
@@ -69,15 +82,14 @@ const CodeEditor = memo<CodeEditorProps>(
           autoComplete="off"
           autoCorrect="off"
           autoFocus={autoFocus}
-          className={cx(styles.textarea, classNames?.textarea)}
           data-gramm={false}
           ref={ref}
-          style={customStyles?.textarea}
           value={code}
           onChange={(e) => {
             onChange?.(e);
             setCode(e.target.value);
           }}
+          {...styleProps(styles.textarea, classNames?.textarea, customStyles?.textarea)}
           {...rest}
         />
       </Flexbox>

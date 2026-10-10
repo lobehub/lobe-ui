@@ -1,12 +1,13 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { memo } from 'react';
 import useControlledState from 'use-merge-value';
 
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 import Img from '@/Img';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
 import { styles } from './styles';
 import type { ImageSelectProps } from './type';
@@ -40,23 +41,22 @@ const ImageSelect = memo<ImageSelectProps>(
           return (
             <Flexbox
               align={'center'}
-              className={cx(styles.container, isActive && styles.active)}
               gap={4}
+              {...stylex.props(styles.container, isActive && styles.active)}
               key={item.value}
               onClick={() => setCurrentValue(item.value)}
             >
               <Img
                 alt={item.alt || item.value}
-                className={cx(styles.img, isActive && styles.imgActive, classNames?.img)}
                 height={height}
                 src={item.img}
                 unoptimized={unoptimized}
                 width={width}
-                style={{
+                {...styleProps([styles.img, isActive && styles.imgActive], classNames?.img, {
                   ...customStyles?.img,
                   height,
                   width,
-                }}
+                })}
               />
 
               <Flexbox horizontal align={'center'} gap={4}>

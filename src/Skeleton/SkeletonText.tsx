@@ -2,7 +2,8 @@
 
 import { type FC } from 'react';
 
-import { cssVar, cx } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { styleProps } from '@/styles/stylex/props';
 
 import Skeleton from './Skeleton';
 import { styles } from './style';
@@ -32,7 +33,7 @@ const SkeletonText: FC<SkeletonTextProps> = ({
   };
 
   return (
-    <div className={cx(styles.text, className)} style={{ gap, ...style }}>
+    <div {...styleProps(styles.text, className, { gap, ...style })}>
       {Array.from({ length: rowCount }).map((_, index) => (
         <Skeleton
           height={rowHeight}

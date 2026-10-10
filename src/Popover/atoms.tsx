@@ -2,6 +2,8 @@
 
 import { mergeProps } from '@base-ui/react/merge-props';
 import { Popover as BasePopover } from '@base-ui/react/popover';
+import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import {
   cloneElement,
   type ComponentProps,
@@ -14,7 +16,6 @@ import { mergeRefs, useMergeRefs } from 'react-merge-refs';
 import { FloatingLayerProvider } from '@/hooks/useFloatingLayer';
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { getFloatingCollisionPadding } from '@/internal/floating';
-import { cx } from '@/styles';
 import { placementMap } from '@/utils/placement';
 
 import { useLayerZIndex } from '../internal/zIndex';
@@ -70,7 +71,7 @@ export const PopoverTriggerElement = ({
 
           return cloneElement(children as any, {
             ...mergedProps,
-            className: cx(baseClassName, extraClassName),
+            className: clsx(baseClassName, extraClassName),
             ref: mergeRefs([(children as any).ref, (props as any).ref, refProp]),
           });
         }}
@@ -163,7 +164,10 @@ export const PopoverPositioner = ({
       sideOffset={sideOffset ?? 6}
       style={resolvedStyle}
       className={(state) =>
-        cx(styles.positioner, typeof className === 'function' ? className(state) : className)
+        clsx(
+          stylex.props(styles.positioner).className,
+          typeof className === 'function' ? className(state) : className,
+        )
       }
       {...rest}
     >
@@ -174,13 +178,18 @@ export const PopoverPositioner = ({
 
 PopoverPositioner.displayName = 'PopoverPositioner';
 
-export type PopoverPopupAtomProps = ComponentProps<typeof BasePopover.Popup>;
+export type PopoverPopupAtomProps = ComponentProps<typeof BasePopover.Popup> & {
+  xstyle?: stylex.StyleXStyles;
+};
 
-export const PopoverPopup = ({ className, ...rest }: PopoverPopupAtomProps) => {
+export const PopoverPopup = ({ className, xstyle, ...rest }: PopoverPopupAtomProps) => {
   return (
     <BasePopover.Popup
       className={(state) =>
-        cx(styles.popup, typeof className === 'function' ? className(state) : className)
+        clsx(
+          stylex.props(styles.popup, xstyle).className,
+          typeof className === 'function' ? className(state) : className,
+        )
       }
       {...rest}
     />
@@ -195,7 +204,10 @@ export const PopoverArrow = ({ className, children, ...rest }: PopoverArrowAtomP
   return (
     <BasePopover.Arrow
       className={(state) =>
-        cx(styles.arrow, typeof className === 'function' ? className(state) : className)
+        clsx(
+          stylex.props(styles.arrow).className,
+          typeof className === 'function' ? className(state) : className,
+        )
       }
       {...rest}
     >
@@ -212,7 +224,11 @@ export const PopoverViewport = ({ className, ...rest }: PopoverViewportAtomProps
   return (
     <BasePopover.Viewport
       className={(state) =>
-        cx(styles.viewport, typeof className === 'function' ? className(state) : className)
+        clsx(
+          stylex.props(styles.viewport).className,
+          'lobe-popover-viewport',
+          typeof className === 'function' ? className(state) : className,
+        )
       }
       {...rest}
     />

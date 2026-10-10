@@ -1,21 +1,23 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { Maximize2, Minimize2, X } from 'lucide-react';
 import { useDragControls } from 'motion/react';
 import type { MouseEvent, PointerEvent } from 'react';
 import type React from 'react';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import { cx } from '@/styles';
+import { focusRing } from '@/styles/stylex/focusRing';
+import { styleProps } from '@/styles/stylex/props';
 import { stopPropagation } from '@/utils/dom';
 
 import { Button } from '../Button';
 import {
   ModalBackdrop,
-  ModalContent,
+  ModalContentImpl,
   ModalFooter,
-  ModalHeader,
-  ModalPopup,
+  ModalHeaderImpl,
+  ModalPopupImpl,
   ModalPortal,
   ModalRoot,
   ModalTitle,
@@ -240,8 +242,9 @@ const Modal = memo<ModalComponentProps>(
       >
         <ModalPortal container={container}>
           {mask && <ModalBackdrop className={classNames?.mask} style={semanticStyles?.mask} />}
-          <ModalPopup
+          <ModalPopupImpl
             className={classNames?.wrapper}
+            panelClassName={className}
             popupStyle={semanticStyles?.wrapper}
             ref={constraintsRef}
             style={panelStyle}
@@ -250,15 +253,15 @@ const Modal = memo<ModalComponentProps>(
               ...dragProps,
               onAnimationComplete: handleAnimationComplete,
             }}
-            panelClassName={cx(
-              className,
+            panelXstyle={[
               isFullscreen && styles.fullscreenPopupInner,
               isDenying && styles.denyAnimation,
-            )}
+            ]}
           >
             {showHeader && (
-              <ModalHeader
-                className={cx(classNames?.header, shouldDrag && styles.headerDraggable)}
+              <ModalHeaderImpl
+                className={classNames?.header}
+                xstyle={shouldDrag && styles.headerDraggable}
                 style={{
                   ...(isDragging ? { cursor: 'grabbing' } : {}),
                   ...semanticStyles?.header,
@@ -274,11 +277,11 @@ const Modal = memo<ModalComponentProps>(
                 ) : (
                   <span />
                 )}
-                <div className={styles.headerActions} onPointerDown={stopPropagation}>
+                <div {...stylex.props(styles.headerActions)} onPointerDown={stopPropagation}>
                   {allowFullscreen && (
                     <button
                       aria-label={isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
-                      className={styles.fullscreenToggle}
+                      {...stylex.props(styles.fullscreenToggle, focusRing.info)}
                       type="button"
                       onClick={() => setIsFullscreen((prev) => !prev)}
                     >
@@ -288,7 +291,7 @@ const Modal = memo<ModalComponentProps>(
                   {closable && (
                     <button
                       aria-label="Close"
-                      className={styles.closeInline}
+                      {...stylex.props(styles.closeInline, focusRing.info)}
                       type="button"
                       onClick={handleCancel}
                     >
@@ -296,10 +299,11 @@ const Modal = memo<ModalComponentProps>(
                     </button>
                   )}
                 </div>
-              </ModalHeader>
+              </ModalHeaderImpl>
             )}
-            <ModalContent
-              className={cx(!showHeader && styles.contentNoHeader, classNames?.body)}
+            <ModalContentImpl
+              className={classNames?.body}
+              xstyle={!showHeader && styles.contentNoHeader}
               style={{
                 ...(hasHeight || isFullscreen ? { flex: 1 } : {}),
                 ...semanticStyles?.body,
@@ -313,18 +317,18 @@ const Modal = memo<ModalComponentProps>(
                     padding: '32px 0',
                   }}
                 >
-                  <span className={styles.loadingSpinner} style={{ height: 24, width: 24 }} />
+                  <span {...styleProps(styles.loadingSpinner, undefined, { height: 24, width: 24 })} />
                 </div>
               ) : (
                 children
               )}
-            </ModalContent>
+            </ModalContentImpl>
             {footerNode !== null && (
               <ModalFooter className={classNames?.footer} style={semanticStyles?.footer}>
                 {footerNode}
               </ModalFooter>
             )}
-          </ModalPopup>
+          </ModalPopupImpl>
         </ModalPortal>
       </ModalRoot>
     );

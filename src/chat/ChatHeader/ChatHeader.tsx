@@ -5,7 +5,7 @@ import { memo } from 'react';
 
 import ActionIcon from '@/ActionIcon';
 import { Flexbox } from '@/Flex';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
 import { styles } from './style';
 import type { ChatHeaderProps } from './type';
@@ -28,18 +28,22 @@ const ChatHeader = memo<ChatHeaderProps>(
       <Flexbox
         horizontal
         align={'center'}
-        className={cx(styles.container, className)}
+        className={styleProps(styles.container, className).className}
         distribution={'space-between'}
         gap={gap}
+        height={52}
         paddingInline={16}
+        width={'100%'}
         {...rest}
       >
         <Flexbox
           horizontal
           align={'center'}
-          className={cx(styles.left, classNames?.left)}
+          className={styleProps(styles.left, classNames?.left).className}
+          flex={1}
           gap={gaps?.left || 12}
           justify={'flex-start'}
+          paddingInline={'8px 0'}
           style={contentStyles?.left}
         >
           {showBackButton && (
@@ -55,7 +59,7 @@ const ChatHeader = memo<ChatHeaderProps>(
           <Flexbox
             horizontal
             align={'center'}
-            className={cx(styles.center, classNames?.center)}
+            className={styleProps(styles.center, classNames?.center).className}
             gap={gaps?.center || 8}
             justify={'center'}
             style={contentStyles?.center}
@@ -66,7 +70,8 @@ const ChatHeader = memo<ChatHeaderProps>(
         <Flexbox
           horizontal
           align={'center'}
-          className={cx(styles.right, classNames?.right)}
+          className={styleProps(styles.right, classNames?.right).className}
+          flex={'none'}
           gap={gaps?.right || 8}
           justify={'flex-end'}
           style={contentStyles?.right}

@@ -1,5 +1,6 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import dayjs from 'dayjs';
 import { CalendarIcon } from 'lucide-react';
 import { memo, useState } from 'react';
@@ -8,6 +9,7 @@ import useControlledState from 'use-merge-value';
 import datePickerMessages from '@/i18n/resources/en/datePicker';
 import { useTranslation } from '@/i18n/useTranslation';
 import Icon from '@/Icon';
+import { focusRing } from '@/styles/stylex/focusRing';
 
 import { clampToBounds, DEFAULT_FORMAT } from './calendar';
 import CalendarPanel from './CalendarPanel';
@@ -66,14 +68,14 @@ const DatePicker = memo<DatePickerProps>(
         style={style}
         variant={variant}
         icon={
-          <span className={styles.icon}>
+          <span {...stylex.props(styles.icon)}>
             <Icon icon={CalendarIcon} size={14} />
           </span>
         }
         trigger={
-          <button className={styles.trigger} disabled={disabled} type="button">
+          <button {...stylex.props(focusRing.info, styles.trigger)} disabled={disabled} type="button">
             {text ?? (
-              <span className={styles.placeholder}>{placeholder ?? t(PLACEHOLDER_KEY[mode])}</span>
+              <span {...stylex.props(styles.placeholder)}>{placeholder ?? t(PLACEHOLDER_KEY[mode])}</span>
             )}
           </button>
         }
@@ -94,7 +96,7 @@ const DatePicker = memo<DatePickerProps>(
             setOpen(false);
           }}
         />
-        {footer && <div className={styles.footer}>{footer}</div>}
+        {footer && <div {...stylex.props(styles.footer)}>{footer}</div>}
       </PickerShell>
     );
   },

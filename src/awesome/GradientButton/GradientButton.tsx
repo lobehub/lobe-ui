@@ -1,9 +1,11 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { memo, useMemo } from 'react';
 
-import Button from '@/Button';
-import { cssVar, cx, useThemeMode } from '@/styles';
+import { ButtonImpl } from '@/Button/Button';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { useThemeMode } from '@/styles/theme/scope';
 
 import { styles } from './style';
 import type { GradientButtonProps } from './type';
@@ -36,23 +38,21 @@ const GradientButton = memo<GradientButtonProps>(
     }, [size, disabled]);
 
     return (
-      <Button
+      <ButtonImpl
+        className={className}
         disabled={disabled}
         size={size}
         type={disabled ? undefined : 'text'}
-        className={cx(
-          !disabled && (isDarkMode ? styles.buttonDark : styles.buttonLight),
-          className,
-        )}
+        xstyle={!disabled && [styles.button, isDarkMode ? styles.buttonDark : styles.buttonLight]}
         style={{
           ...cssVariables,
           ...style,
         }}
         {...rest}
       >
-        {glow && <div className={styles.glow} />}
+        {glow && <div {...stylex.props(styles.glow)} />}
         {children}
-      </Button>
+      </ButtonImpl>
     );
   },
 );

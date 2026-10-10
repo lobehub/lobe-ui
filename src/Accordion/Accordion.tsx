@@ -1,8 +1,9 @@
 'use client';
 
+import clsx from 'clsx';
 import { type FC } from 'react';
 
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
 import {
   AccordionHeader,
@@ -11,7 +12,7 @@ import {
   AccordionRoot,
   AccordionTrigger,
 } from './atoms';
-import { actionVariants } from './style';
+import { styles } from './style';
 import type { AccordionProps } from './type';
 
 const Accordion: FC<AccordionProps> = ({
@@ -33,7 +34,7 @@ const Accordion: FC<AccordionProps> = ({
 }) => {
   return (
     <AccordionRoot
-      className={cx(classNames?.root, className)}
+      className={clsx(classNames?.root, className)}
       defaultValue={defaultValue}
       hideIndicator={hideIndicator}
       indicatorPlacement={indicatorPlacement}
@@ -58,11 +59,14 @@ const Accordion: FC<AccordionProps> = ({
             </AccordionTrigger>
             {item.action && (
               <div
-                style={customStyles?.action}
-                className={cx(
-                  'accordion-action',
-                  actionVariants({ alwaysVisible: item.alwaysShowAction, variant }),
-                  classNames?.action,
+                {...styleProps(
+                  [
+                    styles.action,
+                    variant === 'borderless' ? styles.actionBorderless : styles.actionOutlined,
+                    item.alwaysShowAction && styles.actionAlwaysVisible,
+                  ],
+                  clsx('accordion-action', classNames?.action),
+                  customStyles?.action,
                 )}
               >
                 {item.action}

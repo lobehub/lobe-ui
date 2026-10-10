@@ -1,0 +1,55 @@
+@layer lobe-ui {
+  @keyframes lobe-hero-gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+
+    50% {
+      background-position: 100% 50%;
+    }
+
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+  .lobe-hero-actions button {
+    height: 45px;
+    padding-inline: 32px;
+    border-radius: var(--lobe-border-radius-lg);
+
+    font-size: 18px;
+    font-weight: 500;
+  }
+
+  .lobe-hero-title b {
+    position: relative;
+    z-index: 5;
+
+    border-radius: inherit;
+
+    background-image: linear-gradient(
+      -45deg,
+      var(--lobe-gold),
+      var(--lobe-magenta),
+      var(--lobe-geekblue),
+      var(--lobe-cyan)
+    );
+    background-clip: text;
+    background-size: 400% 400%;
+
+    animation: 5s lobe-hero-gradient 5s ease infinite;
+
+    -webkit-text-fill-color: transparent;
+  }
+
+  .lobe-hero-title b::selection {
+    -webkit-text-fill-color: #000 !important;
+  }
+
+  @media (width <= 575.98px) {
+    .lobe-hero-actions button {
+      width: 100%;
+    }
+  }
+}

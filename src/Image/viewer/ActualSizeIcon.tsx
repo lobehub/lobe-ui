@@ -1,5 +1,6 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { memo } from 'react';
 
 import { styles } from '../style';
@@ -40,7 +41,7 @@ const ActualSizeIcon = memo<ActualSizeIconProps>(
     >
       {CORNERS.map(({ d, origin }) => (
         <path
-          className={styles.actualSizeCorner}
+          {...stylex.props(styles.actualSizeCorner)}
           d={d}
           key={d}
           style={{ transformOrigin: origin }}

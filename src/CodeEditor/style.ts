@@ -1,122 +1,51 @@
-import { cva } from 'class-variance-authority';
+import './style.css';
 
-import { createStaticStyles, cx, lobeStaticStylish } from '@/styles';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => {
-  return {
-    borderless: cx(
-      lobeStaticStylish.variantBorderlessWithoutHover,
-      css`
-        border-radius: 0;
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { stylish } from '@/styles/stylex/stylish';
 
-        pre,
-        textarea {
-          padding: 0;
-        }
-      `,
-    ),
-    filled: lobeStaticStylish.variantFilledWithoutHover,
-    highlight: css`
-      pointer-events: none;
-
-      /* Mirror the textarea's text flow instead of the highlighter's flex rows. */
-      pre code {
-        display: block;
-
-        /* Keep the final empty line measurable after a trailing newline. */
-        &::after {
-          content: '\\200b';
-        }
-
-        .line {
-          display: inline;
-          margin: 0;
-          padding: 0;
-        }
-
-        /* Token emphasis must not change glyph metrics relative to the textarea. */
-        span {
-          font-weight: inherit !important;
-          font-style: inherit !important;
-        }
-      }
-    `,
-    outlined: lobeStaticStylish.variantOutlinedWithoutHover,
-    root: css`
-      position: relative;
-
-      overflow: hidden auto;
-
-      width: 100%;
-      height: fit-content;
-      border-radius: ${cssVar.borderRadius};
-
-      font-size: 12px;
-
-      pre,
-      textarea {
-        margin: 0;
-        padding: 16px;
-      }
-
-      textarea,
-      pre,
-      code {
-        overflow: hidden;
-
-        font-family: ${cssVar.fontFamilyCode};
-        font-size: inherit;
-        line-height: inherit;
-        word-break: inherit;
-        word-wrap: break-word;
-        white-space: pre-wrap;
-      }
-    `,
-    textarea: css`
-      resize: none;
-
-      position: absolute;
-      inset-block-start: 0;
-      inset-inline-start: 0;
-
-      overflow: hidden;
-
-      box-sizing: border-box;
-      width: 100%;
-      height: 100%;
-      padding: 0;
-      border: none;
-
-      color: transparent;
-      text-align: start;
-
-      background: transparent;
-      outline: none;
-      caret-color: ${cssVar.colorText};
-
-      &::placeholder {
-        color: ${cssVar.colorTextQuaternary};
-      }
-
-      &:focus {
-        border: none;
-        outline: none;
-        box-shadow: none;
-      }
-    `,
-  };
-});
-
-export const variants = cva(styles.root, {
-  defaultVariants: {
-    variant: 'borderless',
+export const styles = stylex.create({
+  borderless: {
+    borderRadius: 0,
   },
-
-  variants: {
-    variant: {
-      filled: styles.filled,
-      outlined: styles.outlined,
-      borderless: styles.borderless,
+  highlight: {
+    pointerEvents: 'none',
+  },
+  root: {
+    borderRadius: cssVar.borderRadius,
+    fontSize: 12,
+    position: 'relative',
+    overflowX: 'hidden',
+    overflowY: 'auto',
+  },
+  textarea: {
+    'padding': 0,
+    'borderColor': 'currentcolor',
+    'borderStyle': 'none',
+    'borderWidth': 'medium',
+    'outline': 'none',
+    'overflow': 'hidden',
+    'backgroundColor': 'transparent',
+    'boxShadow': { 'default': null, ':focus': 'none' },
+    'boxSizing': 'border-box',
+    'caretColor': cssVar.colorText,
+    'color': 'transparent',
+    'insetBlockStart': 0,
+    'insetInlineStart': 0,
+    'position': 'absolute',
+    'resize': 'none',
+    'textAlign': 'start',
+    'height': '100%',
+    'width': '100%',
+    '::placeholder': {
+      color: cssVar.colorTextQuaternary,
     },
   },
 });
+
+export const variantStyles = {
+  borderless: [stylish.variantBorderlessWithoutHover, styles.borderless],
+  filled: stylish.variantFilledWithoutHover,
+  outlined: stylish.variantOutlinedWithoutHover,
+};

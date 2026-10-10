@@ -1,13 +1,13 @@
 'use client';
 
-import { type FC, useMemo } from 'react';
+import { type CSSProperties, type FC, useMemo } from 'react';
 
 import Avatar from '@/Avatar';
-import Block from '@/Block';
+import { BlockImpl as Block } from '@/Block/Block';
 import Grid from '@/Grid';
-import { cx } from '@/styles';
+import { SMOOTH_CORNER_MASKS } from '@/utils/smoothCorners';
 
-import { variants } from './style';
+import { styles } from './style';
 import type { GroupAvatarProps } from './type';
 
 const GroupAvatar: FC<GroupAvatarProps> = ({
@@ -47,11 +47,17 @@ const GroupAvatar: FC<GroupAvatarProps> = ({
   return (
     <Block
       align={'center'}
-      className={cx(variants({ cornerShape }), className)}
+      className={className}
       height={size}
       justify={'center'}
-      style={style}
       width={size}
+      xstyle={styles.root}
+      style={
+        {
+          '--lobe-group-avatar-mask': `url('${SMOOTH_CORNER_MASKS[cornerShape]}')`,
+          ...style,
+        } as CSSProperties
+      }
       {...rest}
     >
       <Grid

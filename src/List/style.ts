@@ -1,142 +1,116 @@
-import { focusRing } from '@/internal/focusRing';
-import { createStaticStyles } from '@/styles';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  actions: css`
-    position: absolute;
-    inset-block-start: 50%;
-    inset-inline-end: 8px;
-    transform: translateY(-50%);
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-    display: none;
-    gap: 4px;
-    align-items: center;
-  `,
-  active: css`
-    font-weight: 500;
-    color: ${cssVar.colorText};
-    background: ${cssVar.colorFillSecondary};
+import { listItemMarker } from './marker.stylex';
 
-    &:hover {
-      background: ${cssVar.colorFillSecondary};
-    }
-  `,
-  body: css`
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    gap: 1px;
-
-    min-width: 0;
-  `,
-  compact: css`
-    gap: 2px;
-
-    & > li > a,
-    & > li > button {
-      padding-inline: 8px;
-    }
-  `,
-  danger: css`
-    color: ${cssVar.colorError};
-
-    &:hover {
-      color: ${cssVar.colorError};
-    }
-  `,
-  description: css`
-    overflow: hidden;
-
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 1.4;
-    color: ${cssVar.colorTextDescription};
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  `,
-  disabled: css`
-    cursor: not-allowed;
-    opacity: 0.45;
-  `,
-  divider: css`
-    height: 1px;
-    margin-block: 4px;
-    background: ${cssVar.colorBorderSecondary};
-  `,
-  extra: css`
-    flex: none;
-    font-size: 12px;
-    color: ${cssVar.colorTextDescription};
-  `,
-  filled: css`
-    padding: 4px;
-    border-radius: ${cssVar.borderRadiusLG};
-    background: ${cssVar.colorFillQuaternary};
-  `,
-  item: css`
-    position: relative;
-
-    &:hover > span:last-child,
-    &:focus-within > span:last-child {
-      display: inline-flex;
-    }
-  `,
-  label: css`
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-
-    a {
-      color: inherit;
-    }
-  `,
-  outlined: css`
-    padding: 4px;
-    border: 1px solid ${cssVar.colorBorderSecondary};
-    border-radius: ${cssVar.borderRadiusLG};
-  `,
-  root: css`
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-
-    margin: 0;
-    padding: 0;
-
-    list-style: none;
-  `,
-  row: css`
-    ${focusRing};
-    cursor: pointer;
-
-    display: flex;
-    gap: 12px;
-    align-items: center;
-
-    box-sizing: border-box;
-    width: 100%;
-    min-height: 32px;
-    padding-block: 6px;
-    padding-inline: 12px;
-    border: 0;
-    border-radius: ${cssVar.borderRadius};
-
-    font: inherit;
-    font-size: 14px;
-    color: ${cssVar.colorTextSecondary};
-    text-align: start;
-    text-decoration: none;
-
-    background: none;
-
-    &:hover {
-      color: ${cssVar.colorText};
-      background: ${cssVar.colorFillTertiary};
-    }
-  `,
-  showAction: css`
-    & > span:last-child {
-      display: inline-flex;
-    }
-  `,
-}));
+export const styles = stylex.create({
+  actions: {
+    gap: 4,
+    alignItems: 'center',
+    display: {
+      default: 'none',
+      [stylex.when.ancestor(':focus-within', listItemMarker)]: 'inline-flex',
+      [stylex.when.ancestor(':hover', listItemMarker)]: 'inline-flex',
+    },
+    insetBlockStart: '50%',
+    insetInlineEnd: 8,
+    position: 'absolute',
+    transform: 'translateY(-50%)',
+  },
+  active: {
+    backgroundColor: cssVar.colorFillSecondary,
+    color: cssVar.colorText,
+    fontWeight: 500,
+  },
+  body: {
+    gap: 1,
+    display: 'flex',
+    flexBasis: '0%',
+    flexDirection: 'column',
+    flexGrow: 1,
+    flexShrink: 1,
+    minWidth: 0,
+  },
+  compactRow: {
+    paddingInline: 8,
+  },
+  danger: {
+    color: cssVar.colorError,
+  },
+  description: {
+    overflow: 'hidden',
+    color: cssVar.colorTextDescription,
+    fontSize: 12,
+    fontWeight: 400,
+    lineHeight: 1.4,
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+  },
+  disabled: {
+    cursor: 'not-allowed',
+    opacity: 0.45,
+  },
+  divider: {
+    marginBlock: 4,
+    backgroundColor: cssVar.colorBorderSecondary,
+    height: 1,
+  },
+  extra: {
+    flex: 'none',
+    color: cssVar.colorTextDescription,
+    fontSize: 12,
+  },
+  filled: {
+    padding: 4,
+    borderRadius: cssVar.borderRadiusLG,
+    backgroundColor: cssVar.colorFillQuaternary,
+  },
+  item: {
+    position: 'relative',
+  },
+  label: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+  },
+  outlined: {
+    padding: 4,
+    borderColor: cssVar.colorBorderSecondary,
+    borderRadius: cssVar.borderRadiusLG,
+    borderStyle: 'solid',
+    borderWidth: 1,
+  },
+  root: {
+    margin: 0,
+    padding: 0,
+    gap: 2,
+    listStyle: 'none',
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  row: {
+    font: 'inherit',
+    borderColor: 'currentColor',
+    borderRadius: cssVar.borderRadius,
+    borderStyle: 'none',
+    borderWidth: 0,
+    gap: 12,
+    paddingBlock: 6,
+    paddingInline: 12,
+    textDecoration: 'none',
+    alignItems: 'center',
+    backgroundColor: { 'default': 'transparent', ':hover': cssVar.colorFillTertiary },
+    boxSizing: 'border-box',
+    color: { 'default': cssVar.colorTextSecondary, ':hover': cssVar.colorText },
+    cursor: 'pointer',
+    display: 'flex',
+    fontSize: 14,
+    textAlign: 'start',
+    minHeight: 32,
+    width: '100%',
+  },
+  showAction: {
+    display: 'inline-flex',
+  },
+});

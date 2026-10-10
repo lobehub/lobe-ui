@@ -6,7 +6,6 @@ import ConfigProvider from '@/ConfigProvider';
 
 import Avatar from '../Avatar';
 import AvatarGroup from '../AvatarGroup';
-import { styles } from '../style';
 
 const renderWithProvider = (children: ReactNode) =>
   render(<ConfigProvider motion={motion}>{children}</ConfigProvider>);
@@ -61,10 +60,14 @@ describe('Avatar', () => {
   });
 
   test('shows the loading overlay while loading', () => {
-    const { container } = renderWithProvider(<Avatar loading avatar="X" />);
+    const { container } = renderWithProvider(
+      <Avatar loading avatar="X" classNames={{ loading: 'avatar-loading' }} />,
+    );
 
-    expect(container.querySelector(`.${styles.loading}`)).toBeTruthy();
-    expect(container.querySelector('svg')).toBeTruthy();
+    const overlay = container.querySelector<HTMLElement>('.avatar-loading');
+    expect(overlay).toBeTruthy();
+    expect(getComputedStyle(overlay!).position).toBe('absolute');
+    expect(overlay!.querySelector('svg')).toBeTruthy();
   });
 
   test('applies circle radius and bordered ring', () => {

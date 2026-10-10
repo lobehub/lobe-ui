@@ -1,5 +1,6 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { useEffect, useState } from 'react';
 
 import { styles } from './style';
@@ -36,7 +37,7 @@ function RouteProgress({ loading = false }: RouteProgressProps) {
   return (
     <div
       aria-hidden
-      className={styles.bar}
+      {...stylex.props(styles.bar)}
       style={{
         opacity: progress >= 1 ? 0 : 1,
         transform: `scaleX(${progress})`,

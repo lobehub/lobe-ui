@@ -1,5 +1,6 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import {
   Children,
   cloneElement,
@@ -18,29 +19,32 @@ import {
   type ScrollAreaRootProps,
   ScrollAreaScrollbar,
   ScrollAreaThumb,
-  ScrollAreaViewport,
+  ScrollAreaViewportImpl,
   type ScrollAreaViewportProps,
 } from '@/ScrollArea/atoms';
-import { createStaticStyles, cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
 // `--lobe-virtual-scroll-inset` is the inline padding of the box the scroll area sits in: the
 // root bleeds out by it so the scrollbar hugs that box's edge, and the viewport pads the rows back.
-const styles = createStaticStyles(({ css }) => ({
-  root: css`
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-
-    min-height: 0;
-    margin-inline: calc(-1 * var(--lobe-virtual-scroll-inset, 0px));
-  `,
-  viewport: css`
-    flex: 1;
-    height: auto;
-    min-height: 0;
-    padding-inline: var(--lobe-virtual-scroll-inset, 0);
-  `,
-}));
+const styles = stylex.create({
+  root: {
+    marginInline: 'calc(-1 * var(--lobe-virtual-scroll-inset, 0px))',
+    display: 'flex',
+    flexBasis: '0%',
+    flexDirection: 'column',
+    flexGrow: 1,
+    flexShrink: 1,
+    minHeight: 0,
+  },
+  viewport: {
+    paddingInline: 'var(--lobe-virtual-scroll-inset, 0)',
+    flexBasis: '0%',
+    flexGrow: 1,
+    flexShrink: 1,
+    height: 'auto',
+    minHeight: 0,
+  },
+});
 
 // Rows mounted on the very first render, before the viewport is measured, so Base UI's
 // list navigation sees the leading rows (not a pinned footer item) when it focuses on open.
@@ -84,16 +88,20 @@ export const VirtualScrollArea = ({
     </Virtualizer>
   );
   const viewportElement = (
-    <ScrollAreaViewport
+    <ScrollAreaViewportImpl
       tabIndex={-1}
       {...viewportProps}
-      className={cx(styles.viewport, viewportProps?.className as string)}
       ref={mergedViewportRef}
+      xstyle={styles.viewport}
     />
   );
 
   return (
-    <ScrollAreaRoot data-virtual="" {...rest} className={cx(styles.root, className as string)}>
+    <ScrollAreaRoot
+      data-virtual=""
+      {...rest}
+      className={styleProps(styles.root, className as string).className}
+    >
       {cloneElement(viewport ?? viewportElement, {
         children: list,
         ...(viewport && { render: viewportElement }),

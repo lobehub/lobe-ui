@@ -1,11 +1,14 @@
 'use client';
 
+import './style.css';
+
 import { Tabs as BaseUITabs } from '@base-ui/react/tabs';
+import clsx from 'clsx';
 import { createContext, type FC, use, useMemo } from 'react';
 
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
-import { indicatorVariants, listVariants, styles, tabVariants } from './style';
+import { indicatorStyles, listStyles, panelStyles, tabStyles } from './style';
 import type {
   TabsIndicatorProps,
   TabsListProps,
@@ -51,7 +54,9 @@ export const TabsList: FC<TabsListProps> = ({ className, variant: variantProp, .
   const ctx = useTabsContext();
   const variant = variantProp ?? ctx.variant;
 
-  return <BaseUITabs.List className={cx(listVariants({ variant }), className)} {...rest} />;
+  return (
+    <BaseUITabs.List className={styleProps(listStyles(variant), className).className} {...rest} />
+  );
 };
 
 TabsList.displayName = 'TabsList';
@@ -66,13 +71,18 @@ export const TabsTab: FC<TabsTabProps> = ({
   const size = sizeProp ?? ctx.size;
   const variant = variantProp ?? ctx.variant;
 
-  return <BaseUITabs.Tab className={cx(tabVariants({ size, variant }), className)} {...rest} />;
+  return (
+    <BaseUITabs.Tab
+      className={styleProps(tabStyles(size, variant), className).className}
+      {...rest}
+    />
+  );
 };
 
 TabsTab.displayName = 'TabsTab';
 
 export const TabsPanel: FC<TabsPanelProps> = ({ className, ...rest }) => {
-  return <BaseUITabs.Panel className={cx(styles.panel, className)} {...rest} />;
+  return <BaseUITabs.Panel className={styleProps(panelStyles, className).className} {...rest} />;
 };
 
 TabsPanel.displayName = 'TabsPanel';
@@ -88,7 +98,9 @@ export const TabsIndicator: FC<TabsIndicatorProps> = ({
   return (
     <BaseUITabs.Indicator
       renderBeforeHydration
-      className={cx(indicatorVariants({ variant }), className)}
+      className={
+        styleProps(indicatorStyles(variant), clsx('lobe-tabs-indicator', className)).className
+      }
       {...rest}
     />
   );
@@ -96,4 +108,4 @@ export const TabsIndicator: FC<TabsIndicatorProps> = ({
 
 TabsIndicator.displayName = 'TabsIndicator';
 
-export { styles as tabsStyles } from './style';
+export { tabsStyles } from './style';

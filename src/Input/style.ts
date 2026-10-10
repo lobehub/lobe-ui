@@ -1,308 +1,315 @@
-import { cva } from 'class-variance-authority';
+import * as stylex from '@stylexjs/stylex';
 
-import { controlHeight } from '@/internal/controlSize';
-import { createStaticStyles, lobeStaticStylish } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { styleProps } from '@/styles/stylex/props';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  clear: css`
-    cursor: pointer;
+import { inputMarker } from './marker.stylex';
+import type { InputSize, InputVariant } from './type';
 
-    display: inline-flex;
-    flex: none;
-    align-items: center;
-    justify-content: center;
+const disabled = ':is([data-disabled], :has(:disabled))';
+const hover = ':hover:not(:focus-within, [data-disabled])';
+const invalid = ":has([data-invalid], [aria-invalid='true'])";
+const invalidIdle =
+  ":has([data-invalid], [aria-invalid='true']):is(:focus-within, :not(:hover), [data-disabled])";
+const invalidFocus = ":has([data-invalid], [aria-invalid='true']):focus-within";
+const validFocus = ":focus-within:not(:has([data-invalid], [aria-invalid='true']))";
 
-    width: 16px;
-    height: 16px;
-    padding: 0;
-    border: 0;
-    border-radius: 50%;
+const lobeShadow = `0 1px 0 -1px ${cssVar.colorBorder}, 0 1px 2px -0.5px ${cssVar.colorBorder}, 0 2px 2px -1px ${cssVar.colorBorderSecondary}, 0 3px 6px -4px ${cssVar.colorBorderSecondary}`;
+const primaryRing = `0 0 0 2px ${cssVar.colorPrimaryBg}`;
+const errorRing = `0 0 0 2px ${cssVar.colorErrorBg}`;
 
-    color: ${cssVar.colorBgContainer};
-
-    visibility: hidden;
-    background: ${cssVar.colorTextQuaternary};
-
-    &:hover {
-      background: ${cssVar.colorTextTertiary};
-    }
-  `,
-  count: css`
-    pointer-events: none;
-
-    position: absolute;
-    inset-block-end: 6px;
-    inset-inline-end: 8px;
-
-    display: inline-flex;
-    align-items: center;
-
-    height: 20px;
-    padding-inline: 8px;
-    border-radius: 999px;
-
-    font-size: 11px;
-    font-weight: 600;
-    font-variant-numeric: tabular-nums;
-    color: ${cssVar.colorTextSecondary};
-
-    background: ${cssVar.colorFillTertiary};
-
-    &[data-over] {
-      color: ${cssVar.colorWhite};
-      background: ${cssVar.colorError};
-    }
-  `,
-  textareaClear: css`
-    position: absolute;
-    inset-block-start: 10px;
-    inset-inline-end: 10px;
-  `,
-  textareaWithCount: css`
-    padding-block-end: 30px;
-  `,
-  borderless: css`
-    border: 1px solid transparent;
-    background: none;
-  `,
-  filled: css`
-    border: 1px solid transparent;
-    background: ${cssVar.colorFillTertiary};
-
-    &:hover:not(:focus-within, [data-disabled]) {
-      background: ${cssVar.colorFillSecondary};
-    }
-  `,
-  input: css`
-    flex: 1;
-
-    min-width: 0;
-    padding: 0;
-    border: none;
-
-    font: inherit;
-    color: inherit;
-
-    appearance: none;
-    background: transparent;
-    outline: none;
-
-    &::placeholder {
-      color: ${cssVar.colorTextPlaceholder};
-    }
-
-    /* the root shows focus via its border; outrank global :focus-visible rings */
-    &:focus-visible {
-      outline: none;
-    }
-  `,
-  invalid: css`
-    &:has([data-invalid], [aria-invalid='true']) {
-      border-color: ${cssVar.colorError};
-
-      &:focus-within {
-        border-color: ${cssVar.colorError};
-        box-shadow: 0 0 0 2px ${cssVar.colorErrorBg};
-      }
-    }
-  `,
-  outlined: css`
-    border: 1px solid ${cssVar.colorBorderSecondary};
-    background: ${cssVar.colorBgContainer};
-
-    &:hover:not(:focus-within, [data-disabled]) {
-      border-color: ${cssVar.colorBorder};
-    }
-
-    &:focus-within {
-      border-color: ${cssVar.colorPrimary};
-      box-shadow: 0 0 0 2px ${cssVar.colorPrimaryBg};
-    }
-  `,
-  root: css`
-    cursor: text;
-
-    display: inline-flex;
-    gap: 8px;
-    align-items: center;
-
-    box-sizing: border-box;
-    width: 100%;
-    padding-inline: 12px;
-    border-radius: ${cssVar.borderRadius};
-
-    font-size: 14px;
-    color: ${cssVar.colorText};
-
-    transition:
-      background 150ms ${cssVar.motionEaseOut},
-      border-color 150ms ${cssVar.motionEaseOut},
-      box-shadow 150ms ${cssVar.motionEaseOut};
-
-    &[data-disabled],
-    &:has(:disabled) {
-      cursor: not-allowed;
-      color: ${cssVar.colorTextQuaternary};
-      opacity: 0.66;
-    }
-
-    &:hover [data-lobe-input-clear],
-    &:focus-within [data-lobe-input-clear] {
-      visibility: visible;
-    }
-  `,
-  shadow: lobeStaticStylish.shadow,
-  sizeLarge: css`
-    min-height: ${controlHeight.large}px;
-    border-radius: ${cssVar.borderRadiusLG};
-    font-size: 16px;
-  `,
-  sizeMiddle: css`
-    min-height: ${controlHeight.middle}px;
-  `,
-  sizeSmall: css`
-    min-height: ${controlHeight.small}px;
-    padding-inline: 8px;
-    border-radius: ${cssVar.borderRadiusSM};
-    font-size: 12px;
-  `,
-  numberControl: css`
-    cursor: pointer;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    width: 20px;
-    height: 13px;
-    margin: 0;
-    padding: 0;
-    border: none;
-    border-radius: 4px;
-
-    color: ${cssVar.colorTextTertiary};
-
-    background: none;
-    outline: none;
-
-    transition:
-      color 150ms ${cssVar.motionEaseOut},
-      background 150ms ${cssVar.motionEaseOut};
-
-    &:hover:not(:disabled) {
-      color: ${cssVar.colorText};
-      background: ${cssVar.colorFillSecondary};
-    }
-
-    &:disabled {
-      cursor: not-allowed;
-      opacity: 0.3;
-    }
-  `,
-  numberControlLarge: css`
-    width: 22px;
-    height: 15px;
-  `,
-  numberControlSmall: css`
-    width: 16px;
-    height: 10px;
-    border-radius: 3px;
-  `,
-  numberControls: css`
-    display: flex;
-    flex: none;
-    flex-direction: column;
-    margin-inline-end: -6px;
-  `,
-  numberControlsSmall: css`
-    margin-inline-end: -4px;
-  `,
-  numberInput: css`
-    font-variant-numeric: tabular-nums;
-  `,
-  otpCell: css`
-    flex: none;
-    width: ${controlHeight.middle}px;
-    padding-inline: 0;
-    text-align: center;
-  `,
-  otpRoot: css`
-    display: inline-flex;
-    gap: 8px;
-    align-items: center;
-  `,
-  passwordToggle: css`
-    cursor: pointer;
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    margin: 0;
-    padding: 0;
-    border: none;
-
-    color: ${cssVar.colorTextTertiary};
-
-    background: none;
-    outline: none;
-
-    transition: color 150ms ${cssVar.motionEaseOut};
-
-    &:hover {
-      color: ${cssVar.colorText};
-    }
-  `,
-  slot: css`
-    display: inline-flex;
-    flex: none;
-    align-items: center;
-    color: ${cssVar.colorTextTertiary};
-  `,
-  textarea: css`
-    position: relative;
-    height: auto;
-    padding-block: 8px;
-
-    textarea {
-      resize: none;
-      min-height: calc(1.5em * var(--textarea-min-rows, 2));
-      max-height: var(--textarea-max-height, none);
-      line-height: 1.5;
-    }
-  `,
-  textareaAutoSize: css`
-    textarea {
-      field-sizing: content;
-    }
-  `,
-  textareaResize: css`
-    textarea {
-      resize: vertical;
-    }
-  `,
-}));
-
-export const rootVariants = cva([styles.root, styles.invalid], {
-  defaultVariants: {
-    shadow: false,
-    size: 'middle',
-    variant: 'outlined',
+export const styles = stylex.create({
+  borderless: {
+    borderColor: { default: 'transparent', [invalid]: cssVar.colorError },
+    borderStyle: 'solid',
+    borderWidth: 1,
+    backgroundColor: 'transparent',
+    backgroundImage: 'none',
+    boxShadow: { default: null, [invalidFocus]: errorRing },
   },
-  variants: {
-    shadow: {
-      false: null,
-      true: styles.shadow,
+  clear: {
+    padding: 0,
+    borderColor: 'currentcolor',
+    borderRadius: '50%',
+    borderStyle: 'none',
+    borderWidth: 0,
+    flex: 'none',
+    alignItems: 'center',
+    backgroundColor: {
+      'default': cssVar.colorTextQuaternary,
+      ':hover': cssVar.colorTextTertiary,
     },
-    size: {
-      large: styles.sizeLarge,
-      middle: styles.sizeMiddle,
-      small: styles.sizeSmall,
+    color: cssVar.colorBgContainer,
+    cursor: 'pointer',
+    display: 'inline-flex',
+    justifyContent: 'center',
+    visibility: {
+      default: 'hidden',
+      [stylex.when.ancestor(':focus-within', inputMarker)]: 'visible',
+      [stylex.when.ancestor(':hover', inputMarker)]: 'visible',
     },
-    variant: {
-      borderless: styles.borderless,
-      filled: styles.filled,
-      outlined: styles.outlined,
+    height: 16,
+    width: 16,
+  },
+  count: {
+    borderRadius: 999,
+    paddingInline: 8,
+    alignItems: 'center',
+    backgroundColor: {
+      'default': cssVar.colorFillTertiary,
+      ':is([data-over])': cssVar.colorError,
     },
+    color: {
+      'default': cssVar.colorTextSecondary,
+      ':is([data-over])': cssVar.colorWhite,
+    },
+    display: 'inline-flex',
+    fontSize: 11,
+    fontVariantNumeric: 'tabular-nums',
+    fontWeight: 600,
+    insetBlockEnd: 6,
+    insetInlineEnd: 8,
+    pointerEvents: 'none',
+    position: 'absolute',
+    height: 20,
+  },
+  filled: {
+    borderColor: { default: 'transparent', [invalid]: cssVar.colorError },
+    borderStyle: 'solid',
+    borderWidth: 1,
+    backgroundColor: {
+      default: cssVar.colorFillTertiary,
+      [hover]: cssVar.colorFillSecondary,
+    },
+    boxShadow: { default: null, [invalidFocus]: errorRing },
+  },
+  input: {
+    'font': 'inherit',
+    'padding': 0,
+    'borderColor': 'currentcolor',
+    'borderStyle': 'none',
+    'borderWidth': 'medium',
+    'flex': '1',
+    'outline': 'none',
+    'appearance': 'none',
+    'backgroundColor': 'transparent',
+    'color': 'inherit',
+    'minWidth': 0,
+    '::placeholder': {
+      color: cssVar.colorTextPlaceholder,
+    },
+  },
+  numberControl: {
+    margin: 0,
+    padding: 0,
+    borderColor: 'currentcolor',
+    borderRadius: 4,
+    borderStyle: 'none',
+    borderWidth: 'medium',
+    outline: 'none',
+    transition: `color 150ms ${cssVar.motionEaseOut}, background 150ms ${cssVar.motionEaseOut}`,
+    alignItems: 'center',
+    backgroundColor: {
+      'default': 'transparent',
+      ':hover:not(:disabled)': cssVar.colorFillSecondary,
+    },
+    color: {
+      'default': cssVar.colorTextTertiary,
+      ':hover:not(:disabled)': cssVar.colorText,
+    },
+    cursor: { 'default': 'pointer', ':disabled': 'not-allowed' },
+    display: 'flex',
+    justifyContent: 'center',
+    opacity: { 'default': null, ':disabled': 0.3 },
+    height: 13,
+    width: 20,
+  },
+  numberControlLarge: {
+    height: 15,
+    width: 22,
+  },
+  numberControls: {
+    flex: 'none',
+    display: 'flex',
+    flexDirection: 'column',
+    marginInlineEnd: -6,
+  },
+  numberControlSmall: {
+    borderRadius: 3,
+    height: 10,
+    width: 16,
+  },
+  numberControlsSmall: {
+    marginInlineEnd: -4,
+  },
+  numberInput: {
+    fontVariantNumeric: 'tabular-nums',
+  },
+  otpCell: {
+    flex: 'none',
+    paddingInline: 0,
+    textAlign: 'center',
+    width: 32,
+  },
+  otpRoot: {
+    gap: 8,
+    alignItems: 'center',
+    display: 'inline-flex',
+  },
+  outlined: {
+    borderColor: {
+      default: cssVar.colorBorderSecondary,
+      [hover]: cssVar.colorBorder,
+      [invalidIdle]: cssVar.colorError,
+      [validFocus]: cssVar.colorPrimary,
+    },
+    borderStyle: 'solid',
+    borderWidth: 1,
+    backgroundColor: cssVar.colorBgContainer,
+    boxShadow: { default: null, [invalidFocus]: errorRing, [validFocus]: primaryRing },
+  },
+  passwordToggle: {
+    margin: 0,
+    padding: 0,
+    borderColor: 'currentcolor',
+    borderStyle: 'none',
+    borderWidth: 'medium',
+    outline: 'none',
+    transition: `color 150ms ${cssVar.motionEaseOut}`,
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    color: { 'default': cssVar.colorTextTertiary, ':hover': cssVar.colorText },
+    cursor: 'pointer',
+    display: 'inline-flex',
+    justifyContent: 'center',
+  },
+  root: {
+    borderRadius: cssVar.borderRadius,
+    gap: 8,
+    paddingInline: 12,
+    transition: `background 150ms ${cssVar.motionEaseOut}, border-color 150ms ${cssVar.motionEaseOut}, box-shadow 150ms ${cssVar.motionEaseOut}`,
+    alignItems: 'center',
+    boxSizing: 'border-box',
+    color: { default: cssVar.colorText, [disabled]: cssVar.colorTextQuaternary },
+    cursor: { default: 'text', [disabled]: 'not-allowed' },
+    display: 'inline-flex',
+    fontSize: 14,
+    opacity: { default: null, [disabled]: 0.66 },
+    width: '100%',
+  },
+  shadow: {
+    boxShadow: { default: lobeShadow, [invalidFocus]: errorRing },
+  },
+  shadowOutlined: {
+    boxShadow: { default: lobeShadow, [invalidFocus]: errorRing, [validFocus]: primaryRing },
+  },
+  sizeLarge: {
+    borderRadius: cssVar.borderRadiusLG,
+    fontSize: 16,
+    minHeight: 40,
+  },
+  sizeMiddle: {
+    minHeight: 32,
+  },
+  sizeSmall: {
+    borderRadius: cssVar.borderRadiusSM,
+    paddingInline: 8,
+    fontSize: 12,
+    minHeight: 24,
+  },
+  slot: {
+    flex: 'none',
+    alignItems: 'center',
+    color: cssVar.colorTextTertiary,
+    display: 'inline-flex',
+  },
+  textarea: {
+    paddingBlock: 8,
+    position: 'relative',
+    height: 'auto',
+  },
+  textareaAutoSize: {
+    fieldSizing: 'content',
+  },
+  textareaClear: {
+    insetBlockStart: 10,
+    insetInlineEnd: 10,
+    position: 'absolute',
+  },
+  textareaControl: {
+    lineHeight: 1.5,
+    resize: 'none',
+    maxHeight: 'var(--textarea-max-height, none)',
+    minHeight: 'calc(1.5em * var(--textarea-min-rows, 2))',
+  },
+  textareaResize: {
+    resize: 'vertical',
+  },
+  textareaWithCount: {
+    paddingBlockEnd: 30,
   },
 });
+
+const sizeStyles = {
+  large: styles.sizeLarge,
+  middle: styles.sizeMiddle,
+  small: styles.sizeSmall,
+};
+
+const variantStyles = {
+  borderless: styles.borderless,
+  filled: styles.filled,
+  outlined: styles.outlined,
+};
+
+interface RootOptions {
+  shadow?: boolean | null;
+  size?: InputSize | null;
+  variant?: InputVariant | null;
+}
+
+export const inputRootStyles = ({ shadow, size, variant }: RootOptions = {}) => {
+  const mergedVariant = variant || 'outlined';
+  return [
+    inputMarker,
+    styles.root,
+    sizeStyles[size || 'middle'],
+    variantStyles[mergedVariant],
+    shadow && (mergedVariant === 'outlined' ? styles.shadowOutlined : styles.shadow),
+  ];
+};
+
+export const rootVariants = (options?: RootOptions) =>
+  stylex.props(inputRootStyles(options)).className ?? '';
+
+const className = (style: Parameters<typeof styleProps>[0]) => styleProps(style).className;
+
+export const inputClassNames = {
+  borderless: className(styles.borderless),
+  clear: className(styles.clear),
+  count: className(styles.count),
+  filled: className(styles.filled),
+  input: className(styles.input),
+  invalid: '',
+  numberControl: className(styles.numberControl),
+  numberControlLarge: className(styles.numberControlLarge),
+  numberControls: className(styles.numberControls),
+  numberControlSmall: className(styles.numberControlSmall),
+  numberControlsSmall: className(styles.numberControlsSmall),
+  numberInput: className(styles.numberInput),
+  otpCell: className(styles.otpCell),
+  otpRoot: className(styles.otpRoot),
+  outlined: className(styles.outlined),
+  passwordToggle: className(styles.passwordToggle),
+  root: className([inputMarker, styles.root]),
+  shadow: className(styles.shadow),
+  sizeLarge: className(styles.sizeLarge),
+  sizeMiddle: className(styles.sizeMiddle),
+  sizeSmall: className(styles.sizeSmall),
+  slot: className(styles.slot),
+  textarea: className(styles.textarea),
+  textareaAutoSize: className(styles.textareaAutoSize),
+  textareaClear: className(styles.textareaClear),
+  textareaResize: className(styles.textareaResize),
+  textareaWithCount: className(styles.textareaWithCount),
+};

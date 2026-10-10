@@ -1,5 +1,6 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { Menu, X } from 'lucide-react';
 import { memo } from 'react';
 
@@ -7,13 +8,27 @@ import ActionIcon from '@/ActionIcon';
 import { Drawer } from '@/Drawer';
 import burgerMessages from '@/i18n/resources/en/burger';
 import { useTranslation } from '@/i18n/useTranslation';
-import List, { type ListItem } from '@/List';
+import { type ListItem } from '@/List';
+import { ListImpl as List } from '@/List/List';
+import type { ListRowXstyle } from '@/List/ListRow';
 
 import { styles } from './style';
 import type { BurgerProps } from './type';
 
 const withoutIcons = (items: ListItem[]): ListItem[] =>
   items.flatMap((item) => (item.type === 'divider' ? [] : [{ ...item, icon: undefined }]));
+
+const bodyStyle = { paddingBlock: 8, paddingInline: 12 };
+
+const rowXstyle: ListRowXstyle = (item, active) => {
+  const current = active && (!item.href || !!item.disabled);
+  return [styles.row, current && styles.rowCurrent];
+};
+
+const largeRowXstyle: ListRowXstyle = (item, active) => {
+  const current = active && (!item.href || !!item.disabled);
+  return [styles.largeRow, current && styles.largeRowCurrent];
+};
 
 const Burger = memo<BurgerProps>(
   ({
@@ -51,29 +66,32 @@ const Burger = memo<BurgerProps>(
         {toggle}
         <Drawer
           noHeader
-          classNames={{ bodyContent: styles.body }}
           height={fullscreen ? '100dvh' : `calc(100dvh - ${headerHeight}px)`}
           open={opened}
           placement="top"
-          styles={fullscreen ? undefined : { popup: { insetBlockStart: headerHeight } }}
+          styles={
+            fullscreen
+              ? { bodyContent: bodyStyle }
+              : { bodyContent: bodyStyle, popup: { insetBlockStart: headerHeight } }
+          }
           onClose={close}
         >
           {fullscreen && (
-            <div className={styles.fullHeader} style={{ height: headerHeight }}>
+            <div {...stylex.props(styles.fullHeader)} style={{ height: headerHeight }}>
               <ActionIcon aria-label={t('burger.close')} icon={X} size={size} onClick={close} />
             </div>
           )}
           <List
             selectable
             activeKey={activeKey ?? null}
-            classNames={{ item: fullscreen ? styles.largeRow : styles.row }}
+            itemXstyle={fullscreen ? largeRowXstyle : rowXstyle}
             items={fullscreen ? withoutIcons(items) : items}
             onClick={({ key }) => {
               onSelect?.(key);
               close();
             }}
           />
-          {fullscreen && footer && <div className={styles.footer}>{footer}</div>}
+          {fullscreen && footer && <div {...stylex.props(styles.footer)}>{footer}</div>}
         </Drawer>
       </>
     );

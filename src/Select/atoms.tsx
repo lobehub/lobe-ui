@@ -2,6 +2,8 @@
 
 import { mergeProps } from '@base-ui/react/merge-props';
 import { Select } from '@base-ui/react/select';
+import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import {
   cloneElement,
   type ComponentProps,
@@ -11,21 +13,25 @@ import {
 import { mergeRefs, useMergeRefs } from 'react-merge-refs';
 
 import { useAppElement } from '@/ConfigProvider/AppElementContext';
-import { styles as menuStyles } from '@/DropdownMenu/sharedStyle';
+import { menuClassNames, menuStyles } from '@/DropdownMenu/sharedStyle';
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { getFloatingCollisionPadding } from '@/internal/floating';
-import { cx, useThemeMode } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
+import { useThemeMode } from '@/styles/theme/scope';
 
 import { useLayerZIndex } from '../internal/zIndex';
-import { styles, triggerVariants } from './style';
+import { styles, triggerStyles } from './style';
 import { type SelectSize, type SelectVariant } from './type';
 
 const mergeStateClassName = <TState,>(
-  base: string,
+  base: Parameters<typeof styleProps>[0],
   className: string | ((state: TState) => string | undefined) | undefined,
+  extra?: string,
 ) => {
-  if (typeof className === 'function') return (state: TState) => cx(base, className(state));
-  return cx(base, className);
+  const baseClassName = styleProps(base, extra).className;
+  if (typeof className === 'function')
+    return (state: TState) => clsx(baseClassName, className(state));
+  return clsx(baseClassName, className);
 };
 
 export const SelectRoot = Select.Root;
@@ -54,7 +60,8 @@ export const SelectTrigger = ({
 }: SelectTriggerProps) => {
   const { isDarkMode } = useThemeMode();
   const resolvedVariant = variant ?? (isDarkMode ? 'filled' : 'outlined');
-  const baseClassName = triggerVariants({ shadow, size, variant: resolvedVariant });
+  const triggerStyle = triggerStyles({ shadow, size, variant: resolvedVariant });
+  const baseClassName = stylex.props(triggerStyle).className;
 
   const { isNativeButtonTriggerElement, resolvedNativeButton } = useNativeButton({
     children,
@@ -85,7 +92,7 @@ export const SelectTrigger = ({
 
           return cloneElement(children as any, {
             ...mergedProps,
-            className: cx(baseClassName, childClassName, extraClassName),
+            className: clsx(baseClassName, childClassName, extraClassName),
             ref: mergeRefs([(children as any).ref, (props as any).ref, refProp]),
           });
         }}
@@ -96,7 +103,7 @@ export const SelectTrigger = ({
   return (
     <Select.Trigger
       {...rest}
-      className={mergeStateClassName(baseClassName, className) as any}
+      className={mergeStateClassName([triggerStyle], className) as any}
       nativeButton={resolvedNativeButton}
       ref={refProp as any}
     >
@@ -110,7 +117,7 @@ SelectTrigger.displayName = 'SelectTrigger';
 export type SelectIconProps = ComponentProps<typeof Select.Icon>;
 
 export const SelectIcon = ({ className, ...rest }: SelectIconProps) => {
-  return <Select.Icon className={mergeStateClassName(styles.icon, className) as any} {...rest} />;
+  return <Select.Icon className={mergeStateClassName([styles.icon], className) as any} {...rest} />;
 };
 
 SelectIcon.displayName = 'SelectIcon';
@@ -118,7 +125,9 @@ SelectIcon.displayName = 'SelectIcon';
 export type SelectValueProps = ComponentProps<typeof Select.Value>;
 
 export const SelectValue = ({ className, ...rest }: SelectValueProps) => {
-  return <Select.Value className={mergeStateClassName(styles.value, className) as any} {...rest} />;
+  return (
+    <Select.Value className={mergeStateClassName([styles.value], className) as any} {...rest} />
+  );
 };
 
 SelectValue.displayName = 'SelectValue';
@@ -166,7 +175,7 @@ export const SelectPositioner = ({
     <Select.Positioner
       align={align ?? 'start'}
       alignItemWithTrigger={alignItemWithTrigger ?? false}
-      className={mergeStateClassName(styles.positioner, className) as any}
+      className={mergeStateClassName([styles.positioner], className) as any}
       collisionPadding={collisionPadding ?? getFloatingCollisionPadding()}
       ref={composedRef as any}
       side={side ?? 'bottom'}
@@ -184,7 +193,13 @@ export type SelectPopupProps = ComponentProps<typeof Select.Popup>;
 export const SelectPopup = ({ className, ...rest }: SelectPopupProps) => {
   return (
     <Select.Popup
-      className={mergeStateClassName(cx(menuStyles.popup, styles.popup), className) as any}
+      className={
+        mergeStateClassName(
+          [menuStyles.popup, styles.popup],
+          className,
+          menuClassNames.popup,
+        ) as any
+      }
       {...rest}
     />
   );
@@ -195,7 +210,7 @@ SelectPopup.displayName = 'SelectPopup';
 export type SelectListProps = ComponentProps<typeof Select.List>;
 
 export const SelectList = ({ className, ...rest }: SelectListProps) => {
-  return <Select.List className={mergeStateClassName(styles.list, className) as any} {...rest} />;
+  return <Select.List className={mergeStateClassName([styles.list], className) as any} {...rest} />;
 };
 
 SelectList.displayName = 'SelectList';
@@ -204,10 +219,7 @@ export type SelectItemProps = ComponentProps<typeof Select.Item>;
 
 export const SelectItem = ({ className, ...rest }: SelectItemProps) => {
   return (
-    <Select.Item
-      className={mergeStateClassName(cx(menuStyles.item, styles.item), className) as any}
-      {...rest}
-    />
+    <Select.Item className={mergeStateClassName([menuStyles.item], className) as any} {...rest} />
   );
 };
 
@@ -218,7 +230,7 @@ export type SelectItemTextProps = ComponentProps<typeof Select.ItemText>;
 export const SelectItemText = ({ className, ...rest }: SelectItemTextProps) => {
   return (
     <Select.ItemText
-      className={mergeStateClassName(cx(menuStyles.label, styles.itemText), className) as any}
+      className={mergeStateClassName([menuStyles.label], className, menuClassNames.label) as any}
       {...rest}
     />
   );
@@ -231,7 +243,7 @@ export type SelectItemIndicatorProps = ComponentProps<typeof Select.ItemIndicato
 export const SelectItemIndicator = ({ className, ...rest }: SelectItemIndicatorProps) => {
   return (
     <Select.ItemIndicator
-      className={mergeStateClassName(styles.itemIndicator, className) as any}
+      className={mergeStateClassName([styles.itemIndicator], className) as any}
       {...rest}
     />
   );
@@ -242,7 +254,7 @@ SelectItemIndicator.displayName = 'SelectItemIndicator';
 export type SelectGroupProps = ComponentProps<typeof Select.Group>;
 
 export const SelectGroup = ({ className, ...rest }: SelectGroupProps) => {
-  return <Select.Group className={mergeStateClassName(styles.group, className) as any} {...rest} />;
+  return <Select.Group className={className} {...rest} />;
 };
 
 SelectGroup.displayName = 'SelectGroup';
@@ -252,9 +264,7 @@ export type SelectGroupLabelProps = ComponentProps<typeof Select.GroupLabel>;
 export const SelectGroupLabel = ({ className, ...rest }: SelectGroupLabelProps) => {
   return (
     <Select.GroupLabel
-      className={
-        mergeStateClassName(cx(menuStyles.groupLabel, styles.groupLabel), className) as any
-      }
+      className={mergeStateClassName([menuStyles.groupLabel], className) as any}
       {...rest}
     />
   );
@@ -267,7 +277,7 @@ export type SelectScrollUpArrowProps = ComponentProps<typeof Select.ScrollUpArro
 export const SelectScrollUpArrow = ({ className, ...rest }: SelectScrollUpArrowProps) => {
   return (
     <Select.ScrollUpArrow
-      className={mergeStateClassName(styles.scrollArrow, className) as any}
+      className={mergeStateClassName([styles.scrollArrow], className) as any}
       {...rest}
     />
   );
@@ -280,7 +290,7 @@ export type SelectScrollDownArrowProps = ComponentProps<typeof Select.ScrollDown
 export const SelectScrollDownArrow = ({ className, ...rest }: SelectScrollDownArrowProps) => {
   return (
     <Select.ScrollDownArrow
-      className={mergeStateClassName(styles.scrollArrow, className) as any}
+      className={mergeStateClassName([styles.scrollArrow], className) as any}
       {...rest}
     />
   );
@@ -291,7 +301,12 @@ SelectScrollDownArrow.displayName = 'SelectScrollDownArrow';
 export type SelectArrowProps = ComponentProps<typeof Select.Arrow>;
 
 export const SelectArrow = ({ className, ...rest }: SelectArrowProps) => {
-  return <Select.Arrow className={mergeStateClassName(styles.arrow, className) as any} {...rest} />;
+  return (
+    <Select.Arrow
+      className={mergeStateClassName([styles.arrow], className, 'lobe-select-arrow') as any}
+      {...rest}
+    />
+  );
 };
 
 SelectArrow.displayName = 'SelectArrow';

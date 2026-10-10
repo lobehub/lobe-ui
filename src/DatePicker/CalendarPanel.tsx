@@ -1,5 +1,6 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import dayjs from 'dayjs';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { type KeyboardEvent, memo, useEffect, useRef, useState } from 'react';
@@ -8,7 +9,7 @@ import datePickerMessages from '@/i18n/resources/en/datePicker';
 import { useTranslation } from '@/i18n/useTranslation';
 import Icon from '@/Icon';
 import { panelStyles } from '@/internal/panelStyles';
-import { cx } from '@/styles';
+import { focusRing } from '@/styles/stylex/focusRing';
 
 import {
   buildMonthGrid,
@@ -106,13 +107,17 @@ const CalendarPanel = memo<CalendarPanelProps>(
       return (
         <div
           aria-label={current.format('MMMM YYYY')}
-          className={styles.grid}
+          {...stylex.props(styles.grid)}
           ref={gridRef}
           role="grid"
           onMouseLeave={() => onHover?.(null)}
         >
           {getWeekdayLabels(weekStart).map((label) => (
-            <span className={cx(styles.weekday, panelStyles.label)} key={label} role="columnheader">
+            <span
+              key={label}
+              role="columnheader"
+              {...stylex.props(styles.weekday, panelStyles.label)}
+            >
               {label}
             </span>
           ))}
@@ -133,7 +138,7 @@ const CalendarPanel = memo<CalendarPanelProps>(
                 aria-selected={pressed}
                 key={date.toISOString()}
                 role="gridcell"
-                className={cx(
+                {...stylex.props(
                   styles.cell,
                   inBand && styles.band,
                   isStart && !isEnd && styles.bandStart,
@@ -143,7 +148,7 @@ const CalendarPanel = memo<CalendarPanelProps>(
                 <button
                   aria-label={dayjs(date).format('MMMM D, YYYY')}
                   aria-pressed={pressed}
-                  className={styles.day}
+                  {...stylex.props(focusRing.info, styles.day)}
                   data-focus-target={focusTarget ? '' : undefined}
                   data-outside={outside ? '' : undefined}
                   data-today={isSameDay(date, today) ? '' : undefined}
@@ -164,13 +169,13 @@ const CalendarPanel = memo<CalendarPanelProps>(
     };
 
     const renderMonths = () => (
-      <div className={styles.tiles}>
+      <div {...stylex.props(styles.tiles)}>
         {MONTHS.map((index) => {
           const date = current.month(index).startOf('month').toDate();
           return (
             <button
               aria-pressed={!!selected && dayjs(selected).isSame(date, 'month')}
-              className={styles.tile}
+              {...stylex.props(focusRing.info, styles.tile)}
               data-today={dayjs(today).isSame(date, 'month') ? '' : undefined}
               disabled={isMonthDisabled(date, bounds)}
               key={index}
@@ -189,13 +194,13 @@ const CalendarPanel = memo<CalendarPanelProps>(
     );
 
     const renderYears = () => (
-      <div className={styles.tiles}>
+      <div {...stylex.props(styles.tiles)}>
         {MONTHS.map((index) => {
           const date = dayjs(new Date(decadeStart + index, 0, 1)).toDate();
           return (
             <button
               aria-pressed={!!selected && dayjs(selected).isSame(date, 'year')}
-              className={styles.tile}
+              {...stylex.props(focusRing.info, styles.tile)}
               data-today={dayjs(today).isSame(date, 'year') ? '' : undefined}
               disabled={isYearDisabled(date, bounds)}
               key={index}
@@ -218,7 +223,7 @@ const CalendarPanel = memo<CalendarPanelProps>(
         return (
           <>
             {current.format('MMMM')}{' '}
-            <span className={panelStyles.titleMuted}>{current.format('YYYY')}</span>
+            <span {...stylex.props(panelStyles.titleMuted)}>{current.format('YYYY')}</span>
           </>
         );
       if (view === 'month') return current.format('YYYY');
@@ -226,10 +231,10 @@ const CalendarPanel = memo<CalendarPanelProps>(
     })();
 
     return (
-      <div className={styles.calendar}>
-        <div className={styles.header}>
+      <div {...stylex.props(styles.calendar)}>
+        <div {...stylex.props(styles.header)}>
           <button
-            className={panelStyles.title}
+            {...stylex.props(panelStyles.title)}
             disabled={view === 'year'}
             type="button"
             onClick={drillUp}
@@ -237,10 +242,10 @@ const CalendarPanel = memo<CalendarPanelProps>(
             {title}
           </button>
           {showNav && (
-            <div className={styles.navGroup}>
+            <div {...stylex.props(styles.navGroup)}>
               <button
                 aria-label={t('datePicker.previous')}
-                className={panelStyles.nav}
+                {...stylex.props(panelStyles.nav)}
                 type="button"
                 onClick={() => step(-1)}
               >
@@ -248,7 +253,7 @@ const CalendarPanel = memo<CalendarPanelProps>(
               </button>
               <button
                 aria-label={t('datePicker.next')}
-                className={panelStyles.nav}
+                {...stylex.props(panelStyles.nav)}
                 type="button"
                 onClick={() => step(1)}
               >

@@ -11,14 +11,17 @@ interface CssSheet {
   rules: CssRule[];
 }
 
-// lightningcss 1.33 serializes absent options as `null` (e.g. `var()`'s `from` and `fallback`) but
-// cannot deserialize them back, so a visitor returning the stylesheet must drop those fields.
+// lightningcss 1.33 serializes absent options as `null` (`var()`'s `from` and `fallback`, the
+// `initialValue` of the `@property` rules dynamic styles emit) but cannot deserialize them back, so a
+// visitor returning the stylesheet must drop those fields.
+const nullableFields = new Set(['fallback', 'from', 'initialValue']);
+
 export const dropNullFields = <T>(node: T): T => {
   if (Array.isArray(node)) return node.map(dropNullFields) as T;
   if (node === null || typeof node !== 'object') return node;
   return Object.fromEntries(
     Object.entries(node)
-      .filter(([key, value]) => value !== null || !(key === 'from' || key === 'fallback'))
+      .filter(([key, value]) => value !== null || !nullableFields.has(key))
       .map(([key, value]) => [key, dropNullFields(value)]),
   ) as T;
 };

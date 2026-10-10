@@ -15,10 +15,13 @@ import {
 
 import { Flexbox } from '@/Flex';
 import Skeleton from '@/Skeleton';
-import { cx, useThemeMode } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
+import { stylish } from '@/styles/stylex/stylish';
+import { useThemeMode } from '@/styles/theme/scope';
 
+import { imageMarker } from './marker.stylex';
 import { usePreviewGroupContext } from './PreviewGroup';
-import { FALLBACK_DARK, FALLBACK_LIGHT, styles, variants } from './style';
+import { FALLBACK_DARK, FALLBACK_LIGHT, styles } from './style';
 import type { ImagePreviewOptions, ImageProps } from './type';
 import { DEFAULT_AUTO_ZOOM_THRESHOLD, DEFAULT_MAX_SCALE } from './viewer/geometry';
 import PreviewOutlet from './viewer/PreviewOutlet';
@@ -35,6 +38,12 @@ const resolvePreview = (
   const imageOptions = typeof imagePreview === 'object' ? imagePreview : undefined;
 
   return { ...groupOptions, ...imageOptions };
+};
+
+const variantStyles = {
+  borderless: stylish.variantBorderlessWithoutHover,
+  filled: styles.filled,
+  outlined: stylish.variantOutlinedWithoutHover,
 };
 
 const Image = memo<ImageProps>(
@@ -170,8 +179,6 @@ const Image = memo<ImageProps>(
       [onClick, previewEnabled, resolvedOptions, previewSrc, group],
     );
 
-    const actionsClassName = alwaysShowActions ? styles.actionsVisible : styles.actionsHidden;
-
     if (isLoading)
       return (
         <div onClick={onClick}>
@@ -184,21 +191,32 @@ const Image = memo<ImageProps>(
       );
 
     return (
-      <Flexbox className={cx(variants({ variant }), className)} ref={ref} style={style}>
+      <Flexbox
+        ref={ref}
+        {...styleProps([styles.root, variantStyles[variant], imageMarker], className, style)}
+      >
         {actions && (
-          <div className={cx(actionsClassName, alwaysShowActions ? '' : 'actions-hidden')}>
+          <div
+            {...styleProps(
+              [styles.actions, !alwaysShowActions && styles.actionsHidden],
+              alwaysShowActions ? undefined : 'actions-hidden',
+            )}
+          >
             {actions}
           </div>
         )}
-        <div className={cx(styles.wrapper, classNames?.wrapper)} style={customStyles?.wrapper}>
+        <div {...styleProps(styles.wrapper, classNames?.wrapper, customStyles?.wrapper)}>
           <img
             alt={alt}
-            className={cx(styles.image, previewEnabled && styles.previewable, classNames?.image)}
             height={resolvedHeight}
             loading={loading}
             ref={imgRef}
             src={hasError ? (isDarkMode ? FALLBACK_DARK : FALLBACK_LIGHT) : src}
             width={resolvedWidth}
+            className={
+              styleProps([styles.image, previewEnabled && styles.previewable], classNames?.image)
+                .className
+            }
             style={{
               height: resolvedHeight,
               maxHeight,

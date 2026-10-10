@@ -1,5 +1,6 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { RotateCw } from 'lucide-react';
 import { memo, useMemo } from 'react';
 import { encode } from 'uqr';
@@ -7,9 +8,9 @@ import { encode } from 'uqr';
 import qrCodeMessages from '@/i18n/resources/en/qrCode';
 import { useTranslation } from '@/i18n/useTranslation';
 import Icon from '@/Icon';
-import { panelStyles } from '@/internal/panelStyles';
 import Spin from '@/Spin';
-import { cx } from '@/styles';
+import { focusRing } from '@/styles/stylex/focusRing';
+import { styleProps } from '@/styles/stylex/props';
 
 import { buildQrPath } from './qrPath';
 import { styles } from './style';
@@ -46,9 +47,11 @@ const QRCode = memo<QRCodeProps>(
 
     return (
       <div
-        className={cx(styles.root, bordered && styles.bordered, className)}
         ref={ref}
-        style={{ background: bgColor, ...style }}
+        {...styleProps([styles.root, bordered && styles.bordered], className, {
+          background: bgColor,
+          ...style,
+        })}
         {...rest}
       >
         <svg
@@ -64,23 +67,23 @@ const QRCode = memo<QRCodeProps>(
         </svg>
         {icon && (
           <span
-            className={styles.icon}
+            {...stylex.props(styles.icon)}
             style={{ height: size * ICON_RATIO, width: size * ICON_RATIO }}
           >
             {icon}
           </span>
         )}
         {status === 'loading' && (
-          <span aria-label={t('qrCode.loading')} className={styles.overlay} role="status">
+          <span aria-label={t('qrCode.loading')} {...stylex.props(styles.overlay)} role="status">
             <Spin style={{ color: '#666' }} />
           </span>
         )}
         {status === 'expired' && (
-          <span className={styles.overlay}>
-            <span className={styles.overlayTitle}>{t('qrCode.expired')}</span>
+          <span {...stylex.props(styles.overlay)}>
+            <span {...stylex.props(styles.overlayTitle)}>{t('qrCode.expired')}</span>
             {onRefresh && (
               <button
-                className={panelStyles.pill}
+                {...stylex.props(focusRing.info, styles.refresh)}
                 style={{ background: '#080808', color: '#fff' }}
                 type="button"
                 onClick={onRefresh}

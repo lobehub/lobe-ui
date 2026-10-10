@@ -7,15 +7,22 @@ import { createContext, memo, useMemo } from 'react';
 
 import { type FlexboxProps } from '@/Flex';
 import { Flexbox } from '@/Flex';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
+import { stylish } from '@/styles/stylex/stylish';
 
-import { variants } from '../style';
+import { styles } from '../style';
 
 interface Context {
   attributes: Record<string, any>;
   listeners: DraggableSyntheticListeners;
   ref: (node: HTMLElement | null) => void;
 }
+
+const variantStyles = {
+  borderless: stylish.variantBorderlessWithoutHover,
+  filled: stylish.variantFilledWithoutHover,
+  outlined: stylish.variantOutlinedWithoutHover,
+};
 
 export const SortableItemContext = createContext<Context>({
   attributes: {},
@@ -54,9 +61,14 @@ const SortableItem = memo<SortableItemProps>(
           horizontal
           align={'center'}
           as={'li'}
-          className={cx(variants({ variant }), className)}
           gap={4}
           ref={setNodeRef}
+          className={
+            styleProps(
+              [styles.item, variantStyles[variant], variant !== 'borderless' && styles.itemVariant],
+              className,
+            ).className
+          }
           style={{
             opacity: isDragging ? 0.4 : undefined,
             transform: CSS.Translate.toString(transform),
