@@ -3,10 +3,10 @@
 import { memo, useMemo } from 'react';
 import { bundledLanguagesInfo } from 'shiki';
 
-import Select, { type SelectProps } from '@/base-ui/Select';
-import Text from '@/base-ui/Text';
 import { Flexbox } from '@/Flex';
 import MaterialFileTypeIcon from '@/MaterialFileTypeIcon';
+import Select, { type SelectProps } from '@/Select';
+import Text from '@/Text';
 import { stopPropagation } from '@/utils/dom';
 
 export const LangSelect = memo<Omit<SelectProps<string>, 'options'>>(({ style, ...rest }) => {

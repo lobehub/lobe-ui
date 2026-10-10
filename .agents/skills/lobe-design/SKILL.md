@@ -1,8 +1,8 @@
 ---
 name: lobe-design
 description: >
-  Build UI with the LobeHub design system — @lobehub/ui/base-ui, the controlled form at
-  @lobehub/ui/base-ui/form, and the chat, mobile, dashboard, awesome, brand, mdx, and i18n
+  Build UI with the LobeHub design system — @lobehub/ui, the controlled form at
+  @lobehub/ui/form, and the chat, mobile, dashboard, awesome, brand, mdx, and i18n
   namespaces, plus @lobehub/icons, @lobehub/charts, @lobehub/fluent-emoji and
   @lobehub/streamdown. Covers provider setup, component selection, cssVar tokens, craft rules
   against AI-generated blandness, and a six-dimension acceptance check. Trigger on lobe-design,
@@ -41,7 +41,7 @@ description: >
 
 ## 硬性前提：搞对这三件事，否则全是白工
 
-**一、新代码从 `@lobehub/ui/base-ui` 进，表单单独从 `@lobehub/ui/base-ui/form` 进。** 顶层同名组件是 antd 包装层，已被 `@lobehub/ui/eslint` 标成 deprecated。antd 里已有 base-ui 对应实现的组件同样禁掉，包括 `Table`、`Badge`、`Progress`、`Spin`、`Result`、`Empty`、`Card`、`Typography`。`Form` 不要从 `@lobehub/ui` 或 `base-ui` 桶导入——桶里那份是即将删除的非受控实现。完整清单见 [components.md](references/components.md) 的 C-01。
+**一、新代码从 `@lobehub/ui` 进，表单单独从 `@lobehub/ui/form` 进。** 顶层同名组件是 antd 包装层，已被 `@lobehub/ui/eslint` 标成 deprecated。antd 里已有 base-ui 对应实现的组件同样禁掉，包括 `Table`、`Badge`、`Progress`、`Spin`、`Result`、`Empty`、`Card`、`Typography`。`Form` 不要从 `@lobehub/ui` 或 `base-ui` 桶导入——桶里那份是即将删除的非受控实现。完整清单见 [components.md](references/components.md) 的 C-01。
 
 **二、样式只写 `createStaticStyles` + `cssVar`。** `createStyles` 已被 eslint 禁用。组件的 `style.ts` 一律这个写法：
 
@@ -164,7 +164,7 @@ L6 验收标准     Given/When/Then · 完成的定义
 ## Anti-patterns
 
 - 从 `antd` 导入已有 base-ui 实现的组件（`Button`、`Table`、`Select`、`Modal`、`Badge`、`Spin`、`Empty`、`Card`、`Typography` 等），或用 antd 的 `message` / `notification` 而不是 base-ui 的 `toast`。
-- 从 `@lobehub/ui` 或 `@lobehub/ui/base-ui` 桶导入 `Form`。受控表单只从 `@lobehub/ui/base-ui/form` 导入。
+- 从 `@lobehub/ui` 桶导入 `Form`。受控表单只从 `@lobehub/ui/form` 导入。
 - 凭直觉在顶层和 `base-ui` 之间二选一。顶层的同名组件大多是 deprecated 的 antd 包装层。
 - 手写 spinner、用 `Icon` 的 spin、或引入 `thinking-orbs`。等待指示按 [components.md](references/components.md) C-02 的分档选 `Spin` / `Skeleton` / `LoadingDots`。
 - 把示例和模板当抄板。骨架是起点，业务字段、内容密度、状态清单都要按真实需求调。

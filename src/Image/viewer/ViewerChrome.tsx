@@ -4,7 +4,7 @@ import { X } from 'lucide-react';
 import type { MotionValue } from 'motion/react';
 import { memo, type MouseEvent, type ReactNode, useCallback } from 'react';
 
-import ActionIcon from '@/base-ui/ActionIcon';
+import ActionIcon from '@/ActionIcon';
 import imageMessages from '@/i18n/resources/en/image';
 import { useTranslation } from '@/i18n/useTranslation';
 

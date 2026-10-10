@@ -1,7 +1,7 @@
 import type { FC, ReactNode } from 'react';
 
 import type { ActionIconGroupEvent, ActionIconGroupProps } from '@/ActionIconGroup';
-import type { AlertProps } from '@/base-ui/Alert';
+import type { AlertProps } from '@/Alert';
 import type { ChatItemProps } from '@/chat/ChatItem';
 import type { ChatMessage, LLMRoleType } from '@/chat/types';
 import type { DivProps } from '@/types';

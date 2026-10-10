@@ -3,10 +3,10 @@
 import numeral from 'numeral';
 import { type FC, useMemo } from 'react';
 
-import ActionIcon from '@/base-ui/ActionIcon';
-import Progress from '@/base-ui/Progress';
+import ActionIcon from '@/ActionIcon';
 import chatMessages from '@/i18n/resources/en/chat';
 import { useTranslation } from '@/i18n/useTranslation';
+import Progress from '@/Progress';
 import { cssVar } from '@/styles';
 
 import type { TokenTagProps } from './type';

@@ -3,7 +3,7 @@
 import { ChevronLeft } from 'lucide-react';
 import { memo } from 'react';
 
-import ActionIcon from '@/base-ui/ActionIcon';
+import ActionIcon from '@/ActionIcon';
 import { Flexbox } from '@/Flex';
 import { cx } from '@/styles';
 

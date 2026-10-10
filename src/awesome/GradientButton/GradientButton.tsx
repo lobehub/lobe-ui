@@ -2,7 +2,7 @@
 
 import { memo, useMemo } from 'react';
 
-import Button from '@/base-ui/Button';
+import Button from '@/Button';
 import { cssVar, cx, useThemeMode } from '@/styles';
 
 import { styles } from './style';

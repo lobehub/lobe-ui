@@ -2,8 +2,8 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { motion } from 'motion/react';
 import { type ReactNode, useState } from 'react';
 
-import { Drawer } from '@/base-ui/Drawer';
 import ConfigProvider from '@/ConfigProvider';
+import { Drawer } from '@/Drawer';
 
 import ImageComponent from '../Image';
 

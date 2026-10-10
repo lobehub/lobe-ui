@@ -2,11 +2,11 @@
 
 import { memo, useCallback, useEffect, useMemo, useRef } from 'react';
 
-import Tag from '@/base-ui/Tag';
 import CopyButton from '@/CopyButton';
 import { Flexbox } from '@/Flex';
 import { styles, variants } from '@/Highlighter/style';
 import { cx } from '@/styles';
+import Tag from '@/Tag';
 
 import FullFeatured from './FullFeatured';
 import SyntaxMermaid from './SyntaxMermaid';

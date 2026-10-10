@@ -4,7 +4,7 @@ import { useScroll } from 'ahooks';
 import { ListEnd } from 'lucide-react';
 import { memo, type MouseEventHandler, useEffect, useRef, useState } from 'react';
 
-import Button from '@/base-ui/Button';
+import Button from '@/Button';
 import { cx, lobeStaticStylish } from '@/styles';
 
 import { styles } from './style';

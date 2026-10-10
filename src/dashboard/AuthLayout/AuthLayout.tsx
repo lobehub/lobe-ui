@@ -1,8 +1,8 @@
 'use client';
 
-import Text from '@/base-ui/Text';
 import { Flexbox } from '@/Flex';
 import { cx } from '@/styles';
+import Text from '@/Text';
 
 import { styles as surfaceStyles } from '../Surface/style';
 import { styles } from './style';

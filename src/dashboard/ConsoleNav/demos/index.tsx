@@ -1,4 +1,4 @@
-import { Button } from '@lobehub/ui/base-ui';
+import { Button } from '@lobehub/ui';
 import { ConsoleNav, Surface } from '@lobehub/ui/dashboard';
 import { Box, Gauge, Settings, Users } from 'lucide-react';
 import { useState } from 'react';

@@ -3,7 +3,7 @@
 import { MoreHorizontal } from 'lucide-react';
 import { type FC, useMemo } from 'react';
 
-import ActionIcon from '@/base-ui/ActionIcon';
+import ActionIcon from '@/ActionIcon';
 import DropdownMenu from '@/DropdownMenu';
 import { Center } from '@/Flex';
 import { cx } from '@/styles';

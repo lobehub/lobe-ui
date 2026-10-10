@@ -4,8 +4,8 @@ import { Bot, UserRound } from 'lucide-react';
 import { memo, useState } from 'react';
 
 import { renderLandingIcon } from '@/awesome/landingIcon';
-import Segmented from '@/base-ui/Segmented';
 import Icon from '@/Icon';
+import Segmented from '@/Segmented';
 import Snippet from '@/Snippet';
 import { cx } from '@/styles';
 

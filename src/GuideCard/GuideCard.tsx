@@ -3,7 +3,7 @@
 import { X } from 'lucide-react';
 import { memo, useState } from 'react';
 
-import ActionIcon from '@/base-ui/ActionIcon';
+import ActionIcon from '@/ActionIcon';
 import { Flexbox } from '@/Flex';
 import Img from '@/Img';
 import { cx, useThemeMode } from '@/styles';

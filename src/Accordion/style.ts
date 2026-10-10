@@ -1,0 +1,351 @@
+import { cva } from 'class-variance-authority';
+
+import { focusRing } from '@/internal/focusRing';
+import { createStaticStyles } from '@/styles';
+
+export const styles = createStaticStyles(({ css, cssVar }) => ({
+  action: css`
+    display: flex;
+    flex-shrink: 0;
+    gap: 4px;
+    align-items: center;
+
+    opacity: 0;
+
+    transition: opacity 150ms ${cssVar.motionEaseOut};
+  `,
+  actionAlwaysVisible: css`
+    opacity: 1;
+  `,
+  actionBorderless: css`
+    padding-inline-end: var(--accordion-hover-inset, 8px);
+  `,
+  actionOutlined: css`
+    padding-inline-end: 16px;
+  `,
+  content: css`
+    font-size: 14px;
+    line-height: 1.6;
+    transition:
+      opacity 200ms ${cssVar.motionEaseOut},
+      translate 200ms ${cssVar.motionEaseOut};
+
+    [data-starting-style] & {
+      translate: 0 6px;
+      opacity: 0;
+    }
+
+    [data-ending-style] & {
+      translate: 0 -6px;
+      opacity: 0;
+    }
+
+    /* Base UI sets animation-name: none on initially-open panels */
+    [style*='animation-name: none'] &,
+    [style*='animation-name:none'] & {
+      translate: none;
+      opacity: 1;
+      transition: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition-duration: 0s;
+    }
+  `,
+  contentBorderless: css`
+    padding-block: 0 12px;
+  `,
+  contentIndent: css`
+    padding-inline-start: 24px;
+  `,
+  contentIndentOutlined: css`
+    padding-inline-start: 40px;
+  `,
+  contentOutlined: css`
+    padding-block: 4px 14px;
+    padding-inline: 16px;
+  `,
+  header: css`
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    margin: 0;
+
+    font-size: inherit;
+    font-weight: inherit;
+
+    transition: background 150ms ${cssVar.motionEaseOut};
+
+    &:hover:not(:has([data-disabled])) {
+      background: ${cssVar.colorFillTertiary};
+    }
+
+    &:hover .accordion-action,
+    &:focus-within .accordion-action {
+      opacity: 1;
+    }
+  `,
+  headerBorderless: css`
+    margin-inline: calc(var(--accordion-hover-inset, 8px) * -1);
+    border-radius: ${cssVar.borderRadius};
+  `,
+  headerFilled: css`
+    border-radius: ${cssVar.borderRadius};
+    background: ${cssVar.colorFillTertiary};
+
+    &:hover:not(:has([data-disabled])) {
+      background: ${cssVar.colorFillSecondary};
+    }
+  `,
+  headerInline: css`
+    margin-inline: 0;
+
+    > .accordion-action {
+      padding-block: 4px;
+    }
+  `,
+  contentInline: css`
+    padding-block: 0;
+  `,
+  indicator: css`
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+
+    color: ${cssVar.colorTextDescription};
+
+    transition: transform 200ms ${cssVar.motionEaseOut};
+
+    @media (prefers-reduced-motion: reduce) {
+      transition-duration: 0s;
+    }
+  `,
+  indicatorInline: css`
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    margin-inline-start: -6px;
+
+    [data-panel-open] & {
+      transform: rotate(90deg);
+    }
+  `,
+  indicatorEnd: css`
+    margin-inline-start: auto;
+
+    [data-panel-open] & {
+      transform: rotate(180deg);
+    }
+  `,
+  indicatorStart: css`
+    [data-panel-open] & {
+      transform: rotate(90deg);
+    }
+  `,
+  item: css`
+    display: flex;
+    flex-direction: column;
+  `,
+  itemOutlined: css`
+    & + & {
+      border-block-start: 1px solid ${cssVar.colorBorderSecondary};
+    }
+  `,
+  panel: css`
+    overflow: hidden;
+    height: auto;
+    transition: height 200ms ${cssVar.motionEaseOut};
+
+    interpolate-size: allow-keywords;
+
+    &[data-starting-style],
+    &[data-ending-style] {
+      height: 0;
+    }
+
+    &[data-starting-style][style*='animation-name: none'],
+    &[data-starting-style][style*='animation-name:none'] {
+      height: auto;
+      transition: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      transition-duration: 0s;
+    }
+  `,
+  root: css`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  `,
+  rootOutlined: css`
+    overflow: hidden;
+    border: 1px solid ${cssVar.colorBorderSecondary};
+    border-radius: ${cssVar.borderRadiusLG};
+  `,
+  trigger: css`
+    cursor: pointer;
+    user-select: none;
+
+    display: flex;
+    flex: 1;
+    gap: 8px;
+    align-items: center;
+
+    min-width: 0;
+    border: 0;
+    border-radius: inherit;
+
+    font: inherit;
+    font-size: 14px;
+    color: ${cssVar.colorText};
+    text-align: start;
+
+    background: none;
+    outline: none;
+
+    ${focusRing};
+
+    &[data-disabled] {
+      cursor: not-allowed;
+      color: ${cssVar.colorTextDisabled};
+    }
+  `,
+  triggerBorderless: css`
+    padding-block: 8px;
+    padding-inline: var(--accordion-hover-inset, 8px);
+  `,
+  triggerFilled: css`
+    padding-block: 8px;
+    padding-inline: 16px;
+  `,
+  triggerOutlined: css`
+    padding-block: 12px;
+    padding-inline: 16px;
+
+    &[data-panel-open] {
+      padding-block-end: 8px;
+    }
+  `,
+}));
+
+export const rootVariants = cva(styles.root, {
+  defaultVariants: { variant: 'borderless' },
+  variants: {
+    variant: {
+      borderless: null,
+      filled: null,
+      outlined: styles.rootOutlined,
+    },
+  },
+});
+
+export const itemVariants = cva(styles.item, {
+  defaultVariants: { variant: 'borderless' },
+  variants: {
+    variant: {
+      borderless: null,
+      filled: null,
+      outlined: styles.itemOutlined,
+    },
+  },
+});
+
+export const headerVariants = cva(styles.header, {
+  compoundVariants: [
+    { class: styles.headerInline, inline: true, variant: 'borderless' },
+    { class: styles.headerInline, inline: true, variant: 'filled' },
+  ],
+  defaultVariants: { inline: false, variant: 'borderless' },
+  variants: {
+    inline: {
+      false: null,
+      true: null,
+    },
+    variant: {
+      borderless: styles.headerBorderless,
+      filled: styles.headerFilled,
+      outlined: null,
+    },
+  },
+});
+
+export const triggerVariants = cva(styles.trigger, {
+  defaultVariants: { variant: 'borderless' },
+  variants: {
+    variant: {
+      borderless: styles.triggerBorderless,
+      filled: styles.triggerFilled,
+      outlined: styles.triggerOutlined,
+    },
+  },
+});
+
+export const indicatorVariants = cva(styles.indicator, {
+  defaultVariants: { placement: 'start' },
+  variants: {
+    placement: {
+      end: styles.indicatorEnd,
+      inline: styles.indicatorInline,
+      start: styles.indicatorStart,
+    },
+  },
+});
+
+export const contentVariants = cva(styles.content, {
+  compoundVariants: [
+    {
+      class: styles.contentInline,
+      inline: true,
+      variant: 'borderless',
+    },
+    {
+      class: styles.contentIndent,
+      indent: true,
+      variant: 'borderless',
+    },
+    {
+      class: styles.contentIndent,
+      indent: true,
+      variant: 'filled',
+    },
+    {
+      class: styles.contentIndentOutlined,
+      indent: true,
+      variant: 'outlined',
+    },
+  ],
+  defaultVariants: { indent: true, inline: false, variant: 'borderless' },
+  variants: {
+    indent: {
+      false: null,
+      true: null,
+    },
+    inline: {
+      false: null,
+      true: null,
+    },
+    variant: {
+      borderless: styles.contentBorderless,
+      filled: styles.contentBorderless,
+      outlined: styles.contentOutlined,
+    },
+  },
+});
+
+export const actionVariants = cva(styles.action, {
+  defaultVariants: { alwaysVisible: false, variant: 'borderless' },
+  variants: {
+    alwaysVisible: {
+      false: null,
+      true: styles.actionAlwaysVisible,
+    },
+    variant: {
+      borderless: styles.actionBorderless,
+      filled: styles.actionOutlined,
+      outlined: styles.actionOutlined,
+    },
+  },
+});

@@ -3,8 +3,8 @@
 import { Autocomplete } from '@base-ui/react/autocomplete';
 import type React from 'react';
 
-import { styles as menuStyles } from '@/base-ui/DropdownMenu/sharedStyle';
 import { useAppElement } from '@/ConfigProvider';
+import { styles as menuStyles } from '@/DropdownMenu/sharedStyle';
 import { cx } from '@/styles';
 
 import { styles } from './style';

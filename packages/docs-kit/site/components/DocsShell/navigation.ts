@@ -2,7 +2,6 @@ import type { BreadcrumbItem, ConsoleNavGroup, ConsoleNavItem } from '@lobehub/u
 import { SkillsIcon } from '@lobehub/ui/icons';
 import type { LucideIcon } from 'lucide-react';
 import {
-  Blocks,
   BookOpen,
   Bot,
   Component,
@@ -32,7 +31,6 @@ import type { DocumentManifestEntry, NavigationSection } from '../../types/conte
 
 const sectionIcons: Record<string, LucideIcon> = {
   'Awesome': Sparkles,
-  'Base UI': Blocks,
   'Brand': Gem,
   'Chat': MessagesSquare,
   'Color': Palette,
@@ -63,7 +61,7 @@ export interface TopLink {
 export const CHANGELOG_PATHNAME = '/changelog';
 
 /** Sections that lead the sidebar; everything else keeps manifest order. */
-const PREFERRED_SECTION_TITLES = ['Components', 'Base UI'];
+const PREFERRED_SECTION_TITLES = ['Components'];
 
 const sectionDocuments = (section: NavigationSection) =>
   section.categories.flatMap((category) => category.documents);

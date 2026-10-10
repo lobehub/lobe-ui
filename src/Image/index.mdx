@@ -93,7 +93,7 @@ The preview viewer was rewritten from scratch on top of a Base UI dialog and no 
 
 `preview` now only accepts `boolean | { src?, defaultZoom?, autoZoomThreshold?, maxScale?, onOpenChange?, toolbarAddon? }` (see below).
 
-> In apps without an app-level `ToastHost` (see `@lobehub/ui/base-ui`), a copy/download toast fired after the viewer has already closed is dropped rather than shown standalone. This is an accepted limitation — mount a `ToastHost` at the app root to avoid it.
+> In apps without an app-level `ToastHost` (see `@lobehub/ui`), a copy/download toast fired after the viewer has already closed is dropped rather than shown standalone. This is an accepted limitation — mount a `ToastHost` at the app root to avoid it.
 
 ## APIs
 

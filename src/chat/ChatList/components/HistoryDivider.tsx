@@ -1,9 +1,9 @@
 import { Timer } from 'lucide-react';
 import { type FC } from 'react';
 
-import Divider from '@/base-ui/Divider';
-import Tag from '@/base-ui/Tag';
+import Divider from '@/Divider';
 import Icon from '@/Icon';
+import Tag from '@/Tag';
 
 interface HistoryDividerProps {
   enable?: boolean;

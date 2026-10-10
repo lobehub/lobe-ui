@@ -2,14 +2,7 @@ import { existsSync, globSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 
 const es = path.resolve(import.meta.dirname, '../es');
-const migrated = [
-  'base-ui/Button',
-  'base-ui/Divider',
-  'base-ui/Spin',
-  'base-ui/Switch',
-  'base-ui/Tag',
-  'base-ui/Tooltip',
-];
+const migrated = ['Button', 'Divider', 'Spin', 'Switch', 'Tag', 'Tooltip'];
 
 const errors: string[] = [];
 const fail = (message: string) => errors.push(message);
@@ -56,7 +49,7 @@ for (const file of globSync('**/*.mjs', { cwd: es })) {
   ) {
     fail(`${file} imports emotion`);
   }
-  if (file.startsWith('base-ui/ScrollArea/') && code.includes('createGlobalStyle')) {
+  if (file.startsWith('ScrollArea/') && code.includes('createGlobalStyle')) {
     fail(`${file} injects global styles at runtime`);
   }
 }
@@ -65,4 +58,4 @@ if (errors.length > 0) {
   console.error(errors.join('\n'));
   process.exit(1);
 }
-console.log(`es/style.css ok; checked ${migrated.join(', ')}, base-ui/ScrollArea`);
+console.log(`es/style.css ok; checked ${migrated.join(', ')}, ScrollArea`);

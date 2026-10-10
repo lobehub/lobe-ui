@@ -2353,1336 +2353,1336 @@
       "source": "src/awesome/TypewriterEffect/demos/variableSpeed.tsx"
     },
     {
-      "document": "src/base-ui/ActionIcon/index.mdx",
+      "document": "src/ActionIcon/index.mdx",
       "legacyId": "src-base-ui-action-icon-demo-dropdown-menu",
-      "legacyRouteId": "components/base-ui/ActionIcon/index",
+      "legacyRouteId": "components/ActionIcon/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/action-icon",
-      "source": "src/base-ui/ActionIcon/demos/DropdownMenu.tsx"
+      "pathname": "/components/action-icon",
+      "source": "src/ActionIcon/demos/DropdownMenu.tsx"
     },
     {
-      "document": "src/base-ui/ActionIcon/index.mdx",
+      "document": "src/ActionIcon/index.mdx",
       "legacyId": "src-base-ui-action-icon-demo-demos",
-      "legacyRouteId": "components/base-ui/ActionIcon/index",
+      "legacyRouteId": "components/ActionIcon/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/action-icon",
-      "source": "src/base-ui/ActionIcon/demos/index.tsx"
+      "pathname": "/components/action-icon",
+      "source": "src/ActionIcon/demos/index.tsx"
     },
     {
-      "document": "src/base-ui/Alert/index.mdx",
+      "document": "src/Alert/index.mdx",
       "legacyId": "src-base-ui-alert-demo-extra",
-      "legacyRouteId": "components/base-ui/Alert/index",
+      "legacyRouteId": "components/Alert/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/alert",
-      "source": "src/base-ui/Alert/demos/Extra.tsx"
+      "pathname": "/components/alert",
+      "source": "src/Alert/demos/Extra.tsx"
     },
     {
-      "document": "src/base-ui/Alert/index.mdx",
+      "document": "src/Alert/index.mdx",
       "legacyId": "src-base-ui-alert-demo-playground",
-      "legacyRouteId": "components/base-ui/Alert/index",
+      "legacyRouteId": "components/Alert/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/alert",
-      "source": "src/base-ui/Alert/demos/Playground.tsx"
+      "pathname": "/components/alert",
+      "source": "src/Alert/demos/Playground.tsx"
     },
     {
-      "document": "src/base-ui/Alert/index.mdx",
+      "document": "src/Alert/index.mdx",
       "legacyId": "src-base-ui-alert-demo-demos",
-      "legacyRouteId": "components/base-ui/Alert/index",
+      "legacyRouteId": "components/Alert/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/alert",
-      "source": "src/base-ui/Alert/demos/index.tsx"
+      "pathname": "/components/alert",
+      "source": "src/Alert/demos/index.tsx"
     },
     {
-      "document": "src/base-ui/Avatar/index.mdx",
+      "document": "src/Avatar/index.mdx",
       "legacyId": "src-base-ui-avatar-demo-bordered",
-      "legacyRouteId": "components/base-ui/Avatar/index",
+      "legacyRouteId": "components/Avatar/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/avatar",
-      "source": "src/base-ui/Avatar/demos/Bordered.tsx"
+      "pathname": "/components/avatar",
+      "source": "src/Avatar/demos/Bordered.tsx"
     },
     {
-      "document": "src/base-ui/Avatar/index.mdx",
+      "document": "src/Avatar/index.mdx",
       "legacyId": "src-base-ui-avatar-demo-emoji",
-      "legacyRouteId": "components/base-ui/Avatar/index",
+      "legacyRouteId": "components/Avatar/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/avatar",
-      "source": "src/base-ui/Avatar/demos/Emoji.tsx"
+      "pathname": "/components/avatar",
+      "source": "src/Avatar/demos/Emoji.tsx"
     },
     {
-      "document": "src/base-ui/Avatar/index.mdx",
+      "document": "src/Avatar/index.mdx",
       "legacyId": "src-base-ui-avatar-demo-group",
-      "legacyRouteId": "components/base-ui/Avatar/index",
+      "legacyRouteId": "components/Avatar/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/avatar",
-      "source": "src/base-ui/Avatar/demos/Group.tsx"
+      "pathname": "/components/avatar",
+      "source": "src/Avatar/demos/Group.tsx"
     },
     {
-      "document": "src/base-ui/Avatar/index.mdx",
+      "document": "src/Avatar/index.mdx",
       "legacyId": "src-base-ui-avatar-demo-image-fallback",
-      "legacyRouteId": "components/base-ui/Avatar/index",
+      "legacyRouteId": "components/Avatar/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/avatar",
-      "source": "src/base-ui/Avatar/demos/ImageFallback.tsx"
+      "pathname": "/components/avatar",
+      "source": "src/Avatar/demos/ImageFallback.tsx"
     },
     {
-      "document": "src/base-ui/Avatar/index.mdx",
+      "document": "src/Avatar/index.mdx",
       "legacyId": "src-base-ui-avatar-demo-demos",
-      "legacyRouteId": "components/base-ui/Avatar/index",
+      "legacyRouteId": "components/Avatar/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/avatar",
-      "source": "src/base-ui/Avatar/demos/index.tsx"
+      "pathname": "/components/avatar",
+      "source": "src/Avatar/demos/index.tsx"
     },
     {
-      "document": "src/base-ui/Button/index.mdx",
+      "document": "src/Button/index.mdx",
       "legacyId": "src-base-ui-button-demo-icons",
-      "legacyRouteId": "components/base-ui/Button/index",
+      "legacyRouteId": "components/Button/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/button",
-      "source": "src/base-ui/Button/demos/icons.tsx"
+      "pathname": "/components/button",
+      "source": "src/Button/demos/icons.tsx"
     },
     {
-      "document": "src/base-ui/Button/index.mdx",
+      "document": "src/Button/index.mdx",
       "legacyId": "src-base-ui-button-demo-demos",
-      "legacyRouteId": "components/base-ui/Button/index",
+      "legacyRouteId": "components/Button/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/button",
-      "source": "src/base-ui/Button/demos/index.tsx"
+      "pathname": "/components/button",
+      "source": "src/Button/demos/index.tsx"
     },
     {
-      "document": "src/base-ui/Button/index.mdx",
+      "document": "src/Button/index.mdx",
       "legacyId": "src-base-ui-button-demo-sizes",
-      "legacyRouteId": "components/base-ui/Button/index",
+      "legacyRouteId": "components/Button/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/button",
-      "source": "src/base-ui/Button/demos/sizes.tsx"
+      "pathname": "/components/button",
+      "source": "src/Button/demos/sizes.tsx"
     },
     {
-      "document": "src/base-ui/Button/index.mdx",
+      "document": "src/Button/index.mdx",
       "legacyId": "src-base-ui-button-demo-split",
-      "legacyRouteId": "components/base-ui/Button/index",
+      "legacyRouteId": "components/Button/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/button",
-      "source": "src/base-ui/Button/demos/split.tsx"
+      "pathname": "/components/button",
+      "source": "src/Button/demos/split.tsx"
     },
     {
-      "document": "src/base-ui/ContextMenu/index.mdx",
+      "document": "src/ContextMenu/index.mdx",
       "legacyId": "src-base-ui-context-menu-demo-checkbox",
-      "legacyRouteId": "components/base-ui/ContextMenu/index",
+      "legacyRouteId": "components/ContextMenu/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "center"
       },
-      "pathname": "/components/base-ui/context-menu",
+      "pathname": "/components/context-menu",
       "source": "src/ContextMenu/demos/checkbox.tsx"
     },
     {
-      "document": "src/base-ui/ContextMenu/index.mdx",
+      "document": "src/ContextMenu/index.mdx",
       "legacyId": "src-base-ui-context-menu-demo-desc",
-      "legacyRouteId": "components/base-ui/ContextMenu/index",
+      "legacyRouteId": "components/ContextMenu/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "center"
       },
-      "pathname": "/components/base-ui/context-menu",
+      "pathname": "/components/context-menu",
       "source": "src/ContextMenu/demos/desc.tsx"
     },
     {
-      "document": "src/base-ui/ContextMenu/index.mdx",
+      "document": "src/ContextMenu/index.mdx",
       "legacyId": "src-base-ui-context-menu-demo-emptysubmenu",
-      "legacyRouteId": "components/base-ui/ContextMenu/index",
+      "legacyRouteId": "components/ContextMenu/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "center"
       },
-      "pathname": "/components/base-ui/context-menu",
+      "pathname": "/components/context-menu",
       "source": "src/ContextMenu/demos/emptySubmenu.tsx"
     },
     {
-      "document": "src/base-ui/ContextMenu/index.mdx",
+      "document": "src/ContextMenu/index.mdx",
       "legacyId": "src-base-ui-context-menu-demo-header-footer-scroll",
-      "legacyRouteId": "components/base-ui/ContextMenu/index",
+      "legacyRouteId": "components/ContextMenu/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "center"
       },
-      "pathname": "/components/base-ui/context-menu",
+      "pathname": "/components/context-menu",
       "source": "src/ContextMenu/demos/header-footer-scroll.tsx"
     },
     {
-      "document": "src/base-ui/ContextMenu/index.mdx",
+      "document": "src/ContextMenu/index.mdx",
       "legacyId": "src-base-ui-context-menu-demo-header-footer",
-      "legacyRouteId": "components/base-ui/ContextMenu/index",
+      "legacyRouteId": "components/ContextMenu/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "center"
       },
-      "pathname": "/components/base-ui/context-menu",
+      "pathname": "/components/context-menu",
       "source": "src/ContextMenu/demos/header-footer.tsx"
     },
     {
-      "document": "src/base-ui/ContextMenu/index.mdx",
+      "document": "src/ContextMenu/index.mdx",
       "legacyId": "src-base-ui-context-menu-demo-iconspacemode",
-      "legacyRouteId": "components/base-ui/ContextMenu/index",
+      "legacyRouteId": "components/ContextMenu/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "center"
       },
-      "pathname": "/components/base-ui/context-menu",
+      "pathname": "/components/context-menu",
       "source": "src/ContextMenu/demos/iconSpaceMode.tsx"
     },
     {
-      "document": "src/base-ui/ContextMenu/index.mdx",
+      "document": "src/ContextMenu/index.mdx",
       "legacyId": "src-base-ui-context-menu-demo-imperative",
-      "legacyRouteId": "components/base-ui/ContextMenu/index",
+      "legacyRouteId": "components/ContextMenu/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "center"
       },
-      "pathname": "/components/base-ui/context-menu",
+      "pathname": "/components/context-menu",
       "source": "src/ContextMenu/demos/imperative.tsx"
     },
     {
-      "document": "src/base-ui/ContextMenu/index.mdx",
+      "document": "src/ContextMenu/index.mdx",
       "legacyId": "src-base-ui-context-menu-demo-overflow",
-      "legacyRouteId": "components/base-ui/ContextMenu/index",
+      "legacyRouteId": "components/ContextMenu/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "center"
       },
-      "pathname": "/components/base-ui/context-menu",
+      "pathname": "/components/context-menu",
       "source": "src/ContextMenu/demos/overflow.tsx"
     },
     {
-      "document": "src/base-ui/ContextMenu/index.mdx",
+      "document": "src/ContextMenu/index.mdx",
       "legacyId": "src-base-ui-context-menu-demo-switch",
-      "legacyRouteId": "components/base-ui/ContextMenu/index",
+      "legacyRouteId": "components/ContextMenu/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "center"
       },
-      "pathname": "/components/base-ui/context-menu",
+      "pathname": "/components/context-menu",
       "source": "src/ContextMenu/demos/switch.tsx"
     },
     {
-      "document": "src/base-ui/ContextMenu/index.mdx",
+      "document": "src/ContextMenu/index.mdx",
       "legacyId": "src-base-ui-context-menu-demo-trigger",
-      "legacyRouteId": "components/base-ui/ContextMenu/index",
+      "legacyRouteId": "components/ContextMenu/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "center"
       },
-      "pathname": "/components/base-ui/context-menu",
+      "pathname": "/components/context-menu",
       "source": "src/ContextMenu/demos/trigger.tsx"
     },
     {
-      "document": "src/base-ui/ContextMenu/index.mdx",
+      "document": "src/ContextMenu/index.mdx",
       "legacyId": "src-base-ui-context-menu-demo-uploader",
-      "legacyRouteId": "components/base-ui/ContextMenu/index",
+      "legacyRouteId": "components/ContextMenu/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "center"
       },
-      "pathname": "/components/base-ui/context-menu",
+      "pathname": "/components/context-menu",
       "source": "src/ContextMenu/demos/uploader.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.mdx",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-atoms",
-      "legacyRouteId": "components/base-ui/DropdownMenu/index",
+      "legacyRouteId": "components/DropdownMenu/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "center"
       },
-      "pathname": "/components/base-ui/dropdown-menu",
+      "pathname": "/components/dropdown-menu",
       "source": "src/DropdownMenu/demos/atoms.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.mdx",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-checkbox",
-      "legacyRouteId": "components/base-ui/DropdownMenu/index",
+      "legacyRouteId": "components/DropdownMenu/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "center"
       },
-      "pathname": "/components/base-ui/dropdown-menu",
+      "pathname": "/components/dropdown-menu",
       "source": "src/DropdownMenu/demos/checkbox.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.mdx",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-custom-trigger",
-      "legacyRouteId": "components/base-ui/DropdownMenu/index",
+      "legacyRouteId": "components/DropdownMenu/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "center"
       },
-      "pathname": "/components/base-ui/dropdown-menu",
+      "pathname": "/components/dropdown-menu",
       "source": "src/DropdownMenu/demos/custom-trigger.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.mdx",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-danger",
-      "legacyRouteId": "components/base-ui/DropdownMenu/index",
+      "legacyRouteId": "components/DropdownMenu/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "center"
       },
-      "pathname": "/components/base-ui/dropdown-menu",
+      "pathname": "/components/dropdown-menu",
       "source": "src/DropdownMenu/demos/danger.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.mdx",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-desc",
-      "legacyRouteId": "components/base-ui/DropdownMenu/index",
+      "legacyRouteId": "components/DropdownMenu/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "center"
       },
-      "pathname": "/components/base-ui/dropdown-menu",
+      "pathname": "/components/dropdown-menu",
       "source": "src/DropdownMenu/demos/desc.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.mdx",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-group",
-      "legacyRouteId": "components/base-ui/DropdownMenu/index",
+      "legacyRouteId": "components/DropdownMenu/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "center"
       },
-      "pathname": "/components/base-ui/dropdown-menu",
+      "pathname": "/components/dropdown-menu",
       "source": "src/DropdownMenu/demos/group.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.mdx",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-header-footer-scroll",
-      "legacyRouteId": "components/base-ui/DropdownMenu/index",
+      "legacyRouteId": "components/DropdownMenu/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "center"
       },
-      "pathname": "/components/base-ui/dropdown-menu",
+      "pathname": "/components/dropdown-menu",
       "source": "src/DropdownMenu/demos/header-footer-scroll.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.mdx",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-header-footer",
-      "legacyRouteId": "components/base-ui/DropdownMenu/index",
+      "legacyRouteId": "components/DropdownMenu/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "center"
       },
-      "pathname": "/components/base-ui/dropdown-menu",
+      "pathname": "/components/dropdown-menu",
       "source": "src/DropdownMenu/demos/header-footer.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.mdx",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-hover",
-      "legacyRouteId": "components/base-ui/DropdownMenu/index",
+      "legacyRouteId": "components/DropdownMenu/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "center"
       },
-      "pathname": "/components/base-ui/dropdown-menu",
+      "pathname": "/components/dropdown-menu",
       "source": "src/DropdownMenu/demos/hover.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.mdx",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-iconalign",
-      "legacyRouteId": "components/base-ui/DropdownMenu/index",
+      "legacyRouteId": "components/DropdownMenu/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "center"
       },
-      "pathname": "/components/base-ui/dropdown-menu",
+      "pathname": "/components/dropdown-menu",
       "source": "src/DropdownMenu/demos/iconAlign.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.mdx",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-iconspacemode",
-      "legacyRouteId": "components/base-ui/DropdownMenu/index",
+      "legacyRouteId": "components/DropdownMenu/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "center"
       },
-      "pathname": "/components/base-ui/dropdown-menu",
+      "pathname": "/components/dropdown-menu",
       "source": "src/DropdownMenu/demos/iconSpaceMode.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.mdx",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-demos",
-      "legacyRouteId": "components/base-ui/DropdownMenu/index",
+      "legacyRouteId": "components/DropdownMenu/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "center"
       },
-      "pathname": "/components/base-ui/dropdown-menu",
+      "pathname": "/components/dropdown-menu",
       "source": "src/DropdownMenu/demos/index.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.mdx",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-lazy",
-      "legacyRouteId": "components/base-ui/DropdownMenu/index",
+      "legacyRouteId": "components/DropdownMenu/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "center"
       },
-      "pathname": "/components/base-ui/dropdown-menu",
+      "pathname": "/components/dropdown-menu",
       "source": "src/DropdownMenu/demos/lazy.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.mdx",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-link-label",
-      "legacyRouteId": "components/base-ui/DropdownMenu/index",
+      "legacyRouteId": "components/DropdownMenu/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "center"
       },
-      "pathname": "/components/base-ui/dropdown-menu",
+      "pathname": "/components/dropdown-menu",
       "source": "src/DropdownMenu/demos/link-label.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.mdx",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-plus-action-submenu",
-      "legacyRouteId": "components/base-ui/DropdownMenu/index",
+      "legacyRouteId": "components/DropdownMenu/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "center"
       },
-      "pathname": "/components/base-ui/dropdown-menu",
+      "pathname": "/components/dropdown-menu",
       "source": "src/DropdownMenu/demos/plus-action-submenu.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.mdx",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-submenu",
-      "legacyRouteId": "components/base-ui/DropdownMenu/index",
+      "legacyRouteId": "components/DropdownMenu/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "center"
       },
-      "pathname": "/components/base-ui/dropdown-menu",
+      "pathname": "/components/dropdown-menu",
       "source": "src/DropdownMenu/demos/submenu.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.mdx",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-switch-mixed",
-      "legacyRouteId": "components/base-ui/DropdownMenu/index",
+      "legacyRouteId": "components/DropdownMenu/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "center"
       },
-      "pathname": "/components/base-ui/dropdown-menu",
+      "pathname": "/components/dropdown-menu",
       "source": "src/DropdownMenu/demos/switch-mixed.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.mdx",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-switch",
-      "legacyRouteId": "components/base-ui/DropdownMenu/index",
+      "legacyRouteId": "components/DropdownMenu/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "center"
       },
-      "pathname": "/components/base-ui/dropdown-menu",
+      "pathname": "/components/dropdown-menu",
       "source": "src/DropdownMenu/demos/switch.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.mdx",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-tooltip-hover-stay",
-      "legacyRouteId": "components/base-ui/DropdownMenu/index",
+      "legacyRouteId": "components/DropdownMenu/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "center"
       },
-      "pathname": "/components/base-ui/dropdown-menu",
+      "pathname": "/components/dropdown-menu",
       "source": "src/DropdownMenu/demos/tooltip-hover-stay.tsx"
     },
     {
-      "document": "src/base-ui/DropdownMenu/index.mdx",
+      "document": "src/DropdownMenu/index.mdx",
       "legacyId": "src-base-ui-dropdown-menu-demo-uploader",
-      "legacyRouteId": "components/base-ui/DropdownMenu/index",
+      "legacyRouteId": "components/DropdownMenu/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "center"
       },
-      "pathname": "/components/base-ui/dropdown-menu",
+      "pathname": "/components/dropdown-menu",
       "source": "src/DropdownMenu/demos/uploader.tsx"
     },
     {
-      "document": "src/base-ui/FloatingPanel/index.mdx",
+      "document": "src/FloatingPanel/index.mdx",
       "legacyId": "src-base-ui-floating-panel-demo-demos",
-      "legacyRouteId": "components/base-ui/FloatingPanel/index",
+      "legacyRouteId": "components/FloatingPanel/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/floating-panel",
-      "source": "src/base-ui/FloatingPanel/demos/index.tsx"
+      "pathname": "/components/floating-panel",
+      "source": "src/FloatingPanel/demos/index.tsx"
     },
     {
-      "document": "src/base-ui/FloatingSheet/index.mdx",
+      "document": "src/FloatingSheet/index.mdx",
       "legacyId": "src-base-ui-floating-sheet-demo-demos",
-      "legacyRouteId": "components/base-ui/FloatingSheet/index",
+      "legacyRouteId": "components/FloatingSheet/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/floating-sheet",
-      "source": "src/base-ui/FloatingSheet/demos/index.tsx"
+      "pathname": "/components/floating-sheet",
+      "source": "src/FloatingSheet/demos/index.tsx"
     },
     {
-      "document": "src/base-ui/FloatingSheet/index.mdx",
+      "document": "src/FloatingSheet/index.mdx",
       "legacyId": "src-base-ui-floating-sheet-demo-inline",
-      "legacyRouteId": "components/base-ui/FloatingSheet/index",
+      "legacyRouteId": "components/FloatingSheet/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/floating-sheet",
-      "source": "src/base-ui/FloatingSheet/demos/inline.tsx"
+      "pathname": "/components/floating-sheet",
+      "source": "src/FloatingSheet/demos/inline.tsx"
     },
     {
-      "document": "src/base-ui/FloatingSheet/index.mdx",
+      "document": "src/FloatingSheet/index.mdx",
       "legacyId": "src-base-ui-floating-sheet-demo-playground",
-      "legacyRouteId": "components/base-ui/FloatingSheet/index",
+      "legacyRouteId": "components/FloatingSheet/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/floating-sheet",
-      "source": "src/base-ui/FloatingSheet/demos/playground.tsx"
+      "pathname": "/components/floating-sheet",
+      "source": "src/FloatingSheet/demos/playground.tsx"
     },
     {
-      "document": "src/base-ui/Modal/index.mdx",
+      "document": "src/Modal/index.mdx",
       "legacyId": "src-base-ui-modal-demo-atoms",
-      "legacyRouteId": "components/base-ui/Modal/index",
+      "legacyRouteId": "components/Modal/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/modal",
-      "source": "src/base-ui/Modal/demos/atoms.tsx"
+      "pathname": "/components/modal",
+      "source": "src/Modal/demos/atoms.tsx"
     },
     {
-      "document": "src/base-ui/Modal/index.mdx",
+      "document": "src/Modal/index.mdx",
       "legacyId": "src-base-ui-modal-demo-business",
-      "legacyRouteId": "components/base-ui/Modal/index",
+      "legacyRouteId": "components/Modal/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/modal",
-      "source": "src/base-ui/Modal/demos/business.tsx"
+      "pathname": "/components/modal",
+      "source": "src/Modal/demos/business.tsx"
     },
     {
-      "document": "src/base-ui/Modal/index.mdx",
+      "document": "src/Modal/index.mdx",
       "legacyId": "src-base-ui-modal-demo-imperative",
-      "legacyRouteId": "components/base-ui/Modal/index",
+      "legacyRouteId": "components/Modal/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/modal",
-      "source": "src/base-ui/Modal/demos/imperative.tsx"
+      "pathname": "/components/modal",
+      "source": "src/Modal/demos/imperative.tsx"
     },
     {
-      "document": "src/base-ui/Modal/index.mdx",
+      "document": "src/Modal/index.mdx",
       "legacyId": "src-base-ui-modal-demo-demos",
-      "legacyRouteId": "components/base-ui/Modal/index",
+      "legacyRouteId": "components/Modal/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/modal",
-      "source": "src/base-ui/Modal/demos/index.tsx"
+      "pathname": "/components/modal",
+      "source": "src/Modal/demos/index.tsx"
     },
     {
-      "document": "src/base-ui/Modal/index.mdx",
+      "document": "src/Modal/index.mdx",
       "legacyId": "src-base-ui-modal-demo-nested",
-      "legacyRouteId": "components/base-ui/Modal/index",
+      "legacyRouteId": "components/Modal/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/modal",
-      "source": "src/base-ui/Modal/demos/nested.tsx"
+      "pathname": "/components/modal",
+      "source": "src/Modal/demos/nested.tsx"
     },
     {
-      "document": "src/base-ui/Modal/index.mdx",
+      "document": "src/Modal/index.mdx",
       "legacyId": "src-base-ui-modal-demo-zindex-dropdown-in-modal",
-      "legacyRouteId": "components/base-ui/Modal/index",
+      "legacyRouteId": "components/Modal/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/modal",
-      "source": "src/base-ui/Modal/demos/zindex-dropdown-in-modal.tsx"
+      "pathname": "/components/modal",
+      "source": "src/Modal/demos/zindex-dropdown-in-modal.tsx"
     },
     {
-      "document": "src/base-ui/Modal/index.mdx",
+      "document": "src/Modal/index.mdx",
       "legacyId": "src-base-ui-modal-demo-zindex-with-dropdown",
-      "legacyRouteId": "components/base-ui/Modal/index",
+      "legacyRouteId": "components/Modal/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/modal",
-      "source": "src/base-ui/Modal/demos/zindex-with-dropdown.tsx"
+      "pathname": "/components/modal",
+      "source": "src/Modal/demos/zindex-with-dropdown.tsx"
     },
     {
-      "document": "src/base-ui/Popover/index.mdx",
+      "document": "src/Popover/index.mdx",
       "legacyId": "src-base-ui-popover-demo-atoms",
-      "legacyRouteId": "components/base-ui/Popover/index",
+      "legacyRouteId": "components/Popover/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/popover",
-      "source": "src/base-ui/Popover/demos/atoms.tsx"
+      "pathname": "/components/popover",
+      "source": "src/Popover/demos/atoms.tsx"
     },
     {
-      "document": "src/base-ui/Popover/index.mdx",
+      "document": "src/Popover/index.mdx",
       "legacyId": "src-base-ui-popover-demo-context",
-      "legacyRouteId": "components/base-ui/Popover/index",
+      "legacyRouteId": "components/Popover/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/popover",
-      "source": "src/base-ui/Popover/demos/context.tsx"
+      "pathname": "/components/popover",
+      "source": "src/Popover/demos/context.tsx"
     },
     {
-      "document": "src/base-ui/Popover/index.mdx",
+      "document": "src/Popover/index.mdx",
       "legacyId": "src-base-ui-popover-demo-controlled",
-      "legacyRouteId": "components/base-ui/Popover/index",
+      "legacyRouteId": "components/Popover/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/popover",
-      "source": "src/base-ui/Popover/demos/controlled.tsx"
+      "pathname": "/components/popover",
+      "source": "src/Popover/demos/controlled.tsx"
     },
     {
-      "document": "src/base-ui/Popover/index.mdx",
+      "document": "src/Popover/index.mdx",
       "legacyId": "src-base-ui-popover-demo-dropdown-menu",
-      "legacyRouteId": "components/base-ui/Popover/index",
+      "legacyRouteId": "components/Popover/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/popover",
-      "source": "src/base-ui/Popover/demos/dropdown-menu.tsx"
+      "pathname": "/components/popover",
+      "source": "src/Popover/demos/dropdown-menu.tsx"
     },
     {
-      "document": "src/base-ui/Popover/index.mdx",
+      "document": "src/Popover/index.mdx",
       "legacyId": "src-base-ui-popover-demo-group",
-      "legacyRouteId": "components/base-ui/Popover/index",
+      "legacyRouteId": "components/Popover/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/popover",
-      "source": "src/base-ui/Popover/demos/group.tsx"
+      "pathname": "/components/popover",
+      "source": "src/Popover/demos/group.tsx"
     },
     {
-      "document": "src/base-ui/Popover/index.mdx",
+      "document": "src/Popover/index.mdx",
       "legacyId": "src-base-ui-popover-demo-hover-only",
-      "legacyRouteId": "components/base-ui/Popover/index",
+      "legacyRouteId": "components/Popover/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/popover",
-      "source": "src/base-ui/Popover/demos/hover-only.tsx"
+      "pathname": "/components/popover",
+      "source": "src/Popover/demos/hover-only.tsx"
     },
     {
-      "document": "src/base-ui/Popover/index.mdx",
+      "document": "src/Popover/index.mdx",
       "legacyId": "src-base-ui-popover-demo-demos",
-      "legacyRouteId": "components/base-ui/Popover/index",
+      "legacyRouteId": "components/Popover/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/popover",
-      "source": "src/base-ui/Popover/demos/index.tsx"
+      "pathname": "/components/popover",
+      "source": "src/Popover/demos/index.tsx"
     },
     {
-      "document": "src/base-ui/Popover/index.mdx",
+      "document": "src/Popover/index.mdx",
       "legacyId": "src-base-ui-popover-demo-native-button",
-      "legacyRouteId": "components/base-ui/Popover/index",
+      "legacyRouteId": "components/Popover/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/popover",
-      "source": "src/base-ui/Popover/demos/native-button.tsx"
+      "pathname": "/components/popover",
+      "source": "src/Popover/demos/native-button.tsx"
     },
     {
-      "document": "src/base-ui/Popover/index.mdx",
+      "document": "src/Popover/index.mdx",
       "legacyId": "src-base-ui-popover-demo-placement",
-      "legacyRouteId": "components/base-ui/Popover/index",
+      "legacyRouteId": "components/Popover/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/popover",
-      "source": "src/base-ui/Popover/demos/placement.tsx"
+      "pathname": "/components/popover",
+      "source": "src/Popover/demos/placement.tsx"
     },
     {
-      "document": "src/base-ui/Popover/index.mdx",
+      "document": "src/Popover/index.mdx",
       "legacyId": "src-base-ui-popover-demo-popover-wrapping-tooltip-group",
-      "legacyRouteId": "components/base-ui/Popover/index",
+      "legacyRouteId": "components/Popover/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/popover",
-      "source": "src/base-ui/Popover/demos/popover-wrapping-tooltip-group.tsx"
+      "pathname": "/components/popover",
+      "source": "src/Popover/demos/popover-wrapping-tooltip-group.tsx"
     },
     {
-      "document": "src/base-ui/Popover/index.mdx",
+      "document": "src/Popover/index.mdx",
       "legacyId": "src-base-ui-popover-demo-popover-wrapping-tooltip",
-      "legacyRouteId": "components/base-ui/Popover/index",
+      "legacyRouteId": "components/Popover/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/popover",
-      "source": "src/base-ui/Popover/demos/popover-wrapping-tooltip.tsx"
+      "pathname": "/components/popover",
+      "source": "src/Popover/demos/popover-wrapping-tooltip.tsx"
     },
     {
-      "document": "src/base-ui/Popover/index.mdx",
+      "document": "src/Popover/index.mdx",
       "legacyId": "src-base-ui-popover-demo-tooltip-hover-stay",
-      "legacyRouteId": "components/base-ui/Popover/index",
+      "legacyRouteId": "components/Popover/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/popover",
-      "source": "src/base-ui/Popover/demos/tooltip-hover-stay.tsx"
+      "pathname": "/components/popover",
+      "source": "src/Popover/demos/tooltip-hover-stay.tsx"
     },
     {
-      "document": "src/base-ui/Popover/index.mdx",
+      "document": "src/Popover/index.mdx",
       "legacyId": "src-base-ui-popover-demo-tooltip-inside",
-      "legacyRouteId": "components/base-ui/Popover/index",
+      "legacyRouteId": "components/Popover/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/popover",
-      "source": "src/base-ui/Popover/demos/tooltip-inside.tsx"
+      "pathname": "/components/popover",
+      "source": "src/Popover/demos/tooltip-inside.tsx"
     },
     {
-      "document": "src/base-ui/Popover/index.mdx",
+      "document": "src/Popover/index.mdx",
       "legacyId": "src-base-ui-popover-demo-trigger",
-      "legacyRouteId": "components/base-ui/Popover/index",
+      "legacyRouteId": "components/Popover/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/popover",
-      "source": "src/base-ui/Popover/demos/trigger.tsx"
+      "pathname": "/components/popover",
+      "source": "src/Popover/demos/trigger.tsx"
     },
     {
-      "document": "src/base-ui/ScrollArea/index.mdx",
+      "document": "src/ScrollArea/index.mdx",
       "legacyId": "src-base-ui-scroll-area-demo-background",
-      "legacyRouteId": "components/base-ui/ScrollArea/index",
+      "legacyRouteId": "components/ScrollArea/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/scroll-area",
+      "pathname": "/components/scroll-area",
       "source": "src/ScrollArea/demos/background.tsx"
     },
     {
-      "document": "src/base-ui/ScrollArea/index.mdx",
+      "document": "src/ScrollArea/index.mdx",
       "legacyId": "src-base-ui-scroll-area-demo-both",
-      "legacyRouteId": "components/base-ui/ScrollArea/index",
+      "legacyRouteId": "components/ScrollArea/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/scroll-area",
+      "pathname": "/components/scroll-area",
       "source": "src/ScrollArea/demos/both.tsx"
     },
     {
-      "document": "src/base-ui/ScrollArea/index.mdx",
+      "document": "src/ScrollArea/index.mdx",
       "legacyId": "src-base-ui-scroll-area-demo-content-fit-overflow",
-      "legacyRouteId": "components/base-ui/ScrollArea/index",
+      "legacyRouteId": "components/ScrollArea/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/scroll-area",
+      "pathname": "/components/scroll-area",
       "source": "src/ScrollArea/demos/content-fit-overflow.tsx"
     },
     {
-      "document": "src/base-ui/ScrollArea/index.mdx",
+      "document": "src/ScrollArea/index.mdx",
       "legacyId": "src-base-ui-scroll-area-demo-fade-both",
-      "legacyRouteId": "components/base-ui/ScrollArea/index",
+      "legacyRouteId": "components/ScrollArea/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/scroll-area",
+      "pathname": "/components/scroll-area",
       "source": "src/ScrollArea/demos/fade-both.tsx"
     },
     {
-      "document": "src/base-ui/ScrollArea/index.mdx",
+      "document": "src/ScrollArea/index.mdx",
       "legacyId": "src-base-ui-scroll-area-demo-horizontal",
-      "legacyRouteId": "components/base-ui/ScrollArea/index",
+      "legacyRouteId": "components/ScrollArea/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/scroll-area",
+      "pathname": "/components/scroll-area",
       "source": "src/ScrollArea/demos/horizontal.tsx"
     },
     {
-      "document": "src/base-ui/ScrollArea/index.mdx",
+      "document": "src/ScrollArea/index.mdx",
       "legacyId": "src-base-ui-scroll-area-demo-demos",
-      "legacyRouteId": "components/base-ui/ScrollArea/index",
+      "legacyRouteId": "components/ScrollArea/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/scroll-area",
+      "pathname": "/components/scroll-area",
       "source": "src/ScrollArea/demos/index.tsx"
     },
     {
-      "document": "src/base-ui/Segmented/index.mdx",
+      "document": "src/Segmented/index.mdx",
       "legacyId": "src-base-ui-segmented-demo-atoms",
-      "legacyRouteId": "components/base-ui/Segmented/index",
+      "legacyRouteId": "components/Segmented/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/segmented",
-      "source": "src/base-ui/Segmented/demos/atoms.tsx"
+      "pathname": "/components/segmented",
+      "source": "src/Segmented/demos/atoms.tsx"
     },
     {
-      "document": "src/base-ui/Segmented/index.mdx",
+      "document": "src/Segmented/index.mdx",
       "legacyId": "src-base-ui-segmented-demo-demos",
-      "legacyRouteId": "components/base-ui/Segmented/index",
+      "legacyRouteId": "components/Segmented/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/segmented",
-      "source": "src/base-ui/Segmented/demos/index.tsx"
+      "pathname": "/components/segmented",
+      "source": "src/Segmented/demos/index.tsx"
     },
     {
-      "document": "src/base-ui/Select/index.mdx",
+      "document": "src/Select/index.mdx",
       "legacyId": "src-base-ui-select-demo-atoms",
-      "legacyRouteId": "components/base-ui/Select/index",
+      "legacyRouteId": "components/Select/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/select",
-      "source": "src/base-ui/Select/demos/atoms.tsx"
+      "pathname": "/components/select",
+      "source": "src/Select/demos/atoms.tsx"
     },
     {
-      "document": "src/base-ui/Select/index.mdx",
+      "document": "src/Select/index.mdx",
       "legacyId": "src-base-ui-select-demo-clearvalue",
-      "legacyRouteId": "components/base-ui/Select/index",
+      "legacyRouteId": "components/Select/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/select",
-      "source": "src/base-ui/Select/demos/clearValue.tsx"
+      "pathname": "/components/select",
+      "source": "src/Select/demos/clearValue.tsx"
     },
     {
-      "document": "src/base-ui/Select/index.mdx",
+      "document": "src/Select/index.mdx",
       "legacyId": "src-base-ui-select-demo-closedtags",
-      "legacyRouteId": "components/base-ui/Select/index",
+      "legacyRouteId": "components/Select/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/select",
-      "source": "src/base-ui/Select/demos/closedTags.tsx"
+      "pathname": "/components/select",
+      "source": "src/Select/demos/closedTags.tsx"
     },
     {
-      "document": "src/base-ui/Select/index.mdx",
+      "document": "src/Select/index.mdx",
       "legacyId": "src-base-ui-select-demo-demos",
-      "legacyRouteId": "components/base-ui/Select/index",
+      "legacyRouteId": "components/Select/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/select",
-      "source": "src/base-ui/Select/demos/index.tsx"
+      "pathname": "/components/select",
+      "source": "src/Select/demos/index.tsx"
     },
     {
-      "document": "src/base-ui/Select/index.mdx",
+      "document": "src/Select/index.mdx",
       "legacyId": "src-base-ui-select-demo-indicator",
-      "legacyRouteId": "components/base-ui/Select/index",
+      "legacyRouteId": "components/Select/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/select",
-      "source": "src/base-ui/Select/demos/indicator.tsx"
+      "pathname": "/components/select",
+      "source": "src/Select/demos/indicator.tsx"
     },
     {
-      "document": "src/base-ui/Select/index.mdx",
+      "document": "src/Select/index.mdx",
       "legacyId": "src-base-ui-select-demo-reactnodesearch",
-      "legacyRouteId": "components/base-ui/Select/index",
+      "legacyRouteId": "components/Select/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/select",
-      "source": "src/base-ui/Select/demos/reactNodeSearch.tsx"
+      "pathname": "/components/select",
+      "source": "src/Select/demos/reactNodeSearch.tsx"
     },
     {
-      "document": "src/base-ui/Select/index.mdx",
+      "document": "src/Select/index.mdx",
       "legacyId": "src-base-ui-select-demo-render",
-      "legacyRouteId": "components/base-ui/Select/index",
+      "legacyRouteId": "components/Select/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/select",
-      "source": "src/base-ui/Select/demos/render.tsx"
+      "pathname": "/components/select",
+      "source": "src/Select/demos/render.tsx"
     },
     {
-      "document": "src/base-ui/Select/index.mdx",
+      "document": "src/Select/index.mdx",
       "legacyId": "src-base-ui-select-demo-viewportbounds",
-      "legacyRouteId": "components/base-ui/Select/index",
+      "legacyRouteId": "components/Select/index",
       "options": {
         "inline": false,
         "isolated": true,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/select",
-      "source": "src/base-ui/Select/demos/viewportBounds.tsx"
+      "pathname": "/components/select",
+      "source": "src/Select/demos/viewportBounds.tsx"
     },
     {
-      "document": "src/base-ui/Select/index.mdx",
+      "document": "src/Select/index.mdx",
       "legacyId": "src-base-ui-select-demo-virtual",
-      "legacyRouteId": "components/base-ui/Select/index",
+      "legacyRouteId": "components/Select/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/select",
-      "source": "src/base-ui/Select/demos/virtual.tsx"
+      "pathname": "/components/select",
+      "source": "src/Select/demos/virtual.tsx"
     },
     {
-      "document": "src/base-ui/Slider/index.mdx",
+      "document": "src/Slider/index.mdx",
       "legacyId": "src-base-ui-slider-demo-demos",
-      "legacyRouteId": "components/base-ui/Slider/index",
+      "legacyRouteId": "components/Slider/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/slider",
-      "source": "src/base-ui/Slider/demos/index.tsx"
+      "pathname": "/components/slider",
+      "source": "src/Slider/demos/index.tsx"
     },
     {
-      "document": "src/base-ui/Switch/index.mdx",
+      "document": "src/Switch/index.mdx",
       "legacyId": "src-base-ui-switch-demo-asyncloading",
-      "legacyRouteId": "components/base-ui/Switch/index",
+      "legacyRouteId": "components/Switch/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/switch",
-      "source": "src/base-ui/Switch/demos/asyncLoading.tsx"
+      "pathname": "/components/switch",
+      "source": "src/Switch/demos/asyncLoading.tsx"
     },
     {
-      "document": "src/base-ui/Switch/index.mdx",
+      "document": "src/Switch/index.mdx",
       "legacyId": "src-base-ui-switch-demo-atoms",
-      "legacyRouteId": "components/base-ui/Switch/index",
+      "legacyRouteId": "components/Switch/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/switch",
-      "source": "src/base-ui/Switch/demos/atoms.tsx"
+      "pathname": "/components/switch",
+      "source": "src/Switch/demos/atoms.tsx"
     },
     {
-      "document": "src/base-ui/Switch/index.mdx",
+      "document": "src/Switch/index.mdx",
       "legacyId": "src-base-ui-switch-demo-demos",
-      "legacyRouteId": "components/base-ui/Switch/index",
+      "legacyRouteId": "components/Switch/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/switch",
-      "source": "src/base-ui/Switch/demos/index.tsx"
+      "pathname": "/components/switch",
+      "source": "src/Switch/demos/index.tsx"
     },
     {
-      "document": "src/base-ui/Switch/index.mdx",
+      "document": "src/Switch/index.mdx",
       "legacyId": "src-base-ui-switch-demo-nativebutton",
-      "legacyRouteId": "components/base-ui/Switch/index",
+      "legacyRouteId": "components/Switch/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/switch",
-      "source": "src/base-ui/Switch/demos/nativeButton.tsx"
+      "pathname": "/components/switch",
+      "source": "src/Switch/demos/nativeButton.tsx"
     },
     {
-      "document": "src/base-ui/Tabs/index.mdx",
+      "document": "src/Tabs/index.mdx",
       "legacyId": "src-base-ui-tabs-demo-atoms",
-      "legacyRouteId": "components/base-ui/Tabs/index",
+      "legacyRouteId": "components/Tabs/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/tabs",
-      "source": "src/base-ui/Tabs/demos/atoms.tsx"
+      "pathname": "/components/tabs",
+      "source": "src/Tabs/demos/atoms.tsx"
     },
     {
-      "document": "src/base-ui/Tabs/index.mdx",
+      "document": "src/Tabs/index.mdx",
       "legacyId": "src-base-ui-tabs-demo-implicitdefault",
-      "legacyRouteId": "components/base-ui/Tabs/index",
+      "legacyRouteId": "components/Tabs/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/tabs",
-      "source": "src/base-ui/Tabs/demos/implicitDefault.tsx"
+      "pathname": "/components/tabs",
+      "source": "src/Tabs/demos/implicitDefault.tsx"
     },
     {
-      "document": "src/base-ui/Tabs/index.mdx",
+      "document": "src/Tabs/index.mdx",
       "legacyId": "src-base-ui-tabs-demo-demos",
-      "legacyRouteId": "components/base-ui/Tabs/index",
+      "legacyRouteId": "components/Tabs/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/tabs",
-      "source": "src/base-ui/Tabs/demos/index.tsx"
+      "pathname": "/components/tabs",
+      "source": "src/Tabs/demos/index.tsx"
     },
     {
-      "document": "src/base-ui/Tag/index.mdx",
+      "document": "src/Tag/index.mdx",
       "legacyId": "src-base-ui-tag-demo-closable",
-      "legacyRouteId": "components/base-ui/Tag/index",
+      "legacyRouteId": "components/Tag/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/tag",
-      "source": "src/base-ui/Tag/demos/closable.tsx"
+      "pathname": "/components/tag",
+      "source": "src/Tag/demos/closable.tsx"
     },
     {
-      "document": "src/base-ui/Tag/index.mdx",
+      "document": "src/Tag/index.mdx",
       "legacyId": "src-base-ui-tag-demo-hex",
-      "legacyRouteId": "components/base-ui/Tag/index",
+      "legacyRouteId": "components/Tag/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/tag",
-      "source": "src/base-ui/Tag/demos/hex.tsx"
+      "pathname": "/components/tag",
+      "source": "src/Tag/demos/hex.tsx"
     },
     {
-      "document": "src/base-ui/Tag/index.mdx",
+      "document": "src/Tag/index.mdx",
       "legacyId": "src-base-ui-tag-demo-demos",
-      "legacyRouteId": "components/base-ui/Tag/index",
+      "legacyRouteId": "components/Tag/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/tag",
-      "source": "src/base-ui/Tag/demos/index.tsx"
+      "pathname": "/components/tag",
+      "source": "src/Tag/demos/index.tsx"
     },
     {
-      "document": "src/base-ui/Tag/index.mdx",
+      "document": "src/Tag/index.mdx",
       "legacyId": "src-base-ui-tag-demo-sizes",
-      "legacyRouteId": "components/base-ui/Tag/index",
+      "legacyRouteId": "components/Tag/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/tag",
-      "source": "src/base-ui/Tag/demos/sizes.tsx"
+      "pathname": "/components/tag",
+      "source": "src/Tag/demos/sizes.tsx"
     },
     {
-      "document": "src/base-ui/Tag/index.mdx",
+      "document": "src/Tag/index.mdx",
       "legacyId": "src-base-ui-tag-demo-variants",
-      "legacyRouteId": "components/base-ui/Tag/index",
+      "legacyRouteId": "components/Tag/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/tag",
-      "source": "src/base-ui/Tag/demos/variants.tsx"
+      "pathname": "/components/tag",
+      "source": "src/Tag/demos/variants.tsx"
     },
     {
-      "document": "src/base-ui/Text/index.mdx",
+      "document": "src/Text/index.mdx",
       "legacyId": "src-base-ui-text-demo-demos",
-      "legacyRouteId": "components/base-ui/Text/index",
+      "legacyRouteId": "components/Text/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/text",
-      "source": "src/base-ui/Text/demos/index.tsx"
+      "pathname": "/components/text",
+      "source": "src/Text/demos/index.tsx"
     },
     {
-      "document": "src/base-ui/Toast/index.mdx",
+      "document": "src/Toast/index.mdx",
       "legacyId": "src-base-ui-toast-demo-actions",
-      "legacyRouteId": "components/base-ui/Toast/index",
+      "legacyRouteId": "components/Toast/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/toast",
-      "source": "src/base-ui/Toast/demos/actions.tsx"
+      "pathname": "/components/toast",
+      "source": "src/Toast/demos/actions.tsx"
     },
     {
-      "document": "src/base-ui/Toast/index.mdx",
+      "document": "src/Toast/index.mdx",
       "legacyId": "src-base-ui-toast-demo-demos",
-      "legacyRouteId": "components/base-ui/Toast/index",
+      "legacyRouteId": "components/Toast/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/toast",
-      "source": "src/base-ui/Toast/demos/index.tsx"
+      "pathname": "/components/toast",
+      "source": "src/Toast/demos/index.tsx"
     },
     {
-      "document": "src/base-ui/Toast/index.mdx",
+      "document": "src/Toast/index.mdx",
       "legacyId": "src-base-ui-toast-demo-position",
-      "legacyRouteId": "components/base-ui/Toast/index",
+      "legacyRouteId": "components/Toast/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/toast",
-      "source": "src/base-ui/Toast/demos/position.tsx"
+      "pathname": "/components/toast",
+      "source": "src/Toast/demos/position.tsx"
     },
     {
-      "document": "src/base-ui/Toast/index.mdx",
+      "document": "src/Toast/index.mdx",
       "legacyId": "src-base-ui-toast-demo-promise",
-      "legacyRouteId": "components/base-ui/Toast/index",
+      "legacyRouteId": "components/Toast/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/toast",
-      "source": "src/base-ui/Toast/demos/promise.tsx"
+      "pathname": "/components/toast",
+      "source": "src/Toast/demos/promise.tsx"
     },
     {
-      "document": "src/base-ui/Tooltip/index.mdx",
+      "document": "src/Tooltip/index.mdx",
       "legacyId": "tooltip-demo-group-children-preserve",
-      "legacyRouteId": "components/base-ui/Tooltip/index",
+      "legacyRouteId": "components/Tooltip/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/tooltip",
-      "source": "src/base-ui/Tooltip/demos/group-children-preserve.tsx"
+      "pathname": "/components/tooltip",
+      "source": "src/Tooltip/demos/group-children-preserve.tsx"
     },
     {
-      "document": "src/base-ui/Tooltip/index.mdx",
+      "document": "src/Tooltip/index.mdx",
       "legacyId": "tooltip-demo-group-remove-trigger",
-      "legacyRouteId": "components/base-ui/Tooltip/index",
+      "legacyRouteId": "components/Tooltip/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/tooltip",
-      "source": "src/base-ui/Tooltip/demos/group-remove-trigger.tsx"
+      "pathname": "/components/tooltip",
+      "source": "src/Tooltip/demos/group-remove-trigger.tsx"
     },
     {
-      "document": "src/base-ui/Tooltip/index.mdx",
+      "document": "src/Tooltip/index.mdx",
       "legacyId": "tooltip-demo-group-shared",
-      "legacyRouteId": "components/base-ui/Tooltip/index",
+      "legacyRouteId": "components/Tooltip/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/tooltip",
-      "source": "src/base-ui/Tooltip/demos/group-shared.tsx"
+      "pathname": "/components/tooltip",
+      "source": "src/Tooltip/demos/group-shared.tsx"
     },
     {
-      "document": "src/base-ui/Tooltip/index.mdx",
+      "document": "src/Tooltip/index.mdx",
       "legacyId": "tooltip-demo-group",
-      "legacyRouteId": "components/base-ui/Tooltip/index",
+      "legacyRouteId": "components/Tooltip/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/tooltip",
-      "source": "src/base-ui/Tooltip/demos/group.tsx"
+      "pathname": "/components/tooltip",
+      "source": "src/Tooltip/demos/group.tsx"
     },
     {
-      "document": "src/base-ui/Tooltip/index.mdx",
+      "document": "src/Tooltip/index.mdx",
       "legacyId": "tooltip-demo-demos",
-      "legacyRouteId": "components/base-ui/Tooltip/index",
+      "legacyRouteId": "components/Tooltip/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "bare"
       },
-      "pathname": "/components/base-ui/tooltip",
-      "source": "src/base-ui/Tooltip/demos/index.tsx"
+      "pathname": "/components/tooltip",
+      "source": "src/Tooltip/demos/index.tsx"
     },
     {
-      "document": "src/base-ui/Tooltip/index.mdx",
+      "document": "src/Tooltip/index.mdx",
       "legacyId": "tooltip-demo-tooltip",
-      "legacyRouteId": "components/base-ui/Tooltip/index",
+      "legacyRouteId": "components/Tooltip/index",
       "options": {
         "inline": false,
         "isolated": false,
         "layout": "default"
       },
-      "pathname": "/components/base-ui/tooltip",
-      "source": "src/base-ui/Tooltip/demos/tooltip.tsx"
+      "pathname": "/components/tooltip",
+      "source": "src/Tooltip/demos/tooltip.tsx"
     },
     {
       "document": "src/brand/BrandLoading/index.mdx",
@@ -5741,7 +5741,7 @@
     },
     {
       "category": "Data Display",
-      "description": "HtmlPreview renders LLM-generated HTML inline using a hardened iframe sandbox. It mirrors how Mermaid is embedded in Markdown, but treats the content as code rather than data — scripts execute inside an isolated frame that cannot reach the host page.",
+      "description": "HtmlPreview renders LLM-generated HTML inline using a hardened iframe sandbox. It mirrors how Mermaid is embedded in Markdown, but treats the content as code rather than data \u2014 scripts execute inside an isolated frame that cannot reach the host page.",
       "legacyRouteId": "components/HtmlPreview/index",
       "pathname": "/components/html-preview",
       "section": "Components",
@@ -5920,7 +5920,7 @@
     },
     {
       "category": "Feedback",
-      "description": "A wrapper component for giscus 💎, a comments system powered by GitHub Discussions.",
+      "description": "A wrapper component for giscus \ud83d\udc8e, a comments system powered by GitHub Discussions.",
       "legacyRouteId": "components/awesome/Giscus/index",
       "pathname": "/components/awesome/giscus",
       "section": "Awesome",
@@ -5984,145 +5984,105 @@
     {
       "category": "Feedback",
       "description": "Semantic inline feedback with actions, dismissal, and expandable diagnostic detail.",
-      "legacyRouteId": "components/base-ui/Alert/index",
-      "pathname": "/components/base-ui/alert",
-      "section": "Base UI",
-      "source": "src/base-ui/Alert/index.mdx",
+      "legacyRouteId": "components/Alert/index",
+      "pathname": "/components/alert",
+      "source": "src/Alert/index.mdx",
       "title": "Alert"
     },
     {
       "category": "General",
       "description": "Polished base-ui Button. API-compatible drop-in for antd Button core props.",
-      "legacyRouteId": "components/base-ui/Button/index",
-      "pathname": "/components/base-ui/button",
-      "section": "Base UI",
-      "source": "src/base-ui/Button/index.mdx",
+      "legacyRouteId": "components/Button/index",
+      "pathname": "/components/button",
+      "source": "src/Button/index.mdx",
       "title": "Button"
-    },
-    {
-      "category": "Navigation",
-      "description": "ContextMenu provides an imperative API to open a menu at the last pointer position. Render a host once and call showContextMenu with Menu items.",
-      "legacyRouteId": "components/base-ui/ContextMenu/index",
-      "pathname": "/components/base-ui/context-menu",
-      "section": "Base UI",
-      "source": "src/base-ui/ContextMenu/index.mdx",
-      "title": "ContextMenu"
-    },
-    {
-      "category": "Navigation",
-      "description": "DropdownMenu renders a dropdown menu based on Base UI Menu primitives, aligned with ContextMenu item layout and styling.",
-      "legacyRouteId": "components/base-ui/DropdownMenu/index",
-      "pathname": "/components/base-ui/dropdown-menu",
-      "section": "Base UI",
-      "source": "src/base-ui/DropdownMenu/index.mdx",
-      "title": "DropdownMenu"
     },
     {
       "category": "Feedback",
       "description": "Viewport-anchored floating panel built from Base UI modal atoms for contextual side conversations, task runs, inspectors, and other non-blocking auxiliary surfaces.",
-      "legacyRouteId": "components/base-ui/FloatingPanel/index",
-      "pathname": "/components/base-ui/floating-panel",
-      "section": "Base UI",
-      "source": "src/base-ui/FloatingPanel/index.mdx",
+      "legacyRouteId": "components/FloatingPanel/index",
+      "pathname": "/components/floating-panel",
+      "source": "src/FloatingPanel/index.mdx",
       "title": "FloatingPanel"
     },
     {
       "category": "Feedback",
       "description": "Container-embedded bottom sheet with drag-to-resize, snap points, overlay/inline layout modes, and elevated/embedded visual variants.",
-      "legacyRouteId": "components/base-ui/FloatingSheet/index",
-      "pathname": "/components/base-ui/floating-sheet",
-      "section": "Base UI",
-      "source": "src/base-ui/FloatingSheet/index.mdx",
+      "legacyRouteId": "components/FloatingSheet/index",
+      "pathname": "/components/floating-sheet",
+      "source": "src/FloatingSheet/index.mdx",
       "title": "FloatingSheet"
     },
     {
       "category": "Feedback",
       "description": "Base UI-powered Modal with antd-compatible API, supporting declarative, imperative, and atomic usage.",
-      "legacyRouteId": "components/base-ui/Modal/index",
-      "pathname": "/components/base-ui/modal",
-      "section": "Base UI",
-      "source": "src/base-ui/Modal/index.mdx",
+      "legacyRouteId": "components/Modal/index",
+      "pathname": "/components/modal",
+      "source": "src/Modal/index.mdx",
       "title": "Modal"
     },
     {
       "category": "Data Display",
       "description": "A floating card that displays additional content when triggered by hover or click.",
-      "legacyRouteId": "components/base-ui/Popover/index",
-      "pathname": "/components/base-ui/popover",
-      "section": "Base UI",
-      "source": "src/base-ui/Popover/index.mdx",
+      "legacyRouteId": "components/Popover/index",
+      "pathname": "/components/popover",
+      "source": "src/Popover/index.mdx",
       "title": "Popover"
     },
     {
-      "category": "Layout",
-      "description": "A native scroll container with custom scrollbars and gradient scroll fade.",
-      "legacyRouteId": "components/base-ui/ScrollArea/index",
-      "pathname": "/components/base-ui/scroll-area",
-      "section": "Base UI",
-      "source": "src/base-ui/ScrollArea/index.mdx",
-      "title": "ScrollArea"
-    },
-    {
       "category": "Data Entry",
-      "description": "Base UI-powered Segmented control — toggle-group semantics with a sliding active indicator. Drops antd dependency in favor of @base-ui/react/toggle-group.",
-      "legacyRouteId": "components/base-ui/Segmented/index",
-      "pathname": "/components/base-ui/segmented",
-      "section": "Base UI",
-      "source": "src/base-ui/Segmented/index.mdx",
+      "description": "Base UI-powered Segmented control \u2014 toggle-group semantics with a sliding active indicator. Drops antd dependency in favor of @base-ui/react/toggle-group.",
+      "legacyRouteId": "components/Segmented/index",
+      "pathname": "/components/segmented",
+      "source": "src/Segmented/index.mdx",
       "title": "Segmented"
     },
     {
       "category": "Data Entry",
       "description": "Base UI-powered Select component.",
-      "legacyRouteId": "components/base-ui/Select/index",
-      "pathname": "/components/base-ui/select",
-      "section": "Base UI",
-      "source": "src/base-ui/Select/index.mdx",
+      "legacyRouteId": "components/Select/index",
+      "pathname": "/components/select",
+      "source": "src/Select/index.mdx",
       "title": "Select"
     },
     {
       "category": "Data Entry",
       "description": "Base UI-powered Slider and SliderWithInput components.",
-      "legacyRouteId": "components/base-ui/Slider/index",
-      "pathname": "/components/base-ui/slider",
-      "section": "Base UI",
-      "source": "src/base-ui/Slider/index.mdx",
+      "legacyRouteId": "components/Slider/index",
+      "pathname": "/components/slider",
+      "source": "src/Slider/index.mdx",
       "title": "Slider"
     },
     {
       "category": "Data Entry",
       "description": "Base UI-powered Switch component.",
-      "legacyRouteId": "components/base-ui/Switch/index",
-      "pathname": "/components/base-ui/switch",
-      "section": "Base UI",
-      "source": "src/base-ui/Switch/index.mdx",
+      "legacyRouteId": "components/Switch/index",
+      "pathname": "/components/switch",
+      "source": "src/Switch/index.mdx",
       "title": "Switch"
     },
     {
       "category": "Navigation",
-      "description": "Base UI-powered Tabs with iOS-flavored interactions — no hover background, tap-scale feedback, and a sliding active indicator across rounded / square / point variants.",
-      "legacyRouteId": "components/base-ui/Tabs/index",
-      "pathname": "/components/base-ui/tabs",
-      "section": "Base UI",
-      "source": "src/base-ui/Tabs/index.mdx",
+      "description": "Base UI-powered Tabs with iOS-flavored interactions \u2014 no hover background, tap-scale feedback, and a sliding active indicator across rounded / square / point variants.",
+      "legacyRouteId": "components/Tabs/index",
+      "pathname": "/components/tabs",
+      "source": "src/Tabs/index.mdx",
       "title": "Tabs"
     },
     {
       "category": "Feedback",
       "description": "A toast notification component for displaying brief messages.",
-      "legacyRouteId": "components/base-ui/Toast/index",
-      "pathname": "/components/base-ui/toast",
-      "section": "Base UI",
-      "source": "src/base-ui/Toast/index.mdx",
+      "legacyRouteId": "components/Toast/index",
+      "pathname": "/components/toast",
+      "source": "src/Toast/index.mdx",
       "title": "Toast"
     },
     {
       "category": "Data Display",
       "description": "The Tooltip component is used to provide additional information to the user when they hover over a specific element.",
-      "legacyRouteId": "components/base-ui/Tooltip/index",
-      "pathname": "/components/base-ui/tooltip",
-      "section": "Base UI",
-      "source": "src/base-ui/Tooltip/index.mdx",
+      "legacyRouteId": "components/Tooltip/index",
+      "pathname": "/components/tooltip",
+      "source": "src/Tooltip/index.mdx",
       "title": "Tooltip"
     },
     {

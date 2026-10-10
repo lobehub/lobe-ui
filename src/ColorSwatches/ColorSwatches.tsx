@@ -5,7 +5,7 @@ import { CheckIcon } from 'lucide-react';
 import { type FC, useMemo } from 'react';
 import useMergeState from 'use-merge-value';
 
-import { ColorPicker } from '@/base-ui/ColorPicker';
+import { ColorPicker } from '@/ColorPicker';
 import { Center, Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 import { cssVar, cx } from '@/styles';

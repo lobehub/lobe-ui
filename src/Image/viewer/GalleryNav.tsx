@@ -3,7 +3,7 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { memo } from 'react';
 
-import ActionIcon from '@/base-ui/ActionIcon';
+import ActionIcon from '@/ActionIcon';
 import { Center } from '@/Flex';
 import imageMessages from '@/i18n/resources/en/image';
 import { useTranslation } from '@/i18n/useTranslation';

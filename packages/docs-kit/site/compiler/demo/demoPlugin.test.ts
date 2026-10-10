@@ -148,7 +148,7 @@ it('preserves every frozen alias by source, including repeated and punctuation-b
     'src-dropdown-menu-demo-demos',
     'src-base-ui-dropdown-menu-demo-demos',
   ]);
-  expect(repeated.routeId).toBe('');
+  expect(repeated.routeId).toBe('components/DropdownMenu/index');
   expect(punctuated.legacyIds).toEqual(['cards, card-demo-demos']);
 });
 
@@ -159,9 +159,9 @@ it('does not execute browser-only entries during descriptor evaluation or hide e
   expect((globalThis as any).__lobeDemoExecutionLog).toEqual([]);
 });
 
-it('selects route metadata from each importing MDX document for a shared demo source', async () => {
+it('keeps the demo route when an importing MDX document does not reference the demo', async () => {
   const rootImporter = resolve(repositoryRoot, 'src/DropdownMenu/index.mdx');
-  const baseImporter = resolve(repositoryRoot, 'src/base-ui/DropdownMenu/index.mdx');
+  const baseImporter = resolve(repositoryRoot, 'src/ContextMenu/index.mdx');
   const importers = new Map([
     ['virtual:root-dropdown-demo', rootImporter],
     ['virtual:base-dropdown-demo', baseImporter],
@@ -190,7 +190,7 @@ it('selects route metadata from each importing MDX document for a shared demo so
     .default as DemoModule;
 
   expect(rootDescriptor.routeId).toBe('components/DropdownMenu/index');
-  expect(baseDescriptor.routeId).toBe('components/base-ui/DropdownMenu/index');
+  expect(baseDescriptor.routeId).toBe('components/DropdownMenu/index');
   expect(baseDescriptor.legacyIds).toEqual(rootDescriptor.legacyIds);
 });
 

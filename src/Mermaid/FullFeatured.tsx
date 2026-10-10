@@ -3,13 +3,13 @@
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { memo, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import ActionIcon from '@/base-ui/ActionIcon';
-import Text from '@/base-ui/Text';
+import ActionIcon from '@/ActionIcon';
 import CopyButton from '@/CopyButton';
 import { Flexbox } from '@/Flex';
 import { bodyVariants, headerVariants, variants } from '@/Highlighter/style';
 import MaterialFileTypeIcon from '@/MaterialFileTypeIcon';
 import { cx } from '@/styles';
+import Text from '@/Text';
 import { stopPropagation } from '@/utils/dom';
 
 import { type MermaidProps } from './type';

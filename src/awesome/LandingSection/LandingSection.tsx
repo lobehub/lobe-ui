@@ -3,8 +3,8 @@
 import { memo } from 'react';
 
 import { LandingActions } from '@/awesome/landingActions';
-import Tag from '@/base-ui/Tag';
 import { cx } from '@/styles';
+import Tag from '@/Tag';
 
 import { styles } from './style';
 import type { LandingSectionProps } from './type';

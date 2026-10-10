@@ -2,8 +2,8 @@
 
 import { Fragment, memo } from 'react';
 
-import { ToastHost } from '@/base-ui/Toast';
 import { cx } from '@/styles';
+import { ToastHost } from '@/Toast';
 
 import ChatListItem from './components/ChatListItem';
 import HistoryDivider from './components/HistoryDivider';

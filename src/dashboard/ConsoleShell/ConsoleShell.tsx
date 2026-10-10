@@ -3,8 +3,8 @@
 import { PanelLeft } from 'lucide-react';
 import { useEffect, useId, useRef, useState } from 'react';
 
-import Button from '@/base-ui/Button';
-import { Drawer } from '@/base-ui/Drawer';
+import Button from '@/Button';
+import { Drawer } from '@/Drawer';
 import { Flexbox } from '@/Flex';
 
 import { useIsCompact, useLocalStorage, usePrefersReducedMotion } from '../hooks';

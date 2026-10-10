@@ -6,5 +6,12 @@
   "ignoreCommand": "git diff HEAD^ HEAD --quiet -- ./package.json ./src ./docs ./packages ./public ./vercel.json ./docs.config.ts ./compatibility.json ./tsconfig.site.json ./tsconfig.json",
   "installCommand": "export PATH=\"$(printf '%s' \"$PATH\" | tr ':' '\\n' | grep -v '/pnpm6' | paste -sd: -)\" && corepack enable && pnpm install",
   "outputDirectory": "dist",
+  "redirects": [
+    {
+      "source": "/components/base-ui/:path*",
+      "destination": "/components/:path*",
+      "permanent": true
+    }
+  ],
   "trailingSlash": false
 }

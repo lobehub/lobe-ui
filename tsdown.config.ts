@@ -65,7 +65,7 @@ export default defineConfig({
     'src/index.ts',
     // packages
     ...packageEntries,
-    'src/base-ui/FormKit/index.ts',
+    'src/FormKit/index.ts',
     'src/i18n/resources/index.ts',
   ],
   deps: {

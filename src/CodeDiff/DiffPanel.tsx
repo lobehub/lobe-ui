@@ -4,13 +4,13 @@ import { ChevronDown, ChevronRight } from 'lucide-react';
 import type { CSSProperties, ReactNode } from 'react';
 import { memo, useCallback, useState } from 'react';
 
-import ActionIcon from '@/base-ui/ActionIcon';
-import Tag from '@/base-ui/Tag';
-import Text from '@/base-ui/Text';
+import ActionIcon from '@/ActionIcon';
 import type { FlexboxProps } from '@/Flex';
 import { Flexbox } from '@/Flex';
 import MaterialFileTypeIcon from '@/MaterialFileTypeIcon';
 import { cx } from '@/styles';
+import Tag from '@/Tag';
+import Text from '@/Text';
 import { stopPropagation } from '@/utils/dom';
 
 import { bodyVariants, headerVariants, prefix, styles, variants } from './style';

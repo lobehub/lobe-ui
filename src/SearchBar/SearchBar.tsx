@@ -6,9 +6,9 @@ import { useHotkeys } from 'react-hotkeys-hook';
 import useControlledState from 'use-merge-value';
 
 import Spotlight from '@/awesome/Spotlight';
-import { Input } from '@/base-ui/Input';
 import Hotkey from '@/Hotkey';
 import Icon from '@/Icon';
+import { Input } from '@/Input';
 import { cx } from '@/styles';
 
 import { styles } from './style';

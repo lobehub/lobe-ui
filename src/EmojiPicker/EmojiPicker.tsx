@@ -10,15 +10,15 @@ import { memo, useMemo, useRef, useState } from 'react';
 import useSWR from 'swr';
 import useMergeState from 'use-merge-value';
 
-import ActionIcon from '@/base-ui/ActionIcon';
-import Avatar from '@/base-ui/Avatar';
-import Tabs, { type TabsProps } from '@/base-ui/Tabs';
+import ActionIcon from '@/ActionIcon';
+import Avatar from '@/Avatar';
 import { Flexbox } from '@/Flex';
 import emojiPickerMessages from '@/i18n/resources/en/emojiPicker';
 import { useTranslation } from '@/i18n/useTranslation';
 import Icon from '@/Icon';
 import Popover from '@/Popover';
 import { cx, useTheme } from '@/styles';
+import Tabs, { type TabsProps } from '@/Tabs';
 import Tooltip from '@/Tooltip';
 
 import AvatarUploader from './AvatarUploader';

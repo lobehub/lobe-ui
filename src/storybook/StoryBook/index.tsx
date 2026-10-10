@@ -3,7 +3,7 @@
 import { LevaPanel } from 'leva';
 import { memo, type Ref } from 'react';
 
-import { DraggablePanel } from '@/base-ui/DraggablePanel';
+import { DraggablePanel } from '@/DraggablePanel';
 import { Center, Flexbox, type FlexboxProps } from '@/Flex';
 import { cx, useResponsive } from '@/styles';
 

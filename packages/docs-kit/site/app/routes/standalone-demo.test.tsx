@@ -58,14 +58,14 @@ afterEach(() => {
 it('resolves exclusively by a frozen demo id and treats routeId as metadata', () => {
   expect(resolveStandaloneDemo('src-base-ui-button-demo-demos', 'wrong/route')).toMatchObject({
     requestedRouteId: 'wrong/route',
-    routeId: 'components/base-ui/Button/index',
-    sourcePath: 'src/base-ui/Button/demos/index.tsx',
+    routeId: 'components/Button/index',
+    sourcePath: 'src/Button/demos/index.tsx',
   });
 });
 
 it('also resolves the deterministic canonical id for a source', () => {
-  expect(resolveStandaloneDemo('src-base-ui-button-demos-index')).toMatchObject({
-    sourcePath: 'src/base-ui/Button/demos/index.tsx',
+  expect(resolveStandaloneDemo('src-button-demos-index')).toMatchObject({
+    sourcePath: 'src/Button/demos/index.tsx',
   });
 });
 
