@@ -321,6 +321,8 @@ export const splitStyles = stylex.create({
     opacity: { default: null, [disabled]: 1 },
   },
   itemSolid: {
+    // solid halves share one color, so the outline-merging overlap only adds a dark seam once each half is translucent (disabled)
+    'marginInlineStart': { default: null, [last]: 0 },
     '::before': {
       insetBlock: { default: null, [last]: 0 },
       backgroundColor: { default: null, [last]: 'currentcolor' },
