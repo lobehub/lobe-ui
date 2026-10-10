@@ -2,6 +2,16 @@
 
 # Changelog
 
+## [5.57.3](https://github.com/lobehub/lobe-ui/compare/v5.57.2...v5.57.3) (2026-10-10)
+
+### 🐛 Bug Fixes
+
+- **build**: Stop leaking `import "node:module"` into the shared rolldown runtime ([8c68829](https://github.com/lobehub/lobe-ui/commit/8c68829))
+
+### 📝 Documentation
+
+- **skills**: Rename building-with-lobe-ui to lobe-design ([1f4ac3a](https://github.com/lobehub/lobe-ui/commit/1f4ac3a))
+
 ## [5.57.2](https://github.com/lobehub/lobe-ui/compare/v5.57.1...v5.57.2) (2026-10-09)
 
 ### 🐛 Bug Fixes
