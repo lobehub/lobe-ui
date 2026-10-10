@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.27.5](https://github.com/lobehub/lobe-ui/compare/docs-kit@5.27.4...docs-kit@5.27.5) (2026-10-06)
+
+### 🐛 Bug Fixes
+
+- **docs-kit**: Let component outline styles override the docs focus ring, closes [#696](https://github.com/lobehub/lobe-ui/issues/696) ([e90ac82](https://github.com/lobehub/lobe-ui/commit/e90ac82))
+
 ## [5.27.4](https://github.com/lobehub/lobe-ui/compare/docs-kit@5.27.3...docs-kit@5.27.4) (2026-09-23)
 
 ### ✅ Tests

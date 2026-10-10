@@ -255,11 +255,11 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       position: absolute;
       inset-block-start: 12px;
       inset-inline-start: var(--lobe-popover-viewport-inline-padding);
-      width: calc(var(--popup-width) - var(--lobe-popover-viewport-inline-padding) * 2 - 2px);
+      width: calc(var(--popup-width) - var(--lobe-popover-viewport-inline-padding) * 2);
     }
 
     &[data-transitioning] [data-current] {
-      width: calc(var(--positioner-width) - var(--lobe-popover-viewport-inline-padding) * 2 - 2px);
+      width: calc(var(--positioner-width) - var(--lobe-popover-viewport-inline-padding) * 2);
     }
 
     &[data-repop] [data-previous] {
