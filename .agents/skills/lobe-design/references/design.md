@@ -24,7 +24,7 @@ export const styles = createStaticStyles(({ css, cssVar, cx, responsive }) => ({
 
 `cssVar.xxx` 输出的是 CSS 变量引用，随明暗外观自动切换。这是它比 `token.xxx` 更重要的原因：**用 cssVar 写的样式天然支持暗色模式，不需要任何分支**。
 
-`createStyles` 已被 `@lobehub/ui/eslint` 禁用，只用 `createStaticStyles`。仓库里约 170 个 `style.ts` 全是这个写法，零例外。
+`createStyles` 已被 `@lobehub/ui/eslint` 禁用，只用 `createStaticStyles`。组件的 `style.ts` 一律这个写法。
 
 ## D-02 先判断视觉角色，再取 token
 
