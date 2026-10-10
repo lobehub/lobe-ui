@@ -130,7 +130,8 @@ injectGlobal`
       background: var(--docs-accent);
     }
 
-    :focus-visible {
+    /* zero specificity so component rules like \`outline: none\` on editors win over the docs ring */
+    :where(:focus-visible) {
       outline: 2px solid var(--docs-accent);
       outline-offset: 3px;
     }

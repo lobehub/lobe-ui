@@ -45,23 +45,24 @@
 
 看到问题不要停在「不好看」。必须说明它违反了哪条规则，这决定了下一轮改哪里。
 
-| 检查发现                             | 表层判断     | 归因                                 |
-| ------------------------------------ | ------------ | ------------------------------------ |
-| 主流程能跑，空态 / 加载 / 错误态缺失 | 交互不完整   | [craft.md](craft.md) K-05            |
-| 页面像通用 SaaS，不像这个产品        | 没有个性     | 规划阶段的业务语义与领域约束         |
-| 蓝紫渐变、等大卡片网格、无意义动效   | 有 AI 味     | [craft.md](craft.md) K-01            |
-| 落地页效果被搬进控制台内页           | 品类错位     | [components.md](components.md) C-06  |
-| 写了裸 hex、裸 rgba                  | 代码不规范   | [design.md](design.md) D-01 / D-10.1 |
-| 状态色是新造的，不在派生体系里       | 颜色失控     | [design.md](design.md) D-03          |
-| 自己写边框背景而不用 variant         | 重复造工艺   | [design.md](design.md) D-06          |
-| 组件里写了 `font-family`             | 中文排版失真 | [craft.md](craft.md) K-02            |
-| Badge / Tag、Modal / Drawer 语义混用 | 组件选错     | [components.md](components.md) C-03  |
-| 用了已废弃的顶层组件                 | 命名空间错   | [components.md](components.md) C-01  |
-| `outline: none` 抹掉焦点环           | 可访问性破坏 | [craft.md](craft.md) K-07            |
-| 动效是弹跳 / 过冲 / 超过 300ms       | 动效失控     | [craft.md](craft.md) K-06            |
-| 图表颜色与主题脱节、随手指定 hex     | 图表不像系统 | [ecosystem.md](ecosystem.md) E-02    |
-| 所有指标同权重、密度不对             | 版式不对     | [craft.md](craft.md) K-09            |
-| 页面结构像卡片墙，不像看板           | 骨架错       | 骨架阶段的结构选择                   |
+| 检查发现                                                         | 表层判断     | 归因                                 |
+| ---------------------------------------------------------------- | ------------ | ------------------------------------ |
+| 主流程能跑，空态 / 加载 / 错误态缺失                             | 交互不完整   | [craft.md](craft.md) K-05            |
+| 页面像通用 SaaS，不像这个产品                                    | 没有个性     | 规划阶段的业务语义与领域约束         |
+| 蓝紫渐变、等大卡片网格、无意义动效                               | 有 AI 味     | [craft.md](craft.md) K-01            |
+| 落地页效果被搬进控制台内页                                       | 品类错位     | [components.md](components.md) C-06  |
+| 写了裸 hex、裸 rgba                                              | 代码不规范   | [design.md](design.md) D-01 / D-10.1 |
+| 状态色是新造的，不在派生体系里                                   | 颜色失控     | [design.md](design.md) D-03          |
+| 自己写边框背景而不用 variant                                     | 重复造工艺   | [design.md](design.md) D-06          |
+| 组件里写了 `font-family`                                         | 中文排版失真 | [craft.md](craft.md) K-02            |
+| Badge / Tag、Modal / Drawer 语义混用                             | 组件选错     | [components.md](components.md) C-03  |
+| 用了已废弃的顶层组件，或从 antd 导入已有 base-ui 实现的组件      | 命名空间错   | [components.md](components.md) C-01  |
+| `Form` 从 `@lobehub/ui` / `base-ui` 桶导入，或 schema 写在渲染里 | 表单入口错   | [components.md](components.md) C-02  |
+| `outline: none` 抹掉焦点环                                       | 可访问性破坏 | [craft.md](craft.md) K-07            |
+| 动效是弹跳 / 过冲 / 超过 300ms                                   | 动效失控     | [craft.md](craft.md) K-06            |
+| 图表颜色与主题脱节、随手指定 hex                                 | 图表不像系统 | [ecosystem.md](ecosystem.md) E-02    |
+| 所有指标同权重、密度不对                                         | 版式不对     | [craft.md](craft.md) K-09            |
+| 页面结构像卡片墙，不像看板                                       | 骨架错       | 骨架阶段的结构选择                   |
 
 ## 阻断问题
 
