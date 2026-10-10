@@ -308,11 +308,11 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       position: absolute;
       inset-block-start: 4px;
       inset-inline-start: var(--lobe-tooltip-viewport-inline-padding);
-      width: calc(var(--popup-width) - var(--lobe-tooltip-viewport-inline-padding) * 2 - 2px);
+      width: calc(var(--popup-width) - var(--lobe-tooltip-viewport-inline-padding) * 2);
     }
 
     &[data-transitioning] [data-current] {
-      width: calc(var(--positioner-width) - var(--lobe-tooltip-viewport-inline-padding) * 2 - 2px);
+      width: calc(var(--positioner-width) - var(--lobe-tooltip-viewport-inline-padding) * 2);
     }
 
     &[data-repop] [data-previous] {
