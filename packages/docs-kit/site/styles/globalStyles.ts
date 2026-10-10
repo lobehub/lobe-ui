@@ -68,71 +68,73 @@ injectGlobal`
     --docs-gradient-spectral: linear-gradient(105deg, #a78bfa 8%, #ef7fc0 55%, #f8a878 95%);
   }
 
-  * {
-    box-sizing: border-box;
-  }
+  @layer docs-reset {
+    * {
+      box-sizing: border-box;
+    }
 
-  html {
-    overflow: hidden;
-    height: 100%;
-    background: var(--docs-background);
-    font-synthesis: none;
-    text-size-adjust: 100%;
-  }
+    html {
+      overflow: hidden;
+      height: 100%;
+      background: var(--docs-background);
+      font-synthesis: none;
+      text-size-adjust: 100%;
+    }
 
-  body {
-    position: relative;
+    body {
+      position: relative;
 
-    overflow: hidden;
+      overflow: hidden;
 
-    width: 100%;
-    min-width: 20rem;
-    height: 100%;
-    margin: 0;
-    padding: 0;
+      width: 100%;
+      min-width: 20rem;
+      height: 100%;
+      margin: 0;
+      padding: 0;
 
-    color: var(--docs-text-primary);
-    background-color: var(--docs-background);
-    font-family: var(--docs-font-sans);
-    font-feature-settings: 'kern';
-    font-kerning: normal;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-rendering: optimizelegibility;
-  }
+      color: var(--docs-text-primary);
+      background-color: var(--docs-background);
+      font-family: var(--docs-font-sans);
+      font-feature-settings: 'kern';
+      font-kerning: normal;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizelegibility;
+    }
 
-  button,
-  input,
-  textarea,
-  select {
-    font: inherit;
-  }
+    button,
+    input,
+    textarea,
+    select {
+      font: inherit;
+    }
 
-  button,
-  a {
-    -webkit-tap-highlight-color: transparent;
-  }
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
 
-  a {
-    color: inherit;
-  }
+    a {
+      color: inherit;
+    }
 
-  code,
-  kbd,
-  pre,
-  samp {
-    font-family: var(--docs-font-mono);
-  }
+    code,
+    kbd,
+    pre,
+    samp {
+      font-family: var(--docs-font-mono);
+    }
 
-  ::selection {
-    color: var(--docs-accent-contrast);
-    background: var(--docs-accent);
-  }
+    ::selection {
+      color: var(--docs-accent-contrast);
+      background: var(--docs-accent);
+    }
 
-  /* zero specificity so component rules like \`outline: none\` on editors win over the docs ring */
-  :where(:focus-visible) {
-    outline: 2px solid var(--docs-accent);
-    outline-offset: 3px;
+    /* zero specificity so component rules like \`outline: none\` on editors win over the docs ring */
+    :where(:focus-visible) {
+      outline: 2px solid var(--docs-accent);
+      outline-offset: 3px;
+    }
   }
 
 `;

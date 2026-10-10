@@ -4,9 +4,10 @@ import { ChevronDownIcon } from 'lucide-react';
 import { createContext, type CSSProperties, type ReactNode, use, useMemo } from 'react';
 
 import { DropdownMenu, type DropdownMenuProps } from '@/base-ui/DropdownMenu';
-import { createStaticStyles, cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 
-import Button from './Button';
+import { ButtonImpl } from './Button';
+import { splitStyles } from './style';
 import type { ButtonProps } from './type';
 
 interface SharedVisualProps {
@@ -25,74 +26,6 @@ interface SplitButtonProps extends SharedVisualProps {
 
 const SplitButtonContext = createContext<SharedVisualProps>({});
 
-const styles = createStaticStyles(({ css, cssVar }) => ({
-  interactionDisabled: css`
-    opacity: 0.5;
-
-    & > :where(button, a):disabled,
-    & > :where(button, a)[aria-disabled='true'] {
-      opacity: 1;
-    }
-  `,
-  solid: css`
-    /* solid halves share one color, so the outline-merging overlap only adds a dark seam once each half is translucent (disabled) */
-    & > :where(button, a):last-of-type {
-      margin-inline-start: 0;
-    }
-
-    & > :where(button, a):last-of-type::before {
-      pointer-events: none;
-      content: '';
-
-      position: absolute;
-      inset-block: 0;
-      inset-inline-start: 0;
-
-      width: 1px;
-
-      opacity: 0.2;
-      background: currentcolor;
-    }
-  `,
-  solidDanger: css`
-    &:has(> :where(button, a):hover:not(:disabled, [aria-disabled='true'])) > :where(button, a) {
-      border-color: ${cssVar.colorErrorHover};
-      background: ${cssVar.colorErrorHover};
-    }
-
-    &:has(> :where(button, a):active:not(:disabled, [aria-disabled='true'])) > :where(button, a) {
-      border-color: ${cssVar.colorErrorActive};
-      background: ${cssVar.colorErrorActive};
-    }
-  `,
-  solidPrimary: css`
-    &:has(> :where(button, a):hover:not(:disabled, [aria-disabled='true'])) > :where(button, a) {
-      border-color: ${cssVar.colorPrimaryHover};
-      background: ${cssVar.colorPrimaryHover};
-    }
-
-    &:has(> :where(button, a):active:not(:disabled, [aria-disabled='true'])) > :where(button, a) {
-      border-color: ${cssVar.colorPrimaryActive};
-      background: ${cssVar.colorPrimaryActive};
-    }
-  `,
-  splitButton: css`
-    display: inline-flex;
-    flex-direction: row;
-
-    & > :where(button, a):first-of-type {
-      border-start-end-radius: 0;
-      border-end-end-radius: 0;
-    }
-
-    & > :where(button, a):last-of-type {
-      margin-inline-start: -1px;
-      border-start-start-radius: 0;
-      border-end-start-radius: 0;
-    }
-  `,
-}));
-
 const SplitButton = ({
   children,
   className,
@@ -110,13 +43,14 @@ const SplitButton = ({
   return (
     <SplitButtonContext value={shared}>
       <div
-        style={style}
-        className={cx(
-          styles.splitButton,
-          type === 'primary' && styles.solid,
-          type === 'primary' && (danger ? styles.solidDanger : styles.solidPrimary),
-          (disabled || loading) && styles.interactionDisabled,
+        {...styleProps(
+          [
+            splitStyles.root,
+            type === 'primary' && (danger ? splitStyles.solidDanger : splitStyles.solidPrimary),
+            (disabled || loading) && splitStyles.interactionDisabled,
+          ],
           className,
+          style,
         )}
       >
         {children}
@@ -125,9 +59,29 @@ const SplitButton = ({
   );
 };
 
+const itemFill = ({ danger, ghost }: Pick<ButtonProps, 'danger' | 'ghost'>) => {
+  if (ghost) return splitStyles.itemFillGhost;
+  return danger ? splitStyles.itemFillDanger : splitStyles.itemFillPrimary;
+};
+
+const itemStyle = (
+  shared: SharedVisualProps,
+  item: Pick<ButtonProps, 'danger' | 'ghost' | 'type'>,
+) => {
+  const solid = shared.type === 'primary';
+  return [
+    splitStyles.item,
+    (shared.disabled || shared.loading) && splitStyles.itemInteractionDisabled,
+    solid && splitStyles.itemSolid,
+    solid &&
+      (item.type ?? shared.type) === 'primary' &&
+      itemFill({ danger: item.danger ?? shared.danger, ghost: item.ghost }),
+  ];
+};
+
 const SplitButtonMain = (props: ButtonProps) => {
   const shared = use(SplitButtonContext);
-  return <Button {...shared} {...props} />;
+  return <ButtonImpl {...shared} {...props} xstyle={itemStyle(shared, props)} />;
 };
 
 interface SplitButtonMenuProps extends Omit<DropdownMenuProps, 'children'> {
@@ -144,7 +98,12 @@ const SplitButtonMenu = ({
 
   return (
     <DropdownMenu {...menuProps} disabled={interactionDisabled}>
-      <Button {...shared} disabled={interactionDisabled} icon={icon} />
+      <ButtonImpl
+        {...shared}
+        disabled={interactionDisabled}
+        icon={icon}
+        xstyle={itemStyle(shared, {})}
+      />
     </DropdownMenu>
   );
 };

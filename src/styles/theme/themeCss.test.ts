@@ -51,4 +51,11 @@ describe('getThemeCss', () => {
     expect(getThemeCss()).not.toMatch(/^\s*(html|body|\*)\s*\{/m);
     expect(getGlobalCss()).toMatch(/^\s*body\s*\{/m);
   });
+
+  it('orders the lobe layers so components beat popup and base helpers', () => {
+    const order = '@layer lobe-base, lobe-popup, lobe-ui;';
+    expect(getThemeCss().startsWith(order)).toBe(true);
+    expect(getGlobalCss().startsWith(order)).toBe(true);
+    expect(getGlobalCss()).toMatch(/@layer lobe-base \{\n\s*:root/);
+  });
 });

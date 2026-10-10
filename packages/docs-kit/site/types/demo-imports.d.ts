@@ -22,6 +22,11 @@ declare module 'virtual:lobedocs/site-config' {
   export default siteConfig;
 }
 
+declare module 'virtual:lobedocs/stylex' {
+  export const stylexLinks: import('react-router').LinkDescriptor[];
+  export const loadStylexRuntime: () => unknown;
+}
+
 declare module 'virtual:lobedocs/home-page' {
   const HomePage: import('react').ComponentType<{
     description: string;

@@ -2,6 +2,7 @@
 
 import { mergeProps } from '@base-ui/react/merge-props';
 import { Tooltip as BaseTooltip } from '@base-ui/react/tooltip';
+import clsx from 'clsx';
 import {
   cloneElement,
   isValidElement,
@@ -18,7 +19,7 @@ import { useAppElement } from '@/ConfigProvider/AppElementContext';
 import { useFloatingLayer } from '@/hooks/useFloatingLayer';
 import { useIsClient } from '@/hooks/useIsClient';
 import { useNativeButton } from '@/hooks/useNativeButton';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 import { placementMap } from '@/utils/placement';
 
 import { TooltipArrowIcon } from './ArrowIcon';
@@ -53,7 +54,7 @@ export const TooltipStandalone = memo<TooltipProps>(
     openDelay,
     placement = 'top',
     popupContainer,
-    styles: styleProps,
+    styles: customStylesProp,
     zIndex,
     ref: refProp,
     positionerProps,
@@ -107,35 +108,30 @@ export const TooltipStandalone = memo<TooltipProps>(
       children,
     });
 
-    const resolvedClassNames = useMemo(
-      () => ({
-        arrow: cx(styles.arrow, classNames?.arrow),
-        popup: cx(styles.popup, className, classNames?.root, classNames?.container),
-        positioner: styles.positioner,
-        viewport: cx(styles.viewport, classNames?.content),
-      }),
-      [className, classNames?.arrow, classNames?.container, classNames?.content, classNames?.root],
-    );
-
-    const resolvedStyleProps = useMemo(() => {
-      if (typeof styleProps === 'function') return undefined;
-      return styleProps;
-    }, [styleProps]);
-
-    const resolvedStyles = useMemo(
-      () => ({
-        arrow: resolvedStyleProps?.arrow,
-        popup: {
-          ...resolvedStyleProps?.root,
-          ...resolvedStyleProps?.container,
-        },
-        positioner: {
-          zIndex: zIndex ?? 114_514,
-        },
-        viewport: resolvedStyleProps?.content,
-      }),
-      [resolvedStyleProps, zIndex],
-    );
+    const slots = useMemo(() => {
+      const customStyles = typeof customStylesProp === 'function' ? undefined : customStylesProp;
+      return {
+        arrow: styleProps(styles.arrow, classNames?.arrow, customStyles?.arrow),
+        popup: styleProps(styles.popup, clsx(className, classNames?.root, classNames?.container), {
+          ...customStyles?.root,
+          ...customStyles?.container,
+        }),
+        positioner: styleProps(styles.positioner, undefined, { zIndex: zIndex ?? 114_514 }),
+        viewport: styleProps(
+          styles.viewport,
+          clsx('lobe-tooltip-viewport', classNames?.content),
+          customStyles?.content,
+        ),
+      };
+    }, [
+      className,
+      classNames?.arrow,
+      classNames?.container,
+      classNames?.content,
+      classNames?.root,
+      customStylesProp,
+      zIndex,
+    ]);
 
     const triggerElement = useMemo(() => {
       const popupTriggerId =
@@ -217,28 +213,16 @@ export const TooltipStandalone = memo<TooltipProps>(
       () => (
         <BaseTooltip.Positioner
           align={placementConfig.align}
-          className={resolvedClassNames.positioner}
           data-placement={placement}
           side={placementConfig.side}
           sideOffset={baseSideOffset}
-          style={resolvedStyles.positioner}
+          {...slots.positioner}
           {...positionerProps}
           collisionPadding={positionerProps?.collisionPadding ?? getFloatingCollisionPadding()}
         >
-          <BaseTooltip.Popup
-            className={resolvedClassNames.popup}
-            style={resolvedStyles.popup}
-            {...popupProps}
-          >
-            {arrow && (
-              <BaseTooltip.Arrow className={resolvedClassNames.arrow} style={resolvedStyles.arrow}>
-                {TooltipArrowIcon}
-              </BaseTooltip.Arrow>
-            )}
-            <BaseTooltip.Viewport
-              className={resolvedClassNames.viewport}
-              style={resolvedStyles.viewport}
-            >
+          <BaseTooltip.Popup {...slots.popup} {...popupProps}>
+            {arrow && <BaseTooltip.Arrow {...slots.arrow}>{TooltipArrowIcon}</BaseTooltip.Arrow>}
+            <BaseTooltip.Viewport {...slots.viewport}>
               <TooltipContent hotkey={hotkey} hotkeyProps={hotkeyProps} title={title} />
             </BaseTooltip.Viewport>
           </BaseTooltip.Popup>
@@ -254,8 +238,7 @@ export const TooltipStandalone = memo<TooltipProps>(
         placementConfig.side,
         popupProps,
         positionerProps,
-        resolvedClassNames,
-        resolvedStyles,
+        slots,
         title,
       ],
     );

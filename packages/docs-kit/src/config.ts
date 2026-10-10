@@ -99,6 +99,7 @@ export interface DocsConfig {
   navSections?: Record<string, string>;
   publicDocs?: string[];
   siteUrl: string;
+  stylex?: Record<string, unknown> | string;
   themeConfig?: DocsThemeConfig;
   title: string;
 }

@@ -3,10 +3,12 @@
 import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 
+import stylex from '@stylexjs/unplugin/vite';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { createServer, type ViteDevServer } from 'vite';
 
+import { stylexOptions } from '../../../../../config/stylex';
 import { lobeDocsSiteConfigPlugin } from '../vitePlugin';
 import { createContentManifest } from './createManifest';
 import { defaultAtomDirs } from './discoverDocuments';
@@ -75,7 +77,7 @@ it('renders the realistic CHANGELOG.md fallback content for a fixture consumer w
   server = await createServer({
     configFile: false,
     logLevel: 'silent',
-    plugins: [lobeDocsSiteConfigPlugin(root), createMdxPlugin()],
+    plugins: [stylex(stylexOptions), lobeDocsSiteConfigPlugin(root), createMdxPlugin()],
     resolve: {
       alias: [
         {

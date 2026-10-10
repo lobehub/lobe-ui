@@ -1,366 +1,197 @@
-import { createStaticStyles } from '@/styles';
+import './style.css';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  arrow: css`
-    --lobe-tooltip-arrow-offset-block: 4px;
-    --lobe-tooltip-arrow-offset-inline: 6px;
+import * as stylex from '@stylexjs/stylex';
 
-    pointer-events: none;
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-    position: absolute;
-    transform-origin: center;
+const reducedMotion = '@media (prefers-reduced-motion: reduce)';
+const layoutAnimation = ':is([data-layout-animation])';
+const instant = ':is([data-instant])';
+const instantOrRepop = ':is([data-instant], [data-repop])';
+const popupLayoutTiming =
+  ':is([data-layout-animation]):not([data-repop], [data-ending-style], [data-instant])';
+const popupLayoutProperty = ':is([data-layout-animation]):not([data-repop], [data-instant])';
+const popupRepopTiming = ':is([data-repop]):not([data-ending-style], [data-instant])';
+const popupEndingTiming = ':is([data-ending-style]):not([data-instant])';
+const positionerLayout = ':is([data-layout-animation]):not([data-instant], [data-repop])';
+const startingOrEnding = ':is([data-starting-style], [data-ending-style])';
+const anchorHidden = ":is([data-anchor-hidden], [data-zero-origin='true'])";
+const placementTop =
+  ":is([data-placement='top'], [data-placement='topLeft'], [data-placement='topRight'])";
+const placementLeft =
+  ":is([data-placement='left'], [data-placement='leftTop'], [data-placement='leftBottom'])";
+const placementRight =
+  ":is([data-placement='right'], [data-placement='rightTop'], [data-placement='rightBottom'])";
 
-    display: flex;
+const springEnter =
+  'linear(0, 0.041, 0.14, 0.268, 0.407, 0.541, 0.662, 0.765, 0.849, 0.915, 0.964, 0.998, 1.02, 1.032, 1.038, 1.039, 1.036, 1.032, 1.027, 1.022, 1.016, 1.012, 1.008, 1.005, 1.003)';
+const springGlide =
+  'linear(0, 0.041, 0.14, 0.268, 0.407, 0.541, 0.661, 0.765, 0.849, 0.915, 0.964, 0.998, 1.02, 1.032, 1.038, 1.039, 1.036, 1.032, 1.027, 1.022, 1.016, 1.012, 1.008, 1.005, 1.003)';
 
-    width: 8px;
-    height: 4px;
+export const styles = stylex.create({
+  arrow: {
+    '--lobe-tooltip-arrow-offset-block': '4px',
+    '--lobe-tooltip-arrow-offset-inline': '6px',
+    'transition':
+      'inset-inline-start var(--lobe-tooltip-layout-duration) var(--lobe-tooltip-layout-ease), inset-block-start var(--lobe-tooltip-layout-duration) var(--lobe-tooltip-layout-ease)',
+    'display': 'flex',
+    'insetBlockEnd': {
+      'default': null,
+      ":is([data-side='top'])": 'calc(var(--lobe-tooltip-arrow-offset-block) * -1)',
+    },
+    'insetBlockStart': {
+      'default': null,
+      ":is([data-side='bottom'])": 'calc(var(--lobe-tooltip-arrow-offset-block) * -1)',
+    },
+    'insetInlineEnd': {
+      'default': null,
+      ":is([data-side='left'])": 'calc(var(--lobe-tooltip-arrow-offset-inline) * -1)',
+    },
+    'insetInlineStart': {
+      'default': null,
+      ":is([data-side='right'])": 'calc(var(--lobe-tooltip-arrow-offset-inline) * -1)',
+    },
+    'pointerEvents': 'none',
+    'position': 'absolute',
+    'transform': {
+      'default': null,
+      ":is([data-side='left'])": 'rotate(90deg)',
+      ":is([data-side='right'])": 'rotate(-90deg)',
+      ":is([data-side='top'])": 'rotate(180deg)',
+    },
+    'transformOrigin': 'center',
+    'height': 4,
+    'width': 8,
+  },
+  arrowStroke: {
+    stroke: cssVar.colorBorderSecondary,
+  },
+  arrowSvg: {
+    fill: cssVar.colorBgElevated,
+    display: 'block',
+    height: '100%',
+    width: '100%',
+  },
 
-    transition:
-      inset-inline-start var(--lobe-tooltip-layout-duration) var(--lobe-tooltip-layout-ease),
-      inset-block-start var(--lobe-tooltip-layout-duration) var(--lobe-tooltip-layout-ease);
-
-    & > svg {
-      display: block;
-      width: 100%;
-      height: 100%;
-      fill: ${cssVar.colorBgElevated};
-    }
-
-    & [data-role='stroke'] {
-      stroke: ${cssVar.colorBorderSecondary};
-    }
-
-    &[data-side='top'] {
-      inset-block-end: calc(var(--lobe-tooltip-arrow-offset-block) * -1);
-      transform: rotate(180deg);
-    }
-
-    &[data-side='left'] {
-      inset-inline-end: calc(var(--lobe-tooltip-arrow-offset-inline) * -1);
-      transform: rotate(90deg);
-    }
-
-    &[data-side='right'] {
-      inset-inline-start: calc(var(--lobe-tooltip-arrow-offset-inline) * -1);
-      transform: rotate(-90deg);
-    }
-
-    &[data-side='bottom'] {
-      inset-block-start: calc(var(--lobe-tooltip-arrow-offset-block) * -1);
-    }
-  `,
-
-  popup: css`
+  popup: {
+    borderRadius: cssVar.borderRadiusSM,
+    backgroundColor: cssVar.colorBgElevated,
+    boxShadow: `${cssVar.boxShadowTertiary}, var(--lobe-ring)`,
+    boxSizing: 'border-box',
+    color: cssVar.colorTextLabel,
+    fontSize: cssVar.fontSizeSM,
+    lineHeight: 1.2,
+    opacity: { default: null, [startingOrEnding]: 0 },
+    position: 'relative',
+    transform: {
+      default: null,
+      [startingOrEnding]:
+        'translate3d(var(--lobe-tooltip-translate-x), var(--lobe-tooltip-translate-y), 0) scale(var(--lobe-tooltip-animation-scale))',
+    },
+    transformOrigin: 'var(--transform-origin)',
+    /* `transition: none` is spelled out as longhands because StyleX layers longhands above
+       shorthands. StyleX does not keep condition order, so the old cascade
+       (layout < repop < ending-style < instant) is encoded with :not() guards. */
+    transitionDuration: {
+      default: 'var(--lobe-tooltip-fade-duration), var(--lobe-tooltip-animation-duration)',
+      [instant]: '0s',
+      [popupEndingTiming]: 'var(--lobe-tooltip-animation-duration-exit)',
+      [popupLayoutTiming]:
+        'var(--lobe-tooltip-fade-duration), var(--lobe-tooltip-animation-duration), var(--lobe-tooltip-layout-duration), var(--lobe-tooltip-layout-duration)',
+      [popupRepopTiming]: '0s',
+    },
+    transitionProperty: {
+      default: 'opacity, transform',
+      [instantOrRepop]: 'none',
+      [popupLayoutProperty]: 'opacity, transform, width, height',
+    },
+    /* Opacity gets its own monotonic curve: running it on the overshooting spring makes the
+       fade look finished at ~0.96, pause, then visibly step to 1 at the clamp point — reads
+       as a dropped frame. The spring stays on transform only. */
+    transitionTimingFunction: {
+      default: 'var(--lobe-tooltip-fade-ease), var(--lobe-tooltip-animation-ease-out)',
+      [instant]: 'ease',
+      [popupEndingTiming]: 'var(--lobe-tooltip-animation-ease-in)',
+      [popupLayoutTiming]:
+        'var(--lobe-tooltip-fade-ease), var(--lobe-tooltip-animation-ease-out), var(--lobe-tooltip-layout-ease), var(--lobe-tooltip-layout-ease)',
+      [popupRepopTiming]: 'ease',
+    },
+    userSelect: 'none',
     /* Keep the popup on its own compositor layer for its whole lifetime: when the opacity
        transition ends the browser otherwise drops the layer and re-rasterizes with pixel
        snapping — a visible one-frame shift when the measured width is fractional
        (single-line tooltips). */
-    will-change: transform, opacity;
-    user-select: none;
-
-    position: relative;
-    transform-origin: var(--transform-origin);
-
-    box-sizing: border-box;
-
+    willChange: 'transform, opacity',
+    height: { default: null, [layoutAnimation]: 'var(--popup-height, auto)' },
     /* The 320px cap lives on the viewport, not here: Base UI measures content with
        --available-width set to max-content, and min(320px, max-content) is invalid, which
        recorded unclamped sizes. A percentage cap is out too — it tracks the positioner, which
        snaps to the new size and would freeze the shrink half of the morph. */
-    max-width: var(--available-width);
-    border-radius: ${cssVar.borderRadiusSM};
-
-    font-size: ${cssVar.fontSizeSM};
-    line-height: 1.2;
-    color: ${cssVar.colorTextLabel};
-
-    background: ${cssVar.colorBgElevated};
-    box-shadow: ${cssVar.boxShadowTertiary}, var(--lobe-ring);
-
-    /* Opacity gets its own monotonic curve: running it on the overshooting spring makes the
-       fade look finished at ~0.96, pause, then visibly step to 1 at the clamp point — reads
-       as a dropped frame. The spring stays on transform only. */
-    transition-timing-function:
-      var(--lobe-tooltip-fade-ease), var(--lobe-tooltip-animation-ease-out);
-    transition-duration: var(--lobe-tooltip-fade-duration), var(--lobe-tooltip-animation-duration);
-    transition-property: opacity, transform;
-
+    maxWidth: 'var(--available-width)',
     /* Base UI writes the old size into --popup-width/height on a trigger switch and the new size
        one frame later; the box only morphs if width/height actually read them. */
-    &[data-layout-animation] {
-      width: var(--popup-width, auto);
-      height: var(--popup-height, auto);
+    width: { default: null, [layoutAnimation]: 'var(--popup-width, auto)' },
+  },
 
-      transition-timing-function:
-        var(--lobe-tooltip-fade-ease), var(--lobe-tooltip-animation-ease-out),
-        var(--lobe-tooltip-layout-ease), var(--lobe-tooltip-layout-ease);
-      transition-duration:
-        var(--lobe-tooltip-fade-duration), var(--lobe-tooltip-animation-duration),
-        var(--lobe-tooltip-layout-duration), var(--lobe-tooltip-layout-duration);
-      transition-property: opacity, transform, width, height;
-    }
-
-    &[data-repop] {
-      transition: none;
-    }
-
-    &[data-starting-style],
-    &[data-ending-style] {
-      transform: translate3d(var(--lobe-tooltip-translate-x), var(--lobe-tooltip-translate-y), 0)
-        scale(var(--lobe-tooltip-animation-scale));
-      opacity: 0;
-    }
-
-    &[data-ending-style] {
-      transition-timing-function: var(--lobe-tooltip-animation-ease-in);
-      transition-duration: var(--lobe-tooltip-animation-duration-exit);
-    }
-
-    &[data-instant] {
-      transition: none;
-    }
-  `,
-
-  positioner: css`
+  positioner: {
     /* Springs baked as linear(): stiffness 700 / damping 38 (enter) and 380 / 28 (glide),
        both zeta ~0.72 with ~4% overshoot. Durations are the springs' settle times —
        change them together with the curves, not independently. */
-    --lobe-tooltip-animation-duration: 280ms;
-    --lobe-tooltip-fade-duration: 160ms;
-    --lobe-tooltip-fade-ease: cubic-bezier(0.33, 1, 0.68, 1);
-    --lobe-tooltip-animation-duration-exit: 100ms;
-    --lobe-tooltip-animation-translate: 3px;
-    --lobe-tooltip-animation-scale: 0.97;
-    --lobe-tooltip-animation-ease-in: cubic-bezier(0.4, 0, 1, 1);
-    --lobe-tooltip-animation-ease-out: linear(
-      0,
-      0.041,
-      0.14,
-      0.268,
-      0.407,
-      0.541,
-      0.662,
-      0.765,
-      0.849,
-      0.915,
-      0.964,
-      0.998,
-      1.02,
-      1.032,
-      1.038,
-      1.039,
-      1.036,
-      1.032,
-      1.027,
-      1.022,
-      1.016,
-      1.012,
-      1.008,
-      1.005,
-      1.003
-    );
-    --lobe-tooltip-layout-duration: 380ms;
-    --lobe-tooltip-layout-ease: linear(
-      0,
-      0.041,
-      0.14,
-      0.268,
-      0.407,
-      0.541,
-      0.661,
-      0.765,
-      0.849,
-      0.915,
-      0.964,
-      0.998,
-      1.02,
-      1.032,
-      1.038,
-      1.039,
-      1.036,
-      1.032,
-      1.027,
-      1.022,
-      1.016,
-      1.012,
-      1.008,
-      1.005,
-      1.003
-    );
-    --lobe-tooltip-translate-x: 0;
-    --lobe-tooltip-translate-y: calc(var(--lobe-tooltip-animation-translate) * -1);
+    '--lobe-tooltip-animation-duration': { default: '280ms', [reducedMotion]: '0s' },
+    '--lobe-tooltip-animation-duration-exit': { default: '100ms', [reducedMotion]: '0s' },
+    '--lobe-tooltip-animation-ease-in': 'cubic-bezier(0.4, 0, 1, 1)',
+    '--lobe-tooltip-animation-ease-out': springEnter,
+    '--lobe-tooltip-animation-scale': '0.97',
+    '--lobe-tooltip-animation-translate': '3px',
+    '--lobe-tooltip-fade-duration': { default: '160ms', [reducedMotion]: '0s' },
+    '--lobe-tooltip-fade-ease': 'cubic-bezier(0.33, 1, 0.68, 1)',
+    '--lobe-tooltip-layout-duration': { default: '380ms', [reducedMotion]: '0s' },
+    '--lobe-tooltip-layout-ease': springGlide,
+    '--lobe-tooltip-translate-x': {
+      default: '0',
+      [placementLeft]: 'var(--lobe-tooltip-animation-translate)',
+      [placementRight]: 'calc(var(--lobe-tooltip-animation-translate) * -1)',
+    },
+    '--lobe-tooltip-translate-y': {
+      default: 'calc(var(--lobe-tooltip-animation-translate) * -1)',
+      [placementLeft]: '0',
+      [placementRight]: '0',
+      [placementTop]: 'var(--lobe-tooltip-animation-translate)',
+    },
+    /* Never show a tooltip when the anchor is hidden or the positioner falls back to (0,0). */
+    'pointerEvents': { [anchorHidden]: 'none', default: null },
+    'transitionDuration': {
+      default: 'var(--lobe-tooltip-animation-duration)',
+      [instantOrRepop]: '0s',
+      [positionerLayout]: 'var(--lobe-tooltip-layout-duration)',
+    },
+    'transitionProperty': {
+      default: 'none',
+      [positionerLayout]:
+        'inset-block-start, inset-inline-start, inset-inline-end, inset-block-end, transform',
+    },
+    'transitionTimingFunction': {
+      default: 'var(--lobe-tooltip-animation-ease-out)',
+      [instantOrRepop]: 'ease',
+      [positionerLayout]: 'var(--lobe-tooltip-layout-ease)',
+    },
+    'visibility': { [anchorHidden]: 'hidden', default: null },
+    'willChange': 'transform, opacity',
+    'zIndex': 114_514,
+    'height': 'var(--positioner-height)',
+    'width': 'min(var(--positioner-width), 320px, var(--available-width))',
+  },
 
-    will-change: transform, opacity;
-
-    z-index: 114514;
-
-    width: min(var(--positioner-width), 320px, var(--available-width));
-    height: var(--positioner-height);
-
-    transition-timing-function: var(--lobe-tooltip-animation-ease-out);
-    transition-duration: var(--lobe-tooltip-animation-duration);
-    transition-property: none;
-
-    &[data-layout-animation] {
-      transition-timing-function: var(--lobe-tooltip-layout-ease);
-      transition-duration: var(--lobe-tooltip-layout-duration);
-      transition-property:
-        inset-block-start, inset-inline-start, inset-inline-end, inset-block-end, transform;
-    }
-
-    &[data-instant],
-    &[data-repop] {
-      transition: none;
-    }
-
-    /* Fallback: never show a tooltip when the anchor is hidden or the positioner falls back to (0,0). */
-    &[data-anchor-hidden],
-    &[data-zero-origin='true'] {
-      pointer-events: none;
-      visibility: hidden;
-    }
-
-    &[data-placement='top'],
-    &[data-placement='topLeft'],
-    &[data-placement='topRight'] {
-      --lobe-tooltip-translate-x: 0;
-      --lobe-tooltip-translate-y: var(--lobe-tooltip-animation-translate);
-    }
-
-    &[data-placement='bottom'],
-    &[data-placement='bottomLeft'],
-    &[data-placement='bottomRight'] {
-      --lobe-tooltip-translate-x: 0;
-      --lobe-tooltip-translate-y: calc(var(--lobe-tooltip-animation-translate) * -1);
-    }
-
-    &[data-placement='left'],
-    &[data-placement='leftTop'],
-    &[data-placement='leftBottom'] {
-      --lobe-tooltip-translate-x: var(--lobe-tooltip-animation-translate);
-      --lobe-tooltip-translate-y: 0;
-    }
-
-    &[data-placement='right'],
-    &[data-placement='rightTop'],
-    &[data-placement='rightBottom'] {
-      --lobe-tooltip-translate-x: calc(var(--lobe-tooltip-animation-translate) * -1);
-      --lobe-tooltip-translate-y: 0;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      --lobe-tooltip-animation-duration: 0s;
-      --lobe-tooltip-fade-duration: 0s;
-      --lobe-tooltip-animation-duration-exit: 0s;
-      --lobe-tooltip-layout-duration: 0s;
-    }
-  `,
-
-  viewport: css`
-    --lobe-tooltip-viewport-inline-padding: 8px;
-    --lobe-tooltip-content-shift: 8px;
-    --lobe-tooltip-content-blur: 4px;
-
-    position: relative;
-
-    overflow: clip;
-
-    max-width: calc(320px - 2px);
-    padding-block: 4px;
-    padding-inline: var(--lobe-tooltip-viewport-inline-padding);
-
-    overflow-wrap: break-word;
-    white-space: normal;
-
-    /* Old and new text overlap in one clip box while the box morphs; blurring both layers during
-       the crossfade turns the misaligned overlap into a soft smear instead of garbled text. */
-    [data-previous],
-    [data-current] {
-      transform: translateX(0);
-
-      display: flex;
-      gap: 6px;
-      align-items: center;
-
-      opacity: 1;
-      filter: blur(0);
-
-      transition:
-        transform var(--lobe-tooltip-layout-duration) var(--lobe-tooltip-layout-ease),
-        opacity calc(var(--lobe-tooltip-layout-duration) / 2) var(--lobe-tooltip-fade-ease),
-        filter calc(var(--lobe-tooltip-layout-duration) / 2) var(--lobe-tooltip-fade-ease);
-    }
-
-    [data-current] {
-      transition-delay:
-        0s, calc(var(--lobe-tooltip-layout-duration) / 6),
-        calc(var(--lobe-tooltip-layout-duration) / 6);
-    }
-
-    [data-previous][data-ending-style],
-    [data-current][data-starting-style] {
-      filter: blur(var(--lobe-tooltip-content-blur));
-    }
-
-    /* Freeze both layers at their own final width so neither re-wraps while the box morphs;
-       the viewport clip reveals the new text as the box grows over it. */
-    [data-previous] {
-      position: absolute;
-      inset-block-start: 4px;
-      inset-inline-start: var(--lobe-tooltip-viewport-inline-padding);
-      width: calc(var(--popup-width) - var(--lobe-tooltip-viewport-inline-padding) * 2);
-    }
-
-    &[data-transitioning] [data-current] {
-      width: calc(var(--positioner-width) - var(--lobe-tooltip-viewport-inline-padding) * 2);
-    }
-
-    &[data-repop] [data-previous] {
-      display: none;
-    }
-
-    &[data-repop] [data-current] {
-      transition: none;
-    }
-
-    &[data-activation-direction~='right'] [data-previous][data-ending-style] {
-      transform: translateX(calc(var(--lobe-tooltip-content-shift) * -1));
-      opacity: 0;
-    }
-
-    &[data-activation-direction~='right'] [data-current][data-starting-style] {
-      transform: translateX(var(--lobe-tooltip-content-shift));
-      opacity: 0;
-    }
-
-    &[data-activation-direction~='left'] [data-previous][data-ending-style] {
-      transform: translateX(var(--lobe-tooltip-content-shift));
-      opacity: 0;
-    }
-
-    &[data-activation-direction~='left'] [data-current][data-starting-style] {
-      transform: translateX(calc(var(--lobe-tooltip-content-shift) * -1));
-      opacity: 0;
-    }
-
-    &[data-activation-direction~='down'] [data-previous][data-ending-style] {
-      transform: translateY(calc(var(--lobe-tooltip-content-shift) * -1));
-      opacity: 0;
-    }
-
-    &[data-activation-direction~='down'] [data-current][data-starting-style] {
-      transform: translateY(var(--lobe-tooltip-content-shift));
-      opacity: 0;
-    }
-
-    &[data-activation-direction~='up'] [data-previous][data-ending-style] {
-      transform: translateY(var(--lobe-tooltip-content-shift));
-      opacity: 0;
-    }
-
-    &[data-activation-direction~='up'] [data-current][data-starting-style] {
-      transform: translateY(calc(var(--lobe-tooltip-content-shift) * -1));
-      opacity: 0;
-    }
-  `,
-}));
+  viewport: {
+    '--lobe-tooltip-content-blur': '4px',
+    '--lobe-tooltip-content-shift': '8px',
+    '--lobe-tooltip-viewport-inline-padding': '8px',
+    'overflow': 'clip',
+    'paddingBlock': 4,
+    'paddingInline': 'var(--lobe-tooltip-viewport-inline-padding)',
+    'overflowWrap': 'break-word',
+    'position': 'relative',
+    'whiteSpace': 'normal',
+    'maxWidth': 'calc(320px - 2px)',
+  },
+});

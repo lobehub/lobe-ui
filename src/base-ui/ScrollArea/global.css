@@ -1,0 +1,14 @@
+@layer lobe-ui {
+  /* registered so the scroll-driven fade interpolates instead of snapping at the edges */
+  @property --lobe-scroll-area-fade-top {
+    inherits: true;
+    initial-value: 0;
+    syntax: '<length>';
+  }
+
+  @property --lobe-scroll-area-fade-bottom {
+    inherits: true;
+    initial-value: 0;
+    syntax: '<length>';
+  }
+}

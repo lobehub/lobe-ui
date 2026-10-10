@@ -1,6 +1,6 @@
 import { camelCase } from 'es-toolkit/compat';
 
-import { cssVar } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
 export const presetColors = [
   'red',

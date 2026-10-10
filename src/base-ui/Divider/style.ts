@@ -1,55 +1,69 @@
-import { createStaticStyles } from '@/styles';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  dashed: css`
-    border-style: dashed;
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-    &::before,
-    &::after {
-      border-block-start-style: dashed;
-    }
-  `,
-  horizontal: css`
-    flex-shrink: 0;
-
-    width: 100%;
-    height: 0;
-    margin: 0;
-    border: 0;
-    border-block-start: 1px solid ${cssVar.colorBorderSecondary};
-  `,
-  text: css`
-    flex: none;
-    font-size: 12px;
-    line-height: 1.5;
-    color: ${cssVar.colorTextDescription};
-  `,
-  vertical: css`
-    display: inline-block;
-    flex-shrink: 0;
-    align-self: center;
-
-    width: 0;
-    height: 1em;
-    margin: 0;
-    border: 0;
-    border-inline-start: 1px solid ${cssVar.colorBorderSecondary};
-
-    vertical-align: middle;
-  `,
-  withText: css`
-    display: flex;
-    gap: 12px;
-    align-items: center;
-
-    width: 100%;
-    margin: 0;
-
-    &::before,
-    &::after {
-      content: '';
-      flex: 1;
-      border-block-start: 1px solid ${cssVar.colorBorderSecondary};
-    }
-  `,
-}));
+export const styles = stylex.create({
+  dashed: {
+    'borderStyle': 'dashed',
+    'borderBlockStartStyle': 'dashed',
+    'borderInlineStartStyle': 'dashed',
+    '::after': {
+      borderBlockStartStyle: 'dashed',
+    },
+    '::before': {
+      borderBlockStartStyle: 'dashed',
+    },
+  },
+  horizontal: {
+    margin: 0,
+    borderStyle: 'none',
+    borderWidth: 0,
+    borderBlockStartColor: cssVar.colorBorderSecondary,
+    borderBlockStartStyle: 'solid',
+    borderBlockStartWidth: 1,
+    flexShrink: 0,
+    height: 0,
+    width: '100%',
+  },
+  text: {
+    flex: 'none',
+    color: cssVar.colorTextDescription,
+    fontSize: 12,
+    lineHeight: 1.5,
+  },
+  vertical: {
+    margin: 0,
+    borderStyle: 'none',
+    borderWidth: 0,
+    alignSelf: 'center',
+    borderInlineStartColor: cssVar.colorBorderSecondary,
+    borderInlineStartStyle: 'solid',
+    borderInlineStartWidth: 1,
+    display: 'inline-block',
+    flexShrink: 0,
+    verticalAlign: 'middle',
+    height: '1em',
+    width: 0,
+  },
+  withText: {
+    'margin': 0,
+    'gap': 12,
+    'alignItems': 'center',
+    'display': 'flex',
+    'width': '100%',
+    '::after': {
+      flex: '1',
+      borderBlockStartColor: cssVar.colorBorderSecondary,
+      borderBlockStartStyle: 'solid',
+      borderBlockStartWidth: 1,
+      content: "''",
+    },
+    '::before': {
+      flex: '1',
+      borderBlockStartColor: cssVar.colorBorderSecondary,
+      borderBlockStartStyle: 'solid',
+      borderBlockStartWidth: 1,
+      content: "''",
+    },
+  },
+});

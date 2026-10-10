@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { motion } from 'motion/react';
 
 import ConfigProvider from '@/ConfigProvider';
+import { cssVar } from '@/styles';
 
 import SplitButton from '../SplitButton';
 
@@ -30,5 +31,23 @@ describe('SplitButton', () => {
 
     expect(handleOpenChange).not.toHaveBeenCalled();
     expect(screen.queryByRole('menu')).toBeNull();
+  });
+
+  test.each([
+    [{ danger: true }, cssVar.colorError],
+    [{ ghost: true }, 'transparent'],
+  ])('a primary group item with %o keeps its own resting fill', (itemProps, expected) => {
+    render(
+      <ConfigProvider motion={motion}>
+        <SplitButton type={'primary'}>
+          <SplitButton.Main {...itemProps}>Save</SplitButton.Main>
+          <SplitButton.Menu items={[{ key: 'download', label: 'Download' }]} />
+        </SplitButton>
+      </ConfigProvider>,
+    );
+
+    const fill = getComputedStyle(screen.getByRole('button', { name: 'Save' })).backgroundColor;
+
+    expect(fill.replaceAll(' ', '')).toBe(`var(--lobe-split-button-fill,${expected})`);
   });
 });

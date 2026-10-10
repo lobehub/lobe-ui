@@ -1,0 +1,10 @@
+@layer lobe-ui {
+  .lobe-switch {
+    --switch-dir: 1;
+  }
+
+  .lobe-switch:dir(rtl),
+  [dir='rtl'] .lobe-switch {
+    --switch-dir: -1;
+  }
+}

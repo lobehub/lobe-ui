@@ -122,7 +122,7 @@ const essentialCss = `@layer lobe-ui {
   }
 }`;
 
-const globalCss = `@layer lobe-ui {
+const globalCss = `@layer lobe-base {
   :root {
     --font-settings: 'cv01', 'tnum', 'kern';
     --font-variations: 'opsz' auto, tabular-nums;
@@ -199,10 +199,13 @@ const globalCss = `@layer lobe-ui {
   }
 }`;
 
+const layerOrder = '@layer lobe-base, lobe-popup, lobe-ui;';
+
 let cached: string | undefined;
 
 export const getThemeCss = () =>
   (cached ??= [
+    layerOrder,
     appearanceRule(":root, [data-theme='light']", 'light'),
     appearanceRule("[data-theme='dark']", 'dark'),
     ...colorRules('light'),
@@ -210,4 +213,4 @@ export const getThemeCss = () =>
     essentialCss,
   ].join('\n\n'));
 
-export const getGlobalCss = () => globalCss;
+export const getGlobalCss = () => `${layerOrder}\n\n${globalCss}`;

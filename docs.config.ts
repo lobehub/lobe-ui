@@ -21,6 +21,7 @@ export default defineDocsConfig({
   homePage: './docs/home/home.tsx',
   legacyRedirects,
   siteUrl: 'https://ui.lobehub.com',
+  stylex: './config/stylex.ts',
   themeConfig: {
     analytics: {
       plausible: {

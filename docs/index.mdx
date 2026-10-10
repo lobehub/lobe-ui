@@ -14,6 +14,9 @@ pnpm add @lobehub/ui
 
 ```tsx | pure
 import '@lobehub/ui/theme.css';
+import '@lobehub/ui/style.css';
+// optional document resets (body font, background, scrollbars)
+import '@lobehub/ui/global.css';
 
 import { Button, ConfigProvider, I18nProvider } from '@lobehub/ui';
 import allResources from '@lobehub/ui/i18n/resources/all';
@@ -27,6 +30,28 @@ export default () => (
   </I18nProvider>
 );
 ```
+
+Lobe UI CSS is emitted inside the `lobe-base`, `lobe-popup` and `lobe-ui` cascade layers, so unlayered CSS always wins over it. Put global resets (`button { font: inherit }`, normalize.css, ...) in a layer declared before them:
+
+```css
+@layer reset, lobe-base, lobe-popup, lobe-ui;
+
+@layer reset {
+  button {
+    font: inherit;
+  }
+}
+```
+
+This `@layer` statement must be the first CSS your app loads, before `theme.css` and `style.css`: the first declaration of a layer fixes its order and later order statements are ignored.
+
+With Tailwind v4, use one merged statement as the very first CSS, before `@import 'tailwindcss'`, `theme.css` and `style.css`:
+
+```css
+@layer theme, base, lobe-base, lobe-popup, lobe-ui, components, utilities;
+```
+
+The lobe layers sit after Tailwind's `base` (preflight), so preflight loses to Lobe UI, and before `components` / `utilities`, so Tailwind utilities still beat Lobe UI. These layering guarantees cover components already migrated to StyleX; the remaining components still inject runtime styles until the migration completes.
 
 The components are based on [Ant Design](https://ant.design/components/overview) and are fully compatible with its component APIs. [antd-style](https://ant-design.github.io/antd-style) is the recommended CSS-in-JS styling solution.
 

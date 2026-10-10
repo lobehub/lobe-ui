@@ -1,14 +1,16 @@
 import { fileURLToPath } from 'node:url';
 
+import stylex from '@stylexjs/unplugin/vite';
 import { defineConfig } from 'vitest/config';
 
+import { stylexOptions } from './config/stylex';
 import { name } from './package.json';
 import { lobeDocsSiteConfigPlugin } from './packages/docs-kit/site/compiler/vitePlugin';
 
 const srcPath = fileURLToPath(new URL('./src', import.meta.url));
 
 export default defineConfig({
-  plugins: [lobeDocsSiteConfigPlugin()],
+  plugins: [stylex({ ...stylexOptions, runtimeInjection: true }), lobeDocsSiteConfigPlugin()],
   resolve: {
     alias: [
       { find: '@', replacement: srcPath },

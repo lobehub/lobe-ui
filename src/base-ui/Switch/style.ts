@@ -1,219 +1,115 @@
-import { cva } from 'class-variance-authority';
+import * as stylex from '@stylexjs/stylex';
 
-import { focusRing } from '@/base-ui/focusRing';
-import { createStaticStyles } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  icon: css`
-    pointer-events: none;
+import { switchMarker } from './marker.stylex';
 
-    position: absolute;
-    inset-block: 0;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    color: ${cssVar.colorBgLayout};
-
-    transition:
-      opacity 200ms ${cssVar.motionEaseOut},
-      scale 200ms ${cssVar.motionEaseOut};
-
-    @media (prefers-reduced-motion: reduce) {
-      transition-duration: 0s;
-    }
-  `,
-  iconLeft: css`
-    inset-inline-start: 4px;
-    scale: 0;
-    opacity: 0;
-
-    [data-checked] & {
-      scale: 1;
-      opacity: 1;
-    }
-  `,
-  iconLeftSmall: css`
-    inset-inline-start: 4px;
-    scale: 0;
-    opacity: 0;
-
-    [data-checked] & {
-      scale: 1;
-      opacity: 1;
-    }
-  `,
-  iconRight: css`
-    inset-inline-end: 4px;
-
-    [data-checked] & {
-      scale: 0;
-      opacity: 0;
-    }
-  `,
-  iconRightSmall: css`
-    inset-inline-end: 4px;
-
-    [data-checked] & {
-      scale: 0;
-      opacity: 0;
-    }
-  `,
-  iconThumb: css`
-    position: relative;
-    inset: unset;
-    transform: none;
-    color: ${cssVar.colorPrimary};
-  `,
-  loading: css`
-    @keyframes lobe-switch-loading {
-      0% {
-        transform: rotate(0deg);
-      }
-
-      100% {
-        transform: rotate(360deg);
-      }
-    }
-
-    animation: lobe-switch-loading 1s linear infinite;
-
-    @media (prefers-reduced-motion: reduce) {
-      animation-duration: 0s;
-    }
-  `,
-  root: css`
-    --switch-dir: 1;
-
-    cursor: pointer;
-    user-select: none;
-
-    position: relative;
-
-    overflow: hidden;
-    display: inline-flex;
-    align-items: center;
-    justify-content: flex-start;
-
-    box-sizing: border-box;
-    padding: 2px;
-    border: 0;
-    border-radius: 100px;
-
-    background: ${cssVar.colorFillSecondary};
-    outline: none;
-    box-shadow: inset 0 1.5px 2px rgb(0 0 0 / 8%);
-
-    transition:
-      background 200ms ${cssVar.motionEaseOut},
-      box-shadow 200ms ${cssVar.motionEaseOut};
-
-    &:dir(rtl) {
-      --switch-dir: -1;
-    }
-
-    [dir='rtl'] & {
-      --switch-dir: -1;
-    }
-
-    ${focusRing};
-
-    &:hover:not([data-disabled]) {
-      background: ${cssVar.colorFill};
-    }
-
-    &[data-checked] {
-      background: ${cssVar.colorPrimary};
-      box-shadow: inset 0 1.5px 3px rgb(0 0 0 / 18%);
-
-      &:hover:not([data-disabled]) {
-        background: ${cssVar.colorPrimaryHover};
-      }
-    }
-
-    &[data-disabled] {
-      cursor: not-allowed;
-      opacity: 0.45;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      transition-duration: 0s;
-    }
-  `,
-  rootDefault: css`
-    width: 36px;
-    min-width: 36px;
-    height: 22px;
-  `,
-  rootSmall: css`
-    width: 28px;
-    min-width: 28px;
-    height: 16px;
-  `,
-  thumb: css`
-    transform: translateX(calc(var(--switch-x, 0px) * var(--switch-dir, 1)));
-
-    display: flex;
-    flex-shrink: 0;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 50%;
-
-    background: ${cssVar.colorBgContainer};
-    box-shadow:
-      0 0 0 0.5px rgb(0 0 0 / 4%),
-      0 1px 1px rgb(0 0 0 / 6%),
-      0 3px 8px rgb(0 30 80 / 16%);
-
-    transition: box-shadow 200ms ${cssVar.motionEaseOut};
-
-    [role='switch']:hover:not([data-disabled]) > & {
-      box-shadow:
-        0 0 0 0.5px rgb(0 0 0 / 4%),
-        0 1px 1px rgb(0 0 0 / 8%),
-        0 6px 14px rgb(0 30 80 / 24%);
-    }
-
-    [data-disabled] > & {
-      box-shadow: none;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      transition-duration: 0s;
-    }
-  `,
-  thumbDefault: css`
-    width: 18px;
-    height: 18px;
-  `,
-  thumbSmall: css`
-    width: 12px;
-    height: 12px;
-  `,
-}));
-
-export const rootVariants = cva(styles.root, {
-  defaultVariants: {
-    size: 'default',
-  },
-  variants: {
-    size: {
-      default: styles.rootDefault,
-      small: styles.rootSmall,
-    },
-  },
+const loadingSpin = stylex.keyframes({
+  '0%': { transform: 'rotate(0deg)' },
+  '100%': { transform: 'rotate(360deg)' },
 });
 
-export const thumbVariants = cva(styles.thumb, {
-  defaultVariants: {
-    size: 'default',
+const reducedMotion = '@media (prefers-reduced-motion: reduce)';
+const enabledHover = ':hover:not([data-disabled])';
+
+export const styles = stylex.create({
+  icon: {
+    insetBlock: 0,
+    transition: `opacity 200ms ${cssVar.motionEaseOut}, scale 200ms ${cssVar.motionEaseOut}`,
+    alignItems: 'center',
+    color: cssVar.colorBgLayout,
+    display: 'flex',
+    justifyContent: 'center',
+    pointerEvents: 'none',
+    position: 'absolute',
+    transitionDuration: { default: null, [reducedMotion]: '0s' },
   },
-  variants: {
-    size: {
-      default: styles.thumbDefault,
-      small: styles.thumbSmall,
+  iconLeft: {
+    insetInlineStart: 4,
+    opacity: { default: 0, [stylex.when.ancestor('[data-checked]', switchMarker)]: 1 },
+    scale: { default: 0, [stylex.when.ancestor('[data-checked]', switchMarker)]: 1 },
+  },
+  iconRight: {
+    insetInlineEnd: 4,
+    opacity: { default: null, [stylex.when.ancestor('[data-checked]', switchMarker)]: 0 },
+    scale: { default: null, [stylex.when.ancestor('[data-checked]', switchMarker)]: 0 },
+  },
+  iconThumb: {
+    inset: 'unset',
+    insetBlock: 'unset',
+    color: cssVar.colorPrimary,
+    position: 'relative',
+    transform: 'none',
+  },
+  loading: {
+    animationDuration: { default: '1s', [reducedMotion]: '0s' },
+    animationIterationCount: 'infinite',
+    animationName: loadingSpin,
+    animationTimingFunction: 'linear',
+  },
+  root: {
+    padding: 2,
+    borderColor: 'currentcolor',
+    borderRadius: 100,
+    borderStyle: 'none',
+    borderWidth: 0,
+    outline: 'none',
+    overflow: 'hidden',
+    transition: `background 200ms ${cssVar.motionEaseOut}, box-shadow 200ms ${cssVar.motionEaseOut}`,
+    alignItems: 'center',
+    backgroundColor: {
+      'default': cssVar.colorFillSecondary,
+      [enabledHover]: cssVar.colorFill,
+      ':is([data-checked])': cssVar.colorPrimary,
+      ':is([data-checked]):hover:not([data-disabled])': cssVar.colorPrimaryHover,
     },
+    boxShadow: {
+      'default': 'inset 0 1.5px 2px rgb(0 0 0 / 8%)',
+      ':is([data-checked])': 'inset 0 1.5px 3px rgb(0 0 0 / 18%)',
+    },
+    boxSizing: 'border-box',
+    cursor: { 'default': 'pointer', ':is([data-disabled])': 'not-allowed' },
+    display: 'inline-flex',
+    justifyContent: 'flex-start',
+    opacity: { 'default': null, ':is([data-disabled])': 0.45 },
+    position: 'relative',
+    transitionDuration: { default: null, [reducedMotion]: '0s' },
+    userSelect: 'none',
+  },
+  rootDefault: {
+    height: 22,
+    minWidth: 36,
+    width: 36,
+  },
+  rootSmall: {
+    height: 16,
+    minWidth: 28,
+    width: 28,
+  },
+  thumb: {
+    borderRadius: '50%',
+    transition: `box-shadow 200ms ${cssVar.motionEaseOut}`,
+    alignItems: 'center',
+    backgroundColor: cssVar.colorBgContainer,
+    boxShadow: {
+      'default':
+        '0 0 0 0.5px rgb(0 0 0 / 4%), 0 1px 1px rgb(0 0 0 / 6%), 0 3px 8px rgb(0 30 80 / 16%)',
+      ':is([data-disabled])': 'none',
+      [stylex.when.ancestor(enabledHover, switchMarker)]:
+        '0 0 0 0.5px rgb(0 0 0 / 4%), 0 1px 1px rgb(0 0 0 / 8%), 0 6px 14px rgb(0 30 80 / 24%)',
+    },
+    display: 'flex',
+    flexShrink: 0,
+    justifyContent: 'center',
+    transform: 'translateX(calc(var(--switch-x, 0px) * var(--switch-dir, 1)))',
+    transitionDuration: { default: null, [reducedMotion]: '0s' },
+  },
+  thumbDefault: {
+    height: 18,
+    width: 18,
+  },
+  thumbSmall: {
+    height: 12,
+    width: 12,
   },
 });

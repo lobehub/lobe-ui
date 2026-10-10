@@ -1,12 +1,13 @@
 'use client';
 
 import { Tooltip as BaseTooltip } from '@base-ui/react/tooltip';
+import clsx from 'clsx';
 import { type FC, useCallback, useRef, useState } from 'react';
 
 import { getFloatingCollisionPadding } from '@/base-ui/floating';
 import { useAppElement } from '@/ConfigProvider/AppElementContext';
 import { useFloatingLayer } from '@/hooks/useFloatingLayer';
-import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
 import {
   useDestroyOnInvalidActiveTriggerElement,
   useHidePopupWhenPositionerAtOrigin,
@@ -82,41 +83,26 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
             const placementConfig = placementMap[placement] ?? placementMap.top;
             const baseSideOffset = arrow ? 8 : 6;
 
-            const resolvedClassNames = {
-              arrow: cx(styles.arrow, item.classNames?.arrow),
-              popup: cx(
+            const customStyles = typeof item.styles === 'function' ? undefined : item.styles;
+            const slots = {
+              arrow: styleProps(styles.arrow, item.classNames?.arrow, customStyles?.arrow),
+              popup: styleProps(
                 styles.popup,
-                item.className,
-                item.classNames?.root,
-                item.classNames?.container,
+                clsx(item.className, item.classNames?.root, item.classNames?.container),
+                { ...customStyles?.root, ...customStyles?.container },
               ),
-              positioner: styles.positioner,
-              viewport: cx(styles.viewport, item.classNames?.content),
-            };
-
-            const resolvedStyleProps = (() => {
-              if (typeof item.styles === 'function') return undefined;
-              return item.styles;
-            })();
-
-            const resolvedStyles = {
-              arrow: resolvedStyleProps?.arrow,
-              popup: {
-                ...resolvedStyleProps?.root,
-                ...resolvedStyleProps?.container,
-              },
-              positioner: {
+              positioner: styleProps(styles.positioner, undefined, {
                 zIndex: item.zIndex ?? 114_514,
-              },
-              viewport: resolvedStyleProps?.content,
+              }),
+              viewport: styleProps(
+                styles.viewport,
+                clsx('lobe-tooltip-viewport', item.classNames?.content),
+                customStyles?.content,
+              ),
             };
 
             const body = (
-              <BaseTooltip.Viewport
-                className={resolvedClassNames.viewport}
-                data-repop={repop || undefined}
-                style={resolvedStyles.viewport}
-              >
+              <BaseTooltip.Viewport data-repop={repop || undefined} {...slots.viewport}>
                 <TooltipContent
                   hotkey={item.hotkey}
                   hotkeyProps={item.hotkeyProps}
@@ -128,32 +114,25 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
             const popup = (
               <BaseTooltip.Positioner
                 align={placementConfig.align}
-                className={resolvedClassNames.positioner}
                 data-layout-animation={layoutAnimation || undefined}
                 data-placement={placement}
                 data-repop={repop || undefined}
                 side={placementConfig.side}
                 sideOffset={baseSideOffset}
-                style={resolvedStyles.positioner}
+                {...slots.positioner}
                 {...item.positionerProps}
                 collisionPadding={
                   item.positionerProps?.collisionPadding ?? getFloatingCollisionPadding()
                 }
               >
                 <BaseTooltip.Popup
-                  className={resolvedClassNames.popup}
                   data-layout-animation={layoutAnimation || undefined}
                   data-repop={repop || undefined}
-                  style={resolvedStyles.popup}
+                  {...slots.popup}
                   {...item.popupProps}
                 >
                   {arrow && (
-                    <BaseTooltip.Arrow
-                      className={resolvedClassNames.arrow}
-                      style={resolvedStyles.arrow}
-                    >
-                      {TooltipArrowIcon}
-                    </BaseTooltip.Arrow>
+                    <BaseTooltip.Arrow {...slots.arrow}>{TooltipArrowIcon}</BaseTooltip.Arrow>
                   )}
                   {body}
                 </BaseTooltip.Popup>

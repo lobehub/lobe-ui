@@ -1,10 +1,12 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { Loader2 } from 'lucide-react';
 import { memo } from 'react';
 
 import Icon from '@/Icon';
-import { cssVar, cx } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
 import { SwitchIcon, SwitchRoot, SwitchThumb } from './atoms';
 import { styles } from './style';
@@ -43,7 +45,7 @@ const Switch = memo<SwitchProps>(
       <SwitchRoot
         autoFocus={autoFocus}
         checked={resolvedChecked}
-        className={cx(className, rootClassName, classNames?.root)}
+        className={clsx(className, rootClassName, classNames?.root)}
         defaultChecked={resolvedDefaultChecked}
         disabled={isDisabled}
         id={id}
@@ -79,7 +81,7 @@ const Switch = memo<SwitchProps>(
         <SwitchThumb className={classNames?.thumb} size={size} style={customStyles?.thumb}>
           {loading && (
             <Icon
-              className={styles.loading}
+              {...stylex.props(styles.loading)}
               icon={Loader2}
               size={size === 'small' ? 8 : 12}
               style={{ color: cssVar.colorPrimary }}

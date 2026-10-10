@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { motion } from 'motion/react';
 
 import ConfigProvider from '@/ConfigProvider';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
 import Switch from '../Switch';
 
@@ -50,5 +51,40 @@ describe('Switch', () => {
     await new Promise((resolve) => setTimeout(resolve, 150));
 
     expect(thumb?.style.width).toBe('18px');
+  });
+
+  test('styles checked, unchecked and disabled states', () => {
+    render(
+      <>
+        <Switch />
+        <Switch defaultChecked />
+        <Switch disabled />
+      </>,
+    );
+
+    const [off, on, disabled] = screen.getAllByRole('switch');
+
+    expect(getComputedStyle(off).backgroundColor).toBe(cssVar.colorFillSecondary);
+    expect(getComputedStyle(on).backgroundColor).toBe(cssVar.colorPrimary);
+    expect(getComputedStyle(off).cursor).toBe('pointer');
+    expect(getComputedStyle(disabled).cursor).toBe('not-allowed');
+    expect(getComputedStyle(disabled).opacity).toBe('0.45');
+    expect(getComputedStyle(disabled.querySelector('span')!).boxShadow).toBe('none');
+  });
+
+  test('shows the checked icon only while checked', () => {
+    render(<Switch checkedChildren={<i>on</i>} unCheckedChildren={<i>off</i>} />);
+
+    const switchEl = screen.getByRole('switch');
+    const iconOn = screen.getByText('on').parentElement!;
+    const iconOff = screen.getByText('off').parentElement!;
+
+    expect(getComputedStyle(iconOn).opacity).toBe('0');
+    expect(getComputedStyle(iconOff).opacity).toBe('1');
+
+    fireEvent.click(switchEl);
+
+    expect(getComputedStyle(iconOn).opacity).toBe('1');
+    expect(getComputedStyle(iconOff).opacity).toBe('0');
   });
 });
