@@ -242,7 +242,7 @@
     "use-merge-value": "^1.2.0",
     "uuid": "^14.0.1",
     "vfile": "^6.0.3",
-    "virtua": "^0.52.0"
+    "virtua": "^0.53.0"
   },
   "devDependencies": {
     "@ant-design/icons": "^6.3.2",
