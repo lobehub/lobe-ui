@@ -1,6 +1,6 @@
 'use client';
 
-import isEqual from 'fast-deep-equal';
+import { isEqual } from 'es-toolkit/compat';
 import { Plus, Trash } from 'lucide-react';
 import { memo, useEffect, useReducer } from 'react';
 
