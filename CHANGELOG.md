@@ -2,6 +2,24 @@
 
 # Changelog
 
+# [6.0.0-beta.3](https://github.com/lobehub/lobe-ui/compare/v6.0.0-beta.2...v6.0.0-beta.3) (2026-10-12)
+
+### ✨ Features
+
+- **video**: Rebuild Video as a player with sections, markers and a player handle ([92fe925](https://github.com/lobehub/lobe-ui/commit/92fe925))
+
+### 🎫 Chores
+
+- **release**: Codemod@1.0.0-beta.1 [skip ci] ([e0ffd2d](https://github.com/lobehub/lobe-ui/commit/e0ffd2d))
+
+### 🐛 Bug Fixes
+
+- **video**: Restart after the end, keep early seeks, scope keys and menus to the player ([028b533](https://github.com/lobehub/lobe-ui/commit/028b533))
+
+### 📝 Documentation
+
+- **migration**: Cover the v6 Video and flag its removed props in the codemod ([3439e41](https://github.com/lobehub/lobe-ui/commit/3439e41))
+
 # [6.0.0-beta.2](https://github.com/lobehub/lobe-ui/compare/v6.0.0-beta.1...v6.0.0-beta.2) (2026-10-12)
 
 ### 🎫 Chores
