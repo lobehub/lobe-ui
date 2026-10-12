@@ -4627,29 +4627,9 @@
           "context": 0,
           "mounts": 0,
           "parent": 0,
-          "props": 62,
-          "renders": 62,
-          "state": 1,
-          "unnecessary": 0
-        },
-        {
-          "name": "Icon",
-          "context": 0,
-          "mounts": 1,
-          "parent": 0,
           "props": 60,
-          "renders": 61,
-          "state": 0,
-          "unnecessary": 0
-        },
-        {
-          "name": "Anonymous",
-          "context": 0,
-          "mounts": 1,
-          "parent": 60,
-          "props": 0,
-          "renders": 61,
-          "state": 0,
+          "renders": 60,
+          "state": 1,
           "unnecessary": 0
         },
         {
@@ -4663,22 +4643,12 @@
           "unnecessary": 0
         },
         {
-          "name": "Search",
-          "context": 0,
-          "mounts": 0,
-          "parent": 31,
-          "props": 0,
-          "renders": 31,
-          "state": 0,
-          "unnecessary": 0
-        },
-        {
           "name": "FieldControl",
           "context": 0,
           "mounts": 0,
           "parent": 0,
-          "props": 31,
-          "renders": 31,
+          "props": 30,
+          "renders": 30,
           "state": 0,
           "unnecessary": 0
         },
@@ -4687,8 +4657,18 @@
           "context": 0,
           "mounts": 1,
           "parent": 0,
-          "props": 29,
-          "renders": 30,
+          "props": 0,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Icon",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 1,
           "state": 0,
           "unnecessary": 0
         },
@@ -4696,18 +4676,28 @@
           "name": "X",
           "context": 0,
           "mounts": 1,
-          "parent": 29,
+          "parent": 0,
           "props": 0,
-          "renders": 30,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Anonymous",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 1,
           "state": 0,
           "unnecessary": 0
         }
       ],
       "totals": {
         "context": 0,
-        "parent": 120,
-        "props": 182,
-        "renders": 337,
+        "parent": 0,
+        "props": 90,
+        "renders": 125,
         "state": 32,
         "unnecessary": 0
       }
@@ -4924,7 +4914,8 @@
         "unnecessary": 1
       }
     },
-    "name": "SearchBar: type 30 chars"
+    "name": "SearchBar: type 30 chars",
+    "tolerance": 0
   },
   {
     "demo": "src-editable-text-demo-demos",
