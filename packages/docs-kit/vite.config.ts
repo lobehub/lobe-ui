@@ -19,7 +19,6 @@ const repositoryRequire = createRequire(path.join(repositoryRoot, 'package.json'
 
 const runtimeOptimizeDeps = [
   'es-toolkit',
-  'react-merge-refs',
   'remark-breaks',
   'remark-parse',
   'remark-rehype',

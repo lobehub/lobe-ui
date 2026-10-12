@@ -3,9 +3,9 @@
 import { mergeProps } from '@base-ui/react/merge-props';
 import { Tooltip as BaseTooltip } from '@base-ui/react/tooltip';
 import { cloneElement, type FC, isValidElement, use, useCallback, useMemo } from 'react';
-import { mergeRefs } from 'react-merge-refs';
 
 import { useNativeButton } from '@/hooks/useNativeButton';
+import { mergeRefs } from '@/utils/mergeRefs';
 
 import { TooltipGroupHandleContext } from './groupContext';
 import { type TooltipProps } from './type';

@@ -17,13 +17,13 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { mergeRefs, useMergeRefs } from 'react-merge-refs';
 
 import { useAppElement } from '@/ConfigProvider/AppElementContext';
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { useMotionComponent } from '@/MotionProvider';
 import { focusRing } from '@/styles/stylex/focusRing';
 import { styleProps } from '@/styles/stylex/props';
+import { mergeRefs, useMergeRefs } from '@/utils/mergeRefs';
 
 import { useLayerZIndex } from '../internal/zIndex';
 import { backdropTransition, modalMotionConfig } from './constants';
@@ -216,9 +216,12 @@ export const ModalPopupImpl = ({
             <Motion.div
               {...modalMotionConfig}
               {...motionProps}
-              className={clsx(stylex.props(styles.popupInner, panelXstyle).className, panelClassName)}
               key="modal-popup-panel"
               style={{ maxWidth: width ?? undefined, transition: 'none', ...style }}
+              className={clsx(
+                stylex.props(styles.popupInner, panelXstyle).className,
+                panelClassName,
+              )}
             >
               {children}
             </Motion.div>

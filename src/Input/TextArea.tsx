@@ -3,10 +3,10 @@
 import { Field } from '@base-ui/react/field';
 import * as stylex from '@stylexjs/stylex';
 import { type CSSProperties, memo, useMemo, useRef, useState } from 'react';
-import { useMergeRefs } from 'react-merge-refs';
 
 import { styleProps } from '@/styles/stylex/props';
 import { useThemeMode } from '@/styles/theme/scope';
+import { useMergeRefs } from '@/utils/mergeRefs';
 
 import ClearButton from './ClearButton';
 import { clearNativeValue } from './clearNativeValue';

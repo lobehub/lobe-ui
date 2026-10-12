@@ -11,7 +11,6 @@ import {
   useEffect,
   useRef,
 } from 'react';
-import { useMergeRefs } from 'react-merge-refs';
 import { Virtualizer, type VirtualizerHandle } from 'virtua';
 
 import {
@@ -23,6 +22,7 @@ import {
   type ScrollAreaViewportProps,
 } from '@/ScrollArea/atoms';
 import { styleProps } from '@/styles/stylex/props';
+import { useMergeRefs } from '@/utils/mergeRefs';
 
 // `--lobe-virtual-scroll-inset` is the inline padding of the box the scroll area sits in: the
 // root bleeds out by it so the scrollbar hugs that box's edge, and the viewport pads the rows back.

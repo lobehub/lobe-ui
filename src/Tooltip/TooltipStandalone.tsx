@@ -12,7 +12,6 @@ import {
   useMemo,
   useState,
 } from 'react';
-import { mergeRefs } from 'react-merge-refs';
 
 import { useAppElement } from '@/ConfigProvider/AppElementContext';
 import { useFloatingLayer } from '@/hooks/useFloatingLayer';
@@ -20,6 +19,7 @@ import { useIsClient } from '@/hooks/useIsClient';
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { getFloatingCollisionPadding } from '@/internal/floating';
 import { styleProps } from '@/styles/stylex/props';
+import { mergeRefs } from '@/utils/mergeRefs';
 import { placementMap } from '@/utils/placement';
 
 import { TooltipArrowIcon } from './ArrowIcon';

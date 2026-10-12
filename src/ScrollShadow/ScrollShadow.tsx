@@ -2,11 +2,11 @@
 
 import type { FC } from 'react';
 import { useMemo, useRef } from 'react';
-import { mergeRefs } from 'react-merge-refs';
 
 import { Flexbox } from '@/Flex';
 import { useEventCallback } from '@/hooks/useEventCallback';
 import { styleProps } from '@/styles/stylex/props';
+import { mergeRefs } from '@/utils/mergeRefs';
 
 import { styles } from './style';
 import type { ScrollShadowProps } from './type';

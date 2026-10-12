@@ -10,11 +10,11 @@ import {
   useRef,
   useState,
 } from 'react';
-import { useMergeRefs } from 'react-merge-refs';
 import useControlledState from 'use-merge-value';
 
 import { useEventCallback } from '@/hooks/useEventCallback';
 import { styleProps } from '@/styles/stylex/props';
+import { useMergeRefs } from '@/utils/mergeRefs';
 
 import { styles } from './style';
 import type { AnchorItem, AnchorProps } from './type';

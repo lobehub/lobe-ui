@@ -2,10 +2,10 @@
 
 import { Input as BaseInput } from '@base-ui/react/input';
 import { memo, useRef, useState } from 'react';
-import { useMergeRefs } from 'react-merge-refs';
 
 import { styleProps } from '@/styles/stylex/props';
 import { useThemeMode } from '@/styles/theme/scope';
+import { useMergeRefs } from '@/utils/mergeRefs';
 
 import ClearButton from './ClearButton';
 import { clearNativeValue } from './clearNativeValue';
