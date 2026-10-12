@@ -36,6 +36,7 @@
   "Tag",
   "Text",
   "TextArea",
+  "Video",
   "createModal",
   "useModalContext"
 ]

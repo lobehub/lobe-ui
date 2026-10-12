@@ -1,15 +1,83 @@
 ---
 title: Video
-description: Video component for displaying video content with customizable controls, preview mode, and various styles. It supports standard HTML video features while providing an enhanced user interface.
+description: A video player with sections and markers on a segmented timeline, marker captions, hover frame preview, frame stepping, speed and mute controls, and a player handle for driving it from your own code.
 category: Data Display
 ---
 
 import DemoIndex from './demos/index.tsx?demo';
+import DemoSections from './demos/Sections.tsx?demo';
+import DemoDense from './demos/Dense.tsx?demo';
+import DemoReview from './demos/Review.tsx?demo';
+import DemoImperative from './demos/Imperative.tsx?demo';
+import DemoError from './demos/Error.tsx?demo';
 
 ## Default
 
-<Demo of={DemoIndex} layout="bare" />
+`<Video src>` plays with controls over the frame. They hide two seconds after the pointer stops moving during playback.
+
+<Demo of={DemoIndex} layout="center" />
+
+## Sections and markers
+
+`sections` split the timeline into segments; the chip in the bar shows the current one and opens a menu of all of them. `markers` sit above the rail as dots. A marker with `content` is captioned over the frame for two seconds from its time, and clicking a dot pauses there.
+
+<Demo of={DemoSections} layout="center" />
+
+## Many sections
+
+A section narrower than 12 px joins the segment before it; its start stays as a hairline. Hovering still names the exact section.
+
+<Demo of={DemoDense} layout="center" />
+
+## Composing parts
+
+`Video.Root` holds the state; `Video.Frame`, `Video.Caption`, `Video.CenterPlay`, `Video.Timeline`, `Video.Controls`, `Video.SectionList` and `Video.LoadError` render it. `Controls` inside `Frame` overlays and auto-hides; after `Frame` it sits below and stays visible. Children of `Timeline` render as extra lanes under the rail, and `Caption`'s `action` adds a control to each captioned marker.
+
+`useVideoPlayer()` creates the player before it mounts, so code outside the tree can drive it and read it with `useVideoState(player, selector)`. Inside a `Root`, `useVideo(selector)` reads the same state.
+
+<Demo of={DemoReview} layout="center" />
+
+## Player handle
+
+`ref` on `Video` or `Video.Root` receives the player: `play`, `pause`, `toggle`, `seek`, `step`, `setRate`, `setMuted`, `toggleMute`, `setCaptions`, `requestFullscreen`, `getState`, `subscribe`, and the `video` and `root` elements.
+
+<Demo of={DemoImperative} layout="center" />
+
+## Load failure
+
+When the source fails, the frame offers Reload and Download. Reload awaits `onRetry` first, which is where an expired signed link gets re-signed.
+
+<Demo of={DemoError} layout="center" />
+
+## Keyboard
+
+Keys work while the player has focus, so they never take over page scroll.
+
+| Key       | Action                |
+| --------- | --------------------- |
+| Space, K  | Play / pause          |
+| `,` / `.` | Previous / next frame |
+| ← / →     | Seek 1 s (Shift: 5 s) |
+| J / L     | Slower / faster       |
+| M         | Mute                  |
+| C         | Captions              |
+| F         | Fullscreen            |
+
+## Migrating from v5 Video
+
+| v5 | v6 |
+| --- | --- |
+| `variant` | removed; the frame is borderless, wrap it in `Block` for a border |
+| `preview` (hover mask) | removed; the controls replace it |
+| `isLoading` | removed; render `Skeleton` yourself |
+| `size` | `width` / `height` |
+| `maxWidth`, `minWidth`, `minHeight` | `style` |
+| `classNames.mask`, `styles.mask` | removed |
+| `classNames.wrapper` / `classNames.video` | `classNames.root` / `classNames.frame` |
+| `styles.wrapper` / `styles.video` | `styles.root` / `styles.frame` |
+| `ref: Ref<HTMLDivElement>` | `ref: Ref<VideoPlayer>`; the element is `player.root` |
+| native `<video>` attributes | only the documented media props pass through; use `player.video` for the rest |
 
 ## APIs
 
-<Api name="Video" migrationKey="unheaded:0" />
+<Api name="Video" migrationKey="heading:%5B%22Video%22%5D:0" />

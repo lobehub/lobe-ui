@@ -4,7 +4,7 @@ import { parse } from './ast';
 
 export const DOCS_URL = 'https://ui.lobehub.com/migration-v6';
 
-export type RuleId = 'R1' | 'R2' | 'R3' | 'R4' | 'R5' | 'R6' | 'R7' | 'R8' | 'R9';
+export type RuleId = 'R1' | 'R2' | 'R3' | 'R4' | 'R5' | 'R6' | 'R7' | 'R8' | 'R9' | 'R10';
 
 export interface ReportItem {
   anchor: string;

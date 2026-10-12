@@ -151,6 +151,7 @@ The root export is the former `@lobehub/ui/base-ui` set. Components that keep th
 | `Skeleton`, `SkeletonBlock`, `SkeletonButton`, `SkeletonTags`, `SkeletonParagraph`, `SkeletonTitle` | [`Skeleton`](/components/skeleton#migration), `SkeletonAvatar`, `SkeletonText` |
 | `Tabs` | [`Tabs`](/components/tabs) |
 | `Tag` | [`Tag`](/components/tag#migrating-from-antd-tag) |
+| `Video` | [`Video`](/components/video#migrating-from-v5-video): a full player with sections, markers and a player handle; `variant`, `preview`, `isLoading` and `size` are gone |
 | `Accordion`, `ActionIcon`, `DraggablePanel`, `List`, `Text` (legacy root versions) | [`Accordion`](/components/accordion), [`ActionIcon`](/components/action-icon), [`DraggablePanel`](/components/draggable-panel), [`List`](/components/list#migrating-from-antd-menu-list), [`Text`](/components/text) |
 | `Burger` | [`Burger`](/components/burger#migrating-from-v5-burger) |
 | `Footer`, `Toc`, `ThemeSwitch`, `Meta` | removed, no successor (render `<title>` / `<meta>` yourself; React 19 hoists them) |
@@ -197,6 +198,7 @@ antd components without a same-named counterpart:
 - **Menus open on click.** `DropdownMenu` defaults to `trigger="click"` (antd `Dropdown` opened on hover) and has no menu-level `onClick`; move a `switch (key)` from `menu.onClick` into each item's `onClick`.
 - **No arrows by default.** `Tooltip` and `Popover` render without an arrow unless you pass `arrow`.
 - **Popup containers.** There is no `.ant-app` element. Code that looked it up (`getPopupContainer`, portals) uses `document.getElementById(LOBE_THEME_APP_ID)`.
+- **`Video` ref is a player.** `ref` on `Video` now receives a `VideoPlayer` (`play`, `seek`, `getState`, …) instead of the wrapper `<div>`; the element is `player.root`, the `<video>` is `player.video`.
 - **antd class names and variables.** `.ant-*` selectors and `--ant-*` variables match nothing. Use component props for overrides and `cssVar` / `--lobe-*` for tokens.
 - **Resets.** antd's `reset.css` (box-sizing, margins, list styles) is now part of `global.css`. Apps that relied on it without importing antd's stylesheet need `global.css`.
 

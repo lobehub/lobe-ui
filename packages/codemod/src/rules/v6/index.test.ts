@@ -199,6 +199,21 @@ describe('v6Rules', () => {
     );
   });
 
+  it('R10 flags removed v5 Video props, following the local name', () => {
+    const items = collectReport(
+      [
+        `import { Video as LobeVideo } from '@lobehub/ui';`,
+        `const a = <LobeVideo preview={false} src="a.mp4" variant="outlined" />;`,
+        `const b = <video preview />;`,
+      ].join('\n'),
+      'a.tsx',
+      v6Rules,
+    );
+    expect(items.map((i) => `${i.rule}:${i.line}`)).toEqual(['R5:1', 'R10:2', 'R10:2']);
+    expect(items[1].message).toContain('`preview`');
+    expect(items[2].message).toContain('Block');
+  });
+
   it('reports nothing for clean v6 code', () => {
     expect(
       report(
