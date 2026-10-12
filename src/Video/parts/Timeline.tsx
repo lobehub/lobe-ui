@@ -40,10 +40,11 @@ const markerName = (marker: VideoMarker) =>
 const Timeline = ({ children, className, style, thumbnails = true }: VideoTimelineProps) => {
   const { config, media, store } = useVideoContext();
   const { t } = useTranslation(videoMessages);
-  const duration = useVideo((state) => state.duration);
+  const duration = useVideo((state) => (Number.isFinite(state.duration) ? state.duration : 0));
   const trackRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(0);
   const [hover, setHover] = useState<Hover | null>(null);
+  const [hovering, setHovering] = useState(false);
 
   useLayoutEffect(() => {
     const track = trackRef.current;
@@ -117,6 +118,7 @@ const Timeline = ({ children, className, style, thumbnails = true }: VideoTimeli
     const seconds = timeAt(element, event.clientX);
     const snap = duration * SNAP_RATIO;
     const marker = visibleMarkers.find((item) => Math.abs(item.time - seconds) < snap);
+    setHovering(true);
     setHover({
       marker,
       time: marker?.time ?? seconds,
@@ -136,6 +138,7 @@ const Timeline = ({ children, className, style, thumbnails = true }: VideoTimeli
           src={media.src}
           thumbnail={thumbnails}
           time={hover.time}
+          visible={hovering}
           x={hover.x}
         />
       )}
@@ -147,15 +150,15 @@ const Timeline = ({ children, className, style, thumbnails = true }: VideoTimeli
         role="slider"
         {...styleProps(styles.track)}
         onPointerDown={onPointerDown}
-        onPointerLeave={() => setHover(null)}
+        onPointerLeave={() => setHovering(false)}
         onPointerMove={onPointerMove}
       >
         {segments.map((segment, index) => {
           const span = segment.end - segment.start;
-          const hovered = hover !== null && hover.time >= segment.start && hover.time < segment.end;
-          const hoverFill = hover
-            ? Math.min(Math.max((hover.time - segment.start) / span, 0), 1)
-            : 0;
+          const hovered =
+            hovering && hover !== null && hover.time >= segment.start && hover.time < segment.end;
+          const hoverFill =
+            hovering && hover ? Math.min(Math.max((hover.time - segment.start) / span, 0), 1) : 0;
           const leftInset = index === 0 ? 0 : GAP_PX / 2;
           const rightInset = index === segments.length - 1 ? 0 : GAP_PX / 2;
           return (

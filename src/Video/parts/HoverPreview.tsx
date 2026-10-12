@@ -14,6 +14,7 @@ export interface HoverPreviewProps {
   src: string;
   thumbnail: boolean;
   time: number;
+  visible: boolean;
   x: number;
 }
 
@@ -42,8 +43,18 @@ const Thumbnail = ({ src, time }: { src: string; time: number }) => {
       probe.currentTime = pendingRef.current;
       pendingRef.current = null;
     };
+    const reset = () => {
+      busyRef.current = false;
+    };
     probe.addEventListener('seeked', paint);
-    return () => probe.removeEventListener('seeked', paint);
+    probe.addEventListener('error', reset);
+    return () => {
+      probe.removeEventListener('seeked', paint);
+      probe.removeEventListener('error', reset);
+      // An unmounted element with a src keeps downloading until it is collected.
+      probe.removeAttribute('src');
+      probe.load?.();
+    };
   }, []);
 
   useEffect(() => {
@@ -72,8 +83,10 @@ const Thumbnail = ({ src, time }: { src: string; time: number }) => {
   );
 };
 
-const HoverPreview = ({ marker, section, src, thumbnail, time, x }: HoverPreviewProps) => (
-  <div {...styleProps(styles.preview, undefined, { left: x })}>
+const HoverPreview = ({ marker, section, src, thumbnail, time, visible, x }: HoverPreviewProps) => (
+  <div
+    {...styleProps(styles.preview, undefined, { display: visible ? undefined : 'none', left: x })}
+  >
     {thumbnail && <Thumbnail src={src} time={time} />}
     {(section || marker) && (
       <div {...styleProps(styles.previewLabel)}>

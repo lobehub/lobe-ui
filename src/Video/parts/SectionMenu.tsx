@@ -11,11 +11,13 @@ import { styleProps } from '@/styles/stylex/props';
 import { FrameContext, useVideoContext } from '../context';
 import { styles } from '../style';
 import { formatTime } from '../time';
+import { useFullscreen } from '../useFullscreen';
 import { useVideo } from '../useVideo';
 
 const SectionMenu = () => {
   const { config, store } = useVideoContext();
   const frame = use(FrameContext);
+  const fullscreen = useFullscreen(store);
   const { t } = useTranslation(videoMessages);
   const active = useVideo((state) => state.activeSection);
   const [shown, setShown] = useState({ direction: 'none', section: active });
@@ -28,6 +30,7 @@ const SectionMenu = () => {
 
   return (
     <DropdownMenu
+      portalProps={fullscreen && store.root ? { container: store.root } : undefined}
       items={config.sections.map((section) => ({
         extra: section === active ? <Check size={14} /> : formatTime(section.start),
         key: `${section.start}`,

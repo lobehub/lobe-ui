@@ -9,7 +9,7 @@ import {
   Volume2,
   VolumeX,
 } from 'lucide-react';
-import { type ReactNode, use, useEffect, useState } from 'react';
+import { type ReactNode, use } from 'react';
 
 import videoMessages from '@/i18n/resources/en/video';
 import { useTranslation } from '@/i18n/useTranslation';
@@ -19,6 +19,7 @@ import { FrameContext, useVideoContext } from '../context';
 import { styles } from '../style';
 import { formatTime, frameOf } from '../time';
 import type { VideoControlsProps } from '../type';
+import { useFullscreen } from '../useFullscreen';
 import { useVideo } from '../useVideo';
 import PlayPauseIcon from './PlayPauseIcon';
 import RateMenu from './RateMenu';
@@ -52,16 +53,6 @@ const BarButton = ({
   </button>
 );
 
-const useFullscreen = (root: HTMLDivElement | null) => {
-  const [fullscreen, setFullscreen] = useState(false);
-  useEffect(() => {
-    const sync = () => setFullscreen(Boolean(root) && document.fullscreenElement === root);
-    document.addEventListener('fullscreenchange', sync);
-    return () => document.removeEventListener('fullscreenchange', sync);
-  }, [root]);
-  return fullscreen;
-};
-
 // Leaves so playback re-renders only these, and the clock only once a second.
 const TimeReadout = () => {
   const seconds = useVideo((state) => Math.floor(state.time));
@@ -92,7 +83,7 @@ const Controls = ({ children, className, extra, frameStep, style }: VideoControl
   const muted = useVideo((state) => state.muted);
   const captions = useVideo((state) => state.captions);
   const ready = useVideo((state) => state.status === 'ready');
-  const fullscreen = useFullscreen(store.root);
+  const fullscreen = useFullscreen(store);
   const overlay = frame !== null;
   const visible = !overlay || frame.visible;
   const hasCaptions = config.markers.some(

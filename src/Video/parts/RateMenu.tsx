@@ -10,18 +10,21 @@ import { styleProps } from '@/styles/stylex/props';
 
 import { FrameContext, useVideoContext } from '../context';
 import { styles } from '../style';
+import { useFullscreen } from '../useFullscreen';
 import { DEFAULT_PLAYBACK_RATES } from '../useKeyboard';
 import { useVideo } from '../useVideo';
 
 const RateMenu = () => {
   const { config, store } = useVideoContext();
   const frame = use(FrameContext);
+  const fullscreen = useFullscreen(store);
   const { t } = useTranslation(videoMessages);
   const rate = useVideo((state) => state.rate);
   const rates = config.playbackRates ?? DEFAULT_PLAYBACK_RATES;
 
   return (
     <DropdownMenu
+      portalProps={fullscreen && store.root ? { container: store.root } : undefined}
       items={rates.map((value) => ({
         extra: value === rate ? <Check size={14} /> : undefined,
         key: `${value}`,

@@ -1,4 +1,4 @@
-import { act, fireEvent, screen } from '@testing-library/react';
+import { act, cleanup, fireEvent, screen } from '@testing-library/react';
 
 import { playerRef, renderVideo } from '../__tests__/render';
 import type { VideoMarker } from '../type';
@@ -18,6 +18,7 @@ const markers: VideoMarker[] = [
 const TRACK_WIDTH = 1340;
 
 beforeEach(() => {
+  vi.spyOn(HTMLMediaElement.prototype, 'load').mockImplementation(() => {});
   vi.spyOn(HTMLElement.prototype, 'getBoundingClientRect').mockImplementation(
     () =>
       ({
@@ -33,7 +34,10 @@ beforeEach(() => {
   );
 });
 
-afterEach(() => vi.restoreAllMocks());
+afterEach(() => {
+  cleanup();
+  vi.restoreAllMocks();
+});
 
 const setup = (props: { onMarkerClick?: (m: VideoMarker) => void; thumbnails?: boolean } = {}) => {
   const ref = playerRef();
@@ -111,6 +115,16 @@ describe('Video.Timeline', () => {
     fireEvent.pointerMove(slider, { clientX: 300, pointerType: 'mouse' });
     expect(container.querySelectorAll('video')).toHaveLength(2);
     expect(container.querySelector('canvas')).toBeTruthy();
+  });
+
+  it('keeps one probe video across hovers', () => {
+    const { container, slider } = setup();
+    fireEvent.pointerMove(slider, { clientX: 300, pointerType: 'mouse' });
+    const probe = container.querySelectorAll('video')[1];
+    fireEvent.pointerLeave(slider);
+    fireEvent.pointerMove(slider, { clientX: 400, pointerType: 'mouse' });
+    expect(container.querySelectorAll('video')).toHaveLength(2);
+    expect(container.querySelectorAll('video')[1]).toBe(probe);
   });
 
   it('skips the thumbnail when thumbnails is off', () => {

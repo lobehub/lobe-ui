@@ -1,4 +1,5 @@
 import { act, fireEvent } from '@testing-library/react';
+import { createPortal } from 'react-dom';
 
 import { playerRef, renderVideo } from './__tests__/render';
 import Frame from './parts/Frame';
@@ -81,5 +82,32 @@ describe('player keyboard', () => {
     act(() => container.querySelector('video')!.dispatchEvent(new Event('error')));
     fireEvent.keyDown(container.firstElementChild!, { key: ' ' });
     expect(ref.current?.getState().paused).toBe(true);
+  });
+
+  it('ignores keys from portalled content such as an open menu', () => {
+    const { container } = renderVideo(
+      <Root src="a.mp4">
+        <Frame>
+          {createPortal(<div data-testid="menu" role="menuitem" tabIndex={-1} />, document.body)}
+        </Frame>
+      </Root>,
+    );
+    const video = container.querySelector('video')!;
+    fireEvent.keyDown(document.querySelector('[data-testid="menu"]')!, { key: ' ' });
+    expect(video.paused).toBe(true);
+  });
+
+  it('ignores keys typed into an editor inside the player', () => {
+    const { container, video } = renderVideo(
+      <Root src="a.mp4">
+        <Frame>
+          <div contentEditable suppressContentEditableWarning data-testid="editor" />
+          <select data-testid="picker" />
+        </Frame>
+      </Root>,
+    );
+    fireEvent.keyDown(container.querySelector('[data-testid="editor"]')!, { key: 'k' });
+    fireEvent.keyDown(container.querySelector('[data-testid="picker"]')!, { key: ' ' });
+    expect(video.paused).toBe(true);
   });
 });

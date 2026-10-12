@@ -85,12 +85,26 @@ export const createVideoStore = (): VideoStore => {
     return video.paused ? video.currentTime : (painted ?? video.currentTime);
   };
 
+  // Before metadata the duration is NaN: only the lower bound applies, and the
+  // element keeps the value as its start position.
+  const clampToMedia = (seconds: number) => {
+    const lower = Math.max(seconds, 0);
+    return video && Number.isFinite(video.duration) ? Math.min(lower, video.duration) : lower;
+  };
+
+  const atEnd = () =>
+    Boolean(video) &&
+    (video!.ended ||
+      (Number.isFinite(video!.duration) && video!.currentTime >= video!.duration - 0.5 / data.fps));
+
   const seek = (seconds: number) => {
-    if (!video) return;
+    if (!video || !Number.isFinite(seconds)) return;
     painted = undefined;
-    video.currentTime = Math.min(Math.max(seconds, 0), video.duration || 0);
+    video.currentTime = clampToMedia(seconds);
     commit({ time: video.currentTime });
   };
+
+  let attachedOnce = false;
 
   const store: VideoStore = {
     attach: (element) => {
@@ -125,6 +139,7 @@ export const createVideoStore = (): VideoStore => {
       const onMeta = () =>
         commit({
           duration: target.duration,
+          time: target.currentTime,
           size: { height: target.videoHeight, width: target.videoWidth },
           status: 'ready',
         });
@@ -136,7 +151,9 @@ export const createVideoStore = (): VideoStore => {
         cancel();
         const held = painted;
         painted = undefined;
-        if (held !== undefined && Math.abs(target.currentTime - held) > 1e-3)
+        // At the end the element must stay ended, or play() would resume on
+        // the last frame instead of restarting.
+        if (!atEnd() && held !== undefined && Math.abs(target.currentTime - held) > 1e-3)
           target.currentTime = held;
         commit({ paused: true, time: target.currentTime });
       };
@@ -156,9 +173,19 @@ export const createVideoStore = (): VideoStore => {
       };
       const onError = () => commit({ status: 'error' });
 
-      const muted = options.muted ?? false;
-      const rate = options.defaultPlaybackRate ?? 1;
-      commit({ muted, paused: target.paused, rate, status: 'loading' });
+      // Initial props apply once; a later video (a new src) keeps the viewer's choices.
+      const muted = attachedOnce ? state.muted : (options.muted ?? false);
+      const rate = attachedOnce ? state.rate : (options.defaultPlaybackRate ?? 1);
+      attachedOnce = true;
+      commit({
+        duration: Number.isFinite(target.duration) ? target.duration : 0,
+        muted,
+        paused: target.paused,
+        rate,
+        size: undefined,
+        status: 'loading',
+        time: target.currentTime,
+      });
       if (target.muted !== muted) target.muted = muted;
       if (target.playbackRate !== rate) target.playbackRate = rate;
 
@@ -226,7 +253,8 @@ export const createVideoStore = (): VideoStore => {
       const from = frameTime();
       painted = undefined;
       video.pause();
-      video.currentTime = steppedTime(from, frames, video.duration || 0, data.fps);
+      const limit = Number.isFinite(video.duration) ? video.duration : Number.POSITIVE_INFINITY;
+      video.currentTime = steppedTime(from, frames, limit, data.fps);
       commit({ time: video.currentTime });
     },
     subscribe: (listener) => {
@@ -238,7 +266,7 @@ export const createVideoStore = (): VideoStore => {
     toggle: () => {
       if (!video) return;
       if (!video.paused) return video.pause();
-      if (video.ended) video.currentTime = 0;
+      if (atEnd()) video.currentTime = 0;
       void video.play();
     },
     toggleFullscreen: () => {

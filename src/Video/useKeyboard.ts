@@ -21,7 +21,17 @@ export const handleVideoKey = (
 ) => {
   if (event.altKey || event.ctrlKey || event.metaKey) return false;
   const target = event.target as HTMLElement | null;
-  if (target?.closest?.('input, textarea, [contenteditable="true"]')) return false;
+  // Portalled content (menus) bubbles through React to Root without being inside it.
+  const host = event.currentTarget as Node | null;
+  if (host instanceof Node && target instanceof Node && host !== target && !host.contains(target))
+    return false;
+  if (
+    target?.isContentEditable ||
+    target?.closest?.(
+      'input, textarea, select, [role="menuitem"], [contenteditable]:not([contenteditable="false"])',
+    )
+  )
+    return false;
   if (target instanceof HTMLButtonElement && (event.key === ' ' || event.key === 'Enter'))
     return false;
   const state = store.getState();

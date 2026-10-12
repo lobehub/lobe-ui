@@ -1,7 +1,10 @@
 export interface MockVideo extends HTMLVideoElement {
   emit: (type: string) => void;
+  enableFrameCallbacks: () => void;
   finish: () => void;
+  finishNaturally: () => void;
   loadCalls: number;
+  paintFrame: (mediaTime: number) => void;
   setMeta: (meta: { duration: number; height?: number; width?: number }) => void;
 }
 
@@ -71,6 +74,32 @@ export const mockVideoElement = (element: HTMLVideoElement): MockVideo => {
     ended = true;
     paused = true;
     video.emit('ended');
+  };
+  video.finishNaturally = () => {
+    currentTime = duration;
+    paused = true;
+    video.emit('pause');
+    ended = true;
+    video.emit('ended');
+  };
+  let frameCallbacks: ((now: number, frame: { mediaTime: number }) => void)[] = [];
+  video.enableFrameCallbacks = () => {
+    Object.assign(video, {
+      cancelVideoFrameCallback: () => {
+        frameCallbacks = [];
+      },
+      requestVideoFrameCallback: (
+        callback: (now: number, frame: { mediaTime: number }) => void,
+      ) => {
+        frameCallbacks.push(callback);
+        return frameCallbacks.length;
+      },
+    });
+  };
+  video.paintFrame = (mediaTime) => {
+    const pending = frameCallbacks;
+    frameCallbacks = [];
+    for (const callback of pending) callback(0, { mediaTime });
   };
   video.setMeta = (meta) => {
     duration = meta.duration;

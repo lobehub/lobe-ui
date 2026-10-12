@@ -173,6 +173,19 @@ describe('Video.Controls', () => {
     expect(player.getState().rate).toBe(1.5);
   });
 
+  it('opens menus inside the player while it is fullscreen', async () => {
+    const { container } = setup();
+    const root = container.firstElementChild as HTMLElement;
+    Object.defineProperty(document, 'fullscreenElement', { configurable: true, get: () => root });
+    act(() => {
+      document.dispatchEvent(new Event('fullscreenchange'));
+    });
+    fireEvent.click(screen.getByRole('button', { name: 'Playback speed' }));
+    const item = await screen.findByRole('menuitem', { name: /1\.5×/ });
+    expect(root.contains(item)).toBe(true);
+    Object.defineProperty(document, 'fullscreenElement', { configurable: true, get: () => null });
+  });
+
   it('hides over the frame once playback leaves the pointer idle', async () => {
     const { container, video } = setup();
     const bar = container.querySelector('[data-video-controls]')!;

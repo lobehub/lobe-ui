@@ -158,4 +158,64 @@ describe('createVideoStore', () => {
     store.setCaptions(false);
     expect(store.getState().captions).toBe(false);
   });
+
+  it('restarts from the beginning after a natural end with painted frames', async () => {
+    const store = createVideoStore();
+    const video = createMockVideo();
+    video.enableFrameCallbacks();
+    store.attach(video);
+    video.setMeta({ duration: 134 });
+    await store.play();
+    video.paintFrame(133.96);
+    video.finishNaturally();
+    expect(video.currentTime).toBe(134);
+    store.toggle();
+    expect(video.currentTime).toBe(0);
+    expect(video.paused).toBe(false);
+  });
+
+  it('restarts when toggled within half a frame of the end', () => {
+    const { store, video } = setup();
+    video.currentTime = 134 - 0.01;
+    store.toggle();
+    expect(video.currentTime).toBe(0);
+  });
+
+  it('keeps a seek made before metadata loads', () => {
+    const store = createVideoStore();
+    const video = createMockVideo();
+    store.attach(video);
+    store.seek(52);
+    expect(video.currentTime).toBe(52);
+  });
+
+  it('ignores non-finite seeks such as on a live stream', () => {
+    const { store, video } = setup();
+    store.seek(10);
+    expect(() => store.seek(Number.POSITIVE_INFINITY)).not.toThrow();
+    expect(() => store.seek(Number.NaN)).not.toThrow();
+    expect(video.currentTime).toBe(10);
+  });
+
+  it('resets time and keeps the viewer mute and speed when a new video attaches', () => {
+    const onMutedChange = vi.fn();
+    const { detach, store } = setup();
+    store.setOptions({ onMutedChange });
+    store.seek(45);
+    store.toggleMute();
+    store.setRate(1.5);
+    onMutedChange.mockClear();
+    detach();
+    const next = createMockVideo();
+    store.attach(next);
+    expect(store.getState()).toMatchObject({
+      duration: 0,
+      size: undefined,
+      status: 'loading',
+      time: 0,
+    });
+    expect(next.muted).toBe(true);
+    expect(next.playbackRate).toBe(1.5);
+    expect(onMutedChange).not.toHaveBeenCalled();
+  });
 });
