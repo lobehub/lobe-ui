@@ -41,12 +41,12 @@ description: >
 
 ## 硬性前提：搞对这三件事，否则全是白工
 
-**一、新代码从 `@lobehub/ui` 进，表单单独从 `@lobehub/ui/form` 进。** 顶层同名组件是 antd 包装层，已被 `@lobehub/ui/eslint` 标成 deprecated。antd 里已有 base-ui 对应实现的组件同样禁掉，包括 `Table`、`Badge`、`Progress`、`Spin`、`Result`、`Empty`、`Card`、`Typography`。`Form` 不要从 `@lobehub/ui` 或 `base-ui` 桶导入——桶里那份是即将删除的非受控实现。完整清单见 [components.md](references/components.md) 的 C-01。
+**一、组件从 `@lobehub/ui` 进，表单单独从 `@lobehub/ui/form` 进，不碰 antd。** v6 只有一套组件，没有 `@lobehub/ui/base-ui` 子路径，也不依赖 antd / `antd-style`。antd 的组件、`message` / `notification`、`@ant-design/*` 都被 `@lobehub/ui/eslint` 禁掉，`Card` → `Block`、`Typography` → `Text` 这类映射见 [components.md](references/components.md) 的 C-01。`@lobehub/ui` 根上的 `Form` 是 deprecated 的非受控实现，不要用。
 
 **二、样式只写 `createStaticStyles` + `cssVar`。** `createStyles` 已被 eslint 禁用。组件的 `style.ts` 一律这个写法：
 
 ```ts
-import { createStaticStyles } from 'antd-style';
+import { createStaticStyles } from '@lobehub/ui';
 
 export const styles = createStaticStyles(({ css, cssVar, responsive }) => ({
   root: css`
@@ -60,23 +60,27 @@ export const styles = createStaticStyles(({ css, cssVar, responsive }) => ({
 }));
 ```
 
-用 `cssVar` 写的样式天然支持暗色模式，不需要任何分支。
+用 `cssVar` 写的样式天然支持暗色模式，不需要任何分支。`cssVar` 解析成 `var(--lobe-*)`，值来自 `@lobehub/ui/theme.css`。
 
-**三、Provider 顺序不能颠倒，motion 必须显式传入。**
+**三、样式表要引入，motion 必须显式传入。** 没有 `ThemeProvider`：主题是 `theme.css` 里的 CSS 变量，由 `<html>` 上的 `data-theme` / `data-primary-color` / `data-neutral-color` 切换。
 
 ```tsx
-import { ConfigProvider, ThemeProvider } from '@lobehub/ui';
+import '@lobehub/ui/theme.css';
+import '@lobehub/ui/style.css';
+import '@lobehub/ui/global.css';
+
+import { ConfigProvider, setLobeTheme } from '@lobehub/ui';
 import { zhCn } from '@lobehub/ui/i18n';
 import { motion } from 'motion/react';
 
+setLobeTheme({ appearance: 'dark', primaryColor: 'geekblue' });
+
 <ConfigProvider locale="zh-CN" motion={motion} resources={zhCn}>
-  <ThemeProvider>
-    <App />
-  </ThemeProvider>
+  <App />
 </ConfigProvider>;
 ```
 
-`ConfigProvider` 必须在外层：`ThemeProvider` 渲染 antd 的 `App`（承载静态 `notification` / `modal` 持有者）并读取 CDN 配置加载 webfont，两者都依赖上方的 context。
+`theme.css` 和 `style.css` 必须引入，`global.css`（文档级重置、字体栈、滚动条）按需。`ConfigProvider` 负责 webfont、弹层挂载点和 i18n。
 
 三个容易踩的点：
 
@@ -116,7 +120,7 @@ L6 验收标准     Given/When/Then · 完成的定义
 | 对话界面              | `ChatHeader` → `ChatList` → `ChatInputArea`（组合顺序见 C-04）                                               |
 | 移动端外壳            | `@lobehub/ui/mobile` 的 `ChatHeader` / `ChatInputArea` / `TabBar` / `SafeArea`                               |
 | 固定窄导航栏          | `SideNav`；需要可拖拽伸缩用 `DraggableSideNav`                                                               |
-| 可伸缩侧栏 / 浮动面板 | `base-ui` 的 `DraggablePanel`                                                                                |
+| 可伸缩侧栏 / 浮动面板 | `DraggablePanel`                                                                                             |
 | 营销落地页            | `building-landing-home` skill。组件在 `@lobehub/ui/awesome`，不要在这里现拼 `Hero`                           |
 
 骨架决定主区、侧栏、操作区、状态区的关系。**这一步错了整个页面都偏**——一个列表页被做成卡片墙、一个批量任务页没有批量操作区，后面怎么改组件都救不回来。
@@ -152,7 +156,7 @@ L6 验收标准     Given/When/Then · 完成的定义
 | 空态 / 加载 / 错误 / 权限态缺失          | 规划的 L5      | [craft.md](references/craft.md) K-05           |
 | 页面结构像卡片墙，不像看板               | 搭骨架         | 本文第 2 步 + K-09                             |
 | 组件外观像但语义用错                     | 填充           | [components.md](references/components.md) C-03 |
-| 用了已废弃的顶层组件或 antd 对应件       | 填充           | [components.md](references/components.md) C-01 |
+| 用了 antd 组件或 v5 的导入               | 填充           | [components.md](references/components.md) C-01 |
 | 表单从错误入口导入，或 schema 写在渲染里 | 填充           | [components.md](references/components.md) C-02 |
 | 裸 hex、裸 rgba                          | 细化的视觉取值 | [design.md](references/design.md) D-01 / D-10  |
 | 状态色是新造的                           | 细化的视觉取值 | [design.md](references/design.md) D-03         |
@@ -163,9 +167,9 @@ L6 验收标准     Given/When/Then · 完成的定义
 
 ## Anti-patterns
 
-- 从 `antd` 导入已有 base-ui 实现的组件（`Button`、`Table`、`Select`、`Modal`、`Badge`、`Spin`、`Empty`、`Card`、`Typography` 等），或用 antd 的 `message` / `notification` 而不是 base-ui 的 `toast`。
+- 从 `antd` 导入组件（`Button`、`Table`、`Select`、`Modal`、`Badge`、`Spin`、`Empty`、`Card`、`Typography` 等），或用 antd 的 `message` / `notification` 而不是 `toast`。
 - 从 `@lobehub/ui` 桶导入 `Form`。受控表单只从 `@lobehub/ui/form` 导入。
-- 凭直觉在顶层和 `base-ui` 之间二选一。顶层的同名组件大多是 deprecated 的 antd 包装层。
+- 写 v5 的代码：`ThemeProvider`、`@lobehub/ui/base-ui`、`from 'antd-style'`。v6 都没有了，升级见 `lobe-ui-v6-migration` skill。
 - 手写 spinner、用 `Icon` 的 spin、或引入 `thinking-orbs`。等待指示按 [components.md](references/components.md) C-02 的分档选 `Spin` / `Skeleton` / `LoadingDots`。
 - 把示例和模板当抄板。骨架是起点，业务字段、内容密度、状态清单都要按真实需求调。
 - 在需要 `cssVar` 的地方写死值。找不到对应 token 时明示缺口（[design.md](references/design.md) 的 D-11），不要悄悄写一个 hex 绕过系统。

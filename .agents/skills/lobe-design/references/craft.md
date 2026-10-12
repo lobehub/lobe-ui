@@ -30,7 +30,7 @@
 
 ## K-02 排版与中文
 
-- 界面默认继承 `ThemeProvider` 注入的全局字体栈，**不要在组件里另外指定 `font-family`**。需要自定义字体时走 `ThemeProvider` 的 `customFonts` / `enableCustomFonts`，而不是在 `style.ts` 里写死。
+- 界面默认继承 `@lobehub/ui/theme.css` 提供的字体栈，**不要在组件里另外指定 `font-family`**。需要自定义字体时走 `ConfigProvider` 的 `customFonts` / `enableCustomFonts`，而不是在 `style.ts` 里写死。
 - 中文界面不做字母间距加宽，不用全大写标签——中文没有大小写，`text-transform: uppercase` 只会伤害西文混排部分。
 - 数字用于对比时需要等宽数字（`font-variant-numeric: tabular-nums`），否则列表里数字会跳动。价格、统计、实时刷新的指标都属于这一类。
 - 单栏正文行宽控制在 65 字符左右，宽屏必须有 `max-width`，否则眼睛找不到下一行。
@@ -113,6 +113,6 @@
 
 ## K-10 编码陷阱
 
-- `//` 在 `antd-style` 的 css 模板里**不是注释**。它会被当成内容解析，文本里的撇号会变成未闭合字符串，提交时 stylelint 失败。用 `/* */`。
+- `//` 在 `createStaticStyles` 的 css 模板里**不是注释**。它会被当成内容解析，文本里的撇号会变成未闭合字符串，提交时 stylelint 失败。用 `/* */`。
 - 写在 `:root` 上的 CSS 自定义属性会影响页面上该组件的所有实例。描述单个实例的变量要挂在这个实例自己的元素上，并且用两个以上实例验证。
 - 入场动画期间 `getBoundingClientRect` 包含 transform。要测布局尺寸用 `offsetWidth` / `offsetHeight`。

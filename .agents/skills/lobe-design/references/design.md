@@ -9,7 +9,7 @@
 ## D-01 唯一事实源是 cssVar
 
 ```ts
-import { createStaticStyles } from 'antd-style';
+import { createStaticStyles } from '@lobehub/ui';
 
 export const styles = createStaticStyles(({ css, cssVar, cx, responsive }) => ({
   root: css`
@@ -73,7 +73,7 @@ color{Primary|Success|Warning|Error|Info} 各自提供：
 | 用途     | token                                                                            |
 | -------- | -------------------------------------------------------------------------------- |
 | 圆角     | `borderRadiusXS` 4 · `borderRadiusSM` 6 · `borderRadius` 8 · `borderRadiusLG` 12 |
-| 控件高度 | `controlHeight` 36（base-ui 另有常量：small 24 / middle 32 / large 40）          |
+| 控件高度 | `controlHeight` 36（控件另有尺寸常量：small 24 / middle 32 / large 40）          |
 | 字体     | `fontFamily`（西文 → 中文 → 回退 → emoji 的完整栈）                              |
 | 等宽字体 | `fontFamilyCode`                                                                 |
 
@@ -81,7 +81,7 @@ color{Primary|Success|Warning|Error|Info} 各自提供：
 
 圆角是嵌套关系：内层 = 外层 − padding。外层 `borderRadiusLG`（12）配 4px padding，内层取 `borderRadius`（8）。两层同值会出现可见缝隙。
 
-字体栈已由 `ThemeProvider` 的全局样式注入，包含中文字体。**不要在组件里另写 `font-family`**——这是中文行高、标点和字重失真的主要来源。
+字体栈由 `@lobehub/ui/theme.css` 的根排版规则提供，包含中文字体。**不要在组件里另写 `font-family`**——这是中文行高、标点和字重失真的主要来源。
 
 ## D-05 预设色阶用于「需要互相区分」的场合
 
@@ -145,39 +145,36 @@ export const styles = createStaticStyles(({ css, cx }) => ({
 ## D-07 品牌气质通过主题声明，不靠覆盖 token
 
 ```tsx
-<ThemeProvider
-  customTheme={{
-    primaryColor: 'geekblue',
-    neutralColor: 'slate',
-  }}
->
+setLobeTheme({ neutralColor: 'slate', primaryColor: 'geekblue' });
 ```
+
+等价于在 `<html>` 上写 `data-primary-color="geekblue" data-neutral-color="slate"`。局部换主题用 `<ThemeScope primaryColor="…">`。
 
 - `primaryColor`：`blue` `cyan` `geekblue` `gold` `green` `lime` `magenta` `orange` `purple` `red` `volcano` `yellow`
 - `neutralColor`：`mauve` `olive` `sage` `sand` `slate`
 
 中性色温决定页面底色偏暖、纯灰还是偏冷，会联动 `colorBgLayout` / `colorBgContainer` / `colorText` / `colorBorder` 一整组中性色。品牌色会派生出完整色阶，再挑出 hover / active / surface / border / text 各角色。
 
-需要补项目自己的 token 时走 `customToken` / `customStylish`，它们与 lobe-ui 的定义**合并**而非替换。
+lobe-ui 不再接受自定义 token。项目自己的变量在应用 CSS 里另起前缀定义，不要覆盖 `--lobe-*`。
 
 ## D-08 暗色模式默认不需要分支
 
 ```tsx
-<ThemeProvider themeMode="auto" />
+<LobeThemeScript appearance="system" />
 ```
 
-`themeMode` 取 `light` / `dark` / `auto`。**不要同时控制 `themeMode` 和 `appearance`。**
+`LobeThemeScript` 放进 `<head>`，在首屏绘制前写好 `data-theme`；之后用 `setLobeTheme({ appearance })` 切换。用 `next-themes` 时让它管 `data-theme`，lobe-ui 只管主色和中性色。「跟随系统」这个选择存在应用自己的状态里，`appearance` 永远是解析后的 `light` / `dark`。
 
 绝大多数样式不需要为暗色写任何分支——D-01 已经处理了。只在「token 选择本身要变」时才读运行时状态：
 
 ```ts
-import { useThemeMode } from 'antd-style';
+import { useThemeMode } from '@lobehub/ui';
 
 const { isDarkMode } = useThemeMode();
 const resolvedVariant = variant ?? (isDarkMode ? 'filled' : 'outlined');
 ```
 
-这是库里的真实用法（base-ui `Select` 的默认变体）。如果发现自己在写 `isDarkMode ? '#fff' : '#000'`，说明该换成 token。
+这是库里的真实用法（`Select` 的默认变体）。如果发现自己在写 `isDarkMode ? '#fff' : '#000'`，说明该换成 token。
 
 ## D-09 响应式只管视觉规则
 
@@ -201,17 +198,7 @@ createStaticStyles(({ css, responsive }) => ({
 2. 间距可以写数值（库内普遍如此），但要用 4 的倍数并在同一区域内保持一致；`Flexbox` 的 `gap` 优先取预设档位 `2|4|8|12|16|24`。
 3. 动效时长和缓动不要为了「活泼一点」改成弹跳曲线（见 K-06）。
 4. 焦点态不可降级为 `outline: none`（见 K-07）。
-5. 覆盖 antd 内部类名时用 `prefixCls`，不要写死 `.ant-`：
-
-```ts
-const prefixCls = 'ant';
-
-css`
-  .${prefixCls}-alert-message {
-    color: inherit;
-  }
-`;
-```
+5. 定制组件只走 `className`、`style`、`classNames` / `styles` 插槽和文档里的 `data-*` 属性。不要选中生成的类名（StyleX 哈希每个版本都会变），也不要再写 `.ant-*`。
 
 6. `//` 在 css 模板里不是注释，用 `/* */`（见 K-10）。
 7. 描述单个实例的 CSS 自定义属性要挂在该实例自己的元素上。写到 `:root` 会被页面上所有实例共享，第二个挂载的实例会读到第一个的值当基线。
