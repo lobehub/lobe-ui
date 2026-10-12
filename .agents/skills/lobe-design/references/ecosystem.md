@@ -7,7 +7,7 @@
 按 `@lobehub/ui` 自己声明的 peer 装，不要另锁一套旧版本：
 
 - `react` / `react-dom` `^19`
-- `motion` `^13`
+- `motion` `^13 || ^14`
 - `@lobehub/icons` `^6` 与 `@lobehub/fluent-emoji` `^5`（beta 期间装 `@beta`） —— 两者是 peer。不装的话 `Avatar`、`FluentEmoji`、`EmojiPicker` 会在运行时失败。`@lobehub/icons` 和 `@lobehub/ui` 互为 peer，必须同时安装。
 
 不要装 `antd` / `antd-style`。应用侧写样式从 `@lobehub/ui` 导入 `createStaticStyles` / `cssVar` / `cx`。

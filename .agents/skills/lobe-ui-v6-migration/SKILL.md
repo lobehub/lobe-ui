@@ -18,7 +18,7 @@ v6 has no antd, no `antd-style`, no `ThemeProvider` and no `@lobehub/ui/base-ui`
 Work in order. Type-check after each step; do not batch several steps into one unverified change.
 
 1. **Inventory.** Read `package.json` (and workspace packages in a monorepo). Find the app entry points (`main.tsx`, `app/layout.tsx`, `_app.tsx`), SSR shells, and every place that renders `ThemeProvider`, `StyleProvider`, antd `App` or antd `ConfigProvider`. Note the package manager.
-2. **Dependencies.** Install `@lobehub/ui@beta`, `@lobehub/icons@beta`, `@lobehub/fluent-emoji@beta`, `motion@^13`, plus `@lobehub/charts@beta` / `@lobehub/editor@beta` / `@lobehub/tts@beta` if used. Remove `antd`, `antd-style`, `@ant-design/*` and `rc-*` unless code outside lobe-ui still needs them (then keep them and say so in your summary).
+2. **Dependencies.** Install `@lobehub/ui@beta`, `@lobehub/icons@beta`, `@lobehub/fluent-emoji@beta`, `motion@^14` (13 also works), plus `@lobehub/charts@beta` / `@lobehub/editor@beta` / `@lobehub/tts@beta` if used. Remove `antd`, `antd-style`, `@ant-design/*` and `rc-*` unless code outside lobe-ui still needs them (then keep them and say so in your summary).
 3. **Codemod.** Run from the repository root (`.` also reaches build config and test mocks), then the project formatter:
 
    ```bash

@@ -23,7 +23,7 @@ describe('checkPackageJson', () => {
       '5 Bump `@lobehub/ui` to ^6 (`@beta` during the beta).',
       '6 Remove `antd`: @lobehub/ui 6 does not use it.',
       '7 Remove `antd-style`: import its helpers from @lobehub/ui.',
-      '8 Bump `motion` to ^13.',
+      '8 Bump `motion` to ^14 (^13 also works).',
       '12 Remove `@ant-design/icons`: @lobehub/ui 6 does not use it.',
     ]);
   });

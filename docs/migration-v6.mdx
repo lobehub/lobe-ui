@@ -6,14 +6,14 @@ order: 1
 
 `@lobehub/ui` 6 drops Ant Design. There is no `antd`, `antd-style`, `@ant-design/*` or `rc-*` dependency anymore, no `ThemeProvider`, and one component set: the base-ui components that used to live under `@lobehub/ui/base-ui` are now the root export. Component styles are compiled with StyleX into `@lobehub/ui/style.css`, and the theme is a static stylesheet switched by `data-*` attributes.
 
-Requirements: React 19, `motion` 13, `@lobehub/icons` 6 and `@lobehub/fluent-emoji` 5 (both on the `beta` tag during the beta).
+Requirements: React 19, `motion` 13 or 14, `@lobehub/icons` 6 and `@lobehub/fluent-emoji` 5 (both on the `beta` tag during the beta).
 
 ## Upgrade steps
 
 1. Update the dependencies and remove antd:
 
    ```bash
-   pnpm add @lobehub/ui@beta @lobehub/icons@beta @lobehub/fluent-emoji@beta motion@^13
+   pnpm add @lobehub/ui@beta @lobehub/icons@beta @lobehub/fluent-emoji@beta motion@^14
    pnpm remove antd antd-style # plus any @ant-design/* packages you have
    ```
 

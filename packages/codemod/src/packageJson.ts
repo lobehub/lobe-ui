@@ -7,11 +7,11 @@ const DEPENDENCY_FIELDS = [
   'optionalDependencies',
 ];
 
-const MIN_MAJOR: Record<string, { beta: boolean; major: number }> = {
+const MIN_MAJOR: Record<string, { beta: boolean; major: number; suggest?: string }> = {
   '@lobehub/fluent-emoji': { beta: true, major: 5 },
   '@lobehub/icons': { beta: true, major: 6 },
   '@lobehub/ui': { beta: true, major: 6 },
-  'motion': { beta: false, major: 13 },
+  'motion': { beta: false, major: 13, suggest: '^14 (^13 also works)' },
 };
 
 const majorOf = (range: string) => {
@@ -27,6 +27,7 @@ const messageFor = (name: string, range: string) => {
   const min = MIN_MAJOR[name];
   const major = majorOf(range);
   if (!min || major === undefined || major >= min.major) return;
+  if (min.suggest) return `Bump \`${name}\` to ${min.suggest}.`;
   return `Bump \`${name}\` to ^${min.major}${min.beta ? ' (`@beta` during the beta)' : ''}.`;
 };
 
