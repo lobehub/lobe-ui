@@ -29,7 +29,7 @@ export interface CodeDiffProps extends Omit<FlexboxProps, 'children'> {
   /**
    * Options for the diff component
    */
-  diffOptions?: FileDiffOptions<string>;
+  diffOptions?: FileDiffOptions<string, undefined>;
   /**
    * File name to display
    */
@@ -95,7 +95,7 @@ export interface PatchDiffProps extends Omit<FlexboxProps, 'children'> {
   /**
    * Options for the diff component
    */
-  diffOptions?: FileDiffOptions<string>;
+  diffOptions?: FileDiffOptions<string, undefined>;
   /**
    * File name to display (optional, extracted from patch if not provided)
    */

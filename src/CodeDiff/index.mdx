@@ -57,7 +57,7 @@ Render from a unified diff patch string.
 | showHeader | Whether to show file header | `boolean` | `true` |
 | fullFeatured | Whether to enable full-featured mode | `boolean` | `true` |
 | defaultExpand | Default expansion state when fullFeatured | `boolean` | `true` |
-| diffOptions | Options for the underlying diff engine | `FileDiffOptions<string>` | - |
+| diffOptions | Options for the underlying diff engine | `FileDiffOptions<string, undefined>` | - |
 | classNames | Custom class names for different parts | `{ header?: string; body?: string }` | - |
 | styles | Custom inline styles for different parts | `{ header?: CSSProperties; body?: CSSProperties }` | - |
 | actionsRender | Custom render function for header actions | `(props: { patch: string; originalNode: ReactNode }) => ReactNode` | - |

@@ -66,7 +66,7 @@ export const PatchDiff = memo<PatchDiffProps>(
       });
     }, [actionsRender, patch]);
 
-    const options = useMemo<FileDiffOptions<string>>(
+    const options = useMemo<FileDiffOptions<string, undefined>>(
       () => getLobeDiffOptions({ diffOptions, isDarkMode, viewMode }),
       [isDarkMode, viewMode, diffOptions],
     );
