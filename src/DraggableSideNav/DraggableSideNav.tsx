@@ -3,7 +3,6 @@
 import './style.css';
 
 import * as stylex from '@stylexjs/stylex';
-import { useHover } from 'ahooks';
 import clsx from 'clsx';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Resizable, type ResizeCallback } from 're-resizable';
@@ -19,6 +18,7 @@ import {
 import useControlledState from 'use-merge-value';
 
 import { Center, Flexbox } from '@/Flex';
+import { useHover } from '@/hooks/useHover';
 import Icon from '@/Icon';
 import { styleProps } from '@/styles/stylex/props';
 

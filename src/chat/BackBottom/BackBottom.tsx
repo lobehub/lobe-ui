@@ -1,10 +1,10 @@
 'use client';
 
-import { useScroll } from 'ahooks';
 import { ListEnd } from 'lucide-react';
 import { memo, type MouseEventHandler, useEffect, useRef, useState } from 'react';
 
 import { ButtonImpl } from '@/Button/Button';
+import { useScroll } from '@/hooks/useScroll';
 
 import { styles } from './style';
 import { type BackBottomProps } from './type';
