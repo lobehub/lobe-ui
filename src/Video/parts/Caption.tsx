@@ -13,10 +13,13 @@ const Caption = ({ action, className, style }: VideoCaptionProps) => {
   const frame = use(FrameContext);
   const markers = useVideo((state) => (state.captions ? state.activeMarkers : undefined));
   if (!markers || markers.length === 0) return null;
+  const raised = Boolean(frame?.overlay && frame.visible);
 
   return (
     <div
-      {...styleProps([styles.caption, frame?.visible && styles.captionRaised], className, style)}
+      data-raised={String(raised)}
+      data-video-caption=""
+      {...styleProps([styles.caption, raised && styles.captionRaised], className, style)}
       onClick={(event) => event.stopPropagation()}
       onPointerDown={(event) => event.stopPropagation()}
     >

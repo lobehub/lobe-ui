@@ -2,9 +2,18 @@ import { act, fireEvent, screen, waitFor } from '@testing-library/react';
 
 import { playerRef, renderVideo } from '../__tests__/render';
 import Caption from './Caption';
+import Controls from './Controls';
 import Frame from './Frame';
 import LoadError from './LoadError';
 import Root from './Root';
+
+if (!globalThis.ResizeObserver) {
+  globalThis.ResizeObserver = class {
+    disconnect() {}
+    observe() {}
+    unobserve() {}
+  } as any;
+}
 
 const markers = [
   { color: 'success', content: 'Agent created', label: 'Check', time: 52 },
@@ -40,6 +49,37 @@ describe('Video.Caption', () => {
       player.setCaptions(false);
     });
     expect(screen.queryByText('Agent created')).toBeNull();
+  });
+
+  it('rises above overlay controls only', () => {
+    const below = playerRef();
+    const { container, unmount } = renderVideo(
+      <Root markers={markers} ref={below} src="a.mp4">
+        <Frame>
+          <Caption />
+        </Frame>
+        <Controls />
+      </Root>,
+    );
+    act(() => below.current?.seek(52.2));
+    expect(container.querySelector('[data-video-caption]')!.getAttribute('data-raised')).toBe(
+      'false',
+    );
+    unmount();
+
+    const over = playerRef();
+    const overlay = renderVideo(
+      <Root markers={markers} ref={over} src="a.mp4">
+        <Frame>
+          <Caption />
+          <Controls />
+        </Frame>
+      </Root>,
+    );
+    act(() => over.current?.seek(52.2));
+    expect(
+      overlay.container.querySelector('[data-video-caption]')!.getAttribute('data-raised'),
+    ).toBe('true');
   });
 
   it('renders the action for each marker', () => {

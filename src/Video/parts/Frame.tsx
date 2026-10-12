@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { styleProps } from '@/styles/stylex/props';
 
@@ -25,6 +25,7 @@ const Frame = ({ children, className, style }: VideoFrameProps) => {
   const size = useVideo((state) => state.size);
   const idleForced = useVideo((state) => state.paused || state.status !== 'ready');
   const idle = useControlsIdle(idleForced);
+  const [overlay, setOverlay] = useState(false);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -33,8 +34,8 @@ const Frame = ({ children, className, style }: VideoFrameProps) => {
   }, [store, media.src]);
 
   const frame = useMemo<FrameContextValue>(
-    () => ({ hold: idle.hold, visible: idle.visible }),
-    [idle.hold, idle.visible],
+    () => ({ hold: idle.hold, overlay, setOverlay, visible: idle.visible }),
+    [idle.hold, idle.visible, overlay],
   );
 
   const aspectRatio = size?.height ? `${size.width} / ${size.height}` : '16 / 9';

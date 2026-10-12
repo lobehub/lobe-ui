@@ -30,6 +30,8 @@ export const useVideoContext = () => {
 
 export interface FrameContextValue {
   hold: (held: boolean) => void;
+  overlay: boolean;
+  setOverlay: (overlay: boolean) => void;
   visible: boolean;
 }
 

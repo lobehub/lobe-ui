@@ -9,7 +9,7 @@ import {
   Volume2,
   VolumeX,
 } from 'lucide-react';
-import { type ReactNode, use } from 'react';
+import { type ReactNode, use, useLayoutEffect } from 'react';
 
 import videoMessages from '@/i18n/resources/en/video';
 import { useTranslation } from '@/i18n/useTranslation';
@@ -85,6 +85,12 @@ const Controls = ({ children, className, extra, frameStep, style }: VideoControl
   const ready = useVideo((state) => state.status === 'ready');
   const fullscreen = useFullscreen(store);
   const overlay = frame !== null;
+
+  useLayoutEffect(() => {
+    if (!frame) return;
+    frame.setOverlay(true);
+    return () => frame.setOverlay(false);
+  }, [frame?.setOverlay]);
   const visible = !overlay || frame.visible;
   const hasCaptions = config.markers.some(
     (marker) => marker.content !== undefined && marker.content !== null,
