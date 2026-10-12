@@ -7,11 +7,10 @@
 按 `@lobehub/ui` 自己声明的 peer 装，不要另锁一套旧版本：
 
 - `react` / `react-dom` `^19`
-- `antd` `^6.1.1` —— `ThemeProvider` 和少数还没迁走的顶层组件仍然需要它。组件从 `base-ui` 导入，不要从 antd 导入 [components.md](components.md) C-01 禁掉的那些。
-- `motion` `^12`
-- `@lobehub/icons` `^5` 与 `@lobehub/fluent-emoji` `^4` —— 两者是 peer。不装的话 `Avatar`、`FluentEmoji`、`EmojiPicker` 会在运行时失败。`@lobehub/icons` 和 `@lobehub/ui` 互为 peer，必须同时安装。
+- `motion` `^13 || ^14`
+- `@lobehub/icons` `^6` 与 `@lobehub/fluent-emoji` `^5`（beta 期间装 `@beta`） —— 两者是 peer。不装的话 `Avatar`、`FluentEmoji`、`EmojiPicker` 会在运行时失败。`@lobehub/icons` 和 `@lobehub/ui` 互为 peer，必须同时安装。
 
-写 `style.ts` 时直接从 `antd-style` 导入 `createStaticStyles`（`^4`）。它是 `@lobehub/ui` 的依赖，应用侧自己写样式时仍要装上。
+不要装 `antd` / `antd-style`。应用侧写样式从 `@lobehub/ui` 导入 `createStaticStyles` / `cssVar` / `cx`。
 
 `@lobehub/charts` 是独立包，不是 `@lobehub/ui` 的依赖。`@lobehub/streamdown` 是直接依赖，不要再单独接一份去驱动 markdown。
 
@@ -25,7 +24,7 @@ import { LineChart, useThemeColorRange } from '@lobehub/charts';
 
 Next.js 里需要 `transpilePackages: ['@lobehub/charts']`。
 
-**必须渲染在 `ThemeProvider` 内部。** 包本身不提供主题，轴标签、网格线、填充都靠 `antd-style` 的 context 取 `cssVar`。
+**页面必须已引入 `@lobehub/ui/theme.css`。** 包本身不提供主题，轴标签、网格线、填充都读 `--lobe-*` 变量。
 
 ### 选哪个图表
 
@@ -86,7 +85,7 @@ geekblue · gold · green · cyan · purple · red · volcano · gray
 要自定义时从主题取值，**不要手写 hex**：
 
 ```tsx
-import { useTheme } from 'antd-style';
+import { useTheme } from '@lobehub/ui';
 
 const theme = useTheme();
 
@@ -99,7 +98,7 @@ const theme = useTheme();
 - `Heatmaps` 的 `colors` 必须是真实颜色值而不是 `cssVar` 字符串——它内部用 `chroma.valid()` 校验。
 - 业务语义色要**稳定映射**：成功/增长、警告、危险/下降各自固定，不能随系列顺序漂移。否则「红色」可能只是第一个系列，不代表任何含义，用户无法信任这个颜色。
 
-暗色模式没有专门的 prop，跟随 `ThemeProvider`。`Heatmaps` 和 `DonutChart` 内部会按 `isDarkMode` 换阶。
+暗色模式没有专门的 prop，跟随最近的 `ThemeScope` 或 `<html data-theme>`。`Heatmaps` 和 `DonutChart` 内部会按 `isDarkMode` 换阶。
 
 ### 已知坑
 

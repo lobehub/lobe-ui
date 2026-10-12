@@ -16,7 +16,7 @@ import DemoIndex from './demos/index.tsx?demo';
 
 `items` use the base-ui `List` item shape, so the same builders serve desktop lists and the mobile menu. Selecting an item calls `onSelect` and closes the drawer. `fullscreen` covers the header, renders labels in large type without icons and pins `footer` to the bottom.
 
-### Migrating from the root Burger
+### Migrating from v5 Burger
 
 - `setOpened` → `onOpenChange`; `selectedKeys` → `activeKey`; `onClick` → `onSelect(key)`.
 - antd `Menu` items → base-ui `List` items; nested submenus are not supported.

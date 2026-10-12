@@ -1,0 +1,41 @@
+{
+  "name": "@lobehub/ui-codemod",
+  "version": "0.0.0",
+  "description": "Codemods for upgrading @lobehub/ui across major versions",
+  "homepage": "https://github.com/lobehub/lobe-ui/tree/master/packages/codemod",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lobehub/lobe-ui.git",
+    "directory": "packages/codemod"
+  },
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "lobe-ui-codemod": "dist/bin.mjs"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsdown",
+    "prepack": "tsdown"
+  },
+  "dependencies": {
+    "@babel/parser": "^8.0.7",
+    "diff": "^9.0.0",
+    "magic-string": "^1.4.3",
+    "tinyglobby": "^0.2.17"
+  },
+  "devDependencies": {
+    "@babel/types": "^8.0.6",
+    "tsdown": "^0.23.0"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org"
+  }
+}
