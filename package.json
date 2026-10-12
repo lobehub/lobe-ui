@@ -176,7 +176,6 @@
     "es-toolkit": "^1.49.0",
     "hast-util-from-html-isomorphic": "^2.0.0",
     "hast-util-to-text": "^4.0.2",
-    "immer": "^11.1.11",
     "katex": "^0.18.1",
     "leva": "^0.10.1",
     "lucide-react": "^1.24.0",

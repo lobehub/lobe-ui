@@ -1,5 +1,3 @@
-import { produce } from 'immer';
-
 import type { ChatMessageError, LLMMessage, LLMRoleType } from '@/chat/types';
 
 export type MessageDispatch =
@@ -26,9 +24,7 @@ export const messagesReducer = (state: LLMMessage[], payload: MessageDispatch): 
     }
 
     case 'insertMessage': {
-      return produce(state, (draftState) => {
-        draftState.splice(payload.index, 0, payload.message);
-      });
+      return [...state.slice(0, payload.index), payload.message, ...state.slice(payload.index)];
     }
 
     case 'deleteMessage': {
@@ -39,42 +35,29 @@ export const messagesReducer = (state: LLMMessage[], payload: MessageDispatch): 
     }
 
     case 'updateMessage': {
-      return produce(state, (draftState) => {
-        const { index, message } = payload;
-
-        draftState[index].content = message;
-      });
+      const { index, message } = payload;
+      return state.map((item, i) => (i === index ? { ...item, content: message } : item));
     }
     case 'updateMessageRole': {
-      return produce(state, (draftState) => {
-        const { index, role } = payload;
-
-        draftState[index].role = role;
-      });
+      const { index, role } = payload;
+      return state.map((item, i) => (i === index ? { ...item, role } : item));
     }
 
     case 'addUserMessage': {
-      return produce(state, (draftState) => {
-        draftState.push({ content: payload.message, role: 'user' });
-      });
+      return [...state, { content: payload.message, role: 'user' }];
     }
 
     case 'updateLatestBotMessage': {
-      return produce(state, () => {
-        const { responseStream } = payload;
-        const newMessage = { content: responseStream.join(''), role: 'assistant' };
-
-        return [...state.slice(0, -1), newMessage];
-      });
+      const newMessage: LLMMessage = {
+        content: payload.responseStream.join(''),
+        role: 'assistant',
+      };
+      return [...state.slice(0, -1), newMessage];
     }
 
     case 'setErrorMessage': {
-      return produce(state, (draftState) => {
-        const { index, error } = payload;
-
-        // @ts-ignore
-        draftState[index].error = error;
-      });
+      const { index, error } = payload;
+      return state.map((item, i) => (i === index ? ({ ...item, error } as LLMMessage) : item));
     }
 
     default: {
