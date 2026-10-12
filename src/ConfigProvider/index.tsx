@@ -25,6 +25,7 @@ import { MotionComponent, type MotionComponentType } from '@/MotionProvider';
 import { type CDN, type CdnApi, genCdnUrl } from '@/utils/genCdnUrl';
 
 import AppElementContext from './AppElementContext';
+import { KATEX_CSS_VERSION } from './cdnAssets';
 
 export const LOBE_THEME_APP_ID = 'lobe-ui-theme-app';
 
@@ -180,7 +181,7 @@ const WebFonts = ({ customFonts }: { customFonts?: string[] }) => {
           pkg: '@lobehub/webfont-harmony-sans-sc',
           version: '1.0.0',
         }),
-        genCdnUrl({ path: 'dist/katex.min.css', pkg: 'katex', version: '0.18.1' }),
+        genCdnUrl({ path: 'dist/katex.min.css', pkg: 'katex', version: KATEX_CSS_VERSION }),
       ],
     [customFonts, genCdnUrl],
   );
