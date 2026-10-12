@@ -180,7 +180,7 @@
     "lucide-react": "^1.55.0",
     "motion": "^13.0.0 || ^14.0.0",
     "re-resizable": "^6.11.2",
-    "react-avatar-editor": "^15.1.0",
+    "react-avatar-editor": "^16.0.0",
     "react-error-boundary": "^6.1.6",
     "react-hotkeys-hook": "^5.3.3",
     "react-markdown": "^10.1.0",
