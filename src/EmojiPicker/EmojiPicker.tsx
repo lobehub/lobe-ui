@@ -9,7 +9,6 @@ import chroma from 'chroma-js';
 import clsx from 'clsx';
 import { SmileIcon, TrashIcon, UploadIcon } from 'lucide-react';
 import { memo, useMemo, useRef, useState } from 'react';
-import useSWR from 'swr';
 import useMergeState from 'use-merge-value';
 
 import ActionIcon from '@/ActionIcon';
@@ -27,6 +26,7 @@ import Tooltip from '@/Tooltip';
 import AvatarUploader from './AvatarUploader';
 import { styles } from './style';
 import { type EmojiPickerProps } from './type';
+import { useEmojiMartI18n } from './useEmojiMartI18n';
 
 const DEFAULT_AVATAR = '🤖';
 
@@ -76,12 +76,7 @@ const EmojiPicker = memo<EmojiPickerProps>(
       [theme.colorPrimary, theme.colorBgElevated],
     );
 
-    const { data: i18n } = useSWR(
-      locale,
-      async () =>
-        await import(/* @vite-ignore */ `@emoji-mart/data/i18n/${locale.split('-')[0]}.json`),
-      { revalidateOnFocus: false, revalidateOnMount: false },
-    );
+    const i18n = useEmojiMartI18n(locale);
 
     const [ava, setAva] = useMergeState(defaultAvatar, {
       defaultValue: defaultAvatar,

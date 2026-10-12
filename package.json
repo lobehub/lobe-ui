@@ -195,7 +195,6 @@
     "remark-gfm": "^4.0.1",
     "remark-math": "^6.0.0",
     "shiki": "^4.3.1",
-    "swr": "^2.4.2",
     "unified": "^11.0.5",
     "unist-util-visit-parents": "^6.0.2",
     "uqr": "^0.1.3",
