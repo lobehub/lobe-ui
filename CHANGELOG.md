@@ -2,6 +2,43 @@
 
 # Changelog
 
+# [6.0.0-beta.5](https://github.com/lobehub/lobe-ui/compare/v6.0.0-beta.4...v6.0.0-beta.5) (2026-10-12)
+
+### ⚡ Performance Improvements
+
+- V6 re-render bench and first render-granularity fixes, closes [#709](https://github.com/lobehub/lobe-ui/issues/709) ([0c0b6c1](https://github.com/lobehub/lobe-ui/commit/0c0b6c1))
+
+### 🎫 Chores
+
+- **deps**: Allow katex 0.19 ([3773ca0](https://github.com/lobehub/lobe-ui/commit/3773ca0))
+- **deps**: Bump minors and patches ([fd1d0a0](https://github.com/lobehub/lobe-ui/commit/fd1d0a0))
+- **deps**: Bump react-avatar-editor to 16 ([a506a20](https://github.com/lobehub/lobe-ui/commit/a506a20))
+- **deps**: Bump virtua to 0.53 ([2f49ada](https://github.com/lobehub/lobe-ui/commit/2f49ada))
+- **deps**: Bump vite to 8.3.4 and widen docs-kit peer ranges ([ed01c30](https://github.com/lobehub/lobe-ui/commit/ed01c30))
+- **deps**: Drop @floating-ui/react, keep its two types locally ([e9b71c5](https://github.com/lobehub/lobe-ui/commit/e9b71c5))
+- **deps**: Drop swr from EmojiPicker ([3619d96](https://github.com/lobehub/lobe-ui/commit/3619d96))
+- **deps**: Drop unused runtime dependencies ([3d60db0](https://github.com/lobehub/lobe-ui/commit/3d60db0))
+- **deps**: Replace ahooks with local useScroll, useSize and useHover ([dee837c](https://github.com/lobehub/lobe-ui/commit/dee837c))
+- **deps**: Replace fast-deep-equal with es-toolkit isEqual ([452b000](https://github.com/lobehub/lobe-ui/commit/452b000))
+- **deps**: Replace immer with plain immutable updates in messagesReducer ([716cc01](https://github.com/lobehub/lobe-ui/commit/716cc01))
+- **deps**: Replace numeral with Intl.NumberFormat ([3a882cc](https://github.com/lobehub/lobe-ui/commit/3a882cc))
+- **deps**: Replace polished with chroma-js-backed color helpers ([d4f3bb5](https://github.com/lobehub/lobe-ui/commit/d4f3bb5))
+- **deps**: Replace react-merge-refs with a local mergeRefs ([deb2071](https://github.com/lobehub/lobe-ui/commit/deb2071))
+- **deps**: Replace ts-md5 with a local string hash for highlight cache keys ([207cf7c](https://github.com/lobehub/lobe-ui/commit/207cf7c))
+- **deps**: Replace url-join with a local joinUrl in genCdnUrl ([e7f4269](https://github.com/lobehub/lobe-ui/commit/e7f4269))
+- **deps**: Replace use-merge-value with a local useControlledState ([060bde7](https://github.com/lobehub/lobe-ui/commit/060bde7))
+- **eslint**: Ban imports of removed dependencies ([6b6b6f9](https://github.com/lobehub/lobe-ui/commit/6b6b6f9))
+
+### 🐛 Bug Fixes
+
+- **deps**: Keep vite on 8.1.4 ([cdaec43](https://github.com/lobehub/lobe-ui/commit/cdaec43))
+- **emoji-picker**: Pass emoji-mart the locale JSON, not its module namespace ([e1e88a3](https://github.com/lobehub/lobe-ui/commit/e1e88a3))
+
+### 📝 Documentation
+
+- **migration**: Note dependencies no longer installed by @lobehub/ui ([cb5ba58](https://github.com/lobehub/lobe-ui/commit/cb5ba58))
+- **specs**: V6 dependency cleanup design ([fe95424](https://github.com/lobehub/lobe-ui/commit/fe95424))
+
 # [6.0.0-beta.4](https://github.com/lobehub/lobe-ui/compare/v6.0.0-beta.3...v6.0.0-beta.4) (2026-10-12)
 
 ### 🐛 Bug Fixes
