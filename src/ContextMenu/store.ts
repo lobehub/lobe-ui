@@ -1,4 +1,3 @@
-import type { VirtualElement } from '@floating-ui/react';
 import type { ReactNode } from 'react';
 
 import type { IconAlign } from '@/internal/menu';
@@ -6,6 +5,11 @@ import type { VirtualListProps } from '@/internal/virtual';
 
 import type { IconSpaceMode } from './renderItems';
 import type { ContextMenuItem } from './type';
+
+interface VirtualElement {
+  contextElement?: Element;
+  getBoundingClientRect: () => DOMRect;
+}
 
 export type ContextMenuState = Pick<VirtualListProps, 'virtual' | 'listItemHeight'> & {
   anchor: VirtualElement | null;
