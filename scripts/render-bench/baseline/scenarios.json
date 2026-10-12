@@ -3371,8 +3371,8 @@
           "context": 64,
           "mounts": 0,
           "parent": 0,
-          "props": 32,
-          "renders": 80,
+          "props": 0,
+          "renders": 64,
           "state": 0,
           "unnecessary": 0
         },
@@ -3380,11 +3380,11 @@
           "name": "TabsPanel",
           "context": 52,
           "mounts": 0,
-          "parent": 16,
+          "parent": 0,
           "props": 0,
-          "renders": 75,
+          "renders": 59,
           "state": 23,
-          "unnecessary": 44
+          "unnecessary": 36
         },
         {
           "name": "CompositeList",
@@ -3401,8 +3401,8 @@
           "context": 12,
           "mounts": 0,
           "parent": 0,
-          "props": 8,
-          "renders": 20,
+          "props": 0,
+          "renders": 16,
           "state": 4,
           "unnecessary": 0
         },
@@ -3430,9 +3430,9 @@
           "name": "TabsIndicator",
           "context": 12,
           "mounts": 0,
-          "parent": 4,
+          "parent": 0,
           "props": 0,
-          "renders": 16,
+          "renders": 12,
           "state": 0,
           "unnecessary": 0
         },
@@ -3459,11 +3459,11 @@
       ],
       "totals": {
         "context": 140,
-        "parent": 20,
-        "props": 92,
-        "renders": 259,
+        "parent": 0,
+        "props": 52,
+        "renders": 219,
         "state": 47,
-        "unnecessary": 44
+        "unnecessary": 36
       }
     },
     "mount": {
@@ -3678,7 +3678,8 @@
         "unnecessary": 4
       }
     },
-    "name": "Tabs: click each tab"
+    "name": "Tabs: click each tab",
+    "tolerance": 0
   },
   {
     "demo": "src-base-ui-segmented-demo-demos",
