@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 
 type LoadI18n = (language: string) => Promise<unknown>;
 
+const unwrapDefault = (value: unknown): unknown =>
+  value && typeof value === 'object' && 'default' in value ? value.default : value;
+
 export const createEmojiMartI18nLoader = (load: LoadI18n) => {
   const cache = new Map<string, Promise<unknown>>();
 
@@ -18,7 +21,7 @@ export const createEmojiMartI18nLoader = (load: LoadI18n) => {
       }
       pending.then(
         (value) => {
-          if (active) setLoaded({ language, value });
+          if (active) setLoaded({ language, value: unwrapDefault(value) });
         },
         () => {},
       );

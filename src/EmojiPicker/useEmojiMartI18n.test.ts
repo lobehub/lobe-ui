@@ -41,3 +41,12 @@ describe('useEmojiMartI18n', () => {
     expect(result.current).toBeUndefined();
   });
 });
+
+describe('useEmojiMartI18n with a JSON module namespace', () => {
+  it('unwraps the default export', async () => {
+    const strings = { categories: { custom: 'Custom' } };
+    const useI18n = createEmojiMartI18nLoader(async () => ({ default: strings }));
+    const { result } = renderHook(() => useI18n('de-DE'));
+    await waitFor(() => expect(result.current).toBe(strings));
+  });
+});
