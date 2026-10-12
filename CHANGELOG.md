@@ -2,6 +2,22 @@
 
 # Changelog
 
+# [6.0.0-beta.2](https://github.com/lobehub/lobe-ui/compare/v6.0.0-beta.1...v6.0.0-beta.2) (2026-10-12)
+
+### 🎫 Chores
+
+- **deps**: Accept motion 14 ([4e02e1f](https://github.com/lobehub/lobe-ui/commit/4e02e1f))
+
+### 🐛 Bug Fixes
+
+- **deps**: Peer @lobehub/icons 6 and @lobehub/fluent-emoji 5 betas ([49f40bb](https://github.com/lobehub/lobe-ui/commit/49f40bb))
+
+### 📝 Documentation
+
+- **skills**: Add lobe-ui-v6-migration skill and update lobe-design for v6 ([6732efc](https://github.com/lobehub/lobe-ui/commit/6732efc))
+- **spec**: V6 migration kit design ([04c00ac](https://github.com/lobehub/lobe-ui/commit/04c00ac))
+- Add the v6 migration guide and drop stale antd wording ([bb8a015](https://github.com/lobehub/lobe-ui/commit/bb8a015))
+
 # [6.0.0-beta.1](https://github.com/lobehub/lobe-ui/compare/v5.57.3...v6.0.0-beta.1) (2026-10-10)
 
 ### ♻ Code Refactoring
