@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [6.0.0-beta.4](https://github.com/lobehub/lobe-ui/compare/v6.0.0-beta.3...v6.0.0-beta.4) (2026-10-12)
+
+### 🐛 Bug Fixes
+
+- **video**: Raise the caption only above overlay controls ([44953b9](https://github.com/lobehub/lobe-ui/commit/44953b9))
+
 # [6.0.0-beta.3](https://github.com/lobehub/lobe-ui/compare/v6.0.0-beta.2...v6.0.0-beta.3) (2026-10-12)
 
 ### ✨ Features
