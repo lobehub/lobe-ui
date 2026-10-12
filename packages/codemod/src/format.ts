@@ -11,6 +11,7 @@ const RULE_TITLES: Record<RuleId, string> = {
   R7: 'Dependencies',
   R8: 'Theme hook fields',
   R9: 'antd class names',
+  R10: 'Video props',
 };
 
 const groupByRule = (items: ReportItem[]) => {

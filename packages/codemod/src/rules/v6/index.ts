@@ -8,6 +8,7 @@ import { staticCss } from './staticCss';
 import { styleProvider } from './styleProvider';
 import { themeMode } from './themeMode';
 import { themeProvider } from './themeProvider';
+import { videoProps } from './videoProps';
 
 export const v6Rules: Rule[] = [
   themeProvider,
@@ -19,4 +20,5 @@ export const v6Rules: Rule[] = [
   antdImports,
   themeMode,
   antClassNames,
+  videoProps,
 ];
