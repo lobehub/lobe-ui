@@ -1,0 +1,206 @@
+---
+title: Migrating to v6
+description: Upgrade from @lobehub/ui 5.x to 6.x — no antd, CSS-variable theming, one component set.
+order: 1
+---
+
+`@lobehub/ui` 6 drops Ant Design. There is no `antd`, `antd-style`, `@ant-design/*` or `rc-*` dependency anymore, no `ThemeProvider`, and one component set: the base-ui components that used to live under `@lobehub/ui/base-ui` are now the root export. Component styles are compiled with StyleX into `@lobehub/ui/style.css`, and the theme is a static stylesheet switched by `data-*` attributes.
+
+Requirements: React 19, `motion` 13, `@lobehub/icons` 6 and `@lobehub/fluent-emoji` 5 (both on the `beta` tag during the beta).
+
+## Upgrade steps
+
+1. Update the dependencies and remove antd:
+
+   ```bash
+   pnpm add @lobehub/ui@beta @lobehub/icons@beta @lobehub/fluent-emoji@beta motion@^13
+   pnpm remove antd antd-style # plus any @ant-design/* packages you have
+   ```
+
+2. Run the codemod from the repository root. `.` also covers build config (Vite aliases, test mocks); `node_modules`, `dist`, `es`, `build` and `.next` are skipped. Run it without `--dry` once the diff looks right, then run your formatter:
+
+   ```bash
+   npx @lobehub/ui-codemod@beta v6 . --dry
+   npx @lobehub/ui-codemod@beta v6 . --report lobe-ui-v6.md
+   ```
+
+   It rewrites `@lobehub/ui/base-ui` imports, moves the `antd-style` helpers to `@lobehub/ui`, renames the `Theme` type, and lists everything else it found with a file, a line and a link into this page.
+
+3. Work through the report. Each rule matches a section below. A coding agent can do this with the `lobe-ui-v6-migration` skill:
+
+   ```bash
+   npx skills add lobehub/lobe-ui
+   ```
+
+4. Type-check, lint (the `@lobehub/ui/eslint` preset bans antd imports) and open the app in light and dark mode.
+
+## Theming
+
+`ThemeProvider` is gone. Theme tokens are CSS variables (`--lobe-*`) shipped in a stylesheet, and the appearance and colors are attributes on `<html>` or on any subtree.
+
+| File | Content | Required |
+| --- | --- | --- |
+| `@lobehub/ui/theme.css` | token variables for every appearance, primary and neutral color, plus essential rules | yes |
+| `@lobehub/ui/style.css` | compiled component styles | yes |
+| `@lobehub/ui/global.css` | document resets (body font and background, scrollbars, antd's old `reset.css`) | optional |
+
+Before:
+
+```tsx | pure
+import { ThemeProvider } from '@lobehub/ui';
+
+export default ({ children }) => (
+  <ThemeProvider
+    appearance={appearance}
+    customTheme={{ neutralColor: 'mauve', primaryColor: 'blue' }}
+    enableGlobalStyle
+  >
+    {children}
+  </ThemeProvider>
+);
+```
+
+After:
+
+```tsx | pure
+import '@lobehub/ui/theme.css';
+import '@lobehub/ui/style.css';
+import '@lobehub/ui/global.css';
+
+import { ConfigProvider, setLobeTheme } from '@lobehub/ui';
+import { motion } from 'motion/react';
+
+// client only: touches document; on the server render <LobeThemeScript /> in <head>
+setLobeTheme({ appearance: 'dark', neutralColor: 'mauve', primaryColor: 'blue' });
+
+export default ({ children }) => <ConfigProvider motion={motion}>{children}</ConfigProvider>;
+```
+
+- `setLobeTheme({ appearance, primaryColor, neutralColor }, root?)` writes `data-theme`, `data-primary-color` and `data-neutral-color` on `<html>` (or `root`). Call it whenever the user changes the theme.
+- `<LobeThemeScript appearance="system" />` renders an inline script for the document `<head>` that sets the attributes before the first paint, so server-rendered pages do not flash. It does not persist anything; keep the user's choice in your own storage or in `next-themes`.
+- With `next-themes`, let it own `data-theme` (`attribute="data-theme"`) and only pass `primaryColor` / `neutralColor` to `setLobeTheme` or `LobeThemeScript`.
+- `<ThemeScope appearance="dark">` renders a `div` with its own attributes, for an island with a different theme. Unset props inherit from the parent scope.
+- `useThemeMode()` returns `{ appearance, isDarkMode }`; `useTheme()` returns the token values plus `appearance` and `isDarkMode`, for code that needs concrete values (canvas, charts). Both read the nearest `ThemeScope`, else `<html>`.
+
+`ConfigProvider` takes over what `ThemeProvider` did besides theming: web fonts (`customFonts`, `enableCustomFonts`), the portal host for popups (`#lobe-ui-theme-app`, exported as `LOBE_THEME_APP_ID`), and `direction`. These `ThemeProvider` props have no successor: `customTheme` (use the attributes), `customToken`, `customStylish`, `theme` (antd), `themeMode`, `enableGlobalStyle` (import `global.css`) and `appId` (the portal host id is fixed to `lobe-ui-theme-app`).
+
+`ThemeProvider` also rendered antd's `App` and `ConfigProvider`. If your app used `App.useApp()` for `message` / `modal` / `notification`, switch to `toast` and `createModal` from `@lobehub/ui`.
+
+## Styling API
+
+`antd-style` is not used anymore. `@lobehub/ui` exports the same helpers on its own emotion instance (cache key `acss`), so the codemod only changes the import source:
+
+| antd-style | @lobehub/ui | Notes |
+| --- | --- | --- |
+| `createStaticStyles(({ css, cx, cssVar, responsive }) => …)` | same |  |
+| `cssVar` | same | resolves to `var(--lobe-*)` instead of `var(--ant-*)` |
+| `cx`, `css`, `keyframes`, `injectGlobal` | same |  |
+| `responsive`, `useResponsive` | same | keys `xs`–`xxl`, `mobile`, `tablet`, `laptop`, `desktop` |
+| `useTheme` | same | tokens + `appearance` + `isDarkMode`; no `stylish` or `prefixCls` |
+| `useThemeMode` | same | `{ appearance, isDarkMode }`; no `themeMode` or `setThemeMode` |
+| `createGlobalStyle` | same | function interpolations receive `{ theme }` (a `LobeTheme`) |
+| `extractStaticStyle` | same name | returns `{ css, ids, key, tag }[]` (`tag` is a `<style>` HTML string); there is no React `style` element, and the antd cache options are ignored |
+| `Theme`, `ThemeAppearance` types | `LobeTheme`, `LobeAppearance` |  |
+| `StyleProvider` | — | it only passed the antd SSR cache; delete it and keep its children |
+| `createStyles`, `createStylish`, `useAntdToken`, `ThemeProvider` | — | rewrite with `createStaticStyles` + `cssVar` |
+
+`setThemeMode` callers switch to `setLobeTheme({ appearance })` or their `next-themes` setter. Keep an "auto" choice in your own state; `appearance` is always the resolved `'light'` or `'dark'`.
+
+## CSS cascade
+
+Every rule Lobe UI ships sits in the `lobe-base`, `lobe-popup` and `lobe-ui` cascade layers, so unlayered CSS always wins over it. That changes two things:
+
+- Your unlayered global resets (`* { margin: 0 }`, `button { … }`, normalize.css) now beat component styles. Move them into a layer declared before Lobe UI's. This statement must be the first CSS the app loads, before `theme.css` and `style.css`:
+
+  ```css
+  @layer reset, lobe-base, lobe-popup, lobe-ui;
+
+  @layer reset {
+    button {
+      font: inherit;
+    }
+  }
+  ```
+
+  With Tailwind v4, use `@layer theme, base, lobe-base, lobe-popup, lobe-ui, components, utilities;` as the first CSS, before `@import 'tailwindcss'`.
+
+- Overrides no longer need specificity tricks, but they must target what components expose: `className`, `style`, the `classNames` / `styles` slot props, and documented `data-*` attributes. Generated class names (StyleX hashes) change between releases.
+
+## Components
+
+The root export is the former `@lobehub/ui/base-ui` set. Components that keep their name but were antd wrappers in v5 have a new implementation and partly new props; their pages list the differences.
+
+| v5 | v6 |
+| --- | --- |
+| `Alert` | [`Alert`](/components/alert#migrating-from-antd-alert) |
+| `AutoComplete` | `AutoComplete` |
+| `Avatar`, `AvatarGroup` | [`Avatar`](/components/avatar) |
+| `Button` | [`Button`](/components/button#migrating-from-antd-s-button) |
+| `Checkbox`, `CheckboxGroup` | `Checkbox` |
+| `Collapse` | [`Accordion`](/components/accordion) for several sections, [`Collapsible`](/components/collapsible) for one region |
+| `DatePicker` | [`DatePicker`](/components/date-picker#migrating-from-antd-datepicker) |
+| `Drawer` | [`Drawer`](/components/drawer) |
+| `Dropdown` (`menu={{ items }}`) | [`DropdownMenu`](/components/dropdown-menu) (`items`, typed `DropdownItem[]`) |
+| `Form`, `FormItem`, `FormModal` | [`Form`, `FormField` from `@lobehub/ui/form`](/components/form-kit#migrating-from-antd-form); a form in a dialog is `Modal` + `Form` |
+| `Input`, `InputNumber`, `InputPassword`, `TextArea` | `Input` and its siblings |
+| `InputOPT` | `InputOTP` |
+| `Menu` | [`DropdownMenu`](/components/dropdown-menu) / [`ContextMenuTrigger` or `showContextMenu`](/components/context-menu) for menus, [`SideNav`](/components/side-nav) for navigation |
+| `Modal`, `ModalHost`, `createModal`, `createRawModal` | [`Modal`](/components/modal), `ModalHost`, `createModal`; `ModalProvider` → `<ModalContext value>` |
+| `Segmented` | [`Segmented`](/components/segmented) |
+| `Select` | [`Select`](/components/select) |
+| `Skeleton`, `SkeletonBlock`, `SkeletonButton`, `SkeletonTags`, `SkeletonParagraph`, `SkeletonTitle` | [`Skeleton`](/components/skeleton#migration), `SkeletonAvatar`, `SkeletonText` |
+| `Tabs` | [`Tabs`](/components/tabs) |
+| `Tag` | [`Tag`](/components/tag#migrating-from-antd-tag) |
+| `Accordion`, `ActionIcon`, `DraggablePanel`, `List`, `Text` (legacy root versions) | [`Accordion`](/components/accordion), [`ActionIcon`](/components/action-icon), [`DraggablePanel`](/components/draggable-panel), [`List`](/components/list#migrating-from-antd-menu-list), [`Text`](/components/text) |
+| `Burger` | [`Burger`](/components/burger#migrating-from-v5-burger) |
+| `Footer`, `Toc`, `ThemeSwitch`, `Meta` | removed, no successor (render `<title>` / `<meta>` yourself; React 19 hoists them) |
+
+The root `Form` still exists in v6 but is deprecated; use `Form` from `@lobehub/ui/form`.
+
+antd components without a same-named counterpart:
+
+| antd                                | @lobehub/ui                                         |
+| ----------------------------------- | --------------------------------------------------- |
+| `App`, `ConfigProvider`             | remove; see [Theming](#theming)                     |
+| `Card`                              | `Block` (or `Surface` from `@lobehub/ui/dashboard`) |
+| `Row`, `Col`, `Space`, `Flex`       | `Grid`, `Flexbox` (with `gap`)                      |
+| `message`, `notification`           | `toast`                                             |
+| `Popconfirm`                        | `Popover` with actions, or `confirmModal`           |
+| `FloatButton`                       | a positioned `ActionIcon` or `Button`               |
+| `Typography`                        | `Text` (or `Typography` for long-form content)      |
+| `theme.useToken()`                  | `cssVar` / `useTheme()`                             |
+| `@ant-design/icons`                 | `lucide-react` icons rendered with `Icon`           |
+| `@ant-design/pro-components` tables | `Table`                                             |
+
+`Anchor`, `Badge`, `Breadcrumb`, `Carousel`, `ColorPicker`, `Descriptions`, `Divider`, `Empty`, `Image`, `Pagination`, `Popover`, `Progress`, `QRCode`, `Radio`, `Rate`, `Result`, `Slider`, `Spin`, `Statistic`, `Steps`, `Switch`, `Table`, `Tooltip`, `Tree` and `Upload` exist under the same name; most pages have a "Migrating from antd" section.
+
+## Removed APIs
+
+| Removed | Replacement |
+| --- | --- |
+| `@lobehub/ui/base-ui` | `@lobehub/ui` |
+| `@lobehub/ui/base-ui/form` | `@lobehub/ui/form` |
+| `@lobehub/ui/static-css`, `/static-css/emit`, `/runtime`, `/vite` | `theme.css` ships the variables statically; drop the build plugin |
+| `ThemeProvider`, `ThemeProviderProps` | see [Theming](#theming) |
+| `lobeCustomToken` | `cssVar` / `useTheme()` |
+| `lobeCustomStylish` | plain `css` fragments on `cssVar` (`lobeStaticStylish` stays) |
+| `createLobeAntdTheme` | — |
+| `controlOutline` token | `cssVar.colorPrimaryBg` (it was that color blended with `colorBgContainer`) |
+| antd type re-exports (`ImageProps`, `SelectProps`, `InputRef`, `MenuProps`, …) | the `@lobehub/ui` component's own props types; `ModalProps` → `ModalComponentProps` |
+
+`generateColorPalette` and `generateColorNeutralPalette` now return precise key types instead of `Partial<AliasToken>`.
+
+## Behavior changes
+
+- **Form values are the whole store.** `getValues()`, `onSubmit(values)` and the second argument of `onValuesChange` from `@lobehub/ui/form` return every value in the store (initial values, `setValues` and edits), not only the mounted fields as antd's `getFieldsValue` / `onFinish` did. Pick the fields you submit explicitly; never pass a database row as `initialValues` and post `getValues()` back.
+- **Menu items are a union type.** `DropdownItem` is a union, so an inline `onClick({ domEvent })` loses its contextual type. Annotate the argument as `MenuInfo`.
+- **Menus open on click.** `DropdownMenu` defaults to `trigger="click"` (antd `Dropdown` opened on hover) and has no menu-level `onClick`; move a `switch (key)` from `menu.onClick` into each item's `onClick`.
+- **No arrows by default.** `Tooltip` and `Popover` render without an arrow unless you pass `arrow`.
+- **Popup containers.** There is no `.ant-app` element. Code that looked it up (`getPopupContainer`, portals) uses `document.getElementById(LOBE_THEME_APP_ID)`.
+- **antd class names and variables.** `.ant-*` selectors and `--ant-*` variables match nothing. Use component props for overrides and `cssVar` / `--lobe-*` for tokens.
+- **Resets.** antd's `reset.css` (box-sizing, margins, list styles) is now part of `global.css`. Apps that relied on it without importing antd's stylesheet need `global.css`.
+
+## Known issues
+
+- `@lobehub/ui@6.0.0-beta.1` still declares `@lobehub/icons@^5` and `@lobehub/fluent-emoji@^4` as peers. Install the `beta` versions anyway and ignore the peer warning until the next beta.
+- `@lobehub/docs-kit` still depends on `@lobehub/ui` 5.

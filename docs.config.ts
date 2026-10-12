@@ -23,6 +23,7 @@ export default defineDocsConfig({
   },
   homePage: './docs/home/home.tsx',
   legacyRedirects,
+  publicDocs: ['docs/migration-v6.mdx'],
   siteUrl: 'https://ui.lobehub.com',
   stylex: './config/stylex.ts',
   themeConfig: {

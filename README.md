@@ -66,6 +66,8 @@ To install Lobe UI, run the following command:
 $ pnpm add @lobehub/ui
 ```
 
+Upgrading from 5.x? Follow the [v6 migration guide](https://ui.lobehub.com/migration-v6) and run `npx @lobehub/ui-codemod@beta v6 .`.
+
 ### Compile with NextJS
 
 > \[!NOTE]\
@@ -126,7 +128,7 @@ With Tailwind v4, use one merged statement as the very first CSS, before `@impor
 @layer theme, base, lobe-base, lobe-popup, lobe-ui, components, utilities;
 ```
 
-The lobe layers sit after Tailwind's `base` (preflight), so preflight loses to Lobe UI, and before `components` / `utilities`, so Tailwind utilities still beat Lobe UI. These layering guarantees cover components already migrated to StyleX; the remaining components still inject runtime styles until the migration completes.
+The lobe layers sit after Tailwind's `base` (preflight), so preflight loses to Lobe UI, and before `components` / `utilities`, so Tailwind utilities still beat Lobe UI.
 
 ### Theming
 
