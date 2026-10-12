@@ -3,8 +3,8 @@
 import * as stylex from '@stylexjs/stylex';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { memo, useEffect, useRef, useState } from 'react';
-import useControlledState from 'use-merge-value';
 
+import { useControlledState } from '@/hooks/useControlledState';
 import { useEventCallback } from '@/hooks/useEventCallback';
 import Select from '@/Select';
 import { styleProps } from '@/styles/stylex/props';

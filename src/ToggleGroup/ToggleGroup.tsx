@@ -2,7 +2,8 @@
 
 import clsx from 'clsx';
 import { useMemo } from 'react';
-import useControlledState from 'use-merge-value';
+
+import { useControlledState } from '@/hooks/useControlledState';
 
 import {
   ToggleGroupItem,

@@ -10,8 +10,8 @@ import {
   useRef,
   useState,
 } from 'react';
-import useControlledState from 'use-merge-value';
 
+import { useControlledState } from '@/hooks/useControlledState';
 import { useEventCallback } from '@/hooks/useEventCallback';
 import { styleProps } from '@/styles/stylex/props';
 import { useMergeRefs } from '@/utils/mergeRefs';

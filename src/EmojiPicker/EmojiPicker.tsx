@@ -9,11 +9,11 @@ import chroma from 'chroma-js';
 import clsx from 'clsx';
 import { SmileIcon, TrashIcon, UploadIcon } from 'lucide-react';
 import { memo, useMemo, useRef, useState } from 'react';
-import useMergeState from 'use-merge-value';
 
 import ActionIcon from '@/ActionIcon';
 import Avatar from '@/Avatar';
 import { Flexbox } from '@/Flex';
+import { useControlledState } from '@/hooks/useControlledState';
 import emojiPickerMessages from '@/i18n/resources/en/emojiPicker';
 import { useTranslation } from '@/i18n/useTranslation';
 import Icon from '@/Icon';
@@ -60,7 +60,7 @@ const EmojiPicker = memo<EmojiPickerProps>(
   }) => {
     const ref = useRef<HTMLDivElement>(null);
     const { t } = useTranslation(emojiPickerMessages);
-    const [visible, setVisible] = useMergeState(defaultOpen, {
+    const [visible, setVisible] = useControlledState(defaultOpen, {
       defaultValue: defaultOpen,
       onChange: onOpenChange,
       value: open,
@@ -78,7 +78,7 @@ const EmojiPicker = memo<EmojiPickerProps>(
 
     const i18n = useEmojiMartI18n(locale);
 
-    const [ava, setAva] = useMergeState(defaultAvatar, {
+    const [ava, setAva] = useControlledState(defaultAvatar, {
       defaultValue: defaultAvatar,
       onChange,
       value,

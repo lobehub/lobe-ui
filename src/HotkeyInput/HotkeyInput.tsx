@@ -14,10 +14,10 @@ import {
   useState,
 } from 'react';
 import { useHotkeys, useRecordHotkeys } from 'react-hotkeys-hook';
-import useControlledState from 'use-merge-value';
 
 import ActionIcon from '@/ActionIcon';
 import { Flexbox } from '@/Flex';
+import { useControlledState } from '@/hooks/useControlledState';
 import Hotkey from '@/Hotkey';
 import { checkIsAppleDevice, NORMATIVE_MODIFIER, splitKeysByPlus } from '@/Hotkey/utils';
 import hotkeyMessages from '@/i18n/resources/en/hotkey';

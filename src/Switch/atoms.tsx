@@ -8,8 +8,8 @@ import clsx from 'clsx';
 import { animate, motionValue } from 'motion';
 import type { CSSProperties, KeyboardEvent, MouseEvent, PointerEvent } from 'react';
 import { createContext, use, useEffect, useMemo, useRef, useState } from 'react';
-import useControlledState from 'use-merge-value';
 
+import { useControlledState } from '@/hooks/useControlledState';
 import { focusRing } from '@/styles/stylex/focusRing';
 import { styleProps } from '@/styles/stylex/props';
 

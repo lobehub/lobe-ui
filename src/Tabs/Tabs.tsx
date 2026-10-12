@@ -2,8 +2,8 @@
 
 import clsx from 'clsx';
 import { type FC } from 'react';
-import useControlledState from 'use-merge-value';
 
+import { useControlledState } from '@/hooks/useControlledState';
 import { styleProps } from '@/styles/stylex/props';
 
 import { TabsIndicator, TabsList, TabsPanel, TabsRoot, TabsTab } from './atoms';

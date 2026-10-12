@@ -2,9 +2,9 @@
 
 import * as stylex from '@stylexjs/stylex';
 import { memo } from 'react';
-import useMergeState from 'use-merge-value';
 
 import { Flexbox } from '@/Flex';
+import { useControlledState } from '@/hooks/useControlledState';
 import SafeArea from '@/mobile/SafeArea';
 import { styleProps } from '@/styles/stylex/props';
 
@@ -13,7 +13,7 @@ import type { TabBarProps } from './type';
 
 const TabBar = memo<TabBarProps>(
   ({ ref, className, safeArea, items, activeKey, defaultActiveKey, onChange, ...rest }) => {
-    const [currentActive, setCurrentActive] = useMergeState<string>(
+    const [currentActive, setCurrentActive] = useControlledState<string>(
       defaultActiveKey || items[0].key,
       {
         defaultValue: defaultActiveKey,

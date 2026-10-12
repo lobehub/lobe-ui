@@ -2,9 +2,9 @@
 
 import clsx from 'clsx';
 import { memo, useId, useMemo, useRef, useState } from 'react';
-import useControlledState from 'use-merge-value';
 
 import { FocusScope, focusScopeItem, useScopeArrowNav } from '@/FocusScope';
+import { useControlledState } from '@/hooks/useControlledState';
 import { styleProps } from '@/styles/stylex/props';
 
 import { TreeContext, type TreeContextValue } from './context';

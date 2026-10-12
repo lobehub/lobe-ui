@@ -9,7 +9,8 @@ import {
   useMemo,
   useRef,
 } from 'react';
-import useControlledState from 'use-merge-value';
+
+import { useControlledState } from '@/hooks/useControlledState';
 
 import {
   SegmentedIndicator,

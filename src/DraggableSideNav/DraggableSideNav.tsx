@@ -15,9 +15,9 @@ import {
   useReducer,
   useRef,
 } from 'react';
-import useControlledState from 'use-merge-value';
 
 import { Center, Flexbox } from '@/Flex';
+import { useControlledState } from '@/hooks/useControlledState';
 import { useHover } from '@/hooks/useHover';
 import Icon from '@/Icon';
 import { styleProps } from '@/styles/stylex/props';

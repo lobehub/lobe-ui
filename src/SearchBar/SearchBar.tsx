@@ -4,9 +4,9 @@ import * as stylex from '@stylexjs/stylex';
 import { LucideLoader2, Search } from 'lucide-react';
 import { memo, useMemo, useRef, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
-import useControlledState from 'use-merge-value';
 
 import Spotlight from '@/awesome/Spotlight';
+import { useControlledState } from '@/hooks/useControlledState';
 import Hotkey from '@/Hotkey';
 import Icon from '@/Icon';
 import { Input } from '@/Input';

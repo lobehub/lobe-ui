@@ -2,10 +2,10 @@
 
 import clsx from 'clsx';
 import { memo } from 'react';
-import useControlledState from 'use-merge-value';
 
 import MessageInput from '@/chat/MessageInput';
 import MessageModal from '@/chat/MessageModal';
+import { useControlledState } from '@/hooks/useControlledState';
 import Markdown from '@/Markdown';
 
 import { type EditableMessageProps } from './type';

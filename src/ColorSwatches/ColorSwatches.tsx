@@ -4,10 +4,10 @@ import * as stylex from '@stylexjs/stylex';
 import chroma from 'chroma-js';
 import { CheckIcon } from 'lucide-react';
 import { type FC, useMemo } from 'react';
-import useMergeState from 'use-merge-value';
 
 import { ColorPicker } from '@/ColorPicker';
 import { Center, Flexbox } from '@/Flex';
+import { useControlledState } from '@/hooks/useControlledState';
 import Icon from '@/Icon';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import Tooltip from '@/Tooltip';
@@ -30,7 +30,7 @@ const ColorSwatches: FC<ColorSwatchesProps> = ({
   ref,
   ...rest
 }) => {
-  const [active, setActive] = useMergeState(defaultValue, {
+  const [active, setActive] = useControlledState(defaultValue, {
     defaultValue,
     onChange,
     value,

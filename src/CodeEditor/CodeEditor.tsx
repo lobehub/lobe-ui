@@ -2,10 +2,10 @@
 
 import clsx from 'clsx';
 import { memo } from 'react';
-import useMergeState from 'use-merge-value';
 
 import { Flexbox } from '@/Flex';
 import { SyntaxHighlighterImpl } from '@/Highlighter/SyntaxHighlighter';
+import { useControlledState } from '@/hooks/useControlledState';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import { styleProps } from '@/styles/stylex/props';
 
@@ -32,7 +32,7 @@ const CodeEditor = memo<CodeEditorProps>(
     ref,
     ...rest
   }) => {
-    const [code, setCode] = useMergeState(defaultValue, {
+    const [code, setCode] = useControlledState(defaultValue, {
       defaultValue,
       onChange: onValueChange,
       value,

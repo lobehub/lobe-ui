@@ -3,8 +3,8 @@
 import * as stylex from '@stylexjs/stylex';
 import { Star } from 'lucide-react';
 import { type KeyboardEvent, memo, useState } from 'react';
-import useControlledState from 'use-merge-value';
 
+import { useControlledState } from '@/hooks/useControlledState';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import { styleProps } from '@/styles/stylex/props';
 
