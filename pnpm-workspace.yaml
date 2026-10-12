@@ -41,3 +41,4 @@ minimumReleaseAgeExclude:
   - '@vitest/spy@5.0.4'
   - vitest@5.0.4
   - zod@4.6.6
+  - virtua@0.53.5

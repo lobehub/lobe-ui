@@ -196,7 +196,7 @@
     "unist-util-visit-parents": "^6.0.2",
     "uqr": "^0.1.3",
     "vfile": "^6.0.3",
-    "virtua": "^0.52.0"
+    "virtua": "^0.53.5"
   },
   "devDependencies": {
     "@commitlint/cli": "^21.2.3",
