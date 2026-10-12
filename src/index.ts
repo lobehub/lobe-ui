@@ -317,7 +317,17 @@ export {
   placementMap,
   toFloatingUIPlacement,
 } from './utils/placement';
-export { default as Video, type VideoProps } from './Video';
+export {
+  useVideo,
+  useVideoPlayer,
+  useVideoState,
+  default as Video,
+  type VideoMarker,
+  type VideoPlayer,
+  type VideoProps,
+  type VideoSection,
+  type VideoState,
+} from './Video';
 export { default as ShikiLobeTheme } from '@/Highlighter/theme/lobe-theme';
 export { rehypeStreamAnimated } from '@lobehub/streamdown';
 export { ErrorBoundary, type ErrorBoundaryProps } from 'react-error-boundary';
