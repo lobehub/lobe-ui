@@ -4942,116 +4942,6 @@
           "unnecessary": 0
         },
         {
-          "name": "TooltipStandalone",
-          "context": 0,
-          "mounts": 2,
-          "parent": 0,
-          "props": 26,
-          "renders": 30,
-          "state": 2,
-          "unnecessary": 0
-        },
-        {
-          "name": "TooltipRoot",
-          "context": 0,
-          "mounts": 2,
-          "parent": 0,
-          "props": 28,
-          "renders": 30,
-          "state": 0,
-          "unnecessary": 0
-        },
-        {
-          "name": "TooltipTrigger",
-          "context": 0,
-          "mounts": 2,
-          "parent": 0,
-          "props": 28,
-          "renders": 30,
-          "state": 0,
-          "unnecessary": 0
-        },
-        {
-          "name": "BaseButton",
-          "context": 0,
-          "mounts": 2,
-          "parent": 0,
-          "props": 28,
-          "renders": 30,
-          "state": 0,
-          "unnecessary": 0
-        },
-        {
-          "name": "motion.button",
-          "context": 0,
-          "mounts": 2,
-          "parent": 0,
-          "props": 28,
-          "renders": 30,
-          "state": 0,
-          "unnecessary": 0
-        },
-        {
-          "name": "TooltipPortal",
-          "context": 0,
-          "mounts": 2,
-          "parent": 2,
-          "props": 26,
-          "renders": 30,
-          "state": 0,
-          "unnecessary": 28
-        },
-        {
-          "name": "BaseActionIcon",
-          "context": 0,
-          "mounts": 2,
-          "parent": 0,
-          "props": 26,
-          "renders": 28,
-          "state": 0,
-          "unnecessary": 0
-        },
-        {
-          "name": "Tooltip",
-          "context": 0,
-          "mounts": 2,
-          "parent": 0,
-          "props": 26,
-          "renders": 28,
-          "state": 0,
-          "unnecessary": 0
-        },
-        {
-          "name": "Icon",
-          "context": 0,
-          "mounts": 2,
-          "parent": 0,
-          "props": 26,
-          "renders": 28,
-          "state": 0,
-          "unnecessary": 0
-        },
-        {
-          "name": "Anonymous",
-          "context": 0,
-          "mounts": 2,
-          "parent": 26,
-          "props": 0,
-          "renders": 28,
-          "state": 0,
-          "unnecessary": 0
-        },
-        {
-          "name": "FlexBasic",
-          "context": 0,
-          "mounts": 1,
-          "parent": 0,
-          "props": 14,
-          "renders": 15,
-          "state": 0,
-          "unnecessary": 0
-        },
-        {
           "name": "ControlInput",
           "context": 0,
           "mounts": 1,
@@ -5072,22 +4962,112 @@
           "unnecessary": 0
         },
         {
-          "name": "RotateCcw",
+          "name": "TooltipStandalone",
           "context": 0,
-          "mounts": 1,
-          "parent": 13,
+          "mounts": 2,
+          "parent": 0,
           "props": 0,
-          "renders": 14,
+          "renders": 4,
+          "state": 2,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipRoot",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 2,
+          "renders": 4,
           "state": 0,
           "unnecessary": 0
         },
         {
-          "name": "Save",
+          "name": "TooltipTrigger",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 2,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "BaseButton",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 2,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "motion.button",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 2,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipPortal",
+          "context": 0,
+          "mounts": 2,
+          "parent": 2,
+          "props": 0,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 2
+        },
+        {
+          "name": "FlexBasic",
           "context": 0,
           "mounts": 1,
-          "parent": 13,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "BaseActionIcon",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
           "props": 0,
-          "renders": 14,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Tooltip",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Icon",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Anonymous",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
           "state": 0,
           "unnecessary": 0
         },
@@ -5100,15 +5080,35 @@
           "renders": 1,
           "state": 1,
           "unnecessary": 0
+        },
+        {
+          "name": "RotateCcw",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Save",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
         }
       ],
       "totals": {
         "context": 0,
-        "parent": 54,
-        "props": 298,
-        "renders": 396,
+        "parent": 2,
+        "props": 51,
+        "renders": 97,
         "state": 17,
-        "unnecessary": 28
+        "unnecessary": 2
       }
     },
     "mount": {
@@ -5323,7 +5323,8 @@
         "unnecessary": 2
       }
     },
-    "name": "EditableText: edit and type"
+    "name": "EditableText: edit and type",
+    "tolerance": 0
   },
   {
     "demo": "src-color-swatches-demo-demos",
