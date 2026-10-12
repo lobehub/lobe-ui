@@ -221,6 +221,7 @@
     "@typescript-eslint/eslint-plugin": "^8.71.1",
     "@typescript-eslint/parser": "^8.71.1",
     "@vitest/coverage-v8": "^5.0.4",
+    "bippy": "0.6.1",
     "cheerio": "^1.2.0",
     "clean-package": "^2.2.0",
     "code-inspector-plugin": "^2.0.9",
