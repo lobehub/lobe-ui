@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.58.0](https://github.com/lobehub/lobe-ui/compare/v5.57.3...v5.58.0) (2026-10-12)
+
+### ✨ Features
+
+- **image**: Add fetchImage for CORS-safe preview copy and download ([61aa8bc](https://github.com/lobehub/lobe-ui/commit/61aa8bc))
+
 ## [5.57.3](https://github.com/lobehub/lobe-ui/compare/v5.57.2...v5.57.3) (2026-10-10)
 
 ### 🐛 Bug Fixes
