@@ -362,6 +362,86 @@ describe('copy and download', () => {
     expect(fetch).not.toHaveBeenCalled();
   });
 
+  it('copies with a downstream fetchImage instead of the default fetch', async () => {
+    const blob = new Blob(['x'], { type: 'image/png' });
+    const fetchImage = vi.fn().mockResolvedValue(blob);
+    mount(undefined, { fetchImage });
+
+    fireEvent.click(openMoreMenu()[4]);
+
+    await waitFor(() =>
+      expect(toastMock.success).toHaveBeenCalledWith(imageMessages['image.copySuccess']),
+    );
+    expect(fetchImage).toHaveBeenCalledWith('https://example.com/cat.png');
+    expect(fetch).not.toHaveBeenCalled();
+    expect(navigator.clipboard.write).toHaveBeenCalled();
+  });
+
+  it('downloads with a downstream fetchImage instead of the default fetch', async () => {
+    const blob = new Blob(['x'], { type: 'image/png' });
+    const fetchImage = vi.fn().mockResolvedValue(blob);
+    mount(undefined, { fetchImage });
+
+    fireEvent.click(toolbarButton('download'));
+
+    await waitFor(() =>
+      expect(toastMock.success).toHaveBeenCalledWith(imageMessages['image.downloadSuccess']),
+    );
+    expect(fetchImage).toHaveBeenCalledWith('https://example.com/cat.png');
+    expect(fetch).not.toHaveBeenCalled();
+  });
+
+  it('keeps onDownload for download when fetchImage is also provided', async () => {
+    const fetchImage = vi.fn().mockResolvedValue(new Blob(['x'], { type: 'image/png' }));
+    const onDownload = vi.fn().mockResolvedValue(undefined);
+    mount(undefined, { fetchImage, onDownload });
+
+    fireEvent.click(toolbarButton('download'));
+
+    await waitFor(() => expect(onDownload).toHaveBeenCalledWith('https://example.com/cat.png'));
+    expect(fetchImage).not.toHaveBeenCalled();
+  });
+
+  it('still copies with fetchImage when onDownload is also provided', async () => {
+    const blob = new Blob(['x'], { type: 'image/png' });
+    const fetchImage = vi.fn().mockResolvedValue(blob);
+    const onDownload = vi.fn().mockResolvedValue(undefined);
+    mount(undefined, { fetchImage, onDownload });
+
+    fireEvent.click(openMoreMenu()[4]);
+
+    await waitFor(() => expect(fetchImage).toHaveBeenCalledWith('https://example.com/cat.png'));
+    expect(onDownload).not.toHaveBeenCalled();
+    expect(navigator.clipboard.write).toHaveBeenCalled();
+  });
+
+  it('shows an error toast when fetchImage fails during copy', async () => {
+    const fetchImage = vi.fn().mockRejectedValue(new Error('cors'));
+    mount(undefined, { fetchImage });
+
+    fireEvent.click(openMoreMenu()[4]);
+
+    await waitFor(() =>
+      expect(toastMock.error).toHaveBeenCalledWith(imageMessages['image.copyFailed']),
+    );
+    expect(fetchImage).toHaveBeenCalledWith('https://example.com/cat.png');
+    expect(fetch).not.toHaveBeenCalled();
+  });
+
+  it('shows an error toast when fetchImage fails during download, without opening a tab', async () => {
+    const openSpy = vi.spyOn(window, 'open').mockReturnValue(null);
+    const fetchImage = vi.fn().mockRejectedValue(new Error('cors'));
+    mount(undefined, { fetchImage });
+
+    fireEvent.click(toolbarButton('download'));
+
+    await waitFor(() =>
+      expect(toastMock.error).toHaveBeenCalledWith(imageMessages['image.downloadFailed']),
+    );
+    expect(openSpy).not.toHaveBeenCalled();
+    openSpy.mockRestore();
+  });
+
   it('opens the source in a new tab when the blob download is blocked', async () => {
     const openSpy = vi.spyOn(window, 'open').mockReturnValue(null);
     vi.mocked(fetch).mockRejectedValue(new Error('network error'));

@@ -19,6 +19,7 @@ export interface ViewerChromeProps {
   canZoomOut: boolean;
   chromeRef: (node: HTMLElement | null) => void;
   current: number;
+  fetchImage?: (source: string) => Promise<Blob>;
   fitRect: Rect;
   flipHorizontal: () => void;
   flipVertical: () => void;

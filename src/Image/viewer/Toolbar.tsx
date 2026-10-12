@@ -60,9 +60,15 @@ const usePercentage = (scale: MotionValue<number>, matchScale: number): number =
   return useSyncExternalStore(subscribe, getSnapshot);
 };
 
+const defaultFetchImage = async (src: string): Promise<Blob> => {
+  const response = await fetch(src, { mode: 'cors' });
+  return response.blob();
+};
+
 export interface ToolbarProps {
   canZoomIn: boolean;
   canZoomOut: boolean;
+  fetchImage?: (source: string) => Promise<Blob>;
   fitRect: Rect;
   flipHorizontal: () => void;
   flipVertical: () => void;
@@ -84,6 +90,7 @@ const Toolbar = memo<ToolbarProps>(
   ({
     canZoomIn,
     canZoomOut,
+    fetchImage,
     fitRect,
     flipHorizontal,
     flipVertical,
@@ -117,11 +124,12 @@ const Toolbar = memo<ToolbarProps>(
     // "fit to screen" while already fitted.
     const showFitAffordance = canToggleActualSize && percentage === 100;
 
+    const loadImage = fetchImage ?? defaultFetchImage;
+
     const defaultDownload = useCallback(
       async (src: string) => {
         try {
-          const response = await fetch(src, { mode: 'cors' });
-          const blob = await response.blob();
+          const blob = await loadImage(src);
           const blobUrl = URL.createObjectURL(blob);
           let fileName = getFileNameFromUrl(src);
           const ext = getExtensionFromMimeType(blob.type);
@@ -133,14 +141,15 @@ const Toolbar = memo<ToolbarProps>(
           await downloadBlob(blobUrl, fileName);
           URL.revokeObjectURL(blobUrl);
           toast.success(t('image.downloadSuccess'));
-        } catch {
+        } catch (error) {
+          if (fetchImage) throw error;
           // A cross-origin source without CORS headers (e.g. a presigned URL reached
           // through a redirect, which sends `Origin: null`) can never be read as a
           // blob; opening it lets the browser handle the save instead of failing.
           window.open(src, '_blank', 'noopener,noreferrer');
         }
       },
-      [t],
+      [fetchImage, loadImage, t],
     );
 
     const handleDownload = useCallback(async () => {
@@ -157,8 +166,7 @@ const Toolbar = memo<ToolbarProps>(
     const handleCopy = useCallback(async () => {
       setCopyLoading(true);
       try {
-        const response = await fetch(source, { mode: 'cors' });
-        const blob = await response.blob();
+        const blob = await loadImage(source);
         const clipboardBlob = await getClipboardBlob(blob);
         await navigator.clipboard.write([new ClipboardItem(clipboardBlob)]);
         toast.success(t('image.copySuccess'));
@@ -167,7 +175,7 @@ const Toolbar = memo<ToolbarProps>(
       } finally {
         setCopyLoading(false);
       }
-    }, [source, t]);
+    }, [loadImage, source, t]);
 
     const moreItems = useMemo<DropdownItem[]>(
       () => [

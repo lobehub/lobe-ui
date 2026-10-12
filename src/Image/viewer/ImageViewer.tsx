@@ -333,6 +333,7 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
             canZoomOut={canZoomOut}
             chromeRef={chromeRef}
             current={currentIndex}
+            fetchImage={currentEntry.options.fetchImage}
             fitRect={fitRect}
             flipHorizontal={flipHorizontal}
             flipVertical={flipVertical}
