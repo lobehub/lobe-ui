@@ -1,6 +1,6 @@
 {
   "name": "@lobehub/ui-codemod",
-  "version": "0.0.0",
+  "version": "1.0.0-beta.1",
   "description": "Codemods for upgrading @lobehub/ui across major versions",
   "homepage": "https://github.com/lobehub/lobe-ui/tree/master/packages/codemod",
   "repository": {
