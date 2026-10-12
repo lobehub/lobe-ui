@@ -1,6 +1,5 @@
 'use client';
 
-import numeral from 'numeral';
 import { type FC, useMemo } from 'react';
 
 import ActionIcon from '@/ActionIcon';
@@ -8,10 +7,9 @@ import chatMessages from '@/i18n/resources/en/chat';
 import { useTranslation } from '@/i18n/useTranslation';
 import Progress from '@/Progress';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { formatNumber } from '@/utils/formatNumber';
 
 import type { TokenTagProps } from './type';
-
-const format = (number: number) => numeral(number).format('0,0');
 
 const TokenTag: FC<TokenTagProps> = ({
   mode = 'remained',
@@ -53,7 +51,7 @@ const TokenTag: FC<TokenTagProps> = ({
     valueLeft > 0
       ? [
           mode === 'remained' ? remainedText : usedText,
-          mode === 'remained' ? format(valueLeft) : format(value),
+          mode === 'remained' ? formatNumber(valueLeft) : formatNumber(value),
         ].join(' ')
       : overloadText;
 

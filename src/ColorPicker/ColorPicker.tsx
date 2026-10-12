@@ -3,8 +3,8 @@
 import * as stylex from '@stylexjs/stylex';
 import { Pipette } from 'lucide-react';
 import { type CSSProperties, memo, useEffect, useRef, useState } from 'react';
-import useControlledState from 'use-merge-value';
 
+import { useControlledState } from '@/hooks/useControlledState';
 import colorPickerMessages from '@/i18n/resources/en/colorPicker';
 import { useTranslation } from '@/i18n/useTranslation';
 import Icon from '@/Icon';

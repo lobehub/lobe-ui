@@ -9,13 +9,13 @@ import {
 } from '@shikijs/transformers';
 import { type CSSProperties, useEffect, useMemo, useState } from 'react';
 import type { BuiltinTheme, CodeToHastOptions, ThemedToken } from 'shiki';
-import { Md5 } from 'ts-md5';
 
 import { getCodeLanguageByInput } from '@/Highlighter/const';
 import lobeTheme from '@/Highlighter/theme/lobe-theme';
+import { hashString } from '@/utils/hashString';
 
 // Application-level cache to avoid repeated calculations
-export const MD5_LENGTH_THRESHOLD = 10_000; // Use async MD5 for text exceeding this length
+export const MD5_LENGTH_THRESHOLD = 10_000;
 
 export type StreamingHighlightResult = {
   lines: ThemedToken[][];
@@ -112,7 +112,10 @@ export const useHighlight = (
   const cacheKey = useMemo((): string | null => {
     if (streaming) return null;
     // Use hash for long text
-    const hash = safeText.length < MD5_LENGTH_THRESHOLD ? safeText : Md5.hashStr(safeText);
+    const hash =
+      safeText.length < MD5_LENGTH_THRESHOLD
+        ? safeText
+        : `${safeText.length}:${hashString(safeText)}`;
     return [matchedLanguage, builtinTheme, hash].filter(Boolean).join('-');
   }, [safeText, matchedLanguage, builtinTheme, streaming]);
 

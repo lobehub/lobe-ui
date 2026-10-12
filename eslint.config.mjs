@@ -36,6 +36,54 @@ export default defineConfig(
     },
   },
   {
+    files: ['src/**/*.{ts,tsx}', 'packages/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          paths: [
+            {
+              message: 'Use the hooks in src/hooks (useScroll, useSize, useHover).',
+              name: 'ahooks',
+            },
+            { message: 'Use useControlledState from src/hooks.', name: 'use-merge-value' },
+            {
+              message: 'Use mergeRefs / useMergeRefs from src/utils/mergeRefs.',
+              name: 'react-merge-refs',
+            },
+            { message: 'Use mixColors / withAlpha from src/utils/colorMath.', name: 'polished' },
+            { message: 'Data fetching belongs to the app, not the UI library.', name: 'swr' },
+            { message: 'Use plain immutable updates.', name: 'immer' },
+            { message: 'Use isEqual from es-toolkit/compat.', name: 'fast-deep-equal' },
+            { message: 'Use hashString from src/utils/hashString.', name: 'ts-md5' },
+            { message: 'Use formatNumber from src/utils/formatNumber.', name: 'numeral' },
+            { message: 'Use genCdnUrl or build the URL directly.', name: 'url-join' },
+            {
+              message: 'Base UI owns positioning; declare the types you need locally.',
+              name: '@floating-ui/react',
+            },
+            ...[
+              '@emotion/is-prop-valid',
+              '@mdx-js/react',
+              '@radix-ui/react-slot',
+              'class-variance-authority',
+              'hast-util-to-jsx-runtime',
+              'html-url-attributes',
+              'marked',
+              'query-string',
+              'react-rnd',
+              'react-zoom-pan-pinch',
+              'remark-github',
+              'remend',
+              'uuid',
+            ].map((name) => ({ message: 'Removed from @lobehub/ui dependencies in v6.', name })),
+          ],
+          patterns: [{ group: ['ahooks/*'], message: 'Use the hooks in src/hooks.' }],
+        },
+      ],
+    },
+  },
+  {
     files: ['**/*.{jsx,tsx}'],
     rules: {
       'react/self-closing-comp': [

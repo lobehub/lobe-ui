@@ -1,5 +1,5 @@
 import { FormApi, getBy, setBy } from '@tanstack/form-core';
-import isEqual from 'fast-deep-equal';
+import { isEqual } from 'es-toolkit/compat';
 
 import type {
   ChangeSource,

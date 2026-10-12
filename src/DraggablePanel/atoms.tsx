@@ -16,9 +16,9 @@ import {
   useRef,
   useState,
 } from 'react';
-import useControlledState from 'use-merge-value';
 
 import ActionIcon from '@/ActionIcon';
+import { useControlledState } from '@/hooks/useControlledState';
 import { useMotionComponent } from '@/MotionProvider';
 import { styleProps } from '@/styles/stylex/props';
 import type { DivProps } from '@/types';

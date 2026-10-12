@@ -5,9 +5,9 @@ import { Popover as BasePopover } from '@base-ui/react/popover';
 import clsx from 'clsx';
 import { cloneElement, type FC, isValidElement, useMemo } from 'react';
 import { use } from 'react';
-import { mergeRefs } from 'react-merge-refs';
 
 import { useNativeButton } from '@/hooks/useNativeButton';
+import { mergeRefs } from '@/utils/mergeRefs';
 import { parseTrigger } from '@/utils/parseTrigger';
 
 import { PopoverGroupHandleContext } from './groupContext';

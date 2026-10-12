@@ -98,7 +98,7 @@ export const CodeDiff = memo<CodeDiffProps>(
       [newContent, language, fileName],
     );
 
-    const options = useMemo<FileDiffOptions<string>>(
+    const options = useMemo<FileDiffOptions<string, undefined>>(
       () => getLobeDiffOptions({ diffOptions, isDarkMode, viewMode }),
       [isDarkMode, viewMode, diffOptions],
     );

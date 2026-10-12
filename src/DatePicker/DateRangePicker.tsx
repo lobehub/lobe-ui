@@ -4,8 +4,8 @@ import * as stylex from '@stylexjs/stylex';
 import dayjs from 'dayjs';
 import { ArrowRight, CalendarIcon } from 'lucide-react';
 import { memo, useState } from 'react';
-import useControlledState from 'use-merge-value';
 
+import { useControlledState } from '@/hooks/useControlledState';
 import datePickerMessages from '@/i18n/resources/en/datePicker';
 import { useTranslation } from '@/i18n/useTranslation';
 import Icon from '@/Icon';
@@ -90,7 +90,11 @@ const DateRangePicker = memo<DateRangePickerProps>(
           </span>
         }
         trigger={
-          <button {...stylex.props(focusRing.info, styles.trigger)} disabled={disabled} type="button">
+          <button
+            {...stylex.props(focusRing.info, styles.trigger)}
+            disabled={disabled}
+            type="button"
+          >
             <span {...stylex.props(styles.rangeTrigger)}>
               {half(
                 shown[0],

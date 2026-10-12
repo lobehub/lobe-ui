@@ -6,7 +6,6 @@ import * as stylex from '@stylexjs/stylex';
 import clsx from 'clsx';
 import type React from 'react';
 import { cloneElement, isValidElement, useCallback, useState } from 'react';
-import { mergeRefs, useMergeRefs } from 'react-merge-refs';
 
 import { useAppElement } from '@/ConfigProvider/AppElementContext';
 import { FloatingLayerProvider } from '@/hooks/useFloatingLayer';
@@ -16,6 +15,7 @@ import { MenuVirtualList, type VirtualListProps } from '@/internal/virtual';
 import { CLASSNAMES } from '@/styles/classNames';
 import { type styleProps } from '@/styles/stylex/props';
 import Switch from '@/Switch';
+import { mergeRefs, useMergeRefs } from '@/utils/mergeRefs';
 import { placementMap } from '@/utils/placement';
 
 import { useLayerZIndex } from '../internal/zIndex';

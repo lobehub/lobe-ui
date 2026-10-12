@@ -1,6 +1,5 @@
 'use client';
 
-import { useSize } from 'ahooks';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import {
   type FC,
@@ -16,6 +15,7 @@ import {
 import ActionIcon from '@/ActionIcon';
 import ChatInputAreaInner from '@/chat/ChatInputArea/components/ChatInputAreaInner';
 import { Flexbox } from '@/Flex';
+import { useSize } from '@/hooks/useSize';
 import SafeArea from '@/mobile/SafeArea';
 import { styleProps } from '@/styles/stylex/props';
 

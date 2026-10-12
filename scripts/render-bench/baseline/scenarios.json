@@ -1,0 +1,7197 @@
+[
+  {
+    "demo": "tooltip-demo-group",
+    "errors": [],
+    "interaction": {
+      "components": [
+        {
+          "name": "TooltipViewport",
+          "context": 9,
+          "mounts": 1,
+          "parent": 0,
+          "props": 6,
+          "renders": 18,
+          "state": 12,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipInGroup",
+          "context": 15,
+          "mounts": 0,
+          "parent": 0,
+          "props": 0,
+          "renders": 15,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipTrigger",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 15,
+          "renders": 15,
+          "state": 6,
+          "unnecessary": 0
+        },
+        {
+          "name": "BaseButton",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 15,
+          "renders": 15,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "motion.button",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 15,
+          "renders": 15,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipPositioner",
+          "context": 4,
+          "mounts": 1,
+          "parent": 0,
+          "props": 6,
+          "renders": 12,
+          "state": 8,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipPopup",
+          "context": 7,
+          "mounts": 1,
+          "parent": 0,
+          "props": 6,
+          "renders": 12,
+          "state": 4,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipInteractions",
+          "context": 0,
+          "mounts": 1,
+          "parent": 4,
+          "props": 0,
+          "renders": 10,
+          "state": 5,
+          "unnecessary": 2
+        },
+        {
+          "name": "TooltipRoot",
+          "context": 2,
+          "mounts": 0,
+          "parent": 0,
+          "props": 5,
+          "renders": 9,
+          "state": 9,
+          "unnecessary": 3
+        },
+        {
+          "name": "PopupHandleAttachment",
+          "context": 0,
+          "mounts": 0,
+          "parent": 9,
+          "props": 0,
+          "renders": 9,
+          "state": 0,
+          "unnecessary": 3
+        },
+        {
+          "name": "FloatingPortalLite",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 6,
+          "renders": 9,
+          "state": 2,
+          "unnecessary": 1
+        },
+        {
+          "name": "TooltipPortal",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 6,
+          "renders": 7,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipContent",
+          "context": 0,
+          "mounts": 7,
+          "parent": 0,
+          "props": 0,
+          "renders": 7,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipGroup",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 0,
+          "renders": 5,
+          "state": 5,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipArrow",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 38,
+        "parent": 13,
+        "props": 80,
+        "renders": 160,
+        "state": 51,
+        "unnecessary": 9
+      }
+    },
+    "mount": {
+      "components": [
+        {
+          "name": "TooltipInGroup",
+          "context": 3,
+          "mounts": 3,
+          "parent": 0,
+          "props": 0,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipTrigger",
+          "context": 0,
+          "mounts": 3,
+          "parent": 0,
+          "props": 3,
+          "renders": 6,
+          "state": 3,
+          "unnecessary": 0
+        },
+        {
+          "name": "BaseButton",
+          "context": 0,
+          "mounts": 3,
+          "parent": 0,
+          "props": 3,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "motion.button",
+          "context": 0,
+          "mounts": 3,
+          "parent": 0,
+          "props": 3,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Anonymous",
+          "context": 0,
+          "mounts": 3,
+          "parent": 0,
+          "props": 0,
+          "renders": 5,
+          "state": 2,
+          "unnecessary": 0
+        },
+        {
+          "name": "Tooltip",
+          "context": 0,
+          "mounts": 3,
+          "parent": 0,
+          "props": 0,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "HydratedRouter",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "RemixErrorBoundary",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RouterProvider$1",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RouterProvider",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Router",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RenderErrorBoundary",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RenderedRoute",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Meta",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Links",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "WithComponentProps",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "StandaloneQuerySync",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "StandaloneDemoPage",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "CanonicalPreview",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "DemoPlaceholder",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 7,
+        "parent": 4,
+        "props": 12,
+        "renders": 87,
+        "state": 9,
+        "unnecessary": 3
+      }
+    },
+    "name": "Tooltip group: hover across triggers"
+  },
+  {
+    "demo": "tooltip-demo-demos",
+    "errors": [],
+    "interaction": {
+      "components": [
+        {
+          "name": "TooltipRoot",
+          "context": 6,
+          "mounts": 0,
+          "parent": 0,
+          "props": 2,
+          "renders": 10,
+          "state": 9,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipInteractions",
+          "context": 0,
+          "mounts": 1,
+          "parent": 4,
+          "props": 0,
+          "renders": 9,
+          "state": 4,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipPositioner",
+          "context": 2,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 7,
+          "state": 6,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipPopup",
+          "context": 4,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 7,
+          "state": 4,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipTrigger",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 2,
+          "renders": 6,
+          "state": 5,
+          "unnecessary": 0
+        },
+        {
+          "name": "BaseButton",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 6,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "motion.button",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 6,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipViewport",
+          "context": 5,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 6,
+          "state": 2,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipPortal",
+          "context": 0,
+          "mounts": 0,
+          "parent": 2,
+          "props": 0,
+          "renders": 4,
+          "state": 2,
+          "unnecessary": 3
+        },
+        {
+          "name": "FloatingPortalLite",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 4,
+          "state": 2,
+          "unnecessary": 1
+        },
+        {
+          "name": "FlexBasic",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 2,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipStandalone",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 2,
+          "unnecessary": 0
+        },
+        {
+          "name": "Hotkey",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "Center",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipContent",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Icon",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Command",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Anonymous",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 17,
+        "parent": 7,
+        "props": 19,
+        "renders": 79,
+        "state": 37,
+        "unnecessary": 4
+      }
+    },
+    "mount": {
+      "components": [
+        {
+          "name": "Styled.div",
+          "context": 0,
+          "mounts": 15,
+          "parent": 0,
+          "props": 13,
+          "renders": 28,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Anonymous",
+          "context": 0,
+          "mounts": 9,
+          "parent": 0,
+          "props": 0,
+          "renders": 15,
+          "state": 6,
+          "unnecessary": 0
+        },
+        {
+          "name": "ControlInput",
+          "context": 0,
+          "mounts": 3,
+          "parent": 3,
+          "props": 0,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Row",
+          "context": 0,
+          "mounts": 3,
+          "parent": 0,
+          "props": 3,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Label",
+          "context": 3,
+          "mounts": 3,
+          "parent": 0,
+          "props": 0,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RawLabel",
+          "context": 3,
+          "mounts": 3,
+          "parent": 0,
+          "props": 0,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Styled.label",
+          "context": 0,
+          "mounts": 3,
+          "parent": 3,
+          "props": 0,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "StringComponent",
+          "context": 2,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "String$1",
+          "context": 0,
+          "mounts": 2,
+          "parent": 2,
+          "props": 0,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "ValueInput",
+          "context": 2,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Styled.input",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 2,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "HydratedRouter",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "RemixErrorBoundary",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RouterProvider$1",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RouterProvider",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Router",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RenderErrorBoundary",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RenderedRoute",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Meta",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Links",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 15,
+        "parent": 13,
+        "props": 26,
+        "renders": 170,
+        "state": 10,
+        "unnecessary": 2
+      }
+    },
+    "name": "Tooltip: hover triggers"
+  },
+  {
+    "demo": "src-base-ui-popover-demo-hover-only",
+    "errors": [],
+    "interaction": {
+      "components": [
+        {
+          "name": "FlexBasic",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 11,
+          "renders": 12,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Text",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 9,
+          "renders": 11,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "PopoverPositioner",
+          "context": 2,
+          "mounts": 2,
+          "parent": 0,
+          "props": 1,
+          "renders": 7,
+          "state": 5,
+          "unnecessary": 0
+        },
+        {
+          "name": "PopoverInteractions",
+          "context": 0,
+          "mounts": 0,
+          "parent": 4,
+          "props": 0,
+          "renders": 6,
+          "state": 2,
+          "unnecessary": 0
+        },
+        {
+          "name": "PopoverPopup",
+          "context": 3,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 6,
+          "state": 2,
+          "unnecessary": 0
+        },
+        {
+          "name": "PopoverRootComponent",
+          "context": 2,
+          "mounts": 0,
+          "parent": 0,
+          "props": 1,
+          "renders": 5,
+          "state": 5,
+          "unnecessary": 0
+        },
+        {
+          "name": "PopupHandleAttachment",
+          "context": 0,
+          "mounts": 0,
+          "parent": 5,
+          "props": 0,
+          "renders": 5,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "FloatingNode",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 4,
+          "renders": 5,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "FloatingFocusManager",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 4,
+          "renders": 5,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "PopoverViewport",
+          "context": 3,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 5,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "Anonymous",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 3,
+          "renders": 4,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "FocusGuard",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 2,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Step",
+          "context": 0,
+          "mounts": 0,
+          "parent": 3,
+          "props": 0,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "PopoverTrigger",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 1,
+          "renders": 3,
+          "state": 3,
+          "unnecessary": 0
+        },
+        {
+          "name": "BaseButton",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 3,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "motion.button",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 3,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "PopoverPortal",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 2,
+          "renders": 3,
+          "state": 1,
+          "unnecessary": 3
+        },
+        {
+          "name": "FloatingPortal",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 3,
+          "state": 2,
+          "unnecessary": 1
+        },
+        {
+          "name": "Tag",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Pointer",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 1,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 10,
+        "parent": 12,
+        "props": 53,
+        "renders": 104,
+        "state": 24,
+        "unnecessary": 4
+      }
+    },
+    "mount": {
+      "components": [
+        {
+          "name": "FlexBasic",
+          "context": 0,
+          "mounts": 11,
+          "parent": 0,
+          "props": 0,
+          "renders": 11,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Anonymous",
+          "context": 0,
+          "mounts": 7,
+          "parent": 0,
+          "props": 0,
+          "renders": 9,
+          "state": 2,
+          "unnecessary": 0
+        },
+        {
+          "name": "Text",
+          "context": 0,
+          "mounts": 9,
+          "parent": 0,
+          "props": 0,
+          "renders": 9,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Step",
+          "context": 0,
+          "mounts": 3,
+          "parent": 0,
+          "props": 0,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "HydratedRouter",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "RemixErrorBoundary",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RouterProvider$1",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RouterProvider",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Router",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RenderErrorBoundary",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RenderedRoute",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Meta",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Links",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "WithComponentProps",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "StandaloneQuerySync",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "StandaloneDemoPage",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "CanonicalPreview",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "DemoPlaceholder",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "ScrollRestoration",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Scripts",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 1
+        }
+      ],
+      "totals": {
+        "context": 4,
+        "parent": 3,
+        "props": 4,
+        "renders": 100,
+        "state": 6,
+        "unnecessary": 1
+      }
+    },
+    "name": "Popover: hover triggers"
+  },
+  {
+    "demo": "src-base-ui-popover-demo-controlled",
+    "errors": [],
+    "interaction": {
+      "components": [
+        {
+          "name": "FocusGuard",
+          "context": 0,
+          "mounts": 6,
+          "parent": 0,
+          "props": 20,
+          "renders": 26,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Anonymous",
+          "context": 0,
+          "mounts": 3,
+          "parent": 12,
+          "props": 1,
+          "renders": 18,
+          "state": 2,
+          "unnecessary": 0
+        },
+        {
+          "name": "FlexBasic",
+          "context": 0,
+          "mounts": 5,
+          "parent": 0,
+          "props": 13,
+          "renders": 18,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "PopoverInteractions",
+          "context": 0,
+          "mounts": 0,
+          "parent": 10,
+          "props": 0,
+          "renders": 14,
+          "state": 4,
+          "unnecessary": 0
+        },
+        {
+          "name": "BaseButton",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 12,
+          "renders": 14,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "motion.button",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 12,
+          "renders": 14,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "PopoverRootComponent",
+          "context": 6,
+          "mounts": 0,
+          "parent": 0,
+          "props": 4,
+          "renders": 12,
+          "state": 9,
+          "unnecessary": 0
+        },
+        {
+          "name": "PopupHandleAttachment",
+          "context": 0,
+          "mounts": 0,
+          "parent": 12,
+          "props": 0,
+          "renders": 12,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "PopoverPositioner",
+          "context": 2,
+          "mounts": 2,
+          "parent": 0,
+          "props": 3,
+          "renders": 11,
+          "state": 8,
+          "unnecessary": 0
+        },
+        {
+          "name": "PopoverPortal",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 8,
+          "renders": 10,
+          "state": 2,
+          "unnecessary": 8
+        },
+        {
+          "name": "PopoverPopup",
+          "context": 4,
+          "mounts": 2,
+          "parent": 0,
+          "props": 2,
+          "renders": 10,
+          "state": 5,
+          "unnecessary": 0
+        },
+        {
+          "name": "PopoverViewport",
+          "context": 5,
+          "mounts": 2,
+          "parent": 0,
+          "props": 2,
+          "renders": 9,
+          "state": 3,
+          "unnecessary": 0
+        },
+        {
+          "name": "PopoverTrigger",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 4,
+          "renders": 8,
+          "state": 6,
+          "unnecessary": 0
+        },
+        {
+          "name": "Trash",
+          "context": 0,
+          "mounts": 1,
+          "parent": 7,
+          "props": 0,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "FloatingNode",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 7,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "FloatingFocusManager",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 7,
+          "renders": 8,
+          "state": 2,
+          "unnecessary": 0
+        },
+        {
+          "name": "BaseActionIcon",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 6,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Icon",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 6,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "FloatingPortal",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 6,
+          "state": 4,
+          "unnecessary": 1
+        },
+        {
+          "name": "Popover",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 4,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 17,
+        "parent": 46,
+        "props": 130,
+        "renders": 248,
+        "state": 45,
+        "unnecessary": 9
+      }
+    },
+    "mount": {
+      "components": [
+        {
+          "name": "Anonymous",
+          "context": 0,
+          "mounts": 7,
+          "parent": 1,
+          "props": 0,
+          "renders": 10,
+          "state": 2,
+          "unnecessary": 0
+        },
+        {
+          "name": "BaseButton",
+          "context": 0,
+          "mounts": 3,
+          "parent": 0,
+          "props": 2,
+          "renders": 5,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "motion.button",
+          "context": 0,
+          "mounts": 3,
+          "parent": 0,
+          "props": 2,
+          "renders": 5,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "FlexBasic",
+          "context": 0,
+          "mounts": 4,
+          "parent": 0,
+          "props": 0,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "PopoverTrigger",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 4,
+          "state": 2,
+          "unnecessary": 0
+        },
+        {
+          "name": "PopoverPortal",
+          "context": 0,
+          "mounts": 4,
+          "parent": 0,
+          "props": 0,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Tag",
+          "context": 0,
+          "mounts": 3,
+          "parent": 0,
+          "props": 0,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "HydratedRouter",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "RemixErrorBoundary",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RouterProvider$1",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RouterProvider",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Router",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RenderErrorBoundary",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RenderedRoute",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Meta",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Links",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "WithComponentProps",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "StandaloneQuerySync",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "StandaloneDemoPage",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "CanonicalPreview",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 4,
+        "parent": 5,
+        "props": 8,
+        "renders": 106,
+        "state": 7,
+        "unnecessary": 1
+      }
+    },
+    "name": "Popover: open and close"
+  },
+  {
+    "demo": "src-base-ui-select-demo-demos",
+    "errors": [],
+    "interaction": {
+      "components": [
+        {
+          "name": "SelectItem",
+          "context": 0,
+          "mounts": 5,
+          "parent": 0,
+          "props": 10,
+          "renders": 31,
+          "state": 16,
+          "unnecessary": 0
+        },
+        {
+          "name": "FocusGuard",
+          "context": 0,
+          "mounts": 4,
+          "parent": 0,
+          "props": 20,
+          "renders": 24,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "SelectRoot",
+          "context": 4,
+          "mounts": 0,
+          "parent": 0,
+          "props": 2,
+          "renders": 15,
+          "state": 15,
+          "unnecessary": 0
+        },
+        {
+          "name": "SelectPositioner",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 3,
+          "renders": 13,
+          "state": 9,
+          "unnecessary": 0
+        },
+        {
+          "name": "SelectPopup",
+          "context": 4,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 12,
+          "state": 7,
+          "unnecessary": 0
+        },
+        {
+          "name": "FloatingFocusManager",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 11,
+          "renders": 12,
+          "state": 3,
+          "unnecessary": 0
+        },
+        {
+          "name": "SelectItemIndicator",
+          "context": 1,
+          "mounts": 5,
+          "parent": 0,
+          "props": 5,
+          "renders": 11,
+          "state": 0,
+          "unnecessary": 5
+        },
+        {
+          "name": "CompositeList",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 9,
+          "renders": 10,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "FloatingPortal",
+          "context": 0,
+          "mounts": 1,
+          "parent": 2,
+          "props": 1,
+          "renders": 9,
+          "state": 5,
+          "unnecessary": 1
+        },
+        {
+          "name": "SelectList",
+          "context": 4,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 8,
+          "state": 2,
+          "unnecessary": 0
+        },
+        {
+          "name": "SelectTrigger",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 2,
+          "renders": 6,
+          "state": 4,
+          "unnecessary": 0
+        },
+        {
+          "name": "SelectGroup",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 2,
+          "renders": 6,
+          "state": 2,
+          "unnecessary": 0
+        },
+        {
+          "name": "SelectGroupLabel",
+          "context": 2,
+          "mounts": 2,
+          "parent": 2,
+          "props": 0,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "SelectItemText",
+          "context": 1,
+          "mounts": 5,
+          "parent": 0,
+          "props": 0,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "SelectPortal",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 2,
+          "renders": 5,
+          "state": 3,
+          "unnecessary": 2
+        },
+        {
+          "name": "SelectIcon",
+          "context": 0,
+          "mounts": 0,
+          "parent": 2,
+          "props": 0,
+          "renders": 4,
+          "state": 2,
+          "unnecessary": 0
+        },
+        {
+          "name": "ItemIndicator",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 2,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Select",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 2,
+          "unnecessary": 0
+        },
+        {
+          "name": "SelectValue",
+          "context": 0,
+          "mounts": 0,
+          "parent": 2,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "SelectTriggerSuffix",
+          "context": 0,
+          "mounts": 0,
+          "parent": 2,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 16,
+        "parent": 10,
+        "props": 72,
+        "renders": 192,
+        "state": 70,
+        "unnecessary": 8
+      }
+    },
+    "mount": {
+      "components": [
+        {
+          "name": "Styled.div",
+          "context": 0,
+          "mounts": 33,
+          "parent": 2,
+          "props": 29,
+          "renders": 64,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Anonymous",
+          "context": 0,
+          "mounts": 27,
+          "parent": 0,
+          "props": 0,
+          "renders": 37,
+          "state": 10,
+          "unnecessary": 0
+        },
+        {
+          "name": "SelectRoot",
+          "context": 0,
+          "mounts": 8,
+          "parent": 0,
+          "props": 0,
+          "renders": 24,
+          "state": 16,
+          "unnecessary": 0
+        },
+        {
+          "name": "Icon",
+          "context": 0,
+          "mounts": 14,
+          "parent": 0,
+          "props": 0,
+          "renders": 14,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "ControlInput",
+          "context": 0,
+          "mounts": 7,
+          "parent": 7,
+          "props": 0,
+          "renders": 14,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Row",
+          "context": 0,
+          "mounts": 7,
+          "parent": 0,
+          "props": 7,
+          "renders": 14,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Label",
+          "context": 7,
+          "mounts": 7,
+          "parent": 0,
+          "props": 0,
+          "renders": 14,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RawLabel",
+          "context": 7,
+          "mounts": 7,
+          "parent": 0,
+          "props": 0,
+          "renders": 14,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Styled.label",
+          "context": 0,
+          "mounts": 7,
+          "parent": 7,
+          "props": 0,
+          "renders": 14,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Select",
+          "context": 0,
+          "mounts": 10,
+          "parent": 2,
+          "props": 0,
+          "renders": 12,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "BooleanComponent",
+          "context": 5,
+          "mounts": 5,
+          "parent": 0,
+          "props": 0,
+          "renders": 10,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Boolean$1",
+          "context": 0,
+          "mounts": 5,
+          "parent": 5,
+          "props": 0,
+          "renders": 10,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "SelectTrigger",
+          "context": 0,
+          "mounts": 8,
+          "parent": 0,
+          "props": 0,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "SelectValue",
+          "context": 0,
+          "mounts": 8,
+          "parent": 0,
+          "props": 0,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "SelectTriggerSuffix",
+          "context": 0,
+          "mounts": 8,
+          "parent": 0,
+          "props": 0,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "SelectIcon",
+          "context": 0,
+          "mounts": 8,
+          "parent": 0,
+          "props": 0,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "ChevronDown",
+          "context": 0,
+          "mounts": 8,
+          "parent": 0,
+          "props": 0,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "SelectPortal",
+          "context": 0,
+          "mounts": 8,
+          "parent": 0,
+          "props": 0,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "X",
+          "context": 0,
+          "mounts": 5,
+          "parent": 0,
+          "props": 0,
+          "renders": 5,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "SelectComponent",
+          "context": 2,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 25,
+        "parent": 28,
+        "props": 44,
+        "renders": 376,
+        "state": 29,
+        "unnecessary": 1
+      }
+    },
+    "name": "Select: open and arrow through options"
+  },
+  {
+    "demo": "src-dropdown-menu-demo-desc",
+    "errors": [],
+    "interaction": {
+      "components": [
+        {
+          "name": "MenuItemPlain",
+          "context": 0,
+          "mounts": 4,
+          "parent": 0,
+          "props": 4,
+          "renders": 24,
+          "state": 20,
+          "unnecessary": 0
+        },
+        {
+          "name": "FocusGuard",
+          "context": 0,
+          "mounts": 6,
+          "parent": 0,
+          "props": 16,
+          "renders": 22,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "MenuRootInternal",
+          "context": 6,
+          "mounts": 0,
+          "parent": 0,
+          "props": 2,
+          "renders": 21,
+          "state": 21,
+          "unnecessary": 0
+        },
+        {
+          "name": "FloatingTree",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 21,
+          "renders": 21,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "MenuPositioner",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 2,
+          "renders": 8,
+          "state": 7,
+          "unnecessary": 0
+        },
+        {
+          "name": "FloatingNode",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 7,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "CompositeList",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 7,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "DropdownMenuItem",
+          "context": 0,
+          "mounts": 4,
+          "parent": 0,
+          "props": 4,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "MenuItem",
+          "context": 0,
+          "mounts": 4,
+          "parent": 0,
+          "props": 4,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "DropdownMenuItemContentImpl",
+          "context": 0,
+          "mounts": 4,
+          "parent": 0,
+          "props": 4,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "DropdownMenuItemIconImpl",
+          "context": 0,
+          "mounts": 4,
+          "parent": 4,
+          "props": 0,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "DropdownMenuItemLabelGroup",
+          "context": 0,
+          "mounts": 4,
+          "parent": 0,
+          "props": 4,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "DropdownMenuItemLabel",
+          "context": 0,
+          "mounts": 4,
+          "parent": 4,
+          "props": 0,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "DropdownMenuItemDesc",
+          "context": 0,
+          "mounts": 4,
+          "parent": 4,
+          "props": 0,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "MenuPopupPlain",
+          "context": 3,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 7,
+          "state": 5,
+          "unnecessary": 0
+        },
+        {
+          "name": "FloatingFocusManager",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 6,
+          "renders": 7,
+          "state": 2,
+          "unnecessary": 0
+        },
+        {
+          "name": "FloatingPortal",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 6,
+          "state": 4,
+          "unnecessary": 1
+        },
+        {
+          "name": "MenuTrigger",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 2,
+          "renders": 5,
+          "state": 5,
+          "unnecessary": 0
+        },
+        {
+          "name": "MenuPortal",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 2,
+          "renders": 4,
+          "state": 2,
+          "unnecessary": 3
+        },
+        {
+          "name": "Icon",
+          "context": 0,
+          "mounts": 4,
+          "parent": 0,
+          "props": 0,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 9,
+        "parent": 14,
+        "props": 94,
+        "renders": 224,
+        "state": 69,
+        "unnecessary": 5
+      }
+    },
+    "mount": {
+      "components": [
+        {
+          "name": "Anonymous",
+          "context": 0,
+          "mounts": 4,
+          "parent": 0,
+          "props": 0,
+          "renders": 6,
+          "state": 2,
+          "unnecessary": 0
+        },
+        {
+          "name": "HydratedRouter",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "RemixErrorBoundary",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RouterProvider$1",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RouterProvider",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Router",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RenderErrorBoundary",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RenderedRoute",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Meta",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Links",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "WithComponentProps",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "StandaloneQuerySync",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "StandaloneDemoPage",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "CanonicalPreview",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "DemoPlaceholder",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "ScrollRestoration",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Scripts",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 1
+        },
+        {
+          "name": "MenuTrigger",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "DataRoutes",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Layout",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 4,
+        "parent": 3,
+        "props": 2,
+        "renders": 64,
+        "state": 6,
+        "unnecessary": 1
+      }
+    },
+    "name": "DropdownMenu: open and arrow through items"
+  },
+  {
+    "demo": "src-context-menu-demo-trigger",
+    "errors": [],
+    "interaction": {
+      "components": [
+        {
+          "name": "MenuItemPlain",
+          "context": 0,
+          "mounts": 3,
+          "parent": 0,
+          "props": 0,
+          "renders": 18,
+          "state": 15,
+          "unnecessary": 0
+        },
+        {
+          "name": "MenuRootInternal",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 12,
+          "state": 11,
+          "unnecessary": 1
+        },
+        {
+          "name": "FloatingTree",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 11,
+          "renders": 12,
+          "state": 0,
+          "unnecessary": 1
+        },
+        {
+          "name": "FocusGuard",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 6,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "FloatingPortal",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 4,
+          "state": 3,
+          "unnecessary": 1
+        },
+        {
+          "name": "MenuPositioner",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 4,
+          "state": 3,
+          "unnecessary": 0
+        },
+        {
+          "name": "InternalBackdrop",
+          "context": 0,
+          "mounts": 1,
+          "parent": 3,
+          "props": 0,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "FloatingNode",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 3,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "CompositeList",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 3,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "MenuPopupPlain",
+          "context": 3,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 4,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "FloatingFocusManager",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 3,
+          "renders": 4,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "ContextMenuHost",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 0,
+          "renders": 3,
+          "state": 3,
+          "unnecessary": 2
+        },
+        {
+          "name": "MenuItem",
+          "context": 0,
+          "mounts": 3,
+          "parent": 0,
+          "props": 0,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "ContextMenuTrigger",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 2,
+          "unnecessary": 0
+        },
+        {
+          "name": "Block",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 2,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "FlexBasic",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 2,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "ContextMenuRoot",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "MenuRoot",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "MenuPortal",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "MenuPopup",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 3,
+        "parent": 3,
+        "props": 38,
+        "renders": 99,
+        "state": 39,
+        "unnecessary": 5
+      }
+    },
+    "mount": {
+      "components": [
+        {
+          "name": "Anonymous",
+          "context": 0,
+          "mounts": 4,
+          "parent": 0,
+          "props": 0,
+          "renders": 6,
+          "state": 2,
+          "unnecessary": 0
+        },
+        {
+          "name": "HydratedRouter",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "RemixErrorBoundary",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RouterProvider$1",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RouterProvider",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Router",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RenderErrorBoundary",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RenderedRoute",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Meta",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Links",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "WithComponentProps",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "StandaloneQuerySync",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "StandaloneDemoPage",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "CanonicalPreview",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "DemoPlaceholder",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "ScrollRestoration",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Scripts",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 1
+        },
+        {
+          "name": "Text",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "DataRoutes",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Layout",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 4,
+        "parent": 3,
+        "props": 2,
+        "renders": 59,
+        "state": 5,
+        "unnecessary": 1
+      }
+    },
+    "name": "ContextMenu: open and arrow through items"
+  },
+  {
+    "demo": "src-base-ui-modal-demo-demos",
+    "errors": [],
+    "interaction": {
+      "components": [
+        {
+          "name": "motion.button",
+          "context": 4,
+          "mounts": 2,
+          "parent": 0,
+          "props": 2,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "FocusGuard",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 6,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "motion.div",
+          "context": 2,
+          "mounts": 2,
+          "parent": 0,
+          "props": 3,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "AnimatedModalRoot",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 2,
+          "renders": 5,
+          "state": 3,
+          "unnecessary": 3
+        },
+        {
+          "name": "DialogInteractions",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 5,
+          "state": 3,
+          "unnecessary": 1
+        },
+        {
+          "name": "FloatingPortal",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 5,
+          "state": 3,
+          "unnecessary": 1
+        },
+        {
+          "name": "FlexBasic",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 4,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "BaseButton",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 2,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "FloatingFocusManager",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 2,
+          "renders": 4,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "Text",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 2,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "DialogRoot",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 3,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "ModalBackdrop",
+          "context": 2,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "DialogBackdrop",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 2,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "ModalPopupImpl",
+          "context": 2,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "DialogPopup",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 2,
+          "renders": 3,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "AnimatePresence",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 2,
+          "renders": 3,
+          "state": 2,
+          "unnecessary": 0
+        },
+        {
+          "name": "PresenceChild",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 2,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "PopChild",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 2,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "PopChildMeasure",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 2,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "MeasureLayout",
+          "context": 2,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 13,
+        "parent": 2,
+        "props": 47,
+        "renders": 106,
+        "state": 16,
+        "unnecessary": 9
+      }
+    },
+    "mount": {
+      "components": [
+        {
+          "name": "FlexBasic",
+          "context": 0,
+          "mounts": 7,
+          "parent": 0,
+          "props": 0,
+          "renders": 7,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Anonymous",
+          "context": 0,
+          "mounts": 3,
+          "parent": 0,
+          "props": 0,
+          "renders": 5,
+          "state": 2,
+          "unnecessary": 0
+        },
+        {
+          "name": "Modal",
+          "context": 0,
+          "mounts": 5,
+          "parent": 0,
+          "props": 0,
+          "renders": 5,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "ModalRoot",
+          "context": 0,
+          "mounts": 5,
+          "parent": 0,
+          "props": 0,
+          "renders": 5,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "AnimatedModalRoot",
+          "context": 0,
+          "mounts": 5,
+          "parent": 0,
+          "props": 0,
+          "renders": 5,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Text",
+          "context": 0,
+          "mounts": 3,
+          "parent": 0,
+          "props": 0,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "HydratedRouter",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "RemixErrorBoundary",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RouterProvider$1",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RouterProvider",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Router",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RenderErrorBoundary",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RenderedRoute",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Meta",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Links",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "WithComponentProps",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "StandaloneQuerySync",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "StandaloneDemoPage",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "CanonicalPreview",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "DemoPlaceholder",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 4,
+        "parent": 3,
+        "props": 2,
+        "renders": 88,
+        "state": 5,
+        "unnecessary": 1
+      }
+    },
+    "name": "Modal: open and close"
+  },
+  {
+    "demo": "src-base-ui-tabs-demo-demos",
+    "errors": [],
+    "interaction": {
+      "components": [
+        {
+          "name": "TabsTab",
+          "context": 64,
+          "mounts": 0,
+          "parent": 0,
+          "props": 0,
+          "renders": 64,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "TabsPanel",
+          "context": 52,
+          "mounts": 0,
+          "parent": 0,
+          "props": 0,
+          "renders": 59,
+          "state": 23,
+          "unnecessary": 36
+        },
+        {
+          "name": "CompositeList",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 28,
+          "renders": 28,
+          "state": 8,
+          "unnecessary": 0
+        },
+        {
+          "name": "TabsList",
+          "context": 12,
+          "mounts": 0,
+          "parent": 0,
+          "props": 0,
+          "renders": 16,
+          "state": 4,
+          "unnecessary": 0
+        },
+        {
+          "name": "CompositeRoot",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 16,
+          "renders": 16,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "TabsRoot",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 8,
+          "renders": 16,
+          "state": 8,
+          "unnecessary": 0
+        },
+        {
+          "name": "TabsIndicator",
+          "context": 12,
+          "mounts": 0,
+          "parent": 0,
+          "props": 0,
+          "renders": 12,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Tabs",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 0,
+          "renders": 4,
+          "state": 4,
+          "unnecessary": 0
+        },
+        {
+          "name": "FlexBasic",
+          "context": 0,
+          "mounts": 4,
+          "parent": 0,
+          "props": 0,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 140,
+        "parent": 0,
+        "props": 52,
+        "renders": 219,
+        "state": 47,
+        "unnecessary": 36
+      }
+    },
+    "mount": {
+      "components": [
+        {
+          "name": "Styled.div",
+          "context": 0,
+          "mounts": 18,
+          "parent": 3,
+          "props": 13,
+          "renders": 34,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Anonymous",
+          "context": 0,
+          "mounts": 13,
+          "parent": 0,
+          "props": 0,
+          "renders": 19,
+          "state": 6,
+          "unnecessary": 0
+        },
+        {
+          "name": "TabsTab",
+          "context": 4,
+          "mounts": 8,
+          "parent": 0,
+          "props": 0,
+          "renders": 12,
+          "state": 4,
+          "unnecessary": 0
+        },
+        {
+          "name": "TabsPanel",
+          "context": 4,
+          "mounts": 8,
+          "parent": 0,
+          "props": 0,
+          "renders": 12,
+          "state": 1,
+          "unnecessary": 3
+        },
+        {
+          "name": "ControlInput",
+          "context": 0,
+          "mounts": 3,
+          "parent": 3,
+          "props": 0,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "SelectComponent",
+          "context": 3,
+          "mounts": 3,
+          "parent": 0,
+          "props": 0,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Row",
+          "context": 0,
+          "mounts": 3,
+          "parent": 0,
+          "props": 3,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Label",
+          "context": 3,
+          "mounts": 3,
+          "parent": 0,
+          "props": 0,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RawLabel",
+          "context": 3,
+          "mounts": 3,
+          "parent": 0,
+          "props": 0,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Styled.label",
+          "context": 0,
+          "mounts": 3,
+          "parent": 3,
+          "props": 0,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Select",
+          "context": 0,
+          "mounts": 3,
+          "parent": 3,
+          "props": 0,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Styled.select",
+          "context": 0,
+          "mounts": 3,
+          "parent": 0,
+          "props": 3,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Chevron",
+          "context": 0,
+          "mounts": 3,
+          "parent": 3,
+          "props": 0,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Styled.svg",
+          "context": 0,
+          "mounts": 3,
+          "parent": 0,
+          "props": 3,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "CompositeList",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 2,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "TabsIndicator",
+          "context": 1,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 4,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "FlexBasic",
+          "context": 0,
+          "mounts": 3,
+          "parent": 0,
+          "props": 0,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "TabsRoot",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 3,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "TabsList",
+          "context": 1,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 3,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "HydratedRouter",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 23,
+        "parent": 18,
+        "props": 29,
+        "renders": 224,
+        "state": 17,
+        "unnecessary": 4
+      }
+    },
+    "name": "Tabs: click each tab",
+    "tolerance": 0
+  },
+  {
+    "demo": "src-base-ui-segmented-demo-demos",
+    "errors": [],
+    "interaction": {
+      "components": [
+        {
+          "name": "Toggle",
+          "context": 12,
+          "mounts": 0,
+          "parent": 0,
+          "props": 6,
+          "renders": 12,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "CompositeItem",
+          "context": 6,
+          "mounts": 0,
+          "parent": 0,
+          "props": 12,
+          "renders": 12,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "SegmentedItem",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 6,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "SegmentedItemIcon",
+          "context": 0,
+          "mounts": 0,
+          "parent": 6,
+          "props": 0,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "SegmentedItemLabel",
+          "context": 0,
+          "mounts": 0,
+          "parent": 6,
+          "props": 0,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "CompositeRoot",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 2,
+          "renders": 4,
+          "state": 2,
+          "unnecessary": 0
+        },
+        {
+          "name": "CompositeList",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 4,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Segmented",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 2,
+          "unnecessary": 0
+        },
+        {
+          "name": "SegmentedRoot",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 2,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "ToggleGroup",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 2,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "SegmentedIndicator",
+          "context": 0,
+          "mounts": 0,
+          "parent": 2,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 18,
+        "parent": 14,
+        "props": 34,
+        "renders": 58,
+        "state": 4,
+        "unnecessary": 0
+      }
+    },
+    "mount": {
+      "components": [
+        {
+          "name": "Styled.div",
+          "context": 0,
+          "mounts": 29,
+          "parent": 2,
+          "props": 25,
+          "renders": 56,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Anonymous",
+          "context": 0,
+          "mounts": 15,
+          "parent": 0,
+          "props": 0,
+          "renders": 24,
+          "state": 9,
+          "unnecessary": 0
+        },
+        {
+          "name": "ControlInput",
+          "context": 0,
+          "mounts": 6,
+          "parent": 6,
+          "props": 0,
+          "renders": 12,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Row",
+          "context": 0,
+          "mounts": 6,
+          "parent": 0,
+          "props": 6,
+          "renders": 12,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Label",
+          "context": 6,
+          "mounts": 6,
+          "parent": 0,
+          "props": 0,
+          "renders": 12,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RawLabel",
+          "context": 6,
+          "mounts": 6,
+          "parent": 0,
+          "props": 0,
+          "renders": 12,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Styled.label",
+          "context": 0,
+          "mounts": 6,
+          "parent": 6,
+          "props": 0,
+          "renders": 12,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "BooleanComponent",
+          "context": 4,
+          "mounts": 4,
+          "parent": 0,
+          "props": 0,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Boolean$1",
+          "context": 0,
+          "mounts": 4,
+          "parent": 4,
+          "props": 0,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "CompositeItem",
+          "context": 0,
+          "mounts": 3,
+          "parent": 0,
+          "props": 0,
+          "renders": 6,
+          "state": 3,
+          "unnecessary": 0
+        },
+        {
+          "name": "SelectComponent",
+          "context": 2,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Select",
+          "context": 0,
+          "mounts": 2,
+          "parent": 2,
+          "props": 0,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Styled.select",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 2,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Chevron",
+          "context": 0,
+          "mounts": 2,
+          "parent": 2,
+          "props": 0,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Styled.svg",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 2,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "SegmentedItem",
+          "context": 0,
+          "mounts": 3,
+          "parent": 0,
+          "props": 0,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Toggle",
+          "context": 0,
+          "mounts": 3,
+          "parent": 0,
+          "props": 0,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "SegmentedItemIcon",
+          "context": 0,
+          "mounts": 3,
+          "parent": 0,
+          "props": 0,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "SegmentedItemLabel",
+          "context": 0,
+          "mounts": 3,
+          "parent": 0,
+          "props": 0,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "HydratedRouter",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 22,
+        "parent": 25,
+        "props": 39,
+        "renders": 267,
+        "state": 15,
+        "unnecessary": 1
+      }
+    },
+    "name": "Segmented: click each option"
+  },
+  {
+    "demo": "src-base-ui-switch-demo-demos",
+    "errors": [],
+    "interaction": {
+      "components": [
+        {
+          "name": "SwitchRoot",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 24,
+          "renders": 30,
+          "state": 8,
+          "unnecessary": 0
+        },
+        {
+          "name": "SwitchThumb",
+          "context": 24,
+          "mounts": 0,
+          "parent": 0,
+          "props": 15,
+          "renders": 30,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "FlexBasic",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 24,
+          "renders": 24,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Anonymous",
+          "context": 0,
+          "mounts": 0,
+          "parent": 6,
+          "props": 0,
+          "renders": 9,
+          "state": 3,
+          "unnecessary": 0
+        },
+        {
+          "name": "_c",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 9,
+          "renders": 9,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "SwitchIcon",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 6,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Check",
+          "context": 0,
+          "mounts": 0,
+          "parent": 3,
+          "props": 0,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "X",
+          "context": 0,
+          "mounts": 0,
+          "parent": 3,
+          "props": 0,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 24,
+        "parent": 12,
+        "props": 78,
+        "renders": 114,
+        "state": 11,
+        "unnecessary": 0
+      }
+    },
+    "mount": {
+      "components": [
+        {
+          "name": "SwitchRoot",
+          "context": 0,
+          "mounts": 14,
+          "parent": 0,
+          "props": 0,
+          "renders": 14,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "SwitchThumb",
+          "context": 0,
+          "mounts": 14,
+          "parent": 0,
+          "props": 0,
+          "renders": 14,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Anonymous",
+          "context": 0,
+          "mounts": 8,
+          "parent": 0,
+          "props": 0,
+          "renders": 10,
+          "state": 2,
+          "unnecessary": 0
+        },
+        {
+          "name": "FlexBasic",
+          "context": 0,
+          "mounts": 8,
+          "parent": 0,
+          "props": 0,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "_c",
+          "context": 0,
+          "mounts": 7,
+          "parent": 0,
+          "props": 0,
+          "renders": 7,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "HydratedRouter",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "RemixErrorBoundary",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RouterProvider$1",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RouterProvider",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Router",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RenderErrorBoundary",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RenderedRoute",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Meta",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Links",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "WithComponentProps",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "StandaloneQuerySync",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "StandaloneDemoPage",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "CanonicalPreview",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "DemoPlaceholder",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "ScrollRestoration",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 4,
+        "parent": 3,
+        "props": 2,
+        "renders": 108,
+        "state": 5,
+        "unnecessary": 1
+      }
+    },
+    "name": "Switch: toggle each"
+  },
+  {
+    "demo": "src-base-ui-slider-demo-demos",
+    "errors": [],
+    "interaction": {
+      "components": [
+        {
+          "name": "SliderRoot",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 0,
+          "renders": 21,
+          "state": 21,
+          "unnecessary": 0
+        },
+        {
+          "name": "CompositeList",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 21,
+          "renders": 21,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "SliderControl",
+          "context": 21,
+          "mounts": 0,
+          "parent": 0,
+          "props": 0,
+          "renders": 21,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "SliderTrack",
+          "context": 21,
+          "mounts": 0,
+          "parent": 0,
+          "props": 0,
+          "renders": 21,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "SliderIndicator",
+          "context": 21,
+          "mounts": 0,
+          "parent": 0,
+          "props": 0,
+          "renders": 21,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "SliderThumb",
+          "context": 21,
+          "mounts": 0,
+          "parent": 0,
+          "props": 0,
+          "renders": 21,
+          "state": 0,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 84,
+        "parent": 0,
+        "props": 21,
+        "renders": 126,
+        "state": 21,
+        "unnecessary": 0
+      }
+    },
+    "mount": {
+      "components": [
+        {
+          "name": "Anonymous",
+          "context": 0,
+          "mounts": 6,
+          "parent": 0,
+          "props": 0,
+          "renders": 8,
+          "state": 2,
+          "unnecessary": 0
+        },
+        {
+          "name": "SliderRoot",
+          "context": 0,
+          "mounts": 4,
+          "parent": 0,
+          "props": 0,
+          "renders": 8,
+          "state": 4,
+          "unnecessary": 0
+        },
+        {
+          "name": "CompositeList",
+          "context": 0,
+          "mounts": 4,
+          "parent": 0,
+          "props": 4,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "SliderControl",
+          "context": 4,
+          "mounts": 4,
+          "parent": 0,
+          "props": 0,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "SliderTrack",
+          "context": 4,
+          "mounts": 4,
+          "parent": 0,
+          "props": 0,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "SliderIndicator",
+          "context": 4,
+          "mounts": 4,
+          "parent": 0,
+          "props": 0,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "SliderThumb",
+          "context": 4,
+          "mounts": 4,
+          "parent": 0,
+          "props": 0,
+          "renders": 8,
+          "state": 4,
+          "unnecessary": 0
+        },
+        {
+          "name": "_c",
+          "context": 0,
+          "mounts": 6,
+          "parent": 0,
+          "props": 0,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "FlexBasic",
+          "context": 0,
+          "mounts": 3,
+          "parent": 0,
+          "props": 0,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "HydratedRouter",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "RemixErrorBoundary",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RouterProvider$1",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RouterProvider",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Router",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RenderErrorBoundary",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RenderedRoute",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Meta",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Links",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "WithComponentProps",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "StandaloneQuerySync",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 20,
+        "parent": 3,
+        "props": 6,
+        "renders": 124,
+        "state": 13,
+        "unnecessary": 1
+      }
+    },
+    "name": "Slider: arrow 20 steps"
+  },
+  {
+    "demo": "src-search-bar-demo-demos",
+    "errors": [],
+    "interaction": {
+      "components": [
+        {
+          "name": "Input",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 60,
+          "renders": 60,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "SearchBar",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 0,
+          "renders": 31,
+          "state": 31,
+          "unnecessary": 0
+        },
+        {
+          "name": "FieldControl",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 30,
+          "renders": 30,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "InputClearButton",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Icon",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "X",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Anonymous",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 0,
+        "parent": 0,
+        "props": 90,
+        "renders": 125,
+        "state": 32,
+        "unnecessary": 0
+      }
+    },
+    "mount": {
+      "components": [
+        {
+          "name": "Styled.div",
+          "context": 0,
+          "mounts": 32,
+          "parent": 1,
+          "props": 29,
+          "renders": 62,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Anonymous",
+          "context": 0,
+          "mounts": 15,
+          "parent": 0,
+          "props": 0,
+          "renders": 25,
+          "state": 10,
+          "unnecessary": 0
+        },
+        {
+          "name": "ControlInput",
+          "context": 0,
+          "mounts": 7,
+          "parent": 7,
+          "props": 0,
+          "renders": 14,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Row",
+          "context": 0,
+          "mounts": 7,
+          "parent": 0,
+          "props": 7,
+          "renders": 14,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Label",
+          "context": 7,
+          "mounts": 7,
+          "parent": 0,
+          "props": 0,
+          "renders": 14,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RawLabel",
+          "context": 7,
+          "mounts": 7,
+          "parent": 0,
+          "props": 0,
+          "renders": 14,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Styled.label",
+          "context": 0,
+          "mounts": 7,
+          "parent": 7,
+          "props": 0,
+          "renders": 14,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "BooleanComponent",
+          "context": 4,
+          "mounts": 4,
+          "parent": 0,
+          "props": 0,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Boolean$1",
+          "context": 0,
+          "mounts": 4,
+          "parent": 4,
+          "props": 0,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "FlexBasic",
+          "context": 0,
+          "mounts": 4,
+          "parent": 0,
+          "props": 2,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "StringComponent",
+          "context": 2,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "String$1",
+          "context": 0,
+          "mounts": 2,
+          "parent": 2,
+          "props": 0,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "ValueInput",
+          "context": 2,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Styled.input",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 2,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Center",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 1,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "HydratedRouter",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "RemixErrorBoundary",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RouterProvider$1",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RouterProvider",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Router",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 27,
+        "parent": 26,
+        "props": 47,
+        "renders": 279,
+        "state": 14,
+        "unnecessary": 1
+      }
+    },
+    "name": "SearchBar: type 30 chars",
+    "tolerance": 0
+  },
+  {
+    "demo": "src-editable-text-demo-demos",
+    "errors": [],
+    "interaction": {
+      "components": [
+        {
+          "name": "Input",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 28,
+          "renders": 30,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "ControlInput",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 15,
+          "state": 14,
+          "unnecessary": 0
+        },
+        {
+          "name": "FieldControl",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 14,
+          "renders": 15,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipStandalone",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 4,
+          "state": 2,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipRoot",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 2,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipTrigger",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 2,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "BaseButton",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 2,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "motion.button",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 2,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipPortal",
+          "context": 0,
+          "mounts": 2,
+          "parent": 2,
+          "props": 0,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 2
+        },
+        {
+          "name": "FlexBasic",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "BaseActionIcon",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Tooltip",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Icon",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Anonymous",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "EditableText",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 0,
+          "renders": 1,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "RotateCcw",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Save",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 0,
+        "parent": 2,
+        "props": 51,
+        "renders": 97,
+        "state": 17,
+        "unnecessary": 2
+      }
+    },
+    "mount": {
+      "components": [
+        {
+          "name": "Anonymous",
+          "context": 0,
+          "mounts": 5,
+          "parent": 0,
+          "props": 0,
+          "renders": 7,
+          "state": 2,
+          "unnecessary": 0
+        },
+        {
+          "name": "HydratedRouter",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "RemixErrorBoundary",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RouterProvider$1",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RouterProvider",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Router",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RenderErrorBoundary",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RenderedRoute",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Meta",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Links",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "WithComponentProps",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "StandaloneQuerySync",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "StandaloneDemoPage",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "CanonicalPreview",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "DemoPlaceholder",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "ScrollRestoration",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Scripts",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 1
+        },
+        {
+          "name": "TooltipStandalone",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipRoot",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipTrigger",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 4,
+        "parent": 4,
+        "props": 6,
+        "renders": 72,
+        "state": 6,
+        "unnecessary": 2
+      }
+    },
+    "name": "EditableText: edit and type",
+    "tolerance": 0
+  },
+  {
+    "demo": "src-color-swatches-demo-demos",
+    "errors": [],
+    "interaction": {
+      "components": [
+        {
+          "name": "motion.div",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 6,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "DraggablePanelRoot",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 0,
+          "renders": 3,
+          "state": 3,
+          "unnecessary": 0
+        },
+        {
+          "name": "DraggablePanelToggle",
+          "context": 3,
+          "mounts": 0,
+          "parent": 0,
+          "props": 0,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "DraggablePanelContent",
+          "context": 3,
+          "mounts": 0,
+          "parent": 0,
+          "props": 0,
+          "renders": 3,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "DraggablePanelHandle",
+          "context": 3,
+          "mounts": 0,
+          "parent": 0,
+          "props": 0,
+          "renders": 3,
+          "state": 1,
+          "unnecessary": 3
+        }
+      ],
+      "totals": {
+        "context": 9,
+        "parent": 0,
+        "props": 6,
+        "renders": 18,
+        "state": 5,
+        "unnecessary": 3
+      }
+    },
+    "mount": {
+      "components": [
+        {
+          "name": "Styled.div",
+          "context": 0,
+          "mounts": 28,
+          "parent": 1,
+          "props": 25,
+          "renders": 54,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "FlexBasic",
+          "context": 0,
+          "mounts": 16,
+          "parent": 0,
+          "props": 13,
+          "renders": 29,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Center",
+          "context": 0,
+          "mounts": 14,
+          "parent": 0,
+          "props": 13,
+          "renders": 27,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipStandalone",
+          "context": 0,
+          "mounts": 13,
+          "parent": 0,
+          "props": 0,
+          "renders": 26,
+          "state": 13,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipRoot",
+          "context": 0,
+          "mounts": 13,
+          "parent": 0,
+          "props": 13,
+          "renders": 26,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipTrigger",
+          "context": 0,
+          "mounts": 13,
+          "parent": 0,
+          "props": 13,
+          "renders": 26,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipPortal",
+          "context": 0,
+          "mounts": 13,
+          "parent": 13,
+          "props": 0,
+          "renders": 26,
+          "state": 0,
+          "unnecessary": 13
+        },
+        {
+          "name": "Anonymous",
+          "context": 2,
+          "mounts": 13,
+          "parent": 0,
+          "props": 0,
+          "renders": 23,
+          "state": 8,
+          "unnecessary": 0
+        },
+        {
+          "name": "Tooltip",
+          "context": 0,
+          "mounts": 13,
+          "parent": 0,
+          "props": 0,
+          "renders": 13,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "ControlInput",
+          "context": 0,
+          "mounts": 5,
+          "parent": 5,
+          "props": 0,
+          "renders": 10,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Row",
+          "context": 0,
+          "mounts": 5,
+          "parent": 0,
+          "props": 5,
+          "renders": 10,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Label",
+          "context": 5,
+          "mounts": 5,
+          "parent": 0,
+          "props": 0,
+          "renders": 10,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RawLabel",
+          "context": 5,
+          "mounts": 5,
+          "parent": 0,
+          "props": 0,
+          "renders": 10,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Styled.label",
+          "context": 0,
+          "mounts": 5,
+          "parent": 5,
+          "props": 0,
+          "renders": 10,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "BooleanComponent",
+          "context": 2,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Boolean$1",
+          "context": 0,
+          "mounts": 2,
+          "parent": 2,
+          "props": 0,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "NumberComponent",
+          "context": 2,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Number$1",
+          "context": 0,
+          "mounts": 2,
+          "parent": 2,
+          "props": 0,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "NumberInput",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 2,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "ValueInput",
+          "context": 2,
+          "mounts": 2,
+          "parent": 0,
+          "props": 2,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 23,
+        "parent": 33,
+        "props": 94,
+        "renders": 400,
+        "state": 24,
+        "unnecessary": 14
+      }
+    },
+    "name": "ColorSwatches: pick each swatch"
+  },
+  {
+    "demo": "src-base-ui-toast-demo-demos",
+    "errors": [],
+    "interaction": {
+      "components": [
+        {
+          "name": "ToastRoot",
+          "context": 0,
+          "mounts": 5,
+          "parent": 0,
+          "props": 10,
+          "renders": 35,
+          "state": 25,
+          "unnecessary": 0
+        },
+        {
+          "name": "ToastContent",
+          "context": 20,
+          "mounts": 5,
+          "parent": 0,
+          "props": 10,
+          "renders": 25,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "ToastTitle",
+          "context": 20,
+          "mounts": 5,
+          "parent": 0,
+          "props": 0,
+          "renders": 25,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "ToastClose",
+          "context": 20,
+          "mounts": 5,
+          "parent": 0,
+          "props": 10,
+          "renders": 25,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "ToastDescription",
+          "context": 20,
+          "mounts": 5,
+          "parent": 0,
+          "props": 10,
+          "renders": 25,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Anonymous",
+          "context": 0,
+          "mounts": 10,
+          "parent": 10,
+          "props": 0,
+          "renders": 20,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "ToastViewport",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 0,
+          "renders": 15,
+          "state": 15,
+          "unnecessary": 0
+        },
+        {
+          "name": "ToastList",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 0,
+          "renders": 15,
+          "state": 15,
+          "unnecessary": 0
+        },
+        {
+          "name": "ToastItem",
+          "context": 0,
+          "mounts": 5,
+          "parent": 0,
+          "props": 10,
+          "renders": 15,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "X",
+          "context": 0,
+          "mounts": 5,
+          "parent": 10,
+          "props": 0,
+          "renders": 15,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Icon",
+          "context": 0,
+          "mounts": 5,
+          "parent": 0,
+          "props": 0,
+          "renders": 5,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "CircleCheckBig",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "CircleX",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Info",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Bell",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "LoaderCircle",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 80,
+        "parent": 20,
+        "props": 50,
+        "renders": 225,
+        "state": 55,
+        "unnecessary": 0
+      }
+    },
+    "mount": {
+      "components": [
+        {
+          "name": "Styled.div",
+          "context": 0,
+          "mounts": 25,
+          "parent": 1,
+          "props": 22,
+          "renders": 48,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Anonymous",
+          "context": 0,
+          "mounts": 15,
+          "parent": 0,
+          "props": 0,
+          "renders": 22,
+          "state": 7,
+          "unnecessary": 0
+        },
+        {
+          "name": "FloatingPortalLite",
+          "context": 0,
+          "mounts": 6,
+          "parent": 0,
+          "props": 6,
+          "renders": 18,
+          "state": 12,
+          "unnecessary": 6
+        },
+        {
+          "name": "ToastProvider",
+          "context": 0,
+          "mounts": 6,
+          "parent": 0,
+          "props": 6,
+          "renders": 12,
+          "state": 0,
+          "unnecessary": 6
+        },
+        {
+          "name": "ToastProviderPropsSynchronizer",
+          "context": 0,
+          "mounts": 6,
+          "parent": 6,
+          "props": 0,
+          "renders": 12,
+          "state": 0,
+          "unnecessary": 6
+        },
+        {
+          "name": "ToastPortal",
+          "context": 0,
+          "mounts": 6,
+          "parent": 0,
+          "props": 6,
+          "renders": 12,
+          "state": 0,
+          "unnecessary": 6
+        },
+        {
+          "name": "BaseButton",
+          "context": 0,
+          "mounts": 8,
+          "parent": 0,
+          "props": 0,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "motion.button",
+          "context": 0,
+          "mounts": 8,
+          "parent": 0,
+          "props": 0,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "ControlInput",
+          "context": 0,
+          "mounts": 4,
+          "parent": 4,
+          "props": 0,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Row",
+          "context": 0,
+          "mounts": 4,
+          "parent": 0,
+          "props": 4,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Label",
+          "context": 4,
+          "mounts": 4,
+          "parent": 0,
+          "props": 0,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RawLabel",
+          "context": 4,
+          "mounts": 4,
+          "parent": 0,
+          "props": 0,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Styled.label",
+          "context": 0,
+          "mounts": 4,
+          "parent": 4,
+          "props": 0,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "ToastViewport",
+          "context": 0,
+          "mounts": 6,
+          "parent": 0,
+          "props": 0,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "ToastList",
+          "context": 0,
+          "mounts": 6,
+          "parent": 0,
+          "props": 0,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Icon",
+          "context": 0,
+          "mounts": 5,
+          "parent": 0,
+          "props": 0,
+          "renders": 5,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "BooleanComponent",
+          "context": 2,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Boolean$1",
+          "context": 0,
+          "mounts": 2,
+          "parent": 2,
+          "props": 0,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "FlexBasic",
+          "context": 0,
+          "mounts": 3,
+          "parent": 0,
+          "props": 0,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "ToastHost",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 3,
+          "state": 2,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 18,
+        "parent": 24,
+        "props": 51,
+        "renders": 300,
+        "state": 24,
+        "unnecessary": 25
+      }
+    },
+    "name": "Toast: trigger toasts"
+  },
+  {
+    "demo": "video-demo-demos",
+    "errors": [],
+    "interaction": {
+      "components": [
+        {
+          "name": "TimeReadout",
+          "context": 0,
+          "mounts": 0,
+          "parent": 2,
+          "props": 0,
+          "renders": 15,
+          "state": 13,
+          "unnecessary": 0
+        },
+        {
+          "name": "BarButton",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 9,
+          "renders": 9,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Anonymous",
+          "context": 0,
+          "mounts": 1,
+          "parent": 6,
+          "props": 0,
+          "renders": 7,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "VideoFrame",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 0,
+          "renders": 4,
+          "state": 4,
+          "unnecessary": 0
+        },
+        {
+          "name": "VideoControls",
+          "context": 1,
+          "mounts": 0,
+          "parent": 0,
+          "props": 0,
+          "renders": 3,
+          "state": 2,
+          "unnecessary": 0
+        },
+        {
+          "name": "PlayPauseIcon",
+          "context": 0,
+          "mounts": 0,
+          "parent": 2,
+          "props": 1,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Volume2",
+          "context": 0,
+          "mounts": 0,
+          "parent": 3,
+          "props": 0,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "VideoSectionMenu",
+          "context": 1,
+          "mounts": 0,
+          "parent": 2,
+          "props": 0,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "VideoRateMenu",
+          "context": 1,
+          "mounts": 0,
+          "parent": 2,
+          "props": 0,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "DropdownMenuV2",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 3,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "MenuRoot",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 3,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "MenuRootInternal",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 3,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "FloatingTree",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 3,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "DropdownMenuTrigger",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 3,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "MenuTrigger",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 3,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "DropdownMenuPortal",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 3,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 3
+        },
+        {
+          "name": "MenuPortal",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 3,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 3
+        },
+        {
+          "name": "Maximize",
+          "context": 0,
+          "mounts": 0,
+          "parent": 3,
+          "props": 0,
+          "renders": 3,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "VideoCenterPlay",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 2,
+          "unnecessary": 0
+        },
+        {
+          "name": "VideoTimeline",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 2,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 4,
+        "parent": 20,
+        "props": 34,
+        "renders": 84,
+        "state": 24,
+        "unnecessary": 6
+      }
+    },
+    "mount": {
+      "components": [
+        {
+          "name": "Anonymous",
+          "context": 0,
+          "mounts": 5,
+          "parent": 2,
+          "props": 0,
+          "renders": 9,
+          "state": 2,
+          "unnecessary": 0
+        },
+        {
+          "name": "BarButton",
+          "context": 0,
+          "mounts": 3,
+          "parent": 0,
+          "props": 3,
+          "renders": 6,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "HydratedRouter",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "RemixErrorBoundary",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RouterProvider$1",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RouterProvider",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Router",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RenderErrorBoundary",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RenderedRoute",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Meta",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Links",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "WithComponentProps",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "StandaloneQuerySync",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "StandaloneDemoPage",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "CanonicalPreview",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "DemoPlaceholder",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "ScrollRestoration",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Scripts",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 1
+        },
+        {
+          "name": "VideoFrame",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "VideoCaption",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 8,
+        "parent": 9,
+        "props": 13,
+        "renders": 103,
+        "state": 8,
+        "unnecessary": 3
+      }
+    },
+    "name": "Video: play 2s then seek"
+  },
+  {
+    "demo": "src-highlighter-demo-demos",
+    "errors": [],
+    "interaction": {
+      "components": [
+        {
+          "name": "CopyButton",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 0,
+          "renders": 1,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "BaseActionIcon",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 1,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Tooltip",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 1,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipStandalone",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 1,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipRoot",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 1,
+          "renders": 1,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipTrigger",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 1,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "BaseButton",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 1,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "motion.button",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 1,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Icon",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 1,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Check",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Anonymous",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipPortal",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 1,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 1
+        }
+      ],
+      "totals": {
+        "context": 0,
+        "parent": 0,
+        "props": 9,
+        "renders": 12,
+        "state": 2,
+        "unnecessary": 1
+      }
+    },
+    "mount": {
+      "components": [
+        {
+          "name": "Styled.div",
+          "context": 0,
+          "mounts": 37,
+          "parent": 2,
+          "props": 33,
+          "renders": 72,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Anonymous",
+          "context": 0,
+          "mounts": 15,
+          "parent": 0,
+          "props": 0,
+          "renders": 26,
+          "state": 11,
+          "unnecessary": 0
+        },
+        {
+          "name": "ControlInput",
+          "context": 0,
+          "mounts": 8,
+          "parent": 8,
+          "props": 0,
+          "renders": 16,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Row",
+          "context": 0,
+          "mounts": 8,
+          "parent": 0,
+          "props": 8,
+          "renders": 16,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Label",
+          "context": 8,
+          "mounts": 8,
+          "parent": 0,
+          "props": 0,
+          "renders": 16,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RawLabel",
+          "context": 8,
+          "mounts": 8,
+          "parent": 0,
+          "props": 0,
+          "renders": 16,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Styled.label",
+          "context": 0,
+          "mounts": 8,
+          "parent": 8,
+          "props": 0,
+          "renders": 16,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "BooleanComponent",
+          "context": 4,
+          "mounts": 4,
+          "parent": 0,
+          "props": 0,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Boolean$1",
+          "context": 0,
+          "mounts": 4,
+          "parent": 4,
+          "props": 0,
+          "renders": 8,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "FlexBasic",
+          "context": 0,
+          "mounts": 4,
+          "parent": 0,
+          "props": 0,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "StringComponent",
+          "context": 2,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "String$1",
+          "context": 0,
+          "mounts": 2,
+          "parent": 2,
+          "props": 0,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "ValueInput",
+          "context": 2,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Styled.input",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 2,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "SelectComponent",
+          "context": 2,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Select",
+          "context": 0,
+          "mounts": 2,
+          "parent": 2,
+          "props": 0,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Styled.select",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 2,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Chevron",
+          "context": 0,
+          "mounts": 2,
+          "parent": 2,
+          "props": 0,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Styled.svg",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 2,
+          "renders": 4,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "HydratedRouter",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 30,
+        "parent": 32,
+        "props": 55,
+        "renders": 319,
+        "state": 16,
+        "unnecessary": 2
+      }
+    },
+    "name": "Highlighter: copy code"
+  },
+  {
+    "demo": "src-markdown-demo-streamingbench",
+    "errors": [],
+    "interaction": {
+      "components": [
+        {
+          "name": "Anonymous",
+          "context": 0,
+          "mounts": 30,
+          "parent": 21,
+          "props": 806,
+          "renders": 1149,
+          "state": 292,
+          "unnecessary": 2
+        },
+        {
+          "name": "StreamTail",
+          "context": 0,
+          "mounts": 63,
+          "parent": 0,
+          "props": 477,
+          "renders": 540,
+          "state": 0,
+          "unnecessary": 273
+        },
+        {
+          "name": "Streamdown",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 291,
+          "renders": 508,
+          "state": 217,
+          "unnecessary": 0
+        },
+        {
+          "name": "StreamdownBlock",
+          "context": 0,
+          "mounts": 61,
+          "parent": 0,
+          "props": 440,
+          "renders": 501,
+          "state": 0,
+          "unnecessary": 6
+        },
+        {
+          "name": "Markdown",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 292,
+          "renders": 293,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "PreviewGroup",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 293,
+          "renders": 293,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "TypographyImpl",
+          "context": 0,
+          "mounts": 0,
+          "parent": 0,
+          "props": 293,
+          "renders": 293,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "StreamdownRender",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 291,
+          "renders": 292,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "CachedMarkdown",
+          "context": 0,
+          "mounts": 61,
+          "parent": 0,
+          "props": 220,
+          "renders": 281,
+          "state": 0,
+          "unnecessary": 4
+        },
+        {
+          "name": "StreamdownBlocks",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 217,
+          "renders": 218,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "StreamdownStyles",
+          "context": 0,
+          "mounts": 1,
+          "parent": 217,
+          "props": 0,
+          "renders": 218,
+          "state": 0,
+          "unnecessary": 3
+        },
+        {
+          "name": "_c",
+          "context": 0,
+          "mounts": 70,
+          "parent": 0,
+          "props": 62,
+          "renders": 132,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "_c3",
+          "context": 0,
+          "mounts": 8,
+          "parent": 0,
+          "props": 23,
+          "renders": 31,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipStandalone",
+          "context": 0,
+          "mounts": 4,
+          "parent": 0,
+          "props": 20,
+          "renders": 28,
+          "state": 4,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipRoot",
+          "context": 0,
+          "mounts": 4,
+          "parent": 0,
+          "props": 24,
+          "renders": 28,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipTrigger",
+          "context": 0,
+          "mounts": 4,
+          "parent": 0,
+          "props": 24,
+          "renders": 28,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "BaseButton",
+          "context": 0,
+          "mounts": 4,
+          "parent": 0,
+          "props": 24,
+          "renders": 28,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "motion.button",
+          "context": 0,
+          "mounts": 4,
+          "parent": 0,
+          "props": 24,
+          "renders": 28,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "TooltipPortal",
+          "context": 0,
+          "mounts": 4,
+          "parent": 4,
+          "props": 20,
+          "renders": 28,
+          "state": 0,
+          "unnecessary": 24
+        },
+        {
+          "name": "CopyButton",
+          "context": 0,
+          "mounts": 4,
+          "parent": 0,
+          "props": 20,
+          "renders": 24,
+          "state": 0,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 0,
+        "parent": 262,
+        "props": 3988,
+        "renders": 5139,
+        "state": 532,
+        "unnecessary": 312
+      }
+    },
+    "mount": {
+      "components": [
+        {
+          "name": "Anonymous",
+          "context": 0,
+          "mounts": 7,
+          "parent": 0,
+          "props": 0,
+          "renders": 9,
+          "state": 2,
+          "unnecessary": 0
+        },
+        {
+          "name": "HydratedRouter",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "RemixErrorBoundary",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RouterProvider$1",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RouterProvider",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Router",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 1,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RenderErrorBoundary",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "RenderedRoute",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Meta",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Links",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "WithComponentProps",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "StandaloneQuerySync",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "StandaloneDemoPage",
+          "context": 0,
+          "mounts": 1,
+          "parent": 1,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "CanonicalPreview",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 1,
+          "unnecessary": 0
+        },
+        {
+          "name": "DemoPlaceholder",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "ScrollRestoration",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Scripts",
+          "context": 1,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 1
+        },
+        {
+          "name": "Markdown",
+          "context": 0,
+          "mounts": 2,
+          "parent": 0,
+          "props": 0,
+          "renders": 2,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "DataRoutes",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
+        },
+        {
+          "name": "Layout",
+          "context": 0,
+          "mounts": 1,
+          "parent": 0,
+          "props": 0,
+          "renders": 1,
+          "state": 0,
+          "unnecessary": 0
+        }
+      ],
+      "totals": {
+        "context": 4,
+        "parent": 3,
+        "props": 2,
+        "renders": 60,
+        "state": 5,
+        "unnecessary": 1
+      }
+    },
+    "name": "Markdown: stream bench content",
+    "tolerance": 0.1
+  }
+]

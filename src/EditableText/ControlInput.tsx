@@ -1,10 +1,11 @@
 'use client';
 
 import { RotateCcw, Save } from 'lucide-react';
-import { memo, useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
 
 import ActionIcon, { type ActionIconProps } from '@/ActionIcon';
 import { Flexbox } from '@/Flex';
+import { useEventCallback } from '@/hooks/useEventCallback';
 import { Input, type InputProps } from '@/Input';
 
 export interface ControlInputProps extends Omit<InputProps, 'onChange' | 'value' | 'onAbort'> {
@@ -43,55 +44,65 @@ const ControlInput = memo<ControlInputProps>(
       if (value !== undefined) setInput(value);
     }, [value]);
 
-    const handleUpload = () => {
+    const handleUpload = useEventCallback(() => {
       onChange?.(input);
       ref?.current?.blur();
       onChangeEnd?.(input);
-    };
+    });
+
+    const handleReset = useEventCallback(() => setInput(value || ''));
+
+    const dirty = value !== input;
+    const resetText = texts?.reset || 'Reset';
+    const submitText = texts?.submit || 'Submit';
+
+    const suffix = useMemo(
+      () =>
+        dirty ? (
+          <Flexbox
+            horizontal
+            gap={2}
+            style={{
+              marginRight: -4,
+              zIndex: 1,
+            }}
+          >
+            <ActionIcon
+              icon={RotateCcw}
+              size="small"
+              title={resetText}
+              onClick={(e) => {
+                e.preventDefault();
+                handleReset();
+              }}
+            />
+            <ActionIcon
+              icon={submitIcon || Save}
+              size="small"
+              title={submitText}
+              variant={'filled'}
+              onClick={(e) => {
+                e.preventDefault();
+                handleUpload();
+              }}
+            />
+          </Flexbox>
+        ) : (
+          <span />
+        ),
+      [dirty, handleReset, handleUpload, resetText, submitIcon, submitText],
+    );
 
     return (
       <Input
         autoFocus
         ref={ref}
+        suffix={suffix}
         value={input}
         style={{
           width: '100%',
           ...style,
         }}
-        suffix={
-          value === input ? (
-            <span />
-          ) : (
-            <Flexbox
-              horizontal
-              gap={2}
-              style={{
-                marginRight: -4,
-                zIndex: 1,
-              }}
-            >
-              <ActionIcon
-                icon={RotateCcw}
-                size="small"
-                title={texts?.reset || 'Reset'}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setInput(value || '');
-                }}
-              />
-              <ActionIcon
-                icon={submitIcon || Save}
-                size="small"
-                title={texts?.submit || 'Submit'}
-                variant={'filled'}
-                onClick={(e) => {
-                  e.preventDefault();
-                  handleUpload();
-                }}
-              />
-            </Flexbox>
-          )
-        }
         onFocus={onFocus}
         onChange={(e) => {
           setInput(e.target.value);

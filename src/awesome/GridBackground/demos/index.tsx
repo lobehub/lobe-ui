@@ -1,7 +1,7 @@
 import { useTheme } from '@lobehub/ui';
 import { GridBackground, type GridBackgroundProps } from '@lobehub/ui/awesome';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
-import { rgba } from 'polished';
+import chroma from 'chroma-js';
 
 export default () => {
   const theme = useTheme();
@@ -10,7 +10,7 @@ export default () => {
     {
       animation: true,
       backgroundColor: '#001dff',
-      colorBack: rgba(theme.colorText, 0.2),
+      colorBack: chroma(theme.colorText).alpha(0.2).css(),
       colorFront: theme.colorText,
       duration: {
         max: 24,

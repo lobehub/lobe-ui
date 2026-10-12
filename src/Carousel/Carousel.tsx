@@ -12,9 +12,9 @@ import {
   useRef,
   useState,
 } from 'react';
-import useControlledState from 'use-merge-value';
 
 import { ActionIconImpl as ActionIcon } from '@/ActionIcon/ActionIcon';
+import { useControlledState } from '@/hooks/useControlledState';
 import { useEventCallback } from '@/hooks/useEventCallback';
 import { styleProps } from '@/styles/stylex/props';
 

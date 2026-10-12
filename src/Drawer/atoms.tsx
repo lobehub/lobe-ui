@@ -18,13 +18,13 @@ import {
   useRef,
   useState,
 } from 'react';
-import { mergeRefs, useMergeRefs } from 'react-merge-refs';
 
 import { useAppElement } from '@/ConfigProvider/AppElementContext';
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { useMotionComponent } from '@/MotionProvider';
 import { focusRing } from '@/styles/stylex/focusRing';
 import { styleProps } from '@/styles/stylex/props';
+import { mergeRefs, useMergeRefs } from '@/utils/mergeRefs';
 
 import { useLayerZIndex } from '../internal/zIndex';
 import { drawerBackdropTransition, getDrawerMotionConfig, pushAxis } from './constants';

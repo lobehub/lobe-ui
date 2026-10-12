@@ -18,10 +18,7 @@ const docsConfig = getDocsConfig(repositoryRoot);
 const repositoryRequire = createRequire(path.join(repositoryRoot, 'package.json'));
 
 const runtimeOptimizeDeps = [
-  'ahooks',
   'es-toolkit',
-  'polished',
-  'react-merge-refs',
   'remark-breaks',
   'remark-parse',
   'remark-rehype',

@@ -12,12 +12,12 @@ import {
   useRef,
   useState,
 } from 'react';
-import { useMergeRefs } from 'react-merge-refs';
 
 import { useAppElement } from '@/ConfigProvider/AppElementContext';
 import { useLayerZIndex } from '@/internal/zIndex';
 import { styleProps } from '@/styles/stylex/props';
 import { ToastHost } from '@/Toast';
+import { useMergeRefs } from '@/utils/mergeRefs';
 
 import { styles } from '../style';
 import { computeFit, type Size, unrotatedRect } from './geometry';

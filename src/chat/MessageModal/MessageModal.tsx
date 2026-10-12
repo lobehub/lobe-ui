@@ -1,12 +1,12 @@
 'use client';
 
 import { memo, useState } from 'react';
-import useControlledState from 'use-merge-value';
 
 import Button from '@/Button';
 import { styles as textStyles, textAreaStyle } from '@/chat/MessageInput/style';
 import CodeEditor from '@/CodeEditor';
 import { Flexbox } from '@/Flex';
+import { useControlledState } from '@/hooks/useControlledState';
 import messageModalMessages from '@/i18n/resources/en/messageModal';
 import { useTranslation } from '@/i18n/useTranslation';
 import { TextArea } from '@/Input';

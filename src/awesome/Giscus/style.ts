@@ -1,7 +1,7 @@
-import { rgba } from 'polished';
 import { useMemo } from 'react';
 
 import { useTheme } from '@/styles/theme/scope';
+import { withAlpha } from '@/utils/colorMath';
 import { safeReadableColor } from '@/utils/safeReadableColor';
 
 export const useStyles = () => {
@@ -31,22 +31,22 @@ export const useStyles = () => {
       --color-prettylights-syntax-variable: ${colorRed};
       --color-prettylights-syntax-brackethighlighter-unmatched: ${colorRed};
       --color-prettylights-syntax-invalid-illegal-text: ${colorTextSecondary};
-      --color-prettylights-syntax-invalid-illegal-bg: ${rgba(colorRed, 0.4)};
+      --color-prettylights-syntax-invalid-illegal-bg: ${withAlpha(colorRed, 0.4)};
       --color-prettylights-syntax-carriage-return-text: ${colorTextSecondary};
-      --color-prettylights-syntax-carriage-return-bg: ${rgba(colorRed, 0.6)};
+      --color-prettylights-syntax-carriage-return-bg: ${withAlpha(colorRed, 0.6)};
       --color-prettylights-syntax-string-regexp: ${colorGreen};
       --color-prettylights-syntax-markup-list: ${colorOrange};
       --color-prettylights-syntax-markup-heading: ${colorBlue};
       --color-prettylights-syntax-markup-italic: ${colorTextSecondary};
       --color-prettylights-syntax-markup-bold: ${colorTextSecondary};
       --color-prettylights-syntax-markup-deleted-text: ${colorTextSecondary};
-      --color-prettylights-syntax-markup-deleted-bg: ${rgba(colorRed, 0.2)};
+      --color-prettylights-syntax-markup-deleted-bg: ${withAlpha(colorRed, 0.2)};
       --color-prettylights-syntax-markup-inserted-text: ${colorGreen};
-      --color-prettylights-syntax-markup-inserted-bg: ${rgba(colorGreen, 0.2)};
+      --color-prettylights-syntax-markup-inserted-bg: ${withAlpha(colorGreen, 0.2)};
       --color-prettylights-syntax-markup-changed-text: ${colorOrange};
-      --color-prettylights-syntax-markup-changed-bg: ${rgba(colorRed, 0.2)};
+      --color-prettylights-syntax-markup-changed-bg: ${withAlpha(colorRed, 0.2)};
       --color-prettylights-syntax-markup-ignored-text: ${colorTextSecondary};
-      --color-prettylights-syntax-markup-ignored-bg: ${rgba(colorBlue, 0.2)};
+      --color-prettylights-syntax-markup-ignored-bg: ${withAlpha(colorBlue, 0.2)};
       --color-prettylights-syntax-meta-diff-range: ${colorOrange};
       --color-prettylights-syntax-brackethighlighter-angle: ${colorTextSecondary};
       --color-prettylights-syntax-sublimelinter-gutter-mark: ${colorTextTertiary};
@@ -75,8 +75,8 @@ export const useStyles = () => {
         ${safeReadableColor(theme.colorPrimary)} 50%,
         transparent
       );
-      --color-btn-primary-disabled-bg: ${rgba(theme.colorPrimary, 0.5)};
-      --color-btn-primary-disabled-border: ${rgba(theme.colorPrimaryBorder, 0.5)};
+      --color-btn-primary-disabled-bg: ${withAlpha(theme.colorPrimary, 0.5)};
+      --color-btn-primary-disabled-border: ${withAlpha(theme.colorPrimaryBorder, 0.5)};
       --color-action-list-item-default-hover-bg: ${theme.colorFillQuaternary};
       --color-segmented-control-bg: ${theme.colorFillTertiary};
       --color-segmented-control-button-bg: transparent;

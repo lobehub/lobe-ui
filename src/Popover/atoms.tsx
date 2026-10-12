@@ -11,11 +11,11 @@ import {
   isValidElement,
   useState,
 } from 'react';
-import { mergeRefs, useMergeRefs } from 'react-merge-refs';
 
 import { FloatingLayerProvider } from '@/hooks/useFloatingLayer';
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { getFloatingCollisionPadding } from '@/internal/floating';
+import { mergeRefs, useMergeRefs } from '@/utils/mergeRefs';
 import { placementMap } from '@/utils/placement';
 
 import { useLayerZIndex } from '../internal/zIndex';

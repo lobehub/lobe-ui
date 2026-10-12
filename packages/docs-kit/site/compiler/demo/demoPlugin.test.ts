@@ -1,6 +1,6 @@
 // @vitest-environment node
 
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 
@@ -21,7 +21,9 @@ const writeFixture = (root: string, path: string, contents: string): string => {
 };
 
 const createTemporaryProject = (files: Record<string, string>): string => {
-  const root = mkdtempSync(join(tmpdir(), 'lobe-ui-demo-plugin-'));
+  // Vite >= 8.3 realpaths `root`, and macOS tmpdir lives behind the
+  // /var -> /private/var symlink, so watcher events only match canonical paths.
+  const root = realpathSync(mkdtempSync(join(tmpdir(), 'lobe-ui-demo-plugin-')));
   temporaryRoots.push(root);
   for (const [path, contents] of Object.entries(files)) writeFixture(root, path, contents);
   return root;

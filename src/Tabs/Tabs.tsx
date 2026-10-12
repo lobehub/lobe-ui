@@ -1,9 +1,9 @@
 'use client';
 
 import clsx from 'clsx';
-import { type FC } from 'react';
-import useControlledState from 'use-merge-value';
+import { type FC, useMemo } from 'react';
 
+import { useControlledState } from '@/hooks/useControlledState';
 import { styleProps } from '@/styles/stylex/props';
 
 import { TabsIndicator, TabsList, TabsPanel, TabsRoot, TabsTab } from './atoms';
@@ -33,21 +33,8 @@ const Tabs: FC<TabsProps> = ({
     value: activeKey,
   });
 
-  const hasPanels = items?.some((item) => item.children != null);
-
-  return (
-    <TabsRoot
-      {...styleProps(styles.root, clsx(classNames?.root, className), {
-        ...style,
-        ...customStyles?.root,
-      })}
-      orientation={orientation}
-      ref={ref}
-      size={size}
-      value={value}
-      variant={variant}
-      onValueChange={(next) => setValue(next ?? null)}
-    >
+  const list = useMemo(
+    () => (
       <TabsList className={classNames?.list} style={customStyles?.list}>
         <TabsIndicator className={classNames?.indicator} style={customStyles?.indicator} />
         {items?.map((item) => (
@@ -63,17 +50,50 @@ const Tabs: FC<TabsProps> = ({
           </TabsTab>
         ))}
       </TabsList>
-      {hasPanels &&
-        items?.map((item) => (
-          <TabsPanel
-            className={classNames?.panel}
-            key={item.key}
-            style={customStyles?.panel}
-            value={item.key}
-          >
-            {item.children}
-          </TabsPanel>
-        ))}
+    ),
+    [
+      classNames?.indicator,
+      classNames?.list,
+      classNames?.tab,
+      customStyles?.indicator,
+      customStyles?.list,
+      customStyles?.tab,
+      items,
+    ],
+  );
+
+  const panels = useMemo(
+    () =>
+      items?.some((item) => item.children != null)
+        ? items.map((item) => (
+            <TabsPanel
+              className={classNames?.panel}
+              key={item.key}
+              style={customStyles?.panel}
+              value={item.key}
+            >
+              {item.children}
+            </TabsPanel>
+          ))
+        : null,
+    [classNames?.panel, customStyles?.panel, items],
+  );
+
+  return (
+    <TabsRoot
+      {...styleProps(styles.root, clsx(classNames?.root, className), {
+        ...style,
+        ...customStyles?.root,
+      })}
+      orientation={orientation}
+      ref={ref}
+      size={size}
+      value={value}
+      variant={variant}
+      onValueChange={(next) => setValue(next ?? null)}
+    >
+      {list}
+      {panels}
     </TabsRoot>
   );
 };

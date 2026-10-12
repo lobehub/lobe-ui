@@ -1,4 +1,16 @@
-import type { Placement as FloatingUIPlacement } from '@floating-ui/react';
+type FloatingUIPlacement =
+  | 'top'
+  | 'top-start'
+  | 'top-end'
+  | 'right'
+  | 'right-start'
+  | 'right-end'
+  | 'bottom'
+  | 'bottom-start'
+  | 'bottom-end'
+  | 'left'
+  | 'left-start'
+  | 'left-end';
 
 /**
  * Base UI uses a small set of string literal unions for alignment and side.

@@ -1,11 +1,11 @@
 'use client';
 
 import * as stylex from '@stylexjs/stylex';
-import { useSize } from 'ahooks';
 import chroma from 'chroma-js';
 import { shuffle } from 'es-toolkit/compat';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import { useSize } from '@/hooks/useSize';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import { styleProps } from '@/styles/stylex/props';
 import { useTheme } from '@/styles/theme/scope';

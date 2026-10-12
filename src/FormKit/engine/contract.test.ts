@@ -38,6 +38,15 @@ describe.each(engines)('FormEngine contract: %s', (_name, create) => {
       expect(e.getStatus().dirty).toBe(true);
     });
 
+    it('compares Date values by time when computing dirty', () => {
+      const e = make({ due: new Date(2026, 0, 1) });
+      e.registerField('due', {});
+      e.setValue('due', new Date(2026, 1, 1), 'user');
+      expect(e.getStatus().dirty).toBe(true);
+      e.setValue('due', new Date(2026, 0, 1), 'user');
+      expect(e.getStatus().dirty).toBe(false);
+    });
+
     it('reports every change with its source', () => {
       const e = make({ a: '' });
       const changes: unknown[] = [];

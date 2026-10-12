@@ -200,6 +200,8 @@ antd components without a same-named counterpart:
 - **Popup containers.** There is no `.ant-app` element. Code that looked it up (`getPopupContainer`, portals) uses `document.getElementById(LOBE_THEME_APP_ID)`.
 - **`Video` ref is a player.** `ref` on `Video` now receives a `VideoPlayer` (`play`, `seek`, `getState`, …) instead of the wrapper `<div>`; the element is `player.root`, the `<video>` is `player.video`.
 - **antd class names and variables.** `.ant-*` selectors and `--ant-*` variables match nothing. Use component props for overrides and `cssVar` / `--lobe-*` for tokens.
+- **Dependencies no longer installed.** `@lobehub/ui` stopped depending on `ahooks`, `swr`, `polished`, `immer`, `use-merge-value`, `react-merge-refs`, `fast-deep-equal`, `numeral`, `url-join`, `ts-md5`, `uuid`, `marked`, `query-string`, `class-variance-authority`, `react-rnd`, `react-zoom-pan-pinch` and `@floating-ui/react`, among others. An app that imported any of them without declaring it now has to add it to its own `package.json`.
+- **`CodeDiff` options type.** `diffOptions` follows `@pierre/diffs` 1.5, whose `FileDiffOptions` takes a second type argument: annotate it as `FileDiffOptions<string, undefined>`.
 - **Resets.** antd's `reset.css` (box-sizing, margins, list styles) is now part of `global.css`. Apps that relied on it without importing antd's stylesheet need `global.css`.
 
 ## Known issues

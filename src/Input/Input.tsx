@@ -2,10 +2,11 @@
 
 import { Input as BaseInput } from '@base-ui/react/input';
 import { memo, useRef, useState } from 'react';
-import { useMergeRefs } from 'react-merge-refs';
 
+import { useEventCallback } from '@/hooks/useEventCallback';
 import { styleProps } from '@/styles/stylex/props';
 import { useThemeMode } from '@/styles/theme/scope';
+import { useMergeRefs } from '@/utils/mergeRefs';
 
 import ClearButton from './ClearButton';
 import { clearNativeValue } from './clearNativeValue';
@@ -47,6 +48,11 @@ const Input = memo<InputProps>(
     const isFilled = value === undefined ? filled : hasText(value);
     const showClear = allowClear && isFilled && !disabled && !readOnly;
 
+    const handleClear = useEventCallback(() => {
+      clearNativeValue(inputRef.current);
+      onClear?.();
+    });
+
     return (
       <div
         data-disabled={disabled ? '' : undefined}
@@ -75,14 +81,7 @@ const Input = memo<InputProps>(
           }}
           {...rest}
         />
-        {showClear && (
-          <ClearButton
-            onClear={() => {
-              clearNativeValue(inputRef.current);
-              onClear?.();
-            }}
-          />
-        )}
+        {showClear && <ClearButton onClear={handleClear} />}
         {suffix && (
           <span {...styleProps(styles.slot, classNames?.suffix, customStyles?.suffix)}>
             {suffix}

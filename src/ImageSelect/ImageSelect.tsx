@@ -2,9 +2,9 @@
 
 import * as stylex from '@stylexjs/stylex';
 import { memo } from 'react';
-import useControlledState from 'use-merge-value';
 
 import { Flexbox } from '@/Flex';
+import { useControlledState } from '@/hooks/useControlledState';
 import Icon from '@/Icon';
 import Img from '@/Img';
 import { styleProps } from '@/styles/stylex/props';

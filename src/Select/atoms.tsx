@@ -10,7 +10,6 @@ import {
   type ComponentPropsWithRef,
   isValidElement,
 } from 'react';
-import { mergeRefs, useMergeRefs } from 'react-merge-refs';
 
 import { useAppElement } from '@/ConfigProvider/AppElementContext';
 import { menuClassNames, menuStyles } from '@/DropdownMenu/sharedStyle';
@@ -18,6 +17,7 @@ import { useNativeButton } from '@/hooks/useNativeButton';
 import { getFloatingCollisionPadding } from '@/internal/floating';
 import { styleProps } from '@/styles/stylex/props';
 import { useThemeMode } from '@/styles/theme/scope';
+import { mergeRefs, useMergeRefs } from '@/utils/mergeRefs';
 
 import { useLayerZIndex } from '../internal/zIndex';
 import { styles, triggerStyles } from './style';

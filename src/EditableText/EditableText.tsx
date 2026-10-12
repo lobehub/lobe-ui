@@ -3,10 +3,10 @@
 import { Edit3 } from 'lucide-react';
 import { memo, useMemo } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
-import useControlledState from 'use-merge-value';
 
 import ActionIcon from '@/ActionIcon';
 import { Flexbox } from '@/Flex';
+import { useControlledState } from '@/hooks/useControlledState';
 import { cx } from '@/styles';
 
 import ControlInput from './ControlInput';

@@ -49,10 +49,10 @@ export const getLobeDiffOptions = ({
   isDarkMode,
   viewMode,
 }: {
-  diffOptions?: FileDiffOptions<string>;
+  diffOptions?: FileDiffOptions<string, undefined>;
   isDarkMode: boolean;
   viewMode: DiffViewMode;
-}): FileDiffOptions<string> => ({
+}): FileDiffOptions<string, undefined> => ({
   theme: {
     dark: 'lobe-theme',
     light: 'lobe-theme',
