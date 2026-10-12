@@ -93,3 +93,9 @@ jobs:
     needs: release
     uses: ./.github/workflows/release-docs-kit.yml
     secrets: inherit
+
+  codemod:
+    name: Codemod
+    needs: docs-kit
+    uses: ./.github/workflows/release-codemod.yml
+    secrets: inherit
