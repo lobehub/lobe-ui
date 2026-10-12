@@ -1,7 +1,6 @@
-import { mix, parseToRgb } from 'polished';
-
 import { gray } from '@/color/colors';
 import { neutralColorScales } from '@/color/neutrals';
+import { mixColors, parseRgb } from '@/utils/colorMath';
 
 import type { NeutralColors } from '../../customTheme';
 import { generateColorNeutralPalette } from '../generateColorPalette';
@@ -10,9 +9,9 @@ const isChannel = (value: number) => value >= 0 && value <= 255;
 
 // port of antd's getAlphaColor: the most transparent rgba that renders `front` over `back`
 const getAlphaColor = (front: string, back: string) => {
-  const f = parseToRgb(front);
-  if ('alpha' in f && f.alpha < 1) return front;
-  const b = parseToRgb(back);
+  const f = parseRgb(front);
+  if (f.alpha !== undefined) return front;
+  const b = parseRgb(back);
 
   for (let alpha = 0.01; alpha <= 1; alpha += 0.01) {
     const r = Math.round((f.red - b.red * (1 - alpha)) / alpha);
@@ -38,7 +37,7 @@ export const createNeutralToken = (
   return {
     ...token,
     colorBgContainerDisabled: token.colorFillTertiary,
-    colorBgContainerSecondary: mix(0.5, token.colorBgLayout, token.colorBgContainer),
+    colorBgContainerSecondary: mixColors(0.5, token.colorBgLayout, token.colorBgContainer),
     colorBgTextActive: token.colorFill,
     colorBgTextHover: token.colorFillSecondary,
     colorBorderBg: token.colorBgContainer,
