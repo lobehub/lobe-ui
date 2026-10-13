@@ -2,6 +2,13 @@
 
 # Changelog
 
+## [5.62.1](https://github.com/lobehub/lobe-ui/compare/v5.62.0...v5.62.1) (2026-10-13)
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Keep Table onChange sorter single-object compatible for multi-sort ([ea442cb](https://github.com/lobehub/lobe-ui/commit/ea442cb))
+- **base-ui**: Restore deprecated Table bordered prop as variant outlined ([b9af52f](https://github.com/lobehub/lobe-ui/commit/b9af52f))
+
 # [5.62.0](https://github.com/lobehub/lobe-ui/compare/v5.61.1...v5.62.0) (2026-10-13)
 
 ### ✨ Features
