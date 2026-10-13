@@ -1,15 +1,32 @@
 ---
 title: Surface
-description: Surface is an elevated card for dashboard panels. It steps the fill and border up from the workspace canvas so nested content stays distinct in light and dark themes.
+description: Surface is an elevated card for dashboard panels. Bare, it is a plain frame. With a title, description or extra it gets a header, a padded body whose trailing table meets the card edges, an optional chart slot, and first-load / refresh states. Links go through `renderLink` or `SurfaceLinkProvider`, so the app router stays in the app.
 category: Layout
 order: 2
 ---
 
 import DemoIndex from './demos/index.tsx?demo';
+import DemoHeader from './demos/header.tsx?demo';
+import DemoLoading from './demos/loading.tsx?demo';
+import DemoHeaderAlignment from './demos/header-alignment.tsx?demo';
 
 ## Default
 
-<Demo of={DemoIndex} layout="bare" />
+<Demo of={DemoIndex} />
+
+## Header and link
+
+<Demo of={DemoHeader} />
+
+## Loading
+
+<Demo of={DemoLoading} />
+
+## Header alignment
+
+The header is one 32px control row plus 8px above and below, with or without `extra`, so a row of cards lines up. Controls in `extra` sit centered on the title line; use compact ones (`Segmented size="small"`, `ActionIcon size="small"`). A `description` adds its own line under the title and leaves `extra` on the title line, so cards with a description share one taller height.
+
+<Demo of={DemoHeaderAlignment} layout="bare" />
 
 ## APIs
 

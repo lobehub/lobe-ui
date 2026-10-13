@@ -1,10 +1,29 @@
-export { default as AuthLayout, type AuthLayoutProps } from './AuthLayout';
-export { default as Breadcrumb, type BreadcrumbItem, type BreadcrumbProps } from './Breadcrumb';
 export {
+  default as AuthLayout,
+  AuthLayoutAside,
+  type AuthLayoutAsideProps,
+  type AuthLayoutBackground,
+  type AuthLayoutProps,
+  type AuthLayoutVariant,
+} from './AuthLayout';
+export {
+  type AuthLocaleOption,
+  AuthLocaleSwitch,
+  type AuthLocaleSwitchProps,
+  type AuthThemeMode,
+  AuthThemeSwitch,
+  type AuthThemeSwitchProps,
+} from './AuthTools';
+export { default as Breadcrumb, type BreadcrumbItem, type BreadcrumbProps } from './Breadcrumb';
+export { default as ChartGrid, type ChartGridProps } from './ChartGrid';
+export {
+  ConsoleFooterSkeleton,
   default as ConsoleNav,
   type ConsoleNavGroup,
   type ConsoleNavItem,
   type ConsoleNavProps,
+  ConsoleNavSkeleton,
+  type ConsoleNavSkeletonProps,
   resolveActiveHref,
 } from './ConsoleNav';
 export {
@@ -24,6 +43,14 @@ export {
   type FilterSidebarProps,
   useInFilterSplit,
 } from './FilterSidebar';
+export {
+  default as FilterStrip,
+  type FilterStripItem,
+  type FilterStripProps,
+  formatInteger,
+} from './FilterStrip';
+export { default as LabelWithKey, type LabelWithKeyProps } from './LabelWithKey';
+export { type MetricItem, default as MetricStrip, type MetricStripProps } from './MetricStrip';
 export { default as PageHeader, type PageHeaderProps } from './PageHeader';
 export {
   LoadingAnnouncer,
@@ -34,6 +61,27 @@ export {
   TableSkeleton,
 } from './PageSkeleton';
 export { type PageTab, default as PageTabs, type PageTabsProps } from './PageTabs';
+export { default as PageToolbar, type PageToolbarProps } from './PageToolbar';
+export { default as PanelSurface, type PanelSurfaceProps } from './PanelSurface';
 export { default as RouteProgress, type RouteProgressProps } from './RouteProgress';
+export { default as Section, type SectionProps } from './Section';
 export { default as StatCard, type StatCardProps, type StatDirection } from './StatCard';
-export { default as Surface, type SurfaceProps, surfaceStyles } from './Surface';
+export {
+  default as Surface,
+  type SurfaceLinkProps,
+  SurfaceLinkProvider,
+  type SurfaceProps,
+  type SurfaceRenderLink,
+  surfaceStyles,
+  useSurfaceCardClassName,
+  useSurfaceDepth,
+  useSurfaceLink,
+} from './Surface';
+export {
+  tableActionColumnWidth,
+  TableIconAction,
+  type TableIconActionProps,
+  default as TableIconActions,
+  type TableIconActionsProps,
+} from './TableIconActions';
+export { default as TitleWithTips, type TitleWithTipsProps } from './TitleWithTips';

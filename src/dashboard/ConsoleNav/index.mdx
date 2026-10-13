@@ -6,6 +6,7 @@ order: 0
 ---
 
 import DemoIndex from './demos/index.tsx?demo';
+import DemoSkeleton from './demos/skeleton.tsx?demo';
 import DemoTree from './demos/tree.tsx?demo';
 
 ## Default
@@ -20,6 +21,14 @@ Use `items` for top-level links and nested `groups` for a second level. Icons ar
 
 <Demo of={DemoTree} layout="bare" />
 
+## Skeleton
+
+`ConsoleNavSkeleton` draws placeholder rows with the nav's own row heights and indents, so the real nav replaces it without a shift. Pass `groups` as row counts or as the real `ConsoleNavGroup[]`. `ConsoleShell loading` uses it automatically.
+
+<Demo of={DemoSkeleton} layout="bare" />
+
 ## APIs
 
 <Api name="ConsoleNav" />
+
+<Api name="ConsoleNavSkeleton" from="." />

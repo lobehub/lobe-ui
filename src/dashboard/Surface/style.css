@@ -1,0 +1,75 @@
+@layer lobe-ui {
+  .lobe-surface th,
+  .lobe-surface td {
+    background: transparent;
+  }
+
+  .lobe-surface th {
+    font-weight: 500;
+    color: var(--lobe-color-text-secondary);
+    white-space: nowrap;
+
+    background: var(--lobe-surface-bg-solid, var(--lobe-color-bg-container));
+    box-shadow: inset 0 -1px 0 var(--lobe-color-fill-secondary);
+  }
+
+  .lobe-surface td {
+    border-block-end-color: var(--lobe-color-fill-secondary);
+  }
+
+  .lobe-surface tr:hover > td {
+    background: color-mix(in srgb, var(--lobe-color-text) 6%, var(--lobe-color-bg-elevated));
+  }
+
+  /* Table pins with inline position:sticky. The transparent body rule above would let scrolled
+     text show through. */
+  .lobe-surface td[style*='sticky'] {
+    background: var(--lobe-surface-bg-solid, var(--lobe-color-bg-container));
+  }
+
+  .lobe-surface tr:hover > td[style*='sticky'] {
+    background: color-mix(in srgb, var(--lobe-color-text) 6%, var(--lobe-color-bg-elevated));
+  }
+
+  .lobe-surface-bleed th,
+  .lobe-surface-bleed td {
+    padding-inline: 16px;
+  }
+
+  .lobe-surface-bleed th {
+    white-space: nowrap;
+  }
+
+  /* A table inside a padded card body meets the card's left, right, and bottom edges. A table
+     that is the only body content also meets the header. A table nested in a cell keeps the
+     cell's own inset. */
+  .lobe-surface-table-bleed :has(> [data-table-wrapper]):not(td :has(> [data-table-wrapper])) {
+    width: calc(100% + 2 * var(--surface-pad-inline, 16px));
+    margin-inline: calc(-1 * var(--surface-pad-inline, 16px));
+  }
+
+  .lobe-surface-table-bleed
+    :has(> [data-table-wrapper]):not(td :has(> [data-table-wrapper])):last-child {
+    margin-block-end: calc(-1 * var(--surface-pad-block, 16px));
+  }
+
+  .lobe-surface-table-bleed
+    :has(> [data-table-wrapper]):not(td :has(> [data-table-wrapper])):first-child:last-child {
+    margin-block-start: calc(-1 * var(--surface-pad-block, 16px));
+  }
+
+  .lobe-surface-table-bleed :has(> [data-table-wrapper]):not(td :has(> [data-table-wrapper])) th,
+  .lobe-surface-table-bleed :has(> [data-table-wrapper]):not(td :has(> [data-table-wrapper])) td {
+    padding-inline: var(--surface-pad-inline, 16px);
+  }
+
+  /* The root's negative bottom margin includes this sibling. Without block padding the pager
+     sits on the card edge. */
+  .lobe-surface-table-bleed
+    :has(> [data-table-wrapper]):not(td :has(> [data-table-wrapper]))
+    > :not([data-table-wrapper]) {
+    margin-block: 0;
+    padding-block: 12px;
+    padding-inline: var(--surface-pad-inline, 16px);
+  }
+}

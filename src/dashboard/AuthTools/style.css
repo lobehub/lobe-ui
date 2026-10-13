@@ -1,0 +1,25 @@
+@layer lobe-ui {
+  .lobe-auth-locale-switch {
+    inline-size: fit-content;
+    min-inline-size: 120px;
+    block-size: 28px;
+    border-radius: 28px;
+    background: var(--lobe-color-bg-layout);
+  }
+
+  .lobe-auth-theme-switch {
+    block-size: 28px;
+    padding: 2px;
+    border-radius: 28px;
+  }
+
+  .lobe-auth-theme-switch .lobe-segmented-indicator {
+    border-radius: 22px;
+  }
+
+  .lobe-auth-theme-switch-item {
+    block-size: 22px;
+    padding-inline: 8px;
+    border-radius: 22px;
+  }
+}

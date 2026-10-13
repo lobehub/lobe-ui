@@ -12,7 +12,7 @@ import { Drawer } from '@/Drawer';
 import { styleProps } from '@/styles/stylex/props';
 
 import { useIsCompact, useLocalStorage } from '../hooks';
-import { styles as surfaceStyles } from '../Surface/style';
+import { useSurfaceCardStyles } from '../Surface/link';
 import { FilterSplitProvider } from './context';
 import { styles } from './style';
 import type { FilterOptionProps, FilterRowProps, FilterSidebarProps } from './type';
@@ -48,6 +48,7 @@ function FilterSidebar({
   summary,
   wide,
 }: FilterSidebarProps) {
+  const cardStyles = useSurfaceCardStyles();
   const isCompact = useIsCompact();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const sidebar = usePageSidebar(wide, storageKey);
@@ -78,7 +79,7 @@ function FilterSidebar({
       <div
         {...stylex.props(
           styles.layout,
-          flush ? styles.layoutFlush : [surfaceStyles.card, styles.layoutSplit],
+          flush ? styles.layoutFlush : [cardStyles, styles.layoutSplit],
         )}
         data-flush={flush ? true : undefined}
         data-page-layout={flush ? 'flush' : undefined}

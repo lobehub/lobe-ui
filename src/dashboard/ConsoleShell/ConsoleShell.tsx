@@ -1,19 +1,26 @@
 'use client';
 
 import * as stylex from '@stylexjs/stylex';
-import { PanelLeft } from 'lucide-react';
+import { PanelLeft, X } from 'lucide-react';
 import { useEffect, useId, useRef, useState } from 'react';
 
 import Button from '@/Button';
 import { Drawer } from '@/Drawer';
 import { Flexbox } from '@/Flex';
 import { styleProps } from '@/styles/stylex/props';
+import { useThemeMode } from '@/styles/theme/scope';
 
+import ConsoleNavSkeleton, { ConsoleFooterSkeleton } from '../ConsoleNav/Skeleton';
 import { useIsCompact, useLocalStorage, usePrefersReducedMotion } from '../hooks';
+import PageLoading from '../PageSkeleton';
 import { ConsoleShellContext } from './context';
 import { consoleBrandMarker } from './marker.stylex';
 import { styles } from './style';
 import type { ConsoleShellProps, ConsoleShellState } from './type';
+
+// The drawer body is the scroll container. Without its default padding the scrollbar sits on
+// the panel edge; the brand row, nav and footer keep their own insets.
+const drawerBodyStyle = { minBlockSize: '100%', padding: 0 };
 
 function isTypingTarget(target: EventTarget | null) {
   if (!(target instanceof HTMLElement)) return false;
@@ -27,12 +34,16 @@ function ConsoleShell({
   children,
   className,
   collapsed,
+  closeNavigationLabel = 'Close navigation',
   collapseLabel = 'Collapse sidebar',
   defaultCollapsed = false,
   expandLabel = 'Expand sidebar',
-  footer,
+  footer: footerProp,
+  loading,
+  loadingContent,
+  loadingNavigation,
   hotkey = true,
-  navigation,
+  navigation: navigationProp,
   onCollapsedChange,
   openNavigationLabel = 'Open navigation',
   skipToContentLabel = 'Skip to content',
@@ -41,9 +52,13 @@ function ConsoleShell({
   tools,
   ...rest
 }: ConsoleShellProps) {
+  const navigation = loading ? (loadingNavigation ?? <ConsoleNavSkeleton />) : navigationProp;
+  const footer = loading ? <ConsoleFooterSkeleton /> : footerProp;
+  const body = loading ? (loadingContent ?? <PageLoading />) : children;
   const mainId = `console-main-${useId().replaceAll(':', '')}`;
   const shellRef = useRef<HTMLDivElement>(null);
   const isCompact = useIsCompact();
+  const { isDarkMode } = useThemeMode();
   const reducedMotion = usePrefersReducedMotion();
   const [storedCollapsed, setStoredCollapsed] = useLocalStorage(storageKey, defaultCollapsed);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -94,9 +109,20 @@ function ConsoleShell({
 
   const sidebar = (rail: boolean) => (
     <ConsoleShellContext value={stateFor(rail)}>
-      {brand ? (
+      {brand || isCompact ? (
         <div data-collapsed={rail} {...stylex.props(styles.brand, consoleBrandMarker)}>
           {brand}
+          {isCompact ? (
+            // In the drawer the close button sits in the brand row's flow, so it never
+            // overlaps a brand switcher the way the drawer's floating close button did.
+            <Button
+              aria-label={closeNavigationLabel}
+              className={stylex.props(styles.brandClose).className}
+              icon={X}
+              type="text"
+              onClick={closeNavigation}
+            />
+          ) : null}
         </div>
       ) : null}
       {navigation ? <div {...stylex.props(styles.navSlot)}>{navigation}</div> : null}
@@ -135,11 +161,19 @@ function ConsoleShell({
         {!isCompact && sidebar(railed)}
       </aside>
       {isCompact ? (
-        <Drawer noHeader open={drawerOpen} placement="left" width={272} onClose={closeNavigation}>
+        <Drawer
+          noHeader
+          closable={false}
+          open={drawerOpen}
+          placement="left"
+          styles={{ bodyContent: drawerBodyStyle }}
+          width={272}
+          onClose={closeNavigation}
+        >
           <Flexbox height="100%">{sidebar(false)}</Flexbox>
         </Drawer>
       ) : null}
-      <div {...stylex.props(styles.workspace)}>
+      <div {...stylex.props(styles.workspace, !isDarkMode && styles.workspaceLight)}>
         <header {...stylex.props(styles.topbar)}>
           <Button
             aria-label={toggleLabel}
@@ -151,8 +185,13 @@ function ConsoleShell({
           <div {...stylex.props(styles.topbarMain)}>{breadcrumb}</div>
           {tools ? <div {...stylex.props(styles.tools)}>{tools}</div> : null}
         </header>
-        <main id={mainId} tabIndex={-1} {...stylex.props(styles.main)}>
-          {children}
+        <main
+          aria-busy={loading || undefined}
+          id={mainId}
+          tabIndex={-1}
+          {...stylex.props(styles.main)}
+        >
+          {body}
         </main>
       </div>
     </div>

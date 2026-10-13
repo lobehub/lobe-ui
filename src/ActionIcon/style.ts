@@ -17,7 +17,7 @@ export const styles = stylex.create({
   },
   dangerRoot: {
     color: {
-      'default': cssVar.colorTextTertiary,
+      'default': `color-mix(in srgb, ${cssVar.colorError} 66%, transparent)`,
       [hover]: cssVar.colorError,
       ':active': cssVar.colorErrorActive,
     },

@@ -262,6 +262,21 @@ export const styles = stylex.create({
   railLinkActive: {
     backgroundColor: cssVar.colorFillSecondary,
   },
+  skeletonFooter: {
+    gap: 10,
+    paddingInline: 4,
+    alignItems: 'center',
+    display: 'flex',
+  },
+  skeletonGroup: {
+    gap: 2,
+    display: 'flex',
+    flexDirection: 'column',
+    marginBlockStart: 12,
+  },
+  skeletonRow: {
+    pointerEvents: 'none',
+  },
   topItems: {
     gap: 2,
     transition: {

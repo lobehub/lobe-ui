@@ -82,20 +82,20 @@ const form = useForm<Values>({ schema, initialValues, onSubmit });
 
 ### 反馈与状态
 
-| 需要                    | 用                                                                         | 注意                                                        |
-| ----------------------- | -------------------------------------------------------------------------- | ----------------------------------------------------------- |
-| 一闪而过的操作结果      | `toast()`（命令式）                                                        | 需在应用里渲染一次 `ToastHost`                              |
-| 常驻的行内提示 / 横幅   | `Alert`（`variant`: `soft`/`outlined`/`plain`）                            | 不要用 Alert 做瞬时反馈                                     |
-| 内容加载中的占位        | `Skeleton` + `Skeleton.Avatar` / `Skeleton.Text`                           | 形状要贴近真实内容；布局已知时用它                          |
-| 按钮或图标动作进行中    | `Button` / `ActionIcon` 的 `loading`                                       | 不要再套一个 Spin                                           |
-| 行内同步、遮住现有内容  | `Spin`（`size`: `small`/`middle`/`large`）                                 | 有 `children` 时盖在内容上；`spinning={false}` 只渲染子节点 |
-| 模型 / Agent 在思考     | `Spin variant="network"`                                                   | 只用于等模型。普通请求用默认 `Spin`                         |
-| 聊天里等第一个 token    | `LoadingDots`（`chat`，`variant`: `dots`/`pulse`/`wave`/`orbit`/`typing`） | —                                                           |
-| 整页结果（成功 / 失败） | `Result`（`status`: `success`/`error`/`info`/`warning`）                   | 比 Alert 重，比 toast 持久                                  |
-| 没有数据                | `Empty`（`type`: `default`/`page`，可带 `action`）                         | 必须给下一步动作，不能只写「暂无数据」                      |
-| 进度（线 / 环 / 分段）  | `Progress`                                                                 | 确定百分比用它；不确定的等待用 Spin                         |
-| 悬停提示                | `Tooltip`                                                                  | 不能放可交互内容                                            |
-| 可交互的浮层内容        | `Popover`（`trigger`: `hover`/`click`/`both`）                             | 要放链接或按钮就用它                                        |
+| 需要                                      | 用                                                                         | 注意                                                            |
+| ----------------------------------------- | -------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| 一闪而过的操作结果                        | `toast()`（命令式）                                                        | 需在应用里渲染一次 `ToastHost`                                  |
+| 常驻的行内提示 / 横幅                     | `Alert`（`variant`: `soft`/`outlined`/`plain`）                            | 不要用 Alert 做瞬时反馈                                         |
+| 内容加载中的占位                          | `Skeleton` + `Skeleton.Avatar` / `Skeleton.Text`                           | 形状要贴近真实内容；布局已知时用它                              |
+| 按钮或图标动作进行中                      | `Button` / `ActionIcon` 的 `loading`                                       | 不要再套一个 Spin                                               |
+| 行内同步、遮住现有内容                    | `Spin`（`size`: `small`/`middle`/`large`）                                 | 有 `children` 时盖在内容上；`spinning={false}` 只渲染子节点     |
+| 模型 / Agent 在思考；控制台卡片或外壳刷新 | `Spin variant="network"`                                                   | 控制台里的不确定等待统一用它；dashboard 组件的 `loading` 已内置 |
+| 聊天里等第一个 token                      | `LoadingDots`（`chat`，`variant`: `dots`/`pulse`/`wave`/`orbit`/`typing`） | —                                                               |
+| 整页结果（成功 / 失败）                   | `Result`（`status`: `success`/`error`/`info`/`warning`）                   | 比 Alert 重，比 toast 持久                                      |
+| 没有数据                                  | `Empty`（`type`: `default`/`page`，可带 `action`）                         | 必须给下一步动作，不能只写「暂无数据」                          |
+| 进度（线 / 环 / 分段）                    | `Progress`                                                                 | 确定百分比用它；不确定的等待用 Spin                             |
+| 悬停提示                                  | `Tooltip`                                                                  | 不能放可交互内容                                                |
+| 可交互的浮层内容                          | `Popover`（`trigger`: `hover`/`click`/`both`）                             | 要放链接或按钮就用它                                            |
 
 ### 覆盖层与菜单
 
@@ -175,28 +175,28 @@ const form = useForm<Values>({ schema, initialValues, onSubmit });
 
 外观相似、语义不同。混用会让用户重新学习每个组件在这个产品里的含义。
 
-| 组件对                                                | 看起来像       | 真正差别                                                                                            |
-| ----------------------------------------------------- | -------------- | --------------------------------------------------------------------------------------------------- |
-| `Tag` / `Badge`                                       | 都是小标签     | `Tag` 表分类、独立、可移除；`Badge` 附着在别的元素上、表计数或状态                                  |
-| `Modal` / `Drawer` / `FloatingSheet`                  | 都是弹出层     | 打断程度、信息密度、退出方式递减；Modal 最强打断                                                    |
-| `Modal` 里的表单                                      | 都是对话框     | `Modal` 包 `@lobehub/ui/form` 的 `Form`。v5 的 `FormModal` 已删除                                   |
-| `Tabs` / `Segmented`                                  | 都能切换       | Tabs 管同空间内的多个面板；Segmented 管少量互斥选项，没有独立面板区                                 |
-| `DropdownMenu` / `ContextMenu` / `SideNav`            | 都是菜单       | DropdownMenu 挂在 trigger 上；ContextMenu 命令式、出现在指针处；SideNav 是常驻导航                  |
-| `Tooltip` / `Popover`                                 | 都是浮层       | Tooltip 只放简短提示、不能含可交互内容；要放链接或按钮必须用 Popover                                |
-| `Alert` / `toast`                                     | 都是提示       | Alert 常驻行内；toast 瞬时且命令式调用                                                              |
-| `Skeleton` / `Spin` / `Spin variant="network"`        | 都是等待       | Skeleton 模拟已知布局；默认 Spin 是不确定等待或遮罩；`network` 只表示模型或 Agent 在工作            |
-| `Accordion` / `Collapsible`                           | 都能折叠       | Accordion 管多节（可单开）；Collapsible 只管一个区域                                                |
-| `SideNav` / `DraggableSideNav` / `LayoutSidebar`      | 都是侧栏       | SideNav 固定窄栏不可调；DraggableSideNav 是通用可伸缩容器（不限导航）；LayoutSidebar 是整页骨架插槽 |
-| `ScrollArea` / `ScrollShadow` / `MaskShadow`          | 都处理滚动边缘 | ScrollArea 替换滚动条 UI；ScrollShadow 保留原生滚动只加阴影；MaskShadow 是单边静态遮罩              |
-| `Highlighter` / `CodeEditor` / `Snippet` / `CodeDiff` | 都是代码块     | 只读 / 可编辑 / 单行可复制命令 / 前后差异                                                           |
-| `FileTypeIcon` / `MaterialFileTypeIcon`               | 都是文件图标   | 前者内置 SVG 按扩展名；后者走 CDN 的 Material 图标按文件名，失败回退前者                            |
-| `Icon` / `ActionIcon` / `ActionIconGroup`             | 都是图标       | 纯展示 / 可点击按钮 / 一组按钮带溢出菜单                                                            |
-| `Text` / `Markdown`                                   | 都渲染文字     | Text 是排版原语；Markdown 是完整管线（代码、公式、mermaid、流式）                                   |
-| `Select` / `AutoComplete` / `EmojiPicker`             | 都是选择       | 固定选项 / 自由文本加建议 / 头像与 emoji 选择弹层                                                   |
-| `ColorSwatches` / `ColorPicker`                       | 都是选颜色     | Swatches 点预设色；ColorPicker 拾取任意 hex，写入放在 `onChangeComplete`                            |
-| `SideNav` / `ConsoleNav`                              | 都是导航       | `SideNav` 是通用固定窄栏；`ConsoleNav` 是控制台分组侧栏，会随 `ConsoleShell` 收成图标轨             |
-| `Block` / `Surface`                                   | 都是卡片表面   | `Block` 是通用表面（`variant` / `shadow`）；`Surface` 是控制台工作区里抬高一档的面板                |
-| `Statistic` / `StatCard`                              | 都是数字       | `Statistic` 只排一个带格式的数；`StatCard` 是控制台指标瓦片，带标签和语义涨跌                       |
+| 组件对                                                | 看起来像       | 真正差别                                                                                                             |
+| ----------------------------------------------------- | -------------- | -------------------------------------------------------------------------------------------------------------------- |
+| `Tag` / `Badge`                                       | 都是小标签     | `Tag` 表分类、独立、可移除；`Badge` 附着在别的元素上、表计数或状态                                                   |
+| `Modal` / `Drawer` / `FloatingSheet`                  | 都是弹出层     | 打断程度、信息密度、退出方式递减；Modal 最强打断                                                                     |
+| `Modal` 里的表单                                      | 都是对话框     | `Modal` 包 `@lobehub/ui/form` 的 `Form`。v5 的 `FormModal` 已删除                                                    |
+| `Tabs` / `Segmented`                                  | 都能切换       | Tabs 管同空间内的多个面板；Segmented 管少量互斥选项，没有独立面板区                                                  |
+| `DropdownMenu` / `ContextMenu` / `SideNav`            | 都是菜单       | DropdownMenu 挂在 trigger 上；ContextMenu 命令式、出现在指针处；SideNav 是常驻导航                                   |
+| `Tooltip` / `Popover`                                 | 都是浮层       | Tooltip 只放简短提示、不能含可交互内容；要放链接或按钮必须用 Popover                                                 |
+| `Alert` / `toast`                                     | 都是提示       | Alert 常驻行内；toast 瞬时且命令式调用                                                                               |
+| `Skeleton` / `Spin` / `Spin variant="network"`        | 都是等待       | Skeleton 模拟已知布局、只给首屏；默认 Spin 是通用不确定等待或遮罩；`network` 用于等模型，以及控制台卡片 / 外壳的刷新 |
+| `Accordion` / `Collapsible`                           | 都能折叠       | Accordion 管多节（可单开）；Collapsible 只管一个区域                                                                 |
+| `SideNav` / `DraggableSideNav` / `LayoutSidebar`      | 都是侧栏       | SideNav 固定窄栏不可调；DraggableSideNav 是通用可伸缩容器（不限导航）；LayoutSidebar 是整页骨架插槽                  |
+| `ScrollArea` / `ScrollShadow` / `MaskShadow`          | 都处理滚动边缘 | ScrollArea 替换滚动条 UI；ScrollShadow 保留原生滚动只加阴影；MaskShadow 是单边静态遮罩                               |
+| `Highlighter` / `CodeEditor` / `Snippet` / `CodeDiff` | 都是代码块     | 只读 / 可编辑 / 单行可复制命令 / 前后差异                                                                            |
+| `FileTypeIcon` / `MaterialFileTypeIcon`               | 都是文件图标   | 前者内置 SVG 按扩展名；后者走 CDN 的 Material 图标按文件名，失败回退前者                                             |
+| `Icon` / `ActionIcon` / `ActionIconGroup`             | 都是图标       | 纯展示 / 可点击按钮 / 一组按钮带溢出菜单                                                                             |
+| `Text` / `Markdown`                                   | 都渲染文字     | Text 是排版原语；Markdown 是完整管线（代码、公式、mermaid、流式）                                                    |
+| `Select` / `AutoComplete` / `EmojiPicker`             | 都是选择       | 固定选项 / 自由文本加建议 / 头像与 emoji 选择弹层                                                                    |
+| `ColorSwatches` / `ColorPicker`                       | 都是选颜色     | Swatches 点预设色；ColorPicker 拾取任意 hex，写入放在 `onChangeComplete`                                             |
+| `SideNav` / `ConsoleNav`                              | 都是导航       | `SideNav` 是通用固定窄栏；`ConsoleNav` 是控制台分组侧栏，会随 `ConsoleShell` 收成图标轨                              |
+| `Block` / `Surface`                                   | 都是卡片表面   | `Block` 是通用表面（`variant` / `shadow`）；`Surface` 是控制台工作区里抬高一档的面板                                 |
+| `Statistic` / `StatCard`                              | 都是数字       | `Statistic` 只排一个带格式的数；`StatCard` 是控制台指标瓦片，带标签和语义涨跌                                        |
 
 ### 一个具体例子
 
@@ -291,3 +291,31 @@ BackBottom                        ← 浮层，指向滚动容器
 | 控制台页的加载形         | `PageLoading` / `PageHeaderSkeleton` / `StatCardSkeleton` / `TableSkeleton`                                 |
 
 控制台密度见 [craft.md](craft.md) 的 K-09。不要在 `Surface` 上再叠玻璃、渐变或等大卡片墙。
+
+## C-08 控制台：按场景选组件
+
+`@lobehub/ui/dashboard` 的卡片底、边框、阴影、明暗、嵌套、固定列都已在组件里处理。这里只记「什么场景用哪个」和调用方必须知道的注意事项，不记组件内部的取值。
+
+| 场景                                                      | 用                                                                           | 注意                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| --------------------------------------------------------- | ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 单个指标，独立成卡（和图表卡并排、单独占一格）            | `StatCard`                                                                   | 长得和一格 `MetricStrip` 一样。`prominent` / `wash` 已废弃、不生效，语义只放在 `delta` / `direction` / `valueTone`                                                                                                                                                                                                                                                                                                                |
+| 一组等权指标，只展示                                      | `MetricStrip`（默认 `variant="joined"`：一张卡，格间分割线）                 | 不要拆成一排自己写的卡片                                                                                                                                                                                                                                                                                                                                                                                                          |
+| 一组指标要各自成卡（每格可点、带 `action`、和别的卡混排） | `MetricStrip variant="split"`                                                | split 的每格和 `StatCard` 完全一致，不要混用自写指标卡                                                                                                                                                                                                                                                                                                                                                                            |
+| 点了会筛表的计数                                          | `FilterStrip`                                                                | 只展示用 `MetricStrip`                                                                                                                                                                                                                                                                                                                                                                                                            |
+| 工作区里的面板（标题 / 说明 / `extra` / 表 / 图）         | `Surface`                                                                    | 有 `href` 时右上角箭头总在 `extra` 之后、最右。表放进来会自动贴边，不要再套外框                                                                                                                                                                                                                                                                                                                                                   |
+| 只有标题 + 正文的简单面板，加载时保留旧内容               | `PanelSurface`                                                               | `loading` 且有内容时 `extra` 位置换成刷新指示                                                                                                                                                                                                                                                                                                                                                                                     |
+| 页面里的分区（标题 + 一组卡片）                           | `Section`                                                                    | 分区用标题，不要卡片套卡片                                                                                                                                                                                                                                                                                                                                                                                                        |
+| 登录 / 注册 / 一次性确认                                  | `AuthLayout`                                                                 | `background="grid"` + `variant="elevated"` 是登录页形态；`logo` / `alert` / `footer` 用槽位，不要往 children 里塞；`loading` 出表单骨架；右侧插画用 `AuthLayout.Aside` + `@lobehub/ui/awesome` 的 `Grainient lightMode="auto"`；角落工具用 `AuthThemeSwitch` / `AuthLocaleSwitch`（受控，自己接 store）。404 / 无权限等状态页用 `card={false}` 复用页头和工具。默认 `min-block-size: 100dvh`，嵌在定高容器里要覆盖 `minBlockSize` |
+| 会话 / 菜单还没就绪时的整页外壳                           | `ConsoleShell loading`                                                       | 品牌、`tools`、`storageKey` 照常传；导航和底栏自动换成 `ConsoleNavSkeleton`，正文默认 `PageLoading`，可用 `loadingContent` 换掉；要和真实菜单对齐就传 `loadingNavigation={<ConsoleNavSkeleton groups={groups} />}`                                                                                                                                                                                                                |
+| 首次加载、版面已知                                        | `Skeleton` / `PageLoading` / `StatCardSkeleton` / `TableSkeleton`            | 骨架只给首屏无数据时；已有数据的刷新不要盖骨架                                                                                                                                                                                                                                                                                                                                                                                    |
+| 卡片 / 外壳里的刷新、不确定等待                           | 组件自己的 `loading` / `refreshing`；自己放指示时用 `Spin variant="network"` | 控制台里统一 network 形态。按钮、图标动作用它们自己的 `loading`                                                                                                                                                                                                                                                                                                                                                                   |
+| 删除、撤销等破坏性图标动作                                | `ActionIcon danger`                                                          | 颜色梯度组件内已处理，不要自己给图标涂 `colorError`                                                                                                                                                                                                                                                                                                                                                                               |
+
+注意事项：
+
+- 自己做卡片状容器时用 `useSurfaceCardClassName()`，不要直接用 `surfaceStyles.card`（那只是浅色、未嵌套的样子，暗色和嵌套会错）。
+- 卡片放在非默认页面底上（例如自定义画布色）时，在外层设 `--lobe-surface-canvas`，固定列等需要不透明底的地方才能算对。
+- `Surface` 的自定义 `renderLink` 必须把收到的 props 原样透传（包括 `aria-hidden`、`tabIndex`），否则右上角箭头会变成一个可聚焦的重复链接。
+- 卡片头里的控件（`Segmented`、`ActionIcon`、`Select`）用紧凑尺寸：`Segmented size="small"`、`ActionIcon size="small"`。头部行高固定在标题行，大控件不会撑高卡片但会溢出显得挤；同一行卡片有的带控件有的不带时，标题、数字和图表仍应横向对齐。
+- 应用里确实要自己画卡片状的边框或分割线时，用 `colorFillSecondary`（悬停 / 聚焦用 `colorFill`），不要用实色 `colorBorder` / `colorBorderSecondary`。布局容器（`ConsoleShell`、`ConsoleNav`、`FilterSidebar` 分栏线）不在此列。
+- 不要在应用里覆盖 lobe-ui / antd 主题变量（如 `--ant-color-border`、`--ant-color-border-secondary` 加 `!important`）。看起来不对就修 lobe-ui 上游组件。

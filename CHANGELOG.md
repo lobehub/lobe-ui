@@ -2,6 +2,35 @@
 
 # Changelog
 
+# [5.60.0](https://github.com/lobehub/lobe-ui/compare/v5.59.0...v5.60.0) (2026-10-13)
+
+### ✨ Features
+
+- **dashboard**: Card system refresh, StatCard/MetricStrip split, AuthLayout and ConsoleShell loading ([342ba84](https://github.com/lobehub/lobe-ui/commit/342ba84))
+- **grainient**: Add animated grainy WebGL gradient background ([04f429b](https://github.com/lobehub/lobe-ui/commit/04f429b))
+
+### 💄 Styles
+
+- **dashboard**: Clip strip cells to the card radius and share colorBorderSecondary for borders and dividers ([8897617](https://github.com/lobehub/lobe-ui/commit/8897617))
+
+# [5.59.0](https://github.com/lobehub/lobe-ui/compare/v5.58.0...v5.59.0) (2026-10-13)
+
+### ✨ Features
+
+- **dashboard**: Add ChartGrid, PageToolbar, TableIconActions, TitleWithTips and LabelWithKey ([694261d](https://github.com/lobehub/lobe-ui/commit/694261d))
+- **dashboard**: Rich Surface with links, loading and chart slot; add PanelSurface, MetricStrip, FilterStrip and Section; fix Grid overflow on narrow screens ([1b9fbda](https://github.com/lobehub/lobe-ui/commit/1b9fbda))
+
+### 🐛 Bug Fixes
+
+- **console-shell**: Flush drawer scroll edge and put the close button in the brand row ([c671c4f](https://github.com/lobehub/lobe-ui/commit/c671c4f))
+- **input-number**: Only dim the root when the field itself is disabled ([6c3c9e0](https://github.com/lobehub/lobe-ui/commit/6c3c9e0))
+
+# [5.58.0](https://github.com/lobehub/lobe-ui/compare/v5.57.3...v5.58.0) (2026-10-12)
+
+### ✨ Features
+
+- **image**: Add fetchImage for CORS-safe preview copy and download ([61aa8bc](https://github.com/lobehub/lobe-ui/commit/61aa8bc))
+
 ## [5.57.3](https://github.com/lobehub/lobe-ui/compare/v5.57.2...v5.57.3) (2026-10-10)
 
 ### 🐛 Bug Fixes

@@ -27,6 +27,7 @@ export { type FeatureItemType, default as Features, type FeaturesProps } from '.
 export { default as FluidGradient, type FluidGradientProps } from './FluidGradient';
 export { default as Giscus, type GiscusProps } from './Giscus';
 export { default as GradientButton, type GradientButtonProps } from './GradientButton';
+export { default as Grainient, type GrainientProps } from './Grainient';
 export {
   default as GridBackground,
   type GridBackgroundProps,

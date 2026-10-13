@@ -5,6 +5,7 @@ import type { ZoomPolicy } from './viewer/geometry';
 export interface ImagePreviewOptions {
   autoZoomThreshold?: number;
   defaultZoom?: ZoomPolicy;
+  fetchImage?: (source: string) => Promise<Blob>;
   maxScale?: number;
   onDownload?: (source: string) => void | Promise<void>;
   onOpenChange?: (open: boolean) => void;

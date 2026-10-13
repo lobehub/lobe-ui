@@ -1,13 +1,18 @@
 'use client';
 
+import './style.css';
+
 import * as stylex from '@stylexjs/stylex';
+import { isValidElement } from 'react';
 
 import { Flexbox } from '@/Flex';
+import Skeleton from '@/Skeleton';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import { styleProps } from '@/styles/stylex/props';
 import Text from '@/Text';
 
-import { styles as surfaceStyles } from '../Surface/style';
+import { useSurfaceCardStyles } from '../Surface/link';
+import Aside from './Aside';
 import { styles } from './style';
 import type { AuthLayoutProps } from './type';
 
@@ -18,48 +23,99 @@ const titleStyle = {
 };
 const descriptionStyle = { color: cssVar.colorTextSecondary, lineHeight: 1.6 };
 
+const FormSkeleton = () => (
+  <Flexbox aria-hidden gap={12}>
+    <Skeleton height={36} radius={8} width="100%" />
+    <Skeleton height={36} radius={8} width="100%" />
+    <Skeleton height={36} radius={8} width="100%" />
+  </Flexbox>
+);
+
 function AuthLayout({
+  alert,
   aside,
+  background = 'plain',
   brand,
+  card = true,
   children,
   className,
   description,
+  footer,
+  loading,
+  logo,
   style,
   title,
   tools,
+  variant = 'default',
   ...rest
 }: AuthLayoutProps) {
+  const cardStyles = useSurfaceCardStyles();
   const split = Boolean(aside);
+  const art = isValidElement(background) ? background : null;
+  const heading =
+    title === undefined || title === null ? null : typeof title === 'string' ? (
+      <Text as="h1" style={titleStyle} weight="bold">
+        {title}
+      </Text>
+    ) : (
+      <div {...stylex.props(styles.titleNode)}>{title}</div>
+    );
+  const intro =
+    logo || heading || description ? (
+      <Flexbox gap={8}>
+        {logo ? <div {...stylex.props(styles.logo)}>{logo}</div> : null}
+        {heading}
+        {description ? (
+          <Text style={descriptionStyle} type="secondary">
+            {description}
+          </Text>
+        ) : null}
+      </Flexbox>
+    ) : null;
+
   return (
-    <div {...styleProps(styles.page, className, style)} {...rest}>
+    <div
+      data-auth-layout=""
+      {...rest}
+      {...styleProps([styles.page, background === 'grid' && styles.grid], className, style)}
+    >
+      {art ? <div {...stylex.props(styles.backdrop)}>{art}</div> : null}
       <header {...stylex.props(styles.header)}>
         {brand}
         {tools ? <div {...stylex.props(styles.tools)}>{tools}</div> : null}
       </header>
       <main {...stylex.props(styles.main)}>
-        <div {...stylex.props(styles.lift, split && styles.liftSplit, surfaceStyles.card)}>
-          <div {...stylex.props(styles.frame, split && styles.split)}>
-            <div {...stylex.props(styles.form, split && styles.formSplit)}>
-              <Flexbox gap={8}>
-                <Text as="h1" style={titleStyle} weight="bold">
-                  {title}
-                </Text>
-                {description ? (
-                  <Text style={descriptionStyle} type="secondary">
-                    {description}
-                  </Text>
+        {card ? (
+          <div
+            data-auth-card=""
+            {...stylex.props(
+              styles.lift,
+              split && styles.liftSplit,
+              cardStyles,
+              variant === 'elevated' && styles.elevated,
+            )}
+          >
+            <div {...stylex.props(styles.frame, split && styles.split)}>
+              <div {...stylex.props(styles.form, split && styles.formSplit)}>
+                {intro}
+                {alert}
+                {loading ? <FormSkeleton /> : children}
+                {footer ? (
+                  <div {...styleProps(styles.footer, 'lobe-auth-layout-footer')}>{footer}</div>
                 ) : null}
-              </Flexbox>
-              {children}
+              </div>
+              {aside ? <div {...stylex.props(styles.aside)}>{aside}</div> : null}
             </div>
-            {aside ? <div {...stylex.props(styles.aside)}>{aside}</div> : null}
           </div>
-        </div>
+        ) : (
+          children
+        )}
       </main>
     </div>
   );
 }
 
 AuthLayout.displayName = 'AuthLayout';
+AuthLayout.Aside = Aside;
 
 export default AuthLayout;
