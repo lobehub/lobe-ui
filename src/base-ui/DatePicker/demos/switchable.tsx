@@ -2,8 +2,7 @@ import { Flexbox } from '@lobehub/ui';
 import { DatePicker, type PickerMode, Select, Text } from '@lobehub/ui/base-ui';
 import { useState } from 'react';
 
-// `time` follows with the time panel.
-const pickers: PickerMode[] = ['date', 'week', 'month', 'quarter', 'year'];
+const pickers: PickerMode[] = ['date', 'week', 'month', 'quarter', 'year', 'time'];
 
 export default () => {
   const [picker, setPicker] = useState<PickerMode>('date');

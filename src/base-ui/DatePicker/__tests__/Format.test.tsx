@@ -1,5 +1,8 @@
 import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
 import dayjs, { type Dayjs } from 'dayjs';
+import { motion } from 'motion/react';
+
+import { MotionProvider } from '@/MotionProvider';
 
 import DatePicker from '../DatePicker';
 import DateRangePicker from '../DateRangePicker';
@@ -313,12 +316,15 @@ describe('DatePicker format', () => {
 
     test('mask with a time format', () => {
       const onChange = vi.fn();
+      // The showTime popup has the OK button, a base-ui Button that needs the motion component.
       render(
-        <DatePicker
-          showTime
-          format={{ format: 'YYYY-MM-DD HH:mm:ss', type: 'mask' }}
-          onChange={onChange}
-        />,
+        <MotionProvider motion={motion}>
+          <DatePicker
+            showTime
+            format={{ format: 'YYYY-MM-DD HH:mm:ss', type: 'mask' }}
+            onChange={onChange}
+          />
+        </MotionProvider>,
       );
       act(() => input().focus());
       expect(input().value).toBe('YYYY-MM-DD HH:mm:ss');

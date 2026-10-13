@@ -15,6 +15,7 @@ const PLACEHOLDER_KEY: Partial<Record<PickerMode, TranslationKey>> = {
   date: 'datePicker.placeholder',
   month: 'datePicker.monthPlaceholder',
   quarter: 'datePicker.quarterPlaceholder',
+  time: 'datePicker.timePlaceholder',
   week: 'datePicker.weekPlaceholder',
   year: 'datePicker.yearPlaceholder',
 };
@@ -24,6 +25,7 @@ const RANGE_PLACEHOLDER_KEYS: Partial<Record<PickerMode, [TranslationKey, Transl
   date: ['datePicker.startPlaceholder', 'datePicker.endPlaceholder'],
   month: ['datePicker.rangeMonthPlaceholder.start', 'datePicker.rangeMonthPlaceholder.end'],
   quarter: ['datePicker.rangeQuarterPlaceholder.start', 'datePicker.rangeQuarterPlaceholder.end'],
+  time: ['datePicker.rangeTimePlaceholder.start', 'datePicker.rangeTimePlaceholder.end'],
   week: ['datePicker.rangeWeekPlaceholder.start', 'datePicker.rangeWeekPlaceholder.end'],
   year: ['datePicker.rangeYearPlaceholder.start', 'datePicker.rangeYearPlaceholder.end'],
 };
@@ -31,7 +33,7 @@ const RANGE_PLACEHOLDER_KEYS: Partial<Record<PickerMode, [TranslationKey, Transl
 /**
  * rc-picker's locale, with `locale` following the active dayjs locale so week start and
  * week / month names track `dayjs.locale()`, plus placeholders from `@/i18n`. Default
- * formats per picker (`YYYY-MM-DD`, `gggg-wo`, `YYYY-MM`, `YYYY-[Q]Q`, `YYYY`) come from
+ * formats per picker (`YYYY-MM-DD`, `gggg-wo`, `YYYY-MM`, `YYYY-[Q]Q`, `YYYY`, `HH:mm:ss`) come from
  * rc-picker's locale fallbacks, as in antd.
  */
 export const usePickerLocale = (locale?: Partial<PickerLocale>) => {

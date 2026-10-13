@@ -1,6 +1,6 @@
 ---
 title: DatePicker
-description: Date, week, month, quarter and year picking with Dayjs values and a typeable input, plus a two-panel range picker. Built on @rc-component/picker, the same core as antd DatePicker.
+description: Date, week, month, quarter, year and time picking with Dayjs values and a typeable input, plus a two-panel range picker. Built on @rc-component/picker, the same core as antd DatePicker.
 category: Data Entry
 ---
 
@@ -15,6 +15,10 @@ import DemoIndex from './demos/index.tsx?demo';
 import DemoSwitchable from './demos/switchable.tsx?demo';
 import DemoFormat from './demos/format.tsx?demo';
 import DemoMask from './demos/mask.tsx?demo';
+import DemoTime from './demos/time.tsx?demo';
+import DemoNeedConfirm from './demos/needConfirm.tsx?demo';
+import DemoDisabledDate from './demos/disabled-date.tsx?demo';
+import DemoPreviewValue from './demos/preview-value.tsx?demo';
 import DemoCellRender from './demos/cell-render.tsx?demo';
 import DemoShowWeek from './demos/show-week.tsx?demo';
 import DemoKeyboard from './demos/keyboard.tsx?demo';
@@ -54,13 +58,13 @@ import DemoFilledDebug from './demos/filled-debug.tsx?demo';
 
 ## Controlled panels
 
-`mode` controls the visible panel the antd way: the panel only changes when you update `mode` from `onPanelChange`. Both pickers start on a higher panel and drill down as `mode` follows `onPanelChange`; the range picker takes a `[start, end]` mode tuple.
+`mode` controls the visible panel the antd way: the panel only changes when you update `mode` from `onPanelChange`. Both pickers start on a higher panel and drill down as `mode` follows `onPanelChange`; the `showTime` picker opens on the `time` panel each time; the range picker takes a `[start, end]` mode tuple.
 
 <Demo of={DemoMode} layout="bare" />
 
 ## Start and end
 
-Two pickers linked through `disabledDate(current, info)` and a controlled `open`, so closing the start picker opens the end one.
+Two `showTime` pickers linked through `disabledDate(current, info)` and a controlled `open`, so confirming the start picker opens the end one.
 
 <Demo of={DemoStartEnd} layout="bare" />
 
@@ -72,7 +76,7 @@ Two pickers linked through `disabledDate(current, info)` and a controlled `open`
 
 ## Switchable picker
 
-`picker` can change at runtime; placeholder and format follow it. `time` follows with the time panel.
+`picker` can change at runtime; placeholder and format follow it, including `time` (`HH:mm:ss`, "Select time").
 
 <Demo of={DemoSwitchable} layout="bare" />
 
@@ -103,9 +107,42 @@ dayjs.extend(customParseFormat);
 
 <Demo of={DemoMask} layout="bare" />
 
+## Date and time
+
+`showTime` puts the time panel next to the date panel; the default format becomes `YYYY-MM-DD HH:mm:ss`. `picker="time"` (or a controlled `mode="time"`) shows the time panel alone, with the `HH:mm:ss` format and the "Select time" / "Start time" placeholders. `showTime` takes the antd `SharedTimeProps` object:
+
+- `format` decides which columns are shown (`'HH:mm'` drops seconds, `'h:mm a'` adds AM / PM); the input keeps `format`, so set both when they should match;
+- `showHour` / `showMinute` / `showSecond` / `showMillisecond` and `use12Hours` set the columns explicitly;
+- `hourStep` / `minuteStep` / `secondStep` / `millisecondStep` thin the options;
+- `hideDisabledOptions` removes the options `disabledTime` disables instead of greying them;
+- `defaultOpenValue` is the time a picked date gets before any time is chosen (`defaultValue` is its deprecated alias; a top-level `defaultOpenValue` works too);
+- `changeOnScroll` picks the option a column is scrolled to.
+
+The time props can also be passed at the top level (`use12Hours`, `hourStep`, …), as in antd. With `showTime`, picking only fills the input; `onOk(value)` fires on the OK button, which commits the value. The **Now** button (`showNow`, on by default on single pickers, off on `DateRangePicker`) fills in the current time.
+
+<Demo of={DemoTime} layout="bare" />
+
+## Need confirm
+
+`needConfirm` adds the OK button to any picker, so the value is only committed once confirmed. It defaults to `true` with `showTime` and `picker="time"`; `needConfirm={false}` commits as soon as the popup closes (on blur, Enter or a click outside). The deprecated `changeOnBlur` maps to `needConfirm={false}`. The OK button is a small primary base-ui `Button`; `components.button` replaces it.
+
+<Demo of={DemoNeedConfirm} layout="bare" />
+
+## Disabled date and time
+
+`disabledDate(current, info)` disables cells on every panel; `disabledTime(date)` returns `disabledHours` / `disabledMinutes(hour)` / `disabledSeconds(hour, minute)` / `disabledMilliseconds(…)` for the time columns. On `DateRangePicker` it is `disabledTime(date, partial, info)`, where `partial` is `'start'` or `'end'` and `info.from` is the start already picked — the last example keeps the end from being earlier than the start on the same day.
+
+<Demo of={DemoDisabledDate} layout="bare" />
+
+## Preview value
+
+While you hover a cell, the input shows that value in a muted colour (`previewValue="hover"`, the default); leaving the cell restores it. `previewValue={false}` turns this off. On the range picker the hover only fills the field being picked.
+
+<Demo of={DemoPreviewValue} layout="bare" />
+
 ## Customized cell rendering
 
-`cellRender(current, info)` renders every cell of every panel. `info` carries `originNode` (the default cell), `today`, `type` (`date` / `week` / `month` / `quarter` / `year` / `decade`), `locale`, `prefixCls` and, on `DateRangePicker`, `range` (`'start'` / `'end'`). The deprecated `dateRender(current, today)` and `monthCellRender(current, locale)` still work for the date and month panels when `cellRender` is not set.
+`cellRender(current, info)` renders every cell of every panel. `info` carries `originNode` (the default cell), `today`, `type` (`date` / `week` / `month` / `quarter` / `year` / `decade` / `time`), `locale`, `prefixCls`, on time cells `subType` (`hour` / `minute` / `second` / `millisecond` / `meridiem`, with `current` being the cell's number) and, on `DateRangePicker`, `range` (`'start'` / `'end'`). The deprecated `dateRender(current, today)` and `monthCellRender(current, locale)` still work for the date and month panels when `cellRender` is not set.
 
 <Demo of={DemoCellRender} layout="bare" />
 
@@ -175,7 +212,7 @@ The popup nests in the enclosing base-ui Modal or Popover, so picking a date nei
 
 ## Debug: filled
 
-`variant="filled"` with `disabled` and `status`.
+`variant="filled"` with `disabled`, `status` and `previewValue`.
 
 <Demo of={DemoFilledDebug} layout="bare" />
 

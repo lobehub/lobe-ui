@@ -9,9 +9,11 @@ export default () => {
   const [endOpen, setEndOpen] = useState(false);
 
   return (
-    <Flexbox horizontal gap={12} padding={16} style={{ maxWidth: 480 }}>
+    <Flexbox horizontal gap={12} padding={16} style={{ maxWidth: 560 }}>
       <DatePicker
+        showTime
         disabledDate={(current) => !!endValue && current.isAfter(endValue, 'day')}
+        format="YYYY-MM-DD HH:mm:ss"
         placeholder="Start"
         value={startValue}
         onChange={setStartValue}
@@ -20,7 +22,9 @@ export default () => {
         }}
       />
       <DatePicker
+        showTime
         disabledDate={(current) => !!startValue && current.isBefore(startValue, 'day')}
+        format="YYYY-MM-DD HH:mm:ss"
         open={endOpen}
         placeholder="End"
         value={endValue}

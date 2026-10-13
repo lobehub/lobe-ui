@@ -12,6 +12,12 @@ export default () => {
       <DatePicker format={{ format: 'YYYY-MM-DD', type: 'mask' }} onChange={onChange} />
       <DatePicker format={{ format: 'DD/MM/YYYY', type: 'mask' }} onChange={onChange} />
       <DatePicker format={{ format: 'YYYY-MM', type: 'mask' }} picker="month" onChange={onChange} />
+      <DatePicker
+        showTime
+        format={{ format: 'YYYY-MM-DD HH:mm:ss', type: 'mask' }}
+        onChange={onChange}
+      />
+      <DatePicker format={{ format: 'HH:mm', type: 'mask' }} picker="time" onChange={onChange} />
       <DateRangePicker format={{ format: 'YYYY-MM-DD', type: 'mask' }} />
       <Text type="secondary">onChange dateString: {last === null ? 'null' : `"${last}"`}</Text>
     </Flexbox>

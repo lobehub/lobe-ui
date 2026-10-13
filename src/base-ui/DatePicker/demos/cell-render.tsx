@@ -39,6 +39,19 @@ const allPanels: DatePickerProps['cellRender'] = (current, info) => {
   });
 };
 
+// Time cells get `info.type === 'time'` and `info.subType` (`hour` / `minute` / `second` /
+// `millisecond` / `meridiem`); `current` is the cell's number (or `am` / `pm`).
+const timeCells: DatePickerProps['cellRender'] = (current, info) => {
+  if (info.type !== 'time') return info.originNode;
+  const marked =
+    (info.subType === 'hour' && Number(current) % 6 === 0) ||
+    (info.subType === 'minute' && Number(current) % 15 === 0);
+  if (!marked) return info.originNode;
+  return cloneElement(info.originNode as ReactElement<{ style?: CSSProperties }>, {
+    style: { color: info.subType === 'hour' ? colorPrimary : colorSuccess, fontWeight: 600 },
+  });
+};
+
 export default () => (
   <Flexbox gap={12} padding={16} style={{ maxWidth: 400 }}>
     <DatePicker cellRender={cellRender} />
@@ -46,5 +59,6 @@ export default () => (
     <DatePicker cellRender={allPanels} picker="month" />
     <DateRangePicker cellRender={allPanels} picker="quarter" />
     <DateRangePicker cellRender={allPanels} picker="year" />
+    <DatePicker showTime cellRender={timeCells} />
   </Flexbox>
 );

@@ -33,6 +33,7 @@ type InternalRcProps = 'generateConfig' | 'locale' | 'prefixCls';
 type MultipleRcProps = 'maxTagCount' | 'multiple' | 'removeIcon' | 'tagRender';
 
 type ValueRcProps =
+  | 'changeOnBlur'
   | 'defaultValue'
   | 'onCalendarChange'
   | 'onChange'
@@ -45,6 +46,11 @@ type ValueRcProps =
 interface LobePickerProps {
   /** @deprecated Use `variant` instead; `bordered={false}` maps to `variant="borderless"`. */
   bordered?: boolean;
+  /**
+   * @deprecated Use `needConfirm={false}` instead: the value is committed when the popup
+   * closes, without the OK button. Ignored when `needConfirm` is set.
+   */
+  changeOnBlur?: boolean;
   /**
    * Popup position relative to the input.
    * @default 'bottomLeft' ('bottomRight' when `direction="rtl"`)

@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { type ReactNode, useCallback, useLayoutEffect, useMemo, useState } from 'react';
 
+import Button from '@/base-ui/Button';
 import { rootVariants } from '@/base-ui/Input/style';
 import { acquireLayerZIndex } from '@/base-ui/zIndex';
 import { useFloatingLayer } from '@/hooks/useFloatingLayer';
@@ -28,15 +29,18 @@ type SharedInput = Pick<
   DatePickerProps,
   | 'allowClear'
   | 'bordered'
+  | 'changeOnBlur'
   | 'className'
   | 'clearIcon'
   | 'classNames'
+  | 'components'
   | 'defaultOpen'
   | 'getPopupContainer'
   | 'max'
   | 'maxDate'
   | 'min'
   | 'minDate'
+  | 'needConfirm'
   | 'nextIcon'
   | 'onKeyDown'
   | 'onOpenChange'
@@ -59,11 +63,13 @@ type SharedOutput = Pick<
   RcPickerProps<Dayjs>,
   | 'allowClear'
   | 'className'
+  | 'components'
   | 'defaultOpen'
   | 'generateConfig'
   | 'getPopupContainer'
   | 'maxDate'
   | 'minDate'
+  | 'needConfirm'
   | 'nextIcon'
   | 'onKeyDown'
   | 'onOpenChange'
@@ -76,6 +82,13 @@ type SharedOutput = Pick<
   | 'superPrevIcon'
   | 'transitionName'
 > & { classNames: any; styles: any };
+
+/** antd's `PickerButton`: the panel's OK button is a small primary button. */
+const PickerButton = (props: {
+  children?: ReactNode;
+  disabled?: boolean;
+  onClick?: () => void;
+}) => <Button size="small" type="primary" {...props} />;
 
 const defaultClearIcon = <Icon icon={X} size={10} style={{ strokeWidth: 3 }} />;
 
@@ -95,15 +108,18 @@ const withDefault = (node: ReactNode, fallback: ReactNode) =>
 export const usePickerShared = ({
   allowClear = true,
   bordered,
+  changeOnBlur,
   className,
   clearIcon,
   classNames,
+  components,
   defaultOpen,
   getPopupContainer,
   max,
   maxDate,
   min,
   minDate,
+  needConfirm,
   nextIcon,
   onKeyDown,
   onOpenChange,
@@ -173,11 +189,14 @@ export const usePickerShared = ({
       `${PREFIX_CLS}-${mergedVariant}`,
       className,
     ),
+    components: { button: PickerButton, ...components },
     defaultOpen,
     generateConfig,
     getPopupContainer: getPopupContainer ?? defaultPopupContainer,
     maxDate: maxDate ?? max,
     minDate: minDate ?? min,
+    // rc-picker dropped `changeOnBlur`; committing on close is what `needConfirm={false}` does.
+    needConfirm: needConfirm ?? (changeOnBlur ? false : undefined),
     nextIcon: withDefault(nextIcon, <Icon icon={ChevronRight} size={16} />),
     // Escape closes only the popup, not a Modal / Popover hosting the picker.
     onKeyDown: (event, preventDefault) => {

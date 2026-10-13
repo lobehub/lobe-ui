@@ -609,6 +609,112 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       outline-offset: 1px;
     }
 
+    /* time: hour / minute / second / meridiem columns, beside the date panel with showTime */
+    &.${P}-dropdown .${P}-datetime-panel {
+      display: flex;
+      align-items: stretch;
+    }
+
+    &.${P}-dropdown .${P}-datetime-panel > .${P}-time-panel {
+      border-inline-start: 1px solid ${cssVar.colorBorderSecondary};
+    }
+
+    &.${P}-dropdown .${P}-time-panel {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    &.${P}-dropdown .${P}-time-panel .${P}-header-view {
+      height: 28px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    &.${P}-dropdown .${P}-time-panel .${P}-content {
+      display: flex;
+      flex: auto;
+
+      height: 224px;
+      padding-block: 4px 12px;
+      padding-inline: 4px;
+    }
+
+    /* next to the date panel the columns take its height instead */
+    &.${P}-dropdown .${P}-datetime-panel .${P}-time-panel .${P}-content {
+      flex: 1 1 0;
+      height: auto;
+      min-height: 0;
+    }
+
+    &.${P}-dropdown .${P}-time-panel-column {
+      scrollbar-width: thin;
+
+      overflow-y: hidden;
+      flex: none;
+
+      width: 56px;
+      margin: 0;
+      padding: 0;
+
+      list-style: none;
+
+      /* lets the last option scroll up to the top, as in antd */
+      &::after {
+        content: '';
+        display: block;
+        height: calc(100% - 28px);
+      }
+
+      &:hover {
+        overflow-y: auto;
+      }
+    }
+
+    &.${P}-dropdown .${P}-time-panel-column + .${P}-time-panel-column {
+      border-inline-start: 1px solid ${cssVar.colorBorderSecondary};
+    }
+
+    &.${P}-dropdown .${P}-time-panel-cell {
+      cursor: pointer;
+      padding-block: 1px;
+      padding-inline: 4px;
+    }
+
+    &.${P}-dropdown .${P}-time-panel-cell-inner {
+      height: 26px;
+      border-radius: 6px;
+
+      font-size: 13px;
+      font-variant-numeric: tabular-nums;
+      line-height: 26px;
+      color: ${cssVar.colorText};
+      text-align: center;
+
+      transition:
+        background 150ms ${cssVar.motionEaseOut},
+        color 150ms ${cssVar.motionEaseOut};
+    }
+
+    &.${P}-dropdown
+      .${P}-time-panel-cell:not(.${P}-time-panel-cell-disabled, .${P}-time-panel-cell-selected):hover
+      .${P}-time-panel-cell-inner {
+      background: ${cssVar.colorFillTertiary};
+    }
+
+    &.${P}-dropdown .${P}-time-panel-cell-selected .${P}-time-panel-cell-inner {
+      font-weight: 600;
+      color: ${cssVar.colorBgContainer};
+      background: ${cssVar.colorText};
+    }
+
+    &.${P}-dropdown .${P}-time-panel-cell-disabled {
+      cursor: not-allowed;
+
+      .${P}-time-panel-cell-inner {
+        color: ${cssVar.colorTextQuaternary};
+      }
+    }
+
     /* footer */
     &.${P}-dropdown .${P}-footer {
       border-block-start: 1px solid ${cssVar.colorBorderSecondary};
@@ -640,6 +746,15 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     &.${P}-dropdown .${P}-ranges > .${P}-now {
       margin-inline: auto;
+    }
+
+    /* Now on the start side, OK on the end side */
+    &.${P}-dropdown .${P}-ranges > .${P}-now:has(+ .${P}-ok) {
+      margin-inline: 0;
+    }
+
+    &.${P}-dropdown .${P}-ranges > .${P}-ok {
+      margin-inline-start: auto;
     }
 
     &.${P}-dropdown .${P}-now-btn {
