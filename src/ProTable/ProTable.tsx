@@ -165,51 +165,50 @@ const ProTable = <
         placeholder={{ input: locale.searchPlaceholder, select: locale.selectPlaceholder }}
       />
     ) : null;
-  const settingsDom: ReactNode =
-    toolbar?.settings ??
-    (optionConfig ? (
-      <ToolbarOptions
-        columnsState={columnsStateApi.state}
-        config={optionConfig}
-        fullscreen={fullscreen}
-        locale={locale}
-        reloading={reloading}
-        settingColumns={settingColumns}
-        size={size}
-        onColumnsStateChange={columnsStateApi.setState}
-        onColumnsStateReset={columnsStateApi.resetState}
-        onReload={() => void requestApi.reload()}
-        onSizeChange={setSize}
-        onToggleFullScreen={toggleFullScreen}
-      />
-    ) : null);
-
-  const title = headerTitle ?? toolbar?.title;
-  const hasToolbar =
-    toolBarRender !== false &&
+  const hasOptions =
+    optionConfig &&
     Boolean(
-      title !== undefined ||
-      toolbar?.actions?.length ||
-      toolBarRender ||
-      settingsDom ||
-      filterDom ||
-      keywordDom,
+      optionConfig.reload ||
+      optionConfig.density ||
+      optionConfig.fullScreen ||
+      optionConfig.setting,
     );
-  const toolbarDom = hasToolbar ? (
-    <Toolbar<T>
-      actionRef={actionHolderRef}
-      actions={toolbar?.actions}
-      filter={filterDom}
-      getRow={getRow}
-      handleRef={handleRef}
-      keyword={keywordDom}
-      settings={settingsDom}
-      subTitle={toolbar?.subTitle}
-      title={title}
-      toolBarRender={toolBarRender || undefined}
-      tooltip={tooltip ?? toolbar?.tooltip}
+  const settingsDom: ReactNode = toolbar?.settings?.length ? (
+    toolbar.settings
+  ) : toolbar?.settings === undefined && hasOptions ? (
+    <ToolbarOptions
+      columnsState={columnsStateApi.state}
+      config={optionConfig}
+      fullscreen={fullscreen}
+      locale={locale}
+      reloading={reloading}
+      settingColumns={settingColumns}
+      size={size}
+      onColumnsStateChange={columnsStateApi.setState}
+      onColumnsStateReset={columnsStateApi.resetState}
+      onReload={() => void requestApi.reload()}
+      onSizeChange={setSize}
+      onToggleFullScreen={toggleFullScreen}
     />
   ) : null;
+
+  const title = headerTitle ?? toolbar?.title;
+  const toolbarDom =
+    toolBarRender === false ? null : (
+      <Toolbar<T>
+        actionRef={actionHolderRef}
+        actions={toolbar?.actions}
+        filter={filterDom}
+        getRow={getRow}
+        handleRef={handleRef}
+        keyword={keywordDom}
+        settings={settingsDom}
+        subTitle={toolbar?.subTitle}
+        title={title}
+        toolBarRender={toolBarRender || undefined}
+        tooltip={tooltip ?? toolbar?.tooltip}
+      />
+    );
 
   const alertDom = rowSelection ? (
     <TableAlert<T>

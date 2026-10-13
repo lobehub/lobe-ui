@@ -25,21 +25,6 @@ interface ToolbarProps<T> {
   tooltip?: ReactNode;
 }
 
-const RenderedActions = <T,>({
-  actionRef,
-  getRow,
-  handleRef,
-  toolBarRender,
-}: Pick<ToolbarProps<T>, 'actionRef' | 'getRow' | 'handleRef'> & {
-  toolBarRender: NonNullable<ToolbarProps<T>['toolBarRender']>;
-}) => {
-  const selectedRowKeys = useSelectedRowKeys(handleRef);
-  const selectedRows = selectedRowKeys
-    .map((key) => getRow(key))
-    .filter((row): row is T => row !== undefined);
-  return <>{toolBarRender(actionRef.current, { selectedRowKeys, selectedRows })}</>;
-};
-
 const Toolbar = <T,>({
   actionRef,
   actions,
@@ -52,30 +37,44 @@ const Toolbar = <T,>({
   title,
   toolBarRender,
   tooltip,
-}: ToolbarProps<T>) => (
-  <div className={clsx(styles.toolbar, `${PRO_PREFIX_CLS}-toolbar`)}>
-    {(title !== undefined || subTitle) && (
-      <div className={styles.title}>
-        {title}
-        {tooltip && <ActionIcon icon={CircleHelp} size="small" title={tooltip} />}
-        {subTitle && <span className={styles.titleSub}>{subTitle}</span>}
-      </div>
-    )}
-    <div className={styles.toolbarActions}>
-      {filter}
-      {keyword}
-      {actions}
-      {toolBarRender && (
-        <RenderedActions
-          actionRef={actionRef}
-          getRow={getRow}
-          handleRef={handleRef}
-          toolBarRender={toolBarRender}
-        />
+}: ToolbarProps<T>) => {
+  const selectedRowKeys = useSelectedRowKeys(handleRef);
+  const rendered = toolBarRender
+    ? toolBarRender(actionRef.current, {
+        selectedRowKeys,
+        selectedRows: selectedRowKeys
+          .map((key) => getRow(key))
+          .filter((row): row is T => row !== undefined),
+      })
+    : [];
+  const empty =
+    title === undefined &&
+    !subTitle &&
+    !filter &&
+    !keyword &&
+    !actions?.length &&
+    !rendered.length &&
+    !settings;
+  if (empty) return null;
+
+  return (
+    <div className={clsx(styles.toolbar, `${PRO_PREFIX_CLS}-toolbar`)}>
+      {(title !== undefined || subTitle) && (
+        <div className={styles.title}>
+          {title}
+          {tooltip && <ActionIcon icon={CircleHelp} size="small" title={tooltip} />}
+          {subTitle && <span className={styles.titleSub}>{subTitle}</span>}
+        </div>
       )}
-      {settings && <div className={styles.toolbarOptions}>{settings}</div>}
+      <div className={styles.toolbarActions}>
+        {filter}
+        {keyword}
+        {actions}
+        {rendered}
+        {settings && <div className={styles.toolbarOptions}>{settings}</div>}
+      </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default Toolbar;

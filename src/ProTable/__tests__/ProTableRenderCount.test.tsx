@@ -1,6 +1,6 @@
 import { act, cleanup, fireEvent, render as rtlRender, screen } from '@testing-library/react';
 import { motion } from 'motion/react';
-import type { HTMLAttributes, ReactNode } from 'react';
+import { type HTMLAttributes, type Key, type ReactNode, useState } from 'react';
 import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 
 import ConfigProvider from '@/ConfigProvider';
@@ -117,5 +117,75 @@ describe('ProTable render granularity', () => {
     expect(root.dataset.fullscreen).toBe('true');
     expect(total()).toBe(0);
     Object.defineProperty(document, 'fullscreenElement', { configurable: true, value: null });
+  });
+
+  it('a controlled selection re-renders at most the toggled row', () => {
+    const Controlled = () => {
+      const [keys, setKeys] = useState<Key[]>([]);
+      return (
+        <ProTable<Row>
+          columns={columns}
+          components={components}
+          dataSource={data}
+          rowKey="id"
+          rowSelection={{ onChange: setKeys, selectedRowKeys: keys }}
+          search={false}
+        />
+      );
+    };
+    render(<Controlled />);
+    renders.clear();
+    act(() => {
+      fireEvent.click(screen.getAllByRole('checkbox')[2]);
+    });
+    expect(screen.getByRole('status').textContent).toContain('1 selected');
+    expect(total()).toBeLessThanOrEqual(1);
+  });
+});
+
+describe('ProTable toolbar', () => {
+  const allOff = { density: false, fullScreen: false, reload: false, setting: false };
+
+  it('renders no toolbar when every option is off and there is no title', () => {
+    const { container } = render(
+      <ProTable<Row>
+        columns={columns}
+        dataSource={data}
+        options={allOff}
+        rowKey="id"
+        search={false}
+      />,
+    );
+    expect(container.querySelector('.lobe-pro-table-toolbar')).toBeNull();
+  });
+
+  it('renders no toolbar when toolBarRender returns nothing and nothing else shows', () => {
+    const { container } = render(
+      <ProTable<Row>
+        columns={columns}
+        dataSource={data}
+        options={false}
+        rowKey="id"
+        search={false}
+        toolBarRender={() => []}
+      />,
+    );
+    expect(container.querySelector('.lobe-pro-table-toolbar')).toBeNull();
+  });
+
+  it('keeps the toolbar for toolBarRender actions', () => {
+    render(
+      <ProTable<Row>
+        columns={columns}
+        dataSource={data}
+        options={false}
+        rowKey="id"
+        search={false}
+        toolBarRender={() => [<button key="new">New</button>]}
+      />,
+    );
+    expect(
+      screen.getByRole('button', { name: 'New' }).closest('.lobe-pro-table-toolbar'),
+    ).toBeTruthy();
   });
 });
