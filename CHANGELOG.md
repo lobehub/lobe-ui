@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.63.1](https://github.com/lobehub/lobe-ui/compare/v5.63.0...v5.63.1) (2026-10-13)
+
+### 💄 Styles
+
+- **dashboard,base-ui**: Surface 暗色 Quaternary 与 fill 边框 / Table 表面, closes [#714](https://github.com/lobehub/lobe-ui/issues/714) ([3490f2d](https://github.com/lobehub/lobe-ui/commit/3490f2d))
+
 # [5.63.0](https://github.com/lobehub/lobe-ui/compare/v5.62.1...v5.63.0) (2026-10-13)
 
 ### ✨ Features
