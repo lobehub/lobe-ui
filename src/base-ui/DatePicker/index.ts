@@ -1,3 +1,4 @@
 export { default as DatePicker } from './DatePicker';
 export { default as DateRangePicker } from './DateRangePicker';
-export type { CalendarMode, DatePickerProps, DateRangePickerProps, DateRangeValue } from './type';
+export type { PickerLocale } from './locale';
+export type * from './type';

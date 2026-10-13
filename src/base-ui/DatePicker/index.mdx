@@ -1,19 +1,56 @@
 ---
 title: DatePicker
-description: Date, month and year picking with native Date values, plus a two-month range picker.
+description: Date, month and year picking with Dayjs values and a typeable input, plus a two-month range picker. Built on @rc-component/picker, the same core as antd DatePicker.
 category: Data Entry
 ---
 
-import DemoIndex from './demos/index.tsx?demo';
+import DemoBasic from './demos/basic.tsx?demo';
 import DemoRange from './demos/range.tsx?demo';
+import DemoDateRange from './demos/date-range.tsx?demo';
+import DemoMode from './demos/mode.tsx?demo';
+import DemoStartEnd from './demos/start-end.tsx?demo';
+import DemoControlled from './demos/controlled.tsx?demo';
+import DemoIndex from './demos/index.tsx?demo';
 
 ## Basic
 
-<Demo of={DemoIndex} layout="bare" />
+`picker` switches between `date`, `month` and `year`. `onChange` receives `(date: Dayjs | null, dateString: string | null)`; clearing passes `null` for both. The input is typeable — a date in `format` is parsed as you type and committed on Enter or blur.
+
+<Demo of={DemoBasic} layout="bare" />
 
 ## Range
 
+`DateRangePicker` takes and emits a `[Dayjs, Dayjs]` pair (or `null` once cleared), with `dateStrings` as the second argument.
+
 <Demo of={DemoRange} layout="bare" />
+
+## Date limits
+
+`minDate` / `maxDate` disable out-of-range cells and stop the header buttons from navigating past them.
+
+<Demo of={DemoDateRange} layout="bare" />
+
+## Controlled panels
+
+`mode` controls the visible panel the antd way: the panel only changes when you update `mode` from `onPanelChange`. Both pickers start on a higher panel and drill down as `mode` follows `onPanelChange`; the range picker takes a `[start, end]` mode tuple.
+
+<Demo of={DemoMode} layout="bare" />
+
+## Start and end
+
+Two pickers linked through `disabledDate(current, info)` and a controlled `open`, so closing the start picker opens the end one.
+
+<Demo of={DemoStartEnd} layout="bare" />
+
+## Controlled open, panel date and ref
+
+`open` / `onOpenChange`, `pickerValue` / `onPickerValueChange`, focus / blur / keydown events and the `ref` (`focus`, `blur`, `nativeElement`).
+
+<Demo of={DemoControlled} layout="bare" />
+
+## Extra footer
+
+<Demo of={DemoIndex} layout="bare" />
 
 ## APIs
 
@@ -21,12 +58,18 @@ import DemoRange from './demos/range.tsx?demo';
 
 <Api name="DateRangePicker" from=".." />
 
-Values are native `Date` objects; days compare by calendar day, so a `min` with a time of day still enables that day. The grid always shows six weeks and follows the active dayjs locale for week start and names. Click the title to move from days to months to years; `mode` sets the lowest level.
+Values are `Dayjs` objects, exactly as in antd. `minDate` / `maxDate` replace `min` / `max`, which remain as deprecated aliases; `footer` is a deprecated alias of `renderExtraFooter`, and `onSelect` of `onCalendarChange`. Week start and week / month names follow the active dayjs locale.
 
-### Migrating from antd DatePicker
+The popup is rendered with `@rc-component/trigger`. Inside a base-ui floating layer (Popover, DropdownMenu) or a dialog it mounts in that layer, so picking a date never counts as an outside click for the host; elsewhere it mounts on `document.body` like antd, carrying the theme's CSS-variable scope so light / dark tokens still apply. It takes its z-index from the shared base-ui layer counter. Pass `getPopupContainer` to mount it elsewhere.
 
-- `Dayjs` values → `Date` (`dayjs(value).toDate()` at the call site).
-- `picker="month"` → `mode="month"`; `minDate` / `maxDate` → `min` / `max`.
-- `renderExtraFooter` → `footer`; `showNow={false}` is the default.
-- `DatePicker.RangePicker` → `DateRangePicker`.
-- Time, week, quarter and `presets` are not supported.
+### Keyboard
+
+Keyboard behaviour matches antd DatePicker: type a date and press Enter to commit it, Escape closes the popup, Tab moves on (and between the two inputs of a range). Like antd, the calendar cells are not focusable and there is no arrow-key navigation inside the panel — the input stays the single keyboard target, so arrow keys keep moving the text caret.
+
+### Migrating from the previous lobe DatePicker
+
+- `Date` values → `Dayjs`: wrap with `dayjs(date)` when passing a value and call `.toDate()` in `onChange`. `onChange` now also receives the formatted string.
+- `mode="month"` / `mode="year"` → `picker="month"` / `picker="year"`. `mode` now means the controlled panel, as in antd.
+- `min` / `max` → `minDate` / `maxDate` (`Dayjs`); `disabledDate(date: Date)` → `disabledDate(current: Dayjs, info)`.
+- `DateRangePicker` clears to `null` instead of `[null, null]`.
+- The trigger is now an `<input>` instead of a `<button>`; the panel no longer moves focus into the day grid.

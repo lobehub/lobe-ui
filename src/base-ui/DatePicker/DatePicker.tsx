@@ -1,104 +1,97 @@
 'use client';
 
-import dayjs from 'dayjs';
-import { CalendarIcon } from 'lucide-react';
-import { memo, useState } from 'react';
-import useControlledState from 'use-merge-value';
+import RcPicker from '@rc-component/picker';
+import type { Dayjs } from 'dayjs';
 
-import datePickerMessages from '@/i18n/resources/en/datePicker';
-import { useTranslation } from '@/i18n/useTranslation';
-import Icon from '@/Icon';
-
-import { clampToBounds, DEFAULT_FORMAT } from './calendar';
-import CalendarPanel from './CalendarPanel';
-import PickerShell from './PickerShell';
-import { styles } from './style';
+import { usePickerLocale } from './locale';
 import type { DatePickerProps } from './type';
+import { usePickerShared } from './usePickerShared';
 
-const PLACEHOLDER_KEY = {
-  date: 'datePicker.placeholder',
-  month: 'datePicker.monthPlaceholder',
-  year: 'datePicker.yearPlaceholder',
-} as const;
-
-export const formatDate = (date: Date, format: DatePickerProps['format'], fallback: string) =>
-  typeof format === 'function' ? format(date) : dayjs(date).format(format ?? fallback);
-
-const DatePicker = memo<DatePickerProps>(
-  ({
-    allowClear = true,
+const DatePicker = ({
+  allowClear,
+  className,
+  classNames,
+  defaultOpen,
+  defaultValue,
+  footer,
+  getPopupContainer,
+  locale: localeOverride,
+  max,
+  maxDate,
+  min,
+  minDate,
+  nextIcon,
+  onCalendarChange,
+  onChange,
+  onOk,
+  onOpenChange,
+  onSelect,
+  open,
+  picker = 'date',
+  placeholder,
+  prevIcon,
+  ref,
+  renderExtraFooter,
+  rootClassName,
+  shadow,
+  size,
+  styles,
+  suffixIcon,
+  superNextIcon,
+  superPrevIcon,
+  transitionName,
+  variant,
+  ...rest
+}: DatePickerProps) => {
+  const { locale, placeholder: defaultPlaceholder } = usePickerLocale(localeOverride);
+  const shared = usePickerShared({
+    allowClear,
     className,
-    defaultValue = null,
-    disabled,
-    disabledDate,
-    footer,
-    format,
+    classNames,
+    defaultOpen,
+    getPopupContainer,
     max,
+    maxDate,
     min,
-    mode = 'date',
-    onChange,
-    placeholder,
+    minDate,
+    nextIcon,
+    onOpenChange,
+    open,
+    prevIcon,
+    rootClassName,
     shadow,
     size,
-    style,
-    value,
+    styles,
+    suffixIcon,
+    superNextIcon,
+    superPrevIcon,
+    transitionName,
     variant,
-  }) => {
-    const { t } = useTranslation(datePickerMessages);
-    const [current, setCurrent] = useControlledState<Date | null>(defaultValue, {
-      defaultValue,
-      onChange,
-      value,
-    });
-    const [open, setOpen] = useState(false);
-    const [month, setMonth] = useState<Date>(() => current ?? new Date());
+  });
 
-    const text = current ? formatDate(current, format, DEFAULT_FORMAT[mode]) : null;
-
-    return (
-      <PickerShell
-        className={className}
-        disabled={disabled}
-        open={open}
-        shadow={shadow}
-        showClear={allowClear && !!current}
-        size={size}
-        style={style}
-        variant={variant}
-        icon={
-          <span className={styles.icon}>
-            <Icon icon={CalendarIcon} size={14} />
-          </span>
-        }
-        trigger={
-          <button className={styles.trigger} disabled={disabled} type="button">
-            {text ?? (
-              <span className={styles.placeholder}>{placeholder ?? t(PLACEHOLDER_KEY[mode])}</span>
-            )}
-          </button>
-        }
-        onClear={() => setCurrent(null)}
-        onOpenChange={(next) => {
-          if (next) setMonth(current ?? clampToBounds(new Date(), { max, min }));
-          setOpen(next);
-        }}
-      >
-        <CalendarPanel
-          bounds={{ disabledDate, max, min }}
-          mode={mode}
-          month={month}
-          selected={current}
-          onMonthChange={setMonth}
-          onSelect={(date) => {
-            setCurrent(date);
-            setOpen(false);
-          }}
-        />
-        {footer && <div className={styles.footer}>{footer}</div>}
-      </PickerShell>
-    );
-  },
-);
+  return (
+    <RcPicker<Dayjs>
+      {...rest}
+      {...shared}
+      defaultValue={defaultValue ?? undefined}
+      locale={locale}
+      picker={picker}
+      placeholder={placeholder ?? defaultPlaceholder(picker)}
+      ref={ref}
+      renderExtraFooter={renderExtraFooter ?? (footer ? () => footer : undefined)}
+      onChange={onChange as any}
+      onOk={onOk as any}
+      onCalendarChange={
+        onCalendarChange || onSelect
+          ? (date, dateString, info) => {
+              onCalendarChange?.(date as Dayjs | null, dateString as string | null, info);
+              if (date) onSelect?.(date as Dayjs);
+            }
+          : undefined
+      }
+    />
+  );
+};
 
 DatePicker.displayName = 'DatePicker';
 
