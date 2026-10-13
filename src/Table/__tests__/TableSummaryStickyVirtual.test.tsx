@@ -328,6 +328,46 @@ describe('virtual', () => {
     { dataIndex: 'repayment', fixed: 'right', title: 'Repayment', width: 120 },
   ];
 
+  test('rowSpan cells keep every virtual row full width and draw once in a span layer', () => {
+    const spanColumns: TableColumn<Row>[] = [
+      {
+        dataIndex: 'name',
+        onCell: (_, index = 0) => ({ rowSpan: index % 2 === 0 ? 2 : 0 }),
+        title: 'Name',
+        width: 120,
+      },
+      { dataIndex: 'borrow', title: 'Borrow', width: 200 },
+    ];
+    const { container } = render(
+      <Table
+        virtual
+        columns={spanColumns}
+        dataSource={many.slice(0, 6)}
+        pagination={false}
+        rowKey="id"
+        scroll={{ x: 400, y: 300 }}
+      />,
+    );
+
+    const rows = container.querySelectorAll('.lobe-table-tbody-virtual [data-row-key]');
+    expect(rows.length).toBe(6);
+    rows.forEach((row) => expect(row.children).toHaveLength(2));
+    rows.forEach((row) => {
+      const nameCell = row.children[0] as HTMLElement;
+      expect(nameCell.style.visibility).toBe('hidden');
+      expect(nameCell.textContent).toBe('');
+    });
+
+    const extras = container.querySelectorAll<HTMLElement>('.lobe-table-row-extra');
+    expect(extras).toHaveLength(3);
+    const spanCell = extras[0].children[0] as HTMLElement;
+    expect(spanCell.textContent).toBe('n-0');
+    expect(spanCell.style.visibility).toBe('');
+    expect(spanCell.style.height).toBe('94px');
+    expect((extras[0].children[1] as HTMLElement).style.visibility).toBe('hidden');
+    expect(extras[1].style.top).toBe('94px');
+  });
+
   test('renders through the virtual body and only mounts a window of rows', () => {
     const { container } = render(
       <Table

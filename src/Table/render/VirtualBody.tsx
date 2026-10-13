@@ -2,7 +2,9 @@
 
 import type { ReactNode, Ref, UIEvent } from 'react';
 
-import type { RowModel, VirtualModel } from '../engine/types';
+import type { LeafColumnModel, RowModel, VirtualModel } from '../engine/types';
+import type { ColumnSource } from '../pipeline/normalizeColumns';
+import type { TableColumnType } from '../type';
 import { BodyRow } from './Body';
 import { useTableView } from './context';
 
@@ -16,6 +18,37 @@ interface VirtualBodyProps<T> {
   virtual: VirtualModel;
 }
 
+const getRowSpan = <T,>(leaf: LeafColumnModel<ColumnSource<T>>, row: RowModel<T> | undefined) => {
+  if (!row) return 1;
+  const column = leaf.column.source.column as TableColumnType<T>;
+  return column.onCell?.(row.record, row.index)?.rowSpan ?? 1;
+};
+
+const collectSpanLines = <T,>(
+  leaves: readonly LeafColumnModel<ColumnSource<T>>[],
+  rows: readonly RowModel<T>[],
+  start: number,
+  end: number,
+) => {
+  const spanning = leaves.filter(
+    (leaf) => (leaf.column.source.column as TableColumnType<T>).onCell,
+  );
+  if (spanning.length === 0 || end < 0) return [];
+
+  let first = start;
+  let covered = spanning.filter((leaf) => getRowSpan(leaf, rows[start]) === 0);
+  for (let index = start; index >= 0 && covered.length > 0; index -= 1) {
+    covered = covered.filter((leaf) => getRowSpan(leaf, rows[index]) === 0);
+    first = index;
+  }
+
+  const lines: number[] = [];
+  for (let index = first; index <= end; index += 1) {
+    if (spanning.some((leaf) => getRowSpan(leaf, rows[index]) > 1)) lines.push(index);
+  }
+  return lines;
+};
+
 const VirtualBody = <T,>({
   emptyNode,
   holderRef,
@@ -25,9 +58,15 @@ const VirtualBody = <T,>({
   scrollX,
   virtual,
 }: VirtualBodyProps<T>) => {
-  const { prefixCls, semanticClassNames, semanticStyles } = useTableView<T>();
+  const { leafColumns, prefixCls, semanticClassNames, semanticStyles } = useTableView<T>();
   const width = scrollX === true ? 'auto' : scrollX;
   const offset = virtual.items[0]?.start ?? 0;
+  const spanLines = collectSpanLines(
+    leafColumns,
+    rows,
+    virtual.items[0]?.index ?? 0,
+    virtual.items.at(-1)?.index ?? -1,
+  );
 
   return (
     <div
@@ -68,6 +107,24 @@ const VirtualBody = <T,>({
               })}
             </div>
           )}
+          {spanLines.map((index) => {
+            const row = rows[index];
+            const top = virtual.getRange(index)?.start ?? 0;
+            const getHeight = (rowSpan: number) =>
+              (virtual.getRange(Math.min(index + rowSpan - 1, rows.length - 1))?.end ?? top) - top;
+            return (
+              <BodyRow
+                depth={row.depth}
+                extra={{ getHeight, top }}
+                hasChildren={row.hasChildren}
+                index={row.index}
+                key={`extra-${row.key}`}
+                record={row.record}
+                renderIndex={row.renderIndex}
+                rowKey={row.key}
+              />
+            );
+          })}
         </div>
       </div>
     </div>

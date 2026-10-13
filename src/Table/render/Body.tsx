@@ -8,7 +8,7 @@ import type { RowModel } from '../engine/types';
 import { useRowExpanded, useRowSelected } from '../store/hooks';
 import type { TableRowClassName } from '../type';
 import { BodyCell } from './BodyCell';
-import { MeasureRowContext, useTableView } from './context';
+import { MeasureRowContext, useTableView, VirtualCellContext } from './context';
 import { HeaderTitle } from './Header';
 
 export const computeExpandedClassName = <T,>(
@@ -18,8 +18,14 @@ export const computeExpandedClassName = <T,>(
   indent: number,
 ) => (typeof className === 'function' ? className(record, index, indent) : (className ?? ''));
 
+export interface BodyRowExtra {
+  getHeight: (rowSpan: number) => number;
+  top: number;
+}
+
 export interface BodyRowProps<T> {
   depth: number;
+  extra?: BodyRowExtra;
   hasChildren: boolean;
   index: number;
   record: T;
@@ -29,6 +35,7 @@ export interface BodyRowProps<T> {
 
 const BodyRowInner = <T,>({
   depth,
+  extra,
   hasChildren,
   index,
   record,
@@ -70,7 +77,7 @@ const BodyRowInner = <T,>({
   );
 
   let expandedRow: ReactNode = null;
-  if (rowSupportExpand && (expand.forceRender || expandedOnce.current || expanded)) {
+  if (!extra && rowSupportExpand && (expand.forceRender || expandedOnce.current || expanded)) {
     expandedRow = (
       <TableExpandedRow
         cellComponent={components.bodyCell}
@@ -89,38 +96,51 @@ const BodyRowInner = <T,>({
     );
   }
 
+  const cells = leafColumns.map((leaf, colIndex) => (
+    <BodyCell
+      colIndex={colIndex}
+      depth={depth}
+      hasChildren={hasChildren}
+      index={index}
+      key={leaf.key}
+      leaf={leaf}
+      record={record}
+      renderIndex={renderIndex}
+      rowKey={rowKey}
+      withNestIcon={expand.type === 'nest' && colIndex === expand.nestIconColumnIndex}
+    />
+  ));
+
   return (
     <>
       <TableRow
         {...rowProps}
         component={components.bodyRow}
-        data-row-key={rowKey}
+        data-row-key={extra ? undefined : rowKey}
         level={depth}
         selected={selected}
-        style={{ ...rowProps.style, ...semanticStyles.body.row }}
         className={clsx(
           computedClassName,
           rowProps.className,
           rowProps.onClick && `${prefixCls}-row-clickable`,
           semanticClassNames.body.row,
           depth >= 1 && expandedClassName,
+          extra && `${prefixCls}-row-extra`,
         )}
+        style={{
+          ...rowProps.style,
+          ...semanticStyles.body.row,
+          ...(extra && { pointerEvents: 'none', position: 'absolute', top: extra.top }),
+        }}
         onClick={onClick}
       >
-        {leafColumns.map((leaf, colIndex) => (
-          <BodyCell
-            colIndex={colIndex}
-            depth={depth}
-            hasChildren={hasChildren}
-            index={index}
-            key={leaf.key}
-            leaf={leaf}
-            record={record}
-            renderIndex={renderIndex}
-            rowKey={rowKey}
-            withNestIcon={expand.type === 'nest' && colIndex === expand.nestIconColumnIndex}
-          />
-        ))}
+        {extra ? (
+          <VirtualCellContext value={{ getHeight: extra.getHeight, inverse: true }}>
+            {cells}
+          </VirtualCellContext>
+        ) : (
+          cells
+        )}
       </TableRow>
       {expandedRow}
     </>

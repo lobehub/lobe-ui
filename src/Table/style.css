@@ -552,7 +552,7 @@
     & .lobe-table-tbody > tr > td,
     & .lobe-table-tbody > tr > th,
     & .lobe-table-tbody-virtual .lobe-table-cell,
-    & .lobe-table-summary,
+    & tfoot.lobe-table-summary,
     & .lobe-table-summary > tr > td,
     & .lobe-table-summary > tr > th,
     & > .lobe-table-footer {

@@ -145,6 +145,10 @@ const useVirtualModel = <T>(
   };
 
   return {
+    getRange: (index) => {
+      const item = virtualizer.measurementsCache[index];
+      return item ? { end: item.end, start: item.start } : undefined;
+    },
     items: virtualizer.getVirtualItems().map((item) => ({
       index: item.index,
       key: item.key as Key,

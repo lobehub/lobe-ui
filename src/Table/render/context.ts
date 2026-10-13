@@ -112,3 +112,10 @@ export const HeaderContext = createContext<HeaderView | null>(null);
 export const useHeaderView = <T>() => use(HeaderContext) as HeaderView<T>;
 
 export const MeasureRowContext = createContext(false);
+
+export interface VirtualCellValue {
+  getHeight?: (rowSpan: number) => number;
+  inverse: boolean;
+}
+
+export const VirtualCellContext = createContext<VirtualCellValue>({ inverse: false });

@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import {
   createElement,
   type CSSProperties,
+  type HTMLAttributes,
   isValidElement,
   type ReactNode,
   type Ref,
@@ -113,7 +114,7 @@ export const TableHeaderCell = ({ component, ...props }: TableCellProps) => (
   <TableCell rowType="header" {...props} component={component ?? 'th'} />
 );
 
-export interface TableRowProps extends TdHTMLAttributes<HTMLTableRowElement> {
+export interface TableRowProps extends HTMLAttributes<HTMLTableRowElement> {
   component?: TableCustomizeComponent;
   level?: number;
   ref?: Ref<HTMLTableRowElement>;

@@ -67,6 +67,7 @@ export interface VirtualScrollConfig {
 }
 
 export interface VirtualModel {
+  getRange: (index: number) => { end: number; start: number } | undefined;
   items: VirtualItem[];
   measureElement: (element: Element | null) => void;
   scrollTo: (config: VirtualScrollConfig) => void;

@@ -7,6 +7,7 @@ import {
   type Key,
   type MouseEvent,
   type ReactNode,
+  use,
 } from 'react';
 
 import { TableCell } from '../atoms';
@@ -14,7 +15,7 @@ import type { LeafColumnModel } from '../engine/types';
 import type { ColumnSource } from '../pipeline/normalizeColumns';
 import { useCellHovered, useColumnSorted, useTableStoreInstance } from '../store/hooks';
 import type { TableCellAttributes, TableColumnType, TableRenderedCell } from '../type';
-import { useTableView } from './context';
+import { useTableView, VirtualCellContext } from './context';
 
 export interface BodyCellProps<T> {
   colIndex: number;
@@ -62,11 +63,17 @@ export const CellShell = <T,>({
   const rowSpan = legacyCellProps?.rowSpan ?? additional.rowSpan ?? 1;
   const hoverSpan = legacyCellProps?.rowSpan ?? rowSpan;
   const hovered = useCellHovered(index, hoverSpan);
-
-  if (colSpan === 0 || rowSpan === 0) return null;
-
+  const { getHeight, inverse } = use(VirtualCellContext);
   const { components, prefixCls, rowHoverable, semanticClassNames, semanticStyles, virtualWidths } =
     view;
+
+  const hidden = virtualWidths
+    ? inverse
+      ? rowSpan <= 1
+      : colSpan === 0 || rowSpan === 0 || rowSpan > 1
+    : false;
+  if (!virtualWidths && (colSpan === 0 || rowSpan === 0)) return null;
+
   const { className: additionalClassName, style: additionalStyle, ...additionalRest } = additional;
   const onMouseEnter = (event: MouseEvent<HTMLTableCellElement>) => {
     store.setState({ hover: [index, index + hoverSpan - 1] });
@@ -77,7 +84,7 @@ export const CellShell = <T,>({
     additional.onMouseLeave?.(event);
   };
 
-  let content = children;
+  let content = hidden ? null : children;
   if (
     typeof content === 'object' &&
     content !== null &&
@@ -91,11 +98,18 @@ export const CellShell = <T,>({
   let virtualStyle: CSSProperties | undefined;
   if (virtualWidths) {
     let width = 0;
-    for (let offset = 0; offset < colSpan; offset += 1) {
+    for (let offset = 0; offset < (colSpan || 1); offset += 1) {
       width += virtualWidths[leaf.index + offset] ?? 0;
     }
-    virtualStyle = { flex: `0 0 ${width}px`, width: `${width}px` };
-    if (rowSpan > 1) virtualStyle.alignSelf = 'stretch';
+    const ownWidth = virtualWidths[leaf.index] ?? 0;
+    virtualStyle = {
+      flex: `0 0 ${width}px`,
+      marginInlineEnd: colSpan > 1 ? ownWidth - width : undefined,
+      pointerEvents: 'auto',
+      width: `${width}px`,
+    };
+    if (hidden) virtualStyle.visibility = 'hidden';
+    else if (inverse) virtualStyle.height = getHeight?.(rowSpan);
   }
   const style: CSSProperties = {
     ...legacyCellProps?.style,
@@ -110,13 +124,13 @@ export const CellShell = <T,>({
       {...(additionalRest as object)}
       align={column.align}
       appendNode={appendNode}
-      colSpan={colSpan}
+      colSpan={virtualWidths ? 1 : colSpan}
       component={column.rowScope ? (components.bodyCell ?? 'th') : components.bodyCell}
       ellipsis={column.ellipsis}
       fixEnd={fixedInfo.fixEnd}
       fixStart={fixedInfo.fixStart}
       hovered={!legacyCellProps && rowHoverable && hovered}
-      rowSpan={rowSpan}
+      rowSpan={virtualWidths ? 1 : rowSpan}
       scope={column.rowScope}
       shadowEnd={fixedInfo.shadowEnd}
       shadowStart={fixedInfo.shadowStart}
