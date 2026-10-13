@@ -1,81 +1,49 @@
 'use client';
 
-import { Minus, TrendingDown, TrendingUp } from 'lucide-react';
+import { cx } from 'antd-style';
 
-import Text from '@/base-ui/Text';
-import Block from '@/Block';
-import { Flexbox } from '@/Flex';
-import Icon from '@/Icon';
-
+import MetricCell from '../MetricStrip/MetricCell';
+import { styles as metricStyles } from '../MetricStrip/style';
+import { useSurfaceCardClassName } from '../Surface/link';
 import { styles as surfaceStyles } from '../Surface/style';
-import { styles } from './style';
-import type { StatCardProps, StatDirection } from './type';
+import type { StatCardProps } from './type';
 
-const deltaIcon = {
-  down: TrendingDown,
-  flat: Minus,
-  up: TrendingUp,
-} satisfies Record<StatDirection, typeof Minus>;
-
+/** One metric in its own card: the same item as a `split` MetricStrip. */
 function StatCard({
   action,
+  className,
   delta,
   direction = 'flat',
   hint,
+  href,
   label,
+  loading,
   mark,
-  prominent = false,
+  onClick,
+  renderLink,
   value,
-  wash,
+  valueTone,
 }: StatCardProps) {
-  const deltaClass = {
-    down: styles.deltaDown,
-    flat: styles.deltaFlat,
-    up: styles.deltaUp,
-  }[direction];
+  const cardClassName = useSurfaceCardClassName();
 
   return (
-    <div className={styles.lift}>
-      <Block
-        className={`${styles.root} ${surfaceStyles.card}${wash ? ` ${styles.wash} ${styles[wash]}` : ''} ${styles.frame}`}
-        variant="borderless"
-      >
-        <Flexbox className={styles.body} gap={prominent ? 0 : 8}>
-          <Flexbox horizontal align="center" justify="space-between">
-            <Flexbox horizontal align="center" className={styles.copy} gap={6}>
-              <Text ellipsis className={prominent ? styles.metricLabel : styles.label}>
-                {label}
-              </Text>
-              {action}
-            </Flexbox>
-            {mark ? (
-              <span aria-hidden className={styles.badge}>
-                <Icon icon={mark} size={14} />
-              </span>
-            ) : null}
-          </Flexbox>
-          <div className={prominent ? styles.metricValue : styles.value}>{value}</div>
-          {delta || hint ? (
-            <Flexbox
-              horizontal
-              align="center"
-              className={prominent ? styles.metricFoot : undefined}
-              gap={8}
-              wrap="wrap"
-            >
-              {delta ? (
-                <span className={`${styles.delta} ${deltaClass}`}>
-                  <Icon icon={deltaIcon[direction]} size={14} />
-                  {delta}
-                </span>
-              ) : null}
-              {hint ? (
-                <Text className={prominent ? styles.metricHint : styles.hint}>{hint}</Text>
-              ) : null}
-            </Flexbox>
-          ) : null}
-        </Flexbox>
-      </Block>
+    <div className={cx(metricStyles.card, cardClassName, surfaceStyles.clip, className)}>
+      <MetricCell
+        renderLink={renderLink}
+        item={{
+          action,
+          delta,
+          direction,
+          hint,
+          href,
+          label,
+          loading,
+          mark,
+          onClick,
+          value,
+          valueTone,
+        }}
+      />
     </div>
   );
 }

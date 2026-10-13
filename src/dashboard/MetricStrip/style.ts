@@ -10,10 +10,56 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     padding-block: 16px;
     padding-inline: 20px;
 
-    background: ${cssVar.colorBgElevated};
+    background: transparent;
+  `,
+  /** Joined strip only: the divider on the cell's trailing and bottom edges. */
+  cellSeam: css`
     box-shadow:
       inset -1px 0 0 var(--metric-seam),
       inset 0 -1px 0 var(--metric-seam);
+  `,
+  /** Split strip and StatCard: one card per item. */
+  card: css`
+    display: grid;
+    min-inline-size: 0;
+  `,
+  /* One fixed 32px row (a small Segmented or ActionIcon fits): an action or mark in the head must not push the value down, so cells with and
+     without header controls line up across a split strip or a row of StatCards. */
+  head: css`
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: space-between;
+
+    box-sizing: border-box;
+    min-inline-size: 0;
+    block-size: 32px;
+  `,
+  headCopy: css`
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    min-inline-size: 0;
+  `,
+  mark: css`
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+
+    inline-size: 24px;
+    block-size: 24px;
+    border: 1px solid ${cssVar.colorFillSecondary};
+    border-radius: ${cssVar.borderRadiusSM};
+
+    color: ${cssVar.colorTextTertiary};
+
+    background: ${cssVar.colorFillTertiary};
+  `,
+  split: css`
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
   `,
   delta: css`
     font-size: 13px;
@@ -41,11 +87,11 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
    * track, which reads louder than the cells.
    */
   frame: css`
-    --metric-seam: ${cssVar.colorBorderSecondary};
+    --metric-seam: ${cssVar.colorFillSecondary};
 
     overflow: hidden;
     border-radius: inherit;
-    background: ${cssVar.colorBgElevated};
+    background: transparent;
   `,
   grid: css`
     display: grid;
@@ -54,7 +100,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     inline-size: calc(100% + 1px);
     margin-block-end: -1px;
 
-    background: ${cssVar.colorBgElevated};
+    background: transparent;
   `,
   hint: css`
     font-size: 13px;

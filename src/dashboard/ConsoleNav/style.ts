@@ -375,6 +375,21 @@ export const styles = createStaticStyles(({ css, cssVar, responsive }) => {
         background: transparent;
       }
     `,
+    skeletonFooter: css`
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      padding-inline: 4px;
+    `,
+    skeletonGroup: css`
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-block-start: 12px;
+    `,
+    skeletonRow: css`
+      pointer-events: none;
+    `,
     topItems: css`
       display: flex;
       flex-direction: column;

@@ -8,7 +8,7 @@ import { DraggablePanel } from '@/base-ui/DraggablePanel';
 import { Drawer } from '@/base-ui/Drawer';
 
 import { useIsCompact, useLocalStorage } from '../hooks';
-import { styles as surfaceStyles } from '../Surface/style';
+import { useSurfaceCardClassName } from '../Surface/link';
 import { FilterSplitProvider } from './context';
 import { styles } from './style';
 import type { FilterOptionProps, FilterRowProps, FilterSidebarProps } from './type';
@@ -42,6 +42,7 @@ function FilterSidebar({
   summary,
   wide,
 }: FilterSidebarProps) {
+  const cardClassName = useSurfaceCardClassName();
   const isCompact = useIsCompact();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const sidebar = usePageSidebar(wide, storageKey);
@@ -70,7 +71,7 @@ function FilterSidebar({
   return (
     <FilterSplitProvider active={!flush}>
       <div
-        className={flush ? styles.layout : `${styles.layout} ${surfaceStyles.card}`}
+        className={flush ? styles.layout : `${styles.layout} ${cardClassName}`}
         data-flush={flush ? true : undefined}
         data-page-layout={flush ? 'flush' : undefined}
         data-split-card={flush ? undefined : true}

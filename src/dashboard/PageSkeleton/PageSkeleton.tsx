@@ -2,7 +2,7 @@
 
 import Skeleton from '@/base-ui/Skeleton';
 
-import { styles as surfaceStyles } from '../Surface/style';
+import { useSurfaceCardClassName } from '../Surface/link';
 import { styles } from './style';
 import type {
   LoadingAnnouncerProps,
@@ -44,9 +44,10 @@ function PageHeaderSkeleton({ action = true }: PageHeaderSkeletonProps) {
 PageHeaderSkeleton.displayName = 'PageHeaderSkeleton';
 
 function TableSkeleton({ framed = true, leading = 'text', rows = 6 }: TableSkeletonProps) {
+  const cardClassName = useSurfaceCardClassName();
   const head = [96, 72, 64, 48];
   return (
-    <div aria-hidden className={framed ? `${styles.table} ${surfaceStyles.card}` : styles.table}>
+    <div aria-hidden className={framed ? `${styles.table} ${cardClassName}` : styles.table}>
       <div className={styles.thead}>
         {head.map((width, index) => (
           <Skeleton className={styles.theadCell} key={index} style={{ ...bone, width }} />
@@ -74,8 +75,9 @@ function TableSkeleton({ framed = true, leading = 'text', rows = 6 }: TableSkele
 TableSkeleton.displayName = 'TableSkeleton';
 
 function StatCardSkeleton() {
+  const cardClassName = useSurfaceCardClassName();
   return (
-    <div aria-hidden className={`${styles.stat} ${surfaceStyles.card}`}>
+    <div aria-hidden className={`${styles.stat} ${cardClassName}`}>
       <Skeleton.Text fontSize={14} width={72} />
       <Skeleton className={styles.statValue} style={bone} />
       <Skeleton.Text fontSize={14} width="68%" />

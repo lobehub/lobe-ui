@@ -1,20 +1,17 @@
 ---
-title: grainient;
-
-description: an animated, grainy webgl gradient for login and landing backgrounds. it pauses off-screen and renders a still frame when reduced motion is preferred.;
-category: landing
+title: Grainient
+description: An animated, grainy WebGL gradient for login and landing backgrounds. It pauses off-screen and renders a still frame when reduced motion is preferred.
+category: Effect
 ---
 
-import demoindex from './demos/index.tsx?demo';
 import DemoColors from './demos/colors.tsx?demo';
+import DemoIndex from './demos/index.tsx?demo';
 
 ## Default
 
 Grainient fills its nearest positioned ancestor. It needs WebGL2; without it nothing is drawn, so keep a background color on the parent.
 
-<demo of={DemoIndex}
-
-layout="bare" />
+<Demo of={DemoIndex} layout="bare" />
 
 ## Custom colors and theme
 

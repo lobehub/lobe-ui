@@ -1,15 +1,22 @@
 ---
 title: MetricStrip
-description: MetricStrip is one Surface divided into metric cells. Each cell has a label, a figure, an optional semantic delta and hint, and can link (through renderLink / SurfaceLinkProvider) or act as a button.
+description: MetricStrip shows peer metrics, either joined in one Surface divided into cells or split into one card per item. Each cell has a label, a figure, an optional semantic delta and hint, and can link (through renderLink / SurfaceLinkProvider) or act as a button.
 category: Data Display
 order: 5
 ---
 
 import DemoIndex from './demos/index.tsx?demo';
+import DemoSplit from './demos/split.tsx?demo';
 
 ## Default
 
 <Demo of={DemoIndex} />
+
+## Split
+
+`variant="split"` gives every item its own card on the same responsive grid, with a gap. Each card is identical to `StatCard`.
+
+<Demo of={DemoSplit} />
 
 ## APIs
 

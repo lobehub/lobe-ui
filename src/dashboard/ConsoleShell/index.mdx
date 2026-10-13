@@ -13,6 +13,10 @@ import DemoIndex from './demos/index.tsx?demo';
 
 The sidebar collapses to an icon rail, and folds into a drawer below the laptop breakpoint. Mod+B toggles it while focus is inside the shell. Pass `storageKey` to remember the rail.
 
+## Loading
+
+Set `loading` for a pre-session or hydrate fallback. The shell keeps `brand`, `tools` and `storageKey` from the caller, swaps `navigation` and `footer` for skeletons, and renders `loadingContent` (default `PageLoading`) in the workspace. Pass `loadingNavigation={<ConsoleNavSkeleton groups={groups} />}` to mirror the real menu.
+
 ## APIs
 
 ### ConsoleShell

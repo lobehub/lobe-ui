@@ -6,13 +6,20 @@ import { lobeStaticStylish } from '@/styles';
 export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     active: lobeStaticStylish.active,
-    // && outranks base-ui Button's variant classes regardless of style insertion order
+    // &&& outranks both base-ui Button's variant classes and this file's own `root` color
+    // (same `&&` weight, inserted later), so the icon itself turns red, not just the fill.
     dangerRoot: css`
-      &&:hover {
+      /* Mirrors the neutral ladder (colorTextTertiary -> colorTextSecondary -> colorText):
+         a softened red at rest, full colorError on hover, colorErrorActive when pressed. */
+      &&& {
+        color: color-mix(in srgb, ${cssVar.colorError} 66%, transparent);
+      }
+
+      &&&:hover:not(:disabled, [aria-disabled='true']) {
         color: ${cssVar.colorError};
       }
 
-      &&:active {
+      &&&:active:not(:disabled, [aria-disabled='true']) {
         color: ${cssVar.colorErrorActive};
       }
     `,

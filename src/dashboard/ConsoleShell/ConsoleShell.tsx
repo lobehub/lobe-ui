@@ -1,5 +1,6 @@
 'use client';
 
+import { useThemeMode } from 'antd-style';
 import { PanelLeft, X } from 'lucide-react';
 import { useEffect, useId, useRef, useState } from 'react';
 
@@ -7,7 +8,9 @@ import Button from '@/base-ui/Button';
 import { Drawer } from '@/base-ui/Drawer';
 import { Flexbox } from '@/Flex';
 
+import ConsoleNavSkeleton, { ConsoleFooterSkeleton } from '../ConsoleNav/Skeleton';
 import { useIsCompact, useLocalStorage, usePrefersReducedMotion } from '../hooks';
+import PageLoading from '../PageSkeleton';
 import { ConsoleShellContext } from './context';
 import { styles } from './style';
 import type { ConsoleShellProps, ConsoleShellState } from './type';
@@ -28,9 +31,12 @@ function ConsoleShell({
   collapseLabel = 'Collapse sidebar',
   defaultCollapsed = false,
   expandLabel = 'Expand sidebar',
-  footer,
+  footer: footerProp,
+  loading,
+  loadingContent,
+  loadingNavigation,
   hotkey = true,
-  navigation,
+  navigation: navigationProp,
   onCollapsedChange,
   openNavigationLabel = 'Open navigation',
   skipToContentLabel = 'Skip to content',
@@ -38,9 +44,13 @@ function ConsoleShell({
   tools,
   ...rest
 }: ConsoleShellProps) {
+  const navigation = loading ? (loadingNavigation ?? <ConsoleNavSkeleton />) : navigationProp;
+  const footer = loading ? <ConsoleFooterSkeleton /> : footerProp;
+  const body = loading ? (loadingContent ?? <PageLoading />) : children;
   const mainId = `console-main-${useId().replaceAll(':', '')}`;
   const shellRef = useRef<HTMLDivElement>(null);
   const isCompact = useIsCompact();
+  const { isDarkMode } = useThemeMode();
   const reducedMotion = usePrefersReducedMotion();
   const [storedCollapsed, setStoredCollapsed] = useLocalStorage(storageKey, defaultCollapsed);
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -147,7 +157,9 @@ function ConsoleShell({
           <Flexbox height="100%">{sidebar(false)}</Flexbox>
         </Drawer>
       ) : null}
-      <div className={styles.workspace}>
+      <div
+        className={isDarkMode ? styles.workspace : `${styles.workspace} ${styles.workspaceLight}`}
+      >
         <header className={styles.topbar}>
           <Button
             aria-label={toggleLabel}
@@ -159,8 +171,8 @@ function ConsoleShell({
           <div className={styles.topbarMain}>{breadcrumb}</div>
           {tools ? <div className={styles.tools}>{tools}</div> : null}
         </header>
-        <main className={styles.main} id={mainId} tabIndex={-1}>
-          {children}
+        <main aria-busy={loading || undefined} className={styles.main} id={mainId} tabIndex={-1}>
+          {body}
         </main>
       </div>
     </div>

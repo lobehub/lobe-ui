@@ -5,14 +5,30 @@ category: Layout
 order: 1
 ---
 
+import DemoElevated from './demos/elevated.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
+import DemoStates from './demos/states.tsx?demo';
 
 ## Default
 
 <Demo of={DemoIndex} layout="bare" />
 
-The layout fills its parent. Give that parent a height, or stretch the document root to the viewport.
+The page grows to at least the viewport height (`min-block-size: 100dvh`) and scrolls itself. Override `minBlockSize` when embedding it in a fixed-height box.
+
+## Grid backdrop, elevated card and aside
+
+`background="grid"` draws the 32px line grid used by sign-in pages; pass any node to render your own backdrop. `variant="elevated"` rounds the card to 28px. It keeps the shared dashboard card fill, border and shadow, and does not react to hover. `AuthLayout.Aside` fills the `aside` slot with an inset art panel, a scrim and copy; pass `<Grainient lightMode="auto" />` from `@lobehub/ui/awesome` as its background.
+
+<Demo of={DemoElevated} layout="bare" />
+
+## Loading, alert and chrome-only
+
+`logo` sits above the title. A string `title` renders as the page `h1`; any other node renders as is. `loading` swaps the form for a skeleton. `alert` renders above the form and `footer` below it. `card={false}` keeps only the header, tools and backdrop for status pages.
+
+<Demo of={DemoStates} layout="bare" />
 
 ## APIs
 
 <Api name="AuthLayout" />
+
+<Api name="AuthLayoutAside" from="." />

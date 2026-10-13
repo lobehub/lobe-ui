@@ -1,11 +1,29 @@
-export { default as AuthLayout, type AuthLayoutProps } from './AuthLayout';
+export {
+  default as AuthLayout,
+  AuthLayoutAside,
+  type AuthLayoutAsideProps,
+  type AuthLayoutBackground,
+  type AuthLayoutProps,
+  type AuthLayoutVariant,
+} from './AuthLayout';
+export {
+  type AuthLocaleOption,
+  AuthLocaleSwitch,
+  type AuthLocaleSwitchProps,
+  type AuthThemeMode,
+  AuthThemeSwitch,
+  type AuthThemeSwitchProps,
+} from './AuthTools';
 export { default as Breadcrumb, type BreadcrumbItem, type BreadcrumbProps } from './Breadcrumb';
 export { default as ChartGrid, type ChartGridProps } from './ChartGrid';
 export {
+  ConsoleFooterSkeleton,
   default as ConsoleNav,
   type ConsoleNavGroup,
   type ConsoleNavItem,
   type ConsoleNavProps,
+  ConsoleNavSkeleton,
+  type ConsoleNavSkeletonProps,
   resolveActiveHref,
 } from './ConsoleNav';
 export {
@@ -55,6 +73,7 @@ export {
   type SurfaceProps,
   type SurfaceRenderLink,
   surfaceStyles,
+  useSurfaceCardClassName,
   useSurfaceDepth,
   useSurfaceLink,
 } from './Surface';

@@ -10,12 +10,19 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
     dangerBorderless: lobeStaticStylish.variantBorderlessDanger,
     dangerFilled: lobeStaticStylish.variantFilledDanger,
     dangerOutlined: lobeStaticStylish.variantOutlinedDanger,
+    // && outranks `root`, whose plain color is inserted after this rule.
     dangerRoot: css`
-      &:hover {
+      /* Mirrors the neutral ladder (colorTextTertiary -> colorTextSecondary -> colorText):
+         a softened red at rest, full colorError on hover, colorErrorActive when pressed. */
+      && {
+        color: color-mix(in srgb, ${cssVar.colorError} 66%, transparent);
+      }
+
+      &&:hover {
         color: ${cssVar.colorError};
       }
 
-      &:active {
+      &&:active {
         color: ${cssVar.colorErrorActive};
       }
     `,

@@ -26,7 +26,7 @@ const PanelSurface = ({
   <Surface
     className={className}
     description={description}
-    extra={loading && children ? <Spin size="small" /> : extra}
+    extra={loading && children ? <Spin size="small" variant="network" /> : extra}
     href={href}
     padded={false}
     renderLink={renderLink}

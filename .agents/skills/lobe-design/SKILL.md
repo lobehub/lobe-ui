@@ -167,6 +167,7 @@ L6 验收标准     Given/When/Then · 完成的定义
 - 从 `@lobehub/ui` 或 `@lobehub/ui/base-ui` 桶导入 `Form`。受控表单只从 `@lobehub/ui/base-ui/form` 导入。
 - 凭直觉在顶层和 `base-ui` 之间二选一。顶层的同名组件大多是 deprecated 的 antd 包装层。
 - 手写 spinner、用 `Icon` 的 spin、或引入 `thinking-orbs`。等待指示按 [components.md](references/components.md) C-02 的分档选 `Spin` / `Skeleton` / `LoadingDots`。
+- 在应用里覆盖 lobe-ui / antd 主题变量（如 `--ant-color-border` 加 `!important`），或自己给卡片写底、边框、阴影。用 dashboard 组件或 `useSurfaceCardClassName()`，不对就修上游（见 components.md「控制台：按场景选组件」）。
 - 把示例和模板当抄板。骨架是起点，业务字段、内容密度、状态清单都要按真实需求调。
 - 在需要 `cssVar` 的地方写死值。找不到对应 token 时明示缺口（[design.md](references/design.md) 的 D-11），不要悄悄写一个 hex 绕过系统。
 - 为了一个图表引第二个图表库，或为了一个模型徽标去抓远程 SVG。

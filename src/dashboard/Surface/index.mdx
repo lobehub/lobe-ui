@@ -8,6 +8,7 @@ order: 2
 import DemoIndex from './demos/index.tsx?demo';
 import DemoHeader from './demos/header.tsx?demo';
 import DemoLoading from './demos/loading.tsx?demo';
+import DemoHeaderAlignment from './demos/header-alignment.tsx?demo';
 
 ## Default
 
@@ -20,6 +21,12 @@ import DemoLoading from './demos/loading.tsx?demo';
 ## Loading
 
 <Demo of={DemoLoading} />
+
+## Header alignment
+
+The header is one 32px control row plus 8px above and below, with or without `extra`, so a row of cards lines up. Controls in `extra` sit centered on the title line; use compact ones (`Segmented size="small"`, `ActionIcon size="small"`). A `description` adds its own line under the title and leaves `extra` on the title line, so cards with a description share one taller height.
+
+<Demo of={DemoHeaderAlignment} layout="bare" />
 
 ## APIs
 

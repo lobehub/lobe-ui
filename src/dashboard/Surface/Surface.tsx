@@ -7,7 +7,12 @@ import type { ReactNode } from 'react';
 import Skeleton from '@/base-ui/Skeleton';
 import Spin from '@/base-ui/Spin';
 
-import { SurfaceDepthContext, useSurfaceDepth, useSurfaceLink } from './link';
+import {
+  SurfaceDepthContext,
+  useSurfaceCardClassName,
+  useSurfaceDepth,
+  useSurfaceLink,
+} from './link';
 import { styles } from './style';
 import type { SurfaceProps } from './type';
 
@@ -34,6 +39,7 @@ function Surface({
 }: SurfaceProps) {
   const depth = useSurfaceDepth();
   const link = useSurfaceLink(renderLink);
+  const cardClassName = useSurfaceCardClassName();
   const refreshing = Boolean(loading) && defined(children);
   const placeholder = Boolean(loading) && !defined(children);
   const hasHeader = defined(title) || defined(description) || defined(extra) || refreshing;
@@ -55,11 +61,15 @@ function Surface({
     children
   );
 
+  // With header actions, the arrow sits after them as the rightmost item.
+  const trailing = refreshing || defined(extra);
+  const arrow = <ArrowUpRight aria-hidden data-surface-arrow className={styles.arrow} size={16} />;
+
   return (
     <SurfaceDepthContext value={depth + 1}>
       <div
         className={cx(
-          styles.card,
+          cardClassName,
           styles.content,
           clip && styles.clip,
           href && styles.cardLinked,
@@ -75,22 +85,26 @@ function Surface({
                   children: (
                     <>
                       {heading}
-                      <ArrowUpRight
-                        aria-hidden
-                        data-surface-arrow
-                        className={styles.arrow}
-                        size={16}
-                      />
+                      {trailing ? null : arrow}
                     </>
                   ),
                   className: styles.headingLink,
                   href,
                 })
               : heading}
-            {refreshing || defined(extra) ? (
+            {trailing ? (
               <div className={styles.extra}>
-                {refreshing ? <Spin size="small" /> : null}
+                {refreshing ? <Spin size="small" variant="network" /> : null}
                 {extra}
+                {href
+                  ? link({
+                      'aria-hidden': true,
+                      'children': arrow,
+                      'className': styles.arrowLink,
+                      href,
+                      'tabIndex': -1,
+                    } as any)
+                  : null}
               </div>
             ) : null}
           </div>

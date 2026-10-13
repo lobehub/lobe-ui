@@ -6,10 +6,26 @@ order: 5
 ---
 
 import DemoIndex from './demos/index.tsx?demo';
+import DemoNarrow from './demos/narrow.tsx?demo';
+
+## When to use
+
+Use ChartGrid for a set of peer chart or ranked-list cards (usually `Surface`) that should be compared side by side: trends, breakdowns, top-N lists. It has no props beyond `className`; the layout is fixed on purpose.
+
+- A row of numbers belongs in `MetricStrip` (or `StatCard`), not here.
+- A free-form card wall with many columns or custom spans belongs in `Grid`.
 
 ## Default
 
+Two columns at any width above 640px, with every card in a row stretched to the same height.
+
 <Demo of={DemoIndex} layout="bare" />
+
+## Narrow containers and a single chart
+
+The breakpoint follows ChartGrid's own container, not the viewport, so it also collapses inside a narrow panel or split view. A lone child stays at most 560px wide.
+
+<Demo of={DemoNarrow} layout="bare" />
 
 ## APIs
 

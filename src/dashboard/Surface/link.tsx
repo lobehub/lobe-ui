@@ -1,7 +1,9 @@
 'use client';
 
+import { cx, useThemeMode } from 'antd-style';
 import { createContext, type ReactNode, use } from 'react';
 
+import { styles } from './style';
 import type { SurfaceLinkProps, SurfaceRenderLink } from './type';
 
 const defaultRenderLink: SurfaceRenderLink = ({ children, ...rest }: SurfaceLinkProps) => (
@@ -27,3 +29,13 @@ export const useSurfaceLink = (override?: SurfaceRenderLink) => override ?? use(
 export const useSurfaceDepth = () => use(SurfaceDepthContext);
 
 export { SurfaceDepthContext };
+
+/**
+ * Class for a dashboard card: `colorBgContainer` in light, translucent `colorFillTertiary` in
+ * dark, and no fill of its own when nested in another Surface.
+ */
+export const useSurfaceCardClassName = () => {
+  const { isDarkMode } = useThemeMode();
+  const depth = useSurfaceDepth();
+  return cx(styles.card, isDarkMode && styles.cardDark, depth > 0 && styles.cardNested);
+};

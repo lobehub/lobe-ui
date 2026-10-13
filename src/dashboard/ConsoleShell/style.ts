@@ -201,6 +201,12 @@ export const styles = createStaticStyles(({ css, cssVar, responsive }) => ({
 
     margin-inline-start: auto;
   `,
+  /** Light only: the content area sits midway between the layout canvas and container white. */
+  workspaceLight: css`
+    && {
+      background: color-mix(in srgb, ${cssVar.colorBgLayout} 50%, ${cssVar.colorBgContainer});
+    }
+  `,
   workspace: css`
     overflow: hidden;
     display: flex;

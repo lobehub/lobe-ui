@@ -55,6 +55,15 @@ export interface ConsoleShellProps extends Omit<HTMLAttributes<HTMLDivElement>, 
    * @default true
    */
   hotkey?: boolean;
+  /**
+   * Swap navigation and footer for skeletons, and render `loadingContent` (default `PageLoading`)
+   * in place of children. Brand, tools and `storageKey` still come from the caller.
+   */
+  loading?: boolean;
+  /** Body while `loading`. Defaults to `<PageLoading />`. */
+  loadingContent?: ReactNode;
+  /** Skeleton nav shape while `loading`. Pass the real groups to mirror their row counts. */
+  loadingNavigation?: ReactNode;
   /** Grouped navigation. Collapsed state comes from the shell. */
   navigation?: ReactNode;
   onCollapsedChange?: (collapsed: boolean) => void;

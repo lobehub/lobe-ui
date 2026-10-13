@@ -3,19 +3,55 @@ import { createStaticStyles } from 'antd-style';
 /**
  * A content card sitting on the workspace.
  *
- * Outlined `Block` uses `colorBorderSecondary` on `colorBgContainer`.
- * The workspace is already that container, so a card inside it steps up to
- * `colorBgElevated`. Borders and inner dividers share `colorBorderSecondary`,
- * the same token as ConsoleShell and ConsoleNav.
+ * Backgrounds: light mode uses `colorBgContainer`. Dark mode uses the translucent
+ * `colorFillTertiary` (white 6%): on the #0d0d0d workspace it reads as about #1c1c1c, a subtle
+ * raised step. `colorFillQuaternary` (white 2%, about #111) would barely separate from the page.
+ *
+ * Borders and inner dividers (table, header and cell lines, PageSkeleton) use `colorFillSecondary`
+ * (white 10% / black 6%); hover and focus use the stronger `colorFill`. Painted over the dark card
+ * the border lands near #2f2f2f against #1c1c1c, and in light near #f0f0f0 against #ffffff.
+ *
+ * Anything that must hide content scrolled beneath it (table header cells, pinned and sticky
+ * cells, their scroll shadows) uses `--lobe-surface-bg-solid`: the same white 6% blended onto
+ * `--lobe-surface-canvas` (default `colorBgContainer`, the ConsoleShell workspace). `color-mix`
+ * in srgb with an opaque base is plain alpha compositing, so it matches the translucent card.
+ * Set `--lobe-surface-canvas` when a card sits on another page color.
+ *
+ * A Surface inside another Surface (`useSurfaceDepth() > 0`) drops its own fill so fills do not
+ * stack. Row hover backgrounds keep their own mix. Layout containers (ConsoleShell, ConsoleNav,
+ * FilterSidebar split divider, AuthLayout page canvas) keep their own tokens.
+ *
+ * Apply the card with `useSurfaceCardClassName()`; plain `surfaceStyles.card` is the light look.
  */
 export const styles = createStaticStyles(({ css, cssVar }) => ({
   card: css`
+    --lobe-surface-bg: ${cssVar.colorBgContainer};
+    --lobe-surface-bg-solid: ${cssVar.colorBgContainer};
+
     &&,
     &&:hover {
-      border: 1px solid ${cssVar.colorBorderSecondary};
+      border: 1px solid ${cssVar.colorFillSecondary};
       border-radius: ${cssVar.borderRadiusLG};
-      background: ${cssVar.colorBgElevated};
-      box-shadow: ${cssVar.boxShadowTertiary};
+      background: var(--lobe-surface-bg);
+      box-shadow: rgb(0 0 0 / 4%) 0 1px 2px 0;
+    }
+  `,
+  cardDark: css`
+    &&& {
+      --lobe-surface-bg: ${cssVar.colorFillTertiary};
+
+      /* colorFillTertiary is white 6% in dark; blend the same amount onto the page. */
+      --lobe-surface-bg-solid: color-mix(
+        in srgb,
+        #fff 6%,
+        var(--lobe-surface-canvas, ${cssVar.colorBgContainer})
+      );
+    }
+  `,
+  cardNested: css`
+    &&&,
+    &&&:hover {
+      background: transparent;
     }
   `,
   chart: css`
@@ -31,7 +67,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   arrow: css`
     flex: none;
 
-    margin-block-start: 2px;
+    margin-block-start: 8px;
     margin-inline-start: auto;
 
     color: ${cssVar.colorTextTertiary};
@@ -39,6 +75,16 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     transition:
       color 150ms ease-out,
       transform 150ms ease-out;
+  `,
+  arrowLink: css`
+    display: flex;
+    flex: none;
+    align-items: center;
+    color: inherit;
+
+    & [data-surface-arrow] {
+      margin-block-start: 0;
+    }
   `,
   bleed: css`
     && th,
@@ -60,9 +106,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   content: css`
     min-inline-size: 0;
 
-    /* Table cells default to colorBgContainer, a step darker than this card.
-       Ant Design paints that color on .ant-table itself, so the body stays dark
-       even after the cells are cleared. */
+    /* Ant Design paints its own container color on .ant-table and the cells.
+       Clear it so the card background shows through; the card owns the fill. */
     && .ant-table,
     && th,
     && td {
@@ -71,7 +116,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     && .ant-table-css-var,
     && .ant-table-wrapper {
-      --ant-table-border-color: ${cssVar.colorBorderSecondary};
+      --ant-table-border-color: ${cssVar.colorFillSecondary};
       --ant-table-row-hover-bg: color-mix(
         in srgb,
         ${cssVar.colorText} 6%,
@@ -84,8 +129,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       color: ${cssVar.colorTextSecondary};
       white-space: nowrap;
 
-      background: ${cssVar.colorBgElevated};
-      box-shadow: inset 0 -1px 0 ${cssVar.colorBorderSecondary};
+      background: var(--lobe-surface-bg-solid, ${cssVar.colorBgContainer});
+      box-shadow: inset 0 -1px 0 ${cssVar.colorFillSecondary};
     }
 
     /* Pinned body cells inherit the transparent body, so a scrolled cell paints
@@ -94,14 +139,18 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
        as a lighter strip in dark mode. */
     && td.ant-table-cell-fix-start,
     && td.ant-table-cell-fix-end {
-      background: color-mix(in srgb, ${cssVar.colorBgElevated} 82%, transparent);
+      background: var(--lobe-surface-bg-solid, ${cssVar.colorBgContainer});
       backdrop-filter: blur(12px);
     }
 
     && td.ant-table-cell-fix-end-shadow-show::after {
       background: linear-gradient(
         to left,
-        color-mix(in srgb, ${cssVar.colorBgElevated} 72%, transparent),
+        color-mix(
+          in srgb,
+          var(--lobe-surface-bg-solid, ${cssVar.colorBgContainer}) 72%,
+          transparent
+        ),
         transparent
       );
       backdrop-filter: blur(8px);
@@ -110,7 +159,11 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     && td.ant-table-cell-fix-start-shadow-show::after {
       background: linear-gradient(
         to right,
-        color-mix(in srgb, ${cssVar.colorBgElevated} 72%, transparent),
+        color-mix(
+          in srgb,
+          var(--lobe-surface-bg-solid, ${cssVar.colorBgContainer}) 72%,
+          transparent
+        ),
         transparent
       );
       backdrop-filter: blur(8px);
@@ -119,7 +172,11 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     [dir='rtl'] && td.ant-table-cell-fix-end-shadow-show::after {
       background: linear-gradient(
         to right,
-        color-mix(in srgb, ${cssVar.colorBgElevated} 72%, transparent),
+        color-mix(
+          in srgb,
+          var(--lobe-surface-bg-solid, ${cssVar.colorBgContainer}) 72%,
+          transparent
+        ),
         transparent
       );
     }
@@ -127,13 +184,17 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     [dir='rtl'] && td.ant-table-cell-fix-start-shadow-show::after {
       background: linear-gradient(
         to left,
-        color-mix(in srgb, ${cssVar.colorBgElevated} 72%, transparent),
+        color-mix(
+          in srgb,
+          var(--lobe-surface-bg-solid, ${cssVar.colorBgContainer}) 72%,
+          transparent
+        ),
         transparent
       );
     }
 
     && td {
-      border-block-end-color: ${cssVar.colorBorderSecondary};
+      border-block-end-color: ${cssVar.colorFillSecondary};
     }
 
     && tr:hover > td,
@@ -144,7 +205,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     /* base-ui Table pins with inline position:sticky, not .ant-table-cell-fix-*.
        The transparent body rule above would let scrolled text show through. */
     && td[style*='sticky'] {
-      background: ${cssVar.colorBgElevated};
+      background: var(--lobe-surface-bg-solid, ${cssVar.colorBgContainer});
     }
 
     && tr:hover > td[style*='sticky'] {
@@ -155,7 +216,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   cardLinked: css`
     &&:hover,
     &&:focus-within {
-      border-color: ${cssVar.colorBorder};
+      border-color: ${cssVar.colorFill};
     }
 
     &&:hover [data-surface-arrow] {
@@ -164,28 +225,35 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
   `,
   desc: css`
-    margin-block-start: 2px;
+    margin-block-start: -4px;
 
     font-size: 13px;
     font-weight: 400;
     line-height: 1.45;
     color: ${cssVar.colorTextSecondary};
   `,
+  /* One fixed control row (32px, the height of a small Segmented or a default ActionIcon), so a
+     header with controls is exactly as tall as one without, and the controls sit centered with
+     8px clear above the divider. */
   extra: css`
     display: flex;
     flex: none;
     gap: 8px;
     align-items: center;
+
+    block-size: 32px;
   `,
   header: css`
     display: flex;
     gap: 12px;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
 
-    padding-block: 12px;
+    box-sizing: border-box;
+    min-block-size: 48px;
+    padding-block: 8px;
     padding-inline: 16px;
-    border-block-end: 1px solid ${cssVar.colorBorderSecondary};
+    border-block-end: 1px solid ${cssVar.colorFillSecondary};
   `,
   heading: css`
     min-inline-size: 0;
@@ -292,7 +360,10 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     font-size: 14px;
     font-weight: 500;
-    line-height: 1.4;
+
+    /* The title line is the 32px control row; extra and the arrow center on it, and a
+       description adds its own line below without moving them. */
+    line-height: 32px;
     color: ${cssVar.colorText};
     text-overflow: ellipsis;
     white-space: nowrap;
