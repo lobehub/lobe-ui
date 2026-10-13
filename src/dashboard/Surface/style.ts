@@ -7,10 +7,11 @@ import { createStaticStyles } from 'antd-style';
  * `colorFillTertiary` (white 6%): on the #0d0d0d workspace it reads as about #1c1c1c, a subtle
  * raised step. `colorFillQuaternary` (white 2%, about #111) would barely separate from the page.
  *
- * Borders and inner dividers (table, header and cell lines, PageSkeleton) use `colorFillSecondary`
- * (white 10% in dark, black 6% in light); hover and focus use the stronger `colorFill`. The light
- * card outline itself is one step darker (`colorFill`); dark keeps `colorFillSecondary`, which over
- * the dark card lands near #2f2f2f against #1c1c1c.
+ * Borders and inner dividers (table, header and cell lines, PageSkeleton, strip seams) all use the
+ * outer border token `colorBorderSecondary` (light and dark); hover and focus use the stronger
+ * `colorFill`. The card follows Block: light is Block `outlined` (`colorBgContainer` +
+ * `colorBorderSecondary`), dark uses the Block `filled` background (`colorFillTertiary`) with the
+ * same `colorBorderSecondary` border.
  *
  * Anything that must hide content scrolled beneath it (table header cells, pinned and sticky
  * cells, their scroll shadows) uses `--lobe-surface-bg-solid`: the same white 6% blended onto
@@ -31,7 +32,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     &&,
     &&:hover {
-      border: 1px solid ${cssVar.colorFill};
+      border: 1px solid ${cssVar.colorBorderSecondary};
       border-radius: ${cssVar.borderRadiusLG};
       background: var(--lobe-surface-bg);
       box-shadow: rgb(0 0 0 / 4%) 0 1px 2px 0;
@@ -48,8 +49,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
         var(--lobe-surface-canvas, ${cssVar.colorBgContainer})
       );
 
-      /* Dark keeps the lighter border; light mode uses the slightly darker colorFill. */
-      border-color: ${cssVar.colorFillSecondary};
+      /* Border: Block's border token (colorBorderSecondary) in both modes, from \`card\`. */
     }
   `,
   cardNested: css`
@@ -61,9 +61,13 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   chart: css`
     min-inline-size: 0;
   `,
-  /** Rounded corners clip a bled table, header rule, or chart. Bare cards keep overflow visible. */
+  /**
+   * Rounded corners clip whatever reaches the edge: a bled table, header rule, chart, or a
+   * tab / segmented indicator. \`clip\` (not \`hidden\`) creates no scroll container, so sticky
+   * table headers keep sticking to the page scroller; popups are portaled and unaffected.
+   */
   clip: css`
-    overflow: hidden;
+    overflow: clip;
   `,
   loading: css`
     padding-block: 4px 8px;
@@ -120,7 +124,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     && .ant-table-css-var,
     && .ant-table-wrapper {
-      --ant-table-border-color: ${cssVar.colorFillSecondary};
+      --ant-table-border-color: ${cssVar.colorBorderSecondary};
       --ant-table-row-hover-bg: color-mix(
         in srgb,
         ${cssVar.colorText} 6%,
@@ -134,7 +138,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       white-space: nowrap;
 
       background: var(--lobe-surface-bg-solid, ${cssVar.colorBgContainer});
-      box-shadow: inset 0 -1px 0 ${cssVar.colorFillSecondary};
+      box-shadow: inset 0 -1px 0 ${cssVar.colorBorderSecondary};
     }
 
     /* Pinned body cells inherit the transparent body, so a scrolled cell paints
@@ -198,7 +202,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
 
     && td {
-      border-block-end-color: ${cssVar.colorFillSecondary};
+      border-block-end-color: ${cssVar.colorBorderSecondary};
     }
 
     && tr:hover > td,
@@ -257,7 +261,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     min-block-size: 48px;
     padding-block: 8px;
     padding-inline: 16px;
-    border-block-end: 1px solid ${cssVar.colorFillSecondary};
+    border-block-end: 1px solid ${cssVar.colorBorderSecondary};
   `,
   heading: css`
     min-inline-size: 0;

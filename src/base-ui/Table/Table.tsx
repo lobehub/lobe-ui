@@ -250,6 +250,14 @@ const TableInner = <T,>(props: TableProps<T>) => {
   );
 
   assertColumnKeys(columns);
+  /** Multi-level headers get column dividers; plain tables never do. */
+  const grouped = useMemo(
+    () =>
+      columns.some(
+        (column) => Array.isArray((column as any).children) && (column as any).children.length > 0,
+      ),
+    [columns],
+  );
 
   const needResponsive = useMemo(
     () => flattenColumns(columns).some(({ column }) => column.responsive),
@@ -744,7 +752,9 @@ const TableInner = <T,>(props: TableProps<T>) => {
             styles.table,
             sizeClassName[size],
             `${PREFIX_CLS}-${size === 'middle' ? 'medium' : size}`,
+            variant === 'borderless' && styles.borderless,
             variant === 'outlined' && styles.outlined,
+            grouped && styles.grouped,
             variant === 'filled' && styles.filled,
             `${PREFIX_CLS}-${variant}`,
             rowHoverable && styles.hoverable,

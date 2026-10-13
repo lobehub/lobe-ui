@@ -9,6 +9,7 @@ import Select from '@/base-ui/Select';
 import Switch from '@/base-ui/Switch';
 
 import type { ProColumnType, ProTableFormInstance, ProTableValueType } from './type';
+import { useColumnRequest } from './useColumnRequest';
 import { resolveValueEnum, resolveValueType, valueEnumToList } from './utils';
 
 export interface FieldControlProps {
@@ -33,6 +34,7 @@ const FieldControl = ({ column, form, light, onChange, placeholder, value }: Fie
   const { isDarkMode } = useThemeMode();
   // Light filter: outlined on light backgrounds, filled in dark mode.
   const variant = light ? (isDarkMode ? 'filled' : 'outlined') : undefined;
+  const remote = useColumnRequest(column);
 
   if (column.renderFormItem) {
     return column.renderFormItem(
@@ -42,8 +44,9 @@ const FieldControl = ({ column, form, light, onChange, placeholder, value }: Fie
     ) as ReactNode;
   }
 
-  if (valueEnum || SELECT_TYPES.has(valueType)) {
+  if (remote.enabled || valueEnum || SELECT_TYPES.has(valueType)) {
     const options =
+      remote.options ??
       fieldProps.options ??
       valueEnumToList(valueEnum).map((item) => ({
         disabled: item.disabled,
@@ -53,8 +56,9 @@ const FieldControl = ({ column, form, light, onChange, placeholder, value }: Fie
     return (
       <Select
         allowClear
+        loading={remote.loading}
         mode={valueType === 'checkbox' ? 'multiple' : undefined}
-        options={options}
+        options={options as any}
         placeholder={light ? label : placeholder.select}
         size={size}
         style={{ width: '100%' }}
@@ -62,6 +66,14 @@ const FieldControl = ({ column, form, light, onChange, placeholder, value }: Fie
         variant={variant}
         {...fieldProps}
         onChange={(next) => onChange(next ?? undefined)}
+        onSearch={
+          remote.onSearch
+            ? (keyWords: string) => {
+                remote.onSearch!(keyWords);
+                fieldProps.onSearch?.(keyWords);
+              }
+            : fieldProps.onSearch
+        }
       />
     );
   }

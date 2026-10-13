@@ -101,7 +101,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
    * track, which reads louder than the cells.
    */
   frame: css`
-    --metric-seam: ${cssVar.colorFillSecondary};
+    --metric-seam: ${cssVar.colorBorderSecondary};
 
     overflow: hidden;
     border-radius: inherit;

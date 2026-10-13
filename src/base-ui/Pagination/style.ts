@@ -48,15 +48,60 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   center: css`
     justify-content: center;
   `,
+  /* Jump item: dots and the double chevron share one grid cell, so the dots never wrap or
+     shrink beside a wide page number and hover swaps them in place. */
   ellipsis: css`
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    cursor: pointer;
+
+    display: inline-grid;
+    flex: none;
+    place-items: center;
 
     width: 28px;
+    height: 28px;
+    padding: 0;
+    border: none;
+    border-radius: ${cssVar.borderRadius};
 
+    font: inherit;
+    line-height: 1;
     color: ${cssVar.colorTextQuaternary};
+    white-space: nowrap;
+
+    background: transparent;
+
+    & > * {
+      grid-area: 1 / 1;
+    }
+
+    &:hover:not(:disabled),
+    &:focus-visible {
+      color: ${cssVar.colorText};
+    }
+
+    &:disabled {
+      cursor: default;
+    }
+  `,
+  ellipsisDots: css`
+    font-size: 8px;
+
+    /* Trailing letter-spacing would push the dots off center. */
+    text-indent: 2px;
     letter-spacing: 2px;
+
+    button:hover:not(:disabled) > &,
+    button:focus-visible > & {
+      visibility: hidden;
+    }
+  `,
+  ellipsisIcon: css`
+    visibility: hidden;
+
+    button:hover:not(:disabled) > &,
+    button:focus-visible > & {
+      visibility: visible;
+    }
   `,
   end: css`
     justify-content: flex-end;
@@ -100,6 +145,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
   smallEllipsis: css`
     width: 24px;
+    height: 24px;
   `,
   start: css`
     justify-content: flex-start;

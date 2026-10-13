@@ -120,7 +120,7 @@ Besides the props below, every base-ui [Table](/components/base-ui/table) prop (
 
 | Property | Description | Type | Default |
 | --- | --- | --- | --- |
-| request | Fetch data; gets `(params, sort, filter)` and resolves `{ data, success, total }` | `(params, sort, filter) => Promise<RequestData>` | - |
+| request | Fetch data; gets `(params, sort, filter)` and resolves `{ data, success, total }`. The row type is inferred from the resolved `data`; `params` is typed by the second generic (`ProTable<T, Params>`) | `(params: Params & { current, pageSize }, sort: Record<string, SortOrder>, filter: Record<string, (string \| number)[] \| null>) => Promise<Partial<RequestData<T>>>` | - |
 | params | Extra request params; a change refetches from page 1 | `object` | - |
 | postData | Post-process the fetched data | `(data: T[]) => T[]` | - |
 | dataSource | Data when there is no `request` | `T[]` | - |
@@ -132,14 +132,14 @@ Besides the props below, every base-ui [Table](/components/base-ui/table) prop (
 | onLoadingChange | Loading changed | `(loading: boolean) => void` | - |
 | onRequestError | Request threw | `(error: Error) => void` | `console.error` |
 | onDataSourceChange | Data replaced by a fetch | `(data: T[]) => void` | - |
-| loading | Controlled loading | `boolean` | - |
+| loading | Controlled loading; an object is passed to the Table Spin (`tip`, `variant` …), `spinning` defaults to the request state and `delay` (ms) postpones the overlay | `boolean \| { spinning?, delay?, tip?, variant? }` | - |
 | columns | Column schema | `ProColumns<T>[]` | - |
 | columnsState | Show / pin / order per column key | `ProTableColumnsState` | - |
 | columnEmptyText | Shown for empty values; `false` renders nothing | `ReactNode \| false` | `'-'` |
 | actionRef | Imperative actions | `Ref<ProTableActionType>` | - |
 | formRef | Search form handle | `Ref<ProTableFormInstance>` | - |
 | search | Query form config; `false` hides it | `false \| ProTableSearchConfig` | `{}` |
-| form | `initialValues`, `onValuesChange`, `validateOn` of the base-ui `useForm` | `object` | - |
+| form | `initialValues`, `onValuesChange`, `validateOn` of the base-ui `useForm`; `ignoreRules` skips every column `rules` / `required`; `layout` is the fallback of `search.layout` | `object` | - |
 | dateFormatter | How dates are sent: `'string'`, `'number'`, `false` (Date) or a function | `string \| false \| fn` | `'string'` |
 | beforeSearchSubmit | Reshape the form values before they become params | `(params) => params` | - |
 | onSubmit | Form submitted | `(params) => void` | - |
@@ -181,6 +181,9 @@ All base-ui Table column fields, plus:
 | order | Field order in the form (larger first) | `number` | - |
 | colSize | Grid cells of the field | `number` | `1` |
 | initialValue | Initial form value | `any` | - |
+| request | Load the options of a select field: `({ ...params, keyWords }) => Promise<{ label, value }[]>`. With `fieldProps: { showSearch: true, filterOption: false }` typing re-requests with `keyWords` | `fn` | - |
+| params | Extra `request` params; a (deep) change re-requests | `object` | - |
+| debounceTime | Debounce of the option `request` in ms | `number` | `10` |
 | formItemProps | `label`, `extra`, `style`, `required` and `rules` (`required`, `message`, `pattern`, `min`, `max`, `len`, `validator`) of the field | `object` | - |
 | tooltip | Info icon after the header title | `ReactNode` | - |
 | copyable | Copy button after the text | `boolean` | - |
@@ -198,9 +201,9 @@ All base-ui Table column fields, plus:
 | filterType | `query` grid form or `light` toolbar filter | `'query' \| 'light'` | `'query'` |
 | defaultCollapsed / collapsed / onCollapse | Collapse state | `boolean` | `true` |
 | defaultColsNumber | Fields shown while collapsed | `number` | one row |
-| span | Field span in a 24-column grid | `number` | responsive |
-| labelWidth | Label width (px) or `'auto'` | `number \| 'auto'` | `80` |
-| layout | Label beside or above the control | `'horizontal' \| 'vertical'` | `horizontal` (`vertical` on one column) |
+| span | Field span in a 24-column grid; an object picks a span by form width (`xs` <576, `sm` ≥576, `md` ≥768, `lg` ≥992, `xl` ≥1200, `xxl` ≥1600) | `number \| { xs?, sm?, md?, lg?, xl?, xxl? }` | responsive |
+| labelWidth | Label column width in horizontal layout (px). Longer labels end in an ellipsis and show the full text as `title` on hover; `'auto'` removes the limit (natural width). Ignored in `vertical` | `number \| 'auto'` | `80` |
+| layout | Label beside (`horizontal`) or above (`vertical`, Pro QueryFilter vertical: 1 / 2 / 3 / 4 columns below 576 / 768 / 1200 px / wider, buttons on the control line of the last row) the control | `'horizontal' \| 'vertical'` | `horizontal` (`vertical` on one column) |
 | searchText / submitText / resetText | Button texts | `ReactNode` | - |
 | optionRender | Replace the buttons; `false` hides them | `({ form, onSubmit, onReset }, dom) => ReactNode[] \| false` | - |
 | collapseRender | Replace the toggle text; `false` hides it | `(collapsed) => ReactNode \| false` | - |

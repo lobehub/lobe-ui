@@ -61,6 +61,8 @@ const Select = memo<SelectProps<any>>(
     selectedIndicatorVariant = 'check',
     shadow,
     showSearch,
+    filterOption,
+    onSearch,
     size = 'middle',
     style,
     suffixIcon,
@@ -120,6 +122,8 @@ const Select = memo<SelectProps<any>>(
       shouldShowSearch,
       stopSearchPropagation,
     } = useSelectSearch({
+      filterOption,
+      onSearch,
       appendTagValues,
       handleOpenChange,
       mergedOpen,

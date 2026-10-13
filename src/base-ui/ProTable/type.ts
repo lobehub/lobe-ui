@@ -5,6 +5,7 @@ import type {
   SortOrder,
   TableColumnFilterItem,
   TableColumnType,
+  TableLoadingConfig,
   TablePaginationConfig,
   TableProps,
   TableRowSelection,
@@ -121,6 +122,23 @@ export interface ProTableActionType {
   setPageInfo: (pageInfo: Partial<ProTablePageInfo>) => void;
 }
 
+/** An option returned by a column `request`. */
+export interface ProTableRequestOption {
+  [key: string]: any;
+  disabled?: boolean;
+  label: ReactNode;
+  value: string | number | boolean;
+}
+
+/**
+ * Column `request`: loads the options of a select-like search field. Receives the column
+ * `params` and, during remote search, the typed `keyWords`.
+ */
+export type ProColumnRequest = (params: {
+  [key: string]: any;
+  keyWords?: string;
+}) => Promise<ProTableRequestOption[]>;
+
 export interface ProTableSchemaConfig<T> {
   /** Current form handle; lets `renderFormItem` read sibling fields. */
   form: ProTableFormInstance;
@@ -140,6 +158,8 @@ export interface ProColumnType<T = any> extends Omit<
   colSize?: number;
   /** Show a copy button after the cell text. */
   copyable?: boolean;
+  /** Debounce of the column `request` (on `params` change and remote search) in ms. @default 10 */
+  debounceTime?: number;
   /** Column-setting checkbox disabled (the column can't be hidden). */
   disable?: boolean | { checkbox: boolean };
   /** Props of the generated form control (placeholder, options, allowClear, …). */
@@ -166,6 +186,8 @@ export interface ProColumnType<T = any> extends Omit<
   onFilter?: boolean | TableColumnType<T>['onFilter'];
   /** Order in the search form (larger first). */
   order?: number;
+  /** Extra params of the column `request`; a change (deep compare) re-requests. */
+  params?: Record<string, any>;
   /**
    * `render(dom, record, index, action, schema)`; `dom` is the value-type rendering. With
    * `valueType: 'option'` return an array of action nodes.
@@ -185,6 +207,12 @@ export interface ProColumnType<T = any> extends Omit<
   ) => ReactNode;
   /** Transform the raw cell value before the value-type rendering. */
   renderText?: (text: any, record: T, index: number, action: ProTableActionType | undefined) => any;
+  /**
+   * Load the search field's options asynchronously (select-like field, replaces `valueEnum` /
+   * `fieldProps.options` once loaded). With `fieldProps: { showSearch: true, filterOption: false }`
+   * typing re-requests with `keyWords`.
+   */
+  request?: ProColumnRequest;
   /** `false` hides the column in the search form; `{ transform }` reshapes the submitted value. */
   search?: boolean | { transform: ProTableSearchTransform };
   /** `true` sorts on the server (sent to `request` as `sort`); a function sorts locally. */
@@ -223,11 +251,30 @@ export interface ProTableRequestData<T> {
   total?: number;
 }
 
-export type ProTableRequest<T, Params> = (
-  params: Params & { current?: number; keyword?: string; pageSize?: number },
-  sort: Record<string, SortOrder>,
-  filter: Record<string, (string | number | boolean)[] | null>,
+/** `sort` argument of `request`: column key → order (ProComponents shape). */
+export type ProTableRequestSort = Record<string, SortOrder>;
+
+/** `filter` argument of `request`: column key → selected filter values (ProComponents shape). */
+export type ProTableRequestFilter = Record<string, (string | number)[] | null>;
+
+/** `request(params, sort, filter)`; resolves `{ data, total, success }` (all optional). */
+export type ProTableRequest<T, Params = Record<string, any>> = (
+  params: Params & { [key: string]: any; current?: number; keyword?: string; pageSize?: number },
+  sort: ProTableRequestSort,
+  filter: ProTableRequestFilter,
 ) => Promise<Partial<ProTableRequestData<T>>>;
+
+/**
+ * `loading` as an object: Spin options of the table overlay (`tip`, `variant`, …) plus `delay`
+ * (ms before the overlay shows). Without `spinning` the overlay follows the `request` state.
+ */
+export type ProTableLoadingConfig = TableLoadingConfig & { delay?: number };
+
+/** Breakpoints of a responsive `search.span`, measured on the query form width. */
+export type ProTableSpanBreakpoint = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+
+/** `search.span` per form width: `xs` < 576 ≤ `sm` < 768 ≤ `md` < 992 ≤ `lg` < 1200 ≤ `xl` < 1600 ≤ `xxl`. */
+export type ProTableSpanConfig = Partial<Record<ProTableSpanBreakpoint, number>>;
 
 export type ProTableDensity = 'large' | 'medium' | 'small';
 
@@ -278,8 +325,11 @@ export interface ProTableSearchConfig {
       ) => ReactNode[]);
   resetText?: ReactNode;
   searchText?: ReactNode;
-  /** Span of each field in a 24-column grid (`8` = 3 per row). Responsive to the width by default. */
-  span?: number;
+  /**
+   * Span of each field in a 24-column grid (`8` = 3 per row), or one per form-width breakpoint
+   * (`{ xs: 24, md: 12, xl: 8 }`). Responsive to the width by default.
+   */
+  span?: number | ProTableSpanConfig;
   submitText?: ReactNode;
 }
 
@@ -331,7 +381,15 @@ export interface ProTableLocale {
 
 export interface ProTableProps<T = any, Params = Record<string, any>> extends Omit<
   TableProps<T>,
-  'columns' | 'dataSource' | 'pagination' | 'rowSelection' | 'size' | 'title' | 'loading' | 'ref'
+  | 'columns'
+  | 'dataSource'
+  | 'pagination'
+  | 'rowSelection'
+  | 'size'
+  | 'title'
+  | 'loading'
+  | 'locale'
+  | 'ref'
 > {
   actionRef?: MutableRefObject<ProTableActionType | undefined> | Ref<ProTableActionType>;
   /** Hook to reshape the form values before they become `params`. */
@@ -351,9 +409,14 @@ export interface ProTableProps<T = any, Params = Record<string, any>> extends Om
   defaultData?: T[];
   /** @default 'medium' */
   defaultSize?: ProTableDensity;
-  /** Initial values of the search form. */
+  /** Search form config (ProComponents `form`, base-ui Form underneath). */
   form?: {
+    /** Skip every column validation rule (`formItemProps.rules` / `required`). */
+    ignoreRules?: boolean;
+    /** Initial values of the search form. */
     initialValues?: Record<string, any>;
+    /** Field layout of the query form; `search.layout` wins. */
+    layout?: 'horizontal' | 'vertical';
     onValuesChange?: (changed: any, all: any) => void;
     /** base-ui Form `validateOn`. @default 'auto' */
     validateOn?: ValidateOn;
@@ -362,8 +425,14 @@ export interface ProTableProps<T = any, Params = Record<string, any>> extends Om
   /** Kept for ProComponents compatibility; the parts have no card background to remove. */
   ghost?: boolean;
   headerTitle?: ReactNode;
-  loading?: boolean;
-  locale?: TableProps<T>['locale'] & ProTableLocale;
+  /** Controlled loading; an object configures the overlay (`delay`, `tip`, …), see `ProTableLoadingConfig`. */
+  loading?: boolean | ProTableLoadingConfig;
+  /**
+   * ProTable texts plus the base-ui Table locale. Table's `collapse` / `expand` (row expand
+   * labels) are replaced by ProTable's search-form toggle texts, so the keys never conflict.
+   * Defaults to the preset of ConfigProvider `locale` (zh* → zh-CN, otherwise en-US).
+   */
+  locale?: Omit<NonNullable<TableProps<T>['locale']>, keyof ProTableLocale> & ProTableLocale;
   /** Don't fetch on mount; call `actionRef.current.reload()` (or submit the form). */
   manualRequest?: boolean;
   onDataSourceChange?: (dataSource: T[]) => void;
