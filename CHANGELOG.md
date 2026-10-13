@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.61.0](https://github.com/lobehub/lobe-ui/compare/v5.60.0...v5.61.0) (2026-10-13)
+
+### ✨ Features
+
+- **base-ui**: Align Table API, features and demos with antd Table, closes [#710](https://github.com/lobehub/lobe-ui/issues/710) ([6db0d94](https://github.com/lobehub/lobe-ui/commit/6db0d94))
+
 # [5.60.0](https://github.com/lobehub/lobe-ui/compare/v5.59.0...v5.60.0) (2026-10-13)
 
 ### ✨ Features
