@@ -637,7 +637,7 @@ const ProTable = <
             items={optionItems}
             key="options"
             size="small"
-            variant="borderless"
+            variant="outlined"
           />,
           <OptionPopover
             anchor={openOption?.key === 'density' ? openOption.anchor : null}
@@ -753,9 +753,6 @@ const ProTable = <
         {lightFilterDom}
         {keywordDom}
         {actionNodes}
-        {settingsNodes.length > 0 && (actionNodes.length > 0 || lightFilterDom || keywordDom) && (
-          <span className={styles.toolbarDivider} />
-        )}
         {settingsNodes.length > 0 && <div className={styles.toolbarOptions}>{settingsNodes}</div>}
       </div>
     </div>

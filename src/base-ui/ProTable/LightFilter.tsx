@@ -22,8 +22,19 @@ const LightFilter = ({ fields, form, placeholder }: LightFilterProps) => (
     className={styles.lightFilter}
     data-pro-table-light-filter=""
     form={form}
-    layout="horizontal"
     variant="borderless"
+    layout="horizontal"
+    // The base-ui Form root stacks its children; the light filter is one wrapping row.
+    style={{
+      alignItems: 'center',
+      display: 'flex',
+      flex: '0 1 auto',
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      gap: 8,
+      minWidth: 0,
+      width: 'auto',
+    }}
   >
     {fields.map(({ column, name }) => {
       const isText =

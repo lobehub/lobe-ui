@@ -54,7 +54,7 @@ const FieldControl = ({ column, form, light, onChange, placeholder, value }: Fie
         options={options}
         placeholder={light ? label : placeholder.select}
         size={size}
-        style={{ minWidth: light ? 120 : undefined, width: light ? undefined : '100%' }}
+        style={{ width: '100%' }}
         value={value ?? (valueType === 'checkbox' ? [] : null)}
         variant={variant}
         {...fieldProps}

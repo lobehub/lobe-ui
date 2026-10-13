@@ -133,8 +133,13 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
   lightFilterItem: css`
     display: inline-flex;
-    gap: 4px;
+    flex: none;
     align-items: center;
+    width: 160px;
+
+    & > * {
+      width: 100%;
+    }
   `,
   lightFilterLabel: css`
     font-size: ${cssVar.fontSizeSM};
@@ -316,6 +321,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
   title: css`
     display: flex;
+    flex: none;
     gap: 4px;
     align-items: center;
 
@@ -337,7 +343,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
   toolbar: css`
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     gap: 12px;
     align-items: center;
     justify-content: space-between;
@@ -346,21 +352,18 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
   toolbarActions: css`
     display: flex;
+    flex: 1;
     flex-wrap: wrap;
     gap: 8px;
     align-items: center;
     justify-content: flex-end;
 
+    min-width: 0;
     margin-inline-start: auto;
-  `,
-  toolbarDivider: css`
-    width: 1px;
-    height: 16px;
-    margin-inline: 4px;
-    background: ${cssVar.colorSplit};
   `,
   toolbarOptions: css`
     display: flex;
+    flex: none;
     gap: 2px;
     align-items: center;
   `,
