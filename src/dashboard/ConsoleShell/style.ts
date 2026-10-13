@@ -217,7 +217,9 @@ export const styles = createStaticStyles(({ css, cssVar, responsive }) => ({
     min-block-size: 0;
     margin-block: ${WORKSPACE_INSET}px;
     margin-inline: 0 ${WORKSPACE_INSET}px;
-    border: 1px solid ${cssVar.colorBorderSecondary};
+
+    /* A little darker than colorBorderSecondary in both modes: 30% of the way to colorBorder. */
+    border: 1px solid color-mix(in srgb, ${cssVar.colorBorderSecondary} 70%, ${cssVar.colorBorder});
     border-radius: ${cssVar.borderRadiusLG};
 
     background: ${cssVar.colorBgContainer};

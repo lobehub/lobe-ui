@@ -12,6 +12,8 @@ export type StatWash = 'gray';
 export interface StatCardProps {
   /** Control rendered on the label row, such as a menu. */
   action?: ReactNode;
+  /** Full-width chart (sparkline, area) under the delta and hint. */
+  chart?: ReactNode;
   className?: string;
   /** Change amount, colored by `direction`. */
   delta?: ReactNode;

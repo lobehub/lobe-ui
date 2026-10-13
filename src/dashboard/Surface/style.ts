@@ -8,8 +8,9 @@ import { createStaticStyles } from 'antd-style';
  * raised step. `colorFillQuaternary` (white 2%, about #111) would barely separate from the page.
  *
  * Borders and inner dividers (table, header and cell lines, PageSkeleton) use `colorFillSecondary`
- * (white 10% / black 6%); hover and focus use the stronger `colorFill`. Painted over the dark card
- * the border lands near #2f2f2f against #1c1c1c, and in light near #f0f0f0 against #ffffff.
+ * (white 10% in dark, black 6% in light); hover and focus use the stronger `colorFill`. The light
+ * card outline itself is one step darker (`colorFill`); dark keeps `colorFillSecondary`, which over
+ * the dark card lands near #2f2f2f against #1c1c1c.
  *
  * Anything that must hide content scrolled beneath it (table header cells, pinned and sticky
  * cells, their scroll shadows) uses `--lobe-surface-bg-solid`: the same white 6% blended onto
@@ -30,7 +31,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     &&,
     &&:hover {
-      border: 1px solid ${cssVar.colorFillSecondary};
+      border: 1px solid ${cssVar.colorFill};
       border-radius: ${cssVar.borderRadiusLG};
       background: var(--lobe-surface-bg);
       box-shadow: rgb(0 0 0 / 4%) 0 1px 2px 0;
@@ -46,6 +47,9 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
         #fff 6%,
         var(--lobe-surface-canvas, ${cssVar.colorBgContainer})
       );
+
+      /* Dark keeps the lighter border; light mode uses the slightly darker colorFill. */
+      border-color: ${cssVar.colorFillSecondary};
     }
   `,
   cardNested: css`

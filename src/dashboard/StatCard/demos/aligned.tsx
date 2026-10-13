@@ -14,7 +14,7 @@ const Area = ({ points }: { points: number[] }) => {
       aria-hidden
       height={56}
       preserveAspectRatio="none"
-      style={{ display: 'block', marginBlockStart: 12 }}
+      style={{ display: 'block' }}
       viewBox="0 0 100 40"
       width="100%"
     >
@@ -35,13 +35,6 @@ const Area = ({ points }: { points: number[] }) => {
     </svg>
   );
 };
-
-const Hint = ({ points, previous }: { points: number[]; previous: string }) => (
-  <>
-    <span>{previous}</span>
-    <Area points={points} />
-  </>
-);
 
 const Scope = () => {
   const [value, setValue] = useState('total');
@@ -67,33 +60,37 @@ export default () => (
     }}
   >
     <StatCard
+      chart={<Area points={[4, 6, 5, 8, 7, 9, 12]} />}
       delta="+12.4%"
       direction="up"
-      hint={<Hint points={[4, 6, 5, 8, 7, 9, 12]} previous="上期 8,210" />}
+      hint="上期 8,210"
       label="活跃用户"
       value="9,227"
     />
     <StatCard
       action={<Scope />}
+      chart={<Area points={[10, 9, 11, 12, 11, 13, 14]} />}
       delta="+3.1%"
       direction="up"
-      hint={<Hint points={[10, 9, 11, 12, 11, 13, 14]} previous="上期 ¥41,920" />}
+      hint="上期 ¥41,920"
       label="收入"
       value="¥43,210"
     />
     <StatCard
       action={<Scope />}
+      chart={<Area points={[9, 8, 8, 7, 8, 6, 6]} />}
       delta="-1.8%"
       direction="down"
-      hint={<Hint points={[9, 8, 8, 7, 8, 6, 6]} previous="上期 1,284" />}
+      hint="上期 1,284"
       label="订阅数"
       value="1,261"
     />
     <StatCard
       action={<ActionIcon icon={RefreshCw} size="small" title="Refresh" />}
+      chart={<Area points={[5, 5, 6, 6, 7, 6, 7]} />}
       delta="+0.4%"
       direction="up"
-      hint={<Hint points={[5, 5, 6, 6, 7, 6, 7]} previous="上期 2.31M" />}
+      hint="上期 2.31M"
       label="Token 用量"
       value="2.32M"
     />

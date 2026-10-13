@@ -11,7 +11,7 @@ import RcTable, {
   VirtualTable as RcVirtualTable,
 } from '@rc-component/table';
 import { cx } from 'antd-style';
-import { ArrowDownFromLine, ArrowUpDown, ArrowUpToLine } from 'lucide-react';
+import { ArrowDownFromLine, ArrowUpDown, ArrowUpToLine, Inbox } from 'lucide-react';
 import {
   type HTMLAttributes,
   type Key,
@@ -679,7 +679,7 @@ const TableInner = <T,>(props: TableProps<T>) => {
       size={size}
     />
   ) : customEmpty === undefined ? (
-    <Empty description={t('table.emptyText')} />
+    <Empty description={t('table.emptyText')} icon={Inbox} imageSize={40} />
   ) : typeof customEmpty === 'function' ? (
     customEmpty()
   ) : (

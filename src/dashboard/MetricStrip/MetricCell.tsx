@@ -21,8 +21,8 @@ const MetricBody = ({ item, loading }: { item: MetricItem; loading?: boolean }) 
     <div className={styles.head}>
       <div className={styles.headCopy}>
         <div className={styles.label}>{item.label}</div>
-        {item.action}
       </div>
+      {item.action ? <div className={styles.headAction}>{item.action}</div> : null}
       {item.mark ? (
         <span aria-hidden className={styles.mark}>
           <Icon icon={item.mark} size={14} />
@@ -52,6 +52,7 @@ const MetricBody = ({ item, loading }: { item: MetricItem; loading?: boolean }) 
         {item.hint ? <span className={styles.hint}>{item.hint}</span> : null}
       </div>
     ) : null}
+    {!loading && item.chart ? <div className={styles.chart}>{item.chart}</div> : null}
   </>
 );
 
