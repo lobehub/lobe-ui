@@ -48,6 +48,7 @@ import {
 } from './columnUtils';
 import renderExpandIcon from './ExpandIcon';
 import FilterDropdown, { TableMeasureRowContext } from './FilterDropdown';
+import FixedFrost from './FixedFrost';
 import TableLoadingSkeleton from './LoadingSkeleton';
 import {
   isPlainObject,
@@ -782,6 +783,7 @@ const TableInner = <T,>(props: TableProps<T>) => {
           onRow={mergedOnRow as any}
           onScroll={onScroll}
         />
+        <FixedFrost rootRef={rootRef} />
         {isLoading && (
           <div className={styles.loading} data-table-loading="">
             <Spin {...spinProps} />

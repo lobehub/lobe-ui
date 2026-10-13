@@ -29,8 +29,7 @@ export default (token: Theme) => css`
     ${
       token.isDarkMode
         ? `--lobe-table-surface: ${token.colorFillQuaternary};
-    --lobe-table-cell-bg: transparent;
-    --lobe-table-canvas-default: ${token.colorBgLayout};`
+    --lobe-table-cell-bg: transparent;`
         : ''
     }
   }

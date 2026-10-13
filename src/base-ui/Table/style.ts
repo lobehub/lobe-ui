@@ -42,17 +42,20 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
   // The variant fill that opaque composites (fixed cells, sticky holder, summary) repeat
   // once. Reset to transparent per root; outlined / filled set it to the dark surface.
   const fill = 'var(--lobe-table-fill, transparent)';
-  // Opaque base under fixed / sticky cells: the real color behind the table, so base + fill
-  // matches the translucent body exactly. Override with --lobe-table-canvas; inside a Surface
-  // card it is the card's solid color; dark default colorBgLayout (page), light colorBgContainer.
-  const solid = 'var(--lobe-table-solid)';
-  const solidWith = (...fills: string[]) =>
-    `${fills.map((f) => `linear-gradient(${f}, ${f})`).join(', ')}, ${solid}`;
+  // Row states: translucent fills on the cell only (never on tr), same for every variant,
+  // normal / fixed cells and the virtual body.
+  const hoverBg = cssVar.colorFillTertiary;
+  const selectedBg = `color-mix(in srgb, ${cssVar.colorPrimary} 6%, transparent)`;
+  const selectedHoverBg = `color-mix(in srgb, ${cssVar.colorPrimary} 10%, transparent)`;
+  // Fixed cells are see-through. Their frosted backdrop is not painted per cell (each box
+  // would blur on its own and show seams at every row): FixedFrost portals one sticky pane
+  // per fixed side into each scroll host (frostRail / frostStart / frostEnd below). The
+  // sticky header is a single element and blurs itself.
+  const frost = `
+    -webkit-backdrop-filter: blur(16px);
+    backdrop-filter: blur(16px);
+  `;
   const variantVars = `
-    --lobe-table-solid: var(
-      --lobe-table-canvas,
-      var(--lobe-surface-bg-solid, var(--lobe-table-canvas-default, ${cssVar.colorBgContainer}))
-    );
     --lobe-table-cell: var(--lobe-table-cell-bg, ${cssVar.colorBgContainer});
     --lobe-table-fill: var(--lobe-table-surface, transparent);
   `;
@@ -91,13 +94,13 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
           border-start-end-radius: ${cssVar.borderRadiusLG};
         }
 
-        /* The container draws the top and both side edges; the last row draws the bottom.
+        /* The container draws the full frame (incl. bottom). Last-row borders used to stand
+           in for the bottom edge, but with scroll.y / virtual the last row sits inside the
+           body viewport - overflow:clip + radius then eats that line at the rounded corners.
            No column dividers (grouped headers included): rows are split horizontally only. */
         & > ${p}-container {
           overflow: clip;
-
-          border-block-start: ${border};
-          border-inline: ${border};
+          border: ${border};
           border-radius: ${cssVar.borderRadiusLG};
 
           /* Same lift as the dashboard Surface card (both modes). Outer shadow on the framed
@@ -111,6 +114,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
         }
 
         &:has(> ${p}-footer) > ${p}-container {
+          border-block-end: 0;
           border-end-start-radius: 0;
           border-end-end-radius: 0;
         }
@@ -132,15 +136,15 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
           box-shadow: inset 0 999px 0 ${cssVar.colorFillQuaternary};
         }
 
-        /* Fixed cells: opaque canvas (--lobe-table-solid) + the container fill once. */
+        /* Fixed cells: see-through (container fill shows) + backdrop blur only. */
         & ${p}-tbody > tr > td${p}-cell-fix, & ${p}-tbody-virtual ${p}-cell${p}-cell-fix {
-          background: ${solidWith(fill)};
+          background: transparent;
           box-shadow: none;
         }
 
         /* Header: container fill + one Quaternary wash (box-shadow), like other th. */
         & ${p}-thead > tr > th${p}-cell-fix, & ${p}-thead > tr > td${p}-cell-fix {
-          background: ${solidWith(fill)};
+          background: transparent;
           box-shadow: inset 0 999px 0 ${cssVar.colorFillQuaternary};
         }
       }
@@ -148,16 +152,41 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
 
     /* Mirrors Block \`filled\`: one colorFillTertiary (dark: colorFillQuaternary on the clipped
        container) surface straight on the parent and no frame border. */
+    /* FixedFrost rail: absolute over the table (or the virtual row layer), z-index 1 puts it
+       above scrolling cells (z auto) and under fixed cells (z >= 2). */
+    frostRail: css`
+      pointer-events: none;
+
+      position: absolute;
+      z-index: 1;
+      inset-block-start: 0;
+      inset-inline-start: 0;
+
+      display: flex;
+    `,
+    frostStart: css`
+      position: sticky;
+      inset-inline-start: 0;
+      flex: none;
+      height: 100%;
+      ${frost}
+    `,
+    frostEnd: css`
+      position: sticky;
+      inset-inline-end: 0;
+
+      flex: none;
+
+      height: 100%;
+      margin-inline-start: auto;
+      ${frost}
+    `,
     filled: css`
       &${p}-filled {
         ${variantVars}
         /* Filled owns its fill in both modes (Block filled = colorFillTertiary; dark uses the
            Quaternary surface) and its opaque base is the page behind it, not colorBgContainer. */
         --lobe-table-fill: var(--lobe-table-surface, ${cssVar.colorFillTertiary});
-        --lobe-table-solid: var(
-          --lobe-table-canvas,
-          var(--lobe-surface-bg-solid, ${cssVar.colorBgLayout})
-        );
 
         /* Root stays clear (square box, would bleed past the rounded corners); the clipped
            container is the ONE fill layer: light FillTertiary, dark colorFillQuaternary. */
@@ -210,16 +239,16 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
           background: transparent;
         }
 
-        /* Fixed cells must be opaque: canvas (--lobe-table-solid) + the same fill; header adds one wash. */
+        /* Fixed cells: see-through + blur; header keeps the same divider + wash as every th. */
         & ${p}-thead > tr > th${p}-cell-fix, & ${p}-thead > tr > td${p}-cell-fix {
-          background: ${solidWith(fill)};
+          background: transparent;
           box-shadow:
             inset 0 -1px 0 ${borderColor},
             inset 0 999px 0 ${cssVar.colorFillQuaternary};
         }
 
         & ${p}-tbody > tr > td${p}-cell-fix {
-          background: ${solidWith(fill)};
+          background: transparent;
           box-shadow: none;
         }
       }
@@ -227,7 +256,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
     /**
      * Borderless: everything but the header is see-through, so the table sits on whatever
      * surface hosts it. Hover / selected rows are translucent fills. Fixed (sticky) cells
-     * stay opaque in colorBgContainer so scrolled content never shows underneath them.
+     * are see-through with a frosted backdrop so scrolled content stays obscured.
      */
     borderless: css`
       && {
@@ -243,14 +272,14 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       }
 
       && ${p}-tbody > tr > td${p}-cell-row-hover, && ${p}-tbody-virtual ${p}-row:hover > ${p}-cell {
-        background: color-mix(in srgb, ${cssVar.colorText} 3%, transparent);
+        background: ${hoverBg};
       }
 
       && ${p}-tbody > tr${p}-row-selected > td {
-        background: color-mix(in srgb, ${cssVar.colorPrimary} 6%, transparent);
+        background: ${selectedBg};
 
         &${p}-cell-row-hover {
-          background: color-mix(in srgb, ${cssVar.colorPrimary} 10%, transparent);
+          background: ${selectedHoverBg};
         }
       }
 
@@ -265,18 +294,18 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
         &&
         ${p}-tbody-virtual
         ${p}-cell${p}-cell-fix {
-        background: ${cssVar.colorBgContainer};
+        background: transparent;
       }
 
       && ${p}-tbody > tr > td${p}-cell-fix${p}-cell-row-hover {
-        background: color-mix(in srgb, ${cssVar.colorBgContainer}, ${cssVar.colorText} 3%);
+        background: ${hoverBg};
       }
 
       && ${p}-tbody > tr${p}-row-selected > td${p}-cell-fix {
-        background: color-mix(in srgb, ${cssVar.colorBgContainer}, ${cssVar.colorPrimary} 6%);
+        background: ${selectedBg};
 
         &${p}-cell-row-hover {
-          background: color-mix(in srgb, ${cssVar.colorBgContainer}, ${cssVar.colorPrimary} 10%);
+          background: ${selectedHoverBg};
         }
       }
     `,
@@ -413,8 +442,9 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       vertical-align: middle;
     `,
     hoverable: css`
-      & ${p}-tbody > tr > ${p}-cell-row-hover, & ${p}-tbody-virtual ${p}-row:hover > ${p}-cell {
-        background: color-mix(in srgb, ${cssVar.colorBgContainer}, ${cssVar.colorText} 3%);
+      /* &&& outranks the variant cell rules (filled clear cells, transparent fixed cells). */
+      &&& ${p}-tbody > tr > ${p}-cell-row-hover, &&& ${p}-tbody-virtual ${p}-row:hover > ${p}-cell {
+        background: ${hoverBg};
       }
     `,
     loading: css`
@@ -526,14 +556,23 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
     sizeLarge: css`
       ${PADDING_BLOCK}: 16px;
       ${PADDING_INLINE}: 16px;
+
+      /* Same as VIRTUAL_ROW_HEIGHT in Table.tsx (padding * 2 + 22px line + 1px divider). */
+      --lobe-table-virtual-row-height: calc(16px * 2 + 23px);
     `,
     sizeMedium: css`
       ${PADDING_BLOCK}: 12px;
       ${PADDING_INLINE}: 16px;
+
+      /* Same as VIRTUAL_ROW_HEIGHT in Table.tsx (padding * 2 + 22px line + 1px divider). */
+      --lobe-table-virtual-row-height: calc(12px * 2 + 23px);
     `,
     sizeSmall: css`
       ${PADDING_BLOCK}: 8px;
       ${PADDING_INLINE}: 12px;
+
+      /* Same as VIRTUAL_ROW_HEIGHT in Table.tsx (padding * 2 + 22px line + 1px divider). */
+      --lobe-table-virtual-row-height: calc(8px * 2 + 23px);
     `,
     // Title + sort ActionIcon row (not a button — the ActionIcon owns the click).
     sortButton: css`
@@ -566,7 +605,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       /* Reset per root so nested / borderless tables never inherit a parent's variant vars. */
       --lobe-table-cell: ${cssVar.colorBgContainer};
       --lobe-table-fill: transparent;
-      --lobe-table-solid: ${cssVar.colorBgContainer};
 
       font-size: 14px;
       color: ${cssVar.colorText};
@@ -585,9 +623,39 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       & tfoot > tr > th,
       & tfoot > tr > td {
         position: relative;
+
         padding-block: var(${PADDING_BLOCK});
         padding-inline: var(${PADDING_INLINE});
+
         overflow-wrap: break-word;
+
+        /* The global \`* { vertical-align: baseline }\` reset drops the UA's middle for cells. */
+        vertical-align: middle;
+      }
+
+      /* Row-merged body cells (rowSpan > 1, table and virtual body alike) get vertical
+         dividers so the block reads apart from the neighbour rows' lines. Drawn on ::before
+         (::after is the fixed-column scroll shadow) so cell box-shadows stay untouched. The
+         first / last column skip the edge the frame or table edge already provides. */
+      & ${p}-tbody > tr > td[rowspan]:not([rowspan='0'], [rowspan='1'])::before,
+      & ${p}-tbody-virtual ${p}-cell[rowspan]:not([rowspan='0'], [rowspan='1'])::before {
+        pointer-events: none;
+        content: '';
+
+        position: absolute;
+        inset: 0;
+
+        border-inline: ${border};
+      }
+
+      & ${p}-tbody > tr > td[rowspan]:first-child::before,
+      & ${p}-tbody-virtual ${p}-cell[rowspan]:first-child::before {
+        border-inline-start: 0;
+      }
+
+      & ${p}-tbody > tr > td[rowspan]:last-child::before,
+      & ${p}-tbody-virtual ${p}-cell[rowspan]:last-child::before {
+        border-inline-end: 0;
       }
 
       & ${p}-thead > tr > th,
@@ -623,8 +691,20 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
         transition: background-color ${cssVar.motionDurationMid};
       }
 
-      &:not(${p}-outlined) ${p}-tbody > tr:last-child > td,
-      &:not(${p}-outlined) ${p}-tbody > tr:last-child > th {
+      /* Filled / outlined drop the last body divider: filled because its fill is the edge,
+         outlined because the container now draws the frame bottom (avoids a double line, and
+         keeps the outline when scroll.y / virtual would otherwise scroll the last-row edge
+         away). Borderless keeps it as the closing rule under the rows. */
+      &${p}-filled ${p}-tbody > tr:last-child > td,
+      &${p}-filled ${p}-tbody > tr:last-child > th,
+      &${p}-outlined ${p}-tbody > tr:last-child > td,
+      &${p}-outlined ${p}-tbody > tr:last-child > th {
+        border-block-end: 0;
+      }
+
+      /* Borderless with a summary: tfoot draws its own top rule, so skip the last-row one. */
+      &${p}-borderless table:has(> tfoot) > ${p}-tbody > tr:last-child > td,
+      &${p}-borderless table:has(> tfoot) > ${p}-tbody > tr:last-child > th {
         border-block-end: 0;
       }
 
@@ -723,7 +803,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       }
 
       & ${p}-cell-fix {
-        background: ${cssVar.colorBgContainer};
+        background: transparent;
 
         &::after {
           ${fixShadowBase}
@@ -750,41 +830,16 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       & ${p}-sticky-holder {
         position: sticky;
         z-index: calc(var(--columns-count, 1) * 2 + ${Z_FIXED} + 1);
-        background: ${solidWith(fill)};
+        background: transparent;
+
+        /* The whole sticky header is one element, so it blurs as one continuous block. */
+        ${frost}
       }
 
       & ${p}-sticky-scroll {
         position: sticky;
         z-index: calc(var(--columns-count, 1) * 2 + ${Z_FIXED} + 1);
         inset-block-end: 0;
-
-        display: flex;
-        align-items: center;
-
-        height: 8px !important;
-        border-block-start: ${border};
-
-        opacity: 0.65;
-        background: ${cssVar.colorFillQuaternary};
-
-        &-bar {
-          position: absolute;
-          inset-block-end: 0;
-
-          height: 8px;
-          border-radius: 100px;
-
-          background-color: ${cssVar.colorFill};
-
-          transition:
-            all ${cssVar.motionDurationSlow},
-            transform 0s;
-
-          &:hover,
-          &-active {
-            background-color: ${cssVar.colorFillSecondary};
-          }
-        }
       }
 
       /* ============================ Selection =========================== */
@@ -804,11 +859,12 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
         }
       }
 
-      & ${p}-tbody > tr${p}-row-selected > td {
-        background: color-mix(in srgb, ${cssVar.colorBgContainer}, ${cssVar.colorPrimary} 6%);
+      /* The table css carries no hoverable class, so use a fourth & to outrank hover too. */
+      &&&& ${p}-tbody > tr${p}-row-selected > td {
+        background: ${selectedBg};
 
         &${p}-cell-row-hover {
-          background: color-mix(in srgb, ${cssVar.colorBgContainer}, ${cssVar.colorPrimary} 10%);
+          background: ${selectedHoverBg};
         }
       }
 
@@ -916,8 +972,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
         position: relative;
         z-index: ${Z_FIXED};
 
-        /* Opaque: canvas + the variant fill once. */
-        background: ${solidWith(fill)};
+        /* See-through; a sticky summary is a sticky holder and gets its frost there. */
+        background: transparent;
 
         & > tr > th,
         & > tr > td {
@@ -953,6 +1009,14 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
           box-sizing: border-box;
           width: 100%;
 
+          /* Virtual rows are locked to the listItemHeight estimate (an integer). Measured
+             heights then equal the estimate, so a rowSpan cell (height = summed row sizes)
+             ends exactly on the neighbour rows' divider instead of drifting by sub-pixel
+             rounding or unmeasured-row estimates. */
+          &:not(${p}-row-extra, ${p}-expanded-row) {
+            height: var(--lobe-table-virtual-row-height);
+          }
+
           & > ${p}-cell {
             align-content: center;
           }
@@ -962,14 +1026,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
           border-block-end: ${border};
           background: ${cellBg};
           transition: background-color ${cssVar.motionDurationMid};
-        }
-
-        & ${p}-tbody-virtual-scrollbar {
-          cursor: pointer;
-
-          &:hover {
-            background-color: ${cssVar.colorFillQuaternary};
-          }
         }
 
         & ${p}-expanded-row ${p}-expanded-row-cell${p}-expanded-row-cell-fixed {
