@@ -13,6 +13,26 @@ export default (token: Theme) => css`
        higher on purpose: a white hairline lightens toward a raised surface, and below ~16%
        it lands on the surface's own colour and the edge vanishes. */
     --lobe-ring: 0 0 0 1px ${token.isDarkMode ? 'rgb(255 255 255 / 18%)' : 'rgb(0 0 0 / 5%)'};
+
+    /* Hairline borders / dividers from the fill series (dashboard cards, base-ui Table):
+       light colorFill, dark one step quieter colorFillSecondary. Strong is one step louder;
+       light has no fill above colorFill, so it mixes toward colorText. */
+    --lobe-fill-border: ${token.isDarkMode ? token.colorFillSecondary : token.colorFill};
+    --lobe-fill-border-strong: ${
+      token.isDarkMode
+        ? token.colorFill
+        : `color-mix(in srgb, ${token.colorFill}, ${token.colorText} 15%)`
+    };
+
+    /* base-ui Table (outlined / filled) in dark: colorFillQuaternary on the clipped container,
+       cells clear so it shows through. Unset in light — each variant keeps its own background. */
+    ${
+      token.isDarkMode
+        ? `--lobe-table-surface: ${token.colorFillQuaternary};
+    --lobe-table-cell-bg: transparent;
+    --lobe-table-canvas-default: ${token.colorBgLayout};`
+        : ''
+    }
   }
 
   @layer lobe-popup {

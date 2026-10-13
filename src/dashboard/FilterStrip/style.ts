@@ -67,7 +67,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     color: ${cssVar.colorWarning};
   `,
   frame: css`
-    --filter-seam: ${cssVar.colorBorderSecondary};
+    --filter-seam: var(--lobe-fill-border, ${cssVar.colorFill});
 
     overflow: hidden;
     border-radius: inherit;

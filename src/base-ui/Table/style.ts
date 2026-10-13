@@ -31,7 +31,31 @@ const ownCells = (cell: string) =>
     .join(', ');
 
 export const styles = createStaticStyles(({ css, cssVar }) => {
-  const border = `1px solid ${cssVar.colorBorderSecondary}`;
+  // Light colorFill / dark colorFillSecondary (see --lobe-fill-border in ThemeProvider).
+  const borderColor = `var(--lobe-fill-border, ${cssVar.colorFill})`;
+  const border = `1px solid ${borderColor}`;
+  // Dark: colorFillQuaternary on the clipped container; unset in light so variants keep their fills.
+  const surface = (light: string) => `var(--lobe-table-surface, ${light})`;
+  // Cell background. Every table root resets it to colorBgContainer (so nested / borderless
+  // tables never inherit it); outlined / filled switch it to transparent in dark.
+  const cellBg = `var(--lobe-table-cell, ${cssVar.colorBgContainer})`;
+  // The variant fill that opaque composites (fixed cells, sticky holder, summary) repeat
+  // once. Reset to transparent per root; outlined / filled set it to the dark surface.
+  const fill = 'var(--lobe-table-fill, transparent)';
+  // Opaque base under fixed / sticky cells: the real color behind the table, so base + fill
+  // matches the translucent body exactly. Override with --lobe-table-canvas; inside a Surface
+  // card it is the card's solid color; dark default colorBgLayout (page), light colorBgContainer.
+  const solid = 'var(--lobe-table-solid)';
+  const solidWith = (...fills: string[]) =>
+    `${fills.map((f) => `linear-gradient(${f}, ${f})`).join(', ')}, ${solid}`;
+  const variantVars = `
+    --lobe-table-solid: var(
+      --lobe-table-canvas,
+      var(--lobe-surface-bg-solid, var(--lobe-table-canvas-default, ${cssVar.colorBgContainer}))
+    );
+    --lobe-table-cell: var(--lobe-table-cell-bg, ${cssVar.colorBgContainer});
+    --lobe-table-fill: var(--lobe-table-surface, transparent);
+  `;
   const fixShadowBase = `
     pointer-events: none;
     content: '';
@@ -46,16 +70,18 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     outlined: css`
       &${p}-outlined {
-        /* The square root must not paint behind the rounded frame: the container
-           (clipped to its radius) carries the colorBgContainer body instead. */
+        ${variantVars}
+        /* The square root must not paint behind the rounded frame: the clipped container
+           is the ONE layer carrying the body (light colorBgContainer, dark
+           colorFillQuaternary). Title / footer are siblings, so they paint it once too. */
         background: transparent;
 
         & > ${p}-container {
-          background: ${cssVar.colorBgContainer};
+          background: ${surface(cssVar.colorBgContainer)};
         }
 
         & > ${p}-title, & > ${p}-footer {
-          background: ${cssVar.colorBgContainer};
+          background: ${surface(cssVar.colorBgContainer)};
         }
 
         & > ${p}-title {
@@ -69,9 +95,14 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
            No column dividers (grouped headers included): rows are split horizontally only. */
         & > ${p}-container {
           overflow: clip;
+
           border-block-start: ${border};
           border-inline: ${border};
           border-radius: ${cssVar.borderRadiusLG};
+
+          /* Same lift as the dashboard Surface card (both modes). Outer shadow on the framed
+             container is not clipped by its own overflow. */
+          box-shadow: rgb(0 0 0 / 4%) 0 1px 2px 0;
         }
 
         & > ${p}-title + ${p}-container {
@@ -95,20 +126,46 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
            shadow underneath, or group headers look double-thick. */
         & > ${p}-container > * > table > thead > tr > th {
           border-block-end: ${border};
+
+          /* Extra FillQuaternary layer on top of the container fill. */
+          background: ${cellBg};
+          box-shadow: inset 0 999px 0 ${cssVar.colorFillQuaternary};
+        }
+
+        /* Fixed cells: opaque canvas (--lobe-table-solid) + the container fill once. */
+        & ${p}-tbody > tr > td${p}-cell-fix, & ${p}-tbody-virtual ${p}-cell${p}-cell-fix {
+          background: ${solidWith(fill)};
+          box-shadow: none;
+        }
+
+        /* Header: container fill + one Quaternary wash (box-shadow), like other th. */
+        & ${p}-thead > tr > th${p}-cell-fix, & ${p}-thead > tr > td${p}-cell-fix {
+          background: ${solidWith(fill)};
           box-shadow: inset 0 999px 0 ${cssVar.colorFillQuaternary};
         }
       }
     `,
 
-    /* Mirrors Block \`filled\`: one colorFillTertiary surface straight on the parent (no
-       colorBgContainer underneath, no stacked header fill) and no frame border. */
+    /* Mirrors Block \`filled\`: one colorFillTertiary (dark: colorFillQuaternary on the clipped
+       container) surface straight on the parent and no frame border. */
     filled: css`
       &${p}-filled {
+        ${variantVars}
+        /* Filled owns its fill in both modes (Block filled = colorFillTertiary; dark uses the
+           Quaternary surface) and its opaque base is the page behind it, not colorBgContainer. */
+        --lobe-table-fill: var(--lobe-table-surface, ${cssVar.colorFillTertiary});
+        --lobe-table-solid: var(
+          --lobe-table-canvas,
+          var(--lobe-surface-bg-solid, ${cssVar.colorBgLayout})
+        );
+
+        /* Root stays clear (square box, would bleed past the rounded corners); the clipped
+           container is the ONE fill layer: light FillTertiary, dark colorFillQuaternary. */
         background: transparent;
 
         & > ${p}-title, & > ${p}-footer {
           border-radius: ${cssVar.borderRadiusLG};
-          background: ${cssVar.colorFillQuaternary};
+          background: ${fill};
         }
 
         & > ${p}-title {
@@ -124,7 +181,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
         & > ${p}-container {
           overflow: clip;
           border-radius: ${cssVar.borderRadiusLG};
-          background: ${cssVar.colorFillTertiary};
+          background: ${fill};
         }
 
         & > ${p}-title + ${p}-container {
@@ -137,36 +194,33 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
           border-end-end-radius: 0;
         }
 
-        /* Header band: only the FillQuaternary wash over the container fill (stacking a
-           second FillTertiary made dark mode too bright). */
+        /* Header band: one extra FillQuaternary wash over the container fill. */
         & ${p}-thead > tr > th,
         & ${p}-thead > tr > td {
           background: transparent;
           box-shadow:
-            inset 0 -1px 0 ${cssVar.colorBorderSecondary},
+            inset 0 -1px 0 ${borderColor},
             inset 0 999px 0 ${cssVar.colorFillQuaternary};
         }
 
-        /* Row dividers stay on (base colorBorderSecondary rule); only the fill is the container's. */
+        /* Row dividers stay on (base border rule); body is clear over the container fill. */
         & ${p}-tbody > tr > td,
         & ${p}-tbody > tr > th,
         & ${p}-tbody-virtual ${p}-cell {
           background: transparent;
         }
 
-        /* Fixed cells must be opaque: colorBgContainer painted with the same fill(s), the
-           closest opaque match to the translucent surface around them. */
+        /* Fixed cells must be opaque: canvas (--lobe-table-solid) + the same fill; header adds one wash. */
         & ${p}-thead > tr > th${p}-cell-fix, & ${p}-thead > tr > td${p}-cell-fix {
-          background: ${cssVar.colorBgContainer};
+          background: ${solidWith(fill)};
           box-shadow:
-            inset 0 -1px 0 ${cssVar.colorBorderSecondary},
-            inset 0 999px 0 ${cssVar.colorFillQuaternary},
-            inset 0 999px 0 ${cssVar.colorFillTertiary};
+            inset 0 -1px 0 ${borderColor},
+            inset 0 999px 0 ${cssVar.colorFillQuaternary};
         }
 
         & ${p}-tbody > tr > td${p}-cell-fix {
-          background: ${cssVar.colorBgContainer};
-          box-shadow: inset 0 999px 0 ${cssVar.colorFillTertiary};
+          background: ${solidWith(fill)};
+          box-shadow: none;
         }
       }
     `,
@@ -405,7 +459,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
 
       width: 100%;
       min-width: 0;
-      border-block-end: 1px solid ${cssVar.colorBorderSecondary};
+      border-block-end: 1px solid ${borderColor};
 
       &:last-child {
         border-block-end: 0;
@@ -509,6 +563,11 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       position: relative;
     `,
     table: css`
+      /* Reset per root so nested / borderless tables never inherit a parent's variant vars. */
+      --lobe-table-cell: ${cssVar.colorBgContainer};
+      --lobe-table-fill: transparent;
+      --lobe-table-solid: ${cssVar.colorBgContainer};
+
       font-size: 14px;
       color: ${cssVar.colorText};
       background: ${cssVar.colorBgContainer};
@@ -538,9 +597,10 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
         color: ${cssVar.colorTextSecondary};
         text-align: start;
 
-        background: ${cssVar.colorBgContainer};
+        /* Clear in dark (outlined) so the container fill shows; Quaternary is the extra header layer. */
+        background: ${cellBg};
         box-shadow:
-          inset 0 -1px 0 ${cssVar.colorBorderSecondary},
+          inset 0 -1px 0 ${borderColor},
           inset 0 999px 0 ${cssVar.colorFillQuaternary};
 
         &[colspan]:not([colspan='1']) {
@@ -557,7 +617,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
         font-variant-numeric: tabular-nums;
         text-align: start;
 
-        background: ${cssVar.colorBgContainer};
+        /* Clear in dark (outlined) so the container fill shows through. */
+        background: ${cellBg};
 
         transition: background-color ${cssVar.motionDurationMid};
       }
@@ -689,7 +750,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       & ${p}-sticky-holder {
         position: sticky;
         z-index: calc(var(--columns-count, 1) * 2 + ${Z_FIXED} + 1);
-        background: ${cssVar.colorBgContainer};
+        background: ${solidWith(fill)};
       }
 
       & ${p}-sticky-scroll {
@@ -833,6 +894,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
             border-block: 0;
             border-inline-end: 0;
             border-radius: 0;
+            box-shadow: none;
           }
 
           & > ${p}-title + ${p}-container {
@@ -853,7 +915,9 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       & ${p}-summary {
         position: relative;
         z-index: ${Z_FIXED};
-        background: ${cssVar.colorBgContainer};
+
+        /* Opaque: canvas + the variant fill once. */
+        background: ${solidWith(fill)};
 
         & > tr > th,
         & > tr > td {
@@ -862,7 +926,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       }
 
       & div${p}-summary {
-        box-shadow: 0 -1px 0 ${cssVar.colorBorderSecondary};
+        box-shadow: 0 -1px 0 ${borderColor};
       }
 
       /* A fixed summary under \`sticky\` is a sticky holder too; keep it sticky (antd orders sticky last). */
@@ -896,7 +960,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
 
         & ${p}-cell {
           border-block-end: ${border};
-          background: ${cssVar.colorBgContainer};
+          background: ${cellBg};
           transition: background-color ${cssVar.motionDurationMid};
         }
 

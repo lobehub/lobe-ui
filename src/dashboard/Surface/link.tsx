@@ -31,7 +31,7 @@ export const useSurfaceDepth = () => use(SurfaceDepthContext);
 export { SurfaceDepthContext };
 
 /**
- * Class for a dashboard card: `colorBgContainer` in light, translucent `colorFillTertiary` in
+ * Class for a dashboard card: `colorBgContainer` in light, translucent `colorFillQuaternary` in
  * dark, and no fill of its own when nested in another Surface.
  */
 export const useSurfaceCardClassName = () => {

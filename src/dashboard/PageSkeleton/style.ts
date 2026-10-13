@@ -52,7 +52,7 @@ export const styles = createStaticStyles(({ css, cssVar, responsive }) => ({
     min-block-size: 54px;
     padding-block: 12px;
     padding-inline: 16px;
-    border-block-end: 1px solid ${cssVar.colorBorderSecondary};
+    border-block-end: 1px solid var(--lobe-fill-border, ${cssVar.colorFill});
 
     &:last-child {
       border-block-end: none;
