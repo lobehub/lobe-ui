@@ -25,7 +25,14 @@ export {
   type FilterSidebarProps,
   useInFilterSplit,
 } from './FilterSidebar';
+export {
+  default as FilterStrip,
+  type FilterStripItem,
+  type FilterStripProps,
+  formatInteger,
+} from './FilterStrip';
 export { default as LabelWithKey, type LabelWithKeyProps } from './LabelWithKey';
+export { type MetricItem, default as MetricStrip, type MetricStripProps } from './MetricStrip';
 export { default as PageHeader, type PageHeaderProps } from './PageHeader';
 export {
   LoadingAnnouncer,
@@ -37,9 +44,20 @@ export {
 } from './PageSkeleton';
 export { type PageTab, default as PageTabs, type PageTabsProps } from './PageTabs';
 export { default as PageToolbar, type PageToolbarProps } from './PageToolbar';
+export { default as PanelSurface, type PanelSurfaceProps } from './PanelSurface';
 export { default as RouteProgress, type RouteProgressProps } from './RouteProgress';
+export { default as Section, type SectionProps } from './Section';
 export { default as StatCard, type StatCardProps, type StatDirection } from './StatCard';
-export { default as Surface, type SurfaceProps, surfaceStyles } from './Surface';
+export {
+  default as Surface,
+  type SurfaceLinkProps,
+  SurfaceLinkProvider,
+  type SurfaceProps,
+  type SurfaceRenderLink,
+  surfaceStyles,
+  useSurfaceDepth,
+  useSurfaceLink,
+} from './Surface';
 export {
   tableActionColumnWidth,
   TableIconAction,
