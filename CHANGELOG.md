@@ -2,6 +2,16 @@
 
 # Changelog
 
+# [5.62.0](https://github.com/lobehub/lobe-ui/compare/v5.61.1...v5.62.0) (2026-10-13)
+
+### ✨ Features
+
+- **base-ui**: Add ProTable, closes [#712](https://github.com/lobehub/lobe-ui/issues/712) ([c8a7b6f](https://github.com/lobehub/lobe-ui/commit/c8a7b6f))
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Ship ProTable from its own base-ui/pro-table entry so the base-ui main entry stays TanStack-free ([d22b4cf](https://github.com/lobehub/lobe-ui/commit/d22b4cf))
+
 ## [5.61.1](https://github.com/lobehub/lobe-ui/compare/v5.61.0...v5.61.1) (2026-10-13)
 
 ### 🐛 Bug Fixes
