@@ -75,6 +75,7 @@ export interface VirtualModel {
 
 export interface VirtualInput {
   getScrollElement: () => HTMLElement | null;
+  initialHeight?: number;
   overscan?: number;
   rowHeight: number;
 }

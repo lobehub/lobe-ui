@@ -6,8 +6,13 @@ import {
   tableFeatures,
   useTable,
 } from '@tanstack/react-table';
-import { useVirtualizer } from '@tanstack/react-virtual';
-import { type Key, useMemo } from 'react';
+import {
+  measureElement,
+  observeElementRect,
+  useVirtualizer,
+  type Virtualizer,
+} from '@tanstack/react-virtual';
+import { type Key, useCallback, useMemo } from 'react';
 
 import { getFixedInfo, getStickyOffsets } from './fixed';
 import type {
@@ -92,29 +97,51 @@ const useVirtualModel = <T>(
   virtual: VirtualInput | undefined,
   rows: readonly RowModel<T>[],
 ): VirtualModel | undefined => {
+  const fallbackHeight = virtual?.initialHeight ?? 0;
+  const observeRect = useCallback(
+    (
+      instance: Virtualizer<HTMLElement, Element>,
+      callback: (rect: { height: number; width: number }) => void,
+    ) =>
+      observeElementRect(instance, (rect) =>
+        callback({ height: rect.height || fallbackHeight, width: rect.width }),
+      ),
+    [fallbackHeight],
+  );
   const virtualizer = useVirtualizer({
     count: virtual ? rows.length : 0,
     enabled: Boolean(virtual),
     estimateSize: () => virtual?.rowHeight ?? 0,
+    measureElement: (element, entry, instance) =>
+      measureElement(element, entry, instance) || (virtual?.rowHeight ?? 0),
     getItemKey: (index) => rows[index]?.key ?? index,
     getScrollElement: () => virtual?.getScrollElement() ?? null,
+    initialRect: { height: virtual?.initialHeight ?? 0, width: 0 },
+    observeElementRect: observeRect,
     overscan: virtual?.overscan ?? 6,
   });
 
   if (!virtual) return undefined;
 
-  const scrollTo = ({ align = 'nearest', index, key, offset, top }: VirtualScrollConfig) => {
+  const scrollTo = ({ align = 'nearest', index, key, offset = 0, top }: VirtualScrollConfig) => {
+    const element = virtual.getScrollElement();
+    if (!element) return;
     if (typeof top === 'number') {
-      virtualizer.scrollToOffset(top);
+      element.scrollTop = top;
       return;
     }
-    const target = key === undefined ? index : rows.findIndex((row) => row.key === key);
+    const target =
+      key === undefined ? index : rows.findIndex((row) => String(row.key) === String(key));
     if (target === undefined || target < 0) return;
-    virtualizer.scrollToIndex(target, { align: align === 'nearest' ? 'auto' : align });
-    if (offset) {
-      const element = virtual.getScrollElement();
-      if (element) element.scrollTop += offset;
-    }
+    const item = virtualizer.measurementsCache[target];
+    if (!item) return;
+    const viewport = element.clientHeight;
+    let next = element.scrollTop;
+    if (align === 'start') next = item.start;
+    else if (align === 'end') next = item.end - viewport;
+    else if (item.start < next) next = item.start;
+    else if (item.end > next + viewport) next = item.end - viewport;
+    element.scrollTop = Math.max(0, next + offset);
   };
 
   return {
