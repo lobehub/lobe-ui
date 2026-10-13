@@ -63,7 +63,7 @@ const Bars = ({ values }: { values: number[] }) => {
 };
 
 const Body = ({ children }: { children: ReactNode }) => (
-  <div style={{ padding: 16 }}>{children}</div>
+  <div style={{ minInlineSize: 0 }}>{children}</div>
 );
 
 export default () => (

@@ -18,7 +18,7 @@ import DemoAligned from './demos/aligned.tsx?demo';
 
 ## Header controls stay aligned
 
-The label row has a fixed height. A `Segmented` or `ActionIcon` in `action` sits centered on the label and never makes its card taller, so values, previous-period lines and charts line up across a row whether or not a card has a control. Use compact controls there: `Segmented size="small"` and `ActionIcon size="small"`. `Surface` headers follow the same rule for `extra`.
+The label row has a fixed height. A `Segmented` or `ActionIcon` in `action` sits centered on the label and never makes its card taller, so values, previous-period lines and charts line up across a row whether or not a card has a control. The control sits on the trailing edge of the label row, and `chart` renders a sparkline or area chart at full card width under the delta and hint. Use compact controls there: `Segmented size="small"` and `ActionIcon size="small"`. `Surface` headers follow the same rule for `extra`.
 
 <Demo of={DemoAligned} />
 

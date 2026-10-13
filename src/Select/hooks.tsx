@@ -235,9 +235,11 @@ export function useSelectOpen({ defaultOpen, onOpenChange, open }: UseSelectOpen
 
 interface UseSelectSearchParams {
   appendTagValues: (values: string[]) => void;
+  filterOption?: SelectProps<any>['filterOption'];
   handleOpenChange: (nextOpen: boolean) => void;
   mergedOpen: boolean;
   mode: SelectProps['mode'];
+  onSearch?: (value: string) => void;
   removeLastTagValue: () => void;
   resolvedOptions: SelectOptions;
   showSearch: boolean | undefined;
@@ -245,6 +247,8 @@ interface UseSelectSearchParams {
 }
 
 export function useSelectSearch({
+  filterOption,
+  onSearch,
   appendTagValues,
   handleOpenChange,
   mergedOpen,
@@ -274,8 +278,9 @@ export function useSelectSearch({
         }
       }
       setSearchValue(nextValue);
+      onSearch?.(nextValue);
     },
-    [appendTagValues, mode, tokenSeparators],
+    [appendTagValues, mode, onSearch, tokenSeparators],
   );
 
   const handleSearchKeyDown = useCallback(
@@ -313,22 +318,24 @@ export function useSelectSearch({
   }, []);
 
   const filteredOptions = useMemo(() => {
-    if (!shouldShowSearch || !searchValue.trim()) return resolvedOptions;
+    if (!shouldShowSearch || !searchValue.trim() || filterOption === false) return resolvedOptions;
     const query = searchValue.trim().toLowerCase();
+    const matches = (option: any) =>
+      typeof filterOption === 'function'
+        ? filterOption(searchValue, option)
+        : getOptionSearchText(option).toLowerCase().includes(query);
 
     return resolvedOptions
       .map((item) => {
         if (isGroupOption(item)) {
-          const groupItems = item.options.filter((option) =>
-            getOptionSearchText(option).toLowerCase().includes(query),
-          );
+          const groupItems = item.options.filter((option) => matches(option));
           if (!groupItems.length) return null;
           return { ...item, options: groupItems };
         }
-        return getOptionSearchText(item).toLowerCase().includes(query) ? item : null;
+        return matches(item) ? item : null;
       })
       .filter(Boolean) as SelectOptions;
-  }, [resolvedOptions, searchValue, shouldShowSearch]);
+  }, [filterOption, resolvedOptions, searchValue, shouldShowSearch]);
 
   return {
     filteredOptions,

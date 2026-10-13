@@ -11,7 +11,7 @@ import { surfaceMarker } from './marker.stylex';
  * `colorFillTertiary` (white 6%): on the #0d0d0d workspace it reads as about #1c1c1c, a subtle
  * raised step. `colorFillQuaternary` (white 2%, about #111) would barely separate from the page.
  *
- * Borders and inner dividers (table, header and cell lines, PageSkeleton) use `colorFillSecondary`
+ * Borders and inner dividers (table, header and cell lines, PageSkeleton, strip seams) use `colorBorderSecondary`
  * (white 10% / black 6%); hover and focus use the stronger `colorFill`. Painted over the dark card
  * the border lands near #2f2f2f against #1c1c1c, and in light near #f0f0f0 against #ffffff.
  *
@@ -60,7 +60,7 @@ export const styles = stylex.create({
   card: {
     '--lobe-surface-bg': cssVar.colorBgContainer,
     '--lobe-surface-bg-solid': cssVar.colorBgContainer,
-    'borderColor': cssVar.colorFillSecondary,
+    'borderColor': cssVar.colorBorderSecondary,
     'borderRadius': cssVar.borderRadiusLG,
     'borderStyle': 'solid',
     'borderWidth': 1,
@@ -73,7 +73,7 @@ export const styles = stylex.create({
   },
   cardLinked: {
     borderColor: {
-      'default': cssVar.colorFillSecondary,
+      'default': cssVar.colorBorderSecondary,
       ':focus-within': cssVar.colorFill,
       ':hover': cssVar.colorFill,
     },
@@ -85,7 +85,7 @@ export const styles = stylex.create({
     minInlineSize: 0,
   },
   clip: {
-    overflow: 'hidden',
+    overflow: 'clip',
   },
   content: {
     minInlineSize: 0,
@@ -112,7 +112,7 @@ export const styles = stylex.create({
     paddingBlock: 8,
     paddingInline: 16,
     alignItems: 'flex-start',
-    borderBlockEndColor: cssVar.colorFillSecondary,
+    borderBlockEndColor: cssVar.colorBorderSecondary,
     borderBlockEndStyle: 'solid',
     borderBlockEndWidth: 1,
     boxSizing: 'border-box',

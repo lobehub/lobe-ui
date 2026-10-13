@@ -2,6 +2,41 @@
 
 # Changelog
 
+# [5.63.0](https://github.com/lobehub/lobe-ui/compare/v5.62.1...v5.63.0) (2026-10-13)
+
+### ✨ Features
+
+- **base-ui,dashboard**: ProTable polish, Table variants, Surface Block tokens, closes [#713](https://github.com/lobehub/lobe-ui/issues/713) ([059090f](https://github.com/lobehub/lobe-ui/commit/059090f))
+
+## [5.62.1](https://github.com/lobehub/lobe-ui/compare/v5.62.0...v5.62.1) (2026-10-13)
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Keep Table onChange sorter single-object compatible for multi-sort ([ea442cb](https://github.com/lobehub/lobe-ui/commit/ea442cb))
+- **base-ui**: Restore deprecated Table bordered prop as variant outlined ([b9af52f](https://github.com/lobehub/lobe-ui/commit/b9af52f))
+
+# [5.62.0](https://github.com/lobehub/lobe-ui/compare/v5.61.1...v5.62.0) (2026-10-13)
+
+### ✨ Features
+
+- **base-ui**: Add ProTable, closes [#712](https://github.com/lobehub/lobe-ui/issues/712) ([c8a7b6f](https://github.com/lobehub/lobe-ui/commit/c8a7b6f))
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Ship ProTable from its own base-ui/pro-table entry so the base-ui main entry stays TanStack-free ([d22b4cf](https://github.com/lobehub/lobe-ui/commit/d22b4cf))
+
+## [5.61.1](https://github.com/lobehub/lobe-ui/compare/v5.61.0...v5.61.1) (2026-10-13)
+
+### 🐛 Bug Fixes
+
+- **select**: Keep selected value while searching, closes [#711](https://github.com/lobehub/lobe-ui/issues/711) ([8b1c50d](https://github.com/lobehub/lobe-ui/commit/8b1c50d))
+
+# [5.61.0](https://github.com/lobehub/lobe-ui/compare/v5.60.0...v5.61.0) (2026-10-13)
+
+### ✨ Features
+
+- **base-ui**: Align Table API, features and demos with antd Table, closes [#710](https://github.com/lobehub/lobe-ui/issues/710) ([6db0d94](https://github.com/lobehub/lobe-ui/commit/6db0d94))
+
 # [5.60.0](https://github.com/lobehub/lobe-ui/compare/v5.59.0...v5.60.0) (2026-10-13)
 
 ### ✨ Features

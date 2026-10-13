@@ -47,7 +47,7 @@ export const styles = stylex.create({
    * track, which reads louder than the cells.
    */
   frame: {
-    '--metric-seam': cssVar.colorFillSecondary,
+    '--metric-seam': cssVar.colorBorderSecondary,
     'borderRadius': 'inherit',
     'overflow': 'hidden',
     'backgroundColor': 'transparent',
@@ -72,9 +72,20 @@ export const styles = stylex.create({
     minInlineSize: 0,
   },
   headCopy: {
+    flex: '1',
     gap: 6,
     alignItems: 'center',
     display: 'flex',
+    minInlineSize: 0,
+  },
+  headAction: {
+    flex: 'none',
+    alignItems: 'center',
+    display: 'flex',
+  },
+  chart: {
+    inlineSize: '100%',
+    marginBlockStart: 6,
     minInlineSize: 0,
   },
   hint: {

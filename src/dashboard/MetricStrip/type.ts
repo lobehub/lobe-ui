@@ -7,6 +7,8 @@ import type { SurfaceRenderLink } from '../Surface/type';
 export interface MetricItem {
   /** Control on the label row, such as a menu. */
   action?: ReactNode;
+  /** Full-width chart (sparkline, area) under the delta and hint. */
+  chart?: ReactNode;
   delta?: ReactNode;
   direction?: 'up' | 'down' | 'flat';
   hint?: ReactNode;

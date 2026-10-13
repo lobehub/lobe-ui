@@ -21,8 +21,8 @@ const MetricBody = ({ item, loading }: { item: MetricItem; loading?: boolean }) 
     <div {...stylex.props(styles.head)}>
       <div {...stylex.props(styles.headCopy)}>
         <div {...stylex.props(styles.label)}>{item.label}</div>
-        {item.action}
       </div>
+      {item.action ? <div {...stylex.props(styles.headAction)}>{item.action}</div> : null}
       {item.mark ? (
         <span aria-hidden {...stylex.props(styles.mark)}>
           <Icon icon={item.mark} size={14} />
@@ -52,6 +52,7 @@ const MetricBody = ({ item, loading }: { item: MetricItem; loading?: boolean }) 
         {item.hint ? <span {...stylex.props(styles.hint)}>{item.hint}</span> : null}
       </div>
     ) : null}
+    {!loading && item.chart ? <div {...stylex.props(styles.chart)}>{item.chart}</div> : null}
   </>
 );
 
