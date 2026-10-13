@@ -2,6 +2,33 @@
 
 # Changelog
 
+# [6.0.0-beta.6](https://github.com/lobehub/lobe-ui/compare/v6.0.0-beta.5...v6.0.0-beta.6) (2026-10-13)
+
+### ✨ Features
+
+- **colorswatches**: Custom colour chip and renderPicker slot ([1131830](https://github.com/lobehub/lobe-ui/commit/1131830))
+- **dashboard**: Add ChartGrid, PageToolbar, TableIconActions, TitleWithTips and LabelWithKey ([694261d](https://github.com/lobehub/lobe-ui/commit/694261d))
+- **dashboard**: Card system refresh, StatCard/MetricStrip split, AuthLayout and ConsoleShell loading ([342ba84](https://github.com/lobehub/lobe-ui/commit/342ba84))
+- **dashboard**: Rich Surface with links, loading and chart slot; add PanelSurface, MetricStrip, FilterStrip and Section; fix Grid overflow on narrow screens ([1b9fbda](https://github.com/lobehub/lobe-ui/commit/1b9fbda))
+- **grainient**: Add animated grainy WebGL gradient background ([04f429b](https://github.com/lobehub/lobe-ui/commit/04f429b))
+- **image**: Add fetchImage for CORS-safe preview copy and download ([61aa8bc](https://github.com/lobehub/lobe-ui/commit/61aa8bc))
+
+### 🎫 Chores
+
+- **release**: V5.58.0 [skip ci] ([02609d1](https://github.com/lobehub/lobe-ui/commit/02609d1))
+- **release**: V5.59.0 [skip ci] ([160c94e](https://github.com/lobehub/lobe-ui/commit/160c94e))
+- **release**: V5.60.0 [skip ci] ([0028cef](https://github.com/lobehub/lobe-ui/commit/0028cef))
+
+### 🐛 Bug Fixes
+
+- **build**: Drop the null name lightningcss emits for unnamed [@container](https://github.com/container) rules ([304f61d](https://github.com/lobehub/lobe-ui/commit/304f61d))
+- **console-shell**: Flush drawer scroll edge and put the close button in the brand row ([c671c4f](https://github.com/lobehub/lobe-ui/commit/c671c4f))
+- **input-number**: Only dim the root when the field itself is disabled ([6c3c9e0](https://github.com/lobehub/lobe-ui/commit/6c3c9e0))
+
+### 💄 Styles
+
+- **dashboard**: Clip strip cells to the card radius and share colorBorderSecondary for borders and dividers ([8897617](https://github.com/lobehub/lobe-ui/commit/8897617))
+
 # [6.0.0-beta.5](https://github.com/lobehub/lobe-ui/compare/v6.0.0-beta.4...v6.0.0-beta.5) (2026-10-12)
 
 ### ⚡ Performance Improvements
