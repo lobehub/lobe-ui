@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [5.63.0](https://github.com/lobehub/lobe-ui/compare/v5.62.1...v5.63.0) (2026-10-13)
+
+### ✨ Features
+
+- **base-ui,dashboard**: ProTable polish, Table variants, Surface Block tokens, closes [#713](https://github.com/lobehub/lobe-ui/issues/713) ([059090f](https://github.com/lobehub/lobe-ui/commit/059090f))
+
 ## [5.62.1](https://github.com/lobehub/lobe-ui/compare/v5.62.0...v5.62.1) (2026-10-13)
 
 ### 🐛 Bug Fixes
