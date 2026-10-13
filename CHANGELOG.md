@@ -2,6 +2,16 @@
 
 # Changelog
 
+# [6.0.0-beta.7](https://github.com/lobehub/lobe-ui/compare/v6.0.0-beta.6...v6.0.0-beta.7) (2026-10-13)
+
+### ✨ Features
+
+- **styles**: Accept any hex as primaryColor ([3046084](https://github.com/lobehub/lobe-ui/commit/3046084))
+
+### 🐛 Bug Fixes
+
+- **colorswatches**: Make texts.custom and texts.presets optional ([2d75984](https://github.com/lobehub/lobe-ui/commit/2d75984))
+
 # [6.0.0-beta.6](https://github.com/lobehub/lobe-ui/compare/v6.0.0-beta.5...v6.0.0-beta.6) (2026-10-13)
 
 ### ✨ Features
