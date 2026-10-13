@@ -1,11 +1,14 @@
 @layer lobe-ui {
   .lobe-table {
+    /* Surface of the table and of every cell that must occlude scrolled content
+       (header, fixed columns, sticky summary). Override it where a transparent
+       variant (borderless / filled) sits on a different surface, e.g. a card. */
     --lobe-table-border: 1px solid var(--lobe-color-border-secondary);
     --lobe-table-z-fixed: 2;
 
     font-size: 14px;
     color: var(--lobe-color-text);
-    background: var(--lobe-color-bg-container);
+    background: var(--lobe-table-bg, var(--lobe-color-bg-container));
 
     & table {
       border-spacing: 0;
@@ -32,7 +35,7 @@
       color: var(--lobe-color-text-secondary);
       text-align: start;
 
-      background: var(--lobe-color-bg-container);
+      background: var(--lobe-table-bg, var(--lobe-color-bg-container));
       box-shadow:
         inset 0 -1px 0 var(--lobe-color-border-secondary),
         inset 0 999px 0 var(--lobe-color-fill-quaternary);
@@ -50,7 +53,7 @@
       font-variant-numeric: tabular-nums;
       text-align: start;
 
-      background: var(--lobe-color-bg-container);
+      background: var(--lobe-table-bg, var(--lobe-color-bg-container));
 
       transition: background-color var(--lobe-motion-duration-mid);
     }
@@ -159,7 +162,7 @@
     }
 
     & .lobe-table-cell-fix {
-      background: var(--lobe-color-bg-container);
+      background: var(--lobe-table-bg, var(--lobe-color-bg-container));
 
       &::after {
         pointer-events: none;
@@ -193,7 +196,7 @@
     & .lobe-table-sticky-holder {
       position: sticky;
       z-index: calc(var(--columns-count, 1) * 2 + var(--lobe-table-z-fixed) + 1);
-      background: var(--lobe-color-bg-container);
+      background: var(--lobe-table-bg, var(--lobe-color-bg-container));
     }
 
     & .lobe-table-sticky-scroll {
@@ -256,12 +259,16 @@
     }
 
     & .lobe-table-tbody > tr.lobe-table-row-selected > td {
-      background: color-mix(in srgb, var(--lobe-color-bg-container), var(--lobe-color-primary) 6%);
+      background: color-mix(
+        in srgb,
+        var(--lobe-table-bg, var(--lobe-color-bg-container)),
+        var(--lobe-color-primary) 6%
+      );
 
       &.lobe-table-cell-row-hover {
         background: color-mix(
           in srgb,
-          var(--lobe-color-bg-container),
+          var(--lobe-table-bg, var(--lobe-color-bg-container)),
           var(--lobe-color-primary) 10%
         );
       }
@@ -364,7 +371,7 @@
     & .lobe-table-summary {
       position: relative;
       z-index: var(--lobe-table-z-fixed);
-      background: var(--lobe-color-bg-container);
+      background: var(--lobe-table-bg, var(--lobe-color-bg-container));
 
       & > tr > th,
       & > tr > td {
@@ -399,7 +406,7 @@
 
       & .lobe-table-cell {
         border-block-end: var(--lobe-table-border);
-        background: var(--lobe-color-bg-container);
+        background: var(--lobe-table-bg, var(--lobe-color-bg-container));
         transition: background-color var(--lobe-motion-duration-mid);
       }
 
@@ -430,7 +437,11 @@
   .lobe-table.lobe-table-hoverable {
     & .lobe-table-tbody > tr > .lobe-table-cell-row-hover,
     & .lobe-table-tbody-virtual .lobe-table-row:hover > .lobe-table-cell {
-      background: color-mix(in srgb, var(--lobe-color-bg-container), var(--lobe-color-text) 3%);
+      background: color-mix(
+        in srgb,
+        var(--lobe-table-bg, var(--lobe-color-bg-container)),
+        var(--lobe-color-text) 3%
+      );
     }
   }
 
@@ -439,7 +450,7 @@
 
     & > .lobe-table-title,
     & > .lobe-table-footer {
-      background: var(--lobe-color-bg-container);
+      background: var(--lobe-table-bg, var(--lobe-color-bg-container));
     }
 
     & > .lobe-table-title {
@@ -456,7 +467,7 @@
       border-inline: var(--lobe-table-border);
       border-radius: var(--lobe-border-radius-lg);
 
-      background: var(--lobe-color-bg-container);
+      background: var(--lobe-table-bg, var(--lobe-color-bg-container));
     }
 
     & > .lobe-table-title + .lobe-table-container {
@@ -533,7 +544,7 @@
 
     & .lobe-table-thead > tr > th.lobe-table-cell-fix,
     & .lobe-table-thead > tr > td.lobe-table-cell-fix {
-      background: var(--lobe-color-bg-container);
+      background: var(--lobe-table-bg, var(--lobe-color-bg-container));
       box-shadow:
         inset 0 -1px 0 var(--lobe-color-border-secondary),
         inset 0 999px 0 var(--lobe-color-fill-quaternary),
@@ -541,13 +552,27 @@
     }
 
     & .lobe-table-tbody > tr > td.lobe-table-cell-fix {
-      background: var(--lobe-color-bg-container);
+      background: var(--lobe-table-bg, var(--lobe-color-bg-container));
       box-shadow: inset 0 999px 0 var(--lobe-color-fill-tertiary);
     }
   }
 
   .lobe-table.lobe-table-borderless {
     background: transparent;
+
+    & .lobe-table-thead > tr > th,
+    & .lobe-table-thead > tr > td {
+      background: transparent;
+    }
+
+    & .lobe-table-thead > tr > th.lobe-table-cell-fix,
+    & .lobe-table-thead > tr > td.lobe-table-cell-fix {
+      background: var(--lobe-table-bg, var(--lobe-color-bg-container));
+      box-shadow:
+        inset 0 -1px 0 var(--lobe-color-border-secondary),
+        inset 0 999px 0 var(--lobe-color-fill-quaternary),
+        inset 0 999px 0 var(--lobe-color-fill-tertiary);
+    }
 
     & .lobe-table-tbody > tr > td,
     & .lobe-table-tbody > tr > th,
@@ -575,20 +600,28 @@
     & .lobe-table-tbody > tr > td.lobe-table-cell-fix,
     & .lobe-table-tbody > tr > th.lobe-table-cell-fix,
     & .lobe-table-tbody-virtual .lobe-table-cell.lobe-table-cell-fix {
-      background: var(--lobe-color-bg-container);
+      background: var(--lobe-table-bg, var(--lobe-color-bg-container));
     }
 
     & .lobe-table-tbody > tr > td.lobe-table-cell-fix.lobe-table-cell-row-hover {
-      background: color-mix(in srgb, var(--lobe-color-bg-container), var(--lobe-color-text) 3%);
+      background: color-mix(
+        in srgb,
+        var(--lobe-table-bg, var(--lobe-color-bg-container)),
+        var(--lobe-color-text) 3%
+      );
     }
 
     & .lobe-table-tbody > tr.lobe-table-row-selected > td.lobe-table-cell-fix {
-      background: color-mix(in srgb, var(--lobe-color-bg-container), var(--lobe-color-primary) 6%);
+      background: color-mix(
+        in srgb,
+        var(--lobe-table-bg, var(--lobe-color-bg-container)),
+        var(--lobe-color-primary) 6%
+      );
 
       &.lobe-table-cell-row-hover {
         background: color-mix(
           in srgb,
-          var(--lobe-color-bg-container),
+          var(--lobe-table-bg, var(--lobe-color-bg-container)),
           var(--lobe-color-primary) 10%
         );
       }

@@ -118,6 +118,8 @@ Records with a `children` array render as a collapsible tree; `expandable.childr
 
 `fixed` accepts `'start'` / `'end'` (`true` and `'left'` / `'right'` also work). Offsets come from the measured column widths, and a shadow shows when content scrolls under a pinned edge. Set `scroll.x` so the table can scroll. Switch `pinning` to `stacked`: pinned columns need not be adjacent, each one sticks right after the pinned columns before it. Raise `scrollY` to combine `scroll.x` and `scroll.y` (fixed columns and header).
 
+`scroll.x` becomes the `<table>`'s width, so the table scrolls inside its own frame. When that frame is a flex or grid item, give it `min-width: 0` — otherwise the item's `min-width: auto` resolves to the table's width and the table stretches the layout (pushing siblings out) instead of scrolling.
+
 <Demo of={DemoFixedColumns} layout="bare" />
 
 ## Grouping table head
@@ -470,6 +472,8 @@ Argument of a function `filterDropdown`.
 ## Design Token
 
 The table has no component tokens. It reads the global `--lobe-*` theme tokens (colors, radius, motion); restyle it per instance with `classNames` / `styles`. See [Differences from antd Table](#differences-from-antd-table-migration).
+
+One custom property is honored: `--lobe-table-bg` (falls back to `var(--lobe-color-bg-container)`) is the surface painted by the table root and by every cell that has to occlude scrolled content — the header, `fixed` (pinned) columns and the sticky summary. The transparent variants (`borderless`, the default, and `filled`) leave the body transparent so the table blends into whatever hosts it; set `--lobe-table-bg` on the container to that host surface (e.g. a card's color) so those opaque cells match it instead of standing out as a block.
 
 ## Differences from antd Table / migration
 
