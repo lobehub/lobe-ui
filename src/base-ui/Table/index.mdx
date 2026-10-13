@@ -1,31 +1,716 @@
 ---
 title: Table
-description: Data table with antd-shaped columns, local or server sorting, header filters, pagination, sticky header and fixed columns. Built on TanStack Table v9.
+description: Data table with antd-shaped columns, local or server sorting, header filters, pagination, row selection, expandable rows, tree data, summary rows, sticky header, fixed columns and virtual scrolling. Built on @rc-component/table, the engine behind antd Table.
 category: Data Display
 ---
 
-import DemoIndex from './demos/index.tsx?demo';
+import DemoBasic from './demos/basic.tsx?demo';
+import DemoJsx from './demos/jsx.tsx?demo';
+import DemoRowSelection from './demos/row-selection.tsx?demo';
+import DemoRowSelectionAndOperation from './demos/row-selection-and-operation.tsx?demo';
+import DemoRowSelectionCustom from './demos/row-selection-custom.tsx?demo';
+import DemoRowSelectionDebug from './demos/row-selection-debug.tsx?demo';
+import DemoHead from './demos/head.tsx?demo';
+import DemoFilterInTree from './demos/filter-in-tree.tsx?demo';
+import DemoFilterSearch from './demos/filter-search.tsx?demo';
+import DemoMultipleSorter from './demos/multiple-sorter.tsx?demo';
+import DemoResetFilter from './demos/reset-filter.tsx?demo';
+import DemoCustomFilterPanel from './demos/custom-filter-panel.tsx?demo';
 import DemoServer from './demos/server.tsx?demo';
+import DemoSize from './demos/size.tsx?demo';
+import DemoNarrow from './demos/narrow.tsx?demo';
+import DemoBordered from './demos/bordered.tsx?demo';
+import DemoExpand from './demos/expand.tsx?demo';
+import DemoExpandSticky from './demos/expand-sticky.tsx?demo';
+import DemoOrderColumn from './demos/order-column.tsx?demo';
+import DemoColspanRowspan from './demos/colspan-rowspan.tsx?demo';
+import DemoTreeData from './demos/tree-data.tsx?demo';
+import DemoTreeTableEllipsis from './demos/tree-table-ellipsis.tsx?demo';
+import DemoTreeTablePreserveSelectedRowKeys from './demos/tree-table-preserve-selected-row-keys.tsx?demo';
+import DemoFixedHeader from './demos/fixed-header.tsx?demo';
+import DemoAutoHeight from './demos/auto-height.tsx?demo';
+import DemoFixedColumns from './demos/fixed-columns.tsx?demo';
+import DemoFixedGappedColumns from './demos/fixed-gapped-columns.tsx?demo';
+import DemoFixedColumnsHeader from './demos/fixed-columns-header.tsx?demo';
+import DemoHiddenColumns from './demos/hidden-columns.tsx?demo';
+import DemoGroupingColumns from './demos/grouping-columns.tsx?demo';
+import DemoEditCell from './demos/edit-cell.tsx?demo';
+import DemoEditRow from './demos/edit-row.tsx?demo';
+import DemoNestedTable from './demos/nested-table.tsx?demo';
+import DemoDragSorting from './demos/drag-sorting.tsx?demo';
+import DemoDragColumnSorting from './demos/drag-column-sorting.tsx?demo';
+import DemoDragSortingHandler from './demos/drag-sorting-handler.tsx?demo';
+import DemoEllipsis from './demos/ellipsis.tsx?demo';
+import DemoColumnDefaults from './demos/column-defaults.tsx?demo';
+import DemoEllipsisCustomTooltip from './demos/ellipsis-custom-tooltip.tsx?demo';
+import DemoCustomEmpty from './demos/custom-empty.tsx?demo';
+import DemoSummary from './demos/summary.tsx?demo';
+import DemoVirtualList from './demos/virtual-list.tsx?demo';
+import DemoResponsive from './demos/responsive.tsx?demo';
+import DemoNestTableBorderDebug from './demos/nest-table-border-debug.tsx?demo';
+import DemoNestedTableInTabsDebug from './demos/nested-table-in-tabs-debug.tsx?demo';
+import DemoPagination from './demos/pagination.tsx?demo';
+import DemoRowSelectionCustomDebug from './demos/row-selection-custom-debug.tsx?demo';
+import DemoSticky from './demos/sticky.tsx?demo';
+import DemoDynamicSettings from './demos/dynamic-settings.tsx?demo';
+import DemoStyleClass from './demos/style-class.tsx?demo';
+import DemoSelectionsDebug from './demos/selections-debug.tsx?demo';
+import DemoMeasureRowRender from './demos/measure-row-render.tsx?demo';
+import DemoLocale from './demos/locale.tsx?demo';
+import DemoIndex from './demos/index.tsx?demo';
 
-## Basic
+## When to use
 
-Sort by clicking a header, filter from the funnel icon, page through with the pager. `scroll.y` keeps the header in view; `fixed: 'right'` pins the action column.
+- To display a collection of structured data.
+- To sort, search, paginate, filter, select or expand that data.
 
-<Demo of={DemoIndex} />
+The API mirrors antd `Table` (columns, `dataSource`, `rowKey`, `pagination`, `rowSelection`, `expandable`, …) and the rendering engine is `@rc-component/table`, the one antd uses. Popups and controls (filter panel, selection menu, pager, tooltips, checkboxes) are lobe base-ui components; no antd component is used. The demos below follow the order of antd's docs, so each antd demo has a counterpart here; the only omission is listed under [Differences from antd Table](#differences-from-antd-table-migration).
 
-## Server-driven
+```tsx
+import { Table } from '@lobehub/ui/base-ui';
 
-`sorter: true` leaves row order alone and reports the sort through `onChange`; `pagination.total` switches the pager to server mode. Fetch the page yourself and pass it as `dataSource`.
+const dataSource = [
+  { key: '1', name: 'Mike', age: 32, address: '10 Downing Street' },
+  { key: '2', name: 'John', age: 42, address: '10 Downing Street' },
+];
+
+const columns = [
+  { title: 'Name', dataIndex: 'name', key: 'name' },
+  { title: 'Age', dataIndex: 'age', key: 'age' },
+  { title: 'Address', dataIndex: 'address', key: 'address' },
+];
+
+<Table dataSource={dataSource} columns={columns} />;
+```
+
+## Basic usage
+
+A plain table: `render` turns the Name into a link and the Tags into lobe `Tag`s.
+
+<Demo of={DemoBasic} />
+
+## JSX style API
+
+Declare columns as `Table.Column` / `Table.ColumnGroup` children instead of the `columns` prop.
+
+<Demo of={DemoJsx} />
+
+## Row selection
+
+`rowSelection` adds a selection column of checkboxes (or radios with `type: 'radio'`). `getCheckboxProps` returns per-row props such as `disabled` and `name`. `onChange(selectedRowKeys, selectedRows, { type })` reports every change, with `type` one of `single`, `multiple` (Shift-click range), `all`, `invert` or `none`; `onSelect(record, selected, selectedRows, nativeEvent)` reports single clicks.
+
+<Demo of={DemoRowSelection} />
+
+## Selection and operation
+
+Control the selection with `selectedRowKeys` + `onChange` to act on it from outside the table, and clear it when done.
+
+<Demo of={DemoRowSelectionAndOperation} />
+
+## Custom selection
+
+`selections` adds a dropdown beside the select-all checkbox. `true` gives the presets: `Table.SELECTION_ALL` (every row of every page), `Table.SELECTION_INVERT` (the current page) and `Table.SELECTION_NONE`; custom `{ key, text, onSelect }` items receive the selectable keys of the current page. Hold Shift to select a range of rows.
+
+<Demo of={DemoRowSelectionCustom} />
+
+## Selection performance (debug)
+
+Selecting rows re-renders only the selection column when the other columns set `shouldCellUpdate`: the counter after each address stays put.
+
+<Demo of={DemoRowSelectionDebug} />
+
+## Filter and sorter
+
+`filters` + `onFilter` filter locally: tick options in the panel and press OK (closing the panel also applies, unless `filterOnClose: false`). `filters.children` nest options in a group, and `filterSearch` adds a search box. `sorter` takes a compare function, `defaultSortOrder` sets the initial order and `sortDirections` limits the cycle (Name only sorts descending). `showSorterTooltip={{ target: 'sorter-icon' }}` moves the hint tooltip from the whole header to the sort icon.
+
+<Demo of={DemoHead} />
+
+## Filter in tree
+
+`filterMode: 'tree'` renders `filters` and their `children` as a checkable tree with a "Select all" box; checking a parent checks its children. `filterSearch` keeps matching nodes and their ancestors.
+
+<Demo of={DemoFilterInTree} />
+
+## Filter search
+
+`filterSearch: true` matches the option text case-insensitively; a function `(input, item) => boolean` decides the match itself.
+
+<Demo of={DemoFilterSearch} />
+
+## Multiple sorter
+
+`sorter: { compare, multiple }` joins a multi-column sort; a higher `multiple` sorts first. With more than one active sorter, `onChange` receives an array of `{ column, columnKey, field, order }`.
+
+<Demo of={DemoMultipleSorter} />
+
+## Reset filters and sorters
+
+`filteredValue` and `sortOrder` make filters and sorting controlled: keep what `onChange` reports in state and pass it back, then clear it from outside the table. Use `null` (not `undefined`) for an empty controlled value. `defaultFilteredValue` sets an uncontrolled initial filter, and `filterResetToDefaultFilteredValue` makes Reset return to it.
+
+<Demo of={DemoResetFilter} />
+
+## Customized filter panel
+
+`filterDropdown` replaces the panel. As a function it receives `selectedKeys` / `setSelectedKeys` (the draft), `confirm({ closeDropdown })`, `clearFilters({ confirm, closeDropdown })`, `close`, `filters` and `visible`. `filterIcon` receives whether the column is filtered, `filtered` forces that state, and `filterDropdownProps` takes the popup options (`open` / `onOpenChange`, `placement`, `getPopupContainer`, `popupRender`); `filterDropdownOpen` / `onFilterDropdownOpenChange` are kept as deprecated aliases.
+
+<Demo of={DemoCustomFilterPanel} />
+
+## Ajax
+
+`sorter: true` and filters without `onFilter` leave the rows alone and report through `onChange`; `pagination.total` switches the pager to server mode. Fetch the page yourself (here from a mock endpoint) and pass it as `dataSource`, with `loading` while it loads. Here pagination (`current` / `pageSize`), `sortOrder` and `filteredValue` are all controlled by one query object, updated from `onChange`; its fourth argument `extra.action` tells whether the change came from `paginate`, `sort` or `filter`. Like antd, filtering returns to page 1 while sorting keeps the page, and `scroll` scrolls back to the first row on every change.
 
 <Demo of={DemoServer} />
 
-## APIs
+## Size
+
+`size` is `large`, `medium` (default; `middle` is an alias) or `small`.
+
+<Demo of={DemoSize} />
+
+## Size in a narrow box (debug)
+
+A small table in a 300px box: the small pager wraps instead of overflowing.
+
+<Demo of={DemoNarrow} />
+
+## Border, title and footer
+
+`bordered` draws cell borders; `title` and `footer` render above and below the table and receive the current page data.
+
+<Demo of={DemoBordered} />
+
+## Expandable row
+
+`expandable.expandedRowRender` adds an expand column and renders extra content under a row; `rowExpandable` hides the toggle for rows that cannot expand. Keys can be controlled (`expandedRowKeys` + `onExpandedRowsChange`) or uncontrolled (`defaultExpandedRowKeys`, `defaultExpandAllRows`). `expandRowByClick`, `expandIcon`, `onExpand`, `showExpandColumn`, `columnTitle`, `columnWidth`, `fixed`, `expandedRowClassName` and `forceRender` follow antd.
+
+<Demo of={DemoExpand} />
+
+## Customizable expansion position (debug)
+
+Put `Table.EXPAND_COLUMN` in `columns` to choose where the expand column goes. The deprecated `expandedRowOffset` keeps the leading columns beside the expanded row and pins them.
+
+<Demo of={DemoExpandSticky} />
+
+## Order specific column
+
+`Table.SELECTION_COLUMN` and `Table.EXPAND_COLUMN` in `columns` choose where the selection and expand columns go. Without them, the selection column comes first, after a leading expand column.
+
+<Demo of={DemoOrderColumn} />
+
+## colSpan and rowSpan
+
+Header cells merge with `column.colSpan` (`0` hides a cell). Body cells merge when `onCell` (or a `render` returning `{ children, props }`) sets `colSpan` / `rowSpan`; a span of `0` skips the cell. `rowScope: 'row'` renders the first column as row headers.
+
+<Demo of={DemoColspanRowspan} />
+
+## Tree data
+
+Records with a `children` array render as a collapsible tree; `expandable.childrenColumnName` reads another field and `indentSize` (default 15px) sets the indent per level. Sorting and filtering apply at every level, pagination counts top-level records, and `rowClassName` receives the depth as its third argument. With `rowSelection`, the tree toggle moves to the column after the checkboxes; `checkStrictly: false` links parents and children (checking a parent checks its descendants, and a parent shows half-checked while only some are).
+
+<Demo of={DemoTreeData} />
+
+## Tree data with ellipsis (debug)
+
+Tree indent and toggle stay inside an `ellipsis` column, fixed or not; `rowSelection.columnWidth` widens the selection column.
+
+<Demo of={DemoTreeTableEllipsis} />
+
+## Tree data with preserved selection (debug)
+
+`preserveSelectedRowKeys` keeps selected keys (and their records in `onChange`) after the rows leave `dataSource`, as with server-side paging. Here it combines with `checkStrictly: false` and pagination.
+
+<Demo of={DemoTreeTablePreserveSelectedRowKeys} />
+
+## Fixed header
+
+`scroll.y` splits the header from a body that scrolls on its own. Give the columns a `width` so header and body stay aligned.
+
+<Demo of={DemoFixedHeader} />
+
+## Auto height
+
+Fill a box of any height by measuring it and feeding the remaining space into `scroll.y`; works with `virtual` too.
+
+<Demo of={DemoAutoHeight} />
+
+## Fixed columns
+
+`fixed` accepts `'start'` / `'end'` (`true` and `'left'` / `'right'` also work). Offsets come from the measured column widths, and a shadow shows when content scrolls under a pinned edge. Set `scroll.x` so the table can scroll.
+
+<Demo of={DemoFixedColumns} />
+
+## Stack fixed columns
+
+Pinned columns need not be adjacent: each one sticks right after the pinned columns before it.
+
+<Demo of={DemoFixedGappedColumns} />
+
+## Fixed columns and header
+
+Combine `scroll.x` and `scroll.y`.
+
+<Demo of={DemoFixedColumnsHeader} />
+
+## Hidden columns
+
+`hidden` removes a column from the view while keeping it in `columns`.
+
+<Demo of={DemoHiddenColumns} />
+
+## Grouping table head
+
+`children` nests columns under a group header, at any depth. Sorters, filters and `fixed` work on nested columns.
+
+<Demo of={DemoGroupingColumns} />
+
+## Editable cells
+
+`components.body.cell` replaces every `td`, and `onCell` hands the editable columns' cells the record and a save callback. Click a name to edit it; Enter or blur saves, and an empty value shows an error instead. The draft lives in cell state (antd uses `Form` here), the input is the base-ui `Input`, and Delete asks for confirmation in a base-ui `Popover` (antd's `Popconfirm`).
+
+<Demo of={DemoEditCell} />
+
+## Editable rows
+
+The same `components.body.cell` / `onCell` pattern edits a whole row: Edit swaps the cells for base-ui `Input` / `InputNumber` controls, Save checks the fields are filled, and paging cancels the edit (`pagination.onChange`). The row draft is kept in a React context instead of an antd `Form` instance.
+
+<Demo of={DemoEditRow} />
+
+## Nested tables
+
+A `Table` returned from `expandedRowRender` fills the expanded row, starting after the expand column.
+
+<Demo of={DemoNestedTable} />
+
+## Drag sorting
+
+`components.body.row` makes each `tr` a `@dnd-kit` sortable item; rc-table passes the row key as `data-row-key`. Drag a row to reorder `dataSource`.
+
+<Demo of={DemoDragSorting} />
+
+## Drag column sorting
+
+`components.header.cell` and `components.body.cell` make the columns sortable; `onHeaderCell` / `onCell` pass each cell its column id. Drag a header to move the column.
+
+<Demo of={DemoDragColumnSorting} />
+
+## Drag sorting with handler
+
+The row owns the sortable and shares its activator through context, so only the grip (a base-ui `ActionIcon`) starts a drag.
+
+<Demo of={DemoDragSortingHandler} />
+
+## Ellipsis column
+
+`ellipsis: true` truncates both cells and headers and switches to a fixed table layout.
+
+<Demo of={DemoEllipsis} />
+
+## Shared column props
+
+The table-level `column` prop is merged under every column and group; a column's own fields win.
+
+<Demo of={DemoColumnDefaults} />
+
+## Ellipsis column custom tooltip
+
+`ellipsis: { showTitle: false }` drops the native `title` so `render` can wrap the text in a `Tooltip`.
+
+<Demo of={DemoEllipsisCustomTooltip} />
+
+## Custom empty
+
+`locale.emptyText` replaces the default empty state; it takes a node or a function called on render. The lobe-only `emptyText` prop is an alias (`locale.emptyText` wins when both are set). antd's `ConfigProvider.renderEmpty` has no counterpart here: pass `locale.emptyText` instead.
+
+<Demo of={DemoCustomEmpty} />
+
+## Summary
+
+`summary(currentPageData)` returns rows built from `Table.Summary.Row` and `Table.Summary.Cell` (`index` is the starting column, plus `colSpan`, `rowSpan` and `align`). Wrap them in `<Table.Summary fixed>` to pin them under a scrolling body (`fixed: true | 'bottom'`), or `fixed="top"` to pin them under the header.
+
+<Demo of={DemoSummary} />
+
+## Virtual list
+
+`virtual` renders only the visible rows (rc-table `VirtualTable`) and needs a numeric `scroll.y` (and a numeric `scroll.x` with fixed columns). It works with fixed columns, `rowSpan`, expandable rows and row selection. `ref.scrollTo({ index | key | top, align, offset })` jumps to a row; `align` is `'start' | 'end' | 'nearest'`.
+
+<Demo of={DemoVirtualList} />
+
+## Responsive
+
+`responsive` lists the breakpoints (`xs` … `xxxl`, antd's Grid values) at which a column shows. Resize the window to see Age and Address drop.
+
+<Demo of={DemoResponsive} />
+
+## Nested bordered tables (debug)
+
+Bordered and borderless tables nest in either combination without doubled borders; `title` and `footer` keep their frame.
+
+<Demo of={DemoNestTableBorderDebug} />
+
+## Nested table in Tabs (debug)
+
+A paginated table inside a base-ui `Tabs` panel, nested in an expanded row, keeps its layout when the tab switches.
+
+<Demo of={DemoNestedTableInTabsDebug} />
+
+## Pagination settings
+
+`pagination.placement` takes up to one top and one bottom position (`topStart` / `topCenter` / `topEnd` / `bottomStart` / `bottomCenter` / `bottomEnd`, or `none`); the deprecated `position` (`topLeft` / `bottomRight` …) still works. The other `pagination` fields (`showTotal`, `showQuickJumper`, `showSizeChanger`, `pageSizeOptions`, `hideOnSinglePage`, `disabled`, `size`, `className`, …) go to the base-ui `Pagination`. Like antd, the size changer shows by default once `total` is over 50, and `small` / `medium` tables get a small pager.
+
+<Demo of={DemoPagination} />
+
+## Custom selection group (debug)
+
+`renderCell(checked, record, index, originNode)` wraps or replaces the box, and may return `{ children, props }` to span rows like a column `render`.
+
+<Demo of={DemoRowSelectionCustomDebug} />
+
+## Fixed header and scroll bar with the page
+
+`sticky` keeps the header (and the horizontal scrollbar) in view while the page scrolls. Pass `{ offsetHeader, offsetSummary, offsetScroll, getContainer }` to offset them from a fixed page header or follow a custom scroll container. A fixed summary sticks to the bottom as well. The demo scrolls inside a 400px box handed to `getContainer`; without it the table follows `window`.
+
+<Demo of={DemoSticky} />
+
+## Dynamic settings
+
+Every table-level switch in one place: `bordered`, `loading`, `title`, `showHeader`, `footer`, `expandable`, `rowSelection`, a fixed header (`scroll.y`), an empty `dataSource`, column `ellipsis`, `size`, horizontal scroll with or without fixed columns (`scroll.x`), `tableLayout` and `pagination.placement`. The controls are base-ui `Switch` and `Segmented`.
+
+<Demo of={DemoDynamicSettings} />
+
+## Custom semantic DOM styling
+
+`classNames` and `styles` take an object, or a function `({ props }) => object`, keyed by the parts listed under [Semantic DOM](#semantic-dom).
+
+<Demo of={DemoStyleClass} />
+
+## Selections with icon (debug)
+
+The `selections` dropdown in a bordered table.
+
+<Demo of={DemoSelectionsDebug} />
+
+## measureRowRender (debug)
+
+rc-table renders a hidden row to measure column widths. `measureRowRender` wraps it, here with a context that lets header titles skip their decoration there; the table's own filter triggers already render statically in that row.
+
+<Demo of={DemoMeasureRowRender} />
+
+## Locale texts
+
+Not an antd demo: switches between the English defaults, `ConfigProvider` with the `zhCn` resources, and a `locale` prop that overrides a few fields (the rest keep their defaults). See [locale](#locale) for the fields.
+
+<Demo of={DemoLocale} />
+
+## Overview
+
+Not an antd demo: sorting, filtering, paging, a fixed header and a pinned action column together.
+
+<Demo of={DemoIndex} />
+
+## API
 
 <Api name="Table" from=".." />
 
-### Migrating from antd Table
+### Table
 
-- `columns`, `dataSource`, `rowKey`, `pagination`, `onChange`, `onRow`, `rowClassName`, `scroll`, `size` (`small` / `middle`), `bordered`, `loading` and `tableLayout` keep their antd shape.
-- `locale={{ emptyText }}` → `emptyText`.
-- Delete `.ant-table-*` style overrides; use `classNames` / `styles` (`wrapper`, `header`, `body`, `row`, `cell`).
-- Row selection, expandable rows, virtual scrolling, summary rows, tree data, column resizing, multi-column sort, controlled `sortOrder`, custom `filterDropdown` and array `dataIndex` paths are not supported.
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| bordered | Show all cell borders | `boolean` | `false` |
+| children | `Table.Column` / `Table.ColumnGroup` elements, used when `columns` is not set | `ReactNode` | - |
+| classNames | Class per semantic part; object or function of `{ props }`. See [Semantic DOM](#semantic-dom) | `TableClassNames \| (info: { props }) => TableClassNames` | - |
+| column | Props merged under every column and group (a column's own fields win) | `Partial<TableColumnType>` | - |
+| columns | Columns of the table | [`TableColumnsType`](#column) | - |
+| components | Override the `table`, `header.{wrapper,row,cell}` and `body.{wrapper,row,cell}` elements (rc-table `TableComponents`) | `TableComponents` | - |
+| dataSource | Records to display | `T[]` | `[]` |
+| emptyText | lobe alias of `locale.emptyText` (which wins) | `ReactNode \| () => ReactNode` | - |
+| expandable | Expandable rows and tree data, see [expandable](#expandable) | `TableExpandableConfig` | - |
+| footer | Footer renderer | `(currentPageData) => ReactNode` | - |
+| getPopupContainer | Container of the filter popups | `(triggerNode) => HTMLElement` | base-ui portal root |
+| loading | Loading overlay | `boolean \| SpinProps` (base-ui `Spin`) | `false` |
+| locale | Texts of the table, see [locale](#locale) | `TableLocale` | `@lobehub/ui/i18n` `table.*` |
+| measureRowRender | Wrap the hidden row rc-table uses to measure column widths | `(measureRow) => ReactNode` | - |
+| pagination | Pager config, see [pagination](#pagination); `false` hides it | `false \| TablePaginationConfig` | - |
+| rootClassName | Extra class on the root element | `string` | - |
+| rowClassName | Row class; a function also receives the tree depth | `string \| (record, index, indent) => string` | - |
+| rowHoverable | Highlight the hovered row | `boolean` | `true` |
+| rowKey | Row key: a field name or a function | `string \| (record, index?) => Key` | `'key'` |
+| rowSelection | Row selection, see [rowSelection](#rowselection) | `TableRowSelection` | - |
+| scroll | Scroll area, see [scroll](#scroll) | `{ x?, y?, scrollToFirstRowOnChange? }` | - |
+| showHeader | Show the header | `boolean` | `true` |
+| showSorterTooltip | Tooltip on sortable headers telling what the next click does; an object goes to the base-ui `Tooltip` | `boolean \| TooltipProps & { target?: 'full-header' \| 'sorter-icon' }` | `{ target: 'full-header' }` |
+| size | Size of the table (`middle` is an alias of `medium`) | `'large' \| 'medium' \| 'small'` | `'medium'` |
+| sortDirections | Default `sortDirections` of every column | `SortOrder[]` | `['ascend', 'descend']` |
+| sticky | Stick the header and horizontal scrollbar to the page | `boolean \| { offsetHeader?, offsetSummary?, offsetScroll?, getContainer? }` | - |
+| styles | Style per semantic part; object or function of `{ props }` | `TableStyles \| (info: { props }) => TableStyles` | - |
+| summary | Summary rows built from `Table.Summary` | `(currentPageData) => ReactNode` | - |
+| tableLayout | CSS `table-layout` | `'auto' \| 'fixed'` | `fixed` with fixed columns, `scroll.y` or `ellipsis`; otherwise `auto` |
+| title | Title renderer | `(currentPageData) => ReactNode` | - |
+| virtual | Virtual scrolling; needs a numeric `scroll.y` | `boolean` | - |
+| onChange | Pagination, filters or sorter changed | `(pagination, filters, sorter \| sorter[], extra: { currentDataSource, action: 'paginate' \| 'sort' \| 'filter' }) => void` | - |
+| onHeaderRow | Props of each header row | `(columns, index) => HTMLAttributes` | - |
+| onRow | Props of each body row | `(record, index) => HTMLAttributes` | - |
+| onScroll | Body scrolled (only vertical scrolling with `virtual`) | `(event) => void` | - |
+
+Deprecated top-level props kept from antd: `expandedRowRender`, `expandIcon`, `expandIconColumnIndex`, `indentSize` and `childrenColumnName` (use `expandable.*`).
+
+`onRow`, `onHeaderRow`, `onCell` and `onHeaderCell` all return element props:
+
+```tsx
+<Table
+  onRow={(record, rowIndex) => ({
+    onClick: (event) => {}, // click row
+    onDoubleClick: (event) => {}, // double click row
+    onContextMenu: (event) => {}, // right click row
+    onMouseEnter: (event) => {}, // mouse enter row
+    onMouseLeave: (event) => {}, // mouse leave row
+  })}
+  onHeaderRow={(columns, index) => ({
+    onClick: () => {}, // click header row
+  })}
+/>
+```
+
+### Table ref
+
+The ref is the root `div`, extended with antd's members.
+
+| Property | Description | Type |
+| --- | --- | --- |
+| nativeElement | The root element | `HTMLDivElement` |
+| scrollTo | Scroll the body: `index` / `key` (matched against `rowKey`) bring a row into view, `align` places it (`'start' \| 'end' \| 'nearest'`) and `offset` adds pixels; `top` scrolls to a pixel offset. Works with `virtual` | `(config: { index?, key?, top?, offset?, align? }) => void` |
+
+### Static members
+
+| Member | Description |
+| --- | --- |
+| `Table.Column` | JSX column, takes the [Column](#column) props |
+| `Table.ColumnGroup` | JSX column group, takes `title` plus `Table.Column` children |
+| `Table.Summary` / `Table.Summary.Row` / `Table.Summary.Cell` | Summary rows, see [Table.Summary](#table-summary) |
+| `Table.EXPAND_COLUMN` | Placeholder in `columns` for the expand column |
+| `Table.SELECTION_COLUMN` | Placeholder in `columns` for the selection column |
+| `Table.SELECTION_ALL` / `Table.SELECTION_INVERT` / `Table.SELECTION_NONE` | Preset `rowSelection.selections` items |
+
+### Column
+
+One entry of `columns`; `Table.Column` takes the same props.
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| align | Alignment (`start` / `end` follow the writing direction) | `'left' \| 'right' \| 'center' \| 'start' \| 'end'` | `'left'` |
+| className | Class of the column's cells | `string` | - |
+| colSpan | Header span; `0` hides the header cell | `number` | - |
+| dataIndex | Field of the record, or a path such as `['address', 'city']` | `string \| string[]` | - |
+| defaultFilteredValue | Initial filter (uncontrolled) | `FilterValue[] \| null` | - |
+| defaultSortOrder | Initial sort order | `'ascend' \| 'descend' \| null` | - |
+| ellipsis | Truncate cells and header; switches `tableLayout` to `fixed`. `showTitle: false` drops the native tooltip | `boolean \| { showTitle?: boolean }` | `false` |
+| filterDropdown | Custom filter panel | `ReactNode \| (props: FilterDropdownProps) => ReactNode` | - |
+| filterDropdownProps | Popup options: `open` / `onOpenChange`, `placement`, `getPopupContainer`, `popupRender`, `className`, `rootClassName`, `style`, `zIndex` | `TableFilterDropdownPopupProps` | - |
+| filtered | Force the filter icon's active state | `boolean` | `false` |
+| filteredValue | Controlled filter (`null` for none) | `FilterValue[] \| null` | - |
+| filterIcon | Custom filter icon | `ReactNode \| (filtered: boolean) => ReactNode` | - |
+| filterMode | Filter panel layout | `'menu' \| 'tree'` | `'menu'` |
+| filterMultiple | Multiple values (checkboxes) or one (radios) | `boolean` | `true` |
+| filterOnClose | Apply the draft when the panel closes without OK | `boolean` | `true` |
+| filterResetToDefaultFilteredValue | Reset returns to `defaultFilteredValue` | `boolean` | `false` |
+| filters | Filter options (`children` nest them) | `{ text, value, children? }[]` | - |
+| filterSearch | Search box over the options; a function decides the match | `boolean \| (input, item) => boolean` | `false` |
+| fixed | Pin the column (`true` / `'left'` = `'start'`, `'right'` = `'end'`) | `boolean \| 'start' \| 'end' \| 'left' \| 'right'` | `false` |
+| hidden | Hide the column | `boolean` | `false` |
+| key | Unique key; may be omitted with a unique `dataIndex` | `Key` | - |
+| minWidth | Minimum width with `tableLayout: 'auto'` | `number` | - |
+| render | Cell renderer; may return `{ children, props: { colSpan, rowSpan } }` | `(value, record, index) => ReactNode \| RenderedCell` | - |
+| responsive | Breakpoints at which the column shows | `('xs' \| 'sm' \| 'md' \| 'lg' \| 'xl' \| 'xxl' \| 'xxxl')[]` | - |
+| rowScope | Render the cells as row headers | `'row' \| 'rowgroup'` | - |
+| shouldCellUpdate | Return `false` to skip re-rendering a cell | `(record, prevRecord) => boolean` | - |
+| showSorterTooltip | Overrides the table's `showSorterTooltip` | `boolean \| TooltipProps & { target? }` | `{ target: 'full-header' }` |
+| sortDirections | Orders a header click cycles through; overrides the table's | `SortOrder[]` | `['ascend', 'descend']` |
+| sorter | Local compare function, `true` for server sorting, or `{ compare, multiple }` for multi-column sorting | `boolean \| (a, b, sortOrder) => number \| { compare?, multiple? }` | - |
+| sortIcon | Custom sort icon | `(props: { sortOrder }) => ReactNode` | - |
+| sortOrder | Controlled sort order (`null` for unsorted) | `'ascend' \| 'descend' \| null` | - |
+| title | Header; a function receives `{ sortColumns, filters, sortColumn, sortOrder }` | `ReactNode \| (props) => ReactNode` | - |
+| width | Column width | `string \| number` | - |
+| onCell | Props of each cell (`colSpan` / `rowSpan` of `0` skip it) | `(record, rowIndex) => TdHTMLAttributes` | - |
+| onFilter | Whether a record passes a filter value | `(value, record) => boolean` | - |
+| onHeaderCell | Props of the header cell | `(column) => ThHTMLAttributes` | - |
+
+Deprecated column props kept from antd: `filterDropdownOpen` and `onFilterDropdownOpenChange` (use `filterDropdownProps.open` / `onOpenChange`).
+
+### ColumnGroup
+
+| Property | Description        | Type        | Default |
+| -------- | ------------------ | ----------- | ------- |
+| title    | Title of the group | `ReactNode` | -       |
+
+A group is a column with `children`; it also takes `align`, `fixed`, `className`, `onHeaderCell` and the other non-data column props.
+
+### pagination
+
+`pagination` takes every base-ui [Pagination](/components/base-ui/pagination) prop, which covers antd's PaginationProps (`current` / `defaultCurrent`, `pageSize` / `defaultPageSize`, `total`, `showTotal`, `showQuickJumper`, `showSizeChanger`, `pageSizeOptions`, `hideOnSinglePage`, `disabled`, `size`, `simple`, `showLessItems`, `itemRender`, `showTitle`, `responsive`, `align`, `totalBoundaryShowSizeChanger`, `components.sizeChanger`, `className`, `classNames`, `styles`), plus:
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| placement | Pager positions: up to one top and one bottom entry | `('topStart' \| 'topCenter' \| 'topEnd' \| 'bottomStart' \| 'bottomCenter' \| 'bottomEnd' \| 'none')[]` | `['bottomEnd']` |
+| ~~position~~ | Deprecated, use `placement` | `('topLeft' \| 'topCenter' \| 'topRight' \| 'bottomLeft' \| 'bottomCenter' \| 'bottomRight' \| 'none')[]` | `['bottomRight']` |
+| total | Server-side total; omitted means the (filtered) `dataSource` length | `number` | - |
+| onChange | Page or page size changed | `(page, pageSize) => void` | - |
+| onShowSizeChange | Page size changed | `(current, size) => void` | - |
+
+`showSizeChanger` defaults to on once `total` is over 50, `pageSizeOptions` accepts strings or numbers, and a `small` / `medium` table gets a small pager.
+
+### expandable
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| childrenColumnName | Field holding tree children | `string` | `'children'` |
+| columnTitle | Header of the expand column | `ReactNode` | - |
+| columnWidth | Width of the expand column | `string \| number` | `48` |
+| defaultExpandAllRows | Expand every row on mount | `boolean` | `false` |
+| defaultExpandedRowKeys | Initially expanded keys | `Key[]` | - |
+| expandedRowClassName | Class of expanded rows | `string \| (record, index, indent) => string` | - |
+| expandedRowKeys | Controlled expanded keys | `Key[]` | - |
+| expandedRowRender | Content of the expanded row | `(record, index, indent, expanded) => ReactNode` | - |
+| expandIcon | Custom toggle | `(props: { expanded, onExpand, record, expandable, prefixCls }) => ReactNode` | - |
+| expandRowByClick | Toggle by clicking anywhere on the row | `boolean` | `false` |
+| fixed | Pin the expand column | `boolean \| 'left' \| 'right' \| 'start' \| 'end'` | `false` |
+| forceRender | Render collapsed rows' content too (hidden) | `boolean` | `false` |
+| indentSize | Indent per tree level, in px | `number` | `15` |
+| rowExpandable | Whether a record can expand | `(record) => boolean` | - |
+| showExpandColumn | Show the expand column | `boolean` | `true` |
+| onExpand | A toggle was clicked | `(expanded, record) => void` | - |
+| onExpandedRowsChange | Expanded keys changed | `(expandedKeys) => void` | - |
+| ~~expandIconColumnIndex~~ | Deprecated, use `Table.EXPAND_COLUMN` | `number` | - |
+| ~~expandedRowOffset~~ | Deprecated: pins the columns before it beside the expanded row; use `Table.EXPAND_COLUMN` | `number` | - |
+
+### rowSelection
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| align | Alignment of the selection column | `'left' \| 'center' \| 'right'` | `'left'` |
+| checkStrictly | `false` links tree parents and children | `boolean` | `true` |
+| columnTitle | Header; a function receives the select-all checkbox | `ReactNode \| (checkboxNode) => ReactNode` | - |
+| columnWidth | Width of the selection column | `string \| number` | `32` |
+| fixed | Pin the selection column | `boolean \| 'left' \| 'right' \| 'start' \| 'end'` | - |
+| getCheckboxProps | Props of a row's base-ui `Checkbox` / `Radio` | `(record) => Partial<CheckboxProps>` | - |
+| getTitleCheckboxProps | Props of the select-all checkbox | `() => Partial<CheckboxProps>` | - |
+| hideSelectAll | Hide the select-all checkbox and `selections` | `boolean` | `false` |
+| preserveSelectedRowKeys | Keep selected keys whose records left `dataSource` | `boolean` | - |
+| renderCell | Wrap or replace a row's box; may return `{ children, props }` | `(checked, record, index, originNode) => ReactNode \| RenderedCell` | - |
+| selectedRowKeys | Controlled selected keys | `Key[]` | - |
+| defaultSelectedRowKeys | Initially selected keys | `Key[]` | `[]` |
+| selections | Dropdown beside the select-all box; `true` gives all / invert / none | `(SelectionItem \| Table.SELECTION_*)[] \| boolean` | - |
+| type | Checkboxes or radios | `'checkbox' \| 'radio'` | `'checkbox'` |
+| onCell | Props of each selection cell | `(record, rowIndex) => TdHTMLAttributes` | - |
+| onChange | Selection changed | `(selectedRowKeys, selectedRows, info: { type: 'all' \| 'none' \| 'invert' \| 'single' \| 'multiple' }) => void` | - |
+| onSelect | One row was (de)selected | `(record, selected, selectedRows, nativeEvent) => void` | - |
+| ~~onSelectAll~~ / ~~onSelectInvert~~ / ~~onSelectNone~~ / ~~onSelectMultiple~~ | Deprecated, use `onChange` | - | - |
+
+### scroll
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| scrollToFirstRowOnChange | Scroll the body back to the top on paginate / sort / filter | `boolean` | `true` once `scroll` is set |
+| x | Horizontal scroll width: number, percentage, `'max-content'`, or `true` to grow with the content | `string \| number \| true` | - |
+| y | Body height; splits the header from a scrolling body | `string \| number` | - |
+
+### selection
+
+An item of `rowSelection.selections`.
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| key | Unique key | `string` | - |
+| text | Menu text | `ReactNode` | - |
+| onSelect | The item was clicked; receives the selectable keys of the current page | `(changeableRowKeys) => void` | - |
+
+### Table.Summary
+
+`Table.Summary` wraps summary rows returned by `summary`.
+
+| Component | Property | Description | Type | Default |
+| --- | --- | --- | --- | --- |
+| `Table.Summary` | fixed | Pin the summary: `true` / `'bottom'` under a scrolling body, `'top'` under the header | `boolean \| 'top' \| 'bottom'` | `false` |
+| `Table.Summary.Row` | - | A `tr`; takes its HTML attributes | - | - |
+| `Table.Summary.Cell` | index | Starting column index | `number` | - |
+| `Table.Summary.Cell` | colSpan / rowSpan | Cell spans | `number` | `1` |
+| `Table.Summary.Cell` | align | Text alignment | `'left' \| 'right' \| 'center'` | - |
+| `Table.Summary.Cell` | className | Cell class | `string` | - |
+
+### FilterDropdownProps
+
+Argument of a function `filterDropdown`.
+
+| Property | Description | Type |
+| --- | --- | --- |
+| prefixCls | Class prefix for custom panels (fixed value, kept for antd parity) | `string` |
+| selectedKeys | Draft selection, applied by `confirm` | `Key[]` |
+| setSelectedKeys | Update the draft | `(selectedKeys: Key[]) => void` |
+| confirm | Apply the draft; closes the panel unless `closeDropdown: false` | `(params?: { closeDropdown?: boolean }) => void` |
+| clearFilters | Clear the draft; `confirm` applies it, `closeDropdown` closes the panel | `(params?: { confirm?: boolean; closeDropdown?: boolean }) => void` |
+| filters | The column's `filters` | `ColumnFilterItem[]` |
+| close | Close the panel without applying | `() => void` |
+| visible | Whether the panel is open | `boolean` |
+
+### locale
+
+`locale` takes antd's `TableLocale`. Unset fields fall back to the `table.*` texts of `@lobehub/ui/i18n`: English by default, Chinese with the `zhCn` resources on `ConfigProvider` (`<ConfigProvider locale="zh-CN" resources={zhCn}>`).
+
+| Field | Default (en) | Used by |
+| --- | --- | --- |
+| `emptyText` | Empty state, "No data" | Empty table (node or function) |
+| `filterTitle` | Filter menu | Native `title` of the filter trigger |
+| `filterConfirm` / `filterReset` | OK / Reset | Filter panel buttons |
+| `filterEmptyText` | No filters | Filter panel with an empty `filters` list |
+| `filterCheckAll` (deprecated `filterCheckall`) | Select all items | "Check all" box of `filterMode: 'tree'` |
+| `filterSearchPlaceholder` | Search in filters | `filterSearch` input |
+| `selectAll` | Select current page | Accessible label of the header checkbox |
+| `selectionAll` / `selectInvert` / `selectNone` | Select all data / Invert current page / Clear all data | `Table.SELECTION_ALL` / `SELECTION_INVERT` / `SELECTION_NONE` items |
+| `sortTitle` | Sort | Native `title` of a sorter when `showSorterTooltip` is off |
+| `triggerAsc` / `triggerDesc` / `cancelSort` | Click to sort ascending / descending / cancel sorting | Sorter tooltip |
+| `expand` / `collapse` | Expand row / Collapse row | Accessible label of the default expand toggle |
+
+## Semantic DOM
+
+`classNames` and `styles` follow antd 6's Semantic DOM. Each takes an object, or a function `({ props }) => object` computed from the table's props.
+
+| Key | Element |
+| --- | --- |
+| `root` | Root `div` (`.lobe-table-wrapper`); `rootClassName` and `className` land here too |
+| `section` | Table container (`.lobe-table-container`) |
+| `title` / `footer` | Title and footer bars (`title()` / `footer()`) |
+| `content` | Scroll box around the `table` (`.lobe-table-content`, without a fixed header) |
+| `header.wrapper` / `header.row` / `header.cell` | `thead` / its `tr` / `th` |
+| `body.wrapper` / `body.row` / `body.cell` | `tbody` / its `tr` / `td` |
+| `pagination.root` / `pagination.item` | Pager `nav` / its page-number buttons; merged with `pagination.classNames` / `pagination.styles` |
+
+The flat keys from before still work: `wrapper` → `section`, `header` (a string, or a style object without `wrapper` / `row` / `cell`) → `header.cell`, `body` (likewise) → `body.wrapper`, `row` → `body.row` and `cell` → `body.cell`.
+
+## Design Token
+
+The table has no component tokens. It reads the global antd-style theme tokens of `ThemeProvider` (colors, radius, motion); restyle it per instance with `classNames` / `styles`. See [Differences from antd Table](#differences-from-antd-table-migration).
+
+## Differences from antd Table / migration
+
+Swap the import from `antd` to `@lobehub/ui/base-ui`; `columns`, `dataSource`, `rowKey` (defaults to `'key'`), `pagination`, `rowSelection`, `expandable`, `scroll`, `sticky`, `summary`, `virtual`, `components`, `locale`, `classNames` / `styles`, the `onChange` arguments, the ref and the static members keep antd's shape (see [API](#api)). What differs:
+
+**Not supported on purpose (no equivalent API)**
+
+| antd | Why | Use instead |
+| --- | --- | --- |
+| `prefixCls` / `dropdownPrefixCls` | antd's CSS class-prefix system; this library styles with antd-style and fixed `lobe-table-*` classes. `FilterDropdownProps.prefixCls` and `expandIcon`'s `prefixCls` receive a fixed value | `className` / `rootClassName`, `classNames` / `styles` (Semantic DOM), `filterDropdownProps.className` |
+| `ConfigProvider` global `table` config (`classNames`, `styles`, `rowKey`, `scroll`, `expandable.expandIcon`) | base-ui components do not read antd's `ConfigProvider` | Set the props per table, or wrap `Table` in your own component with the defaults; the table-level `column` prop covers shared column props |
+| `ConfigProvider.renderEmpty` | Same reason | `locale.emptyText` (node or function), or the lobe `emptyText` alias |
+| Component Design Token (`theme.components.Table`, the `component-token` debug demo) | No per-component token layer; the table reads the global `ThemeProvider` tokens | `ThemeProvider` theme for global colors / radius, `classNames` / `styles` for per-table overrides (see the semantic styling demo) |
+
+**Behaviour and API differences**
+
+- `size` defaults to `medium` (antd: `large`); `middle` is accepted as an alias of `medium`.
+- `locale` defaults come from `@lobehub/ui/i18n` (`ConfigProvider` with `resources`), not antd's locale packages.
+- Controls are base-ui components: `loading` takes base-ui `Spin` props, `showSorterTooltip` base-ui `Tooltip` props, `rowSelection.getCheckboxProps` base-ui `Checkbox` props, and `filterDropdownProps` the subset of `DropdownProps` listed under [Column](#column). `getCheckboxProps().onChange` receives the new checked state (the base-ui `Checkbox` signature) instead of an event.
+- The default expand toggle is a lobe button (`aria-label` "Expand row" / "Collapse row"); selected rows get the `lobe-table-row-selected` class. Replace `.ant-table-*` style overrides with `classNames` / `styles`.
+- `emptyText` is an extra (lobe-only) alias of `locale.emptyText`.
+- Column resizing is not built in (antd has none either).
+- The editable demos keep their draft in React state instead of antd `Form`, and confirm with a base-ui `Popover` instead of `Popconfirm`; the pattern (`components.body.cell` + `onCell`) is the same.
+
+**Demos**
+
+Every demo of antd's Table page has a counterpart above, in the same order, except `component-token` (debug), omitted because there are no component tokens (see above). antd's "Ajax" demo is `server.tsx` here. Locale and Overview are extra lobe demos.

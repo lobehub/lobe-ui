@@ -164,7 +164,7 @@ describe('Table', () => {
     expect(bodyModels()).toEqual(['m-05', 'm-06', 'm-07', 'm-08', 'm-09']);
   });
 
-  test('sorting resets to page 1', () => {
+  test('sorting keeps the current page, like antd', () => {
     render(
       <Table
         columns={columns}
@@ -178,7 +178,8 @@ describe('Table', () => {
     fireEvent.click(within(spend).getByRole('button'));
     fireEvent.click(within(spend).getByRole('button'));
 
-    expect(bodyModels()[0]).toBe('m-11');
+    // Descending, still on page 2: m-11..m-07 are on page 1.
+    expect(bodyModels()[0]).toBe('m-06');
   });
 
   test('shrinking dataSource clamps the page to the last existing page', () => {
@@ -259,7 +260,7 @@ describe('Table', () => {
     expect(screen.getByText('Nothing here')).toBeTruthy();
   });
 
-  test('scroll.y limits the wrapper height', () => {
+  test('scroll.y splits the header from a height-limited body', () => {
     const { container } = render(
       <Table
         columns={columns}
@@ -270,7 +271,9 @@ describe('Table', () => {
       />,
     );
 
-    expect(container.querySelector('[data-table-wrapper]')!.getAttribute('style')).toContain(
+    expect(container.querySelectorAll('table')).toHaveLength(2);
+    expect(container.querySelector('.lobe-table-header')).toBeTruthy();
+    expect(container.querySelector('.lobe-table-body')!.getAttribute('style')).toContain(
       'max-height: 200px',
     );
   });
@@ -372,7 +375,7 @@ describe('Table', () => {
     );
 
     const cell = screen.getAllByText('Open')[0].closest('td')!;
-    expect(cell.getAttribute('style')).toContain('position: sticky');
-    expect(cell.getAttribute('style')).toContain('right: 0px');
+    expect(cell.className).toContain('lobe-table-cell-fix-end');
+    expect(cell.getAttribute('style')).toContain('inset-inline-end: 0px');
   });
 });

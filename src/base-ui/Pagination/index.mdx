@@ -35,3 +35,7 @@ import { Pagination } from '@lobehub/ui/base-ui';
 `current`/`onChange` and `pageSize`/`onPageSizeChange` each support both controlled and uncontrolled usage via `defaultCurrent`/`defaultPageSize`.
 
 antd's `size="default"` becomes `size="middle"`.
+
+Like antd, `showSizeChanger` defaults to `true` once `total` is above `totalBoundaryShowSizeChanger` (50), `pageSizeOptions` accepts strings or numbers, and `showQuickJumper` (or `{ goButton }`) adds a "Go to" page input.
+
+The rest of antd's Pagination props work the same way: `simple` (or `{ readOnly: true }`) for the compact `prev [current] / pages next` pager, `showLessItems` for one page on each side of the current page, `itemRender(page, type, element)` for custom items (`page` / `prev` / `next` / `jump-prev` / `jump-next`), `showTitle` (on by default) for native item titles, `responsive` for the small size on extra-small screens, `align` (`start` / `center` / `end`) for a full-width aligned row, `showSizeChanger` as an object of base-ui `Select` props, and `components.sizeChanger` to replace the page-size `Select`.

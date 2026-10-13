@@ -1,2 +1,9 @@
 export { default } from './Pagination';
-export type { PaginationProps, PaginationSize } from './type';
+export type {
+  PaginationAlign,
+  PaginationItemType,
+  PaginationProps,
+  PaginationSemanticName,
+  PaginationSize,
+  PaginationSizeChangerProps,
+} from './type';
