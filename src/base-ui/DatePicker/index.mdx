@@ -13,6 +13,8 @@ import DemoStartEnd from './demos/start-end.tsx?demo';
 import DemoControlled from './demos/controlled.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 import DemoSwitchable from './demos/switchable.tsx?demo';
+import DemoFormat from './demos/format.tsx?demo';
+import DemoMask from './demos/mask.tsx?demo';
 import DemoCellRender from './demos/cell-render.tsx?demo';
 import DemoShowWeek from './demos/show-week.tsx?demo';
 import DemoKeyboard from './demos/keyboard.tsx?demo';
@@ -73,6 +75,33 @@ Two pickers linked through `disabledDate(current, info)` and a controlled `open`
 `picker` can change at runtime; placeholder and format follow it. `time` follows with the time panel.
 
 <Demo of={DemoSwitchable} layout="bare" />
+
+## Date format
+
+`format` takes the same `FormatType` as antd:
+
+- a dayjs format string (`'YYYY/MM/DD'`) — used to show the value, build the `dateString` and parse what is typed;
+- a function `(value: Dayjs) => string` — display only; typed text can no longer be parsed;
+- an array of strings / functions — the first one is used to show the value and build `dateString`, and typed text is tried against every string format in turn (`13/10/26` and `13-10-2026` both match `['DD/MM/YYYY', 'DD/MM/YY', 'DD-MM-YYYY', 'DD-MM-YY']`). Put a function first and strings after it to show custom text while still accepting typed dates.
+
+Defaults follow antd: `YYYY-MM-DD` (`YYYY-MM-DD HH:mm:ss` with `showTime`), `gggg-wo`, `YYYY-MM`, `YYYY-[Q]Q` and `YYYY` per `picker`.
+
+Typed text is parsed in strict mode through dayjs's `customParseFormat` plugin, which the picker registers itself. To build a `Dayjs` from a string in a custom format in your own code (`dayjs('2015/01/01', 'YYYY/MM/DD')`), extend dayjs with it once, as in antd:
+
+```ts
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+
+dayjs.extend(customParseFormat);
+```
+
+<Demo of={DemoFormat} layout="bare" />
+
+## Mask input
+
+`format={{ format, type: 'mask' }}` turns the input into a masked field, as in antd 5.14+: on focus the empty input shows the format as a template, digits fill one segment at a time and move on, ArrowUp / ArrowDown step the focused segment, ArrowLeft / ArrowRight move between segments, Backspace resets one, and pasting a full date in the format fills it. Enter commits the date. Works on the range picker too.
+
+<Demo of={DemoMask} layout="bare" />
 
 ## Customized cell rendering
 
