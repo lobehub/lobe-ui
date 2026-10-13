@@ -1,6 +1,5 @@
-import { createStaticStyles } from 'antd-style';
-
 import { focusRing } from '@/base-ui/focusRing';
+import { createStaticStyles } from '@/utils/styleEngine';
 
 /** Own prefix so rc-picker class names never collide with antd's global `.ant-picker` CSS. */
 export const PREFIX_CLS = 'lobe-picker';

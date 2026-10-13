@@ -1,7 +1,6 @@
 'use client';
 
 import type { PickerProps as RcPickerProps } from '@rc-component/picker';
-import { cx, useThemeMode } from 'antd-style';
 import type { Dayjs } from 'dayjs';
 import {
   CalendarIcon,
@@ -19,6 +18,7 @@ import { acquireLayerZIndex } from '@/base-ui/zIndex';
 import { useFloatingLayer } from '@/hooks/useFloatingLayer';
 import Icon from '@/Icon';
 import { useAppElement } from '@/ThemeProvider/AppElementContext';
+import { cx, useThemeMode } from '@/utils/styleEngine';
 
 import generateConfig from './generateConfig';
 import { PREFIX_CLS, styles as pickerStyles } from './style';
