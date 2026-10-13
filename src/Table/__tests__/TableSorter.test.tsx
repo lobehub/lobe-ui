@@ -491,7 +491,7 @@ describe('Table sorter: title props and tree data', () => {
       />,
     );
 
-    // rc-table renders `children` as collapsible tree rows.
+    // `children` render as collapsible tree rows.
     fireEvent.click(container.querySelector('.lobe-table-row-expand-icon')!);
     expect(names()).toEqual(['Parent', 'Child Z', 'Child A', 'Solo']);
 

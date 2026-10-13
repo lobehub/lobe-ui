@@ -739,7 +739,7 @@ describe('Table filters', () => {
   });
 
   test('the measure row renders only a static trigger', () => {
-    // A fixed column makes rc-table render its hidden measure row with every column title.
+    // A fixed column renders the hidden measure row with every column title.
     renderTable({
       columns: [
         { dataIndex: 'model', fixed: 'start', title: 'Model', width: 100 },

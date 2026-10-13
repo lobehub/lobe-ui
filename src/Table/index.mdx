@@ -31,7 +31,7 @@ import DemoAtoms from './demos/atoms.tsx?demo';
 - To display a collection of structured data.
 - To sort, search, paginate, filter, select or expand that data.
 
-The API mirrors antd `Table` (columns, `dataSource`, `rowKey`, `pagination`, `rowSelection`, `expandable`, …) and it renders its own DOM on TanStack Table: rc-table and antd are not used. Popups and controls (filter panel, selection menu, pager, tooltips, checkboxes) are lobe components. The same DOM parts are exported as atoms (`TableRoot`, `TableRow`, `TableCell`, …) for tables that need their own logic. The demos below follow the order of antd's docs, condensed: variants that only flip props are folded into StoryBook demos with a control panel; see [Differences from antd Table](#differences-from-antd-table-migration) for what moved where.
+The API mirrors antd `Table` (columns, `dataSource`, `rowKey`, `pagination`, `rowSelection`, `expandable`, …) and it renders its own DOM on TanStack Table; no antd package is used. Popups and controls (filter panel, selection menu, pager, tooltips, checkboxes) are lobe components. The same DOM parts are exported as atoms (`TableRoot`, `TableRow`, `TableCell`, …) for tables that need their own logic. The demos below follow the order of antd's docs, condensed: variants that only flip props are folded into StoryBook demos with a control panel; see [Differences from antd Table](#differences-from-antd-table-migration) for what moved where.
 
 ```tsx
 import { Table } from '@lobehub/ui';
