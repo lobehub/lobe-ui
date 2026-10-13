@@ -11,6 +11,7 @@ import type { StatCardProps } from './type';
 /** One metric in its own card: the same item as a `split` MetricStrip. */
 function StatCard({
   action,
+  chart,
   className,
   delta,
   direction = 'flat',
@@ -32,6 +33,7 @@ function StatCard({
         renderLink={renderLink}
         item={{
           action,
+          chart,
           delta,
           direction,
           hint,

@@ -37,9 +37,23 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
   headCopy: css`
     display: flex;
+    flex: 1;
     gap: 6px;
     align-items: center;
+
     min-inline-size: 0;
+  `,
+  /** Label-row control, pushed to the trailing edge. */
+  headAction: css`
+    display: flex;
+    flex: none;
+    align-items: center;
+  `,
+  /** Full-width chart slot under the delta and hint. */
+  chart: css`
+    inline-size: 100%;
+    min-inline-size: 0;
+    margin-block-start: 6px;
   `,
   mark: css`
     display: inline-flex;
