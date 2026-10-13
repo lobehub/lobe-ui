@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.63.2](https://github.com/lobehub/lobe-ui/compare/v5.63.1...v5.63.2) (2026-10-13)
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Table cell vertical center, continuous frost, outline bottom, closes [#715](https://github.com/lobehub/lobe-ui/issues/715) ([df46262](https://github.com/lobehub/lobe-ui/commit/df46262))
+
 ## [5.63.1](https://github.com/lobehub/lobe-ui/compare/v5.63.0...v5.63.1) (2026-10-13)
 
 ### 💄 Styles
