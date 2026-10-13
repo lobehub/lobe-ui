@@ -145,9 +145,24 @@ const toTableRef = (
   }) as TableRef;
 };
 
+let warnedBordered = false;
+
+/** `bordered` (pre-5.61) → `variant`: `true` is `outlined`; an explicit `variant` wins. */
+export const resolveTableVariant = (
+  variant: TableProps<unknown>['variant'],
+  bordered: boolean | undefined,
+): NonNullable<TableProps<unknown>['variant']> => {
+  if (bordered !== undefined && process.env.NODE_ENV !== 'production' && !warnedBordered) {
+    warnedBordered = true;
+    console.warn('[Table] `bordered` is deprecated. Please use `variant="outlined"` instead.');
+  }
+  return variant ?? (bordered ? 'outlined' : 'borderless');
+};
+
 const TableInner = <T,>(props: TableProps<T>) => {
   const {
-    variant = 'borderless',
+    bordered,
+    variant: variantProp,
     children,
     childrenColumnName: legacyChildrenColumnName,
     className,
@@ -191,6 +206,7 @@ const TableInner = <T,>(props: TableProps<T>) => {
     title,
     virtual,
   } = props;
+  const variant = resolveTableVariant(variantProp, bordered);
   const size: TableSize = sizeProp ?? 'middle';
 
   // =============================== Locale ===============================

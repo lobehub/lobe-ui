@@ -188,6 +188,7 @@ Not an antd demo: switches between the English defaults, `ConfigProvider` with t
 | Property | Description | Type | Default |
 | --- | --- | --- | --- |
 | variant | Visual style | `filled` \| `outlined` \| `borderless` | `borderless` |
+| bordered | **Deprecated**, use `variant="outlined"`. `true` maps to `outlined` when `variant` is not set; an explicit `variant` wins | `boolean` | - |
 | children | `Table.Column` / `Table.ColumnGroup` elements, used when `columns` is not set | `ReactNode` | - |
 | classNames | Class per semantic part; object or function of `{ props }`. See [Semantic DOM](#semantic-dom) | `TableClassNames \| (info: { props }) => TableClassNames` | - |
 | column | Props merged under every column and group (a column's own fields win) | `Partial<TableColumnType>` | - |

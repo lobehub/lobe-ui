@@ -489,6 +489,11 @@ export type TableRef = HTMLDivElement & {
 };
 
 export interface TableProps<T> {
+  /**
+   * @deprecated Use `variant="outlined"` instead. `bordered` maps to `variant="outlined"` when
+   * `variant` is not set; an explicit `variant` wins.
+   */
+  bordered?: boolean;
   /** `Table.Column` / `Table.ColumnGroup` elements, used when `columns` is not set. */
   children?: ReactNode;
   /** @deprecated use `expandable.childrenColumnName` */
