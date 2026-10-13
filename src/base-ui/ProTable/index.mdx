@@ -201,7 +201,7 @@ All base-ui Table column fields, plus:
 | filterType | `query` grid form or `light` toolbar filter | `'query' \| 'light'` | `'query'` |
 | defaultCollapsed / collapsed / onCollapse | Collapse state | `boolean` | `true` |
 | defaultColsNumber | Fields shown while collapsed | `number` | one row |
-| span | Field span in a 24-column grid; an object picks a span by form width (`xs` <576, `sm` ≥576, `md` ≥768, `lg` ≥992, `xl` ≥1200, `xxl` ≥1600) | `number \| { xs?, sm?, md?, lg?, xl?, xxl? }` | responsive |
+| span | Field span in a 24-column grid; an object picks a span by form width (`xs` `<576`, `sm` ≥576, `md` ≥768, `lg` ≥992, `xl` ≥1200, `xxl` ≥1600) | `number \| { xs?, sm?, md?, lg?, xl?, xxl? }` | responsive |
 | labelWidth | Label column width in horizontal layout (px). Longer labels end in an ellipsis and show the full text as `title` on hover; `'auto'` removes the limit (natural width). Ignored in `vertical` | `number \| 'auto'` | `80` |
 | layout | Label beside (`horizontal`) or above (`vertical`, Pro QueryFilter vertical: 1 / 2 / 3 / 4 columns below 576 / 768 / 1200 px / wider, buttons on the control line of the last row) the control | `'horizontal' \| 'vertical'` | `horizontal` (`vertical` on one column) |
 | searchText / submitText / resetText | Button texts | `ReactNode` | - |

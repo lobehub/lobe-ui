@@ -4,17 +4,18 @@ import { createStaticStyles } from 'antd-style';
  * A content card sitting on the workspace.
  *
  * Backgrounds: light mode uses `colorBgContainer`. Dark mode uses the translucent
- * `colorFillTertiary` (white 6%): on the #0d0d0d workspace it reads as about #1c1c1c, a subtle
- * raised step. `colorFillQuaternary` (white 2%, about #111) would barely separate from the page.
+ * `colorFillQuaternary` (white 2%), one step below `colorFillTertiary`, for a quieter raised
+ * step on the workspace.
  *
- * Borders and inner dividers (table, header and cell lines, PageSkeleton, strip seams) all use the
- * outer border token `colorBorderSecondary` (light and dark); hover and focus use the stronger
- * `colorFill`. The card follows Block: light is Block `outlined` (`colorBgContainer` +
- * `colorBorderSecondary`), dark uses the Block `filled` background (`colorFillTertiary`) with the
- * same `colorBorderSecondary` border.
+ * Borders and inner dividers (table, header and cell lines, PageSkeleton, strip seams) all use
+ * `--lobe-fill-border` (`colorFill` in light, `colorFillSecondary` in dark; set on `:root` by
+ * ThemeProvider). Hover / focus / stronger edges use `--lobe-fill-border-strong` (light:
+ * `colorFill` mixed 15% toward `colorText`; dark: `colorFill`). Light is Block `outlined`
+ * (`colorBgContainer` + border); dark uses translucent `colorFillQuaternary` with the same
+ * border var.
  *
  * Anything that must hide content scrolled beneath it (table header cells, pinned and sticky
- * cells, their scroll shadows) uses `--lobe-surface-bg-solid`: the same white 6% blended onto
+ * cells, their scroll shadows) uses `--lobe-surface-bg-solid`: the same white 2% blended onto
  * `--lobe-surface-canvas` (default `colorBgContainer`, the ConsoleShell workspace). `color-mix`
  * in srgb with an opaque base is plain alpha compositing, so it matches the translucent card.
  * Set `--lobe-surface-canvas` when a card sits on another page color.
@@ -32,7 +33,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     &&,
     &&:hover {
-      border: 1px solid ${cssVar.colorBorderSecondary};
+      border: 1px solid var(--lobe-fill-border, ${cssVar.colorFill});
       border-radius: ${cssVar.borderRadiusLG};
       background: var(--lobe-surface-bg);
       box-shadow: rgb(0 0 0 / 4%) 0 1px 2px 0;
@@ -40,16 +41,16 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
   cardDark: css`
     &&& {
-      --lobe-surface-bg: ${cssVar.colorFillTertiary};
+      --lobe-surface-bg: ${cssVar.colorFillQuaternary};
 
-      /* colorFillTertiary is white 6% in dark; blend the same amount onto the page. */
+      /* colorFillQuaternary is white 2% in dark; blend the same amount onto the page. */
       --lobe-surface-bg-solid: color-mix(
         in srgb,
-        #fff 6%,
+        #fff 2%,
         var(--lobe-surface-canvas, ${cssVar.colorBgContainer})
       );
 
-      /* Border: Block's border token (colorBorderSecondary) in both modes, from \`card\`. */
+      /* Border: --lobe-fill-border (dark: colorFillSecondary) from \`card\`. */
     }
   `,
   cardNested: css`
@@ -124,7 +125,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     && .ant-table-css-var,
     && .ant-table-wrapper {
-      --ant-table-border-color: ${cssVar.colorBorderSecondary};
+      --ant-table-border-color: var(--lobe-fill-border, ${cssVar.colorFill});
       --ant-table-row-hover-bg: color-mix(
         in srgb,
         ${cssVar.colorText} 6%,
@@ -138,7 +139,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       white-space: nowrap;
 
       background: var(--lobe-surface-bg-solid, ${cssVar.colorBgContainer});
-      box-shadow: inset 0 -1px 0 ${cssVar.colorBorderSecondary};
+      box-shadow: inset 0 -1px 0 var(--lobe-fill-border, ${cssVar.colorFill});
     }
 
     /* Pinned body cells inherit the transparent body, so a scrolled cell paints
@@ -202,7 +203,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
 
     && td {
-      border-block-end-color: ${cssVar.colorBorderSecondary};
+      border-block-end-color: var(--lobe-fill-border, ${cssVar.colorFill});
     }
 
     && tr:hover > td,
@@ -224,7 +225,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   cardLinked: css`
     &&:hover,
     &&:focus-within {
-      border-color: ${cssVar.colorFill};
+      border-color: var(--lobe-fill-border-strong, ${cssVar.colorFill});
     }
 
     &&:hover [data-surface-arrow] {
@@ -261,7 +262,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     min-block-size: 48px;
     padding-block: 8px;
     padding-inline: 16px;
-    border-block-end: 1px solid ${cssVar.colorBorderSecondary};
+    border-block-end: 1px solid var(--lobe-fill-border, ${cssVar.colorFill});
   `,
   heading: css`
     min-inline-size: 0;

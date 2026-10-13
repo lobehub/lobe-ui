@@ -137,7 +137,7 @@ export const styles = createStaticStyles(({ css, cssVar, responsive }) => {
         block-size: 1px;
 
         opacity: 0;
-        background: ${cssVar.colorBorderSecondary};
+        background: var(--lobe-fill-border, ${cssVar.colorFill});
 
         transition: opacity 200ms ease;
       }
@@ -402,7 +402,7 @@ export const styles = createStaticStyles(({ css, cssVar, responsive }) => {
       &[data-divided='true'] {
         margin-block-end: 6px;
         padding-block-end: 8px;
-        border-block-end: 1px solid ${cssVar.colorBorderSecondary};
+        border-block-end: 1px solid var(--lobe-fill-border, ${cssVar.colorFill});
       }
 
       [data-collapsed='true'] &[data-rail-empty='true'] {

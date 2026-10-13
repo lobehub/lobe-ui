@@ -133,11 +133,11 @@ export const styles = createStaticStyles(({ css, cssVar, responsive }) => ({
     flex-direction: column;
 
     min-block-size: 0;
-    border-inline-end: 1px solid ${cssVar.colorBorderSecondary};
+    border-inline-end: 1px solid var(--lobe-fill-border, ${cssVar.colorFill});
 
     [data-split-card='true'] & {
       block-size: 100%;
-      border-inline-end-color: ${cssVar.colorBorder};
+      border-inline-end-color: var(--lobe-fill-border-strong, ${cssVar.colorFill});
     }
   `,
   sidebar: css`
