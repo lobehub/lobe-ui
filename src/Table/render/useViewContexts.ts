@@ -38,6 +38,15 @@ export const useViewContexts = <T>({
     virtual,
   } = props;
   const { model, selection, state, tableLocale } = controller;
+  const { expandedRowClassName, expandedRowRender, expandRowByClick, forceRender, rowExpandable } =
+    expandable ?? {};
+  const {
+    columnTitle,
+    getTitleCheckboxProps,
+    hideSelectAll,
+    renderCell,
+    type: selectionType = 'checkbox',
+  } = rowSelection ?? {};
   const leafColumns = model.leafColumns;
 
   const componentSet = useMemo((): TableComponentSet => {
@@ -61,14 +70,14 @@ export const useViewContexts = <T>({
     (): TableViewValue<T> => ({
       components: componentSet,
       expand: {
-        expandedRowClassName: expandable?.expandedRowClassName,
-        expandedRowRender: expandable?.expandedRowRender,
+        expandedRowClassName,
+        expandedRowRender,
         expandIcon: controller.expandIcon,
-        expandRowByClick: expandable?.expandRowByClick,
-        forceRender: expandable?.forceRender,
+        expandRowByClick,
+        forceRender,
         indentSize: controller.indentSize,
         nestIconColumnIndex: controller.nestIconColumnIndex,
-        rowExpandable: expandable?.rowExpandable,
+        rowExpandable,
         toggle: toggleExpand,
         type: controller.expandType,
       },
@@ -86,7 +95,11 @@ export const useViewContexts = <T>({
     }),
     [
       componentSet,
-      expandable,
+      expandedRowClassName,
+      expandedRowRender,
+      expandRowByClick,
+      forceRender,
+      rowExpandable,
       controller.expandIcon,
       controller.indentSize,
       controller.nestIconColumnIndex,
@@ -111,15 +124,27 @@ export const useViewContexts = <T>({
       checkboxPropsMap: selection.checkboxPropsMap,
       expandType: controller.expandType,
       getRowKey: controller.getRowKey,
-      getTitleCheckboxProps: rowSelection?.getTitleCheckboxProps,
-      hideSelectAll: rowSelection?.hideSelectAll,
+      getTitleCheckboxProps,
+      hideSelectAll,
       locale: tableLocale,
-      renderCell: rowSelection?.renderCell,
+      renderCell,
       selections: selection.mergedSelections,
-      title: rowSelection?.columnTitle,
-      type: rowSelection?.type ?? 'checkbox',
+      title: columnTitle,
+      type: selectionType,
     }),
-    [selection, controller.expandType, controller.getRowKey, rowSelection, tableLocale],
+    [
+      selection.actions,
+      selection.checkboxPropsMap,
+      selection.mergedSelections,
+      controller.expandType,
+      controller.getRowKey,
+      getTitleCheckboxProps,
+      hideSelectAll,
+      renderCell,
+      columnTitle,
+      selectionType,
+      tableLocale,
+    ],
   );
 
   const triggerSort = useEventCallback(state.triggerSort);

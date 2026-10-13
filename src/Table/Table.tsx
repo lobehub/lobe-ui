@@ -210,7 +210,8 @@ const TableInner = <T,>(props: TableProps<T>) => {
                   tableLayout={mergedTableLayout}
                   title={title ? title(rows) : undefined}
                   variant={variant}
-                  virtual={model.virtual}
+                  virtual={controller.virtualInput}
+                  virtualScrollRef={controller.virtualScrollRef}
                   onColumnResize={controller.onColumnResize}
                   onScroll={onScroll}
                 />

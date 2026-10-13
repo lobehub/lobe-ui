@@ -93,11 +93,12 @@ const useHeaderRows = <C>(
     );
   }, [table, columns, leaves, offsets]);
 
-const useVirtualModel = <T>(
-  virtual: VirtualInput | undefined,
+export const useVirtualModel = <T>(
+  virtual: VirtualInput,
   rows: readonly RowModel<T>[],
-): VirtualModel | undefined => {
-  const fallbackHeight = virtual?.initialHeight ?? 0;
+): VirtualModel => {
+  const { rowHeight } = virtual;
+  const fallbackHeight = virtual.initialHeight ?? 0;
   const observeRect = useCallback(
     (
       instance: Virtualizer<HTMLElement, Element>,
@@ -108,20 +109,26 @@ const useVirtualModel = <T>(
       ),
     [fallbackHeight],
   );
+  const estimateSize = useCallback(() => rowHeight, [rowHeight]);
+  const measure = useCallback(
+    (
+      element: Element,
+      entry: ResizeObserverEntry | undefined,
+      instance: Virtualizer<HTMLElement, Element>,
+    ) => measureElement(element, entry, instance) || rowHeight,
+    [rowHeight],
+  );
+  const getItemKey = useCallback((index: number) => rows[index]?.key ?? index, [rows]);
   const virtualizer = useVirtualizer({
-    count: virtual ? rows.length : 0,
-    enabled: Boolean(virtual),
-    estimateSize: () => virtual?.rowHeight ?? 0,
-    measureElement: (element, entry, instance) =>
-      measureElement(element, entry, instance) || (virtual?.rowHeight ?? 0),
-    getItemKey: (index) => rows[index]?.key ?? index,
-    getScrollElement: () => virtual?.getScrollElement() ?? null,
-    initialRect: { height: virtual?.initialHeight ?? 0, width: 0 },
+    count: rows.length,
+    estimateSize,
+    getItemKey,
+    getScrollElement: virtual.getScrollElement,
+    initialRect: { height: fallbackHeight, width: 0 },
+    measureElement: measure,
     observeElementRect: observeRect,
-    overscan: virtual?.overscan ?? 6,
+    overscan: virtual.overscan ?? 6,
   });
-
-  if (!virtual) return undefined;
 
   const scrollTo = ({ align = 'nearest', index, key, offset = 0, top }: VirtualScrollConfig) => {
     const element = virtual.getScrollElement();
@@ -168,7 +175,6 @@ export const useTableEngine = <T, C = unknown>({
   expandedKeys,
   getChildren,
   getRowKey,
-  virtual,
 }: TableEngineInput<T, C>): TableModel<T, C> => {
   const columnDefs = useMemo(() => toColumnDefs(columns), [columns]);
   const leaves = useMemo(() => flattenLeaves(columns), [columns]);
@@ -232,7 +238,5 @@ export const useTableEngine = <T, C = unknown>({
     [coreRows, expandedKeys, getChildren, getRowKey],
   );
 
-  const virtualModel = useVirtualModel(virtual, rows);
-
-  return { headerRows, leafColumns, rows, virtual: virtualModel };
+  return { headerRows, leafColumns, rows };
 };

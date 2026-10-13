@@ -533,3 +533,61 @@ describe('virtual', () => {
     await waitFor(() => expect(holder.scrollTop).toBe(10 * 39));
   });
 });
+
+describe('fixed summary with a classic scrollbar', () => {
+  const offsetWidth = Object.getOwnPropertyDescriptor(HTMLElement.prototype, 'offsetWidth')!;
+  const clientWidth = Object.getOwnPropertyDescriptor(Element.prototype, 'clientWidth')!;
+
+  beforeEach(() => {
+    Object.defineProperty(HTMLElement.prototype, 'offsetWidth', {
+      configurable: true,
+      get() {
+        return this.classList?.contains('lobe-table-body') ? 1000 : 0;
+      },
+    });
+    Object.defineProperty(Element.prototype, 'clientWidth', {
+      configurable: true,
+      get() {
+        return this.classList?.contains('lobe-table-body') ? 985 : 0;
+      },
+    });
+  });
+
+  afterEach(() => {
+    Object.defineProperty(HTMLElement.prototype, 'offsetWidth', offsetWidth);
+    Object.defineProperty(Element.prototype, 'clientWidth', clientWidth);
+    cleanup();
+  });
+
+  test('fixed-end summary cells line up with the header and the last cell covers the scrollbar', () => {
+    const { container } = render(
+      <Table
+        dataSource={rows}
+        pagination={false}
+        rowKey="id"
+        scroll={{ x: 1200, y: 200 }}
+        columns={[
+          { dataIndex: 'name', title: 'Name', width: 200 },
+          { dataIndex: 'borrow', fixed: 'right', title: 'Borrow', width: 200 },
+          { dataIndex: 'repayment', fixed: 'right', title: 'Repayment', width: 120 },
+        ]}
+        summary={() => (
+          <Table.Summary fixed>
+            <Table.Summary.Row>
+              <Table.Summary.Cell index={0}>Total</Table.Summary.Cell>
+              <Table.Summary.Cell index={1}>Mid</Table.Summary.Cell>
+              <Table.Summary.Cell index={2}>End</Table.Summary.Cell>
+            </Table.Summary.Row>
+          </Table.Summary>
+        )}
+      />,
+    );
+    const headerBorrow = container.querySelectorAll<HTMLElement>('.lobe-table-header th')[1];
+    const summaryMid = screen.getByText('Mid').closest('td')!;
+    expect(headerBorrow.style.insetInlineEnd).not.toBe('0px');
+    expect(summaryMid.style.insetInlineEnd).toBe(headerBorrow.style.insetInlineEnd);
+    const summaryEnd = screen.getByText('End').closest('td')!;
+    expect(summaryEnd.getAttribute('colspan')).toBe('2');
+    expect(summaryEnd.style.insetInlineEnd).toBe('0px');
+  });
+});

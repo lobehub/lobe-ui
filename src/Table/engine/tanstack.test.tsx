@@ -3,7 +3,7 @@ import type { Key } from 'react';
 import { describe, expect, it } from 'vitest';
 
 import type { EngineColumn, TableEngineInput } from './types';
-import { useTableEngine } from './useTableEngine';
+import { useTableEngine, useVirtualModel } from './useTableEngine';
 
 interface Row {
   children?: Row[];
@@ -181,18 +181,13 @@ describe('useTableEngine rows', () => {
   });
 });
 
-describe('useTableEngine virtual', () => {
-  it('returns no virtual model without virtual input', () => {
-    expect(run({ columns: [col('a')] }).virtual).toBeUndefined();
-  });
-
+describe('useVirtualModel', () => {
   it('sizes the virtual list from the row height', () => {
     const data = Array.from({ length: 100 }, (_, index) => ({ key: index, name: `${index}` }));
-    const model = run({
-      columns: [col('name')],
-      data,
-      virtual: { getScrollElement: () => null, rowHeight: 40 },
-    });
-    expect(model.virtual?.totalSize).toBe(4000);
+    const { rows } = run({ columns: [col('name')], data });
+    const { result } = renderHook(() =>
+      useVirtualModel({ getScrollElement: () => null, rowHeight: 40 }, rows),
+    );
+    expect(result.current.totalSize).toBe(4000);
   });
 });

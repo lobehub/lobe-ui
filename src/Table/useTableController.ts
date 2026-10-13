@@ -5,6 +5,7 @@ import { type Key, useCallback, useLayoutEffect, useMemo, useRef, useState } fro
 import { useEventCallback } from '@/hooks/useEventCallback';
 
 import { DEFAULT_INDENT_SIZE, PREFIX_CLS } from './constants';
+import type { VirtualInput } from './engine/types';
 import { useTableEngine } from './engine/useTableEngine';
 import {
   assertColumnKeys,
@@ -23,7 +24,12 @@ import { useTableState } from './pipeline/useTableState';
 import { useVirtualLayout } from './pipeline/useVirtualLayout';
 import renderExpandIcon from './render/ExpandIcon';
 import { createTableStore } from './store/createTableStore';
-import type { TableProps, TableScrollToConfig } from './type';
+import type {
+  TableExpandableConfig,
+  TableProps,
+  TableRowSelection,
+  TableScrollToConfig,
+} from './type';
 
 const EMPTY_DATA: any[] = [];
 
@@ -142,20 +148,70 @@ export const useTableController = <T>(props: TableProps<T>) => {
     rowSelection,
   );
 
-  const virtualDefaults = useVirtualLayout({ expandable, rowSelection, variant, virtual });
+  const virtualDefaults = useVirtualLayout<T>({
+    expandable: Boolean(expandable),
+    rowSelection: rowSelection && { selections: rowSelection.selections, type: rowSelection.type },
+    variant,
+    virtual,
+  });
+
+  const selectionShape = useMemo(
+    (): TableRowSelection<T> | undefined =>
+      rowSelection && {
+        align: rowSelection.align,
+        fixed: rowSelection.fixed,
+        onCell: rowSelection.onCell,
+        selections: rowSelection.selections,
+        type: rowSelection.type,
+      },
+    [
+      Boolean(rowSelection),
+      rowSelection?.align,
+      rowSelection?.fixed,
+      rowSelection?.onCell,
+      rowSelection?.selections,
+      rowSelection?.type,
+    ],
+  );
+  const expandShape = useMemo(
+    (): TableExpandableConfig<T> | undefined =>
+      expandable && {
+        columnTitle: expandable.columnTitle,
+        expandIconColumnIndex: expandable.expandIconColumnIndex,
+        fixed: expandable.fixed,
+        showExpandColumn: expandable.showExpandColumn,
+      },
+    [
+      Boolean(expandable),
+      expandable?.columnTitle,
+      expandable?.expandIconColumnIndex,
+      expandable?.fixed,
+      expandable?.showExpandColumn,
+    ],
+  );
+  const expandColumnWidth = expandable?.columnWidth ?? virtualDefaults.expandColumnWidth;
+  const selectionColumnWidth = rowSelection?.columnWidth ?? virtualDefaults.selectionColumnWidth;
 
   const normalized = useMemo(
     () =>
       normalizeColumns(columns, {
-        expandColumnWidth: expandable?.columnWidth ?? virtualDefaults.expandColumnWidth,
+        expandColumnWidth,
         expandType,
-        expandable,
+        expandable: expandShape,
         prefixCls: PREFIX_CLS,
-        rowSelection,
+        rowSelection: selectionShape,
         screens,
-        selectionColumnWidth: rowSelection?.columnWidth ?? virtualDefaults.selectionColumnWidth,
+        selectionColumnWidth,
       }),
-    [columns, expandable, expandType, rowSelection, screens, virtualDefaults],
+    [
+      columns,
+      expandColumnWidth,
+      expandShape,
+      expandType,
+      selectionShape,
+      screens,
+      selectionColumnWidth,
+    ],
   );
 
   const [colWidthMap, setColWidthMap] = useState<ReadonlyMap<string, number>>(new Map());
@@ -209,18 +265,21 @@ export const useTableController = <T>(props: TableProps<T>) => {
     expandedKeys,
     getChildren,
     getRowKey,
-    virtual: virtual
-      ? {
-          getScrollElement: () => bodyRef.current,
-          initialHeight: typeof scrollY === 'number' ? scrollY : undefined,
-          rowHeight: virtualDefaults.rowHeight(size),
-        }
-      : undefined,
   });
 
+  const initialHeight = typeof scrollY === 'number' ? scrollY : undefined;
+  const rowHeight = virtualDefaults.rowHeight(size);
+  const getScrollElement = useCallback(() => bodyRef.current, []);
+  const virtualInput = useMemo(
+    (): VirtualInput | undefined =>
+      virtual ? { getScrollElement, initialHeight, rowHeight } : undefined,
+    [virtual, getScrollElement, initialHeight, rowHeight],
+  );
+  const virtualScrollRef = useRef<((config: TableScrollToConfig) => void) | undefined>(undefined);
+
   engineScrollRef.current = (config) => {
-    if (model.virtual) {
-      model.virtual.scrollTo(config);
+    if (virtualInput) {
+      virtualScrollRef.current?.(config);
       return;
     }
     const body = bodyRef.current;
@@ -301,6 +360,8 @@ export const useTableController = <T>(props: TableProps<T>) => {
     summaryNode,
     tableLocale,
     toggleExpand: toggle,
+    virtualInput,
+    virtualScrollRef,
     virtualWidths,
   };
 };

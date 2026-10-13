@@ -6,7 +6,7 @@ import {
   SELECTION_DROPDOWN_WIDTH,
   VIRTUAL_ROW_HEIGHT,
 } from '../constants';
-import type { TableExpandableConfig, TableRowSelection, TableSize, TableVariant } from '../type';
+import type { TableRowSelection, TableSize, TableVariant } from '../type';
 import type { NormalizedColumn } from './normalizeColumns';
 
 const parseWidth = (total: number, width: number | string | undefined) => {
@@ -70,8 +70,8 @@ export const useVirtualLayout = <T>({
   variant,
   virtual,
 }: {
-  expandable?: TableExpandableConfig<T>;
-  rowSelection?: TableRowSelection<T>;
+  expandable: boolean;
+  rowSelection?: Pick<TableRowSelection<T>, 'selections' | 'type'>;
   variant: TableVariant;
   virtual?: boolean;
 }) => {
@@ -88,6 +88,7 @@ export const useVirtualLayout = <T>({
   );
 
   const withDropdown = Boolean(rowSelection?.selections) && rowSelection?.type !== 'radio';
+  const hasSelection = Boolean(rowSelection);
   return useMemo(
     () => ({
       componentWidth,
@@ -96,12 +97,12 @@ export const useVirtualLayout = <T>({
       measureRef,
       rowHeight: (size: TableSize) => VIRTUAL_ROW_HEIGHT[size],
       selectionColumnWidth:
-        virtual && rowSelection
+        virtual && hasSelection
           ? SELECTION_COLUMN_WIDTH +
             (withDropdown ? SELECTION_DROPDOWN_WIDTH : 0) +
             (variant === 'outlined' ? 16 : 0)
           : undefined,
     }),
-    [componentWidth, virtual, expandable, rowSelection, withDropdown, variant, measureRef],
+    [componentWidth, virtual, expandable, hasSelection, withDropdown, variant, measureRef],
   );
 };

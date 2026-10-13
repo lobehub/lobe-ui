@@ -2,7 +2,7 @@ import type { CSSProperties, ReactNode, Ref, RefObject, UIEventHandler } from 'r
 
 import type { TableRootProps } from '../atoms';
 import type { StickyOffsets } from '../engine/fixed';
-import type { HeaderCellModel, RowModel, VirtualModel } from '../engine/types';
+import type { HeaderCellModel, RowModel, VirtualInput, VirtualScrollConfig } from '../engine/types';
 import type { ColumnSource } from '../pipeline/normalizeColumns';
 
 export interface StickyConfig {
@@ -38,5 +38,6 @@ export interface TableViewProps<T> extends Pick<
   summaryNode: ReactNode;
   tableLayout: 'auto' | 'fixed';
   title?: ReactNode;
-  virtual?: VirtualModel;
+  virtual?: VirtualInput;
+  virtualScrollRef: RefObject<((config: VirtualScrollConfig) => void) | undefined>;
 }

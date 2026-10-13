@@ -1,8 +1,9 @@
 'use client';
 
-import type { ReactNode, Ref, UIEvent } from 'react';
+import { type ReactNode, type Ref, type RefObject, type UIEvent, useLayoutEffect } from 'react';
 
-import type { LeafColumnModel, RowModel, VirtualModel } from '../engine/types';
+import type { LeafColumnModel, RowModel, VirtualInput, VirtualScrollConfig } from '../engine/types';
+import { useVirtualModel } from '../engine/useTableEngine';
 import type { ColumnSource } from '../pipeline/normalizeColumns';
 import type { TableColumnType } from '../type';
 import { BodyRow } from './Body';
@@ -11,11 +12,12 @@ import { useTableView } from './context';
 interface VirtualBodyProps<T> {
   emptyNode: ReactNode;
   holderRef: Ref<HTMLDivElement>;
+  input: VirtualInput;
   maxHeight?: number | string;
   onScroll: (event: UIEvent<HTMLDivElement>) => void;
   rows: readonly RowModel<T>[];
+  scrollRef: RefObject<((config: VirtualScrollConfig) => void) | undefined>;
   scrollX?: number | string | true;
-  virtual: VirtualModel;
 }
 
 const getRowSpan = <T,>(leaf: LeafColumnModel<ColumnSource<T>>, row: RowModel<T> | undefined) => {
@@ -52,12 +54,17 @@ const collectSpanLines = <T,>(
 const VirtualBody = <T,>({
   emptyNode,
   holderRef,
+  input,
   maxHeight,
   onScroll,
   rows,
+  scrollRef,
   scrollX,
-  virtual,
 }: VirtualBodyProps<T>) => {
+  const virtual = useVirtualModel(input, rows);
+  useLayoutEffect(() => {
+    scrollRef.current = virtual.scrollTo;
+  });
   const { leafColumns, prefixCls, semanticClassNames, semanticStyles } = useTableView<T>();
   const width = scrollX === true ? 'auto' : scrollX;
   const offset = virtual.items[0]?.start ?? 0;

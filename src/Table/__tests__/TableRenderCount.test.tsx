@@ -1,6 +1,6 @@
 import { act, cleanup, fireEvent, render as rtlRender, screen } from '@testing-library/react';
 import { motion } from 'motion/react';
-import type { HTMLAttributes, ReactNode } from 'react';
+import { type HTMLAttributes, type Key, type ReactNode, useState } from 'react';
 
 import ConfigProvider from '@/ConfigProvider';
 
@@ -61,6 +61,8 @@ const SpyRow = (props: HTMLAttributes<HTMLTableRowElement> & { 'data-row-key'?: 
   return <tr {...props} />;
 };
 const components: TableComponents<Row> = { body: { row: SpyRow } };
+
+const renderDetail = (record: Row) => <span>Detail {record.name}</span>;
 
 const total = () => [...renders.values()].reduce((sum, count) => sum + count, 0);
 
@@ -166,5 +168,104 @@ describe('render granularity', () => {
       <Table columns={columns} components={components} dataSource={rows} onRow={() => ({})} />,
     );
     expect(renders.size).toBe(rows.length);
+  });
+
+  test('toggling one row checkbox renders at most two selection cells', () => {
+    let cellRenders = 0;
+    const counted: TableRowSelection<Row> = {
+      renderCell: (_checked, _record, _index, node) => {
+        cellRenders += 1;
+        return node;
+      },
+    };
+    render(<Table columns={columns} dataSource={rows} rowSelection={counted} />);
+    cellRenders = 0;
+    act(() => {
+      fireEvent.click(screen.getAllByRole('checkbox')[2]);
+    });
+    expect(cellRenders).toBeLessThanOrEqual(2);
+  });
+
+  test('a controlled inline rowSelection re-renders at most the toggled row', () => {
+    const Controlled = () => {
+      const [keys, setKeys] = useState<Key[]>([]);
+      return (
+        <Table
+          columns={columns}
+          components={components}
+          dataSource={rows}
+          rowSelection={{ onChange: setKeys, selectedRowKeys: keys }}
+        />
+      );
+    };
+    render(<Controlled />);
+    renders.clear();
+    act(() => {
+      fireEvent.click(screen.getAllByRole('checkbox')[2]);
+    });
+    expect(screen.getAllByRole('checkbox')[2].getAttribute('aria-checked')).toBe('true');
+    expect(total()).toBeLessThanOrEqual(1);
+  });
+
+  test('an inline expandable with controlled keys re-renders only the toggled row', () => {
+    const Controlled = () => {
+      const [keys, setKeys] = useState<readonly Key[]>([]);
+      return (
+        <Table
+          columns={columns}
+          components={components}
+          dataSource={rows}
+          expandable={{
+            expandedRowKeys: keys,
+            expandedRowRender: renderDetail,
+            onExpandedRowsChange: setKeys,
+          }}
+        />
+      );
+    };
+    const { container } = render(<Controlled />);
+    renders.clear();
+    act(() => {
+      fireEvent.click(container.querySelector('tr[data-row-key="3"] .lobe-table-row-expand-icon')!);
+    });
+    expect(screen.getByText('Detail Gamma')).toBeTruthy();
+    expect([...renders.keys()]).toEqual(['3']);
+  });
+});
+
+describe('virtual scroll granularity', () => {
+  test('scrolling the virtual body renders no header cell', async () => {
+    let headerRenders = 0;
+    const HeaderCell = (props: HTMLAttributes<HTMLTableCellElement>) => {
+      headerRenders += 1;
+      return <div {...props} />;
+    };
+    const many: Row[] = Array.from({ length: 500 }, (_, index) => ({
+      key: String(index),
+      name: `n-${index}`,
+      provider: 'OpenAI',
+    }));
+    const virtualComponents: TableComponents<Row> = { header: { cell: HeaderCell } };
+    const { container } = render(
+      <Table
+        virtual
+        columns={columns}
+        components={virtualComponents}
+        dataSource={many}
+        pagination={false}
+        scroll={{ x: 600, y: 300 }}
+      />,
+    );
+    const holder = container.querySelector<HTMLDivElement>('.lobe-table-tbody-virtual-holder')!;
+    const firstKey = () => holder.querySelector('[data-row-key]')?.getAttribute('data-row-key');
+    expect(firstKey()).toBe('0');
+    headerRenders = 0;
+    await act(async () => {
+      holder.scrollTop = 4700;
+      holder.dispatchEvent(new Event('scroll'));
+      await new Promise((resolve) => setTimeout(resolve, 50));
+    });
+    expect(firstKey()).not.toBe('0');
+    expect(headerRenders).toBe(0);
   });
 });

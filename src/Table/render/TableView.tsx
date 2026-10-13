@@ -49,6 +49,7 @@ const TableView = <T,>({
   title,
   variant,
   virtual,
+  virtualScrollRef,
 }: TableViewProps<T>) => {
   const view = useTableView<T>();
   const { horizonScroll, leafColumns, prefixCls, semanticClassNames, semanticStyles } = view;
@@ -98,6 +99,9 @@ const TableView = <T,>({
       : undefined;
 
   const summary = summaryNode ? <SummaryFooter>{summaryNode}</SummaryFooter> : null;
+  const holderSummary = summaryNode ? (
+    <SummaryFooter scrollbar={headerScrollbar}>{summaryNode}</SummaryFooter>
+  ) : null;
   const stickyHolderClass = sticky.isSticky ? `${prefixCls}-sticky-holder` : undefined;
   const headerRowsNode = <HeaderRows rows={headerRows} scrollbar={headerScrollbar} />;
 
@@ -107,10 +111,11 @@ const TableView = <T,>({
       <VirtualBody
         emptyNode={emptyNode}
         holderRef={bodyRef}
+        input={virtual}
         maxHeight={scrollY}
         rows={rows}
+        scrollRef={virtualScrollRef}
         scrollX={scrollX}
-        virtual={virtual}
         onScroll={onBodyScroll}
       />
     ) : (
@@ -148,7 +153,7 @@ const TableView = <T,>({
             }
           >
             {headerRowsNode}
-            {fixFooter === 'top' && summary}
+            {fixFooter === 'top' && holderSummary}
           </FixedHolder>
         )}
         {bodyNode}
@@ -166,7 +171,7 @@ const TableView = <T,>({
               onInternalScroll({ currentTarget: target, scrollLeft })
             }
           >
-            {summary}
+            {holderSummary}
           </FixedHolder>
         )}
         {sticky.isSticky && bodyRef.current && (

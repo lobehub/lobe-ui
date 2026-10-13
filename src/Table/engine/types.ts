@@ -88,12 +88,10 @@ export interface TableEngineInput<T, C = unknown> {
   expandedKeys: ReadonlySet<Key>;
   getChildren?: (record: T) => readonly T[] | undefined;
   getRowKey: (record: T, index: number) => Key;
-  virtual?: VirtualInput;
 }
 
 export interface TableModel<T, C = unknown> {
   headerRows: HeaderCellModel<C>[][];
   leafColumns: LeafColumnModel<C>[];
   rows: RowModel<T>[];
-  virtual?: VirtualModel;
 }
