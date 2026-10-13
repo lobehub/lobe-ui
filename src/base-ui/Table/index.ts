@@ -31,6 +31,7 @@ export type {
   TableLegacySemanticName,
   TableLoadingConfig,
   TableLocale,
+  TableMultipleSorterResult,
   TablePaginationConfig,
   TablePaginationPlacement,
   TablePaginationPosition,

@@ -357,12 +357,21 @@ export interface TableCurrentDataSource<T> {
 }
 
 export interface TableSorterResult<T> {
-  column?: TableColumn<T>;
+  /** The sorted (leaf) column. */
+  column?: TableColumnType<T>;
   columnKey?: Key;
   /** The column's `dataIndex`. */
   field?: Key | readonly Key[];
-  order?: SortOrder;
+  /** `undefined` when nothing is sorted; never `null` here. */
+  order?: Exclude<SortOrder, null>;
 }
+
+/**
+ * `onChange`'s `sorter` while several `multiple` sorters are active: the array of results, which
+ * also carries the first entry's `column` / `columnKey` / `field` / `order` (non-enumerable), so code
+ * written for a single sorter (`sorter.order`) keeps working. Narrow with `Array.isArray(sorter)`.
+ */
+export type TableMultipleSorterResult<T> = TableSorterResult<T>[] & TableSorterResult<T>;
 
 export type TableFilters = Record<string, FilterValue[] | null>;
 
@@ -529,8 +538,11 @@ export interface TableProps<T> {
   onChange?: (
     pagination: TablePaginationConfig,
     filters: TableFilters,
-    /** An array when more than one `multiple` sorter is active. */
-    sorter: TableSorterResult<T> | TableSorterResult<T>[],
+    /**
+     * One result, or a `TableMultipleSorterResult` array when more than one `multiple` sorter is
+     * active (it still exposes the first entry's fields, so `sorter.order` type-checks either way).
+     */
+    sorter: TableSorterResult<T> | TableMultipleSorterResult<T>,
     extra: TableCurrentDataSource<T>,
   ) => void;
   onHeaderRow?: (

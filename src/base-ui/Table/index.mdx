@@ -219,7 +219,7 @@ Not an antd demo: switches between the English defaults, `ConfigProvider` with t
 | tableLayout | CSS `table-layout` | `'auto' \| 'fixed'` | `fixed` with fixed columns, `scroll.y` or `ellipsis`; otherwise `auto` |
 | title | Title renderer | `(currentPageData) => ReactNode` | - |
 | virtual | Virtual scrolling; needs a numeric `scroll.y` | `boolean` | - |
-| onChange | Pagination, filters or sorter changed | `(pagination, filters, sorter \| sorter[], extra: { currentDataSource, action: 'paginate' \| 'sort' \| 'filter' }) => void` | - |
+| onChange | Pagination, filters or sorter changed. With several active `multiple` sorters `sorter` is an array (`TableMultipleSorterResult`) that also exposes the first entry's `column` / `columnKey` / `field` / `order`, so single-sorter code keeps compiling; narrow with `Array.isArray(sorter)` for multi-sort | `(pagination, filters, sorter \| sorter[], extra: { currentDataSource, action: 'paginate' \| 'sort' \| 'filter' }) => void` | - |
 | onHeaderRow | Props of each header row | `(columns, index) => HTMLAttributes` | - |
 | onRow | Props of each body row | `(record, index) => HTMLAttributes` | - |
 | onScroll | Body scrolled (only vertical scrolling with `virtual`) | `(event) => void` | - |

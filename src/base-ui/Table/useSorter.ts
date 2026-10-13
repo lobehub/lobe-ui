@@ -7,6 +7,7 @@ import type {
   TableColumnTitleProps,
   TableColumnType,
   TableCompareFn,
+  TableMultipleSorterResult,
   TableSorterResult,
 } from './type';
 
@@ -143,17 +144,17 @@ export const getTriggeredSortStates = <T>(
 };
 
 const stateToInfo = <T>({ column, key, sortOrder }: SortState<T>): TableSorterResult<T> => ({
-  column,
+  column: column as TableColumnType<T>,
   // antd reports `column.key`; the id fallback keeps dataIndex-only columns identifiable.
   columnKey: column.key ?? key,
   field: (column as TableColumnType<T>).dataIndex as TableSorterResult<T>['field'],
-  order: sortOrder,
+  order: sortOrder ?? undefined,
 });
 
 /** The `sorter` argument of `onChange`: one result, or an array for several active sorters. */
 export const getSorterInfo = <T>(
   states: readonly SortState<T>[],
-): TableSorterResult<T> | TableSorterResult<T>[] => {
+): TableSorterResult<T> | TableMultipleSorterResult<T> => {
   const active = states.filter(({ sortOrder }) => sortOrder).map((state) => stateToInfo(state));
 
   // antd keeps the last cleared column's other fields when nothing is sorted.
@@ -167,7 +168,18 @@ export const getSorterInfo = <T>(
     };
   }
   if (active.length <= 1) return active[0] ?? {};
-  return active;
+  // Pre-5.61 code reads `sorter.order` / `sorter.columnKey` directly: expose the first entry's
+  // fields on the array too. Non-enumerable, so iteration, spread and equality see a plain array.
+  const [first] = active;
+  for (const field of ['column', 'columnKey', 'field', 'order'] as const) {
+    Object.defineProperty(active, field, {
+      configurable: true,
+      enumerable: false,
+      value: first[field],
+      writable: true,
+    });
+  }
+  return active as TableMultipleSorterResult<T>;
 };
 
 /** `sortColumns` and the legacy `sortColumn` / `sortOrder` passed to function titles. */
