@@ -214,6 +214,53 @@ describe('v6Rules', () => {
     expect(items[2].message).toContain('Block');
   });
 
+  it('R11 flags removed Table and ProTable props, following the local name', () => {
+    const items = collectReport(
+      [
+        `import { Table as DataTable } from '@lobehub/ui';`,
+        `import { ProTable } from '@lobehub/ui/pro-table';`,
+        `const a = <DataTable bordered emptyText="-" expandedRowRender={r} size="medium" measureRowRender={f} />;`,
+        `const b = <DataTable classNames={{ cell: 'c', header: 'h' }} pagination={{ position: ['bottomRight'] }} locale={{ filterCheckall: 'All' }} expandable={{ expandedRowOffset: 1 }} />;`,
+        `const c = <ProTable ghost size="medium" defaultSize="medium" />;`,
+        `const d = <DataTable components={{ body: (data, info) => null }} styles={{ row: {}, body: { fontSize: 12 } }} />;`,
+        `const e = <DataTable size="small" classNames={{ header: { cell: 'x' }, body: { row: 'r' } }} variant="outlined" pagination={{ placement: ['topEnd'] }} />;`,
+        `const f = <table bordered />;`,
+      ].join('\n'),
+      'a.tsx',
+      v6Rules,
+    );
+    expect(items.map((i) => `${i.rule}:${i.line}`)).toEqual([
+      'R11:3',
+      'R11:3',
+      'R11:3',
+      'R11:3',
+      'R11:3',
+      'R11:4',
+      'R11:4',
+      'R11:4',
+      'R11:4',
+      'R11:4',
+      'R11:5',
+      'R11:5',
+      'R11:5',
+      'R11:6',
+      'R11:6',
+      'R11:6',
+    ]);
+    const messages = items.map((i) => i.message);
+    expect(messages[0]).toContain('variant="outlined"');
+    expect(messages[1]).toContain('locale.emptyText');
+    expect(messages[2]).toContain('expandable.expandedRowRender');
+    expect(messages[3]).toContain('"middle"');
+    expect(messages[5]).toContain('body.cell');
+    expect(messages[6]).toContain('header.cell');
+    expect(messages[7]).toContain('placement');
+    expect(messages[8]).toContain('filterCheckAll');
+    expect(messages[10]).toContain('`ghost`');
+    expect(messages[13]).toContain('virtual');
+    expect(items.every((item) => item.anchor.endsWith('#table-and-protable'))).toBe(true);
+  });
+
   it('reports nothing for clean v6 code', () => {
     expect(
       report(
