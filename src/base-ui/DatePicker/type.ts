@@ -20,6 +20,50 @@ import type { FocusEvent, ReactNode, Ref } from 'react';
 
 export type { CellRender, CellRenderInfo, PanelMode, PickerMode, PickerRef, RangePickerRef };
 
+/** rc-picker's locale (texts and formats) plus antd's per-`picker` placeholders. */
+export interface PickerLocaleLang extends Locale {
+  monthPlaceholder?: string;
+  placeholder?: string;
+  quarterPlaceholder?: string;
+  rangeMonthPlaceholder?: [string, string];
+  rangePlaceholder?: [string, string];
+  rangeQuarterPlaceholder?: [string, string];
+  rangeWeekPlaceholder?: [string, string];
+  rangeYearPlaceholder?: [string, string];
+  weekPlaceholder?: string;
+  yearPlaceholder?: string;
+}
+
+/** Placeholders of `picker="time"`. */
+export interface TimePickerLocale {
+  placeholder?: string;
+  rangePlaceholder?: [string, string];
+}
+
+/** antd's `PickerLocale`, the shape of the `locale` prop. */
+export interface PickerLocale {
+  /** @deprecated Kept for antd parity; use `lang.fieldDateFormat`. */
+  dateFormat?: string;
+  /** @deprecated Kept for antd parity; use `lang.fieldDateTimeFormat`. */
+  dateTimeFormat?: string;
+  lang: PickerLocaleLang;
+  /** @deprecated Kept for antd parity; use `lang.fieldMonthFormat`. */
+  monthFormat?: string;
+  timePickerLocale: TimePickerLocale;
+  /** @deprecated Kept for antd parity; use `lang.fieldWeekFormat`. */
+  weekFormat?: string;
+}
+
+/**
+ * The `locale` prop: a full `PickerLocale` (e.g. a spread of an exported default locale) or
+ * only the fields to change — `lang` and `timePickerLocale` are merged field by field over the
+ * default locale generated from `@lobehub/ui/i18n`.
+ */
+export type PickerLocaleInput = Omit<Partial<PickerLocale>, 'lang' | 'timePickerLocale'> & {
+  lang?: Partial<PickerLocaleLang>;
+  timePickerLocale?: TimePickerLocale;
+};
+
 /** A `presets` entry: `value` may be a function, evaluated when the preset is hovered or picked. */
 export type PresetDate<T = Dayjs> = ValueDate<T>;
 /** `components`: replace a panel (`date` / `week` / … / `time`), the `input` or the OK `button`. */
@@ -82,8 +126,12 @@ export interface DatePickerProps
   defaultValue?: Dayjs | null;
   /** @deprecated Use `renderExtraFooter` instead. */
   footer?: ReactNode;
-  /** Overrides individual fields of the rc-picker locale. */
-  locale?: Partial<Locale>;
+  /**
+   * antd `PickerLocale`: `lang` texts and formats (`fieldDateFormat`, `yearFormat`,
+   * `shortWeekDays`, …) and `timePickerLocale`. Defaults to the locale generated from the
+   * `@lobehub/ui/i18n` resources in context.
+   */
+  locale?: PickerLocaleInput;
   /** @deprecated Use `maxDate` instead. */
   max?: Dayjs;
   /** @deprecated Use `minDate` instead. */
@@ -132,7 +180,8 @@ export interface DateRangePickerProps
   footer?: ReactNode;
   /** Ids of the start and end inputs. */
   id?: { end?: string; start?: string };
-  locale?: Partial<Locale>;
+  /** antd `PickerLocale`, see `DatePickerProps['locale']`. */
+  locale?: PickerLocaleInput;
   /** @deprecated Use `maxDate` instead. */
   max?: Dayjs;
   /** @deprecated Use `minDate` instead. */

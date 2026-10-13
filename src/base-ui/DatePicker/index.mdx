@@ -37,6 +37,8 @@ import DemoPresetRanges from './demos/preset-ranges.tsx?demo';
 import DemoExtraFooter from './demos/extra-footer.tsx?demo';
 import DemoRenderPanel from './demos/render-panel.tsx?demo';
 import DemoComponents from './demos/components.tsx?demo';
+import DemoBuddhistEra from './demos/buddhist-era.tsx?demo';
+import DemoLocale from './demos/locale.tsx?demo';
 import DemoSuffixIconDebug from './demos/suffixIcon-debug.tsx?demo';
 import DemoFilledDebug from './demos/filled-debug.tsx?demo';
 
@@ -260,6 +262,20 @@ The footer can hold actions too:
 
 <Demo of={DemoComponents} layout="bare" />
 
+## Buddhist Era
+
+Format fields of `locale.lang` (`fieldDateFormat`, `fieldDateTimeFormat`, `yearFormat`, `cellYearFormat`) with the dayjs `buddhistEra` plugin's `BBBB` token. Values stay Gregorian `Dayjs` objects; only the display changes. lobe has no ConfigProvider `locale.DatePicker`, so a locale shared by several pickers goes through a wrapper component.
+
+<Demo of={DemoBuddhistEra} layout="bare" />
+
+## Locale
+
+`locale` takes antd's `PickerLocale`: `lang` (texts, placeholders, `field*Format` / `yearFormat` / `cellDateFormat` / `monthBeforeYear`, `shortWeekDays` / `shortMonths`, and `locale`, the rc-picker code picking the dayjs locale) plus `timePickerLocale`. `datePickerLocaleEnUS` and `datePickerLocaleZhCN` are the exported defaults (antd's `date-picker/locale/en_US` / `zh_CN`; they also carry their own `shortWeekDays` / `shortMonths`), and `createPickerLocale(resources, code)` builds one from `datePicker.*` i18n resources. A partial `locale` is merged field by field over the default.
+
+Without `locale`, the texts come from the `@lobehub/ui/i18n` resources of the surrounding `ConfigProvider` and the week / month names from `dayjs.locale()` — load and set the dayjs locale yourself (`import 'dayjs/locale/zh-cn'`), as with antd.
+
+<Demo of={DemoLocale} layout="bare" />
+
 ## Debug: suffixIcon
 
 `suffixIcon={null}` removes the icon.
@@ -278,7 +294,7 @@ The footer can hold actions too:
 
 <Api name="DateRangePicker" from=".." />
 
-Values are `Dayjs` objects, exactly as in antd. `minDate` / `maxDate` replace `min` / `max`, which remain as deprecated aliases; `footer` is a deprecated alias of `renderExtraFooter`, and `onSelect` of `onCalendarChange`. Week start and week / month names follow the active dayjs locale.
+Values are `Dayjs` objects, exactly as in antd. `minDate` / `maxDate` replace `min` / `max`, which remain as deprecated aliases; `footer` is a deprecated alias of `renderExtraFooter`, and `onSelect` of `onCalendarChange`. Week start and week / month names follow the active dayjs locale, or `locale.lang.locale` when set (see Locale).
 
 The popup is rendered with `@rc-component/trigger`. Inside a base-ui floating layer (Popover, DropdownMenu) or a dialog it mounts in that layer, so picking a date never counts as an outside click for the host; elsewhere it mounts on `document.body` like antd, carrying the theme's CSS-variable scope so light / dark tokens still apply. It takes its z-index from the shared base-ui layer counter. Pass `getPopupContainer` to mount it elsewhere.
 
