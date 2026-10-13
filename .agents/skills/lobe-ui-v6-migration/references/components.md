@@ -507,6 +507,30 @@ v5 `Popover` already used Base UI. From antd:
 | `fresh`, `destroyOnHidden`, `autoAdjustOverflow`, `align` | removed (`positionerProps`, `portalProps`, `popupProps` for Base UI parts) |
 | —                                                         | new: `standalone`, `nativeButton`, `backdropProps`, `PopoverGroup`         |
 
+## Table / ProTable
+
+https://ui.lobehub.com/components/table · https://ui.lobehub.com/components/pro-table
+
+```ts
+import { Table } from '@lobehub/ui';
+import { ProTable } from '@lobehub/ui/pro-table';
+```
+
+| v5                                                                                             | v6                                                                |
+| ---------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| `@lobehub/ui/base-ui/pro-table`                                                                | `@lobehub/ui/pro-table` (rewritten by the codemod)                |
+| `bordered`                                                                                     | `variant="outlined"`                                              |
+| `expandedRowRender`, `expandIcon`, `indentSize`, `childrenColumnName`, `expandIconColumnIndex` | move under `expandable`                                           |
+| `classNames` / `styles` `cell`, `row`, `wrapper`, string `header` / `body`                     | `body.cell`, `body.row`, `section`, `header.cell`, `body.wrapper` |
+| `emptyText`                                                                                    | `locale.emptyText`                                                |
+| `size="medium"`, ProTable `defaultSize="medium"`                                               | `"middle"`                                                        |
+| `pagination.position`                                                                          | `pagination.placement`                                            |
+| `locale.filterCheckall`                                                                        | `locale.filterCheckAll`                                           |
+| `expandable.expandedRowOffset`                                                                 | `Table.EXPAND_COLUMN` in `columns`, columns before it `fixed`     |
+| `measureRowRender`, `components.body` render function, ProTable `ghost`                        | removed (`virtual` replaces the custom body)                      |
+
+Everything else keeps the antd shape. Class overrides keep the `lobe-table-*` / `lobe-pro-table-*` names.
+
 ## Common pitfalls
 
 - **`DropdownItem` breaks contextual typing.** `onClick: ({ domEvent }) => …` inside a `DropdownItem[]` literal loses its parameter type, because the type is a union of item shapes. Annotate it: `onClick: (info: MenuInfo) => …`, importing `MenuInfo` from `@lobehub/ui`. Replace `MenuProps['items']` / `ItemType` / `GenericItemType` with `DropdownItem`.
