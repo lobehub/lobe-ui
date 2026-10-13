@@ -6,6 +6,7 @@ category: Theme
 
 import DemoConfigProvider from './demos/config-provider.tsx?demo';
 import DemoConfigProvider2 from './demos/config-provider-2.tsx?demo';
+import DemoCustomPrimary from './demos/custom-primary.tsx?demo';
 import DemoGlobalFocusRing from './demos/global-focus-ring.tsx?demo';
 import DemoLazyMotion from './demos/lazy-motion.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
@@ -32,6 +33,12 @@ At the same time, it provides custom CDN configuration, set `proxy` to `custom` 
 - the portal container for popups (`useAppElement`, element id `LOBE_THEME_APP_ID`).
 
 Theme appearance and colors are not configured here: import `@lobehub/ui/theme.css` and `@lobehub/ui/style.css`, and set `data-theme` / `data-primary-color` / `data-neutral-color` on `<html>` (or wrap a subtree in `ThemeScope`).
+
+## Custom primary colour
+
+`primaryColor` also takes any 6-digit hex (`setLobeTheme`, `ThemeScope`, `LobeThemeScript`). Lobe UI builds the 13-step light and dark scale from the preset nearest in hue: the picked colour becomes `colorPrimary`, hover and active steps keep the preset's lightness offsets around it, and backgrounds and borders keep the preset's lightness with the new hue. The generated rules are injected once per colour under `[data-primary-color='#rrggbb']`, so light / dark switching and nested scopes keep working. For server rendering, `getCustomPrimaryCss(hex)` returns the same CSS.
+
+<Demo of={DemoCustomPrimary} layout="bare" />
 
 ## Motion
 

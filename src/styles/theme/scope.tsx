@@ -9,8 +9,14 @@ import {
   useSyncExternalStore,
 } from 'react';
 
-import type { NeutralColors, PrimaryColors } from '../customTheme';
+import type { NeutralColors } from '../customTheme';
 import { createLobeToken, type LobeToken } from './createLobeToken';
+import {
+  type CustomPrimaryColor,
+  isCustomPrimaryColor,
+  type LobePrimaryColor,
+} from './customPrimary';
+import { getCustomPrimaryCss } from './themeCss';
 import { staticToken } from './token/static';
 
 export type LobeAppearance = 'light' | 'dark';
@@ -18,7 +24,7 @@ export type LobeAppearance = 'light' | 'dark';
 export interface LobeThemeState {
   appearance: LobeAppearance;
   neutralColor?: NeutralColors;
-  primaryColor?: PrimaryColors;
+  primaryColor?: LobePrimaryColor;
 }
 
 const ATTRIBUTES = ['data-theme', 'data-primary-color', 'data-neutral-color'];
@@ -29,11 +35,28 @@ const toAttributes = ({ appearance, neutralColor, primaryColor }: LobeThemeState
   'data-theme': appearance,
 });
 
+const normalizePrimary = (color?: LobePrimaryColor) =>
+  isCustomPrimaryColor(color) ? (color.toLowerCase() as CustomPrimaryColor) : color;
+
+const customPrimaryStyleId = (color: CustomPrimaryColor) => `lobe-primary-${color.slice(1)}`;
+
+const ensureCustomPrimaryStyle = (color: CustomPrimaryColor, doc: Document) => {
+  const id = customPrimaryStyleId(color);
+  if (doc.getElementById(id)) return;
+  const style = doc.createElement('style');
+  style.id = id;
+  style.textContent = getCustomPrimaryCss(color);
+  doc.head.append(style);
+};
+
 export const setLobeTheme = (
   state: Partial<LobeThemeState>,
   root: HTMLElement = document.documentElement,
 ) => {
   const next = { ...readThemeState(root), ...state };
+  next.primaryColor = normalizePrimary(next.primaryColor);
+  if (isCustomPrimaryColor(next.primaryColor))
+    ensureCustomPrimaryStyle(next.primaryColor, root.ownerDocument);
   for (const [name, value] of Object.entries(toAttributes(next))) {
     if (value) root.setAttribute(name, value);
     else root.removeAttribute(name);
@@ -43,7 +66,7 @@ export const setLobeTheme = (
 const readThemeState = (el: HTMLElement): LobeThemeState => ({
   appearance: el.dataset.theme === 'dark' ? 'dark' : 'light',
   neutralColor: (el.dataset.neutralColor as NeutralColors) || undefined,
-  primaryColor: (el.dataset.primaryColor as PrimaryColors) || undefined,
+  primaryColor: (el.dataset.primaryColor as LobePrimaryColor) || undefined,
 });
 
 const stateKey = (state: LobeThemeState) =>
@@ -91,13 +114,19 @@ export const ThemeScope = ({
     () => ({
       appearance: appearance ?? parent.appearance,
       neutralColor: neutralColor ?? parent.neutralColor,
-      primaryColor: primaryColor ?? parent.primaryColor,
+      primaryColor: normalizePrimary(primaryColor) ?? parent.primaryColor,
     }),
     [appearance, neutralColor, primaryColor, parent],
   );
+  const customPrimary = isCustomPrimaryColor(state.primaryColor) ? state.primaryColor : undefined;
 
   return (
     <ThemeScopeContext value={state}>
+      {customPrimary && (
+        <style href={customPrimaryStyleId(customPrimary)} precedence="lobe-theme">
+          {getCustomPrimaryCss(customPrimary)}
+        </style>
+      )}
       <div className={className} style={style} {...toAttributes(state)}>
         {children}
       </div>
@@ -190,7 +219,7 @@ export interface LobeThemeScriptProps {
   appearance?: LobeAppearance | 'system';
   neutralColor?: NeutralColors;
   nonce?: string;
-  primaryColor?: PrimaryColors;
+  primaryColor?: LobePrimaryColor;
 }
 
 export const LobeThemeScript = ({
@@ -199,8 +228,17 @@ export const LobeThemeScript = ({
   nonce,
   primaryColor,
 }: LobeThemeScriptProps) => {
-  const args = JSON.stringify([appearance ?? null, primaryColor ?? null, neutralColor ?? null]);
-  const script = `(function(a,p,n){var d=document.documentElement;if(a==='system')a=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';if(a)d.setAttribute('data-theme',a);else if(!d.hasAttribute('data-theme'))d.setAttribute('data-theme','light');if(p)d.setAttribute('data-primary-color',p);if(n)d.setAttribute('data-neutral-color',n);}).apply(null,${args})`;
+  const primary = normalizePrimary(primaryColor);
+  const custom = isCustomPrimaryColor(primary)
+    ? [customPrimaryStyleId(primary), getCustomPrimaryCss(primary)]
+    : [null, null];
+  const args = JSON.stringify([
+    appearance ?? null,
+    primary ?? null,
+    neutralColor ?? null,
+    ...custom,
+  ]);
+  const script = `(function(a,p,n,i,c){var d=document.documentElement;if(a==='system')a=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';if(a)d.setAttribute('data-theme',a);else if(!d.hasAttribute('data-theme'))d.setAttribute('data-theme','light');if(p)d.setAttribute('data-primary-color',p);if(n)d.setAttribute('data-neutral-color',n);if(c&&!document.getElementById(i)){var s=document.createElement('style');s.id=i;s.textContent=c;document.head.appendChild(s);}}).apply(null,${args})`;
 
   return (
     <script suppressHydrationWarning dangerouslySetInnerHTML={{ __html: script }} nonce={nonce} />

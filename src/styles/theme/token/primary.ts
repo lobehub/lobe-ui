@@ -1,11 +1,26 @@
 import { colorScales, primary } from '@/color/colors';
 
-import type { PrimaryColors } from '../../customTheme';
+import {
+  generatePrimaryScale,
+  isCustomPrimaryColor,
+  type LobePrimaryColor,
+} from '../customPrimary';
 import { generateColorPalette } from '../generateColorPalette';
 
-export const createPrimaryToken = (appearance: 'light' | 'dark', primaryColor?: PrimaryColors) => {
-  const scale = (primaryColor && colorScales[primaryColor]) || primary;
-  const token = generateColorPalette({ appearance, scale, type: 'Primary' });
+const resolveScale = (primaryColor?: LobePrimaryColor) => {
+  if (isCustomPrimaryColor(primaryColor)) return generatePrimaryScale(primaryColor);
+  return (primaryColor && colorScales[primaryColor]) || primary;
+};
+
+export const createPrimaryToken = (
+  appearance: 'light' | 'dark',
+  primaryColor?: LobePrimaryColor,
+) => {
+  const token = generateColorPalette({
+    appearance,
+    scale: resolveScale(primaryColor),
+    type: 'Primary',
+  });
 
   return {
     ...token,
