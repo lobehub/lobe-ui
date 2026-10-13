@@ -2,6 +2,17 @@
 
 # Changelog
 
+# [5.60.0](https://github.com/lobehub/lobe-ui/compare/v5.59.0...v5.60.0) (2026-10-13)
+
+### ✨ Features
+
+- **dashboard**: Card system refresh, StatCard/MetricStrip split, AuthLayout and ConsoleShell loading ([342ba84](https://github.com/lobehub/lobe-ui/commit/342ba84))
+- **grainient**: Add animated grainy WebGL gradient background ([04f429b](https://github.com/lobehub/lobe-ui/commit/04f429b))
+
+### 💄 Styles
+
+- **dashboard**: Clip strip cells to the card radius and share colorBorderSecondary for borders and dividers ([8897617](https://github.com/lobehub/lobe-ui/commit/8897617))
+
 # [5.59.0](https://github.com/lobehub/lobe-ui/compare/v5.58.0...v5.59.0) (2026-10-13)
 
 ### ✨ Features
