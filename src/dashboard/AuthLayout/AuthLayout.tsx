@@ -1,13 +1,12 @@
 'use client';
 
-import { cx } from 'antd-style';
+import { cx, useThemeMode } from 'antd-style';
 import { isValidElement } from 'react';
 
 import Skeleton from '@/base-ui/Skeleton';
 import Text from '@/base-ui/Text';
 import { Flexbox } from '@/Flex';
 
-import { useSurfaceCardClassName } from '../Surface/link';
 import Aside from './Aside';
 import { styles } from './style';
 import type { AuthLayoutProps } from './type';
@@ -37,7 +36,7 @@ function AuthLayout({
   variant = 'default',
   ...rest
 }: AuthLayoutProps) {
-  const cardClassName = useSurfaceCardClassName();
+  const { isDarkMode } = useThemeMode();
   const split = Boolean(aside);
   const art = isValidElement(background) ? background : null;
   const heading =
@@ -63,8 +62,13 @@ function AuthLayout({
 
   return (
     <div
-      className={cx(styles.page, background === 'grid' && styles.grid, className)}
       data-auth-layout=""
+      className={cx(
+        styles.page,
+        background === 'grid' && styles.grid,
+        background === 'grid' && isDarkMode && styles.gridDark,
+        className,
+      )}
       {...rest}
     >
       {art ? <div className={styles.backdrop}>{art}</div> : null}
@@ -79,7 +83,6 @@ function AuthLayout({
             className={cx(
               styles.lift,
               split && styles.liftSplit,
-              cardClassName,
               variant === 'elevated' && styles.elevated,
             )}
           >
