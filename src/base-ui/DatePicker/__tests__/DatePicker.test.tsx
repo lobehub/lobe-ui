@@ -319,6 +319,117 @@ describe('DatePicker', () => {
     expect(document.querySelector('[class*="ant-picker"]')).toBeNull();
   });
 
+  test('size medium and its middle alias render the same box', () => {
+    const { rerender } = render(<DatePicker size="medium" />);
+    const medium = document.querySelector('.lobe-picker')!.className;
+    rerender(<DatePicker size="middle" />);
+    expect(document.querySelector('.lobe-picker')!.className).toBe(medium);
+    rerender(<DatePicker size="large" />);
+    expect(document.querySelector('.lobe-picker')!.className).not.toBe(medium);
+  });
+
+  test('variant adds its modifier; bordered={false} is an alias of borderless', () => {
+    const root = () => document.querySelector('.lobe-picker')!.classList;
+    const { rerender } = render(<DatePicker variant="underlined" />);
+    expect(root().contains('lobe-picker-underlined')).toBe(true);
+
+    rerender(<DatePicker bordered={false} />);
+    expect(root().contains('lobe-picker-borderless')).toBe(true);
+
+    rerender(<DatePicker bordered={false} variant="filled" />);
+    expect(root().contains('lobe-picker-filled')).toBe(true);
+  });
+
+  test('status adds the status modifier', () => {
+    const { rerender } = render(<DatePicker status="error" />);
+    expect(document.querySelector('.lobe-picker-status-error')).toBeTruthy();
+    rerender(<DatePicker status="warning" />);
+    expect(document.querySelector('.lobe-picker-status-warning')).toBeTruthy();
+  });
+
+  test('prefix and suffixIcon render; suffixIcon={null} hides the suffix', () => {
+    const { rerender } = render(
+      <DatePicker prefix={<span>from</span>} suffixIcon={<span>cal</span>} />,
+    );
+    expect(document.querySelector('.lobe-picker-prefix')!.textContent).toBe('from');
+    expect(document.querySelector('.lobe-picker-suffix')!.textContent).toBe('cal');
+
+    rerender(<DatePicker suffixIcon={null} />);
+    expect(document.querySelector('.lobe-picker-suffix')).toBeNull();
+  });
+
+  test('allowClear takes { clearIcon }, clearIcon is honoured, onClear fires', () => {
+    const onClear = vi.fn();
+    const onChange = vi.fn();
+    const { rerender } = render(
+      <DatePicker
+        allowClear={{ clearIcon: <span data-testid="clear">x</span> }}
+        defaultValue={dayjs('2026-10-15')}
+        onChange={onChange}
+        onClear={onClear}
+      />,
+    );
+
+    fireEvent.click(screen.getByTestId('clear').closest('.lobe-picker-clear')!);
+    expect(onClear).toHaveBeenCalledTimes(1);
+    expect(onChange).toHaveBeenCalledWith(null, null);
+
+    rerender(<DatePicker clearIcon={<span data-testid="legacy">y</span>} value={dayjs()} />);
+    expect(screen.getByTestId('legacy')).toBeTruthy();
+
+    rerender(<DatePicker allowClear={false} value={dayjs()} />);
+    expect(document.querySelector('.lobe-picker-clear')).toBeNull();
+  });
+
+  test('prevIcon / nextIcon / superPrevIcon / superNextIcon replace the header icons', () => {
+    render(
+      <DatePicker defaultOpen nextIcon="N" prevIcon="P" superNextIcon="SN" superPrevIcon="SP" />,
+    );
+    const text = (name: string) =>
+      document.querySelector(`.lobe-picker-header-${name}-btn`)!.textContent;
+    expect([text('super-prev'), text('prev'), text('next'), text('super-next')]).toEqual([
+      'SP',
+      'P',
+      'N',
+      'SN',
+    ]);
+  });
+
+  test('getPopupContainer decides where the popup mounts', () => {
+    const container = document.createElement('div');
+    document.body.append(container);
+    render(<DatePicker defaultOpen getPopupContainer={() => container} />);
+    expect(container.querySelector('.lobe-picker-dropdown')).toBeTruthy();
+    container.remove();
+  });
+
+  test('Escape closes the popup without reaching a host listening on document', async () => {
+    const onDocumentKeyDown = vi.fn();
+    const onKeyDown = vi.fn();
+    const onOpenChange = vi.fn();
+    document.addEventListener('keydown', onDocumentKeyDown);
+    render(<DatePicker onKeyDown={onKeyDown} onOpenChange={onOpenChange} />);
+
+    openPicker();
+    fireEvent.keyDown(input(), { key: 'Escape' });
+    await waitFor(() => expect(onOpenChange).toHaveBeenLastCalledWith(false));
+    expect(onKeyDown).toHaveBeenCalledTimes(1);
+    expect(onDocumentKeyDown).not.toHaveBeenCalled();
+
+    // Closed: Escape is left for the host (e.g. to close a Modal).
+    fireEvent.keyDown(input(), { key: 'Escape' });
+    expect(onDocumentKeyDown).toHaveBeenCalledTimes(1);
+    document.removeEventListener('keydown', onDocumentKeyDown);
+  });
+
+  test('direction="rtl" reaches the box and the popup', () => {
+    render(<DatePicker defaultOpen direction="rtl" />);
+    expect(document.querySelector('.lobe-picker')!.classList.contains('lobe-picker-rtl')).toBe(
+      true,
+    );
+    expect(popup()!.classList.contains('lobe-picker-dropdown-rtl')).toBe(true);
+  });
+
   test('the popup mounts in the closest base-ui floating layer and takes a z-index', () => {
     const layer = document.createElement('div');
     document.body.append(layer);

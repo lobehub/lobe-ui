@@ -9,9 +9,10 @@ import {
   ChevronRight,
   ChevronsLeft,
   ChevronsRight,
+  Clock,
   X,
 } from 'lucide-react';
-import { useCallback, useLayoutEffect, useMemo, useState } from 'react';
+import { type ReactNode, useCallback, useLayoutEffect, useMemo, useState } from 'react';
 
 import { rootVariants } from '@/base-ui/Input/style';
 import { acquireLayerZIndex } from '@/base-ui/zIndex';
@@ -26,7 +27,9 @@ import type { DatePickerProps } from './type';
 type SharedInput = Pick<
   DatePickerProps,
   | 'allowClear'
+  | 'bordered'
   | 'className'
+  | 'clearIcon'
   | 'classNames'
   | 'defaultOpen'
   | 'getPopupContainer'
@@ -35,12 +38,15 @@ type SharedInput = Pick<
   | 'min'
   | 'minDate'
   | 'nextIcon'
+  | 'onKeyDown'
   | 'onOpenChange'
   | 'open'
+  | 'picker'
   | 'prevIcon'
   | 'rootClassName'
   | 'shadow'
   | 'size'
+  | 'status'
   | 'styles'
   | 'suffixIcon'
   | 'superNextIcon'
@@ -59,6 +65,7 @@ type SharedOutput = Pick<
   | 'maxDate'
   | 'minDate'
   | 'nextIcon'
+  | 'onKeyDown'
   | 'onOpenChange'
   | 'open'
   | 'prefixCls'
@@ -70,7 +77,11 @@ type SharedOutput = Pick<
   | 'transitionName'
 > & { classNames: any; styles: any };
 
-const clearIcon = <Icon icon={X} size={10} style={{ strokeWidth: 3 }} />;
+const defaultClearIcon = <Icon icon={X} size={10} style={{ strokeWidth: 3 }} />;
+
+/** `undefined` falls back to the lobe icon; `null` (as in antd) renders nothing. */
+const withDefault = (node: ReactNode, fallback: ReactNode) =>
+  node === undefined ? fallback : node;
 
 /**
  * Wiring shared by DatePicker and RangePicker: lobe prefix, dayjs adapter, base-ui
@@ -83,7 +94,9 @@ const clearIcon = <Icon icon={X} size={10} style={{ strokeWidth: 3 }} />;
  */
 export const usePickerShared = ({
   allowClear = true,
+  bordered,
   className,
+  clearIcon,
   classNames,
   defaultOpen,
   getPopupContainer,
@@ -92,12 +105,15 @@ export const usePickerShared = ({
   min,
   minDate,
   nextIcon,
+  onKeyDown,
   onOpenChange,
   open,
+  picker,
   prevIcon,
   rootClassName,
   shadow,
   size,
+  status,
   styles,
   suffixIcon,
   superNextIcon,
@@ -108,6 +124,10 @@ export const usePickerShared = ({
   const { isDarkMode } = useThemeMode();
   const floatingLayer = useFloatingLayer();
   const appElement = useAppElement();
+
+  // As in antd: an explicit `variant` wins over the deprecated `bordered`.
+  const mergedVariant =
+    variant ?? (bordered === false ? 'borderless' : isDarkMode ? 'filled' : 'outlined');
 
   const [innerOpen, setInnerOpen] = useState(!!defaultOpen);
   const mergedOpen = open ?? innerOpen;
@@ -132,13 +152,25 @@ export const usePickerShared = ({
   }, [appElement]);
 
   return {
-    allowClear: allowClear === true ? { clearIcon } : allowClear,
+    allowClear: allowClear && {
+      clearIcon:
+        (typeof allowClear === 'object' ? allowClear.clearIcon : undefined) ??
+        clearIcon ??
+        defaultClearIcon,
+    },
     classNames: {
       ...classNames,
       popup: { ...classNames?.popup, root: cx(themeScopeClassName, classNames?.popup?.root) },
     },
     className: cx(
-      rootVariants({ shadow, size, variant: variant || (isDarkMode ? 'filled' : 'outlined') }),
+      rootVariants({
+        shadow,
+        size: size === 'medium' ? 'middle' : size,
+        variant: mergedVariant === 'underlined' ? 'borderless' : mergedVariant,
+      }),
+      mergedVariant === 'underlined' && pickerStyles.underlined,
+      status && `${PREFIX_CLS}-status-${status}`,
+      `${PREFIX_CLS}-${mergedVariant}`,
       className,
     ),
     defaultOpen,
@@ -146,19 +178,27 @@ export const usePickerShared = ({
     getPopupContainer: getPopupContainer ?? defaultPopupContainer,
     maxDate: maxDate ?? max,
     minDate: minDate ?? min,
-    nextIcon: nextIcon ?? <Icon icon={ChevronRight} size={16} />,
+    nextIcon: withDefault(nextIcon, <Icon icon={ChevronRight} size={16} />),
+    // Escape closes only the popup, not a Modal / Popover hosting the picker.
+    onKeyDown: (event, preventDefault) => {
+      if (event.key === 'Escape' && mergedOpen) event.stopPropagation();
+      onKeyDown?.(event, preventDefault);
+    },
     onOpenChange: (next: boolean) => {
       setInnerOpen(next);
       onOpenChange?.(next);
     },
     open,
     prefixCls: PREFIX_CLS,
-    prevIcon: prevIcon ?? <Icon icon={ChevronLeft} size={16} />,
+    prevIcon: withDefault(prevIcon, <Icon icon={ChevronLeft} size={16} />),
     rootClassName: cx(pickerStyles.root, rootClassName),
     styles: { ...styles, popup: { ...styles?.popup, root: { zIndex, ...styles?.popup?.root } } },
-    suffixIcon: suffixIcon ?? <Icon icon={CalendarIcon} size={14} />,
-    superNextIcon: superNextIcon ?? <Icon icon={ChevronsRight} size={16} />,
-    superPrevIcon: superPrevIcon ?? <Icon icon={ChevronsLeft} size={16} />,
+    suffixIcon: withDefault(
+      suffixIcon,
+      <Icon icon={picker === 'time' ? Clock : CalendarIcon} size={14} />,
+    ),
+    superNextIcon: withDefault(superNextIcon, <Icon icon={ChevronsRight} size={16} />),
+    superPrevIcon: withDefault(superPrevIcon, <Icon icon={ChevronsLeft} size={16} />),
     transitionName: transitionName ?? `${PREFIX_CLS}-slide-up`,
   };
 };

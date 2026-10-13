@@ -13,9 +13,13 @@ import type {
 import type { Dayjs } from 'dayjs';
 import type { ReactNode, Ref } from 'react';
 
-import type { InputSize, InputVariant } from '@/base-ui/Input/type';
-
 export type { PanelMode, PickerMode, PickerRef, RangePickerRef };
+
+/** `middle` is kept as an alias of `medium`. */
+export type PickerSize = 'large' | 'medium' | 'small' | 'middle';
+export type PickerVariant = 'outlined' | 'borderless' | 'filled' | 'underlined';
+export type PickerStatus = 'error' | 'warning';
+export type PickerPlacement = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRight';
 
 /** @deprecated Use `PickerMode` (the `picker` prop) instead. */
 export type CalendarMode = 'date' | 'month' | 'year';
@@ -27,15 +31,30 @@ type InternalRcProps = 'generateConfig' | 'locale' | 'prefixCls';
 type MultipleRcProps = 'maxTagCount' | 'multiple' | 'removeIcon' | 'tagRender';
 
 type ValueRcProps =
-  'defaultValue' | 'onCalendarChange' | 'onChange' | 'onOk' | 'placeholder' | 'size' | 'value';
+  | 'defaultValue'
+  | 'onCalendarChange'
+  | 'onChange'
+  | 'onOk'
+  | 'placeholder'
+  | 'placement'
+  | 'size'
+  | 'value';
 
 interface LobePickerProps {
+  /** @deprecated Use `variant` instead; `bordered={false}` maps to `variant="borderless"`. */
+  bordered?: boolean;
+  /**
+   * Popup position relative to the input.
+   * @default 'bottomLeft' ('bottomRight' when `direction="rtl"`)
+   */
+  placement?: PickerPlacement;
   /** Lobe look: drop shadow under the input box. */
   shadow?: boolean;
-  /** @default 'middle' */
-  size?: InputSize;
+  /** @default 'medium' */
+  size?: PickerSize;
+  status?: PickerStatus;
   /** @default 'outlined' (light) / 'filled' (dark) */
-  variant?: InputVariant;
+  variant?: PickerVariant;
 }
 
 export interface DatePickerProps

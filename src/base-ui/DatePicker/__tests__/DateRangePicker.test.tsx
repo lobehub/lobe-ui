@@ -90,6 +90,24 @@ describe('DateRangePicker', () => {
     expect(onChange).toHaveBeenCalledWith(null, null);
   });
 
+  test('separator, status, size and onClear apply to the range picker', () => {
+    const onClear = vi.fn();
+    render(
+      <DateRangePicker
+        defaultValue={[dayjs('2026-09-22'), dayjs('2026-10-08')]}
+        separator="~"
+        size="small"
+        status="warning"
+        onClear={onClear}
+      />,
+    );
+
+    expect(document.querySelector('.lobe-picker-range-separator')!.textContent).toBe('~');
+    expect(document.querySelector('.lobe-picker-range.lobe-picker-status-warning')).toBeTruthy();
+    fireEvent.click(screen.getByRole('button', { name: 'Clear' }));
+    expect(onClear).toHaveBeenCalledTimes(1);
+  });
+
   test('mode tuple is controlled and reported through onPanelChange', () => {
     const onPanelChange = vi.fn();
     render(

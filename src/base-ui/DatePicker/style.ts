@@ -14,6 +14,21 @@ const MOTION = `${P}-slide-up`;
  * (`.lobe-picker-dropdown`); the box itself reuses base-ui Input's `rootVariants`.
  */
 export const styles = createStaticStyles(({ css, cssVar }) => ({
+  /** antd's `underlined`: only a bottom border, applied over Input's `borderless`. */
+  underlined: css`
+    &.${P} {
+      border-block-end-color: ${cssVar.colorBorder};
+      border-radius: 0;
+    }
+
+    &.${P}:hover:not(:focus-within, .${P}-disabled) {
+      border-block-end-color: ${cssVar.colorPrimaryHover};
+    }
+
+    &.${P}:focus-within {
+      border-block-end-color: ${cssVar.colorPrimary};
+    }
+  `,
   root: css`
     /* ---------------------------------------------------------------- input box */
     &.${P} {
@@ -127,6 +142,71 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       display: none;
     }
 
+    /* status: border + focus ring per variant, as antd's genStatusStyle */
+    &.${P}-status-error {
+      --lobe-picker-status: ${cssVar.colorError};
+      --lobe-picker-status-hover: ${cssVar.colorErrorBorderHover};
+      --lobe-picker-status-bg: ${cssVar.colorErrorBg};
+      --lobe-picker-status-bg-hover: ${cssVar.colorErrorBgHover};
+    }
+
+    &.${P}-status-warning {
+      --lobe-picker-status: ${cssVar.colorWarning};
+      --lobe-picker-status-hover: ${cssVar.colorWarningBorderHover};
+      --lobe-picker-status-bg: ${cssVar.colorWarningBg};
+      --lobe-picker-status-bg-hover: ${cssVar.colorWarningBgHover};
+    }
+
+    &:is(.${P}-status-error, .${P}-status-warning):not(.${P}-disabled) {
+      &.${P}-outlined {
+        border-color: var(--lobe-picker-status);
+
+        &:hover:not(:focus-within) {
+          border-color: var(--lobe-picker-status-hover);
+        }
+
+        &:focus-within {
+          border-color: var(--lobe-picker-status);
+          box-shadow: 0 0 0 2px var(--lobe-picker-status-bg);
+        }
+      }
+
+      &.${P}-filled {
+        background: var(--lobe-picker-status-bg);
+
+        &:hover:not(:focus-within) {
+          background: var(--lobe-picker-status-bg-hover);
+        }
+
+        &:focus-within {
+          border-color: var(--lobe-picker-status);
+          background: ${cssVar.colorBgContainer};
+        }
+      }
+
+      &.${P}-underlined {
+        border-block-end-color: var(--lobe-picker-status);
+      }
+
+      &:is(.${P}-borderless, .${P}-underlined) .${P}-input > input {
+        color: var(--lobe-picker-status);
+      }
+
+      .${P}-prefix {
+        color: var(--lobe-picker-status);
+      }
+    }
+
+    /* rtl: rc-picker adds the -rtl modifier to the box and the popup; lucide arrows are mirrored */
+    &.${P}-rtl, &.${P}-dropdown-rtl {
+      direction: rtl;
+    }
+
+    &.${P}-rtl .${P}-range-separator .lucide,
+    &.${P}-dropdown-rtl .${P}-header > button .lucide {
+      transform: scaleX(-1);
+    }
+
     /* range: two inputs, a separator and the bar under the active field */
     &.${P}-range .${P}-input {
       flex: 1;
@@ -162,6 +242,9 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     /* ---------------------------------------------------------------- popup */
     &.${P}-dropdown {
+      /* nested in a base-ui Modal / Popover layer that sets pointer-events: none */
+      pointer-events: auto;
+
       position: absolute;
       inset-block-start: -9999px;
       inset-inline-start: -9999px;

@@ -11,6 +11,16 @@ import DemoMode from './demos/mode.tsx?demo';
 import DemoStartEnd from './demos/start-end.tsx?demo';
 import DemoControlled from './demos/controlled.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
+import DemoSwitchable from './demos/switchable.tsx?demo';
+import DemoSize from './demos/size.tsx?demo';
+import DemoVariant from './demos/variant.tsx?demo';
+import DemoStatus from './demos/status.tsx?demo';
+import DemoSuffix from './demos/suffix.tsx?demo';
+import DemoPlacement from './demos/placement.tsx?demo';
+import DemoRtl from './demos/rtl.tsx?demo';
+import DemoNested from './demos/nested.tsx?demo';
+import DemoSuffixIconDebug from './demos/suffixIcon-debug.tsx?demo';
+import DemoFilledDebug from './demos/filled-debug.tsx?demo';
 
 ## Basic
 
@@ -48,9 +58,69 @@ Two pickers linked through `disabledDate(current, info)` and a controlled `open`
 
 <Demo of={DemoControlled} layout="bare" />
 
+## Switchable picker
+
+`picker` can change at runtime. `time` follows with the time panel; `week` / `quarter` get their own placeholders and formats with the panel-type work.
+
+<Demo of={DemoSwitchable} layout="bare" />
+
+## Size
+
+`size` is `large`, `medium` (default) or `small`; `middle` stays as an alias of `medium`.
+
+<Demo of={DemoSize} layout="bare" />
+
+## Variant
+
+`variant` is `outlined`, `filled`, `borderless` or `underlined`; the lobe `shadow` prop still adds a drop shadow. The deprecated `bordered={false}` maps to `borderless`; an explicit `variant` wins. Unlike antd, the default is `filled` in dark mode.
+
+<Demo of={DemoVariant} layout="bare" />
+
+## Status
+
+`status="error"` or `status="warning"` tints the border (or the fill, for `filled`).
+
+<Demo of={DemoStatus} layout="bare" />
+
+## Prefix and suffix
+
+`prefix` renders before the input; `suffixIcon` replaces the calendar icon.
+
+<Demo of={DemoSuffix} layout="bare" />
+
+## Placement
+
+`placement` is `bottomLeft` (default), `bottomRight`, `topLeft` or `topRight`; the popup flips when there is no room.
+
+<Demo of={DemoPlacement} layout="bare" />
+
+## RTL
+
+`direction="rtl"` lays the input and the popup out right-to-left, mirrors the header arrows and defaults the popup to `bottomRight`. `allowClear={{ clearIcon }}` and `separator` customise the clear button and the range separator.
+
+<Demo of={DemoRtl} layout="bare" />
+
+## Inside Modal and Popover
+
+The popup nests in the enclosing base-ui Modal or Popover, so picking a date neither closes the host nor loses focus, and it stacks above the host.
+
+<Demo of={DemoNested} layout="bare" />
+
 ## Extra footer
 
 <Demo of={DemoIndex} layout="bare" />
+
+## Debug: suffixIcon
+
+`suffixIcon={null}` removes the icon.
+
+<Demo of={DemoSuffixIconDebug} layout="bare" />
+
+## Debug: filled
+
+`variant="filled"` with `disabled` and `status`.
+
+<Demo of={DemoFilledDebug} layout="bare" />
 
 ## APIs
 

@@ -12,7 +12,9 @@ import { usePickerShared } from './usePickerShared';
 
 const DateRangePicker = ({
   allowClear,
+  bordered,
   className,
+  clearIcon,
   classNames,
   defaultOpen,
   getPopupContainer,
@@ -22,17 +24,20 @@ const DateRangePicker = ({
   min,
   minDate,
   nextIcon,
+  onKeyDown,
   onCalendarChange,
   onChange,
   onOk,
   onOpenChange,
   open,
+  picker,
   placeholder,
   prevIcon,
   rootClassName,
   separator,
   shadow,
   size,
+  status,
   styles,
   suffixIcon,
   superNextIcon,
@@ -44,7 +49,9 @@ const DateRangePicker = ({
   const { locale, rangePlaceholder } = usePickerLocale(localeOverride);
   const shared = usePickerShared({
     allowClear,
+    bordered,
     className,
+    clearIcon,
     classNames,
     defaultOpen,
     getPopupContainer,
@@ -53,12 +60,15 @@ const DateRangePicker = ({
     min,
     minDate,
     nextIcon,
+    onKeyDown,
     onOpenChange,
     open,
+    picker,
     prevIcon,
     rootClassName,
     shadow,
     size,
+    status,
     styles,
     suffixIcon,
     superNextIcon,
@@ -72,6 +82,7 @@ const DateRangePicker = ({
       {...rest}
       {...shared}
       locale={locale}
+      picker={picker}
       placeholder={placeholder ?? rangePlaceholder}
       separator={separator ?? <Icon icon={ArrowRight} size={14} />}
       onCalendarChange={onCalendarChange as any}
