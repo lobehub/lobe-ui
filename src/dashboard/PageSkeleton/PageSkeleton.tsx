@@ -5,7 +5,7 @@ import * as stylex from '@stylexjs/stylex';
 import Skeleton from '@/Skeleton';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-import { styles as surfaceStyles } from '../Surface/style';
+import { useSurfaceCardStyles } from '../Surface/link';
 import { styles } from './style';
 import type {
   LoadingAnnouncerProps,
@@ -48,9 +48,10 @@ function PageHeaderSkeleton({ action = true }: PageHeaderSkeletonProps) {
 PageHeaderSkeleton.displayName = 'PageHeaderSkeleton';
 
 function TableSkeleton({ framed = true, leading = 'text', rows = 6 }: TableSkeletonProps) {
+  const cardStyles = useSurfaceCardStyles();
   const head = [96, 72, 64, 48];
   return (
-    <div aria-hidden {...stylex.props(styles.table, framed && surfaceStyles.card)}>
+    <div aria-hidden {...stylex.props(styles.table, framed && cardStyles)}>
       <div {...stylex.props(styles.thead)}>
         {head.map((width, index) => (
           <Skeleton
@@ -82,8 +83,9 @@ function TableSkeleton({ framed = true, leading = 'text', rows = 6 }: TableSkele
 TableSkeleton.displayName = 'TableSkeleton';
 
 function StatCardSkeleton() {
+  const cardStyles = useSurfaceCardStyles();
   return (
-    <div aria-hidden {...stylex.props(styles.stat, surfaceStyles.card)}>
+    <div aria-hidden {...stylex.props(styles.stat, cardStyles)}>
       <Skeleton.Text fontSize={14} width={72} />
       <Skeleton className={stylex.props(styles.statValue).className} style={bone} />
       <Skeleton.Text fontSize={14} width="68%" />

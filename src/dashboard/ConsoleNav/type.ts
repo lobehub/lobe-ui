@@ -69,3 +69,17 @@ export interface ConsoleNavProps {
   /** Persists which groups were opened or closed by hand. */
   storageKey?: string;
 }
+
+export interface ConsoleNavSkeletonProps {
+  className?: string;
+  /**
+   * Rows per group. Pass counts, or the real `ConsoleNavGroup[]` to mirror its item counts.
+   * @default [3, 6, 4, 3]
+   */
+  groups?: Array<number | ConsoleNavGroup>;
+  /**
+   * Ungrouped rows before the groups.
+   * @default 1
+   */
+  items?: number;
+}

@@ -3,6 +3,7 @@ import { useState } from 'react';
 
 import Input from '../Input';
 import InputNumber from '../InputNumber';
+import { disabledControl } from '../style';
 import TextArea from '../TextArea';
 
 const clearButton = () => screen.queryByLabelText('Clear');
@@ -141,5 +142,26 @@ describe('TextArea gaps', () => {
     fireEvent.click(clearButton()!);
 
     expect((screen.getByLabelText('t') as HTMLTextAreaElement).value).toBe('');
+  });
+});
+
+describe('InputNumber disabled style', () => {
+  afterEach(cleanup);
+
+  const rootDisabled = (input: HTMLElement) =>
+    input.parentElement!.matches(`[data-disabled], :has(${disabledControl})`);
+
+  test('a value on its min bound does not look disabled', () => {
+    render(<InputNumber aria-label="n" defaultValue={1} min={1} />);
+    const input = screen.getByLabelText('n');
+
+    expect(input.parentElement!.querySelector('button:disabled')).not.toBeNull();
+    expect(rootDisabled(input)).toBe(false);
+  });
+
+  test('a disabled field still looks disabled', () => {
+    render(<InputNumber disabled aria-label="n" defaultValue={1} min={1} />);
+
+    expect(rootDisabled(screen.getByLabelText('n'))).toBe(true);
   });
 });

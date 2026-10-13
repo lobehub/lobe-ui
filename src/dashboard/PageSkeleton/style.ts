@@ -42,7 +42,7 @@ export const styles = stylex.create({
     paddingBlock: 12,
     paddingInline: 16,
     alignItems: 'center',
-    borderBlockEndColor: { 'default': cssVar.colorBorder, ':last-child': 'currentcolor' },
+    borderBlockEndColor: { 'default': cssVar.colorFillSecondary, ':last-child': 'currentcolor' },
     borderBlockEndStyle: { 'default': 'solid', ':last-child': 'none' },
     borderBlockEndWidth: { 'default': 1, ':last-child': 'medium' },
     display: 'flex',

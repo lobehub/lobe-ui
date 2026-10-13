@@ -29,6 +29,12 @@ export const styles = stylex.create({
     marginBlockStart: { default: WORKSPACE_INSET, [media.laptop]: 0 },
     whiteSpace: 'nowrap',
   },
+  /** Close button in the drawer's brand row: right edge, vertically centred with the brand. */
+  brandClose: {
+    flex: 'none',
+    marginInlineEnd: '-7px',
+    marginInlineStart: 'auto',
+  },
   brandAnchor: {
     textDecoration: 'none',
     alignItems: 'center',
@@ -157,6 +163,10 @@ export const styles = stylex.create({
     alignItems: 'center',
     display: 'flex',
     marginInlineStart: 'auto',
+  },
+  /** Light only: the content area sits midway between the layout canvas and container white. */
+  workspaceLight: {
+    backgroundColor: `color-mix(in srgb, ${cssVar.colorBgLayout} 50%, ${cssVar.colorBgContainer})`,
   },
   workspace: {
     borderColor: { default: cssVar.colorBorderSecondary, [media.laptop]: 'currentcolor' },

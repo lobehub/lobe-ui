@@ -2,6 +2,8 @@ import * as stylex from '@stylexjs/stylex';
 
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
+import { chipMarker } from './marker.stylex';
+
 const size = 'var(--color-swatches-size, 24px)';
 const containerHover = `inset 0 0 0 1px rgb(0 0 0 / 5%), 0 0 0 2px ${cssVar.colorText}`;
 const pickerHover = `inset 0 0 0 1px ${cssVar.colorFillSecondary}, 0 0 0 2px ${cssVar.colorText}`;
@@ -12,6 +14,36 @@ export const styles = stylex.create({
   },
   activePicker: {
     boxShadow: { 'default': `inset 0 0 0 1px ${cssVar.colorFill}`, ':hover': pickerHover },
+  },
+  add: {
+    alignItems: 'center',
+    color: '#fff',
+    display: 'inline-flex',
+    justifyContent: 'center',
+  },
+  chip: {
+    placeItems: 'center',
+    display: 'grid',
+  },
+  chipCheck: {
+    opacity: {
+      default: 1,
+      [stylex.when.ancestor(':focus-visible', chipMarker)]: 0,
+      [stylex.when.ancestor(':hover', chipMarker)]: 0,
+    },
+  },
+  chipEdit: {
+    opacity: {
+      default: 0,
+      [stylex.when.ancestor(':focus-visible', chipMarker)]: 1,
+      [stylex.when.ancestor(':hover', chipMarker)]: 1,
+    },
+  },
+  chipIcon: {
+    gridColumn: 1,
+    gridRow: 1,
+    transition: `opacity 0.15s ${cssVar.motionEaseInOut}`,
+    pointerEvents: 'none',
   },
   conic: {
     backgroundColor: 'transparent',
@@ -29,6 +61,14 @@ export const styles = stylex.create({
     minHeight: size,
     minWidth: size,
     width: size,
+  },
+  divider: {
+    flex: 'none',
+    marginInline: 2,
+    alignSelf: 'center',
+    backgroundColor: cssVar.colorFillSecondary,
+    height: `calc(${size} * 0.75)`,
+    width: 1,
   },
   picker: {
     padding: 0,

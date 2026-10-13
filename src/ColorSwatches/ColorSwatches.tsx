@@ -5,7 +5,6 @@ import chroma from 'chroma-js';
 import { CheckIcon } from 'lucide-react';
 import { type FC, useMemo } from 'react';
 
-import { ColorPicker } from '@/ColorPicker';
 import { Center, Flexbox } from '@/Flex';
 import { useControlledState } from '@/hooks/useControlledState';
 import Icon from '@/Icon';
@@ -13,8 +12,9 @@ import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import Tooltip from '@/Tooltip';
 import { safeReadableColor } from '@/utils/safeReadableColor';
 
+import CustomPicker from './CustomPicker';
 import { styles } from './style';
-import type { ColorSwatchesProps } from './type';
+import type { ColorSwatchesPickerRenderProps, ColorSwatchesProps } from './type';
 
 const ColorSwatches: FC<ColorSwatchesProps> = ({
   enableColorPicker,
@@ -27,6 +27,7 @@ const ColorSwatches: FC<ColorSwatchesProps> = ({
   size = 24,
   shape = 'circle',
   texts,
+  renderPicker,
   ref,
   ...rest
 }) => {
@@ -47,6 +48,24 @@ const ColorSwatches: FC<ColorSwatchesProps> = ({
   const isCustomActive = useMemo(
     () => active && active !== cssVar.colorPrimary && !colors.some((c) => c.color === active),
     [active, colors],
+  );
+
+  const pickerProps: ColorSwatchesPickerRenderProps = {
+    active: !!isCustomActive,
+    onChange: setActive,
+    presets: colors.map((c) => c.color),
+    shape,
+    size,
+    value: isCustomActive ? active : undefined,
+  };
+
+  const defaultPicker = enableColorPicker && (
+    <CustomPicker
+      {...pickerProps}
+      current={active}
+      label={texts?.custom || 'Custom'}
+      standalone={!enableColorSwatches}
+    />
   );
 
   return (
@@ -105,31 +124,8 @@ const ColorSwatches: FC<ColorSwatchesProps> = ({
             </Tooltip>
           );
         })}
-      {enableColorPicker && (
-        <Tooltip title={texts?.custom || 'Custom'}>
-          <span style={{ display: 'inline-flex' }}>
-            <ColorPicker
-              presets={enableColorSwatches ? undefined : colors.map((c) => c.color)}
-              value={isCustomActive ? active : undefined}
-              onChangeComplete={setActive}
-            >
-              <button
-                aria-label={texts?.custom || 'Custom'}
-                type="button"
-                {...stylex.props(
-                  styles.picker,
-                  enableColorSwatches && styles.conic,
-                  !!isCustomActive && styles.activePicker,
-                )}
-                style={{
-                  background: enableColorSwatches ? undefined : active,
-                  borderRadius: shape === 'circle' ? '50%' : cssVar.borderRadius,
-                }}
-              />
-            </ColorPicker>
-          </span>
-        </Tooltip>
-      )}
+      {enableColorPicker &&
+        (renderPicker ? renderPicker(pickerProps, defaultPicker) : defaultPicker)}
     </Flexbox>
   );
 };

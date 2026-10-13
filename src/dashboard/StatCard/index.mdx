@@ -1,15 +1,26 @@
 ---
 title: StatCard
-description: StatCard is a metric tile with a label, a figure, and a semantic delta. The wash is a neutral gray; product-specific color fields stay in the app.
+description: StatCard is one metric in its own card. It renders exactly like an item of a split MetricStrip, with a label row (optional action and corner mark), a figure, and a semantic delta and hint.
 category: Data Display
 order: 0
 ---
 
 import DemoIndex from './demos/index.tsx?demo';
+import DemoAligned from './demos/aligned.tsx?demo';
 
 ## Default
 
 <Demo of={DemoIndex} layout="bare" />
+
+## Migration
+
+`prominent` and `wash` are deprecated and ignored; the card always uses the MetricStrip item scale. `delta` no longer draws a trend icon, and `hint` sits after the delta on the same line.
+
+## Header controls stay aligned
+
+The label row has a fixed height. A `Segmented` or `ActionIcon` in `action` sits centered on the label and never makes its card taller, so values, previous-period lines and charts line up across a row whether or not a card has a control. Use compact controls there: `Segmented size="small"` and `ActionIcon size="small"`. `Surface` headers follow the same rule for `extra`.
+
+<Demo of={DemoAligned} />
 
 ## APIs
 

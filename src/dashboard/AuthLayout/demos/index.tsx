@@ -7,7 +7,7 @@ export default () => {
     <AuthLayout
       aside={<div />}
       description="Sign in to the workspace. The mark and the side panel are slots."
-      style={{ blockSize: 640 }}
+      style={{ blockSize: 640, minBlockSize: 0 }}
       title="Welcome back"
       brand={
         <a aria-label="Home" href="#home" style={{ color: 'inherit' }}>

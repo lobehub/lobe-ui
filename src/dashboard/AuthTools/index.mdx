@@ -1,0 +1,20 @@
+---
+title: AuthThemeSwitch
+description: AuthThemeSwitch and AuthLocaleSwitch are the compact theme and language pickers for AuthLayout's corner tools. Both are controlled and hold no state, so wire them to your own store.
+category: Layout
+order: 2
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Default
+
+Put both in `AuthLayout`'s `tools` slot. The theme switch shows icons only; `labels` set the accessible names and tooltips. The locale switch takes `options` and reports the picked value.
+
+<Demo of={DemoIndex} />
+
+## APIs
+
+<Api name="AuthThemeSwitch" from="." />
+
+<Api name="AuthLocaleSwitch" from="." />

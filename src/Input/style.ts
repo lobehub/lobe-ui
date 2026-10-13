@@ -6,7 +6,9 @@ import { styleProps } from '@/styles/stylex/props';
 import { inputMarker } from './marker.stylex';
 import type { InputSize, InputVariant } from './type';
 
-const disabled = ':is([data-disabled], :has(:disabled))';
+export const disabledControl = 'input:disabled, textarea:disabled';
+
+const disabled = `:is([data-disabled], :has(${disabledControl}))`;
 const hover = ':hover:not(:focus-within, [data-disabled])';
 const invalid = ":has([data-invalid], [aria-invalid='true'])";
 const invalidIdle =
