@@ -71,6 +71,21 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       }
     }
 
+    /*
+     * \`disabled: [boolean, boolean]\`: Input greys the whole root on \`:has(input:disabled)\`;
+     * while one end stays editable (rc adds \`-disabled\` only when both are), grey just that end.
+     */
+    &.${P}-range:not(.${P}-disabled):has(input:disabled) {
+      cursor: auto;
+      color: ${cssVar.colorText};
+      opacity: 1;
+    }
+
+    &.${P}-range:not(.${P}-disabled) .${P}-input:has(> input:disabled) {
+      cursor: not-allowed;
+      color: ${cssVar.colorTextQuaternary};
+    }
+
     /* hover preview text from presets / cells */
     &.${P} .${P}-input-placeholder > input {
       color: ${cssVar.colorTextPlaceholder};

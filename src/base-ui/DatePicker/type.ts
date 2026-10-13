@@ -13,7 +13,7 @@ import type {
   RangePickerRef,
 } from '@rc-component/picker/interface';
 import type { Dayjs } from 'dayjs';
-import type { ReactNode, Ref } from 'react';
+import type { FocusEvent, ReactNode, Ref } from 'react';
 
 export type { CellRender, CellRenderInfo, PanelMode, PickerMode, PickerRef, RangePickerRef };
 
@@ -90,18 +90,57 @@ export interface DatePickerProps
 
 export type DateRangeValue = [Dayjs | null, Dayjs | null];
 
+/** Which end of a range an event belongs to. */
+export interface RangeInfo {
+  range: 'start' | 'end';
+}
+
+/** `info.from` is the end picked first in the current range selection. */
+export type RangeDisabledDate = (
+  current: Dayjs,
+  info: { from?: Dayjs; type: PanelMode },
+) => boolean;
+
+type RangeRcProps =
+  'allowEmpty' | 'disabled' | 'disabledDate' | 'id' | 'onBlur' | 'onFocus' | 'order';
+
 export interface DateRangePickerProps
-  extends Omit<RcRangePickerProps<Dayjs>, InternalRcProps | ValueRcProps>, LobePickerProps {
+  extends
+    Omit<RcRangePickerProps<Dayjs>, InternalRcProps | RangeRcProps | ValueRcProps>,
+    LobePickerProps {
+  /**
+   * Allow leaving the start / end empty; `true` applies to both ends.
+   * @default [false, false]
+   */
+  allowEmpty?: boolean | [boolean, boolean];
   defaultValue?: [Dayjs | null | undefined, Dayjs | null | undefined];
+  /** Disable the whole picker, or each end separately with `[start, end]`. */
+  disabled?: boolean | [boolean, boolean];
+  /** Receives `info.from` once one end is picked, e.g. to limit the range length. */
+  disabledDate?: RangeDisabledDate;
+  /** Ids of the start and end inputs. */
+  id?: { end?: string; start?: string };
   locale?: Partial<Locale>;
   /** @deprecated Use `maxDate` instead. */
   max?: Dayjs;
   /** @deprecated Use `minDate` instead. */
   min?: Dayjs;
-  onCalendarChange?: (dates: DateRangeValue, dateStrings: [string, string], info: BaseInfo) => void;
+  onBlur?: (event: FocusEvent<HTMLElement>, info: RangeInfo) => void;
+  onCalendarChange?: (
+    dates: DateRangeValue,
+    dateStrings: [string, string],
+    info: RangeInfo,
+  ) => void;
   onChange?: (dates: DateRangeValue | null, dateStrings: [string, string] | null) => void;
+  onFocus?: (event: FocusEvent<HTMLElement>, info: RangeInfo) => void;
   onOk?: (dates: DateRangeValue) => void;
+  /**
+   * Swap the ends when the end is earlier than the start; `false` keeps them as entered.
+   * @default true
+   */
+  order?: boolean;
   placeholder?: [string, string];
+  /** `focus(index)` / `focus({ index })` focuses the start (`0`) or end (`1`) input. */
   ref?: Ref<RangePickerRef>;
   value?: [Dayjs | null | undefined, Dayjs | null | undefined] | null;
 }

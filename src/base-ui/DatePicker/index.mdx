@@ -7,6 +7,10 @@ category: Data Entry
 import DemoBasic from './demos/basic.tsx?demo';
 import DemoRange from './demos/range.tsx?demo';
 import DemoRangePicker from './demos/range-picker.tsx?demo';
+import DemoRangeInteraction from './demos/range-interaction.tsx?demo';
+import DemoDisabled from './demos/disabled.tsx?demo';
+import DemoAllowEmpty from './demos/allow-empty.tsx?demo';
+import DemoSelectInRange from './demos/select-in-range.tsx?demo';
 import DemoDateRange from './demos/date-range.tsx?demo';
 import DemoMode from './demos/mode.tsx?demo';
 import DemoStartEnd from './demos/start-end.tsx?demo';
@@ -46,9 +50,33 @@ import DemoFilledDebug from './demos/filled-debug.tsx?demo';
 
 ## Range picker types
 
-`picker` works on `DateRangePicker` too: `week`, `month`, `quarter` and `year` show two adjacent panels (two years of months / quarters, two decades of years) and get range placeholders such as "Start month" / "End month".
+`picker` works on `DateRangePicker` too: `week`, `month`, `quarter` and `year` show two adjacent panels (two years of months / quarters, two decades of years) and get range placeholders such as "Start month" / "End month". `id={{ start, end }}` sets the ids of the two inputs, and `onFocus` / `onBlur` / `onCalendarChange` receive `info.range` (`'start'` or `'end'`) — focus or pick in the first picker to see it.
 
 <Demo of={DemoRangePicker} layout="bare" />
+
+## Range interaction
+
+Clicking the end input first makes the end active, so the end date is picked first and the start second. Tab moves to the other end (as in antd, an empty end that does not allow empty keeps the focus). `ref.focus(index)` / `ref.focus({ index })` focuses the start (`0`) or end (`1`). `order` (default `true`) swaps a reversed pair; `order={false}` keeps it as entered.
+
+<Demo of={DemoRangeInteraction} layout="bare" />
+
+## Disabled
+
+`disabled` disables the whole picker; on `DateRangePicker` a `[boolean, boolean]` tuple disables each end separately.
+
+<Demo of={DemoDisabled} layout="bare" />
+
+## Allow empty
+
+`allowEmpty={[false, true]}` lets the end stay empty: the range commits as `[start, null]`. `true` allows either end to be empty.
+
+<Demo of={DemoAllowEmpty} layout="bare" />
+
+## Select range dates
+
+`disabledDate(current, { from, type })` gets the end picked first as `info.from`, so the range length can be capped — here at 7 days, and at 6 months on a month picker.
+
+<Demo of={DemoSelectInRange} layout="bare" />
 
 ## Date limits
 

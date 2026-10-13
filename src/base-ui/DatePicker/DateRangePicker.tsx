@@ -14,6 +14,7 @@ import { usePickerShared } from './usePickerShared';
 
 const DateRangePicker = ({
   allowClear,
+  allowEmpty,
   bordered,
   cellRender,
   changeOnBlur,
@@ -26,7 +27,10 @@ const DateRangePicker = ({
   defaultPickerValue,
   defaultValue,
   direction,
+  disabled,
+  disabledDate,
   getPopupContainer,
+  id,
   locale: localeOverride,
   max,
   maxDate,
@@ -36,6 +40,7 @@ const DateRangePicker = ({
   monthCellRender,
   needConfirm,
   nextIcon,
+  onBlur,
   onKeyDown,
   onCalendarChange,
   onChange,
@@ -45,6 +50,7 @@ const DateRangePicker = ({
   onPanelChange,
   onPickerValueChange,
   open,
+  order,
   picker = 'date',
   pickerValue,
   placeholder,
@@ -121,19 +127,25 @@ const DateRangePicker = ({
     <RcRangePicker<Dayjs>
       {...rest}
       {...shared}
+      allowEmpty={allowEmpty}
       cellRender={keyboard.cellRender}
       dateRender={dateRender}
       defaultPickerValue={defaultPickerValue as any}
       defaultValue={defaultValue as any}
       direction={direction}
+      disabled={disabled}
+      disabledDate={disabledDate}
+      id={id}
       locale={locale}
       mode={mode as any}
       monthCellRender={monthCellRender}
+      order={order}
       picker={picker}
       pickerValue={keyboard.pickerValue}
       placeholder={placeholder ?? rangePlaceholder(picker)}
       separator={separator ?? <Icon icon={ArrowRight} size={14} />}
       value={value as any}
+      onBlur={onBlur as any}
       onCalendarChange={onCalendarChange as any}
       onChange={keyboard.onChange}
       onFocus={keyboard.onFocus}
