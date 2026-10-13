@@ -43,4 +43,15 @@ describe('theme scope', () => {
     );
     expect(probe.parentElement?.dataset).toMatchObject({ primaryColor: 'red', theme: 'dark' });
   });
+
+  it('injects the stylesheet for a custom hex once', async () => {
+    render(<Probe />);
+
+    await act(async () => setLobeTheme({ primaryColor: '#7C5CFF' }));
+    await act(async () => setLobeTheme({ appearance: 'dark' }));
+
+    expect(document.documentElement.dataset.primaryColor).toBe('#7c5cff');
+    expect(document.querySelectorAll('style#lobe-primary-7c5cff')).toHaveLength(1);
+    expect(screen.getByTestId('probe').textContent).toBe('dark|#7c5cff');
+  });
 });

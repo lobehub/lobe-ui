@@ -28,8 +28,8 @@ export interface ColorSwatchesProps extends Omit<FlexboxProps, 'onChange'> {
   shape?: 'circle' | 'square';
   size?: number;
   texts?: {
-    custom: string;
-    presets: string;
+    custom?: string;
+    presets?: string;
   };
   value?: string;
 }

@@ -1,4 +1,5 @@
-import type { NeutralColors, PrimaryColors } from '../customTheme';
+import type { NeutralColors } from '../customTheme';
+import type { LobePrimaryColor } from './customPrimary';
 import { createNeutralToken } from './token/neutral';
 import { createPaletteToken } from './token/palette';
 import { createPrimaryToken } from './token/primary';
@@ -7,7 +8,7 @@ import { staticToken } from './token/static';
 export interface CreateLobeTokenParams {
   appearance: 'light' | 'dark';
   neutralColor?: NeutralColors;
-  primaryColor?: PrimaryColors;
+  primaryColor?: LobePrimaryColor;
 }
 
 export const createLobeTokenGroups = ({

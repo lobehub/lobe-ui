@@ -18,6 +18,11 @@ export {
   type CreateLobeTokenParams,
   type LobeToken,
 } from './theme/createLobeToken';
+export {
+  type CustomPrimaryColor,
+  isCustomPrimaryColor,
+  type LobePrimaryColor,
+} from './theme/customPrimary';
 export { staticStylish as lobeStaticStylish } from './theme/customStylishStatic';
 export { generateColorNeutralPalette, generateColorPalette } from './theme/generateColorPalette';
 export {
@@ -34,4 +39,4 @@ export {
   useTheme,
   useThemeMode,
 } from './theme/scope';
-export { getGlobalCss, getThemeCss } from './theme/themeCss';
+export { getCustomPrimaryCss, getGlobalCss, getThemeCss } from './theme/themeCss';

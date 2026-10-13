@@ -1,6 +1,7 @@
 import { toCssVariables, toCssVarName } from '../css';
 import { neutralColors, primaryColors } from '../customTheme';
 import { createLobeTokenGroups } from './createLobeToken';
+import type { CustomPrimaryColor } from './customPrimary';
 import type { LobeAppearance } from './scope';
 
 const v = (key: string) => `var(${toCssVarName(key)})`;
@@ -46,6 +47,20 @@ const colorRules = (appearance: LobeAppearance) => [
     ),
   ),
 ];
+
+export const getCustomPrimaryCss = (color: CustomPrimaryColor) => {
+  const hex = color.toLowerCase();
+  return (['light', 'dark'] as const)
+    .map((appearance) =>
+      rule(
+        `[data-primary-color='${hex}']${appearanceSelector(appearance)}`,
+        toCssVariables(
+          createLobeTokenGroups({ appearance, primaryColor: hex as CustomPrimaryColor }).primary,
+        ),
+      ),
+    )
+    .join('\n\n');
+};
 
 const essentialCss = `@layer lobe-ui {
   .lobe-brand-loading path {
