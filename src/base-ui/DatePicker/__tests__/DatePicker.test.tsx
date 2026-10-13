@@ -69,6 +69,18 @@ describe('DatePicker', () => {
     expect(input().value).toBe('');
   });
 
+  test('emptying the text does not clear the value (as in antd); the clear button does', async () => {
+    const onChange = vi.fn();
+    render(<DatePicker defaultValue={dayjs('2026-10-15')} onChange={onChange} />);
+
+    openPicker();
+    fireEvent.change(input(), { target: { value: '' } });
+    fireEvent.blur(input());
+
+    await waitFor(() => expect(input().value).toBe('2026-10-15'));
+    expect(onChange).not.toHaveBeenCalled();
+  });
+
   test('typing a date parses it and Enter submits it', () => {
     const onChange = vi.fn();
     render(<DatePicker format={['YYYY-MM-DD', 'DD/MM/YYYY']} onChange={onChange} />);
