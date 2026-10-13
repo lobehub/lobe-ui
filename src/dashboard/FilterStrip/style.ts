@@ -67,9 +67,10 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     color: ${cssVar.colorWarning};
   `,
   frame: css`
-    --filter-seam: color-mix(in srgb, ${cssVar.colorText} 10%, transparent);
+    --filter-seam: ${cssVar.colorBorderSecondary};
 
     overflow: hidden;
+    border-radius: inherit;
   `,
   grid: css`
     display: grid;

@@ -41,9 +41,10 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
    * track, which reads louder than the cells.
    */
   frame: css`
-    --metric-seam: color-mix(in srgb, ${cssVar.colorText} 10%, transparent);
+    --metric-seam: ${cssVar.colorBorderSecondary};
 
     overflow: hidden;
+    border-radius: inherit;
     background: ${cssVar.colorBgElevated};
   `,
   grid: css`

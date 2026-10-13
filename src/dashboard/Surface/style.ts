@@ -5,13 +5,14 @@ import { createStaticStyles } from 'antd-style';
  *
  * Outlined `Block` uses `colorBorderSecondary` on `colorBgContainer`.
  * The workspace is already that container, so a card inside it steps up to
- * `colorBgElevated` and `colorBorder`.
+ * `colorBgElevated`. Borders and inner dividers share `colorBorderSecondary`,
+ * the same token as ConsoleShell and ConsoleNav.
  */
 export const styles = createStaticStyles(({ css, cssVar }) => ({
   card: css`
     &&,
     &&:hover {
-      border: 1px solid ${cssVar.colorBorder};
+      border: 1px solid ${cssVar.colorBorderSecondary};
       border-radius: ${cssVar.borderRadiusLG};
       background: ${cssVar.colorBgElevated};
       box-shadow: ${cssVar.boxShadowTertiary};
@@ -70,7 +71,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     && .ant-table-css-var,
     && .ant-table-wrapper {
-      --ant-table-border-color: color-mix(in srgb, ${cssVar.colorText} 10%, transparent);
+      --ant-table-border-color: ${cssVar.colorBorderSecondary};
       --ant-table-row-hover-bg: color-mix(
         in srgb,
         ${cssVar.colorText} 6%,
@@ -84,7 +85,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       white-space: nowrap;
 
       background: ${cssVar.colorBgElevated};
-      box-shadow: inset 0 -1px 0 color-mix(in srgb, ${cssVar.colorText} 10%, transparent);
+      box-shadow: inset 0 -1px 0 ${cssVar.colorBorderSecondary};
     }
 
     /* Pinned body cells inherit the transparent body, so a scrolled cell paints
@@ -132,7 +133,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
 
     && td {
-      border-block-end-color: color-mix(in srgb, ${cssVar.colorText} 10%, transparent);
+      border-block-end-color: ${cssVar.colorBorderSecondary};
     }
 
     && tr:hover > td,
@@ -154,7 +155,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   cardLinked: css`
     &&:hover,
     &&:focus-within {
-      border-color: color-mix(in srgb, ${cssVar.colorText} 28%, transparent);
+      border-color: ${cssVar.colorBorder};
     }
 
     &&:hover [data-surface-arrow] {

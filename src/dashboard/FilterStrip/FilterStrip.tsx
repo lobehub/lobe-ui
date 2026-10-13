@@ -4,6 +4,7 @@ import { cx } from 'antd-style';
 
 import Skeleton from '@/base-ui/Skeleton';
 
+import { styles as surfaceStyles } from '../Surface/style';
 import Surface from '../Surface/Surface';
 import { styles } from './style';
 import type { FilterStripProps } from './type';
@@ -26,7 +27,7 @@ const FilterStrip = ({
   onChange,
   value,
 }: FilterStripProps) => (
-  <Surface>
+  <Surface className={surfaceStyles.clip}>
     <div aria-label={label} className={styles.frame} role="radiogroup">
       <div className={styles.grid}>
         {items.map((item) => {

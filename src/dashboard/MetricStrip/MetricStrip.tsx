@@ -5,6 +5,7 @@ import { cx } from 'antd-style';
 import Skeleton from '@/base-ui/Skeleton';
 
 import { useSurfaceLink } from '../Surface/link';
+import { styles as surfaceStyles } from '../Surface/style';
 import Surface from '../Surface/Surface';
 import { styles } from './style';
 import type { MetricItem, MetricStripProps } from './type';
@@ -49,7 +50,7 @@ const MetricStrip = ({ items, loading, renderLink }: MetricStripProps) => {
   const link = useSurfaceLink(renderLink);
 
   return (
-    <Surface>
+    <Surface className={surfaceStyles.clip}>
       <div className={styles.frame}>
         <div className={styles.grid}>
           {items.map((item, index) => {
