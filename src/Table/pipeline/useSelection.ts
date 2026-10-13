@@ -45,6 +45,7 @@ export interface MergedSelectionItem {
 }
 
 export interface SelectionActions {
+  clear: () => void;
   selectAll: () => void;
   selectRadio: (key: Key, event: Event) => void;
   toggleCheckbox: (key: Key, checked: boolean, event: Event | undefined) => void;
@@ -401,9 +402,11 @@ export const useSelection = <T>(
     locale.selectNone,
   ]);
 
+  const clear = useEventCallback(() => setSelectedKeys(EMPTY_KEYS, 'none'));
+
   const actions = useMemo(
-    (): SelectionActions => ({ selectAll, selectRadio, toggleCheckbox }),
-    [selectAll, selectRadio, toggleCheckbox],
+    (): SelectionActions => ({ clear, selectAll, selectRadio, toggleCheckbox }),
+    [clear, selectAll, selectRadio, toggleCheckbox],
   );
 
   return {

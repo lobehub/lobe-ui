@@ -1,9 +1,17 @@
 import { act, cleanup, fireEvent, render as rtlRender, screen } from '@testing-library/react';
 import { motion } from 'motion/react';
-import { type HTMLAttributes, type Key, type ReactNode, useState } from 'react';
+import {
+  type ComponentType,
+  type HTMLAttributes,
+  type Key,
+  type ReactNode,
+  type RefObject,
+  useState,
+} from 'react';
 
 import ConfigProvider from '@/ConfigProvider';
 
+import type { TableInternalHandle, TableInternalProps } from '../internal';
 import Table from '../Table';
 import type {
   TableColumn,
@@ -53,6 +61,8 @@ const columns: TableColumn<Row>[] = [
     title: 'Provider',
   },
 ];
+
+const InternalTable = Table as ComponentType<TableInternalProps<Row>>;
 
 const renders = new Map<string, number>();
 const SpyRow = (props: HTMLAttributes<HTMLTableRowElement> & { 'data-row-key'?: string }) => {
@@ -267,5 +277,24 @@ describe('virtual scroll granularity', () => {
     });
     expect(firstKey()).not.toBe('0');
     expect(headerRenders).toBe(0);
+  });
+});
+
+describe('internal handle', () => {
+  test('exposes the store and clears an uncontrolled selection', () => {
+    const handle: RefObject<TableInternalHandle | null> = { current: null };
+    const onChange = vi.fn();
+    render(
+      <InternalTable
+        columns={columns}
+        dataSource={rows}
+        internalRef={handle}
+        rowSelection={{ defaultSelectedRowKeys: ['1', '2'], onChange }}
+      />,
+    );
+    expect([...handle.current!.store.getState().selectedKeys]).toEqual(['1', '2']);
+    act(() => handle.current!.clearSelection());
+    expect(handle.current!.store.getState().selectedKeys.size).toBe(0);
+    expect(onChange).toHaveBeenLastCalledWith([], [], { type: 'none' });
   });
 });

@@ -41,14 +41,16 @@ import { useViewContexts } from './render/useViewContexts';
 import { useStableSemantic } from './semantic';
 import { TableStoreProvider } from './store/hooks';
 import { styles } from './style';
+import type { TableInternalProps } from './internal';
 import type { TableProps, TableRef } from './type';
 import { useTableController } from './useTableController';
 
-const TableInner = <T,>(props: TableProps<T>) => {
+const TableInner = <T,>(props: TableInternalProps<T>) => {
   const {
     className,
     classNames,
     footer,
+    internalRef,
     loading = false,
     onScroll,
     pagination,
@@ -90,6 +92,11 @@ const TableInner = <T,>(props: TableProps<T>) => {
     ref as Ref<TableRef>,
     () => toTableRef(rootRef.current!, controller.scrollTo),
     [controller.scrollTo],
+  );
+  useImperativeHandle(
+    internalRef,
+    () => ({ clearSelection: controller.selection.actions.clear, store: controller.store }),
+    [controller.selection.actions.clear, controller.store],
   );
 
   const { headerValue, selectionValue, viewValue } = useViewContexts<T>({
