@@ -1,82 +1,134 @@
-import type {
-  ColumnFiltersState,
-  PaginationState,
-  SortingState,
-  Updater,
-} from '@tanstack/react-table';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
-import { getColumnId } from './toColumnDefs';
 import type {
   TableColumn,
-  TableFilters,
+  TableColumnTitleProps,
+  TableCurrentDataSource,
   TablePaginationConfig,
   TableProps,
-  TableSorterResult,
 } from './type';
+import {
+  collectFilterStates,
+  filterData,
+  type FilterKeys,
+  type FiltersState,
+  type FilterState,
+  getFilterInfo,
+  mergeFilterStates,
+  useFilter,
+} from './useFilter';
+import {
+  collectSortStates,
+  getSorterInfo,
+  getSortTitleProps,
+  getTriggeredSortStates,
+  mergeSortStates,
+  sortData,
+  type SortState,
+  useSorter,
+} from './useSorter';
 
-const resolve = <S>(updater: Updater<S>, previous: S): S =>
-  typeof updater === 'function' ? (updater as (old: S) => S)(previous) : updater;
+export interface PaginationState {
+  pageIndex: number;
+  pageSize: number;
+}
 
-const initialSorting = (columns: TableColumn<any>[]): SortingState => {
-  const index = columns.findIndex((column) => column.defaultSortOrder);
-  if (index === -1) return [];
-  return [
-    { desc: columns[index].defaultSortOrder === 'descend', id: getColumnId(columns[index], index) },
-  ];
-};
+export const DEFAULT_PAGE_SIZE = 10;
+
+type ChangeAction = TableCurrentDataSource<unknown>['action'];
 
 export const useTableState = <T>({
+  childrenColumnName,
   columns,
+  dataSource,
   onChange,
+  onTableChange,
   pagination,
-}: Pick<TableProps<T>, 'columns' | 'onChange' | 'pagination'>) => {
+}: Pick<TableProps<T>, 'onChange' | 'pagination'> & {
+  childrenColumnName?: string;
+  columns: readonly TableColumn<T>[];
+  dataSource: readonly T[];
+  /** Runs before `onChange` on every paginate / sort / filter (scroll back to the first row). */
+  onTableChange?: () => void;
+}) => {
   const config: TablePaginationConfig | undefined =
     pagination === false ? undefined : (pagination ?? {});
-  const columnIds = columns.map((column, index) => getColumnId(column, index));
 
-  const [sorting, setSorting] = useState<SortingState>(() => initialSorting(columns));
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [innerPage, setInnerPage] = useState<PaginationState>({
-    pageIndex: (config?.defaultCurrent ?? 1) - 1,
-    pageSize: config?.defaultPageSize ?? 10,
-  });
-
-  const page: PaginationState = {
-    pageIndex: config?.current === undefined ? innerPage.pageIndex : config.current - 1,
-    pageSize: config?.pageSize ?? innerPage.pageSize,
-  };
-
-  const toFilters = (state: ColumnFiltersState): TableFilters =>
+  const [innerSortStates, setInnerSortStates] = useState<SortState<T>[]>(() =>
+    collectSortStates(columns, true),
+  );
+  const sortStates = useMemo(
+    () => mergeSortStates(columns, innerSortStates),
+    [columns, innerSortStates],
+  );
+  const [innerFilterKeys, setInnerFilterKeys] = useState<FiltersState>(() =>
     Object.fromEntries(
-      columns
-        .map((column, index) => [column, columnIds[index]] as const)
-        .filter(([column]) => column.filters?.length)
-        .map(([, id]) => [
-          id,
-          (state.find((filter) => filter.id === id)?.value as TableFilters[string]) ?? null,
-        ]),
+      collectFilterStates(columns, true).map(({ filteredKeys, key }) => [key, filteredKeys]),
+    ),
+  );
+  const filterStates = useMemo(
+    () => mergeFilterStates(columns, innerFilterKeys),
+    [columns, innerFilterKeys],
+  );
+  const filters = useMemo(() => getFilterInfo(filterStates), [filterStates]);
+
+  // ============================== Data ==============================
+  const filtered = useFilter({ childrenColumnName, data: dataSource, states: filterStates });
+  /** Filtered and sorted records of every page (antd `mergedData`). */
+  const data = useSorter({ childrenColumnName, data: filtered, sortStates });
+  const getCurrentDataSource = (
+    nextFilterStates: readonly FilterState<T>[],
+    nextSortStates: readonly SortState<T>[],
+  ) =>
+    sortData(
+      filterData(dataSource, nextFilterStates, childrenColumnName),
+      nextSortStates,
+      childrenColumnName,
     );
 
-  const toSorter = (state: SortingState): TableSorterResult<T> => {
-    const [active] = state;
-    if (!active) return {};
-    const index = columnIds.indexOf(active.id);
-    return {
-      column: columns[index],
-      columnKey: active.id,
-      order: active.desc ? 'descend' : 'ascend',
+  // =========================== Pagination ===========================
+  const [innerPage, setInnerPage] = useState<PaginationState>({
+    pageIndex: (config?.defaultCurrent ?? 1) - 1,
+    pageSize: config?.defaultPageSize ?? DEFAULT_PAGE_SIZE,
+  });
+
+  const pageSize = config?.pageSize ?? innerPage.pageSize;
+  // Like antd: a positive `pagination.total` wins over the local data length.
+  const total = config?.total && config.total > 0 ? config.total : data.length;
+  const pageCount = Math.max(1, Math.ceil(total / pageSize));
+  const rawPageIndex = config?.current === undefined ? innerPage.pageIndex : config.current - 1;
+  const page: PaginationState = { pageIndex: Math.min(rawPageIndex, pageCount - 1), pageSize };
+
+  /** The `pagination` argument of `onChange` (antd `getPaginationParam`): no callbacks. */
+  const toPaginationArg = (next: PaginationState): TablePaginationConfig => {
+    if (!config) return {};
+    const merged: Record<string, unknown> = {
+      ...config,
+      current: next.pageIndex + 1,
+      pageSize: next.pageSize,
+      total,
     };
+    const arg: Record<string, unknown> = { current: merged.current, pageSize: merged.pageSize };
+    for (const key of Object.keys(config)) {
+      if (typeof merged[key] !== 'function') arg[key] = merged[key];
+    }
+    return arg as TablePaginationConfig;
   };
 
-  const toPaginationArg = (next: PaginationState): TablePaginationConfig =>
-    config ? { ...config, current: next.pageIndex + 1, pageSize: next.pageSize } : {};
-
   const report = (
+    action: ChangeAction,
     nextPage: PaginationState,
-    nextFilters: ColumnFiltersState,
-    nextSorting: SortingState,
-  ) => onChange?.(toPaginationArg(nextPage), toFilters(nextFilters), toSorter(nextSorting));
+    nextFilterStates: readonly FilterState<T>[],
+    nextSortStates: readonly SortState<T>[],
+  ) => {
+    onTableChange?.();
+    onChange?.(
+      toPaginationArg(nextPage),
+      getFilterInfo(nextFilterStates),
+      getSorterInfo(nextSortStates),
+      { action, currentDataSource: getCurrentDataSource(nextFilterStates, nextSortStates) },
+    );
+  };
 
   const changePage = (next: PaginationState) => {
     setInnerPage(next);
@@ -95,38 +147,57 @@ export const useTableState = <T>({
     config.onChange?.(pageIndex + 1, page.pageSize);
   };
 
-  const onSortingChange = (updater: Updater<SortingState>) => {
-    const next = resolve(updater, sorting);
-    const firstPage = { ...page, pageIndex: 0 };
-    setSorting(next);
-    changePage(firstPage);
-    report(firstPage, columnFilters, next);
+  /** Applies a header click (antd `triggerSorter`); like antd, the current page is kept. */
+  const triggerSort = (next: SortState<T>) => {
+    const nextStates = getTriggeredSortStates(sortStates, next);
+    setInnerSortStates(nextStates);
+    report('sort', page, filterStates, nextStates);
   };
 
-  const onColumnFiltersChange = (updater: Updater<ColumnFiltersState>) => {
-    const next = resolve(updater, columnFilters);
+  /**
+   * Applies a column's filter (antd `triggerFilter`); like antd, it returns to the first page and
+   * always tells `pagination.onChange`.
+   */
+  const triggerFilter = (columnKey: string, filteredKeys: FilterKeys) => {
+    const nextStates = filterStates.map((item) =>
+      item.key === columnKey ? { ...item, filteredKeys } : item,
+    );
     const firstPage = { ...page, pageIndex: 0 };
-    setColumnFilters(next);
-    changePage(firstPage);
-    report(firstPage, next, sorting);
+    setInnerFilterKeys(
+      Object.fromEntries(nextStates.map(({ filteredKeys, key }) => [key, filteredKeys])),
+    );
+    setInnerPage(firstPage);
+    if (pagination) pagination.onChange?.(1, firstPage.pageSize);
+    report('filter', firstPage, nextStates, sortStates);
   };
 
-  const onPaginationChange = (updater: Updater<PaginationState>) => {
-    const next = resolve(updater, page);
+  /** Argument of function column titles (antd `ColumnTitleProps`). */
+  const titleProps = useMemo(
+    (): TableColumnTitleProps<T> => ({
+      filters,
+      ...getSortTitleProps(sortStates),
+    }),
+    [filters, sortStates],
+  );
+
+  const onPaginationChange = (next: PaginationState) => {
     changePage(next);
-    report(next, columnFilters, sorting);
+    report('paginate', next, filterStates, sortStates);
   };
 
   return {
     clampPage,
-    columnFilters,
-    columnIds,
     config,
-    manualSorting: columns.some((column) => column.sorter === true),
-    onColumnFiltersChange,
+    data,
+    filterStates,
+    filters,
     onPaginationChange,
-    onSortingChange,
     page,
-    sorting,
+    rawPageIndex,
+    sortStates,
+    titleProps,
+    total,
+    triggerFilter,
+    triggerSort,
   };
 };

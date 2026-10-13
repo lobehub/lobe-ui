@@ -2,6 +2,10 @@ import { createStaticStyles } from 'antd-style';
 import { cva } from 'class-variance-authority';
 
 export const styles = createStaticStyles(({ css, cssVar }) => ({
+  aligned: css`
+    display: flex;
+    width: 100%;
+  `,
   button: css`
     cursor: pointer;
 
@@ -41,6 +45,9 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       background: ${cssVar.colorFillSecondary};
     }
   `,
+  center: css`
+    justify-content: center;
+  `,
   ellipsis: css`
     display: inline-flex;
     align-items: center;
@@ -51,11 +58,40 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     color: ${cssVar.colorTextQuaternary};
     letter-spacing: 2px;
   `,
+  end: css`
+    justify-content: flex-end;
+  `,
+  jumper: css`
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+
+    margin-inline-start: 8px;
+
+    font-size: 13px;
+    color: ${cssVar.colorTextSecondary};
+    white-space: nowrap;
+  `,
+  jumperInput: css`
+    width: 50px;
+  `,
   root: css`
     display: inline-flex;
     gap: 4px;
     align-items: center;
     font-variant-numeric: tabular-nums;
+  `,
+  simplePager: css`
+    display: inline-flex;
+    gap: 6px;
+    align-items: center;
+
+    font-size: 13px;
+    color: ${cssVar.colorTextSecondary};
+    white-space: nowrap;
+  `,
+  simpleSlash: css`
+    color: ${cssVar.colorTextQuaternary};
   `,
   small: css`
     min-width: 24px;
@@ -64,6 +100,9 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
   smallEllipsis: css`
     width: 24px;
+  `,
+  start: css`
+    justify-content: flex-start;
   `,
   total: css`
     margin-inline-end: 8px;

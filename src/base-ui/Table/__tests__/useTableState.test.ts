@@ -10,6 +10,7 @@ describe('useTableState pagination callbacks', () => {
     const { result } = renderHook(() =>
       useTableState({
         columns: [{ dataIndex: 'id', title: 'Id' }],
+        dataSource: [],
         onChange,
         pagination: { defaultCurrent: 2, onChange: pageChange, onShowSizeChange: sizeChange },
       }),
