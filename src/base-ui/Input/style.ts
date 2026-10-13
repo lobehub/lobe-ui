@@ -4,6 +4,13 @@ import { cva } from 'class-variance-authority';
 import { controlHeight } from '@/base-ui/controlSize';
 import { lobeStaticStylish } from '@/styles';
 
+/**
+ * Only the field's own control counts as disabled. NumberField disables its
+ * increment / decrement buttons at max / min, and a bare `:has(:disabled)` greyed
+ * the whole root whenever the value sat on a bound.
+ */
+export const disabledControl = 'input:disabled, textarea:disabled';
+
 export const styles = createStaticStyles(({ css, cssVar }) => ({
   clear: css`
     cursor: pointer;
@@ -141,7 +148,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       box-shadow 150ms ${cssVar.motionEaseOut};
 
     &[data-disabled],
-    &:has(:disabled) {
+    &:has(${disabledControl}) {
       cursor: not-allowed;
       color: ${cssVar.colorTextQuaternary};
       opacity: 0.66;
