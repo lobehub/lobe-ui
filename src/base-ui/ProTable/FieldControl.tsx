@@ -1,3 +1,4 @@
+import { useThemeMode } from 'antd-style';
 import { type ReactNode } from 'react';
 
 import DatePicker from '@/base-ui/DatePicker/DatePicker';
@@ -13,7 +14,7 @@ import { resolveValueEnum, resolveValueType, valueEnumToList } from './utils';
 export interface FieldControlProps {
   column: ProColumnType<any>;
   form: ProTableFormInstance;
-  /** Light filter bar: smaller, borderless controls. */
+  /** Light filter bar: small controls, outlined in light mode and filled in dark mode. */
   light?: boolean;
   onChange: (value: any) => void;
   placeholder: { input: string; select: string };
@@ -29,7 +30,9 @@ const FieldControl = ({ column, form, light, onChange, placeholder, value }: Fie
   const { fieldProps = {} } = column;
   const label = typeof column.title === 'string' ? column.title : undefined;
   const size = light ? 'small' : undefined;
-  const variant = light ? 'filled' : undefined;
+  const { isDarkMode } = useThemeMode();
+  // Light filter: outlined on light backgrounds, filled in dark mode.
+  const variant = light ? (isDarkMode ? 'filled' : 'outlined') : undefined;
 
   if (column.renderFormItem) {
     return column.renderFormItem(
