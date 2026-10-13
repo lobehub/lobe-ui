@@ -285,6 +285,39 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
 
       background: color-mix(in srgb, ${cssVar.colorBgContainer} 60%, transparent);
     `,
+    /**
+     * Empty-state loading body. Tracks follow leaf column widths so bars sit under the
+     * live header; cell padding reuses the size CSS vars on the table ancestor.
+     */
+    skeleton: css`
+      display: flex;
+      flex-direction: column;
+
+      width: 100%;
+      min-width: 0;
+
+      text-align: start;
+    `,
+    skeletonCell: css`
+      display: flex;
+      align-items: center;
+
+      min-width: 0;
+      padding-block: var(${PADDING_BLOCK});
+      padding-inline: var(${PADDING_INLINE});
+    `,
+    skeletonRow: css`
+      display: grid;
+      align-items: stretch;
+
+      width: 100%;
+      min-width: 0;
+      border-block-end: 1px solid ${cssVar.colorBorderSecondary};
+
+      &:last-child {
+        border-block-end: 0;
+      }
+    `,
     // antd `paginationMargin` (token.margin): keep the pager off the table above and off
     // whatever sits below the table.
     pagination: css`
@@ -445,6 +478,14 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
         padding-block: 32px;
         color: ${cssVar.colorTextDescription};
         text-align: center;
+      }
+
+      /* Skeleton loading fills the placeholder like real body rows. */
+      & ${p}-tbody > tr${p}-placeholder > td:has([data-table-skeleton]) {
+        padding: 0;
+        color: inherit;
+        text-align: start;
+        vertical-align: top;
       }
 
       & ${p}-cell-scrollbar:not([rowspan]) {

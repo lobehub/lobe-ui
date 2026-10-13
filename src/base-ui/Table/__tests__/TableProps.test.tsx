@@ -113,11 +113,18 @@ describe('Table-level props', () => {
     expect(container.querySelector('[data-table-loading]')).toBeNull();
   });
 
-  test('loading with no rows shows the spinner in place of the empty text', () => {
-    render(<Table loading columns={columns} dataSource={[]} emptyText="Nothing" rowKey="id" />);
+  test('loading with no rows shows the skeleton under a network spin overlay', () => {
+    const { container } = render(
+      <Table loading columns={columns} dataSource={[]} emptyText="Nothing" rowKey="id" />,
+    );
 
     expect(screen.queryByText('Nothing')).toBeNull();
-    expect(screen.getByRole('status')).toBeTruthy();
+    expect(container.querySelector('[data-table-skeleton]')).toBeTruthy();
+    expect(container.querySelector('[data-table-loading]')).toBeTruthy();
+    const status = screen.getByRole('status');
+    expect(status).toBeTruthy();
+    // network glyph: many connection lines + nodes (see Spin network variant)
+    expect(status.querySelectorAll('line').length).toBeGreaterThan(0);
   });
 
   test('title and footer receive the current page data', () => {

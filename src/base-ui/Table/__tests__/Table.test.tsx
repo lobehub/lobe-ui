@@ -257,13 +257,15 @@ describe('Table', () => {
     expect(firstRow.className).toContain('row-1');
   });
 
-  test('loading keeps rows and shows the overlay', () => {
+  test('loading keeps rows and shows the network spin overlay', () => {
     const { container } = render(
       <Table loading columns={columns} dataSource={rows} pagination={false} rowKey="id" />,
     );
 
     expect(bodyModels()).toHaveLength(3);
-    expect(container.querySelector('[data-table-loading]')).toBeTruthy();
+    const overlay = container.querySelector('[data-table-loading]')!;
+    expect(overlay).toBeTruthy();
+    expect(overlay.querySelectorAll('line').length).toBeGreaterThan(0);
   });
 
   test('empty data shows emptyText', () => {

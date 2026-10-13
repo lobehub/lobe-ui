@@ -48,6 +48,7 @@ import {
 } from './columnUtils';
 import renderExpandIcon from './ExpandIcon';
 import FilterDropdown, { TableMeasureRowContext } from './FilterDropdown';
+import TableLoadingSkeleton from './LoadingSkeleton';
 import {
   isPlainObject,
   SELECTION_ALL,
@@ -393,8 +394,10 @@ const TableInner = <T,>(props: TableProps<T>) => {
   const {
     spinning: isLoading = true,
     tip,
-    ...spinProps
+    variant: spinVariant = 'network',
+    ...spinRest
   } = typeof loading === 'object' ? loading : { spinning: loading };
+  const spinProps = { variant: spinVariant, ...spinRest };
 
   // =============================== Columns ==============================
   const triggerSort = useEventCallback(state.triggerSort);
@@ -667,7 +670,14 @@ const TableInner = <T,>(props: TableProps<T>) => {
   // Like antd: `locale.emptyText` (here also the `emptyText` alias) replaces the default empty state.
   const customEmpty = locale?.emptyText ?? emptyText;
   const emptyNode = isLoading ? (
-    <Spin {...spinProps} />
+    <TableLoadingSkeleton
+      columns={columns}
+      expandColumn={Boolean(expandType)}
+      rows={pagination === false ? 5 : Math.min(5, pageSize)}
+      screens={screens}
+      selectionColumn={hasRowSelection}
+      size={size}
+    />
   ) : customEmpty === undefined ? (
     <Empty description={t('table.emptyText')} />
   ) : typeof customEmpty === 'function' ? (
@@ -746,7 +756,7 @@ const TableInner = <T,>(props: TableProps<T>) => {
           onRow={mergedOnRow as any}
           onScroll={onScroll}
         />
-        {isLoading && rows.length > 0 && (
+        {isLoading && (
           <div className={styles.loading} data-table-loading="">
             <Spin {...spinProps} />
             {tip}
