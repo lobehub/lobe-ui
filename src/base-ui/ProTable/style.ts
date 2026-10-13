@@ -165,6 +165,11 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     gap: 16px;
     min-width: 0;
 
+    /* Query form → toolbar / table: 24px (16px gap + 8px), parts below keep 16px. */
+    & > :has(> [data-pro-table-search]) {
+      margin-block-end: 8px;
+    }
+
     &[data-fullscreen] {
       overflow: auto;
       padding: 16px;
@@ -183,6 +188,22 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     gap: 8px;
     align-items: center;
     justify-content: flex-end;
+
+    /* Vertical: buttons sit on the control line of the last row (Pro adds a blank label). */
+    &[data-layout='vertical'] {
+      align-self: end;
+    }
+  `,
+  /* Ellipsis lives on the element that holds the text (Form wraps labels in flex boxes). */
+  searchLabelText: css`
+    overflow: hidden;
+    display: block;
+
+    min-width: 0;
+    max-width: 100%;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
   `,
   searchField: css`
     min-width: 0;
@@ -206,6 +227,24 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     &[data-layout='horizontal'] > div > label {
       text-align: end;
+    }
+
+    /* A long label never leaves the form: a block label clips and ellipsizes at the END of
+       the text (text-align only moves short labels; it never shifts overflow to the start). */
+    && > div > label {
+      min-width: 0;
+      max-width: 100%;
+    }
+
+    && > div > label * {
+      min-width: 0;
+      max-width: 100%;
+    }
+
+    /* Vertical (Pro QueryFilter vertical): label on its own line, full-width control. */
+    &[data-layout='vertical'] > div > label {
+      width: 100%;
+      text-align: start;
     }
 
     & > div > div {

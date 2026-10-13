@@ -52,7 +52,7 @@ export const styles = createStaticStyles(({ css, cssVar, responsive }) => ({
     min-block-size: 54px;
     padding-block: 12px;
     padding-inline: 16px;
-    border-block-end: 1px solid ${cssVar.colorFillSecondary};
+    border-block-end: 1px solid ${cssVar.colorBorderSecondary};
 
     &:last-child {
       border-block-end: none;
@@ -76,6 +76,7 @@ export const styles = createStaticStyles(({ css, cssVar, responsive }) => ({
     gap: 12px;
   `,
   stat: css`
+    overflow: clip;
     display: flex;
     flex-direction: column;
     padding: 16px;

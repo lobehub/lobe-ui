@@ -46,6 +46,18 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
   return {
     outlined: css`
       &${p}-outlined {
+        /* The square root must not paint behind the rounded frame: the container
+           (clipped to its radius) carries the colorBgContainer body instead. */
+        background: transparent;
+
+        & > ${p}-container {
+          background: ${cssVar.colorBgContainer};
+        }
+
+        & > ${p}-title, & > ${p}-footer {
+          background: ${cssVar.colorBgContainer};
+        }
+
         & > ${p}-title {
           border: ${border};
           border-block-end: 0;
@@ -53,12 +65,12 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
           border-start-end-radius: ${cssVar.borderRadiusLG};
         }
 
-        /* Like antd: start + top on the container; cells draw the end / bottom edges
-           so rowspan group headers never lose a vertical line to \`:last-child\`. */
+        /* The container draws the top and both side edges; the last row draws the bottom.
+           No column dividers (grouped headers included): rows are split horizontally only. */
         & > ${p}-container {
           overflow: clip;
           border-block-start: ${border};
-          border-inline-start: ${border};
+          border-inline: ${border};
           border-radius: ${cssVar.borderRadiusLG};
         }
 
@@ -79,25 +91,21 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
           border-end-end-radius: ${cssVar.borderRadiusLG};
         }
 
-        ${ownCells('th')}, ${ownCells('td')} {
-          border-inline-end: ${border};
-        }
-
         /* Every header row (including the last) draws one bottom edge — no inset
            shadow underneath, or group headers look double-thick. */
         & > ${p}-container > * > table > thead > tr > th {
           border-block-end: ${border};
           box-shadow: inset 0 999px 0 ${cssVar.colorFillQuaternary};
         }
-
-        & ${p}-tbody-virtual ${p}-cell {
-          border-inline-end: ${border};
-        }
       }
     `,
 
+    /* Mirrors Block \`filled\`: one colorFillTertiary surface straight on the parent (no
+       colorBgContainer underneath, no stacked header fill) and no frame border. */
     filled: css`
       &${p}-filled {
+        background: transparent;
+
         & > ${p}-title, & > ${p}-footer {
           border-radius: ${cssVar.borderRadiusLG};
           background: ${cssVar.colorFillQuaternary};
@@ -129,30 +137,115 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
           border-end-end-radius: 0;
         }
 
-        /* Soft header band: same FillTertiary surface as the body, plus the same
-           FillQuaternary inset wash borderless/outlined use — light layering, not a
-           heavy Secondary fill. Sticky thead keeps an opaque Tertiary base so rows
-           do not show through while scrolling. */
+        /* Header band: only the FillQuaternary wash over the container fill (stacking a
+           second FillTertiary made dark mode too bright). */
         & ${p}-thead > tr > th,
         & ${p}-thead > tr > td {
-          background: ${cssVar.colorFillTertiary};
+          background: transparent;
           box-shadow:
             inset 0 -1px 0 ${cssVar.colorBorderSecondary},
             inset 0 999px 0 ${cssVar.colorFillQuaternary};
         }
 
+        /* Row dividers stay on (base colorBorderSecondary rule); only the fill is the container's. */
         & ${p}-tbody > tr > td,
         & ${p}-tbody > tr > th,
         & ${p}-tbody-virtual ${p}-cell {
           background: transparent;
         }
 
+        /* Fixed cells must be opaque: colorBgContainer painted with the same fill(s), the
+           closest opaque match to the translucent surface around them. */
         & ${p}-thead > tr > th${p}-cell-fix, & ${p}-thead > tr > td${p}-cell-fix {
-          background: ${cssVar.colorFillTertiary};
+          background: ${cssVar.colorBgContainer};
           box-shadow:
             inset 0 -1px 0 ${cssVar.colorBorderSecondary},
-            inset 0 999px 0 ${cssVar.colorFillQuaternary};
+            inset 0 999px 0 ${cssVar.colorFillQuaternary},
+            inset 0 999px 0 ${cssVar.colorFillTertiary};
         }
+
+        & ${p}-tbody > tr > td${p}-cell-fix {
+          background: ${cssVar.colorBgContainer};
+          box-shadow: inset 0 999px 0 ${cssVar.colorFillTertiary};
+        }
+      }
+    `,
+    /**
+     * Borderless: everything but the header is see-through, so the table sits on whatever
+     * surface hosts it. Hover / selected rows are translucent fills. Fixed (sticky) cells
+     * stay opaque in colorBgContainer so scrolled content never shows underneath them.
+     */
+    borderless: css`
+      && {
+        background: transparent;
+      }
+
+      && ${p}-tbody > tr > td,
+      && ${p}-tbody > tr > th,
+      && ${p}-tbody-virtual ${p}-cell, && ${p}-summary, && ${p}-summary > tr > td,
+      && ${p}-summary > tr > th,
+      && > ${p}-footer {
+        background: transparent;
+      }
+
+      && ${p}-tbody > tr > td${p}-cell-row-hover, && ${p}-tbody-virtual ${p}-row:hover > ${p}-cell {
+        background: color-mix(in srgb, ${cssVar.colorText} 3%, transparent);
+      }
+
+      && ${p}-tbody > tr${p}-row-selected > td {
+        background: color-mix(in srgb, ${cssVar.colorPrimary} 6%, transparent);
+
+        &${p}-cell-row-hover {
+          background: color-mix(in srgb, ${cssVar.colorPrimary} 10%, transparent);
+        }
+      }
+
+      &&
+        ${p}-tbody
+        > tr
+        > td${p}-cell-fix,
+        &&
+        ${p}-tbody
+        > tr
+        > th${p}-cell-fix,
+        &&
+        ${p}-tbody-virtual
+        ${p}-cell${p}-cell-fix {
+        background: ${cssVar.colorBgContainer};
+      }
+
+      && ${p}-tbody > tr > td${p}-cell-fix${p}-cell-row-hover {
+        background: color-mix(in srgb, ${cssVar.colorBgContainer}, ${cssVar.colorText} 3%);
+      }
+
+      && ${p}-tbody > tr${p}-row-selected > td${p}-cell-fix {
+        background: color-mix(in srgb, ${cssVar.colorBgContainer}, ${cssVar.colorPrimary} 6%);
+
+        &${p}-cell-row-hover {
+          background: color-mix(in srgb, ${cssVar.colorBgContainer}, ${cssVar.colorPrimary} 10%);
+        }
+      }
+    `,
+    /**
+     * Grouped (multi-level) headers only: column dividers in header and body so the
+     * group spans stay readable. Plain tables never get vertical dividers.
+     */
+    grouped: css`
+      ${ownCells('th')}, ${ownCells('td')} {
+        border-inline-end: ${border};
+      }
+
+      & ${p}-tbody-virtual ${p}-cell {
+        border-inline-end: ${border};
+      }
+
+      /* Outlined: the container already draws the trailing edge. Other variants: the
+         rightmost body cell and first header row cell stop at the table edge. */
+      &:not(${p}-outlined) ${p}-tbody > tr > td:last-child,
+      &:not(${p}-outlined) ${p}-thead > tr:first-child > th:last-child,
+      &${p}-outlined ${p}-tbody > tr > td:last-child,
+      &${p}-outlined ${p}-thead > tr:first-child > th:last-child {
+        border-inline-end: 0;
       }
     `,
     clickable: css`

@@ -43,13 +43,15 @@ export default () => {
       search: true,
       filterType: { options: ['query', 'light'], value: 'query' },
       defaultCollapsed: true,
-      labelWidth: { max: 160, min: 40, step: 10, value: 80 },
+      labelWidth: { options: ['auto', '60', '80', '120'], value: '80' },
+      layout: { options: ['horizontal', 'vertical'], value: 'horizontal' },
     },
     { store },
   ) as {
     defaultCollapsed: boolean;
     filterType: 'query' | 'light';
-    labelWidth: number;
+    labelWidth: string;
+    layout: 'horizontal' | 'vertical';
     search: boolean;
   };
   const bar = useControls(
@@ -103,7 +105,8 @@ export default () => {
             ? {
                 defaultCollapsed: query.defaultCollapsed,
                 filterType: query.filterType,
-                labelWidth: query.labelWidth,
+                labelWidth: query.labelWidth === 'auto' ? 'auto' : Number(query.labelWidth),
+                layout: query.layout,
               }
             : false
         }

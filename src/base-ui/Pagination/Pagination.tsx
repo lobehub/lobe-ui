@@ -1,7 +1,7 @@
 'use client';
 
 import { cx } from 'antd-style';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from 'lucide-react';
 import {
   type KeyboardEvent,
   memo,
@@ -22,6 +22,19 @@ import { buttonVariants, ellipsisVariants, styles } from './style';
 import type { PaginationItemType, PaginationProps } from './type';
 
 const XS_QUERY = '(max-width: 575px)';
+
+/** One-line dots that swap to a double chevron on hover / focus of the jump item. */
+const JumpIcon = ({ direction }: { direction: 'next' | 'prev' }) => {
+  const Icon = direction === 'prev' ? ChevronsLeft : ChevronsRight;
+  return (
+    <>
+      <span aria-hidden className={styles.ellipsisDots}>
+        •••
+      </span>
+      <Icon aria-hidden className={styles.ellipsisIcon} size={14} />
+    </>
+  );
+};
 
 const canMatchMedia = () =>
   typeof window !== 'undefined' && typeof window.matchMedia === 'function';
@@ -249,19 +262,37 @@ const Pagination = memo<PaginationProps>(
                   {render(item, 'page', item)}
                 </button>
               ) : (
-                <span
+                <button
                   className={ellipsisVariants({ size })}
+                  data-pagination-jump={item === 'ellipsis-prev' ? 'prev' : 'next'}
+                  disabled={disabled}
                   key={item}
+                  type="button"
                   title={title(
                     item === 'ellipsis-prev'
                       ? `Previous ${jumpStep} Pages`
                       : `Next ${jumpStep} Pages`,
                   )}
+                  onClick={() =>
+                    goTo(
+                      item === 'ellipsis-prev'
+                        ? Math.max(1, displayCurrent - jumpStep)
+                        : Math.min(pageCount, displayCurrent + jumpStep),
+                    )
+                  }
                 >
                   {item === 'ellipsis-prev'
-                    ? render(Math.max(1, displayCurrent - jumpStep), 'jump-prev', '···')
-                    : render(Math.min(pageCount, displayCurrent + jumpStep), 'jump-next', '···')}
-                </span>
+                    ? render(
+                        Math.max(1, displayCurrent - jumpStep),
+                        'jump-prev',
+                        <JumpIcon direction="prev" />,
+                      )
+                    : render(
+                        Math.min(pageCount, displayCurrent + jumpStep),
+                        'jump-next',
+                        <JumpIcon direction="next" />,
+                      )}
+                </button>
               ),
             )}
             {nextButton}

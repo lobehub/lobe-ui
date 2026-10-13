@@ -23,13 +23,17 @@ import type {
   SortOrder,
   TableColumn,
   TableFilters,
+  TableLoadingConfig,
+  TableLocale,
   TablePaginationConfig,
   TableSorterResult,
 } from '@/base-ui/Table/type';
+import { useI18n } from '@/ConfigProvider';
 import { useEventCallback } from '@/hooks/useEventCallback';
 
 import ColumnSetting, { type SettingColumn } from './ColumnSetting';
 import LightFilter from './LightFilter';
+import { PRO_TABLE_LOCALE_EN_US, resolveProTableLocale } from './locale';
 import OptionPopover from './OptionPopover';
 import { CopyableText, renderValue } from './renderValue';
 import SearchForm from './SearchForm';
@@ -40,7 +44,6 @@ import type {
   ProTableColumnsStateMap,
   ProTableDensity,
   ProTableFormInstance,
-  ProTableLocale,
   ProTablePageInfo,
   ProTableProps,
 } from './type';
@@ -57,36 +60,8 @@ import {
   writePersistedState,
 } from './utils';
 
-export const DEFAULT_PRO_TABLE_LOCALE: Required<Omit<ProTableLocale, 'alertSelected'>> & {
-  alertSelected: (count: number) => ReactNode;
-} = {
-  alertClear: 'Clear',
-  alertSelected: (count) => `${count} selected`,
-  collapse: 'Collapse',
-  columnSetting: 'Column settings',
-  columnSettingReset: 'Reset',
-  columnSettingTitle: 'Columns',
-  copy: 'Copy',
-  density: 'Density',
-  densityLarge: 'Large',
-  densityMedium: 'Medium',
-  densitySmall: 'Compact',
-  expand: 'Expand',
-  fixedEnd: 'Pin to end',
-  fixedEndTitle: 'Pinned to end',
-  fixedStart: 'Pin to start',
-  fixedStartTitle: 'Pinned to start',
-  fullScreen: 'Full screen',
-  moveDown: 'Move down',
-  moveUp: 'Move up',
-  noFixed: 'Unpin',
-  reload: 'Reload',
-  reset: 'Reset',
-  search: 'Search',
-  searchPlaceholder: 'Please enter',
-  selectPlaceholder: 'Please select',
-  unfixedTitle: 'Not pinned',
-};
+/** English texts; ProTable picks the preset from ConfigProvider `locale` (see `./locale`). */
+export const DEFAULT_PRO_TABLE_LOCALE = PRO_TABLE_LOCALE_EN_US;
 
 const assignRef = <V,>(ref: Ref<V> | undefined, value: V) => {
   if (!ref) return;
@@ -102,6 +77,20 @@ const stableKey = (value: unknown) => {
   } catch {
     return String(Math.random());
   }
+};
+
+/** `value`, but switching on only after it stayed on for `delay` ms (off is immediate). */
+const useDelayedFlag = (value: boolean, delay: number | undefined) => {
+  const [delayed, setDelayed] = useState(value && !delay);
+  useEffect(() => {
+    if (!value || !delay) {
+      setDelayed(value);
+      return;
+    }
+    const timer = setTimeout(() => setDelayed(true), delay);
+    return () => clearTimeout(timer);
+  }, [value, delay]);
+  return delay ? value && delayed : value;
 };
 
 const isGroup = (column: ProColumnType<any>) => !!column.children?.length;
@@ -164,7 +153,14 @@ const ProTable = <
     ...tableProps
   } = props;
 
-  const locale = { ...DEFAULT_PRO_TABLE_LOCALE, ...localeProp };
+  const i18n = useI18n();
+  const locale = { ...resolveProTableLocale(i18n?.locale), ...localeProp };
+  /** Table-level texts (emptyText, filter / sort / selection labels) go on to the base-ui Table. */
+  const tableLocale = useMemo(() => {
+    if (!localeProp) return undefined;
+    const entries = Object.entries(localeProp).filter(([key]) => !(key in PRO_TABLE_LOCALE_EN_US));
+    return entries.length > 0 ? (Object.fromEntries(entries) as TableLocale) : undefined;
+  }, [localeProp]);
   const rootRef = useRef<HTMLDivElement>(null);
   const actionHolderRef = useRef<ProTableActionType | undefined>(undefined);
 
@@ -312,7 +308,17 @@ const ProTable = <
   }, [paramsKey, setPageInfo]);
 
   const rows: T[] = request ? fetcher.data : (dataSource ?? defaultData ?? []);
-  const loading = loadingProp ?? fetcher.loading;
+  // `loading` object: Spin options (+ `delay`); without `spinning` it follows the request state.
+  const loadingConfig = typeof loadingProp === 'object' ? loadingProp : undefined;
+  const { delay: loadingDelay, ...loadingSpin } = loadingConfig ?? {};
+  const rawLoading =
+    loadingConfig === undefined
+      ? ((loadingProp as boolean | undefined) ?? fetcher.loading)
+      : (loadingConfig.spinning ?? (request ? fetcher.loading : true));
+  const loading = useDelayedFlag(rawLoading, loadingDelay);
+  const tableLoading: boolean | TableLoadingConfig = loadingConfig
+    ? { ...loadingSpin, spinning: loading }
+    : loading;
 
   // ============================= Selection =============================
   const selectionEnabled = !!rowSelection;
@@ -696,6 +702,7 @@ const ProTable = <
       <LightFilter
         fields={searchFields}
         form={form}
+        ignoreRules={formConfig?.ignoreRules}
         placeholder={{ input: locale.searchPlaceholder, select: locale.selectPlaceholder }}
       />
     ) : null;
@@ -820,7 +827,8 @@ const ProTable = <
       className={tableClassName}
       columns={tableColumns}
       dataSource={rows}
-      loading={loading}
+      loading={tableLoading}
+      locale={tableLocale}
       pagination={tablePagination}
       rowSelection={mergedRowSelection}
       size={size}
@@ -860,6 +868,8 @@ const ProTable = <
           config={search ?? {}}
           fields={searchFields}
           form={form}
+          ignoreRules={formConfig?.ignoreRules}
+          layout={formConfig?.layout}
           loading={!!loading && !!request}
           locale={{
             collapse: locale.collapse,
