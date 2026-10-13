@@ -2,6 +2,18 @@
 
 # Changelog
 
+# [5.59.0](https://github.com/lobehub/lobe-ui/compare/v5.58.0...v5.59.0) (2026-10-13)
+
+### ✨ Features
+
+- **dashboard**: Add ChartGrid, PageToolbar, TableIconActions, TitleWithTips and LabelWithKey ([694261d](https://github.com/lobehub/lobe-ui/commit/694261d))
+- **dashboard**: Rich Surface with links, loading and chart slot; add PanelSurface, MetricStrip, FilterStrip and Section; fix Grid overflow on narrow screens ([1b9fbda](https://github.com/lobehub/lobe-ui/commit/1b9fbda))
+
+### 🐛 Bug Fixes
+
+- **console-shell**: Flush drawer scroll edge and put the close button in the brand row ([c671c4f](https://github.com/lobehub/lobe-ui/commit/c671c4f))
+- **input-number**: Only dim the root when the field itself is disabled ([6c3c9e0](https://github.com/lobehub/lobe-ui/commit/6c3c9e0))
+
 # [5.58.0](https://github.com/lobehub/lobe-ui/compare/v5.57.3...v5.58.0) (2026-10-12)
 
 ### ✨ Features
