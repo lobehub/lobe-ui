@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.63.3](https://github.com/lobehub/lobe-ui/compare/v5.63.2...v5.63.3) (2026-10-13)
+
+### 💄 Styles
+
+- **dashboard**: AuthLayout panel bgContainer + colorBorder, drop Surface, grid bg colorBgLayout, dark grid lines, closes [#716](https://github.com/lobehub/lobe-ui/issues/716) ([e3f182c](https://github.com/lobehub/lobe-ui/commit/e3f182c))
+
 ## [5.63.2](https://github.com/lobehub/lobe-ui/compare/v5.63.1...v5.63.2) (2026-10-13)
 
 ### 🐛 Bug Fixes
