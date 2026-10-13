@@ -1,6 +1,6 @@
 'use client';
 
-import { PanelLeft } from 'lucide-react';
+import { PanelLeft, X } from 'lucide-react';
 import { useEffect, useId, useRef, useState } from 'react';
 
 import Button from '@/base-ui/Button';
@@ -24,6 +24,7 @@ function ConsoleShell({
   children,
   className,
   collapsed,
+  closeNavigationLabel = 'Close navigation',
   collapseLabel = 'Collapse sidebar',
   defaultCollapsed = false,
   expandLabel = 'Expand sidebar',
@@ -90,9 +91,20 @@ function ConsoleShell({
 
   const sidebar = (rail: boolean) => (
     <ConsoleShellContext value={stateFor(rail)}>
-      {brand ? (
+      {brand || isCompact ? (
         <div className={styles.brand} data-collapsed={rail}>
           {brand}
+          {isCompact ? (
+            // In the drawer the close button sits in the brand row's flow, so it never
+            // overlaps a brand switcher the way the drawer's floating close button did.
+            <Button
+              aria-label={closeNavigationLabel}
+              className={styles.brandClose}
+              icon={X}
+              type="text"
+              onClick={closeNavigation}
+            />
+          ) : null}
         </div>
       ) : null}
       {navigation ? <div className={styles.navSlot}>{navigation}</div> : null}
@@ -123,7 +135,15 @@ function ConsoleShell({
         {!isCompact && sidebar(railed)}
       </aside>
       {isCompact ? (
-        <Drawer noHeader open={drawerOpen} placement="left" width={272} onClose={closeNavigation}>
+        <Drawer
+          noHeader
+          classNames={{ bodyContent: styles.drawerBody }}
+          closable={false}
+          open={drawerOpen}
+          placement="left"
+          width={272}
+          onClose={closeNavigation}
+        >
           <Flexbox height="100%">{sidebar(false)}</Flexbox>
         </Drawer>
       ) : null}

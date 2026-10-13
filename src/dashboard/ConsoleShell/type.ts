@@ -41,6 +41,8 @@ export interface ConsoleShellProps extends Omit<HTMLAttributes<HTMLDivElement>, 
   /** Location shown in the top bar, usually a `Breadcrumb`. */
   breadcrumb?: ReactNode;
   children?: ReactNode;
+  /** Accessible name of the close button in the compact navigation drawer. */
+  closeNavigationLabel?: string;
   /** Collapse the sidebar to an icon rail. Ignored while compact. */
   collapsed?: boolean;
   collapseLabel?: string;

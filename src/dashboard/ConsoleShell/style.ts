@@ -27,6 +27,11 @@ export const styles = createStaticStyles(({ css, cssVar, responsive }) => ({
       margin-block-start: 0;
     }
   `,
+  /** Close button in the drawer's brand row: right edge, vertically centred with the brand. */
+  brandClose: css`
+    flex: none;
+    margin-inline: auto -7px;
+  `,
   brandAnchor: css`
     display: flex;
     align-items: center;
@@ -89,6 +94,16 @@ export const styles = createStaticStyles(({ css, cssVar, responsive }) => ({
     ${responsive.mobile} {
       gap: 16px;
       padding: 16px;
+    }
+  `,
+  /**
+   * The drawer body is the scroll container. Without its default padding the scrollbar sits on
+   * the panel edge; the brand row, nav and footer keep their own insets.
+   */
+  drawerBody: css`
+    && {
+      min-block-size: 100%;
+      padding: 0;
     }
   `,
   navSlot: css`
