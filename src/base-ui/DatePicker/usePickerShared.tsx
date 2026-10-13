@@ -104,7 +104,7 @@ const PickerButton = (props: {
 const defaultClearIcon = <Icon icon={X} size={10} style={{ strokeWidth: 3 }} />;
 
 /** `undefined` falls back to the lobe icon; `null` (as in antd) renders nothing. */
-const withDefault = (node: ReactNode, fallback: ReactNode) =>
+export const withDefault = (node: ReactNode, fallback: ReactNode) =>
   node === undefined ? fallback : node;
 
 /**
@@ -212,6 +212,7 @@ export const usePickerShared = ({
         variant: mergedVariant === 'underlined' ? 'borderless' : mergedVariant,
       }),
       mergedVariant === 'underlined' && pickerStyles.underlined,
+      (size === 'small' || size === 'large') && `${PREFIX_CLS}-${size}`,
       status && `${PREFIX_CLS}-status-${status}`,
       `${PREFIX_CLS}-${mergedVariant}`,
       className,

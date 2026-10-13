@@ -2,15 +2,32 @@
 
 import RcPicker from '@rc-component/picker';
 import type { Dayjs } from 'dayjs';
+import { X } from 'lucide-react';
+import type { ReactNode } from 'react';
 
+import Icon from '@/Icon';
 import { cx } from '@/utils/styleEngine';
 
 import { usePickerLocale } from './locale';
+import { PREFIX_CLS } from './style';
 import type { DatePickerProps } from './type';
 import { usePanelKeyboard } from './usePanelKeyboard';
-import { usePickerShared } from './usePickerShared';
+import { usePickerShared, withDefault } from './usePickerShared';
 
-const DatePicker = (props: DatePickerProps) => {
+/**
+ * One generic signature: `multiple` (as `IsMultiple`) picks `Dayjs[]` values, otherwise
+ * `Dayjs`; a `value` / `defaultValue` infers `ValueType` directly.
+ */
+export interface DatePickerComponent {
+  <IsMultiple extends boolean = false, ValueType = IsMultiple extends true ? Dayjs[] : Dayjs>(
+    props: DatePickerProps<ValueType> & { multiple?: IsMultiple },
+  ): ReactNode;
+  displayName?: string;
+}
+
+const defaultRemoveIcon = <Icon icon={X} size={10} style={{ strokeWidth: 3 }} />;
+
+const DatePicker = ((props: DatePickerProps<any>) => {
   const {
     allowClear,
     bordered,
@@ -35,6 +52,7 @@ const DatePicker = (props: DatePickerProps) => {
     minDate,
     mode,
     monthCellRender,
+    multiple,
     needConfirm,
     nextIcon,
     onKeyDown,
@@ -54,6 +72,7 @@ const DatePicker = (props: DatePickerProps) => {
     popupStyle,
     prevIcon,
     ref,
+    removeIcon,
     renderExtraFooter,
     rootClassName,
     shadow,
@@ -137,12 +156,25 @@ const DatePicker = (props: DatePickerProps) => {
       locale={locale.lang}
       mode={mode as any}
       monthCellRender={monthCellRender}
+      multiple={multiple}
       picker={picker}
       pickerValue={keyboard.pickerValue}
       placeholder={placeholder ?? defaultPlaceholder(picker)}
       ref={ref}
+      removeIcon={withDefault(removeIcon, defaultRemoveIcon)}
       renderExtraFooter={renderExtraFooter ?? (footer ? () => footer : undefined)}
       value={value as any}
+      classNames={
+        multiple
+          ? {
+              ...shared.classNames,
+              popup: {
+                ...shared.classNames.popup,
+                root: cx(shared.classNames.popup.root, `${PREFIX_CLS}-dropdown-multiple`),
+              },
+            }
+          : shared.classNames
+      }
       onChange={keyboard.onChange}
       onFocus={keyboard.onFocus}
       onOk={onOk as any}
@@ -151,14 +183,14 @@ const DatePicker = (props: DatePickerProps) => {
       onCalendarChange={
         onCalendarChange || onSelect
           ? (date, dateString, info) => {
-              onCalendarChange?.(date as Dayjs | null, dateString as string | null, info);
-              if (date) onSelect?.(date as Dayjs);
+              onCalendarChange?.(date, dateString as any, info);
+              if (date && !Array.isArray(date)) onSelect?.(date);
             }
           : undefined
       }
     />
   );
-};
+}) as DatePickerComponent;
 
 DatePicker.displayName = 'DatePicker';
 

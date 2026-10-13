@@ -92,12 +92,17 @@ const toPair = (value: MaybePair<Dayjs | null | undefined>): Pair =>
     ? [value[0] ?? undefined, value[1] ?? undefined]
     : [value ?? undefined, undefined];
 
+/** The selection the keys start from; with `multiple`, the last picked date. */
+const toValuePair = (value: MaybePair<Dayjs | null | undefined> | Dayjs[], range?: boolean) =>
+  !range && Array.isArray(value) ? toPair(value.at(-1)) : toPair(value as MaybePair<Dayjs>);
+
 export interface PanelKeyboardOptions {
   cellRender?: CellRender<Dayjs>;
   dateRender?: (currentDate: Dayjs, today: Dayjs) => React.ReactNode;
   defaultOpen?: boolean;
   defaultPickerValue?: MaybePair<Dayjs | null | undefined>;
-  defaultValue?: MaybePair<Dayjs | null | undefined>;
+  /** `Dayjs[]` with DatePicker `multiple`. */
+  defaultValue?: MaybePair<Dayjs | null | undefined> | Dayjs[];
   direction?: 'ltr' | 'rtl';
   mode?: MaybePair<PanelMode>;
   monthCellRender?: (currentDate: Dayjs, locale: any) => React.ReactNode;
@@ -111,7 +116,7 @@ export interface PanelKeyboardOptions {
   pickerValue?: MaybePair<Dayjs | null | undefined>;
   /** RangePicker: values, panel modes and picker values are `[start, end]` tuples. */
   range?: boolean;
-  value?: MaybePair<Dayjs | null | undefined>;
+  value?: MaybePair<Dayjs | null | undefined> | Dayjs[];
 }
 
 /**
@@ -187,7 +192,10 @@ export const usePanelKeyboard = ({
     panelMode,
     picker,
     range,
-    value: toPair(value === undefined ? (innerValue ?? defaultValue) : value),
+    value:
+      value === undefined
+        ? (innerValue ?? toValuePair(defaultValue, range))
+        : toValuePair(value, range),
   };
   const stateRef = useRef(state);
   stateRef.current = state;
@@ -307,7 +315,7 @@ export const usePanelKeyboard = ({
   return {
     cellRender: mergedCellRender,
     onChange: (date: any, dateString: any) => {
-      setInnerValue(toPair(date));
+      setInnerValue(toValuePair(date, range));
       onChange?.(date, dateString);
     },
     onFocus: (event: any, info?: { range?: 'end' | 'start' }) => {

@@ -16,7 +16,7 @@ import type {
   ValueDate,
 } from '@rc-component/picker/interface';
 import type { Dayjs } from 'dayjs';
-import type { CSSProperties, FocusEvent, ReactNode, Ref } from 'react';
+import type { CSSProperties, FocusEvent, MouseEvent, ReactNode, Ref } from 'react';
 
 export type { CellRender, CellRenderInfo, PanelMode, PickerMode, PickerRef, RangePickerRef };
 
@@ -105,7 +105,6 @@ export type PickerStyles<P = any> =
 /** Props rc-picker owns internally or that lobe wires up itself. */
 type InternalRcProps = 'classNames' | 'generateConfig' | 'locale' | 'prefixCls' | 'styles';
 
-/** Multiple selection is not part of the single-value API yet. */
 type MultipleRcProps = 'maxTagCount' | 'multiple' | 'removeIcon' | 'tagRender';
 
 type ValueRcProps =
@@ -147,13 +146,49 @@ interface LobePickerProps {
   variant?: PickerVariant;
 }
 
-export interface DatePickerProps
+/** Props `tagRender` receives for each picked date in `multiple` mode. */
+export interface PickerTagProps {
+  closable: boolean;
+  disabled: boolean;
+  /** The date formatted with `format`. */
+  label: ReactNode;
+  /** Removes the date from the value. */
+  onClose: (event?: MouseEvent<HTMLElement>) => void;
+  value: Dayjs;
+}
+
+/** `dateString` of a value: a string per date in `multiple` mode. */
+export type PickerDateStrings<ValueType> = ValueType extends readonly unknown[]
+  ? string[]
+  : string | null;
+
+/**
+ * antd's `PickerPropsWithMultiple`: `InnerPickerProps` with the value props typed by
+ * `ValueType` — `DateType` for one date, `DateType[]` with `multiple`.
+ */
+export type PickerPropsWithMultiple<DateType, InnerPickerProps, ValueType = DateType> = Omit<
+  InnerPickerProps,
+  'defaultValue' | 'onCalendarChange' | 'onChange' | 'onOk' | 'value'
+> & {
+  defaultValue?: ValueType | null;
+  onCalendarChange?: (
+    date: ValueType | null,
+    dateString: PickerDateStrings<ValueType>,
+    info: BaseInfo,
+  ) => void;
+  /** Cleared: `null` for one date, `[]` with `multiple`. */
+  onChange?: (date: ValueType | null, dateString: PickerDateStrings<ValueType>) => void;
+  onOk?: (date?: ValueType | null) => void;
+  value?: ValueType | null;
+};
+
+/** DatePicker props other than the value ones, which `PickerPropsWithMultiple` adds. */
+export interface DatePickerBaseProps
   extends
     Omit<RcPickerProps<Dayjs>, InternalRcProps | MultipleRcProps | ValueRcProps>,
     LobePickerProps {
   /** Semantic DOM class names: `root` / `prefix` / `input` / `suffix` and `popup.*`. */
-  classNames?: PickerClassNames<DatePickerProps>;
-  defaultValue?: Dayjs | null;
+  classNames?: PickerClassNames<DatePickerProps<any>>;
   /** @deprecated Use `renderExtraFooter` instead. */
   footer?: ReactNode;
   /**
@@ -164,19 +199,46 @@ export interface DatePickerProps
   locale?: PickerLocaleInput;
   /** @deprecated Use `maxDate` instead. */
   max?: Dayjs;
+  /**
+   * `multiple`: at most this many tags; `'responsive'` fits as many as the width allows.
+   * The rest collapse into a `+ N ...` tag.
+   */
+  maxTagCount?: number | 'responsive';
   /** @deprecated Use `minDate` instead. */
   min?: Dayjs;
-  onCalendarChange?: (date: Dayjs | null, dateString: string | null, info: BaseInfo) => void;
-  onChange?: (date: Dayjs | null, dateString: string | null) => void;
-  onOk?: (date?: Dayjs | null) => void;
-  /** @deprecated Use `onCalendarChange` instead. */
+  /**
+   * Pick several dates, shown as tags; clicking a picked cell again removes it. Works on
+   * every `picker` except with `showTime`. Values are `Dayjs[]`, sorted unless
+   * `order={false}`. No OK button (`needConfirm` defaults to `false`): `onCalendarChange`
+   * fires on each click and `onChange` once the popup closes.
+   */
+  multiple?: boolean;
+  /** @deprecated Use `onCalendarChange` instead. Not called with `multiple`. */
   onSelect?: (date: Dayjs) => void;
+  /**
+   * `multiple`: sort the picked dates; `false` keeps them in picking order.
+   * @default true
+   */
+  order?: boolean;
   placeholder?: string;
   ref?: Ref<PickerRef>;
+  /** `multiple`: the remove icon of each tag. */
+  removeIcon?: ReactNode;
   /** Semantic DOM styles: `root` / `prefix` / `input` / `suffix` and `popup.*`. */
-  styles?: PickerStyles<DatePickerProps>;
-  value?: Dayjs | null;
+  styles?: PickerStyles<DatePickerProps<any>>;
+  /** `multiple`: render each picked date's tag, e.g. with base-ui `Tag`. */
+  tagRender?: (props: PickerTagProps) => ReactNode;
 }
+
+/**
+ * `ValueType` is `Dayjs` (default) or `Dayjs[]` with `multiple`; `<DatePicker multiple>`
+ * infers `Dayjs[]` by itself.
+ */
+export type DatePickerProps<ValueType = Dayjs> = PickerPropsWithMultiple<
+  Dayjs,
+  DatePickerBaseProps,
+  ValueType
+>;
 
 export type DateRangeValue = [Dayjs | null, Dayjs | null];
 

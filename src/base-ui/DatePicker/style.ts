@@ -156,6 +156,121 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       display: none;
     }
 
+    /*
+     * multiple: rc-picker's tags (\`-selection-item\`, also the \`+ N ...\` rest) in base-ui Tag's
+     * filled look, sized as antd (control height - 8px) and wrapping the box when they overflow.
+     */
+    &.${P}-multiple {
+      --lobe-picker-tag-height: 24px;
+
+      cursor: pointer;
+      padding-block: 1px;
+    }
+
+    &.${P}-multiple.${P}-small {
+      --lobe-picker-tag-height: 16px;
+    }
+
+    &.${P}-multiple.${P}-large {
+      --lobe-picker-tag-height: 32px;
+    }
+
+    &.${P}-multiple .${P}-selector {
+      position: relative;
+      flex: 1;
+      min-width: 0;
+    }
+
+    &.${P}-multiple .${P}-selection-overflow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      max-width: 100%;
+    }
+
+    &.${P}-multiple .${P}-selection-overflow-item {
+      flex: none;
+      max-width: 100%;
+    }
+
+    &.${P}-multiple .${P}-selection-item {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+
+      box-sizing: border-box;
+      max-width: 100%;
+      height: var(--lobe-picker-tag-height);
+      margin-block: 2px;
+      margin-inline-end: 4px;
+      padding-inline: 8px 4px;
+      border-radius: ${cssVar.borderRadiusSM};
+
+      font-size: ${cssVar.fontSizeSM};
+      line-height: var(--lobe-picker-tag-height);
+      color: ${cssVar.colorText};
+      white-space: nowrap;
+
+      background: ${cssVar.colorFillSecondary};
+    }
+
+    &.${P}-multiple.${P}-large .${P}-selection-item {
+      font-size: ${cssVar.fontSize};
+    }
+
+    &.${P}-multiple .${P}-selection-item:not(:has(.${P}-selection-item-remove)) {
+      padding-inline-end: 8px;
+    }
+
+    &.${P}-multiple .${P}-selection-item-content {
+      overflow: hidden;
+      font-variant-numeric: tabular-nums;
+      text-overflow: ellipsis;
+    }
+
+    &.${P}-multiple .${P}-selection-item-remove {
+      cursor: pointer;
+
+      display: inline-flex;
+      flex: none;
+      align-items: center;
+
+      color: ${cssVar.colorIcon};
+
+      &:hover {
+        color: ${cssVar.colorTextHeading};
+      }
+    }
+
+    &.${P}-multiple .${P}-selection-placeholder {
+      overflow: hidden;
+      display: block;
+
+      line-height: calc(var(--lobe-picker-tag-height) + 4px);
+      color: ${cssVar.colorTextPlaceholder};
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* the selector shows the value; rc-picker keeps this readonly input only for focus */
+    &.${P}-multiple .${P}-multiple-input {
+      position: absolute;
+      z-index: -1;
+
+      width: 0;
+      height: 0;
+      padding: 0;
+      border: 0;
+
+      opacity: 0;
+    }
+
+    &.${P}-multiple.${P}-disabled {
+      cursor: not-allowed;
+      color: ${cssVar.colorTextQuaternary};
+      opacity: 0.66;
+    }
+
     /* status: border + focus ring per variant, as antd's genStatusStyle */
     &.${P}-status-error {
       --lobe-picker-status: ${cssVar.colorError};
@@ -641,9 +756,12 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       background: ${cssVar.colorFillSecondary};
     }
 
+    /* multiple: rc-picker marks every picked week but the first with \`-row-hover\` */
     &.${P}-dropdown
       :is(
         .${P}-week-panel-row-selected,
+          .${P}-dropdown-multiple
+          .${P}-week-panel-row-hover,
           .${P}-week-panel-row-range-start,
           .${P}-week-panel-row-range-end
       )
