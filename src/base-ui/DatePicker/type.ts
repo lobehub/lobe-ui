@@ -16,7 +16,7 @@ import type {
   ValueDate,
 } from '@rc-component/picker/interface';
 import type { Dayjs } from 'dayjs';
-import type { FocusEvent, ReactNode, Ref } from 'react';
+import type { CSSProperties, FocusEvent, ReactNode, Ref } from 'react';
 
 export type { CellRender, CellRenderInfo, PanelMode, PickerMode, PickerRef, RangePickerRef };
 
@@ -80,8 +80,30 @@ export type PickerPlacement = 'bottomLeft' | 'bottomRight' | 'topLeft' | 'topRig
 /** @deprecated Use `PickerMode` (the `picker` prop) instead. */
 export type CalendarMode = 'date' | 'month' | 'year';
 
+/** Semantic parts of the input box (Semantic DOM). */
+export type PickerSemanticName = 'root' | 'prefix' | 'input' | 'suffix';
+/** Semantic parts of the popup (Semantic DOM, `classNames.popup` / `styles.popup`). */
+export type PickerPopupSemanticName =
+  'root' | 'container' | 'header' | 'body' | 'content' | 'item' | 'footer';
+
+export interface PickerSemanticClassNames extends Partial<Record<PickerSemanticName, string>> {
+  /** A string is the popup `root` class. */
+  popup?: string | Partial<Record<PickerPopupSemanticName, string>>;
+}
+
+export interface PickerSemanticStyles extends Partial<Record<PickerSemanticName, CSSProperties>> {
+  popup?: Partial<Record<PickerPopupSemanticName, CSSProperties>>;
+}
+
+/** `classNames`: an object, or a function of `{ props }` returning one. */
+export type PickerClassNames<P = any> =
+  PickerSemanticClassNames | ((info: { props: P }) => PickerSemanticClassNames);
+/** `styles`: an object, or a function of `{ props }` returning one. */
+export type PickerStyles<P = any> =
+  PickerSemanticStyles | ((info: { props: P }) => PickerSemanticStyles);
+
 /** Props rc-picker owns internally or that lobe wires up itself. */
-type InternalRcProps = 'generateConfig' | 'locale' | 'prefixCls';
+type InternalRcProps = 'classNames' | 'generateConfig' | 'locale' | 'prefixCls' | 'styles';
 
 /** Multiple selection is not part of the single-value API yet. */
 type MultipleRcProps = 'maxTagCount' | 'multiple' | 'removeIcon' | 'tagRender';
@@ -105,11 +127,17 @@ interface LobePickerProps {
    * closes, without the OK button. Ignored when `needConfirm` is set.
    */
   changeOnBlur?: boolean;
+  /** @deprecated Use `classNames.popup.root` instead. */
+  dropdownClassName?: string;
   /**
    * Popup position relative to the input.
    * @default 'bottomLeft' ('bottomRight' when `direction="rtl"`)
    */
   placement?: PickerPlacement;
+  /** @deprecated Use `classNames.popup.root` instead. */
+  popupClassName?: string;
+  /** @deprecated Use `styles.popup.root` instead. */
+  popupStyle?: CSSProperties;
   /** Lobe look: drop shadow under the input box. */
   shadow?: boolean;
   /** @default 'medium' */
@@ -123,6 +151,8 @@ export interface DatePickerProps
   extends
     Omit<RcPickerProps<Dayjs>, InternalRcProps | MultipleRcProps | ValueRcProps>,
     LobePickerProps {
+  /** Semantic DOM class names: `root` / `prefix` / `input` / `suffix` and `popup.*`. */
+  classNames?: PickerClassNames<DatePickerProps>;
   defaultValue?: Dayjs | null;
   /** @deprecated Use `renderExtraFooter` instead. */
   footer?: ReactNode;
@@ -143,6 +173,8 @@ export interface DatePickerProps
   onSelect?: (date: Dayjs) => void;
   placeholder?: string;
   ref?: Ref<PickerRef>;
+  /** Semantic DOM styles: `root` / `prefix` / `input` / `suffix` and `popup.*`. */
+  styles?: PickerStyles<DatePickerProps>;
   value?: Dayjs | null;
 }
 
@@ -171,6 +203,8 @@ export interface DateRangePickerProps
    * @default [false, false]
    */
   allowEmpty?: boolean | [boolean, boolean];
+  /** Semantic DOM class names, see `DatePickerProps['classNames']`. */
+  classNames?: PickerClassNames<DateRangePickerProps>;
   defaultValue?: [Dayjs | null | undefined, Dayjs | null | undefined];
   /** Disable the whole picker, or each end separately with `[start, end]`. */
   disabled?: boolean | [boolean, boolean];
@@ -203,6 +237,8 @@ export interface DateRangePickerProps
   placeholder?: [string, string];
   /** `focus(index)` / `focus({ index })` focuses the start (`0`) or end (`1`) input. */
   ref?: Ref<RangePickerRef>;
+  /** Semantic DOM styles, see `DatePickerProps['styles']`. */
+  styles?: PickerStyles<DateRangePickerProps>;
   value?: [Dayjs | null | undefined, Dayjs | null | undefined] | null;
 }
 

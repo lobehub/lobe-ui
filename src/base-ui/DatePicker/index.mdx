@@ -39,6 +39,8 @@ import DemoRenderPanel from './demos/render-panel.tsx?demo';
 import DemoComponents from './demos/components.tsx?demo';
 import DemoBuddhistEra from './demos/buddhist-era.tsx?demo';
 import DemoLocale from './demos/locale.tsx?demo';
+import DemoStyleClass from './demos/style-class.tsx?demo';
+import DemoSemantic from './demos/_semantic.tsx?demo';
 import DemoSuffixIconDebug from './demos/suffixIcon-debug.tsx?demo';
 import DemoFilledDebug from './demos/filled-debug.tsx?demo';
 
@@ -276,6 +278,12 @@ Without `locale`, the texts come from the `@lobehub/ui/i18n` resources of the su
 
 <Demo of={DemoLocale} layout="bare" />
 
+## Custom semantic classNames and styles
+
+`classNames` and `styles` target each part of the picker (see Semantic DOM below). Both take an object, or a function of `{ props }` returning one — `props` are the picker's props with the merged `size` — so the styles can follow `size`, `status`, `disabled` and so on. The popup parts sit under `popup`; `classNames.popup` may also be a string, which is the popup `root` class.
+
+<Demo of={DemoStyleClass} layout="bare" />
+
 ## Debug: suffixIcon
 
 `suffixIcon={null}` removes the icon.
@@ -287,6 +295,28 @@ Without `locale`, the texts come from the `@lobehub/ui/i18n` resources of the su
 `variant="filled"` with `disabled`, `status` and `previewValue`.
 
 <Demo of={DemoFilledDebug} layout="bare" />
+
+## Semantic DOM
+
+Hover a key to outline that part.
+
+<Demo of={DemoSemantic} layout="bare" />
+
+| Key               | Element                                                  |
+| ----------------- | -------------------------------------------------------- |
+| `root`            | Root element: the input box (`.lobe-picker`)             |
+| `prefix`          | Prefix (`prefix`)                                        |
+| `input`           | Input; both inputs on `DateRangePicker`                  |
+| `suffix`          | Suffix icon and clear button                             |
+| `popup.root`      | Popup root (`.lobe-picker-dropdown`)                     |
+| `popup.container` | Panel container (`.lobe-picker-<mode>-panel-container`)  |
+| `popup.header`    | Panel header                                             |
+| `popup.body`      | Panel body                                               |
+| `popup.content`   | Panel content (the `<table>`, or the time columns)       |
+| `popup.item`      | Cell (dates, months, … and time options)                 |
+| `popup.footer`    | Popup footer (extra footer and the Today / Now / OK row) |
+
+`classNames` / `styles` are `PickerClassNames<Props>` / `PickerStyles<Props>`: an object, or `(info: { props }) => object`. `classNames.popup` may be a string (the popup `root`). `rootClassName` goes on both the root and the popup root. The deprecated `popupClassName` / `dropdownClassName` map to `classNames.popup.root` (`popupClassName` wins when both are set) and `popupStyle` to `styles.popup.root`, merged after them.
 
 ## APIs
 

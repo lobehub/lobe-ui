@@ -22,8 +22,13 @@ import { useAppElement } from '@/ThemeProvider/AppElementContext';
 import { cx, useThemeMode } from '@/utils/styleEngine';
 
 import generateConfig from './generateConfig';
+import {
+  type FilledPickerClassNames,
+  type FilledPickerStyles,
+  mergePickerSemantic,
+} from './semantic';
 import { PREFIX_CLS, styles as pickerStyles } from './style';
-import type { DatePickerProps } from './type';
+import type { DatePickerProps, PickerClassNames, PickerStyles } from './type';
 
 type SharedInput = Pick<
   DatePickerProps,
@@ -32,7 +37,6 @@ type SharedInput = Pick<
   | 'changeOnBlur'
   | 'className'
   | 'clearIcon'
-  | 'classNames'
   | 'components'
   | 'defaultOpen'
   | 'getPopupContainer'
@@ -48,16 +52,23 @@ type SharedInput = Pick<
   | 'picker'
   | 'prevIcon'
   | 'rootClassName'
+  | 'dropdownClassName'
+  | 'popupClassName'
+  | 'popupStyle'
   | 'shadow'
   | 'size'
   | 'status'
-  | 'styles'
   | 'suffixIcon'
   | 'superNextIcon'
   | 'superPrevIcon'
   | 'transitionName'
   | 'variant'
->;
+> & {
+  classNames?: PickerClassNames;
+  /** The picker's props, passed as `info.props` to the function forms of `classNames` / `styles`. */
+  semanticProps: object;
+  styles?: PickerStyles;
+};
 
 type SharedOutput = Pick<
   RcPickerProps<Dayjs>,
@@ -81,7 +92,7 @@ type SharedOutput = Pick<
   | 'superNextIcon'
   | 'superPrevIcon'
   | 'transitionName'
-> & { classNames: any; styles: any };
+> & { classNames: FilledPickerClassNames; styles: FilledPickerStyles };
 
 /** antd's `PickerButton`: the panel's OK button is a small primary button. */
 const PickerButton = (props: {
@@ -114,6 +125,7 @@ export const usePickerShared = ({
   classNames,
   components,
   defaultOpen,
+  dropdownClassName,
   getPopupContainer,
   max,
   maxDate,
@@ -125,8 +137,11 @@ export const usePickerShared = ({
   onOpenChange,
   open,
   picker,
+  popupClassName,
+  popupStyle,
   prevIcon,
   rootClassName,
+  semanticProps,
   shadow,
   size,
   status,
@@ -167,6 +182,15 @@ export const usePickerShared = ({
     return [...scope.classList].filter((name) => name.startsWith('css-var-')).join(' ');
   }, [appElement]);
 
+  // As in antd, `info.props` carries the merged size.
+  const [semanticClassNames, semanticStyles] = mergePickerSemantic({
+    classNames,
+    popupClassName: popupClassName ?? dropdownClassName,
+    popupStyle,
+    props: { ...semanticProps, size: size ?? 'medium' },
+    styles,
+  });
+
   return {
     allowClear: allowClear && {
       clearIcon:
@@ -175,8 +199,11 @@ export const usePickerShared = ({
         defaultClearIcon,
     },
     classNames: {
-      ...classNames,
-      popup: { ...classNames?.popup, root: cx(themeScopeClassName, classNames?.popup?.root) },
+      ...semanticClassNames,
+      popup: {
+        ...semanticClassNames.popup,
+        root: cx(themeScopeClassName, semanticClassNames.popup.root),
+      },
     },
     className: cx(
       rootVariants({
@@ -211,7 +238,10 @@ export const usePickerShared = ({
     prefixCls: PREFIX_CLS,
     prevIcon: withDefault(prevIcon, <Icon icon={ChevronLeft} size={16} />),
     rootClassName: cx(pickerStyles.root, rootClassName),
-    styles: { ...styles, popup: { ...styles?.popup, root: { zIndex, ...styles?.popup?.root } } },
+    styles: {
+      ...semanticStyles,
+      popup: { ...semanticStyles.popup, root: { zIndex, ...semanticStyles.popup.root } },
+    },
     suffixIcon: withDefault(
       suffixIcon,
       <Icon icon={picker === 'time' ? Clock : CalendarIcon} size={14} />,
