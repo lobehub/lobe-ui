@@ -1,7 +1,26 @@
-import { act, cleanup, fireEvent, render, screen, within } from '@testing-library/react';
+import {
+  act,
+  cleanup,
+  fireEvent,
+  render as rtlRender,
+  screen,
+  within,
+} from '@testing-library/react';
+import { motion } from 'motion/react';
+import type { ReactNode } from 'react';
+
+import ConfigProvider from '@/ConfigProvider';
 
 import Table from '../Table';
 import type { TableColumn, TableColumnTitleProps } from '../type';
+
+// Base-ui buttons (ActionIcon in the expand / filter triggers) read the motion component from
+// ConfigProvider, so every render (and rerender) goes through it.
+const MotionWrapper = ({ children }: { children: ReactNode }) => (
+  <ConfigProvider motion={motion}>{children}</ConfigProvider>
+);
+const render: typeof rtlRender = ((ui: any, options?: any) =>
+  rtlRender(ui, { wrapper: MotionWrapper, ...options })) as typeof rtlRender;
 
 if (!globalThis.ResizeObserver) {
   globalThis.ResizeObserver = class {
@@ -98,7 +117,7 @@ describe('Table columns: grouping', () => {
       />,
     );
 
-    fireEvent.click(screen.getByRole('button', { name: 'Age' }));
+    fireEvent.click(within(screen.getByRole('columnheader', { name: /Age/ })).getByRole('button'));
 
     expect(bodyTexts(container).map((cells) => cells[0])).toEqual(['Bob', 'Ada', 'Cy']);
     expect(onChange.mock.calls.at(-1)![2]).toMatchObject({ columnKey: 'age', order: 'ascend' });
@@ -251,9 +270,9 @@ describe('Table columns: column props', () => {
       sortOrder: undefined,
     });
 
-    fireEvent.click(screen.getByRole('button', { name: 'Age' }));
+    fireEvent.click(within(screen.getByRole('columnheader', { name: /Age/ })).getByRole('button'));
 
-    expect(screen.getByRole('button', { name: 'Age (ascend)' })).toBeTruthy();
+    expect(screen.getByRole('columnheader', { name: /Age \(ascend\)/ })).toBeTruthy();
     expect(calls.at(-1)!.sortColumns).toEqual([
       { column: expect.objectContaining({ dataIndex: 'age' }), order: 'ascend' },
     ]);

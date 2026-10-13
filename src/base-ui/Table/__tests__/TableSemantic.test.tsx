@@ -1,8 +1,20 @@
-import { cleanup, render } from '@testing-library/react';
+import { cleanup, render as rtlRender } from '@testing-library/react';
+import { motion } from 'motion/react';
+import type { ReactNode } from 'react';
+
+import ConfigProvider from '@/ConfigProvider';
 
 import { normalizeClassNames, normalizeStyles, resolveSemantic } from '../semantic';
 import Table from '../Table';
 import type { TableClassNames, TableColumn, TableProps, TableStyles } from '../type';
+
+// Base-ui buttons (ActionIcon in the expand / filter triggers) read the motion component from
+// ConfigProvider, so every render (and rerender) goes through it.
+const MotionWrapper = ({ children }: { children: ReactNode }) => (
+  <ConfigProvider motion={motion}>{children}</ConfigProvider>
+);
+const render: typeof rtlRender = ((ui: any, options?: any) =>
+  rtlRender(ui, { wrapper: MotionWrapper, ...options })) as typeof rtlRender;
 
 if (!globalThis.ResizeObserver) {
   globalThis.ResizeObserver = class {
@@ -109,16 +121,23 @@ describe('Table semantic classNames / styles', () => {
 
   test('function forms receive the table props', () => {
     const classNames = vi.fn(({ props }: { props: TableProps<Row> }) => ({
-      root: props.bordered ? 'is-bordered' : 'not-bordered',
+      root: props.variant === 'outlined' ? 'is-outlined' : 'not-outlined',
     }));
     const styles = vi.fn(({ props }: { props: TableProps<Row> }) => ({
       header: { cell: { color: props.size === 'small' ? 'red' : 'blue' } },
     }));
-    const { container } = renderTable({ bordered: true, classNames, size: 'small', styles });
+    const { container } = renderTable({
+      variant: 'outlined' as const,
+      classNames,
+      size: 'small',
+      styles,
+    });
 
-    expect(classNames).toHaveBeenCalledWith({ props: expect.objectContaining({ bordered: true }) });
+    expect(classNames).toHaveBeenCalledWith({
+      props: expect.objectContaining({ variant: 'outlined' as const }),
+    });
     expect(styles).toHaveBeenCalledWith({ props: expect.objectContaining({ size: 'small' }) });
-    expect(container.firstElementChild!.classList.contains('is-bordered')).toBe(true);
+    expect(container.firstElementChild!.classList.contains('is-outlined')).toBe(true);
     expect(styleOf(container.querySelector('th'))).toContain('color: red');
   });
 
@@ -216,9 +235,11 @@ describe('Table semantic classNames / styles', () => {
 
 describe('semantic helpers', () => {
   test('resolveSemantic calls functions with the info and passes objects through', () => {
-    const info = { props: { bordered: true } };
+    const info = { props: { variant: 'outlined' as const } };
     expect(resolveSemantic({ root: 'a' }, info)).toEqual({ root: 'a' });
-    expect(resolveSemantic(({ props }: any) => ({ root: String(props.bordered) }), info)).toEqual({
+    expect(
+      resolveSemantic(({ props }: any) => ({ root: String(props.variant === 'outlined') }), info),
+    ).toEqual({
       root: 'true',
     });
     expect(resolveSemantic(undefined, info)).toBeUndefined();

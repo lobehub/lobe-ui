@@ -26,6 +26,8 @@ import type { SpinProps } from '@/base-ui/Spin/type';
 import type { TooltipProps } from '@/base-ui/Tooltip/type';
 
 /** `null` (or `undefined`) means unsorted. */
+export type TableVariant = 'filled' | 'outlined' | 'borderless';
+
 export type SortOrder = 'ascend' | 'descend' | null;
 
 /** The third argument is the order being applied; return the ascending comparison either way. */
@@ -487,7 +489,6 @@ export type TableRef = HTMLDivElement & {
 };
 
 export interface TableProps<T> {
-  bordered?: boolean;
   /** `Table.Column` / `Table.ColumnGroup` elements, used when `columns` is not set. */
   children?: ReactNode;
   /** @deprecated use `expandable.childrenColumnName` */
@@ -568,6 +569,11 @@ export interface TableProps<T> {
   /** Defaults to `fixed` with fixed columns, a fixed header (`scroll.y`) or `ellipsis` columns. */
   tableLayout?: 'auto' | 'fixed';
   title?: (currentPageData: readonly T[]) => ReactNode;
+  /**
+   * Visual style: `borderless` (default) has no cell grid; `outlined` draws cell borders
+   * like antd `bordered`; `filled` uses a fill background without the grid.
+   */
+  variant?: TableVariant;
   /** Virtual scrolling (rc-virtual-list); needs numeric `scroll.y`, and numeric `scroll.x` with fixed columns. */
   virtual?: boolean;
 }

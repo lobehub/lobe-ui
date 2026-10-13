@@ -1,8 +1,27 @@
-import { act, cleanup, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
-import { type Key, useState } from 'react';
+import {
+  act,
+  cleanup,
+  fireEvent,
+  render as rtlRender,
+  screen,
+  waitFor,
+  within,
+} from '@testing-library/react';
+import { motion } from 'motion/react';
+import { type Key, type ReactNode, useState } from 'react';
+
+import ConfigProvider from '@/ConfigProvider';
 
 import Table from '../Table';
 import type { TableColumn, TableProps, TableRowSelection } from '../type';
+
+// Base-ui buttons (ActionIcon in the expand / filter triggers) read the motion component from
+// ConfigProvider, so every render (and rerender) goes through it.
+const MotionWrapper = ({ children }: { children: ReactNode }) => (
+  <ConfigProvider motion={motion}>{children}</ConfigProvider>
+);
+const render: typeof rtlRender = ((ui: any, options?: any) =>
+  rtlRender(ui, { wrapper: MotionWrapper, ...options })) as typeof rtlRender;
 
 if (!globalThis.ResizeObserver) {
   globalThis.ResizeObserver = class {

@@ -15,10 +15,10 @@ import {
   useState,
 } from 'react';
 
+import ActionIcon from '@/base-ui/ActionIcon';
 import { Checkbox } from '@/base-ui/Checkbox';
 import DropdownMenu from '@/base-ui/DropdownMenu';
 import { Radio } from '@/base-ui/Radio';
-import Icon from '@/Icon';
 
 import {
   conductCheck,
@@ -358,13 +358,12 @@ export const useSelection = <T,>(
                   onClick: () => onSelectionClick?.(recordKeys),
                 }))}
               >
-                <button
+                <ActionIcon
                   aria-label="Selection options"
                   className={styles.selectionTrigger}
-                  type="button"
-                >
-                  <Icon icon={ChevronDown} size={12} />
-                </button>
+                  icon={ChevronDown}
+                  size="small"
+                />
               </DropdownMenu>
             </div>
           );

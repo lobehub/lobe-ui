@@ -1,4 +1,5 @@
-import { Switch, Table, type TableColumnsType } from '@lobehub/ui/base-ui';
+import { ActionIcon, Switch, Table, type TableColumnsType } from '@lobehub/ui/base-ui';
+import { Ellipsis } from 'lucide-react';
 import { useState } from 'react';
 
 interface DataType {
@@ -17,7 +18,14 @@ const columns: TableColumnsType<DataType> = [
     title: `Column ${index + 1}`,
     width: 150,
   })),
-  { fixed: 'end', key: 'operation', render: () => <a>action</a>, title: 'Action', width: 100 },
+  {
+    align: 'end',
+    fixed: 'end',
+    key: 'operation',
+    render: () => <ActionIcon icon={Ellipsis} size="small" title="Actions" variant="filled" />,
+    title: 'Action',
+    width: 64,
+  },
 ];
 
 const dataSource: DataType[] = Array.from({ length: 100 }, (_, index) => ({

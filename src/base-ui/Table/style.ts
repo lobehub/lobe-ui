@@ -1,7 +1,5 @@
 import { createStaticStyles } from 'antd-style';
 
-import { focusRing } from '@/base-ui/focusRing';
-
 /** Own prefix so rc-table classNames never collide with antd's global `.ant-table` CSS. */
 export const PREFIX_CLS = 'lobe-table';
 
@@ -20,7 +18,7 @@ export const EXPAND_COLUMN_WIDTH = 48;
 
 // antd `selectionColumnWidth`, plus the `selections` trigger when there is one.
 export const SELECTION_COLUMN_WIDTH = 32;
-export const SELECTION_DROPDOWN_WIDTH = 16;
+export const SELECTION_DROPDOWN_WIDTH = 24;
 
 /** Rows of this table's own sections only, so the rules never leak into nested tables. */
 const ownRows = ['content', 'header', 'body', 'summary']
@@ -46,8 +44,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
   const endShadow = `box-shadow: inset -10px 0 8px -8px ${cssVar.colorSplit};`;
 
   return {
-    bordered: css`
-      &${p}-bordered {
+    outlined: css`
+      &${p}-outlined {
         & > ${p}-title {
           border: ${border};
           border-block-end: 0;
@@ -55,9 +53,12 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
           border-start-end-radius: ${cssVar.borderRadiusLG};
         }
 
+        /* Like antd: start + top on the container; cells draw the end / bottom edges
+           so rowspan group headers never lose a vertical line to \`:last-child\`. */
         & > ${p}-container {
           overflow: clip;
-          border: ${border};
+          border-block-start: ${border};
+          border-inline-start: ${border};
           border-radius: ${cssVar.borderRadiusLG};
         }
 
@@ -82,16 +83,75 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
           border-inline-end: ${border};
         }
 
-        ${ownCells('th:last-child')}, ${ownCells('td:last-child')} {
-          border-inline-end: 0;
-        }
-
-        & > ${p}-container > * > table > thead > tr:not(:last-child) > th {
+        /* Every header row (including the last) draws one bottom edge — no inset
+           shadow underneath, or group headers look double-thick. */
+        & > ${p}-container > * > table > thead > tr > th {
           border-block-end: ${border};
+          box-shadow: inset 0 999px 0 ${cssVar.colorFillQuaternary};
         }
 
         & ${p}-tbody-virtual ${p}-cell {
           border-inline-end: ${border};
+        }
+      }
+    `,
+
+    filled: css`
+      &${p}-filled {
+        & > ${p}-title, & > ${p}-footer {
+          border-radius: ${cssVar.borderRadiusLG};
+          background: ${cssVar.colorFillQuaternary};
+        }
+
+        & > ${p}-title {
+          border-end-start-radius: 0;
+          border-end-end-radius: 0;
+        }
+
+        & > ${p}-footer {
+          border-start-start-radius: 0;
+          border-start-end-radius: 0;
+        }
+
+        & > ${p}-container {
+          overflow: clip;
+          border-radius: ${cssVar.borderRadiusLG};
+          background: ${cssVar.colorFillTertiary};
+        }
+
+        & > ${p}-title + ${p}-container {
+          border-start-start-radius: 0;
+          border-start-end-radius: 0;
+        }
+
+        &:has(> ${p}-footer) > ${p}-container {
+          border-end-start-radius: 0;
+          border-end-end-radius: 0;
+        }
+
+        /* Soft header band: same FillTertiary surface as the body, plus the same
+           FillQuaternary inset wash borderless/outlined use — light layering, not a
+           heavy Secondary fill. Sticky thead keeps an opaque Tertiary base so rows
+           do not show through while scrolling. */
+        & ${p}-thead > tr > th,
+        & ${p}-thead > tr > td {
+          background: ${cssVar.colorFillTertiary};
+          box-shadow:
+            inset 0 -1px 0 ${cssVar.colorBorderSecondary},
+            inset 0 999px 0 ${cssVar.colorFillQuaternary};
+        }
+
+        & ${p}-tbody > tr > td,
+        & ${p}-tbody > tr > th,
+        & ${p}-tbody-virtual ${p}-cell {
+          background: transparent;
+        }
+
+        & ${p}-thead > tr > th${p}-cell-fix, & ${p}-thead > tr > td${p}-cell-fix {
+          background: ${cssVar.colorFillTertiary};
+          box-shadow:
+            inset 0 -1px 0 ${cssVar.colorBorderSecondary},
+            inset 0 999px 0 ${cssVar.colorFillQuaternary};
         }
       }
     `,
@@ -109,33 +169,14 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       white-space: nowrap;
     `,
     filterActive: css`
-      color: ${cssVar.colorPrimary};
-
-      &:hover {
+      &&,
+      &&:hover {
         color: ${cssVar.colorPrimary};
       }
     `,
     filterButton: css`
-      ${focusRing};
-      cursor: pointer;
-
-      display: inline-flex;
       flex: none;
-      align-items: center;
-      justify-content: center;
-
-      padding: 2px;
-      border: 0;
-      border-radius: 4px;
-
-      color: ${cssVar.colorTextQuaternary};
-
-      background: none;
-
-      &:hover {
-        color: ${cssVar.colorText};
-        background: ${cssVar.colorFillTertiary};
-      }
+      margin-block: -4px;
     `,
     filterButtons: css`
       display: flex;
@@ -244,9 +285,11 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
 
       background: color-mix(in srgb, ${cssVar.colorBgContainer} 60%, transparent);
     `,
+    // antd `paginationMargin` (token.margin): keep the pager off the table above and off
+    // whatever sits below the table.
     pagination: css`
       display: flex;
-      margin-block-start: 12px;
+      margin-block: 16px;
     `,
     paginationCenter: css`
       justify-content: center;
@@ -258,7 +301,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       justify-content: flex-start;
     `,
     paginationTop: css`
-      margin-block: 0 12px;
+      margin-block: 0 16px;
     `,
     root: css`
       min-width: 0;
@@ -297,25 +340,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       vertical-align: middle;
     `,
     selectionTrigger: css`
-      cursor: pointer;
-
-      display: inline-flex;
-      align-items: center;
-
-      padding: 0;
-      border: 0;
-
-      color: ${cssVar.colorTextQuaternary};
-
-      background: none;
-
-      transition: color ${cssVar.motionDurationMid};
-
-      &:hover {
-        color: ${cssVar.colorTextSecondary};
-      }
-
-      ${focusRing};
+      flex: none;
+      margin-block: -4px;
     `,
     sizeLarge: css`
       ${PADDING_BLOCK}: 16px;
@@ -329,39 +355,24 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       ${PADDING_BLOCK}: 8px;
       ${PADDING_INLINE}: 12px;
     `,
+    // Title + sort ActionIcon row (not a button — the ActionIcon owns the click).
     sortButton: css`
-      ${focusRing};
-      cursor: pointer;
-
       display: inline-flex;
-      gap: 6px;
+      gap: 4px;
       align-items: center;
 
       min-width: 0;
       max-width: 100%;
-      padding: 0;
-      border: 0;
-      border-radius: 4px;
-
-      font: inherit;
-      color: inherit;
-
-      background: none;
     `,
+    // Matches the filter trigger: small ActionIcon with a slight negative margin so the
+    // 24px block does not grow the header.
     sortCaret: css`
-      display: inline-flex;
       flex: none;
-      flex-direction: column;
-      color: ${cssVar.colorTextQuaternary};
-
-      & > [data-active='true'] {
-        color: ${cssVar.colorText};
-      }
+      margin-block: -4px;
     `,
-    sortIcon: css`
-      display: inline-flex;
-      flex: none;
-      align-items: center;
+    sortTitle: css`
+      cursor: pointer;
+      min-width: 0;
     `,
     sortedColumn: css`
       ${p}-tbody > tr > &${p}-cell {
@@ -425,8 +436,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
         transition: background-color ${cssVar.motionDurationMid};
       }
 
-      &:not(${p}-bordered) ${p}-tbody > tr:last-child > td,
-      &:not(${p}-bordered) ${p}-tbody > tr:last-child > th {
+      &:not(${p}-outlined) ${p}-tbody > tr:last-child > td,
+      &:not(${p}-outlined) ${p}-tbody > tr:last-child > th {
         border-block-end: 0;
       }
 
@@ -590,7 +601,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
         }
       }
 
-      &${p}-bordered ${p}-selection-col {
+      &${p}-outlined ${p}-selection-col {
         width: ${SELECTION_COLUMN_WIDTH + 16}px;
 
         &${p}-selection-col-with-dropdown {
@@ -627,72 +638,20 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
       }
 
       & ${p}-row-expand-icon {
-        ${focusRing};
-        cursor: pointer;
-
-        position: relative;
-
         float: inline-start;
-
-        box-sizing: border-box;
-        width: 17px;
-        height: 17px;
-        padding: 0;
-        border: ${border};
-        border-radius: 4px;
-
-        color: inherit;
-
-        background: ${cssVar.colorBgContainer};
-
-        &::before,
-        &::after {
-          content: '';
-          position: absolute;
-          background: currentcolor;
-          transition: transform ${cssVar.motionDurationSlow} ease-out;
-        }
-
-        &::before {
-          inset-block-start: 7px;
-          inset-inline: 3px;
-          height: 1px;
-        }
-
-        &::after {
-          inset-block: 3px;
-          inset-inline-start: 7px;
-          transform: rotate(90deg);
-          width: 1px;
-        }
-
-        &:hover {
-          border-color: currentcolor;
-        }
-
-        &${p}-row-expand-icon-collapsed::before {
-          transform: rotate(-180deg);
-        }
-
-        &${p}-row-expand-icon-collapsed::after {
-          transform: rotate(0deg);
-        }
+        flex: none;
+        vertical-align: middle;
 
         &${p}-row-expand-icon-spaced {
-          border: 0;
+          display: inline-block;
+          width: 24px;
+          height: 24px;
           visibility: hidden;
-          background: transparent;
-
-          &::before,
-          &::after {
-            content: none;
-            display: none;
-          }
         }
       }
 
       & ${p}-row-indent + ${p}-row-expand-icon {
-        margin-block-start: 2px;
+        margin-block: -1px;
         margin-inline-end: 8px;
       }
 
@@ -735,7 +694,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
         }
 
         /* The outer cell already draws the frame: keep only the start edge of a bordered nest. */
-        & ${p}${p}-bordered {
+        & ${p}${p}-outlined {
           & > ${p}-title, & > ${p}-container, & > ${p}-footer {
             border-block: 0;
             border-inline-end: 0;
@@ -752,7 +711,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
         }
       }
 
-      &${p}-bordered ${p}-tbody > tr > td > ${p}-expanded-row-fixed {
+      &${p}-outlined ${p}-tbody > tr > td > ${p}-expanded-row-fixed {
         margin-inline: calc((var(${PADDING_INLINE}) + 1px) * -1);
       }
 

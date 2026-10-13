@@ -1,8 +1,19 @@
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
-import { type Key, useState } from 'react';
+import { cleanup, fireEvent, render as rtlRender, screen, within } from '@testing-library/react';
+import { motion } from 'motion/react';
+import { type Key, type ReactNode, useState } from 'react';
+
+import ConfigProvider from '@/ConfigProvider';
 
 import Table from '../Table';
 import type { TableColumn, TableExpandIconProps, TableProps } from '../type';
+
+// Base-ui buttons (ActionIcon in the expand / filter triggers) read the motion component from
+// ConfigProvider, so every render (and rerender) goes through it.
+const MotionWrapper = ({ children }: { children: ReactNode }) => (
+  <ConfigProvider motion={motion}>{children}</ConfigProvider>
+);
+const render: typeof rtlRender = ((ui: any, options?: any) =>
+  rtlRender(ui, { wrapper: MotionWrapper, ...options })) as typeof rtlRender;
 
 if (!globalThis.ResizeObserver) {
   globalThis.ResizeObserver = class {
@@ -378,11 +389,16 @@ describe('Table expandable rows', () => {
 
   test('a nested Table renders inside the expanded row as its own wrapper', () => {
     const { container } = renderTable({
-      bordered: true,
+      variant: 'outlined' as const,
       expandable: {
         defaultExpandedRowKeys: ['1'],
         expandedRowRender: () => (
-          <Table bordered columns={columns} dataSource={rows.slice(0, 2)} pagination={false} />
+          <Table
+            columns={columns}
+            dataSource={rows.slice(0, 2)}
+            pagination={false}
+            variant="outlined"
+          />
         ),
       },
     });
@@ -390,7 +406,7 @@ describe('Table expandable rows', () => {
     const cell = expandedRows(container)[0].querySelector('td')!;
     const nested = cell.querySelector(':scope > .lobe-table-wrapper')!;
     expect(nested).not.toBeNull();
-    expect(nested.querySelector('.lobe-table-bordered')).not.toBeNull();
+    expect(nested.querySelector('.lobe-table-outlined')).not.toBeNull();
     expect(within(nested as HTMLElement).getAllByText('Jim')).toHaveLength(1);
   });
 });

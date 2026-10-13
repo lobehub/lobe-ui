@@ -1,8 +1,19 @@
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
+import { cleanup, fireEvent, render as rtlRender, screen, within } from '@testing-library/react';
+import { motion } from 'motion/react';
 import { cloneElement, isValidElement, type ReactElement, type ReactNode } from 'react';
+
+import ConfigProvider from '@/ConfigProvider';
 
 import Table from '../Table';
 import type { TableColumn } from '../type';
+
+// Base-ui buttons (ActionIcon in the expand / filter triggers) read the motion component from
+// ConfigProvider, so every render (and rerender) goes through it.
+const MotionWrapper = ({ children }: { children: ReactNode }) => (
+  <ConfigProvider motion={motion}>{children}</ConfigProvider>
+);
+const render: typeof rtlRender = ((ui: any, options?: any) =>
+  rtlRender(ui, { wrapper: MotionWrapper, ...options })) as typeof rtlRender;
 
 // The base-ui popup does not portal under jsdom; expose the props the Table passes instead.
 vi.mock('@/base-ui/Tooltip', () => ({
@@ -39,8 +50,10 @@ const column: TableColumn<Row> = {
   title: 'Math',
 };
 
-const sortButton = () =>
-  within(screen.getByRole('columnheader', { name: /Math/ })).getByRole('button');
+const sortHeader = () => screen.getByRole('columnheader', { name: /Math/ });
+// Full-header tooltip sits on `.lobe-table-column-sorters`; the ActionIcon is the click target.
+const sortGroup = () => sortHeader().querySelector<HTMLElement>('.lobe-table-column-sorters')!;
+const sortButton = () => within(sortHeader()).getByRole('button');
 
 describe('Table sorter tooltip content', () => {
   afterEach(cleanup);
@@ -48,11 +61,11 @@ describe('Table sorter tooltip content', () => {
   test('tells what the next click does, following sortDirections', () => {
     render(<Table columns={[column]} dataSource={rows} pagination={false} />);
 
-    expect(sortButton().dataset.tooltipTitle).toBe('Click to sort ascending');
+    expect(sortGroup().dataset.tooltipTitle).toBe('Click to sort ascending');
     fireEvent.click(sortButton());
-    expect(sortButton().dataset.tooltipTitle).toBe('Click to sort descending');
+    expect(sortGroup().dataset.tooltipTitle).toBe('Click to sort descending');
     fireEvent.click(sortButton());
-    expect(sortButton().dataset.tooltipTitle).toBe('Click to cancel sorting');
+    expect(sortGroup().dataset.tooltipTitle).toBe('Click to cancel sorting');
   });
 
   test('descend-first directions start with the descending tip', () => {
@@ -64,9 +77,9 @@ describe('Table sorter tooltip content', () => {
       />,
     );
 
-    expect(sortButton().dataset.tooltipTitle).toBe('Click to sort descending');
+    expect(sortGroup().dataset.tooltipTitle).toBe('Click to sort descending');
     fireEvent.click(sortButton());
-    expect(sortButton().dataset.tooltipTitle).toBe('Click to cancel sorting');
+    expect(sortGroup().dataset.tooltipTitle).toBe('Click to cancel sorting');
   });
 
   test('tooltip props pass through (minus target) and may override the title', () => {
@@ -80,9 +93,9 @@ describe('Table sorter tooltip content', () => {
     );
     const icon = container.querySelector<HTMLElement>('.lobe-table-column-sorter')!;
 
-    expect(sortButton().dataset.tooltipTitle).toBeUndefined();
+    expect(sortGroup().dataset.tooltipTitle).toBeUndefined();
     expect(icon.dataset.tooltipTitle).toBe('Sort me');
-    expect(JSON.parse(icon.dataset.tooltipProps!)).toEqual({ placement: 'bottom' });
+    expect(JSON.parse(icon.dataset.tooltipProps!)).toMatchObject({ placement: 'bottom' });
   });
 
   test('a column showSorterTooltip overrides the table one', () => {
@@ -95,6 +108,6 @@ describe('Table sorter tooltip content', () => {
       />,
     );
 
-    expect(sortButton().dataset.tooltipTitle).toBe('Column tip');
+    expect(sortGroup().dataset.tooltipTitle).toBe('Column tip');
   });
 });

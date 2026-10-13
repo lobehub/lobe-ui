@@ -55,4 +55,5 @@ export type {
   TableSummaryCellProps,
   TableSummaryProps,
   TableSummaryRowProps,
+  TableVariant,
 } from './type';

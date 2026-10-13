@@ -69,10 +69,12 @@ const renderTable = (props: Partial<TableProps<Row>> = {}, zh = false) =>
     </ConfigProvider>,
   );
 
-const sortButton = () =>
-  within(screen.getByRole('columnheader', { name: /Age/ })).getByRole('button');
+const sortHeader = () => screen.getByRole('columnheader', { name: /Age/ });
+const sortGroup = () => sortHeader().querySelector<HTMLElement>('.lobe-table-column-sorters')!;
+const sortButton = () => within(sortHeader()).getByRole('button');
 const filterTrigger = () => screen.getByRole('button', { name: 'Filter Name' });
-const expandIcon = () => document.querySelector<HTMLButtonElement>('.lobe-table-row-expand-icon')!;
+const expandIcon = () =>
+  document.querySelector<HTMLButtonElement>('button.lobe-table-row-expand-icon')!;
 const headerCheckbox = () =>
   document.querySelector('.lobe-table-selection')!.querySelector('[role="checkbox"]')!;
 
@@ -88,11 +90,11 @@ describe('Table locale', () => {
   test('defaults to the English i18n texts (antd en_US)', async () => {
     renderTable();
 
-    expect(sortButton().dataset.tooltipTitle).toBe('Click to sort ascending');
+    expect(sortGroup().dataset.tooltipTitle).toBe('Click to sort ascending');
     fireEvent.click(sortButton());
-    expect(sortButton().dataset.tooltipTitle).toBe('Click to sort descending');
+    expect(sortGroup().dataset.tooltipTitle).toBe('Click to sort descending');
     fireEvent.click(sortButton());
-    expect(sortButton().dataset.tooltipTitle).toBe('Click to cancel sorting');
+    expect(sortGroup().dataset.tooltipTitle).toBe('Click to cancel sorting');
 
     expect(expandIcon().getAttribute('aria-label')).toBe('Expand row');
     fireEvent.click(expandIcon());
@@ -102,7 +104,7 @@ describe('Table locale', () => {
     await openSelections();
     expect(menuTexts()).toEqual(['Select all data', 'Invert current page', 'Clear all data']);
 
-    expect(filterTrigger().getAttribute('title')).toBe('Filter menu');
+    expect(filterTrigger().getAttribute('aria-description')).toBe('Filter menu');
     fireEvent.click(filterTrigger());
     expect(screen.getByPlaceholderText('Search in filters')).toBeTruthy();
     expect(screen.getByRole('checkbox', { name: 'Select all items' })).toBeTruthy();
@@ -113,7 +115,7 @@ describe('Table locale', () => {
   test('follows the i18n resources of ConfigProvider (zh-CN)', async () => {
     renderTable({}, true);
 
-    expect(sortButton().dataset.tooltipTitle).toBe('点击升序');
+    expect(sortGroup().dataset.tooltipTitle).toBe('点击升序');
     expect(expandIcon().getAttribute('aria-label')).toBe('展开行');
     await openSelections();
     expect(menuTexts()).toEqual(['全选所有', '反选当页', '清空所有']);
@@ -155,11 +157,11 @@ describe('Table locale', () => {
       true,
     );
 
-    expect(sortButton().dataset.tooltipTitle).toBe('L-asc');
+    expect(sortGroup().dataset.tooltipTitle).toBe('L-asc');
     fireEvent.click(sortButton());
-    expect(sortButton().dataset.tooltipTitle).toBe('L-desc');
+    expect(sortGroup().dataset.tooltipTitle).toBe('L-desc');
     fireEvent.click(sortButton());
-    expect(sortButton().dataset.tooltipTitle).toBe('L-cancel');
+    expect(sortGroup().dataset.tooltipTitle).toBe('L-cancel');
 
     expect(expandIcon().getAttribute('aria-label')).toBe('L-expand');
     fireEvent.click(expandIcon());
@@ -168,7 +170,7 @@ describe('Table locale', () => {
     await openSelections();
     expect(menuTexts()).toEqual(['L-all', 'L-invert', 'L-none']);
 
-    expect(filterTrigger().getAttribute('title')).toBe('L-filter-title');
+    expect(filterTrigger().getAttribute('aria-description')).toBe('L-filter-title');
     fireEvent.click(filterTrigger());
     expect(screen.getByPlaceholderText('L-search')).toBeTruthy();
     expect(screen.getByRole('checkbox', { name: 'L-check-all' })).toBeTruthy();
@@ -183,7 +185,7 @@ describe('Table locale', () => {
       showSorterTooltip: false,
     });
     expect(screen.getByRole('checkbox', { name: 'L-select-page' })).toBe(headerCheckbox());
-    expect(sortButton().getAttribute('title')).toBe('L-sort');
+    expect(sortGroup().getAttribute('title')).toBe('L-sort');
   });
 
   test('the default selectAll label is "Select current page"', () => {
@@ -257,7 +259,7 @@ describe('Table locale', () => {
 
   test('locale changes re-render the texts', () => {
     const { rerender } = renderTable({ locale: { triggerAsc: 'First' } });
-    expect(sortButton().dataset.tooltipTitle).toBe('First');
+    expect(sortGroup().dataset.tooltipTitle).toBe('First');
     act(() => {
       rerender(
         <ConfigProvider motion={motion}>
@@ -270,6 +272,6 @@ describe('Table locale', () => {
         </ConfigProvider>,
       );
     });
-    expect(sortButton().dataset.tooltipTitle).toBe('Second');
+    expect(sortGroup().dataset.tooltipTitle).toBe('Second');
   });
 });

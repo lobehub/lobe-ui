@@ -41,10 +41,10 @@ const fixedDataSource: FixedDataType[] = Array.from({ length: 20 }, (_, index) =
 export default () => (
   <Flexbox gap={24}>
     <Table<DataType>
-      bordered
       columns={columns}
       dataSource={dataSource}
       pagination={false}
+      variant="outlined"
       summary={(pageData) => {
         let totalBorrow = 0;
         let totalRepayment = 0;
@@ -75,11 +75,11 @@ export default () => (
       }}
     />
     <Table<FixedDataType>
-      bordered
       columns={fixedColumns}
       dataSource={fixedDataSource}
       pagination={false}
       scroll={{ x: 2000, y: 300 }}
+      variant="outlined"
       summary={() => (
         <Table.Summary fixed>
           <Table.Summary.Row>

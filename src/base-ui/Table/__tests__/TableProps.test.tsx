@@ -1,8 +1,19 @@
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
-import type { HTMLAttributes, RefObject } from 'react';
+import { cleanup, fireEvent, render as rtlRender, screen, within } from '@testing-library/react';
+import { motion } from 'motion/react';
+import type { HTMLAttributes, ReactNode, RefObject } from 'react';
+
+import ConfigProvider from '@/ConfigProvider';
 
 import Table from '../Table';
 import type { TableColumn, TableRef } from '../type';
+
+// Base-ui buttons (ActionIcon in the expand / filter triggers) read the motion component from
+// ConfigProvider, so every render (and rerender) goes through it.
+const MotionWrapper = ({ children }: { children: ReactNode }) => (
+  <ConfigProvider motion={motion}>{children}</ConfigProvider>
+);
+const render: typeof rtlRender = ((ui: any, options?: any) =>
+  rtlRender(ui, { wrapper: MotionWrapper, ...options })) as typeof rtlRender;
 
 if (!globalThis.ResizeObserver) {
   globalThis.ResizeObserver = class {
@@ -57,12 +68,18 @@ describe('Table-level props', () => {
     expect(rootTable(container).classList.contains('lobe-table-medium')).toBe(true);
   });
 
-  test('bordered adds the bordered class', () => {
+  test('variant outlined adds the outlined class', () => {
     const { container } = render(
-      <Table bordered columns={columns} dataSource={rows} pagination={false} rowKey="id" />,
+      <Table
+        columns={columns}
+        dataSource={rows}
+        pagination={false}
+        rowKey="id"
+        variant="outlined"
+      />,
     );
 
-    expect(rootTable(container).classList.contains('lobe-table-bordered')).toBe(true);
+    expect(rootTable(container).classList.contains('lobe-table-outlined')).toBe(true);
   });
 
   test('loading accepts a Spin config object and shows its tip', () => {

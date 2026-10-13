@@ -74,10 +74,10 @@ const data: DataType[] = Array.from({ length: 100 }, (_, index) => ({
 
 export default () => (
   <Table
-    bordered
     columns={columns}
     dataSource={data}
     scroll={{ x: 'calc(700px + 50%)', y: 240 }}
     size="small"
+    variant="outlined"
   />
 );

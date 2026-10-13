@@ -1,5 +1,6 @@
 import { Flexbox } from '@lobehub/ui';
 import {
+  ActionIcon,
   Button,
   Input,
   InputNumber,
@@ -10,6 +11,7 @@ import {
   Text,
 } from '@lobehub/ui/base-ui';
 import { createStaticStyles } from 'antd-style';
+import { Check, Pencil, X } from 'lucide-react';
 import {
   createContext,
   type ReactNode,
@@ -189,34 +191,33 @@ export default () => {
     { dataIndex: 'age', editable: true, title: 'age', width: '15%' },
     { dataIndex: 'address', editable: true, title: 'address', width: '40%' },
     {
+      align: 'end',
       dataIndex: 'operation',
       render: (_, record) =>
         isEditing(record) ? (
-          <Flexbox horizontal gap={8}>
-            <a
-              href="#"
-              onClick={(event) => {
-                event.preventDefault();
-                save(record.key);
-              }}
-            >
-              Save
-            </a>
+          <Flexbox horizontal gap={4} justify="flex-end">
+            <ActionIcon
+              icon={Check}
+              size="small"
+              title="Save"
+              variant="filled"
+              onClick={() => save(record.key)}
+            />
             <Confirm title="Sure to cancel?" onConfirm={cancel}>
-              <a href="#" onClick={(event) => event.preventDefault()}>
-                Cancel
-              </a>
+              <ActionIcon icon={X} size="small" title="Cancel" variant="filled" />
             </Confirm>
           </Flexbox>
         ) : (
-          <Button
-            disabled={editingKey !== ''}
-            size="small"
-            type="link"
-            onClick={() => edit(record)}
-          >
-            Edit
-          </Button>
+          <Flexbox horizontal justify="flex-end">
+            <ActionIcon
+              disabled={editingKey !== ''}
+              icon={Pencil}
+              size="small"
+              title="Edit"
+              variant="filled"
+              onClick={() => edit(record)}
+            />
+          </Flexbox>
         ),
       title: 'operation',
     },
@@ -239,12 +240,12 @@ export default () => {
   return (
     <EditContext value={editContext}>
       <Table<DataType>
-        bordered
         columns={mergedColumns}
         components={{ body: { cell: EditableCell } }}
         dataSource={data}
         pagination={{ onChange: cancel }}
         rowClassName={() => classes.editableRow}
+        variant="outlined"
       />
     </EditContext>
   );

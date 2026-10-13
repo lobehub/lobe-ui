@@ -1,7 +1,19 @@
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
+import { cleanup, fireEvent, render as rtlRender, screen, within } from '@testing-library/react';
+import { motion } from 'motion/react';
+import type { ReactNode } from 'react';
+
+import ConfigProvider from '@/ConfigProvider';
 
 import Table from '../Table';
 import type { SortOrder, TableColumn, TableColumnTitleProps, TableSorterResult } from '../type';
+
+// Base-ui buttons (ActionIcon in the expand / filter triggers) read the motion component from
+// ConfigProvider, so every render (and rerender) goes through it.
+const MotionWrapper = ({ children }: { children: ReactNode }) => (
+  <ConfigProvider motion={motion}>{children}</ConfigProvider>
+);
+const render: typeof rtlRender = ((ui: any, options?: any) =>
+  rtlRender(ui, { wrapper: MotionWrapper, ...options })) as typeof rtlRender;
 
 if (!globalThis.ResizeObserver) {
   globalThis.ResizeObserver = class {
@@ -234,7 +246,7 @@ describe('Table sorter: compare function', () => {
 describe('Table sorter: sortDirections', () => {
   afterEach(cleanup);
 
-  test('column sortDirections restricts the cycle and the carets', () => {
+  test('column sortDirections restricts the cycle and the sort ActionIcon', () => {
     const onChange = vi.fn();
     const { container } = render(
       <Table
@@ -324,7 +336,7 @@ describe('Table sorter: sortDirections', () => {
 describe('Table sorter: sortIcon', () => {
   afterEach(cleanup);
 
-  test('replaces the carets and receives the current order', () => {
+  test('replaces the default ActionIcon glyph and receives the current order', () => {
     const sortIcon = vi.fn(({ sortOrder }: { sortOrder: unknown }) => (
       <span data-testid="icon">{String(sortOrder)}</span>
     ));
@@ -355,7 +367,7 @@ describe('Table sorter: showSorterTooltip trigger', () => {
   };
   const isOpenTrigger = (element: Element | null) => element!.hasAttribute('data-popup-open');
 
-  test("the whole sort button is the trigger by default ('full-header')", () => {
+  test("the title+icon group is the trigger by default ('full-header')", () => {
     const { container } = render(
       <Table
         columns={[column]}
@@ -365,11 +377,12 @@ describe('Table sorter: showSorterTooltip trigger', () => {
       />,
     );
 
-    expect(isOpenTrigger(within(header(/Math/)).getByRole('button'))).toBe(true);
+    // Tooltip wraps `.lobe-table-column-sorters`; the ActionIcon itself is not the trigger.
+    expect(isOpenTrigger(container.querySelector('.lobe-table-column-sorters'))).toBe(true);
     expect(isOpenTrigger(container.querySelector('.lobe-table-column-sorter'))).toBe(false);
   });
 
-  test("target: 'sorter-icon' moves the trigger to the icon", () => {
+  test("target: 'sorter-icon' moves the trigger to the ActionIcon", () => {
     const { container } = render(
       <Table
         columns={[column]}
@@ -379,7 +392,7 @@ describe('Table sorter: showSorterTooltip trigger', () => {
       />,
     );
 
-    expect(isOpenTrigger(within(header(/Math/)).getByRole('button'))).toBe(false);
+    expect(isOpenTrigger(container.querySelector('.lobe-table-column-sorters'))).toBe(false);
     expect(isOpenTrigger(container.querySelector('.lobe-table-column-sorter'))).toBe(true);
   });
 
@@ -401,7 +414,14 @@ describe('Table sorter: showSorterTooltip trigger', () => {
       />,
     );
 
-    expect(isOpenTrigger(within(header(/Math/)).getByRole('button'))).toBe(true);
+    const mathGroup = within(header(/Math/))
+      .getByRole('button')
+      .closest('.lobe-table-column-sorters');
+    const chineseGroup = within(header(/Chinese/))
+      .getByRole('button')
+      .closest('.lobe-table-column-sorters');
+    expect(isOpenTrigger(mathGroup)).toBe(true);
+    expect(chineseGroup?.hasAttribute('data-popup-open')).toBe(false);
     expect(
       within(header(/Chinese/))
         .getByRole('button')

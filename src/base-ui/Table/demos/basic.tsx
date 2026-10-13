@@ -1,5 +1,6 @@
 import { Flexbox } from '@lobehub/ui';
-import { Table, type TableColumnsType, Tag } from '@lobehub/ui/base-ui';
+import { ActionIcon, Table, type TableColumnsType, Tag } from '@lobehub/ui/base-ui';
+import { Trash2, UserPlus } from 'lucide-react';
 
 interface DataType {
   address: string;
@@ -39,10 +40,11 @@ const columns: TableColumnsType<DataType> = [
   },
   {
     key: 'action',
-    render: (_, record) => (
-      <Flexbox horizontal gap={16}>
-        <a href="#">Invite {record.name}</a>
-        <a href="#">Delete</a>
+    align: 'end',
+    render: () => (
+      <Flexbox horizontal gap={4} justify="flex-end">
+        <ActionIcon icon={UserPlus} size="small" title="Invite" variant="filled" />
+        <ActionIcon danger icon={Trash2} size="small" title="Delete" variant="filled" />
       </Flexbox>
     ),
     title: 'Action',

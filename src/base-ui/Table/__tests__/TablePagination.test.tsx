@@ -1,10 +1,19 @@
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
+import { cleanup, fireEvent, render as rtlRender, screen, within } from '@testing-library/react';
 import { motion } from 'motion/react';
+import type { ReactNode } from 'react';
 
 import ConfigProvider from '@/ConfigProvider';
 
 import Table from '../Table';
 import type { TableColumn, TablePaginationConfig, TableProps } from '../type';
+
+// Base-ui buttons (ActionIcon in the expand / filter triggers) read the motion component from
+// ConfigProvider, so every render (and rerender) goes through it.
+const MotionWrapper = ({ children }: { children: ReactNode }) => (
+  <ConfigProvider motion={motion}>{children}</ConfigProvider>
+);
+const render: typeof rtlRender = ((ui: any, options?: any) =>
+  rtlRender(ui, { wrapper: MotionWrapper, ...options })) as typeof rtlRender;
 
 vi.mock('@/base-ui/Select', () => ({
   default: ({ onChange, options, value }: any) => (

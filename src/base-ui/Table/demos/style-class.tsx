@@ -79,9 +79,11 @@ const styles: TableStyles = {
 const stylesFn = ({ props }: { props: TableProps<DataType> }): TableStyles => ({
   body: { cell: props.size === 'small' ? { fontSize: 12 } : undefined },
   header: {
-    cell: { background: props.bordered ? 'var(--ant-color-fill-tertiary)' : undefined },
+    cell: {
+      background: props.variant === 'outlined' ? 'var(--ant-color-fill-tertiary)' : undefined,
+    },
   },
-  root: { boxShadow: props.bordered ? '0 2px 8px rgba(0, 0, 0, 0.06)' : undefined },
+  root: { boxShadow: props.variant === 'outlined' ? '0 2px 8px rgba(0, 0, 0, 0.06)' : undefined },
 });
 
 export default () => (
@@ -99,15 +101,15 @@ export default () => (
       />
     </Flexbox>
     <Flexbox gap={8}>
-      <Text type="secondary">Function styles (bordered, small)</Text>
+      <Text type="secondary">Function styles (outlined, small)</Text>
       <Table<DataType>
-        bordered
         classNames={() => ({ header: { cell: classes.headerCell } })}
         columns={columns}
         dataSource={data}
         pagination={false}
         size="small"
         styles={stylesFn}
+        variant="outlined"
       />
     </Flexbox>
     <Flexbox gap={8}>

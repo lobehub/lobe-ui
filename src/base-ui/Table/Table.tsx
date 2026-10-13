@@ -11,7 +11,7 @@ import RcTable, {
   VirtualTable as RcVirtualTable,
 } from '@rc-component/table';
 import { cx } from 'antd-style';
-import { ChevronDown, ChevronUp } from 'lucide-react';
+import { ArrowDownFromLine, ArrowUpDown, ArrowUpToLine } from 'lucide-react';
 import {
   type HTMLAttributes,
   type Key,
@@ -25,6 +25,7 @@ import {
   useRef,
 } from 'react';
 
+import ActionIcon from '@/base-ui/ActionIcon';
 import Pagination, { type PaginationAlign } from '@/base-ui/Pagination';
 import Spin from '@/base-ui/Spin';
 import Tooltip from '@/base-ui/Tooltip';
@@ -32,7 +33,6 @@ import Empty from '@/Empty';
 import { useEventCallback } from '@/hooks/useEventCallback';
 import tableMessages from '@/i18n/resources/en/table';
 import { useTranslation } from '@/i18n/useTranslation';
-import Icon from '@/Icon';
 
 import Column from './Column';
 import ColumnGroup from './ColumnGroup';
@@ -146,7 +146,7 @@ const toTableRef = (
 
 const TableInner = <T,>(props: TableProps<T>) => {
   const {
-    bordered = false,
+    variant = 'borderless',
     children,
     childrenColumnName: legacyChildrenColumnName,
     className,
@@ -358,9 +358,9 @@ const TableInner = <T,>(props: TableProps<T>) => {
       columnWidth:
         SELECTION_COLUMN_WIDTH +
         (withDropdown ? SELECTION_DROPDOWN_WIDTH : 0) +
-        (bordered ? 16 : 0),
+        (variant === 'outlined' ? 16 : 0),
     };
-  }, [virtual, rowSelection, bordered]);
+  }, [virtual, rowSelection, variant]);
   const [transformSelectionColumns, selectedKeySet] = useSelection<T>(
     {
       childrenColumnName,
@@ -475,45 +475,53 @@ const TableInner = <T,>(props: TableProps<T>) => {
           const tooltipProps = { title: sortTipOf(nextOrder, tableLocale), ...tooltipOptions };
           const withTooltip = (node: ReactNode) => <Tooltip {...tooltipProps}>{node}</Tooltip>;
 
-          const icon = sortIcon ? (
-            <span className={cx(styles.sortIcon, `${PREFIX_CLS}-column-sorter`)}>
-              {sortIcon({ sortOrder: order ?? null })}
-            </span>
-          ) : (
-            <span
-              aria-hidden="true"
-              className={cx(styles.sortCaret, `${PREFIX_CLS}-column-sorter`)}
-            >
-              {sortDirections.includes('ascend') && (
-                <Icon data-active={order === 'ascend'} icon={ChevronUp} size={10} />
-              )}
-              {sortDirections.includes('descend') && (
-                <Icon data-active={order === 'descend'} icon={ChevronDown} size={10} />
-              )}
-            </span>
-          );
           const iconOnlyTooltip = Boolean(showTooltip) && target === 'sorter-icon';
-
-          const button = (
-            <button
+          const onSort = () =>
+            triggerSort({
+              column,
+              key: id,
+              multiplePriority: getMultiplePriority(column),
+              sortOrder: nextOrder,
+            });
+          // ActionIcon owns the click (same as the filter trigger). The title stays a plain
+          // span so we never nest a button inside a button; clicking the title still sorts.
+          const sortAction = (
+            <ActionIcon
+              active={Boolean(order)}
+              className={cx(styles.sortCaret, `${PREFIX_CLS}-column-sorter`)}
+              data-order={order ?? undefined}
+              size="small"
+              icon={
+                sortIcon
+                  ? sortIcon({ sortOrder: order ?? null })
+                  : order === 'ascend'
+                    ? ArrowUpToLine
+                    : order === 'descend'
+                      ? ArrowDownFromLine
+                      : ArrowUpDown
+              }
+              {...(iconOnlyTooltip && showTooltip
+                ? { title: tooltipProps.title, tooltipProps: tooltipOptions }
+                : {})}
+              onClick={(event) => {
+                event.stopPropagation();
+                onSort();
+              }}
+            />
+          );
+          const group = (
+            <span
               className={cx(styles.sortButton, `${PREFIX_CLS}-column-sorters`)}
               // Without a tooltip, the native title still says the header sorts.
               title={showTooltip ? undefined : tableLocale.sortTitle}
-              type="button"
-              onClick={() =>
-                triggerSort({
-                  column,
-                  key: id,
-                  multiplePriority: getMultiplePriority(column),
-                  sortOrder: nextOrder,
-                })
-              }
             >
-              {titleContent}
-              {iconOnlyTooltip ? withTooltip(icon) : icon}
-            </button>
+              <span className={styles.sortTitle} onClick={onSort}>
+                {titleContent}
+              </span>
+              {sortAction}
+            </span>
           );
-          sorterNode = showTooltip && !iconOnlyTooltip ? withTooltip(button) : button;
+          sorterNode = showTooltip && !iconOnlyTooltip ? withTooltip(group) : group;
         }
 
         return {
@@ -710,8 +718,9 @@ const TableInner = <T,>(props: TableProps<T>) => {
             styles.table,
             sizeClassName[size],
             `${PREFIX_CLS}-${size === 'middle' ? 'medium' : size}`,
-            bordered && styles.bordered,
-            bordered && `${PREFIX_CLS}-bordered`,
+            variant === 'outlined' && styles.outlined,
+            variant === 'filled' && styles.filled,
+            `${PREFIX_CLS}-${variant}`,
             rowHoverable && styles.hoverable,
           )}
           classNames={{

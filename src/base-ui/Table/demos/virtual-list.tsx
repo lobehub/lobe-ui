@@ -1,5 +1,6 @@
 import { Flexbox } from '@lobehub/ui';
 import {
+  ActionIcon,
   Button,
   Segmented,
   Switch,
@@ -8,6 +9,7 @@ import {
   type TableRef,
   Text,
 } from '@lobehub/ui/base-ui';
+import { Ellipsis } from 'lucide-react';
 import { useMemo, useRef, useState } from 'react';
 
 interface RecordType {
@@ -38,7 +40,14 @@ const fixedColumns: TableColumnsType<RecordType> = [
   { dataIndex: 'address1', title: 'Address 1', width: 300 },
   { dataIndex: 'address2', title: 'Address 2', width: 300 },
   { dataIndex: 'address3', title: 'Address 3', width: 300 },
-  { fixed: 'right', key: 'action', render: () => <a>Action</a>, title: 'Action', width: 150 },
+  {
+    align: 'end',
+    fixed: 'right',
+    key: 'action',
+    render: () => <ActionIcon icon={Ellipsis} size="small" title="Actions" variant="filled" />,
+    title: 'Action',
+    width: 64,
+  },
 ];
 
 const columns: TableColumnsType<RecordType> = fixedColumns.map(({ fixed: _, ...column }) => column);
@@ -58,7 +67,7 @@ type DataCount = '0' | '100' | '10000';
 
 export default () => {
   const [fixed, setFixed] = useState(true);
-  const [bordered, setBordered] = useState(true);
+  const [variant, setVariant] = useState<'borderless' | 'outlined' | 'filled'>('outlined');
   const [expanded, setExpanded] = useState(false);
   const [selectable, setSelectable] = useState(true);
   const [count, setCount] = useState<DataCount>('10000');
@@ -86,8 +95,11 @@ export default () => {
     <Flexbox gap={16} style={{ width: '100%' }}>
       <Flexbox horizontal align="center" gap={16} wrap="wrap">
         <Flexbox horizontal align="center" gap={8}>
-          <Switch checked={bordered} onChange={() => setBordered(!bordered)} />
-          <Text>Bordered</Text>
+          <Segmented<'borderless' | 'outlined' | 'filled'>
+            options={['borderless', 'outlined', 'filled']}
+            value={variant}
+            onChange={setVariant}
+          />
         </Flexbox>
         <Flexbox horizontal align="center" gap={8}>
           <Switch checked={fixed} onChange={() => setFixed(!fixed)} />
@@ -121,7 +133,6 @@ export default () => {
       </Flexbox>
       <Table<RecordType>
         virtual
-        bordered={bordered}
         columns={mergedColumns}
         dataSource={data}
         expandable={expandableProps}
@@ -130,6 +141,7 @@ export default () => {
         rowKey="id"
         rowSelection={selectable ? { fixed: true, type: 'checkbox' } : undefined}
         scroll={{ x: 2000, y: 400 }}
+        variant={variant}
       />
     </Flexbox>
   );

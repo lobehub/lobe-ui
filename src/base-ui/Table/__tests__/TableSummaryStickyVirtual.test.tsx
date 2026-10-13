@@ -1,8 +1,26 @@
-import { act, cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
-import type { RefObject } from 'react';
+import {
+  act,
+  cleanup,
+  fireEvent,
+  render as rtlRender,
+  screen,
+  waitFor,
+} from '@testing-library/react';
+import { motion } from 'motion/react';
+import type { ReactNode, RefObject } from 'react';
+
+import ConfigProvider from '@/ConfigProvider';
 
 import Table from '../Table';
 import type { TableColumn, TableRef } from '../type';
+
+// Base-ui buttons (ActionIcon in the expand / filter triggers) read the motion component from
+// ConfigProvider, so every render (and rerender) goes through it.
+const MotionWrapper = ({ children }: { children: ReactNode }) => (
+  <ConfigProvider motion={motion}>{children}</ConfigProvider>
+);
+const render: typeof rtlRender = ((ui: any, options?: any) =>
+  rtlRender(ui, { wrapper: MotionWrapper, ...options })) as typeof rtlRender;
 
 if (!globalThis.ResizeObserver) {
   globalThis.ResizeObserver = class {
@@ -381,13 +399,13 @@ describe('virtual', () => {
   test('selection and expand columns get numeric default widths in virtual rows', () => {
     const { container } = render(
       <Table
-        bordered
         virtual
         columns={virtualColumns}
         dataSource={many}
         expandable={{ expandedRowRender: (record) => record.name }}
         pagination={false}
         rowKey="id"
+        variant="outlined"
         rowSelection={{}}
         // Exactly the column sum (48 + 48 + 120 + 200 + 120): no spare width to share out.
         scroll={{ x: 536, y: 300 }}
@@ -397,7 +415,7 @@ describe('virtual', () => {
     const cells = container.querySelectorAll<HTMLElement>(
       '.lobe-table-tbody-virtual [data-row-key="0"] > .lobe-table-cell',
     );
-    // Expand column 48px, bordered selection column 32 + 16px: not stretched to fill scroll.x.
+    // Expand column 48px, outlined selection column 32 + 16px: not stretched to fill scroll.x.
     expect(cells[0].style.width).toBe('48px');
     expect(cells[1].style.width).toBe('48px');
   });

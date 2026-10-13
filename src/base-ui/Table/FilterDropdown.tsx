@@ -15,6 +15,7 @@ import {
   useState,
 } from 'react';
 
+import ActionIcon from '@/base-ui/ActionIcon';
 import Button from '@/base-ui/Button';
 import { Checkbox } from '@/base-ui/Checkbox';
 import { Input } from '@/base-ui/Input';
@@ -401,23 +402,22 @@ const FilterDropdown = <T,>({
   );
 
   // ============================== Trigger =============================
-  const icon =
-    typeof filterIcon === 'function'
-      ? filterIcon(filtered)
-      : (filterIcon ?? <Icon icon={ListFilter} size={12} />);
+  const icon = typeof filterIcon === 'function' ? filterIcon(filtered) : (filterIcon ?? ListFilter);
 
+  // Native `title` would need ActionIcon's tooltip, which can't sit inside the popover trigger;
+  // the localized hint rides on `aria-description` instead.
   const trigger = (
-    <button
+    <ActionIcon
+      active={filtered}
+      aria-description={locale.filterTitle}
       aria-label={`Filter ${label}`}
       className={cx(styles.filterButton, `${FILTER_CLS}-trigger`, filtered && styles.filterActive)}
       data-active={filtered || undefined}
+      icon={icon}
       ref={triggerRef}
-      title={locale.filterTitle}
-      type="button"
+      size="small"
       onClick={(event) => event.stopPropagation()}
-    >
-      {icon}
-    </button>
+    />
   );
 
   if (inMeasureRow) return trigger;
