@@ -25,7 +25,7 @@ import DemoTableRender from './demos/table-render.tsx?demo';
 The API follows [ProComponents ProTable](https://procomponents.ant.design/components/table). Everything is built from lobe-ui: base-ui `Table`, the base-ui `Form` (`@lobehub/ui/base-ui/form`: `useForm`, `Form`, `Form.Field`) for the query form and light filter, `Input`, `Select`, `DatePicker`, `Button`, `Popover`, `Checkbox`, and `ActionIconGroup` for the toolbar icons; no antd or `@ant-design/pro-*` component is used. See [Differences from ProComponents](#differences-from-procomponents-protable) for what is not covered.
 
 ```tsx
-import { ProTable, type ProColumns } from '@lobehub/ui/base-ui';
+import { ProTable, type ProColumns } from '@lobehub/ui/base-ui/pro-table';
 
 const columns: ProColumns<Row>[] = [
   { title: 'Name', dataIndex: 'name' },

@@ -1,9 +1,5 @@
-import {
-  type ProColumns,
-  ProTable,
-  type ProTableDensity,
-  type TableVariant,
-} from '@lobehub/ui/base-ui';
+import { type TableVariant } from '@lobehub/ui/base-ui';
+import { type ProColumns, ProTable, type ProTableDensity } from '@lobehub/ui/base-ui/pro-table';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 import { mockRequest, type ModelRow, providerEnum, statusEnum } from './data';

@@ -1,4 +1,4 @@
-import Form from '@/base-ui/FormKit';
+import Form from '@lobehub/ui/base-ui/form';
 
 import FieldControl from './FieldControl';
 import { styles } from './style';

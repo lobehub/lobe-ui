@@ -1,8 +1,8 @@
+import Form from '@lobehub/ui/base-ui/form';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { type CSSProperties, type ReactNode, useEffect, useRef, useState } from 'react';
 
 import Button from '@/base-ui/Button';
-import Form from '@/base-ui/FormKit';
 
 import FieldControl from './FieldControl';
 import { styles } from './style';

@@ -1,10 +1,5 @@
-import {
-  ActionIcon,
-  Button,
-  type ProColumns,
-  ProTable,
-  type ProTableActionType,
-} from '@lobehub/ui/base-ui';
+import { ActionIcon, Button } from '@lobehub/ui/base-ui';
+import { type ProColumns, ProTable, type ProTableActionType } from '@lobehub/ui/base-ui/pro-table';
 import { Eye, Pencil, Plus, Trash2 } from 'lucide-react';
 import { useRef } from 'react';
 

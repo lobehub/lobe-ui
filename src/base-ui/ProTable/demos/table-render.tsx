@@ -1,4 +1,5 @@
-import { type ProColumns, ProTable, Statistic } from '@lobehub/ui/base-ui';
+import { Statistic } from '@lobehub/ui/base-ui';
+import { type ProColumns, ProTable } from '@lobehub/ui/base-ui/pro-table';
 
 import { mockRequest, type ModelRow, statusEnum } from './data';
 

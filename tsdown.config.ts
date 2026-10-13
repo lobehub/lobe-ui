@@ -34,6 +34,7 @@ export default defineConfig({
     // packages
     ...packageEntries,
     'src/base-ui/FormKit/index.ts',
+    'src/base-ui/ProTable/index.ts',
     'src/i18n/resources/index.ts',
     'src/static-css/emit/index.ts',
     'src/static-css/runtime/index.ts',

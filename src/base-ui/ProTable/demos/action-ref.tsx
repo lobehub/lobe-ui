@@ -1,10 +1,10 @@
+import { Button } from '@lobehub/ui/base-ui';
 import {
-  Button,
   type ProColumns,
   ProTable,
   type ProTableActionType,
   type ProTableFormInstance,
-} from '@lobehub/ui/base-ui';
+} from '@lobehub/ui/base-ui/pro-table';
 import { useRef } from 'react';
 
 import { mockRequest, type ModelRow, statusEnum } from './data';

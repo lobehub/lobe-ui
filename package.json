@@ -85,6 +85,10 @@
       "types": "./es/base-ui/FormKit/index.d.mts",
       "import": "./es/base-ui/FormKit/index.mjs"
     },
+    "./base-ui/pro-table": {
+      "types": "./es/base-ui/ProTable/index.d.mts",
+      "import": "./es/base-ui/ProTable/index.mjs"
+    },
     "./eslint": {
       "types": "./es/eslint/index.d.mts",
       "import": "./es/eslint/index.mjs"

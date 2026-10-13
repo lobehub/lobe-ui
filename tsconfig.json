@@ -17,6 +17,7 @@
     "paths": {
       "@/*": ["src/*"],
       "@lobehub/ui/base-ui/form": ["src/base-ui/FormKit"],
+      "@lobehub/ui/base-ui/pro-table": ["src/base-ui/ProTable"],
       "@lobehub/ui": ["src"],
       "@lobehub/ui/*": ["src/*"],
       "@lobehub/ui/mdx": ["src/mdx"],

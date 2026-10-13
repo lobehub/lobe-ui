@@ -1,4 +1,4 @@
-import type { ProTableRequestData } from '@lobehub/ui/base-ui';
+import type { ProTableRequestData } from '@lobehub/ui/base-ui/pro-table';
 
 export type ModelStatus = 'online' | 'running' | 'error' | 'offline';
 

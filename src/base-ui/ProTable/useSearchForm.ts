@@ -1,8 +1,10 @@
+import {
+  type FieldValidate,
+  type FormValues,
+  useForm,
+  type UseFormOptions,
+} from '@lobehub/ui/base-ui/form';
 import { useMemo, useRef } from 'react';
-
-import type { ValidateOn } from '@/base-ui/FormKit/engine/types';
-import type { FieldValidate } from '@/base-ui/FormKit/type';
-import { useForm } from '@/base-ui/FormKit/useForm';
 
 import type { ProColumnType, ProTableFormInstance, ProTableFormRule } from './type';
 import {
@@ -16,6 +18,8 @@ import {
   resolveValueType,
   setByPath,
 } from './utils';
+
+type ValidateOn = UseFormOptions<FormValues>['validateOn'];
 
 export interface SearchFieldSchema {
   column: ProColumnType<any>;

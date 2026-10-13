@@ -1,4 +1,4 @@
-import { type ProColumns, ProTable } from '@lobehub/ui/base-ui';
+import { type ProColumns, ProTable } from '@lobehub/ui/base-ui/pro-table';
 
 import { type ModelRow, providerEnum, rows, statusEnum } from './data';
 

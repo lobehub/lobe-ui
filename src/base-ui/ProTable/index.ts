@@ -1,4 +1,4 @@
-export { default, DEFAULT_PRO_TABLE_LOCALE } from './ProTable';
+export { default, DEFAULT_PRO_TABLE_LOCALE, default as ProTable } from './ProTable';
 export type {
   ProColumns,
   ProColumnType,

@@ -1,9 +1,9 @@
+import { Button } from '@lobehub/ui/base-ui';
 import {
-  Button,
   type ProColumns,
   ProTable,
   type ProTableColumnsStateMap,
-} from '@lobehub/ui/base-ui';
+} from '@lobehub/ui/base-ui/pro-table';
 import { useState } from 'react';
 
 import { type ModelRow, providerEnum, rows, statusEnum } from './data';

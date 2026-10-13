@@ -13,6 +13,8 @@ export default defineConfig({
   resolve: {
     alias: [
       { find: '@lobehub/ui/es/styles/theme/antdTheme', replacement: antdThemePath },
+      { find: '@lobehub/ui/base-ui/form', replacement: `${srcPath}/base-ui/FormKit` },
+      { find: '@lobehub/ui/base-ui/pro-table', replacement: `${srcPath}/base-ui/ProTable` },
       { find: '@', replacement: srcPath },
       { find: name, replacement: srcPath },
     ],

@@ -1,7 +1,6 @@
+import type { FormInstance, FormValues, UseFormOptions } from '@lobehub/ui/base-ui/form';
 import type { CSSProperties, Key, MutableRefObject, ReactNode, Ref } from 'react';
 
-import type { ValidateOn } from '@/base-ui/FormKit/engine/types';
-import type { FormInstance } from '@/base-ui/FormKit/type';
 import type {
   SortOrder,
   TableColumnFilterItem,
@@ -12,6 +11,8 @@ import type {
   TableSize,
   TableVariant,
 } from '@/base-ui/Table/type';
+
+type ValidateOn = UseFormOptions<FormValues>['validateOn'];
 
 /** Built-in value types; they pick both the cell renderer and the search-form control. */
 export type ProTableValueType =

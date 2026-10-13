@@ -7,6 +7,7 @@ export default defineDocsConfig({
     // docs-kit consumes published `es/*` subpaths. Resolve those imports back
     // to source while developing @lobehub/ui itself.
     '@lobehub/ui/base-ui/form': 'src/base-ui/FormKit',
+    '@lobehub/ui/base-ui/pro-table': 'src/base-ui/ProTable',
     '@lobehub/ui/es': 'src',
     '@lobehub/ui': 'src',
   },

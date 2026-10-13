@@ -1,4 +1,9 @@
-import { Button, type ProColumns, ProTable, type ProTableFormInstance } from '@lobehub/ui/base-ui';
+import { Button } from '@lobehub/ui/base-ui';
+import {
+  type ProColumns,
+  ProTable,
+  type ProTableFormInstance,
+} from '@lobehub/ui/base-ui/pro-table';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { useRef, useState } from 'react';
 

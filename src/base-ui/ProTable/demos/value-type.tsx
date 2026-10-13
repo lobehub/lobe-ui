@@ -1,4 +1,4 @@
-import { type ProColumns, ProTable, type ProTableValueType } from '@lobehub/ui/base-ui';
+import { type ProColumns, ProTable, type ProTableValueType } from '@lobehub/ui/base-ui/pro-table';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 import { statusEnum } from './data';
