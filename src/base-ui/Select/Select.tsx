@@ -8,7 +8,7 @@ import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { styles as menuStyles } from '@/base-ui/DropdownMenu/sharedStyle';
 
 import { SelectPositioner } from './atoms';
-import { isValueEmpty } from './helpers';
+import { isValueEmpty, shouldIgnoreRootValueChange } from './helpers';
 import {
   usePortalContainer,
   useSelectOpen,
@@ -106,13 +106,6 @@ const Select = memo<SelectProps<any>>(
 
     const { handleOpenChange, mergedOpen } = useSelectOpen({ defaultOpen, onOpenChange, open });
 
-    const handleRootValueChange = useCallback(
-      (nextValue: any) => {
-        if (!(isTags && !mergedOpen)) handleValueChange(nextValue);
-      },
-      [handleValueChange, isTags, mergedOpen],
-    );
-
     const handleRemoveTag = useCallback(
       (index: number) =>
         handleValueChange(valueArray.filter((_, itemIndex) => itemIndex !== index)),
@@ -136,6 +129,19 @@ const Select = memo<SelectProps<any>>(
       showSearch,
       tokenSeparators,
     });
+
+    // Base UI prunes selected values that are missing from the registered (filtered) options
+    // and reports it with reason 'none'. Ignore it while open or while closing with a stale
+    // search term, so searching never mutates the value. Closed typeahead stays valid.
+    const handleRootValueChange = useCallback(
+      (nextValue: any, eventDetails?: { reason?: string }) => {
+        if (isTags && !mergedOpen) return;
+        if (shouldIgnoreRootValueChange({ mergedOpen, reason: eventDetails?.reason, searchValue }))
+          return;
+        handleValueChange(nextValue);
+      },
+      [handleValueChange, isTags, mergedOpen, searchValue],
+    );
 
     const virtualState = useSelectVirtual({
       filteredOptions,
