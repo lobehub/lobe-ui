@@ -33,6 +33,10 @@ import DemoSuffix from './demos/suffix.tsx?demo';
 import DemoPlacement from './demos/placement.tsx?demo';
 import DemoRtl from './demos/rtl.tsx?demo';
 import DemoNested from './demos/nested.tsx?demo';
+import DemoPresetRanges from './demos/preset-ranges.tsx?demo';
+import DemoExtraFooter from './demos/extra-footer.tsx?demo';
+import DemoRenderPanel from './demos/render-panel.tsx?demo';
+import DemoComponents from './demos/components.tsx?demo';
 import DemoSuffixIconDebug from './demos/suffixIcon-debug.tsx?demo';
 import DemoFilledDebug from './demos/filled-debug.tsx?demo';
 
@@ -228,9 +232,33 @@ The popup nests in the enclosing base-ui Modal or Popover, so picking a date nei
 
 <Demo of={DemoNested} layout="bare" />
 
+## Preset ranges
+
+`presets` adds a sidebar of quick picks to `DatePicker` (`{ label, value: Dayjs }[]`) and `DateRangePicker` (`{ label, value: [Dayjs, Dayjs] }[]`). `value` may be a function, evaluated when the preset is hovered (the input previews it) or picked, so presets relative to "now" stay current. Picking a preset commits it right away, even with `showTime`. The deprecated range `ranges` object maps to `presets`.
+
+<Demo of={DemoPresetRanges} layout="bare" />
+
 ## Extra footer
 
+`renderExtraFooter(mode)` renders a row above the Today / Now / OK footer and receives the current panel mode (`date`, `month`, `time`, …). It works on `DateRangePicker` too, and the deprecated `footer` node is an alias (`renderExtraFooter` wins). The date panel shows a **Today** button (the `showNow` footer); `showToday` is its deprecated alias, and range pickers hide it unless `showNow` is set.
+
+<Demo of={DemoExtraFooter} layout="bare" />
+
+The footer can hold actions too:
+
 <Demo of={DemoIndex} layout="bare" />
+
+## Customized panel render
+
+`panelRender(panel)` wraps the whole popup content — presets, panels and footer — so you can add a header, a side note or any wrapper around it. Works on both pickers.
+
+<Demo of={DemoRenderPanel} layout="bare" />
+
+## Customized components
+
+`components` swaps in your own panel per mode (`date` / `week` / `month` / `quarter` / `year` / `decade` / `time`), the `input` element or the OK `button` (the default is a small primary base-ui `Button`). A custom panel receives `PickerPanelProps`: `value`, `onHover(date)` previews the date in the input and `onSelect(date)` picks it, closing the popup unless confirmation is needed. The deprecated `inputRender(props)` is an alias of `components.input`.
+
+<Demo of={DemoComponents} layout="bare" />
 
 ## Debug: suffixIcon
 

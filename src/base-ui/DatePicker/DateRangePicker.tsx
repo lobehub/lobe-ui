@@ -29,6 +29,7 @@ const DateRangePicker = ({
   direction,
   disabled,
   disabledDate,
+  footer,
   getPopupContainer,
   id,
   locale: localeOverride,
@@ -55,6 +56,7 @@ const DateRangePicker = ({
   pickerValue,
   placeholder,
   prevIcon,
+  renderExtraFooter,
   rootClassName,
   separator,
   shadow,
@@ -143,6 +145,7 @@ const DateRangePicker = ({
       picker={picker}
       pickerValue={keyboard.pickerValue}
       placeholder={placeholder ?? rangePlaceholder(picker)}
+      renderExtraFooter={renderExtraFooter ?? (footer ? () => footer : undefined)}
       separator={separator ?? <Icon icon={ArrowRight} size={14} />}
       value={value as any}
       onBlur={onBlur as any}

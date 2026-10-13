@@ -7,15 +7,25 @@ import type {
   BaseInfo,
   CellRender,
   CellRenderInfo,
+  Components,
   Locale,
   PanelMode,
   PickerMode,
   RangePickerRef,
+  SharedPanelProps,
+  ValueDate,
 } from '@rc-component/picker/interface';
 import type { Dayjs } from 'dayjs';
 import type { FocusEvent, ReactNode, Ref } from 'react';
 
 export type { CellRender, CellRenderInfo, PanelMode, PickerMode, PickerRef, RangePickerRef };
+
+/** A `presets` entry: `value` may be a function, evaluated when the preset is hovered or picked. */
+export type PresetDate<T = Dayjs> = ValueDate<T>;
+/** `components`: replace a panel (`date` / `week` / … / `time`), the `input` or the OK `button`. */
+export type PickerComponents = Components<Dayjs>;
+/** Props a custom panel in `components` receives (`value`, `onSelect`, `onHover`, …). */
+export type PickerPanelProps = SharedPanelProps<Dayjs>;
 
 /** `middle` is kept as an alias of `medium`. */
 export type PickerSize = 'large' | 'medium' | 'small' | 'middle';
@@ -118,6 +128,8 @@ export interface DateRangePickerProps
   disabled?: boolean | [boolean, boolean];
   /** Receives `info.from` once one end is picked, e.g. to limit the range length. */
   disabledDate?: RangeDisabledDate;
+  /** @deprecated Use `renderExtraFooter` instead. */
+  footer?: ReactNode;
   /** Ids of the start and end inputs. */
   id?: { end?: string; start?: string };
   locale?: Partial<Locale>;

@@ -298,6 +298,52 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       flex-wrap: nowrap;
     }
 
+    /* presets: a sidebar on the start side of the panels, as in antd */
+    &.${P}-dropdown .${P}-presets {
+      display: flex;
+      flex-direction: column;
+      min-width: 120px;
+      max-width: 200px;
+
+      ul {
+        overflow: auto;
+        flex: auto;
+
+        height: 0;
+        margin: 0;
+        padding: 6px;
+        border-inline-end: 1px solid ${cssVar.colorBorderSecondary};
+
+        list-style: none;
+      }
+
+      li {
+        cursor: pointer;
+
+        overflow: hidden;
+
+        padding-block: 4px;
+        padding-inline: 8px;
+        border-radius: 6px;
+
+        font-size: 13px;
+        line-height: 20px;
+        color: ${cssVar.colorText};
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        transition: background-color 150ms ${cssVar.motionEaseOut};
+
+        &:hover {
+          background: ${cssVar.colorFillTertiary};
+        }
+      }
+
+      li + li {
+        margin-block-start: 2px;
+      }
+    }
+
     &.${P}-dropdown .${P}-panel {
       display: inline-flex;
       flex-direction: column;
@@ -735,11 +781,15 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       border-block-start: 1px solid ${cssVar.colorBorderSecondary};
     }
 
+    /* renderExtraFooter: start-aligned above Today / Now / OK, as in antd */
     &.${P}-dropdown .${P}-footer-extra {
-      display: flex;
-      justify-content: center;
-      padding-block: 12px;
+      padding-block: 8px;
       padding-inline: 12px;
+
+      font-size: 13px;
+      line-height: 20px;
+      color: ${cssVar.colorTextSecondary};
+      text-align: start;
     }
 
     &.${P}-dropdown .${P}-footer-extra + .${P}-ranges {
