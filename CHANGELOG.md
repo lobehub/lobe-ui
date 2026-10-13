@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.61.1](https://github.com/lobehub/lobe-ui/compare/v5.61.0...v5.61.1) (2026-10-13)
+
+### 🐛 Bug Fixes
+
+- **select**: Keep selected value while searching, closes [#711](https://github.com/lobehub/lobe-ui/issues/711) ([8b1c50d](https://github.com/lobehub/lobe-ui/commit/8b1c50d))
+
 # [5.61.0](https://github.com/lobehub/lobe-ui/compare/v5.60.0...v5.61.0) (2026-10-13)
 
 ### ✨ Features
