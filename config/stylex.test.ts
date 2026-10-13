@@ -95,6 +95,16 @@ describe('StyleX lightningcss options', () => {
     expect(css).toContain('initial-value: red');
   });
 
+  it('round-trips unnamed @container queries', () => {
+    const css = run(`@layer lobe-ui.priority1, lobe-ui.priority2;
+.lbvar{--x:1}
+@layer lobe-ui.priority2{
+@container (max-width: 640px){.lbgrid{grid-template-columns:minmax(0,1fr)}}
+}`);
+
+    expect(css).toContain('@container (width <= 640px)');
+  });
+
   it('leaves output without priority-0 rules or a layer header alone', () => {
     expect(topLevel(run('.lbx{width:var(--w)}'))).toEqual(['style']);
     expect(
