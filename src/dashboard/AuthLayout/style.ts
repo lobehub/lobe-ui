@@ -60,7 +60,7 @@ export const styles = createStaticStyles(({ css, cssVar, responsive }) => ({
   asidePlate: css`
     position: absolute;
     inset: 0;
-    background: var(--lobe-surface-bg-solid, ${cssVar.colorBgContainer});
+    background: ${cssVar.colorBgContainer};
   `,
   asideScrim: css`
     pointer-events: none;
@@ -85,8 +85,7 @@ export const styles = createStaticStyles(({ css, cssVar, responsive }) => ({
     color: ${cssVar.colorTextSecondary};
   `,
   elevated: css`
-    &&&,
-    &&&:hover {
+    && {
       border-radius: 28px;
     }
   `,
@@ -139,21 +138,20 @@ export const styles = createStaticStyles(({ css, cssVar, responsive }) => ({
     border-radius: inherit;
   `,
   grid: css`
+    /* Light: colorText 5%. Dark overrides it in gridDark (colorBgLayout base is darker). */
+    --lobe-auth-grid-line: color-mix(in srgb, ${cssVar.colorText} 5%, transparent);
+
     && {
-      background-color: color-mix(in srgb, ${cssVar.colorBgLayout}, ${cssVar.colorBgElevated} 70%);
+      background-color: ${cssVar.colorBgLayout};
       background-image:
-        linear-gradient(
-          color-mix(in srgb, ${cssVar.colorText} 5%, transparent) 1px,
-          transparent 1px
-        ),
-        linear-gradient(
-          90deg,
-          color-mix(in srgb, ${cssVar.colorText} 5%, transparent) 1px,
-          transparent 1px
-        );
+        linear-gradient(var(--lobe-auth-grid-line) 1px, transparent 1px),
+        linear-gradient(90deg, var(--lobe-auth-grid-line) 1px, transparent 1px);
       background-position: -1px -1px;
       background-size: 32px 32px;
     }
+  `,
+  gridDark: css`
+    --lobe-auth-grid-line: ${cssVar.colorBorderSecondary};
   `,
   header: css`
     position: relative;
@@ -170,8 +168,17 @@ export const styles = createStaticStyles(({ css, cssVar, responsive }) => ({
   `,
   lift: css`
     position: relative;
+
     display: flex;
+
     inline-size: min(440px, 100%);
+
+    /* Plain panel (no Surface): same radius / shadow the dashboard card had, own colors. */
+    border: 1px solid ${cssVar.colorBorder};
+    border-radius: ${cssVar.borderRadiusLG};
+
+    background: ${cssVar.colorBgContainer};
+    box-shadow: rgb(0 0 0 / 4%) 0 1px 2px 0;
   `,
   liftSplit: css`
     inline-size: min(880px, 100%);
