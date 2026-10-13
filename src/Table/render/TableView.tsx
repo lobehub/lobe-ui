@@ -1,141 +1,26 @@
 'use client';
 
 import clsx from 'clsx';
-import {
-  type CSSProperties,
-  type ReactNode,
-  type Ref,
-  type RefObject,
-  type UIEvent,
-  type UIEventHandler,
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react';
-
-import { useEventCallback } from '@/hooks/useEventCallback';
+import { type CSSProperties, type ReactNode, type UIEvent, useCallback } from 'react';
 
 import {
-  TableColGroup,
-  type TableColGroupColumn,
   TableContainer,
   TableElement,
   TableFooter,
   TableRoot,
-  type TableRootProps,
   TableScroll,
   TableTitle,
 } from '../atoms';
-import type { StickyOffsets } from '../engine/fixed';
-import type { HeaderCellModel, RowModel, VirtualModel } from '../engine/types';
-import type { ColumnSource } from '../pipeline/normalizeColumns';
 import { Body } from './Body';
 import { useTableView } from './context';
+import { FixedHolder } from './FixedHolder';
 import { HeaderRows } from './Header';
-import StickyScrollBar, { type StickyScrollBarApi } from './StickyScrollBar';
+import StickyScrollBar from './StickyScrollBar';
 import { SummaryFooter, SummaryProvider } from './Summary';
+import { useColGroups } from './useColGroups';
+import { useScrollSync } from './useScrollSync';
+import type { TableViewProps } from './viewTypes';
 import VirtualBody from './VirtualBody';
-
-export interface StickyConfig {
-  container: HTMLElement | Window;
-  isSticky: boolean;
-  offsetHeader: number;
-  offsetScroll: number;
-  offsetSummary: number;
-}
-
-export interface TableViewProps<T> extends Pick<
-  TableRootProps,
-  'grouped' | 'hoverable' | 'size' | 'variant'
-> {
-  bodyRef: RefObject<HTMLDivElement | null>;
-  className?: string;
-  colWidths: readonly number[];
-  emptyNode: ReactNode;
-  fixFooter: false | true | 'top' | 'bottom';
-  fixHeader: boolean;
-  footer?: ReactNode;
-  headerRows: readonly HeaderCellModel<ColumnSource<T>>[][];
-  offsets: StickyOffsets;
-  onColumnResize: (key: string, width: number) => void;
-  onScroll?: UIEventHandler<HTMLDivElement>;
-  ref?: Ref<HTMLDivElement>;
-  rows: readonly RowModel<T>[];
-  scrollX?: number | string | true;
-  scrollY?: number | string;
-  showHeader: boolean;
-  sticky: StickyConfig;
-  style?: CSSProperties;
-  summaryNode: ReactNode;
-  tableLayout: 'auto' | 'fixed';
-  title?: ReactNode;
-  virtual?: VirtualModel;
-}
-
-const forceScroll = (scrollLeft: number, target: HTMLElement | null | undefined) => {
-  if (target && target.scrollLeft !== scrollLeft) target.scrollLeft = scrollLeft;
-};
-
-const FixedHolder = ({
-  children,
-  className,
-  colGroup,
-  holderRef,
-  onWheelX,
-  stickyStyle,
-  tableLayout,
-  scrollX,
-}: {
-  children: ReactNode;
-  className: string;
-  colGroup: ReactNode;
-  holderRef: Ref<HTMLDivElement>;
-  onWheelX: (target: HTMLDivElement, scrollLeft: number) => void;
-  scrollX?: number | string | true;
-  stickyStyle?: CSSProperties;
-  tableLayout: 'auto' | 'fixed';
-}) => {
-  const { components } = useTableView();
-  const ref = useRef<HTMLDivElement | null>(null);
-  const onWheel = useEventCallback(onWheelX);
-
-  useEffect(() => {
-    const element = ref.current;
-    if (!element) return;
-    const handler = (event: WheelEvent) => {
-      if (!event.deltaX) return;
-      const max = element.scrollWidth - element.clientWidth;
-      const next = Math.min(Math.max(element.scrollLeft + event.deltaX, 0), max);
-      onWheel(element, next);
-      event.preventDefault();
-    };
-    element.addEventListener('wheel', handler, { passive: false });
-    return () => element.removeEventListener('wheel', handler);
-  }, [onWheel]);
-
-  const setRef = useCallback(
-    (element: HTMLDivElement | null) => {
-      ref.current = element;
-      if (typeof holderRef === 'function') holderRef(element);
-      else if (holderRef) holderRef.current = element;
-    },
-    [holderRef],
-  );
-
-  return (
-    <div className={className} ref={setRef} style={{ overflow: 'hidden', ...stickyStyle }}>
-      <TableElement
-        component={components.headerTable}
-        style={{ minWidth: '100%', tableLayout, width: scrollX === true ? 'auto' : scrollX }}
-      >
-        {colGroup}
-        {children}
-      </TableElement>
-    </div>
-  );
-};
 
 const TableView = <T,>({
   bodyRef,
@@ -167,102 +52,21 @@ const TableView = <T,>({
 }: TableViewProps<T>) => {
   const view = useTableView<T>();
   const { horizonScroll, leafColumns, prefixCls, semanticClassNames, semanticStyles } = view;
-  const rootRef = useRef<HTMLDivElement | null>(null);
-  const headerRef = useRef<HTMLDivElement | null>(null);
-  const summaryRef = useRef<HTMLDivElement | null>(null);
-  const stickyRef = useRef<StickyScrollBarApi>(null);
-  const shadowRef = useRef({ end: false, start: false });
-  const lockRef = useRef<{ target: EventTarget | null; timer?: ReturnType<typeof setTimeout> }>({
-    target: null,
-  });
-  const [scrollbarSize, setScrollbarSize] = useState(0);
-  const [, forceRender] = useState(0);
-
-  const applyShadow = () => {
-    const root = rootRef.current;
-    if (!root) return;
-    root.classList.toggle(
-      `${prefixCls}-fix-start-shadow-show`,
-      horizonScroll && shadowRef.current.start,
-    );
-    root.classList.toggle(
-      `${prefixCls}-fix-end-shadow-show`,
-      horizonScroll && shadowRef.current.end,
-    );
-  };
-
-  const onInternalScroll = useEventCallback(
-    ({
-      currentTarget,
-      scrollLeft,
-    }: {
-      currentTarget?: HTMLElement | null;
-      scrollLeft?: number;
-    }) => {
-      const target = currentTarget ?? bodyRef.current;
-      const left = typeof scrollLeft === 'number' ? scrollLeft : (target?.scrollLeft ?? 0);
-      const lock = lockRef.current;
-      if (!lock.target || lock.target === target) {
-        lock.target = target ?? null;
-        clearTimeout(lock.timer);
-        lock.timer = setTimeout(() => {
-          lock.target = null;
-        }, 100);
-        forceScroll(left, headerRef.current);
-        forceScroll(left, bodyRef.current);
-        forceScroll(left, summaryRef.current);
-        stickyRef.current?.setScrollLeft(left);
-      }
-      const measure = target ?? headerRef.current;
-      if (measure) {
-        const { clientWidth, scrollWidth } = measure;
-        const abs = Math.abs(left);
-        shadowRef.current =
-          scrollWidth === clientWidth
-            ? { end: false, start: false }
-            : { end: abs < scrollWidth - clientWidth - 1, start: abs > 0 };
-        applyShadow();
-      }
-    },
-  );
+  const { headerRef, onInternalScroll, rootRef, scrollbarSize, stickyRef, summaryRef } =
+    useScrollSync({
+      bodyRef,
+      columnCount: leafColumns.length,
+      fixHeader,
+      horizonScroll,
+      prefixCls,
+      rows,
+      sticky: sticky.isSticky,
+    });
 
   const onBodyScroll = (event: UIEvent<HTMLDivElement>) => {
     onInternalScroll({ currentTarget: event.currentTarget });
     onScroll?.(event);
   };
-
-  useLayoutEffect(() => {
-    applyShadow();
-  });
-
-  useLayoutEffect(() => {
-    const root = rootRef.current;
-    if (!root || typeof ResizeObserver === 'undefined') return;
-    const update = () => {
-      root.style.setProperty('--lobe-table-component-width', `${root.offsetWidth}px`);
-      stickyRef.current?.checkVisible();
-      if (horizonScroll) onInternalScroll({ currentTarget: bodyRef.current });
-    };
-    update();
-    const observer = new ResizeObserver(update);
-    observer.observe(root);
-    return () => observer.disconnect();
-  }, [horizonScroll, bodyRef, onInternalScroll]);
-
-  useEffect(() => {
-    if (horizonScroll) onInternalScroll({ currentTarget: bodyRef.current });
-  }, [horizonScroll, rows, leafColumns.length, bodyRef, onInternalScroll]);
-
-  useLayoutEffect(() => {
-    const body = bodyRef.current;
-    if (!fixHeader || !body) return;
-    const size = body.offsetWidth - body.clientWidth;
-    setScrollbarSize((previous) => (previous === size ? previous : Math.max(0, size)));
-  });
-
-  useEffect(() => {
-    if (sticky.isSticky) forceRender((count) => count + 1);
-  }, [sticky.isSticky]);
 
   const setRootRef = useCallback(
     (element: HTMLDivElement | null) => {
@@ -273,35 +77,15 @@ const TableView = <T,>({
     [ref],
   );
 
-  const colGroupColumns: TableColGroupColumn[] = leafColumns.map((leaf, index) => ({
-    className: leaf.column.source.colClassName,
-    minWidth:
-      tableLayout === 'auto'
-        ? (leaf.column.source.column as { minWidth?: number }).minWidth
-        : undefined,
-    width: view.virtualWidths ? view.virtualWidths[index] : leaf.column.width,
-  }));
-  const bodyColGroup = <TableColGroup columns={colGroupColumns} />;
-
-  const allMeasured =
-    rows.length > 0 &&
-    colWidths.length === leafColumns.length &&
-    colWidths.every((width) => width !== undefined) &&
-    !colWidths.every((width) => !width);
   const headerScrollbar = sticky.isSticky && !fixHeader ? 0 : scrollbarSize;
-  const holderColGroup =
-    allMeasured || headerScrollbar ? (
-      <TableColGroup
-        columns={[
-          ...(allMeasured
-            ? colWidths.map((width, index) => ({ ...colGroupColumns[index], width }))
-            : colGroupColumns),
-          ...(headerScrollbar ? [{ width: headerScrollbar }] : []),
-        ]}
-      />
-    ) : (
-      bodyColGroup
-    );
+  const { bodyColGroup, holderColGroup } = useColGroups({
+    colWidths,
+    headerScrollbar,
+    leafColumns,
+    rowCount: rows.length,
+    tableLayout,
+    virtualWidths: view.virtualWidths,
+  });
 
   const scrollTableStyle: CSSProperties | undefined = horizonScroll
     ? { minWidth: '100%', width: scrollX === true ? 'auto' : scrollX }
@@ -469,5 +253,7 @@ const TableView = <T,>({
     </SummaryProvider>
   );
 };
+
+export type { StickyConfig, TableViewProps } from './viewTypes';
 
 export default TableView;

@@ -1,26 +1,10 @@
 'use client';
 
-import { RadioGroup as BaseRadioGroup } from '@base-ui/react/radio-group';
-import * as stylex from '@stylexjs/stylex';
 import clsx from 'clsx';
-import { ListFilter, Search } from 'lucide-react';
-import {
-  type Key,
-  type ReactNode,
-  use,
-  useEffect,
-  useMemo,
-  useReducer,
-  useRef,
-  useState,
-} from 'react';
+import { ListFilter } from 'lucide-react';
+import { type Key, type ReactNode, use, useEffect, useReducer, useRef, useState } from 'react';
 
 import ActionIcon from '@/ActionIcon';
-import Button from '@/Button';
-import { Checkbox } from '@/Checkbox';
-import Empty from '@/Empty';
-import Icon from '@/Icon';
-import { Input } from '@/Input';
 import {
   PopoverPopup,
   PopoverPortal,
@@ -28,32 +12,13 @@ import {
   PopoverRoot,
   PopoverTriggerElement,
 } from '@/Popover';
-import { Radio } from '@/Radio';
-import Tree, { conductCheck, getAllKeys, type TreeDataNode } from '@/Tree';
 
-import { PREFIX_CLS } from '../constants';
-import { type FilterKeys, type FilterState, flattenFilterKeys } from '../pipeline/useFilter';
+import { type FilterKeys, type FilterState } from '../pipeline/useFilter';
 import { styles } from '../style';
-import type {
-  TableColumnFilterItem,
-  TableColumnType,
-  TableFilterDropdownProps,
-  TableLocale,
-} from '../type';
+import type { TableColumnType, TableFilterDropdownProps, TableLocale } from '../type';
 import { MeasureRowContext } from './context';
-
-const sx = (...list: (stylex.StyleXStyles | false | null | undefined)[]) =>
-  stylex.props(...list).className;
-
-const FILTER_CLS = `${PREFIX_CLS}-filter`;
-
-const sameKeys = (a: readonly Key[] | null | undefined, b: readonly Key[] | null | undefined) =>
-  (a ?? null) === (b ?? null) ||
-  (Boolean(a) && Boolean(b) && a!.length === b!.length && a!.every((key, i) => key === b![i]));
-
-const textMatches = (search: string, text: ReactNode) =>
-  (typeof text === 'string' || typeof text === 'number') &&
-  String(text).toLowerCase().includes(search);
+import FilterPanel from './FilterPanel';
+import { FILTER_CLS, sameKeys, sx } from './filterUtils';
 
 const DEPRECATED_PROPS = [
   ['filterDropdownOpen', 'filterDropdownProps.open'],
@@ -68,18 +33,6 @@ const warnDeprecated = (column: object) => {
       warnedProps.add(name);
       console.warn(`[Table] \`${name}\` is deprecated. Please use \`${replacement}\` instead.`);
     }
-  }
-};
-
-const findLineage = (
-  nodes: readonly TreeDataNode[],
-  key: string,
-  ancestors: string[] = [],
-): { ancestors: string[]; subtree: string[] } | undefined => {
-  for (const node of nodes) {
-    if (node.key === key) return { ancestors, subtree: getAllKeys([node]) };
-    const found = node.children && findLineage(node.children, key, [...ancestors, node.key]);
-    if (found) return found;
   }
 };
 
@@ -128,12 +81,9 @@ const FilterDropdown = <T,>({
     filterDropdownOpen,
     filterDropdownProps = {},
     filterIcon,
-    filterMode = 'menu',
-    filterMultiple = true,
     filterOnClose = true,
     filterResetToDefaultFilteredValue,
     filters,
-    filterSearch = false,
     onFilterDropdownOpenChange,
   } = column;
 
@@ -142,7 +92,6 @@ const FilterDropdown = <T,>({
   const triggerRef = useRef<HTMLButtonElement>(null);
   const [visible, setVisible] = useState(false);
   const [searchValue, setSearchValue] = useState('');
-  const normalizedSearch = searchValue.trim().toLowerCase();
   const mergedVisible = filterDropdownProps.open ?? filterDropdownOpen ?? visible;
   const filtered = Boolean(filterState?.filteredKeys?.length || filterState?.forceFiltered);
 
@@ -199,90 +148,6 @@ const FilterDropdown = <T,>({
     else triggerOpen(next);
   };
 
-  const selectedKeys = getSelectedKeys();
-  const selectedSet = new Set(selectedKeys.map(String));
-  const allKeys = useMemo(() => flattenFilterKeys(filters).map(String), [filters]);
-
-  const matches = (item: TableColumnFilterItem) =>
-    typeof filterSearch === 'function'
-      ? filterSearch(normalizedSearch, item)
-      : textMatches(normalizedSearch, item.text);
-
-  const toggleKey = (key: string, checked: boolean) => {
-    if (!filterMultiple) return setSelectedKeys(checked ? [key] : []);
-    const rest = selectedKeys.filter((item) => String(item) !== key);
-    setSelectedKeys(checked ? [...rest, key] : rest);
-  };
-
-  const renderMenuItems = (items: readonly TableColumnFilterItem[]): ReactNode[] =>
-    items.flatMap((item, index) => {
-      const key = String(item.value);
-      if (item.children) {
-        const children = renderMenuItems(item.children);
-        if (children.length === 0) return [];
-        return [
-          <div className={sx(styles.filterGroup)} key={key || index} role="group">
-            <div
-              className={clsx(sx(styles.filterGroupTitle), `${FILTER_CLS}-dropdown-submenu-title`)}
-            >
-              {item.text}
-            </div>
-            {children}
-          </div>,
-        ];
-      }
-      if (normalizedSearch && !matches(item)) return [];
-      return [
-        <div className={clsx(sx(styles.filterItem), `${FILTER_CLS}-dropdown-item`)} key={key}>
-          {filterMultiple ? (
-            <Checkbox
-              checked={selectedSet.has(key)}
-              onChange={(checked) => toggleKey(key, checked)}
-            >
-              {item.text}
-            </Checkbox>
-          ) : (
-            <Radio value={key}>{item.text}</Radio>
-          )}
-        </div>,
-      ];
-    });
-
-  const toTreeData = (
-    items: readonly TableColumnFilterItem[] | undefined,
-    ancestorMatched = false,
-  ): TreeDataNode[] =>
-    (items ?? []).flatMap((item, index) => {
-      const selfMatched = ancestorMatched || !normalizedSearch || matches(item);
-      const children = item.children ? toTreeData(item.children, selfMatched) : undefined;
-      if (!selfMatched && !children?.length) return [];
-      return [
-        {
-          children,
-          key: item.value !== undefined ? String(item.value) : String(index),
-          title: item.text,
-        },
-      ];
-    });
-
-  const renderSearch = () =>
-    filterSearch ? (
-      <div className={clsx(sx(styles.filterSearch), `${PREFIX_CLS}-filter-dropdown-search`)}>
-        <Input
-          allowClear
-          placeholder={locale.filterSearchPlaceholder}
-          prefix={<Icon icon={Search} size={14} />}
-          size="small"
-          value={searchValue}
-          onChange={(event) => setSearchValue(event.target.value)}
-        />
-      </div>
-    ) : null;
-
-  const empty = (
-    <Empty className={sx(styles.filterEmpty)} description={locale.filterEmptyText} imageSize={24} />
-  );
-
   let content: ReactNode;
   if (typeof filterDropdown === 'function') {
     content = filterDropdown({
@@ -291,106 +156,24 @@ const FilterDropdown = <T,>({
       confirm: doFilter,
       filters,
       prefixCls: `${FILTER_CLS}-dropdown-custom`,
-      selectedKeys,
+      selectedKeys: getSelectedKeys(),
       setSelectedKeys,
       visible: mergedVisible,
     });
   } else if (filterDropdown !== undefined) {
     content = filterDropdown;
   } else {
-    let body: ReactNode;
-    if (!filters?.length) {
-      body = empty;
-    } else if (filterMode === 'tree') {
-      const treeData = toTreeData(filters);
-      // Searching prunes the tree, so cascade checks on the full tree and show the keys as is.
-      const fullTreeData = normalizedSearch ? toTreeData(filters, true) : treeData;
-      const onTreeCheck = (checked: boolean, node: TreeDataNode) => {
-        if (!filterMultiple) return setSelectedKeys(checked ? [node.key] : []);
-        const lineage = findLineage(fullTreeData, node.key);
-        const base = conductCheck(fullTreeData, selectedKeys.map(String)).checked;
-        if (checked) lineage?.subtree.forEach((key) => base.add(key));
-        else
-          [...(lineage?.subtree ?? []), ...(lineage?.ancestors ?? [])].forEach((key) =>
-            base.delete(key),
-          );
-        setSelectedKeys([...conductCheck(fullTreeData, base).checked]);
-      };
-      body = (
-        <>
-          {renderSearch()}
-          <div className={clsx(sx(styles.filterTree), `${PREFIX_CLS}-filter-dropdown-tree`)}>
-            {filterMultiple && (
-              <Checkbox
-                checked={selectedKeys.length > 0 && selectedKeys.length === allKeys.length}
-                indeterminate={selectedKeys.length > 0 && selectedKeys.length < allKeys.length}
-                className={clsx(
-                  sx(styles.filterCheckAll),
-                  `${PREFIX_CLS}-filter-dropdown-checkall`,
-                )}
-                onChange={(checked) => setSelectedKeys(checked ? allKeys : [])}
-              >
-                {locale.filterCheckAll}
-              </Checkbox>
-            )}
-            {treeData.length > 0 ? (
-              <Tree
-                checkable
-                defaultExpandAll
-                checkStrictly={!filterMultiple || Boolean(normalizedSearch)}
-                checkedKeys={selectedKeys.map(String)}
-                multiple={filterMultiple}
-                selectedKeys={[]}
-                size="small"
-                treeData={treeData}
-                onCheck={(_, { checked, node }) => onTreeCheck(checked, node)}
-              />
-            ) : (
-              empty
-            )}
-          </div>
-        </>
-      );
-    } else {
-      const items = renderMenuItems(filters);
-      const list = (
-        <div className={clsx(sx(styles.filterMenu), `${FILTER_CLS}-dropdown-menu`)}>{items}</div>
-      );
-      body = (
-        <>
-          {renderSearch()}
-          {items.length === 0 ? (
-            empty
-          ) : filterMultiple ? (
-            list
-          ) : (
-            <BaseRadioGroup
-              value={selectedKeys.length ? String(selectedKeys[0]) : null}
-              onValueChange={(value) => setSelectedKeys(value == null ? [] : [String(value)])}
-            >
-              {list}
-            </BaseRadioGroup>
-          )}
-        </>
-      );
-    }
-
-    const resetDisabled = filterResetToDefaultFilteredValue
-      ? sameKeys((defaultFilteredValue ?? []).map(String), selectedKeys.map(String))
-      : selectedKeys.length === 0;
-
     content = (
-      <>
-        {body}
-        <div className={clsx(sx(styles.filterButtons), `${FILTER_CLS}-dropdown-btns`)}>
-          <Button disabled={resetDisabled} size="small" type="link" onClick={() => onReset()}>
-            {locale.filterReset}
-          </Button>
-          <Button size="small" type="primary" onClick={onConfirm}>
-            {locale.filterConfirm}
-          </Button>
-        </div>
-      </>
+      <FilterPanel
+        column={column}
+        locale={locale}
+        searchValue={searchValue}
+        selectedKeys={getSelectedKeys()}
+        setSelectedKeys={setSelectedKeys}
+        onConfirm={onConfirm}
+        onReset={() => onReset()}
+        onSearchChange={setSearchValue}
+      />
     );
   }
 

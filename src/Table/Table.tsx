@@ -16,7 +16,6 @@ import {
 } from 'react';
 
 import Empty from '@/Empty';
-import { useEventCallback } from '@/hooks/useEventCallback';
 import tableMessages from '@/i18n/resources/en/table';
 import { useTranslation } from '@/i18n/useTranslation';
 import Spin from '@/Spin';
@@ -32,77 +31,34 @@ import {
   SELECTION_INVERT,
   SELECTION_NONE,
 } from './pipeline/selectionUtils';
-import { DEFAULT_SORT_DIRECTIONS } from './pipeline/useSorter';
-import {
-  HeaderContext,
-  type HeaderView,
-  SelectionContext,
-  type SelectionView,
-  type TableComponentSet,
-  TableViewContext,
-  type TableViewValue,
-} from './render/context';
+import { HeaderContext, SelectionContext, TableViewContext } from './render/context';
 import TableLoadingSkeleton from './render/LoadingSkeleton';
 import { renderPaginationBars } from './render/PaginationBar';
 import { TableSummary } from './render/Summary';
-import TableView, { type StickyConfig } from './render/TableView';
+import { resolveSticky, toTableRef } from './render/tableHelpers';
+import TableView from './render/TableView';
+import { useViewContexts } from './render/useViewContexts';
 import { useStableSemantic } from './semantic';
 import { TableStoreProvider } from './store/hooks';
 import { styles } from './style';
-import type { TableProps, TableRef, TableScrollToConfig, TableSorterTooltipProps } from './type';
+import type { TableProps, TableRef } from './type';
 import { useTableController } from './useTableController';
-
-const DEFAULT_SORTER_TOOLTIP: TableSorterTooltipProps = { target: 'full-header' };
-
-const toTableRef = (
-  element: HTMLDivElement,
-  scrollTo: (config: TableScrollToConfig) => void,
-): TableRef => {
-  const extra = { nativeElement: element, scrollTo };
-  return new Proxy(element, {
-    get(target, prop) {
-      if (prop in extra) return extra[prop as keyof typeof extra];
-      const value = Reflect.get(target, prop, target);
-      return typeof value === 'function' ? value.bind(target) : value;
-    },
-  }) as TableRef;
-};
-
-const resolveSticky = (sticky: TableProps<unknown>['sticky']): StickyConfig => {
-  const config = typeof sticky === 'object' ? sticky : {};
-  const fallback = typeof window === 'undefined' ? (undefined as any) : window;
-  return {
-    container: config.getContainer?.() || fallback,
-    isSticky: Boolean(sticky),
-    offsetHeader: config.offsetHeader ?? 0,
-    offsetScroll: config.offsetScroll ?? 0,
-    offsetSummary: config.offsetSummary ?? 0,
-  };
-};
 
 const TableInner = <T,>(props: TableProps<T>) => {
   const {
     className,
     classNames,
-    components,
-    expandable,
     footer,
-    getPopupContainer,
     loading = false,
-    onHeaderRow,
-    onRow,
     onScroll,
     pagination,
     ref,
     rootClassName,
-    rowClassName,
     rowHoverable = true,
     rowSelection,
     scroll,
     showHeader = true,
-    showSorterTooltip = DEFAULT_SORTER_TOOLTIP,
     size = 'middle',
-    sortDirections = DEFAULT_SORT_DIRECTIONS,
     sticky,
     style,
     styles: customStyles,
@@ -113,7 +69,7 @@ const TableInner = <T,>(props: TableProps<T>) => {
   } = props;
 
   const controller = useTableController(props);
-  const { model, rows, selection, state, tableLocale } = controller;
+  const { model, rows, state } = controller;
   const { t } = useTranslation(tableMessages);
   const { classNames: semanticClassNames, styles: semanticStyles } = useStableSemantic(
     classNames,
@@ -136,117 +92,13 @@ const TableInner = <T,>(props: TableProps<T>) => {
     [controller.scrollTo],
   );
 
-  const componentSet = useMemo((): TableComponentSet => {
-    const fallback = virtual ? 'div' : undefined;
-    return {
-      bodyCell: components?.body?.cell ?? fallback,
-      bodyRow: components?.body?.row ?? fallback,
-      bodyWrapper: components?.body?.wrapper,
-      headerCell: components?.header?.cell,
-      headerRow: components?.header?.row,
-      headerTable: components?.header?.table,
-      headerWrapper: components?.header?.wrapper,
-      table: components?.table,
-    };
-  }, [components, virtual]);
-
-  const toggleExpand = useEventCallback((record: T) => controller.toggleExpand(record));
+  const { headerValue, selectionValue, viewValue } = useViewContexts<T>({
+    controller,
+    props,
+    semanticClassNames,
+    semanticStyles,
+  });
   const leafColumns = model.leafColumns;
-  const fixColumn = controller.horizonScroll && leafColumns.some((leaf) => leaf.fixed);
-
-  const viewValue = useMemo(
-    (): TableViewValue<T> => ({
-      components: componentSet,
-      expand: {
-        expandedRowClassName: expandable?.expandedRowClassName,
-        expandedRowRender: expandable?.expandedRowRender,
-        expandIcon: controller.expandIcon,
-        expandRowByClick: expandable?.expandRowByClick,
-        forceRender: expandable?.forceRender,
-        indentSize: controller.indentSize,
-        nestIconColumnIndex: controller.nestIconColumnIndex,
-        rowExpandable: expandable?.rowExpandable,
-        toggle: toggleExpand,
-        type: controller.expandType,
-      },
-      fixColumn,
-      getRowKey: controller.getRowKey,
-      horizonScroll: controller.horizonScroll,
-      leafColumns,
-      onRow,
-      prefixCls: PREFIX_CLS,
-      rowClassName,
-      rowHoverable,
-      semanticClassNames,
-      semanticStyles,
-      virtualWidths: controller.virtualWidths,
-    }),
-    [
-      componentSet,
-      expandable,
-      controller.expandIcon,
-      controller.indentSize,
-      controller.nestIconColumnIndex,
-      toggleExpand,
-      controller.expandType,
-      fixColumn,
-      controller.getRowKey,
-      controller.horizonScroll,
-      leafColumns,
-      onRow,
-      rowClassName,
-      rowHoverable,
-      semanticClassNames,
-      semanticStyles,
-      controller.virtualWidths,
-    ],
-  );
-
-  const selectionValue = useMemo(
-    (): SelectionView<T> => ({
-      actions: selection.actions,
-      checkboxPropsMap: selection.checkboxPropsMap,
-      expandType: controller.expandType,
-      getRowKey: controller.getRowKey,
-      getTitleCheckboxProps: rowSelection?.getTitleCheckboxProps,
-      hideSelectAll: rowSelection?.hideSelectAll,
-      locale: tableLocale,
-      renderCell: rowSelection?.renderCell,
-      selections: selection.mergedSelections,
-      title: rowSelection?.columnTitle,
-      type: rowSelection?.type ?? 'checkbox',
-    }),
-    [selection, controller.expandType, controller.getRowKey, rowSelection, tableLocale],
-  );
-
-  const triggerSort = useEventCallback(state.triggerSort);
-  const triggerFilter = useEventCallback(state.triggerFilter);
-  const headerValue = useMemo(
-    (): HeaderView<T> => ({
-      filterStates: state.filterStates,
-      getPopupContainer,
-      locale: tableLocale,
-      onHeaderRow,
-      showSorterTooltip,
-      sortDirections,
-      sortStates: state.sortStates,
-      titleProps: state.titleProps,
-      triggerFilter,
-      triggerSort,
-    }),
-    [
-      state.filterStates,
-      getPopupContainer,
-      tableLocale,
-      onHeaderRow,
-      showSorterTooltip,
-      sortDirections,
-      state.sortStates,
-      state.titleProps,
-      triggerFilter,
-      triggerSort,
-    ],
-  );
 
   const {
     spinning: isLoading = true,
