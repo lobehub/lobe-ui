@@ -529,6 +529,86 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       font-size: 14px;
     }
 
+    /* decade labels ("2020-2029") stay on one line */
+    &.${P}-dropdown .${P}-decade-panel .${P}-cell-inner {
+      padding-inline: 6px;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    /* week number column: always on the week panel, on the date panel with showWeek */
+    &.${P}-dropdown :is(.${P}-week-panel, .${P}-date-panel-show-week) {
+      width: 320px;
+    }
+
+    &.${P}-dropdown .${P}-cell-week {
+      font-size: 12px;
+      color: ${cssVar.colorTextTertiary};
+    }
+
+    &.${P}-dropdown .${P}-date-panel-show-week .${P}-cell-week {
+      cursor: default;
+    }
+
+    /* week panel: the whole row is one tile, painted through each cell's band */
+    &.${P}-dropdown .${P}-week-panel .${P}-cell:hover .${P}-cell-inner {
+      background: none;
+    }
+
+    &.${P}-dropdown .${P}-week-panel .${P}-cell:first-child::before {
+      inset-inline-start: 2px;
+      border-start-start-radius: 999px;
+      border-end-start-radius: 999px;
+    }
+
+    &.${P}-dropdown .${P}-week-panel .${P}-cell:last-child::before {
+      inset-inline-end: 2px;
+      border-start-end-radius: 999px;
+      border-end-end-radius: 999px;
+    }
+
+    &.${P}-dropdown .${P}-week-panel-row:hover .${P}-cell::before {
+      background: ${cssVar.colorFillTertiary};
+    }
+
+    &.${P}-dropdown
+      .${P}-week-panel-row-range-hover
+      .${P}-cell::before,
+      &.${P}-dropdown
+      .${P}-week-panel-row-hover
+      .${P}-cell::before {
+      background: ${cssVar.colorFillSecondary};
+    }
+
+    &.${P}-dropdown
+      :is(
+        .${P}-week-panel-row-selected,
+          .${P}-week-panel-row-range-start,
+          .${P}-week-panel-row-range-end
+      )
+      .${P}-cell {
+      color: ${cssVar.colorBgContainer};
+
+      &::before {
+        background: ${cssVar.colorText};
+      }
+
+      .${P}-cell-inner {
+        font-weight: 600;
+        box-shadow: none;
+      }
+    }
+
+    /* keyboard: the tile arrow keys moved to on month / quarter / year / decade panels */
+    &.${P}-dropdown .${P}-cell-keyboard-active {
+      display: none;
+    }
+
+    &.${P}-dropdown .${P}-cell-in-view:has(> .${P}-cell-keyboard-active) .${P}-cell-inner {
+      outline: 2px solid ${cssVar.colorPrimary};
+      outline-offset: 1px;
+    }
+
     /* footer */
     &.${P}-dropdown .${P}-footer {
       border-block-start: 1px solid ${cssVar.colorBorderSecondary};

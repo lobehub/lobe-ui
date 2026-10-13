@@ -10,7 +10,9 @@ export default () => {
   return (
     <Flexbox gap={12} padding={16} style={{ maxWidth: 280 }}>
       <DatePicker onChange={onChange} />
+      <DatePicker picker="week" onChange={onChange} />
       <DatePicker picker="month" onChange={onChange} />
+      <DatePicker picker="quarter" onChange={onChange} />
       <DatePicker picker="year" onChange={onChange} />
       <Text type="secondary">onChange dateString: {last === null ? 'null' : `"${last}"`}</Text>
     </Flexbox>

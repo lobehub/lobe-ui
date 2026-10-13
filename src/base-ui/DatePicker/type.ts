@@ -5,6 +5,8 @@ import type {
 } from '@rc-component/picker';
 import type {
   BaseInfo,
+  CellRender,
+  CellRenderInfo,
   Locale,
   PanelMode,
   PickerMode,
@@ -13,7 +15,7 @@ import type {
 import type { Dayjs } from 'dayjs';
 import type { ReactNode, Ref } from 'react';
 
-export type { PanelMode, PickerMode, PickerRef, RangePickerRef };
+export type { CellRender, CellRenderInfo, PanelMode, PickerMode, PickerRef, RangePickerRef };
 
 /** `middle` is kept as an alias of `medium`. */
 export type PickerSize = 'large' | 'medium' | 'small' | 'middle';

@@ -1,17 +1,21 @@
 ---
 title: DatePicker
-description: Date, month and year picking with Dayjs values and a typeable input, plus a two-month range picker. Built on @rc-component/picker, the same core as antd DatePicker.
+description: Date, week, month, quarter and year picking with Dayjs values and a typeable input, plus a two-panel range picker. Built on @rc-component/picker, the same core as antd DatePicker.
 category: Data Entry
 ---
 
 import DemoBasic from './demos/basic.tsx?demo';
 import DemoRange from './demos/range.tsx?demo';
+import DemoRangePicker from './demos/range-picker.tsx?demo';
 import DemoDateRange from './demos/date-range.tsx?demo';
 import DemoMode from './demos/mode.tsx?demo';
 import DemoStartEnd from './demos/start-end.tsx?demo';
 import DemoControlled from './demos/controlled.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 import DemoSwitchable from './demos/switchable.tsx?demo';
+import DemoCellRender from './demos/cell-render.tsx?demo';
+import DemoShowWeek from './demos/show-week.tsx?demo';
+import DemoKeyboard from './demos/keyboard.tsx?demo';
 import DemoSize from './demos/size.tsx?demo';
 import DemoVariant from './demos/variant.tsx?demo';
 import DemoStatus from './demos/status.tsx?demo';
@@ -24,7 +28,7 @@ import DemoFilledDebug from './demos/filled-debug.tsx?demo';
 
 ## Basic
 
-`picker` switches between `date`, `month` and `year`. `onChange` receives `(date: Dayjs | null, dateString: string | null)`; clearing passes `null` for both. The input is typeable — a date in `format` is parsed as you type and committed on Enter or blur.
+`picker` switches between `date`, `week`, `month`, `quarter` and `year`; each has antd's default format (`YYYY-MM-DD`, `gggg-wo`, `YYYY-MM`, `YYYY-[Q]Q`, `YYYY`) and placeholder. The year panel shows a decade (10 years plus the neighbours at either end), and its header drills up to a century of decades. `onChange` receives `(date: Dayjs | null, dateString: string | null)`; clearing passes `null` for both. The input is typeable — a date in `format` is parsed as you type and committed on Enter or blur.
 
 <Demo of={DemoBasic} layout="bare" />
 
@@ -33,6 +37,12 @@ import DemoFilledDebug from './demos/filled-debug.tsx?demo';
 `DateRangePicker` takes and emits a `[Dayjs, Dayjs]` pair (or `null` once cleared), with `dateStrings` as the second argument.
 
 <Demo of={DemoRange} layout="bare" />
+
+## Range picker types
+
+`picker` works on `DateRangePicker` too: `week`, `month`, `quarter` and `year` show two adjacent panels (two years of months / quarters, two decades of years) and get range placeholders such as "Start month" / "End month".
+
+<Demo of={DemoRangePicker} layout="bare" />
 
 ## Date limits
 
@@ -60,9 +70,27 @@ Two pickers linked through `disabledDate(current, info)` and a controlled `open`
 
 ## Switchable picker
 
-`picker` can change at runtime. `time` follows with the time panel; `week` / `quarter` get their own placeholders and formats with the panel-type work.
+`picker` can change at runtime; placeholder and format follow it. `time` follows with the time panel.
 
 <Demo of={DemoSwitchable} layout="bare" />
+
+## Customized cell rendering
+
+`cellRender(current, info)` renders every cell of every panel. `info` carries `originNode` (the default cell), `today`, `type` (`date` / `week` / `month` / `quarter` / `year` / `decade`), `locale`, `prefixCls` and, on `DateRangePicker`, `range` (`'start'` / `'end'`). The deprecated `dateRender(current, today)` and `monthCellRender(current, locale)` still work for the date and month panels when `cellRender` is not set.
+
+<Demo of={DemoCellRender} layout="bare" />
+
+## Show week numbers
+
+`showWeek` adds the week-number column to the date panel; the `week` picker shows it by default and `showWeek={false}` hides it.
+
+<Demo of={DemoShowWeek} layout="bare" />
+
+## Keyboard on month, quarter and year panels
+
+While the popup shows a month, quarter, year or decade panel, ←/→ move one tile, ↑/↓ one row, PageUp/PageDown one page (a year, or a decade / century), Home/End jump to the first / last tile of the page, and Enter picks the highlighted tile — the same as clicking it. The page follows the highlighted tile.
+
+<Demo of={DemoKeyboard} layout="bare" />
 
 ## Size
 
@@ -134,7 +162,9 @@ The popup is rendered with `@rc-component/trigger`. Inside a base-ui floating la
 
 ### Keyboard
 
-Keyboard behaviour matches antd DatePicker: type a date and press Enter to commit it, Escape closes the popup, Tab moves on (and between the two inputs of a range). Like antd, the calendar cells are not focusable and there is no arrow-key navigation inside the panel — the input stays the single keyboard target, so arrow keys keep moving the text caret.
+Input keys match antd DatePicker: type a date and press Enter to commit it, Escape closes the popup, Tab moves on (and between the two inputs of a range). The input stays the single keyboard target; the calendar cells are never focused.
+
+On top of antd, the month, quarter, year and decade panels take arrow keys, PageUp/PageDown, Home/End and Enter while the popup is open (see the demo above); the highlighted tile is outlined and the page follows it. On those panels the arrow keys therefore no longer move the text caret while the popup is open. The date and week panels keep antd's behaviour: no arrow-key navigation, arrow keys move the caret.
 
 ### Migrating from the previous lobe DatePicker
 
