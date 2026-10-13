@@ -11,6 +11,7 @@ import { motion } from 'motion/react';
 import { type ReactNode } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
+import { stubMatchMedia } from '@/base-ui/FormKit/test-utils';
 import ConfigProvider from '@/ConfigProvider';
 
 import ProTable from '../ProTable';
@@ -21,6 +22,9 @@ const Wrapper = ({ children }: { children: ReactNode }) => (
 );
 const render: typeof rtlRender = ((ui: any, options?: any) =>
   rtlRender(ui, { wrapper: Wrapper, ...options })) as typeof rtlRender;
+
+// base-ui Form reads `useResponsive` (matchMedia).
+stubMatchMedia();
 
 if (!globalThis.ResizeObserver) {
   globalThis.ResizeObserver = class {
@@ -377,6 +381,78 @@ describe('ProTable', () => {
     expect(within(form).queryByText('F-c')).toBeNull();
     fireEvent.click(within(form).getByText('Expand'));
     expect(within(form).getByText('F-d')).toBeTruthy();
+  });
+
+  it('validates formItemProps.rules through the base-ui Form before querying', async () => {
+    const request = makeRequest();
+    render(
+      <ProTable<Row>
+        debounceTime={0}
+        request={request}
+        rowKey="id"
+        columns={[
+          {
+            dataIndex: 'name',
+            formItemProps: {
+              rules: [
+                { message: 'Name is required', required: true },
+                { message: 'Starts with row-', pattern: /^row-/ },
+              ],
+            },
+            title: 'Name',
+          },
+        ]}
+      />,
+    );
+    await screen.findByText('row-1');
+    const calls = request.mock.calls.length;
+    const form = document.querySelector('[data-pro-table-search]') as HTMLElement;
+    fireEvent.click(within(form).getByText('Search'));
+    expect(await within(form).findByText('Name is required')).toBeTruthy();
+    fireEvent.change(within(form).getByRole('textbox'), { target: { value: 'abc' } });
+    fireEvent.click(within(form).getByText('Search'));
+    expect(await within(form).findByText('Starts with row-')).toBeTruthy();
+    expect(request.mock.calls.length).toBe(calls);
+
+    fireEvent.change(within(form).getByRole('textbox'), { target: { value: 'row-3' } });
+    fireEvent.click(within(form).getByText('Search'));
+    await waitFor(() => expect(request.mock.lastCall?.[0]).toMatchObject({ name: 'row-3' }));
+  });
+
+  it('exposes base-ui Form instance methods on formRef', async () => {
+    const formRef = { current: undefined } as any;
+    render(
+      <ProTable<Row>
+        columns={[{ dataIndex: 'name', formItemProps: { required: true }, title: 'Name' }]}
+        dataSource={data}
+        formRef={formRef}
+        rowKey="id"
+      />,
+    );
+    for (const method of [
+      'getValue',
+      'getValues',
+      'setValue',
+      'setValues',
+      'reset',
+      'validate',
+      'submit',
+      'setErrors',
+      'isDirty',
+      'subscribe',
+    ]) {
+      expect(typeof formRef.current[method]).toBe('function');
+    }
+    let result: any;
+    await act(async () => {
+      result = await formRef.current.validate();
+    });
+    expect(result.valid).toBe(false);
+    await act(async () => {
+      formRef.current.setValue('name', 'x', { asUser: true });
+    });
+    expect(formRef.current.isDirty()).toBe(true);
+    await expect(formRef.current.validateFields()).resolves.toEqual({ name: 'x' });
   });
 
   it('uses light filter in the toolbar', () => {

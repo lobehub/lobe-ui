@@ -1,5 +1,7 @@
 import type { CSSProperties, Key, MutableRefObject, ReactNode, Ref } from 'react';
 
+import type { ValidateOn } from '@/base-ui/FormKit/engine/types';
+import type { FormInstance } from '@/base-ui/FormKit/type';
 import type {
   SortOrder,
   TableColumnFilterItem,
@@ -56,17 +58,41 @@ export type ProTableSearchTransform = (
   allValues: Record<string, any>,
 ) => Record<string, any> | string | undefined;
 
-/** The search-form handle passed as `formRef`; a lightweight subset of antd's `FormInstance`. */
-export interface ProTableFormInstance<Values = Record<string, any>> {
+/** antd-style validation rule, mapped onto base-ui Form `required` / `validate`. */
+export interface ProTableFormRule {
+  len?: number;
+  max?: number;
+  message?: ReactNode;
+  min?: number;
+  pattern?: RegExp;
+  required?: boolean;
+  /** Reject (throw) to fail; the error message (or `message`) is shown. */
+  validator?: (
+    rule: ProTableFormRule,
+    value: any,
+    values: Record<string, any>,
+  ) => Promise<void> | void;
+}
+
+/**
+ * The search-form handle passed as `formRef`: the base-ui Form instance (`getValue`,
+ * `getValues`, `setValue`, `setValues`, `reset`, `resetField`, `validate`, `submit`,
+ * `setErrors`, `isDirty`, `isTouched`, `subscribe`, `setSchema`) plus antd-style aliases.
+ */
+export interface ProTableFormInstance<
+  Values extends Record<string, any> = Record<string, any>,
+> extends FormInstance<Values> {
   /** Values converted the way they are sent to `request` (`dateFormatter`, `transform`). */
   getFieldsFormatValue: () => Record<string, any>;
   /** Raw field values (dates stay `Date`). */
   getFieldsValue: () => Values;
   getFieldValue: (name: string) => any;
+  /** Back to the initial values (base-ui `reset()` goes back to the last submitted values). */
   resetFields: () => void;
   setFieldsValue: (values: Partial<Values>) => void;
   setFieldValue: (name: string, value: any) => void;
-  submit: () => void;
+  /** Validate every registered field; resolves the values or rejects with `{ errors, valid }`. */
+  validateFields: () => Promise<Values>;
 }
 
 export interface ProTablePageInfo {
@@ -120,7 +146,15 @@ export interface ProColumnType<T = any> extends Omit<
   /** `true` builds header filters from `valueEnum`. */
   filters?: boolean | TableColumnFilterItem[];
   /** Extra props for the field wrapper; `label` overrides the title in the form. */
-  formItemProps?: { label?: ReactNode; style?: CSSProperties; tooltip?: ReactNode };
+  formItemProps?: {
+    /** Help text under the control. */
+    extra?: ReactNode;
+    label?: ReactNode;
+    required?: boolean;
+    /** Validation rules (base-ui Form `required` / `validate`); the query is blocked until they pass. */
+    rules?: ProTableFormRule[];
+    style?: CSSProperties;
+  };
   hideInForm?: boolean;
   hideInSearch?: boolean;
   hideInSetting?: boolean;
@@ -301,7 +335,7 @@ export interface ProTableProps<T = any, Params = Record<string, any>> extends Om
   actionRef?: MutableRefObject<ProTableActionType | undefined> | Ref<ProTableActionType>;
   /** Hook to reshape the form values before they become `params`. */
   beforeSearchSubmit?: (params: Record<string, any>) => Record<string, any>;
-  /** `true` draws a border around the card(s); `{ search, table }` per card. */
+  /** Frame the query form / table (border, radius, padding); they are flat by default. `{ search, table }` per part. */
   cardBordered?: boolean | { search?: boolean; table?: boolean };
   /** Render cells with empty values as this. @default '-' */
   columnEmptyText?: ReactNode | false;
@@ -317,9 +351,14 @@ export interface ProTableProps<T = any, Params = Record<string, any>> extends Om
   /** @default 'medium' */
   defaultSize?: ProTableDensity;
   /** Initial values of the search form. */
-  form?: { initialValues?: Record<string, any>; onValuesChange?: (changed: any, all: any) => void };
+  form?: {
+    initialValues?: Record<string, any>;
+    onValuesChange?: (changed: any, all: any) => void;
+    /** base-ui Form `validateOn`. @default 'auto' */
+    validateOn?: ValidateOn;
+  };
   formRef?: MutableRefObject<ProTableFormInstance | undefined> | Ref<ProTableFormInstance>;
-  /** No card background / padding. */
+  /** Kept for ProComponents compatibility; the parts have no card background to remove. */
   ghost?: boolean;
   headerTitle?: ReactNode;
   loading?: boolean;

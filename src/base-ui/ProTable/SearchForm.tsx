@@ -2,11 +2,12 @@ import { ChevronDown, ChevronUp } from 'lucide-react';
 import { type CSSProperties, type ReactNode, useEffect, useRef, useState } from 'react';
 
 import Button from '@/base-ui/Button';
+import Form from '@/base-ui/FormKit';
 
 import FieldControl from './FieldControl';
 import { styles } from './style';
 import type { ProTableFormInstance, ProTableLocale, ProTableSearchConfig } from './type';
-import type { SearchFieldSchema } from './useSearchForm';
+import { rulesToFieldProps, type SearchFieldSchema } from './useSearchForm';
 
 export interface SearchFormProps {
   config: ProTableSearchConfig;
@@ -18,7 +19,6 @@ export interface SearchFormProps {
     selectPlaceholder: string;
   };
   onReset: () => void;
-  values: Record<string, any>;
 }
 
 /** Pro `QueryFilter` breakpoints: columns per row for the form width. */
@@ -31,13 +31,11 @@ const colsForWidth = (width: number) => {
 };
 
 const useWidth = () => {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLFormElement>(null);
   const [width, setWidth] = useState(0);
   useEffect(() => {
     const node = ref.current;
-    if (!node) return;
-    setWidth(node.getBoundingClientRect().width);
-    if (typeof ResizeObserver === 'undefined') return;
+    if (!node || typeof ResizeObserver === 'undefined') return;
     const observer = new ResizeObserver(([entry]) => setWidth(entry.contentRect.width));
     observer.observe(node);
     return () => observer.disconnect();
@@ -45,15 +43,8 @@ const useWidth = () => {
   return { ref, width };
 };
 
-const SearchForm = ({
-  config,
-  fields,
-  form,
-  loading,
-  locale,
-  onReset,
-  values,
-}: SearchFormProps) => {
+/** The query form: a base-ui `Form` laid out as a collapsible grid of `Form.Field`s. */
+const SearchForm = ({ config, fields, form, loading, locale, onReset }: SearchFormProps) => {
   const { ref, width } = useWidth();
   const [innerCollapsed, setInnerCollapsed] = useState(config.defaultCollapsed ?? true);
   const collapsed = config.collapsed ?? innerCollapsed;
@@ -70,14 +61,13 @@ const SearchForm = ({
   const visibleCount = config.defaultColsNumber ?? Math.max(1, cols - 1);
   let used = 0;
   const visibility = fields.map(({ column }) => {
-    const size = Math.min(column.colSize ?? 1, cols);
-    used += size;
+    used += Math.min(column.colSize ?? 1, cols);
     return !collapsed || used <= visibleCount;
   });
   const collapsible =
     fields.reduce((sum, { column }) => sum + Math.min(column.colSize ?? 1, cols), 0) > visibleCount;
 
-  const submit = () => form.submit();
+  const submit = () => void form.submit();
 
   const resetDom = (
     <Button key="reset" onClick={onReset}>
@@ -85,7 +75,7 @@ const SearchForm = ({
     </Button>
   );
   const submitDom = (
-    <Button key="submit" loading={loading} type="primary" onClick={submit}>
+    <Button htmlType="submit" key="submit" loading={loading} type="primary">
       {config.searchText ?? config.submitText ?? locale.search}
     </Button>
   );
@@ -115,23 +105,30 @@ const SearchForm = ({
     );
   }
 
-  const labelStyle: CSSProperties | undefined =
-    layout === 'vertical' || labelWidth === 'auto' ? undefined : { width: labelWidth };
+  const gridStyle = {
+    '--lobe-pro-table-label-width':
+      layout === 'vertical' || labelWidth === 'auto' ? 'auto' : `${labelWidth}px`,
+    'display': 'grid',
+    'gridTemplateColumns': `repeat(${cols}, minmax(0, 1fr))`,
+  } as CSSProperties;
 
   return (
-    <form
+    <Form
       className={styles.search}
       data-pro-table-search=""
-      ref={ref as any}
-      style={{ gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))` }}
-      onSubmit={(event) => {
-        event.preventDefault();
-        submit();
-      }}
+      form={form}
+      layout={layout}
+      ref={ref}
+      style={gridStyle}
+      variant="borderless"
     >
       {fields.map(({ column, name }, index) => {
         if (!visibility[index]) return null;
         const label = column.formItemProps?.label ?? column.title;
+        const { required, validate } = rulesToFieldProps(
+          column.formItemProps?.rules,
+          column.formItemProps?.required,
+        );
         return (
           <div
             className={styles.searchField}
@@ -142,24 +139,32 @@ const SearchForm = ({
               ...column.formItemProps?.style,
             }}
           >
-            {label !== undefined && (
-              <label className={styles.searchLabel} data-layout={layout} style={labelStyle}>
-                {label}
-              </label>
-            )}
-            <div className={styles.searchFieldControl}>
-              <FieldControl
-                column={column}
-                form={form}
-                placeholder={{ input: locale.inputPlaceholder, select: locale.selectPlaceholder }}
-                value={values[name]}
-                onChange={(value) => form.setFieldValue(name, value)}
-              />
-            </div>
+            <Form.Field
+              extra={column.formItemProps?.extra}
+              label={label}
+              layout={layout}
+              name={name}
+              required={required}
+              validate={validate}
+              render={({ value, onChange, onBlur }) => (
+                <div onBlur={onBlur}>
+                  <FieldControl
+                    column={column}
+                    form={form}
+                    value={value}
+                    placeholder={{
+                      input: locale.inputPlaceholder,
+                      select: locale.selectPlaceholder,
+                    }}
+                    onChange={onChange}
+                  />
+                </div>
+              )}
+            />
           </div>
         );
       })}
-      {/* Enter in a text field submits the form. */}
+      {/* Enter in a text field submits even without a visible submit button. */}
       <button hidden type="submit" />
       {(buttons.length > 0 || collapseDom) && (
         <div className={styles.searchActions}>
@@ -167,7 +172,7 @@ const SearchForm = ({
           {collapseDom}
         </div>
       )}
-    </form>
+    </Form>
   );
 };
 

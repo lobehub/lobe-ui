@@ -8,8 +8,27 @@ const columns: ProColumns<ModelRow>[] = [
   { dataIndex: 'model', order: 10, title: 'Model' },
   { dataIndex: 'provider', initialValue: 'OpenAI', title: 'Provider', valueEnum: providerEnum },
   { dataIndex: 'status', title: 'Status', valueEnum: statusEnum, valueType: 'checkbox' },
-  { dataIndex: 'owner', title: 'Owner' },
-  { dataIndex: 'calls', title: 'Calls', valueType: 'digit' },
+  {
+    dataIndex: 'owner',
+    formItemProps: {
+      rules: [{ message: 'Letters only', pattern: /^[a-z]+$/i }],
+    },
+    title: 'Owner',
+  },
+  {
+    dataIndex: 'calls',
+    formItemProps: {
+      rules: [
+        {
+          validator: (_, value) => {
+            if (value !== undefined && value < 1000) throw new Error('At least 1,000 calls');
+          },
+        },
+      ],
+    },
+    title: 'Calls',
+    valueType: 'digit',
+  },
   {
     colSize: 2,
     dataIndex: 'createdAt',
@@ -23,7 +42,8 @@ const columns: ProColumns<ModelRow>[] = [
 /**
  * Query form: `labelWidth`, `span`, `layout`, `defaultColsNumber`, collapse, custom texts, a
  * `search.transform` (date range → `startTime` / `endTime`), `initialValue`, `order`, `formRef`
- * and `beforeSearchSubmit`. The submitted params show under the form.
+ * `beforeSearchSubmit`, and base-ui Form validation through `formItemProps.rules` (Owner: letters
+ * only, Calls: a `validator`). The submitted params show under the form.
  */
 export default () => {
   const store = useCreateStore();

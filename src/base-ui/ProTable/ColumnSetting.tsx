@@ -1,23 +1,9 @@
-import {
-  ArrowDown,
-  ArrowLeftToLine,
-  ArrowRightToLine,
-  ArrowUp,
-  PinOff,
-  Settings,
-} from 'lucide-react';
-import { type ReactNode, useRef } from 'react';
+import { ArrowDown, ArrowLeftToLine, ArrowRightToLine, ArrowUp, PinOff } from 'lucide-react';
+import { type ReactNode } from 'react';
 
 import ActionIcon from '@/base-ui/ActionIcon';
 import Button from '@/base-ui/Button';
 import Checkbox from '@/base-ui/Checkbox/Checkbox';
-import {
-  PopoverPopup,
-  PopoverPortal,
-  PopoverPositioner,
-  PopoverRoot,
-  PopoverTriggerElement,
-} from '@/base-ui/Popover';
 
 import { styles } from './style';
 import type { ProTableColumnsStateItem, ProTableColumnsStateMap, ProTableLocale } from './type';
@@ -62,7 +48,7 @@ export interface ColumnSettingProps {
   state: ProTableColumnsStateMap;
 }
 
-/** Toolbar "column setting" panel: show / hide, pin to start / end, reorder, reset. */
+/** Toolbar "column setting" panel (rendered in an `OptionPopover`): show / hide, pin to start / end, reorder, reset. */
 const ColumnSetting = ({
   checkable = true,
   columns,
@@ -73,7 +59,6 @@ const ColumnSetting = ({
   showListItemOption = true,
   state,
 }: ColumnSettingProps) => {
-  const triggerRef = useRef<HTMLButtonElement>(null);
   const isShown = (key: string) => state[key]?.show !== false;
   const toggleable = columns.filter((column) => !column.disabled);
   const shownCount = toggleable.filter((column) => isShown(column.key)).length;
@@ -208,18 +193,7 @@ const ColumnSetting = ({
     </div>
   );
 
-  return (
-    <PopoverRoot>
-      <PopoverTriggerElement>
-        <ActionIcon aria-label={locale.columnSetting} icon={Settings} ref={triggerRef} />
-      </PopoverTriggerElement>
-      <PopoverPortal>
-        <PopoverPositioner placement="bottomRight" sideOffset={4}>
-          <PopoverPopup>{panel}</PopoverPopup>
-        </PopoverPositioner>
-      </PopoverPortal>
-    </PopoverRoot>
-  );
+  return panel;
 };
 
 export default ColumnSetting;

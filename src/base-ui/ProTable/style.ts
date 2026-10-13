@@ -35,16 +35,13 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     gap: 8px;
     align-items: center;
   `,
-  card: css`
+  part: css`
+    min-width: 0;
+  `,
+  partBordered: css`
     padding: 16px;
-    border-radius: ${cssVar.borderRadiusLG};
-    background: ${cssVar.colorBgContainer};
-  `,
-  cardBordered: css`
     border: 1px solid ${cssVar.colorBorderSecondary};
-  `,
-  cardDark: css`
-    background: ${cssVar.colorFillQuaternary};
+    border-radius: ${cssVar.borderRadiusLG};
   `,
   code: css`
     padding-block: 1px;
@@ -67,14 +64,45 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     min-width: 0;
     text-overflow: ellipsis;
   `,
+  density: css`
+    display: flex;
+    flex-direction: column;
+    min-width: 140px;
+    padding: 4px;
+  `,
+  densityItem: css`
+    cursor: pointer;
+
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: space-between;
+
+    height: 32px;
+    padding-inline: 8px;
+    border: none;
+    border-radius: ${cssVar.borderRadiusSM};
+
+    font: inherit;
+    color: ${cssVar.colorText};
+    text-align: start;
+
+    background: transparent;
+
+    &:hover,
+    &:focus-visible {
+      background: ${cssVar.colorFillTertiary};
+      outline: none;
+    }
+
+    &[aria-checked='true'] {
+      font-weight: 500;
+    }
+  `,
   enumList: css`
     display: inline-flex;
     flex-wrap: wrap;
     gap: 8px;
-  `,
-  ghost: css`
-    padding: 0;
-    background: transparent;
   `,
   indexBorder: css`
     display: inline-flex;
@@ -152,15 +180,33 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     justify-content: flex-end;
   `,
   searchField: css`
-    display: flex;
-    gap: 8px;
-    align-items: center;
     min-width: 0;
 
-    &[data-layout='vertical'] {
-      flex-direction: column;
-      gap: 6px;
+    /* The base-ui Form.Field row: no list padding, fixed-width label column, full-width control. */
+    & > div {
+      gap: 8px;
+      padding-block: 0;
+    }
+
+    & > div > label {
+      overflow: hidden;
+      flex: none;
+
+      width: var(--lobe-pro-table-label-width, auto);
+
+      color: ${cssVar.colorTextSecondary};
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    &[data-layout='horizontal'] > div > label {
+      text-align: end;
+    }
+
+    & > div > div {
+      flex: 1;
       align-items: stretch;
+      min-width: 0;
     }
   `,
   searchFieldControl: css`

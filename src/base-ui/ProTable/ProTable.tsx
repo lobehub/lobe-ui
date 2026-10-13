@@ -1,7 +1,7 @@
 'use client';
 
-import { cx, useThemeMode } from 'antd-style';
-import { CircleHelp, Fullscreen, Minimize, RotateCw, Rows3 } from 'lucide-react';
+import { cx } from 'antd-style';
+import { Check, CircleHelp, Fullscreen, Minimize, RotateCw, Rows3, Settings } from 'lucide-react';
 import {
   type Key,
   type ReactNode,
@@ -14,9 +14,9 @@ import {
   useState,
 } from 'react';
 
+import ActionIconGroup, { type ActionIconGroupItemType } from '@/ActionIconGroup';
 import ActionIcon from '@/base-ui/ActionIcon';
 import Button from '@/base-ui/Button';
-import DropdownMenu from '@/base-ui/DropdownMenu';
 import Input from '@/base-ui/Input/Input';
 import Table from '@/base-ui/Table';
 import type {
@@ -30,6 +30,7 @@ import { useEventCallback } from '@/hooks/useEventCallback';
 
 import ColumnSetting, { type SettingColumn } from './ColumnSetting';
 import LightFilter from './LightFilter';
+import OptionPopover from './OptionPopover';
 import { CopyableText, renderValue } from './renderValue';
 import SearchForm from './SearchForm';
 import { PRO_PREFIX_CLS, styles } from './style';
@@ -126,7 +127,7 @@ const ProTable = <
     defaultSize,
     form: formConfig,
     formRef,
-    ghost,
+    ghost: _ghost,
     headerTitle,
     loading: loadingProp,
     locale: localeProp,
@@ -163,7 +164,6 @@ const ProTable = <
     ...tableProps
   } = props;
 
-  const { isDarkMode } = useThemeMode();
   const locale = { ...DEFAULT_PRO_TABLE_LOCALE, ...localeProp };
   const rootRef = useRef<HTMLDivElement>(null);
   const actionHolderRef = useRef<ProTableActionType | undefined>(undefined);
@@ -201,7 +201,6 @@ const ProTable = <
       if (column.fixed) map[key] = { fixed: column.fixed };
     });
     return { ...map, ...columnsState?.defaultValue };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const [innerColumnsState, setInnerColumnsState] = useState<ProTableColumnsStateMap>(
     () => readPersistedState(persistKey, persistType) ?? defaultColumnsState,
@@ -258,12 +257,13 @@ const ProTable = <
     void fetcher.reload();
   });
 
-  const { form, values } = useSearchForm({
+  const { form } = useSearchForm({
     dateFormatter,
     fields: searchFields,
     initialValues: formConfig?.initialValues,
     onSubmit: handleSubmit,
     onValuesChange: formConfig?.onValuesChange,
+    validateOn: formConfig?.validateOn,
   });
   // The first request already carries the initial form values (Pro submits the form on mount).
   const initialFormParams = useMemo(() => form.getFieldsFormatValue(), [form]);
@@ -507,7 +507,6 @@ const ProTable = <
     return indexed
       .map(({ column, index }) => convert(column, index, true))
       .filter((column): column is TableColumn<T> => column !== null);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     columnsProp,
     columnsStateMap,
@@ -584,67 +583,112 @@ const ProTable = <
   const settingOption = optionConfig && optionConfig.setting;
   const searchOption = optionConfig && optionConfig.search;
 
-  const optionNodes: ReactNode[] = [];
+  const [openOption, setOpenOption] = useState<{ anchor: HTMLElement; key: string } | null>(null);
+  const toggleOption = (key: string, event: unknown) => {
+    const anchor = (event as { currentTarget?: HTMLElement } | undefined)?.currentTarget ?? null;
+    setOpenOption((prev) => (prev?.key === key || !anchor ? null : { anchor, key }));
+  };
+  const closeOption = () => setOpenOption(null);
+
+  const optionItems: ActionIconGroupItemType[] = [];
   if (optionConfig) {
     if (reloadOption) {
-      optionNodes.push(
-        <ActionIcon
-          icon={RotateCw}
-          key="reload"
-          spin={!!loading && !!request}
-          title={locale.reload}
-          onClick={() => (typeof reloadOption === 'function' ? reloadOption() : void reload())}
-        />,
-      );
+      optionItems.push({
+        icon: RotateCw,
+        key: 'reload',
+        label: locale.reload,
+        loading: !!loading && !!request,
+        onClick: () => (typeof reloadOption === 'function' ? reloadOption() : void reload()),
+      });
     }
     if (optionConfig.density) {
-      const densityItems = (['large', 'medium', 'small'] as ProTableDensity[]).map((item) => ({
-        checked: size === item,
-        key: item,
-        label:
-          item === 'large'
-            ? locale.densityLarge
-            : item === 'medium'
-              ? locale.densityMedium
-              : locale.densitySmall,
-        onCheckedChange: () => setSize(item),
-        type: 'checkbox' as const,
-      }));
-      optionNodes.push(
-        <DropdownMenu items={densityItems} key="density" placement="bottomRight">
-          <ActionIcon aria-label={locale.density} icon={Rows3} />
-        </DropdownMenu>,
-      );
+      optionItems.push({
+        icon: Rows3,
+        key: 'density',
+        label: locale.density,
+        onClick: ((event: unknown) => toggleOption('density', event)) as any,
+      });
     }
     if (fullScreenOption) {
-      optionNodes.push(
-        <ActionIcon
-          icon={fullscreen ? Minimize : Fullscreen}
-          key="fullScreen"
-          title={locale.fullScreen}
-          onClick={() =>
-            typeof fullScreenOption === 'function' ? fullScreenOption() : toggleFullScreen()
-          }
-        />,
-      );
+      optionItems.push({
+        icon: fullscreen ? Minimize : Fullscreen,
+        key: 'fullScreen',
+        label: locale.fullScreen,
+        onClick: () =>
+          typeof fullScreenOption === 'function' ? fullScreenOption() : toggleFullScreen(),
+      });
     }
     if (settingOption) {
-      const settingProps = typeof settingOption === 'object' ? settingOption : {};
-      optionNodes.push(
-        <ColumnSetting
-          checkable={settingProps.checkable}
-          columns={settingColumns}
-          draggable={settingProps.draggable}
-          key="setting"
-          locale={locale}
-          showListItemOption={settingProps.showListItemOption}
-          state={columnsStateMap}
-          onChange={setColumnsStateMap}
-          onReset={resetColumnsState}
-        />,
-      );
+      optionItems.push({
+        icon: Settings,
+        key: 'setting',
+        label: locale.columnSetting,
+        onClick: ((event: unknown) => toggleOption('setting', event)) as any,
+      });
     }
   }
+
+  const settingProps = settingOption && typeof settingOption === 'object' ? settingOption : {};
+  const optionNodes: ReactNode[] =
+    optionItems.length > 0
+      ? [
+          <ActionIconGroup
+            className={`${PRO_PREFIX_CLS}-options`}
+            items={optionItems}
+            key="options"
+            size="small"
+            variant="borderless"
+          />,
+          <OptionPopover
+            anchor={openOption?.key === 'density' ? openOption.anchor : null}
+            key="density-popover"
+            open={openOption?.key === 'density'}
+            onOpenChange={(next) => !next && closeOption()}
+          >
+            <div className={styles.density} data-pro-table-density="" role="menu">
+              {(['large', 'medium', 'small'] as ProTableDensity[]).map((item) => (
+                <button
+                  aria-checked={size === item}
+                  className={styles.densityItem}
+                  key={item}
+                  role="menuitemradio"
+                  type="button"
+                  onClick={() => {
+                    setSize(item);
+                    closeOption();
+                  }}
+                >
+                  <span>
+                    {item === 'large'
+                      ? locale.densityLarge
+                      : item === 'medium'
+                        ? locale.densityMedium
+                        : locale.densitySmall}
+                  </span>
+                  {size === item && <Check size={14} />}
+                </button>
+              ))}
+            </div>
+          </OptionPopover>,
+          <OptionPopover
+            anchor={openOption?.key === 'setting' ? openOption.anchor : null}
+            key="setting-popover"
+            open={openOption?.key === 'setting'}
+            onOpenChange={(next) => !next && closeOption()}
+          >
+            <ColumnSetting
+              checkable={settingProps.checkable}
+              columns={settingColumns}
+              draggable={settingProps.draggable}
+              locale={locale}
+              showListItemOption={settingProps.showListItemOption}
+              state={columnsStateMap}
+              onChange={setColumnsStateMap}
+              onReset={resetColumnsState}
+            />
+          </OptionPopover>,
+        ]
+      : [];
 
   const lightMode = search !== false && search?.filterType === 'light';
   const lightFilterDom =
@@ -653,7 +697,6 @@ const ProTable = <
         fields={searchFields}
         form={form}
         placeholder={{ input: locale.searchPlaceholder, select: locale.selectPlaceholder }}
-        values={values}
       />
     ) : null;
 
@@ -790,16 +833,12 @@ const ProTable = <
     />
   );
 
+  // No card container: the form and the table sit flat. `cardBordered` opts back into a framed
+  // part (border, radius, padding); `ghost` is kept for compatibility and has nothing to remove.
   const cardBorder = (part: 'search' | 'table') =>
     typeof cardBordered === 'object' ? !!cardBordered[part] : !!cardBordered;
   const cardClass = (part: 'search' | 'table') =>
-    cx(
-      styles.card,
-      isDarkMode && styles.cardDark,
-      cardBorder(part) && styles.cardBordered,
-      ghost && styles.ghost,
-      `${PRO_PREFIX_CLS}-${part}`,
-    );
+    cx(styles.part, cardBorder(part) && styles.partBordered, `${PRO_PREFIX_CLS}-${part}`);
 
   const tableBody = (
     <>
@@ -825,7 +864,6 @@ const ProTable = <
           fields={searchFields}
           form={form}
           loading={!!loading && !!request}
-          values={values}
           locale={{
             collapse: locale.collapse,
             expand: locale.expand,

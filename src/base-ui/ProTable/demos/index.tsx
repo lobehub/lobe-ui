@@ -20,7 +20,7 @@ const columns: ProColumns<ModelRow>[] = [
 ];
 
 /**
- * One playground for the table-level switches: card (`variant`, `cardBordered`, `ghost`),
+ * One playground for the table-level switches: layout (`variant`, `cardBordered`),
  * density, query form (`search`, `filterType`, `defaultCollapsed`), toolbar (`headerTitle`,
  * `options.*`), selection alert and pagination.
  */
@@ -30,7 +30,6 @@ export default () => {
     {
       variant: { options: ['borderless', 'outlined', 'filled'], value: 'borderless' },
       cardBordered: false,
-      ghost: false,
       defaultSize: { options: ['large', 'medium', 'small'], value: 'medium' },
       pagination: true,
       rowSelection: false,
@@ -39,7 +38,6 @@ export default () => {
   ) as {
     cardBordered: boolean;
     defaultSize: ProTableDensity;
-    ghost: boolean;
     pagination: boolean;
     rowSelection: boolean;
     variant: TableVariant;
@@ -85,7 +83,6 @@ export default () => {
         cardBordered={card.cardBordered}
         columns={columns}
         defaultSize={card.defaultSize}
-        ghost={card.ghost}
         headerTitle={bar.headerTitle || undefined}
         key={`${card.defaultSize}-${query.defaultCollapsed}-${query.filterType}`}
         pagination={card.pagination ? { defaultPageSize: 10, showSizeChanger: true } : false}
