@@ -1,0 +1,246 @@
+---
+title: ProTable
+description: Advanced data table on top of Table, shaped like ProComponents ProTable — request / params driven data, value types and value enums, a generated query form (or light filter), toolbar with reload / density / full screen / column settings, selection alert, columns state and actionRef / formRef.
+category: Data Display
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoBasic from './demos/basic.tsx?demo';
+import DemoValueType from './demos/value-type.tsx?demo';
+import DemoSearchForm from './demos/search-form.tsx?demo';
+import DemoLightFilter from './demos/light-filter.tsx?demo';
+import DemoRowSelection from './demos/row-selection.tsx?demo';
+import DemoColumnsState from './demos/columns-state.tsx?demo';
+import DemoActionRef from './demos/action-ref.tsx?demo';
+import DemoToolbar from './demos/toolbar.tsx?demo';
+import DemoPolling from './demos/polling.tsx?demo';
+import DemoDataSource from './demos/data-source.tsx?demo';
+import DemoTableRender from './demos/table-render.tsx?demo';
+
+## When to use
+
+- A list page: a query form, a toolbar and a table fed by one `request`.
+- Columns that double as form schema (`valueType`, `valueEnum`, `search`, `hideInTable` …).
+
+The API follows [ProComponents ProTable](https://procomponents.ant.design/components/table). Everything is built from lobe-ui: `Table`, the `Form` (`@lobehub/ui/form`: `useForm`, `Form`, `Form.Field`) for the query form and light filter, `Input`, `Select`, `DatePicker`, `Button`, `Popover`, `Checkbox`, and `ActionIconGroup` for the toolbar icons; no antd or `@ant-design/pro-*` component is used. See [Differences from ProComponents](#differences-from-procomponents-protable) for what is not covered.
+
+```tsx
+import { ProTable, type ProColumns } from '@lobehub/ui/pro-table';
+
+const columns: ProColumns<Row>[] = [
+  { title: 'Name', dataIndex: 'name' },
+  {
+    title: 'Status',
+    dataIndex: 'status',
+    valueEnum: { open: { text: 'Open', status: 'Success' } },
+  },
+  { title: 'Created', dataIndex: 'createdAt', valueType: 'date', hideInSearch: true },
+];
+
+<ProTable<Row>
+  columns={columns}
+  rowKey="id"
+  headerTitle="Rows"
+  request={async (params, sort, filter) => {
+    const { data, total } = await api.list({ ...params, sort, filter });
+    return { data, success: true, total };
+  }}
+/>;
+```
+
+## Playground
+
+The table-level switches in one place: layout (`variant`, `cardBordered`), `defaultSize` (density), `pagination`, `rowSelection`; the query form (`search`, `search.filterType`, `search.defaultCollapsed`, `search.labelWidth`); and the toolbar (`headerTitle`, `options` and each of `reload` / `density` / `fullScreen` / `setting` / `search`).
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Basic usage
+
+`request` receives `{ ...formValues, ...params, current, pageSize }`, the server `sort` and `filter` maps, and returns `{ data, success, total }`. `valueType: 'option'` columns return an array of nodes which are right-aligned; use `filled` `ActionIcon`s for row actions. `copyable`, `tooltip`, `filters: true` (from `valueEnum`) and `sorter: true` (server sort) are on.
+
+<Demo of={DemoBasic} />
+
+## Value types
+
+Every built-in `valueType` in read mode, plus `valueEnum` (single and array values). Toggle `columnEmptyText` and the `fieldProps` of `digit` / `money`.
+
+<Demo of={DemoValueType} layout="bare" />
+
+## Query form
+
+The form is a `Form` driven by a `useForm` instance; each column is a `Form.Field`, so `formItemProps.rules` / `formItemProps.required` validate on change / blur and block the query until they pass (errors show under the control). Columns become fields unless `hideInSearch` / `search: false` (or `index` / `indexBorder` / `option`). `order` sorts fields, `initialValue` presets them, `colSize` widens them and `search.transform` reshapes the submitted value. The form is responsive (1–4 per row) or fixed by `span`; it collapses to one row with `defaultCollapsed` / `defaultColsNumber`, and `optionRender` / `collapseRender` / `searchText` / `resetText` customize the buttons.
+
+<Demo of={DemoSearchForm} layout="bare" />
+
+## Light filter
+
+`search: { filterType: 'light' }` puts compact controls into the toolbar (small, `outlined` in light mode and `filled` in dark mode); select-like fields query on change, text fields on Enter.
+
+<Demo of={DemoLightFilter} />
+
+## Batch operations
+
+`rowSelection` shows an alert bar with the count and a clear button. Replace its parts with `tableAlertRender` / `tableAlertOptionRender` (`false` hides them), keep it with `rowSelection.alwaysShowAlert`, and read the selection in `toolBarRender(action, { selectedRowKeys, selectedRows })`.
+
+<Demo of={DemoRowSelection} layout="bare" />
+
+## Columns state
+
+`columnsState` (controlled `value` / `onChange`, or `defaultValue`) holds `show`, `fixed` and `order` per column key, written by the column setting panel; `persistenceKey` + `persistenceType` save it to storage. `disable` locks a column's checkbox, `hideInSetting` drops it from the panel.
+
+<Demo of={DemoColumnsState} />
+
+## actionRef and formRef
+
+<Demo of={DemoActionRef} />
+
+## Toolbar
+
+<Demo of={DemoToolbar} layout="bare" />
+
+## Polling
+
+<Demo of={DemoPolling} layout="bare" />
+
+## Local data
+
+Without `request`, `dataSource` is shown as is and the table pages, sorts and filters locally; `filters: true` with `onFilter: true` filters by the `valueEnum` keys.
+
+<Demo of={DemoDataSource} />
+
+## Custom layout
+
+<Demo of={DemoTableRender} />
+
+## API
+
+Besides the props below, every [Table](/components/table) prop (`rowKey`, `scroll`, `expandable`, `onRow`, `summary`, `sticky`, `virtual` …) is passed through.
+
+### ProTable
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| request | Fetch data; gets `(params, sort, filter)` and resolves `{ data, success, total }`. The row type is inferred from the resolved `data`; `params` is typed by the second generic (`ProTable<T, Params>`) | `(params: Params & { current, pageSize }, sort: Record<string, SortOrder>, filter: Record<string, (string \| number)[] \| null>) => Promise<Partial<RequestData<T>>>` | - |
+| params | Extra request params; a change refetches from page 1 | `object` | - |
+| postData | Post-process the fetched data | `(data: T[]) => T[]` | - |
+| dataSource | Data when there is no `request` | `T[]` | - |
+| defaultData | Initial data | `T[]` | - |
+| manualRequest | Skip the fetch on mount | `boolean` | `false` |
+| debounceTime | Debounce of fetches in ms | `number` | `10` |
+| polling | Polling interval (≥ 2000 ms), or a function of the data | `number \| (data) => number` | - |
+| onLoad | Data loaded | `(data: T[]) => void` | - |
+| onLoadingChange | Loading changed | `(loading: boolean) => void` | - |
+| onRequestError | Request threw | `(error: Error) => void` | `console.error` |
+| onDataSourceChange | Data replaced by a fetch | `(data: T[]) => void` | - |
+| loading | Controlled loading; an object is passed to the Table Spin (`tip`, `variant` …), `spinning` defaults to the request state and `delay` (ms) postpones the overlay | `boolean \| { spinning?, delay?, tip?, variant? }` | - |
+| columns | Column schema | `ProColumns<T>[]` | - |
+| columnsState | Show / pin / order per column key | `ProTableColumnsState` | - |
+| columnEmptyText | Shown for empty values; `false` renders nothing | `ReactNode \| false` | `'-'` |
+| actionRef | Imperative actions | `Ref<ProTableActionType>` | - |
+| formRef | Search form handle | `Ref<ProTableFormInstance>` | - |
+| search | Query form config; `false` hides it | `false \| ProTableSearchConfig` | `{}` |
+| form | `initialValues`, `onValuesChange`, `validateOn` of `useForm`; `ignoreRules` skips every column `rules` / `required`; `layout` is the fallback of `search.layout` | `object` | - |
+| dateFormatter | How dates are sent: `'string'`, `'number'`, `false` (Date) or a function | `string \| false \| fn` | `'string'` |
+| beforeSearchSubmit | Reshape the form values before they become params | `(params) => params` | - |
+| onSubmit | Form submitted | `(params) => void` | - |
+| onReset | Form reset | `() => void` | - |
+| headerTitle | Toolbar title | `ReactNode` | - |
+| tooltip | Info icon after the title | `ReactNode` | - |
+| toolbar | `title` / `subTitle` / `tooltip` / `actions` / `settings` | `ProTableToolbarConfig` | - |
+| toolBarRender | Toolbar buttons; `false` hides the toolbar | `(action, { selectedRowKeys, selectedRows }) => ReactNode[] \| false` | - |
+| options | Toolbar icons; `false` hides them | `ProTableOptionConfig \| false` | `{ reload, density, setting }` |
+| rowSelection | Table `rowSelection` + `alwaysShowAlert` | `object \| false` | - |
+| tableAlertRender | Alert text; `false` hides the alert | `({ selectedRowKeys, selectedRows, onCleanSelected }) => ReactNode \| false` | count |
+| tableAlertOptionRender | Alert actions; `false` hides them | same | Clear |
+| pagination | Table pagination; `total` comes from `request` | `false \| TablePaginationConfig` | `{ pageSize: 10 }` |
+| size / defaultSize / onSizeChange | Density (controlled / initial / changed) | `'large' \| 'middle' \| 'small'` | `'middle'` |
+| variant | Table variant | `'borderless' \| 'outlined' \| 'filled'` | `'borderless'` |
+| cardBordered | Frame the query form / table with a border, radius and padding (flat by default) | `boolean \| { search?, table? }` | `false` |
+| tableExtraRender | Content between the form and the table card | `(props, data) => ReactNode` | - |
+| tableRender | Arrange `toolbar` / `alert` / `table` yourself | `(props, dom, parts) => ReactNode` | - |
+| searchFormRender | Wrap / replace the search form | `(props, dom) => ReactNode` | - |
+| tableClassName / tableStyle | Class / style of the inner Table | - | - |
+| locale | Table `locale` plus the ProTable texts | `TableLocale & ProTableLocale` | English |
+
+### ProColumns
+
+All Table column fields, plus:
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| valueType | Cell rendering and form control | `ProTableValueType \| (record) => ProTableValueType` | `'text'` |
+| valueEnum | Value → text / status map (`Map` or object) | `ProTableValueEnum \| (record) => ProTableValueEnum` | - |
+| fieldProps | Props of the form control; also `precision` / `customSymbol` for numbers | `object` | - |
+| render | `(dom, record, index, action, schema)`; `option` columns return an array | `fn` | - |
+| renderText | Transform the raw value before rendering | `(text, record, index, action) => any` | - |
+| renderFormItem | Custom search control | `(schema, config, form) => ReactNode` | - |
+| search | `false` hides the field; `{ transform }` reshapes its value | `boolean \| { transform }` | `true` |
+| hideInSearch / hideInTable / hideInSetting | Hide in the form / table / setting panel | `boolean` | - |
+| hideInForm | Accepted for compatibility (there is no create form) | `boolean` | - |
+| order | Field order in the form (larger first) | `number` | - |
+| colSize | Grid cells of the field | `number` | `1` |
+| initialValue | Initial form value | `any` | - |
+| request | Load the options of a select field: `({ ...params, keyWords }) => Promise<{ label, value }[]>`. With `fieldProps: { showSearch: true, filterOption: false }` typing re-requests with `keyWords` | `fn` | - |
+| params | Extra `request` params; a (deep) change re-requests | `object` | - |
+| debounceTime | Debounce of the option `request` in ms | `number` | `10` |
+| formItemProps | `label`, `extra`, `style`, `required` and `rules` (`required`, `message`, `pattern`, `min`, `max`, `len`, `validator`) of the field | `object` | - |
+| tooltip | Info icon after the header title | `ReactNode` | - |
+| copyable | Copy button after the text | `boolean` | - |
+| filters | `true` builds header filters from `valueEnum` | `boolean \| TableColumnFilterItem[]` | - |
+| onFilter | `true` filters locally by `valueEnum` key | `boolean \| fn` | - |
+| sorter | `true` sorts on the server; a string renames the sort field; a function sorts locally | `boolean \| string \| fn \| object` | - |
+| disable | Lock the setting checkbox | `boolean \| { checkbox }` | - |
+
+`valueType`: `text`, `textarea`, `password`, `code`, `digit`, `money`, `percent`, `progress`, `select`, `radio`, `checkbox`, `switch`, `date`, `dateTime`, `time`, `dateRange`, `dateTimeRange`, `index`, `indexBorder`, `option`. `valueEnum` items: `{ text, status?: 'Success' | 'Error' | 'Processing' | 'Warning' | 'Default', color?, disabled? }`.
+
+### search
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| filterType | `query` grid form or `light` toolbar filter | `'query' \| 'light'` | `'query'` |
+| defaultCollapsed / collapsed / onCollapse | Collapse state | `boolean` | `true` |
+| defaultColsNumber | Fields shown while collapsed | `number` | one row |
+| span | Field span in a 24-column grid; an object picks a span by form width (`xs` under 576, `sm` ≥576, `md` ≥768, `lg` ≥992, `xl` ≥1200, `xxl` ≥1600) | `number \| { xs?, sm?, md?, lg?, xl?, xxl? }` | responsive |
+| labelWidth | Label column width in horizontal layout (px). Longer labels end in an ellipsis and show the full text as `title` on hover; `'auto'` removes the limit (natural width). Ignored in `vertical` | `number \| 'auto'` | `80` |
+| layout | Label beside (`horizontal`) or above (`vertical`, Pro QueryFilter vertical: 1 / 2 / 3 / 4 columns below 576 / 768 / 1200 px / wider, buttons on the control line of the last row) the control | `'horizontal' \| 'vertical'` | `horizontal` (`vertical` on one column) |
+| searchText / submitText / resetText | Button texts | `ReactNode` | - |
+| optionRender | Replace the buttons; `false` hides them | `({ form, onSubmit, onReset }, dom) => ReactNode[] \| false` | - |
+| collapseRender | Replace the toggle text; `false` hides it | `(collapsed) => ReactNode \| false` | - |
+
+### options
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| reload | Reload icon (or a handler) | `boolean \| () => void` | `true` |
+| density | Density menu | `boolean` | `true` |
+| fullScreen | Full screen icon (or a handler) | `boolean \| () => void` | `false` |
+| setting | Column setting panel; `{ checkable, draggable, showListItemOption }` | `boolean \| object` | `true` |
+| search | Keyword input; `{ name = 'keyword', placeholder, onSearch }` (return `false` to cancel) | `boolean \| object` | `false` |
+
+### actionRef
+
+| Method                           | Description                                              |
+| -------------------------------- | -------------------------------------------------------- |
+| `reload(resetPageIndex?)`        | Fetch again (optionally from page 1); resolves when done |
+| `reloadAndRest()`                | Clear selection, go to page 1 and fetch                  |
+| `reset()`                        | Reset the form to initial values, go to page 1 and fetch |
+| `clearSelected()`                | Clear the selection                                      |
+| `pageInfo` / `setPageInfo(info)` | Read / set `{ current, pageSize, total }`                |
+| `getSortFilter()`                | Current server `{ sort, filter }`                        |
+| `fullScreen()`                   | Toggle full screen                                       |
+| `nativeElement`                  | Root element                                             |
+
+### formRef
+
+The Form instance — `getValue`, `getValues`, `setValue`, `setValues`, `reset`, `resetField`, `validate`, `submit` (validates first, resolves `{ valid, errors }`), `setErrors`, `setSchema`, `isDirty`, `isTouched`, `subscribe` — plus the antd-style aliases `getFieldValue`, `getFieldsValue`, `setFieldValue`, `setFieldsValue`, `resetFields`, `validateFields` (rejects with `{ errors }`) and `getFieldsFormatValue()` (values as sent to `request`).
+
+## Differences from ProComponents ProTable
+
+- **lobe-ui Form instead of antd Form.** `formRef` is the Form instance plus antd-shaped aliases (above), not an antd `FormInstance`: there is no `getFieldError` / `setFields` / `isFieldsTouched` etc., `rules` cover `required` / `message` / `pattern` / `min` / `max` / `len` / `validator` (no `type`, `whitespace`, `warningOnly`, `validateTrigger`; use `form.validateOn`), there is no `ProForm` field library, and `form` only takes `initialValues` / `onValuesChange` / `validateOn`. A whole-form schema can be set with `formRef.current.setSchema(standardSchema)`. Dotted names (from array `dataIndex`) are nested paths.
+- **Dates are `Date`s,** not dayjs. `dateFormatter: 'string'` sends `YYYY-MM-DD` (`YYYY-MM-DD HH:mm:ss` for `dateTime`); custom format strings are not supported, use a function. `time` / `dateTimeRange` use the date pickers (no time panel).
+- **Not implemented:** `EditableProTable` / `editable`, `DragSortTable`, `type: 'form'`, `ErrorBoundary`, `revalidateOnFocus`, cursor pagination (`pagination.type: 'cursor'` / `nextToken`), `ListToolBar` menus / tabs / multi-line, `optionsRender`, `cardProps`, `tableViewRender`, value types `avatar`, `image`, `rate`, `slider`, `color`, `cascader`, `treeSelect`, `segmented`, `fromNow`, `jsonCode`. Editable and drag-sort tables depend on large subsystems (row editing forms, dnd) and are left out; see the Table demos _Editable rows_ and _Drag sorting with handler_ for how to build them on the same table.
+- **Column setting** reorders with up / down buttons instead of drag and drop, and only lists top-level columns.
+- **No card container.** Pro wraps the query form and the table in `ProCard`s; here they sit flat in the page, so there is no `ghost` and `cardBordered` adds an optional frame (border, radius, padding) instead of a card border. `cardProps` is not supported.
+- **Light filter** renders the controls inline (no "label: value" chips with popovers).
+- **Money** defaults to the `¥` symbol like Pro's zh-CN locale; set `fieldProps.customSymbol`. Texts default to English and are overridden via `locale` (they are not in `@lobehub/ui/i18n` yet).
+- The toolbar icons are one small outlined `ActionIconGroup` (`size="small"`, `variant="outlined"`) (every icon gets a tooltip). The group only renders plain buttons, so the density menu and the column setting panel are controlled popovers anchored to the clicked icon rather than `DropdownMenu` / `Popover` triggers.

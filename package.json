@@ -85,6 +85,10 @@
       "types": "./es/FormKit/index.d.mts",
       "import": "./es/FormKit/index.mjs"
     },
+    "./pro-table": {
+      "types": "./es/ProTable/index.d.mts",
+      "import": "./es/ProTable/index.mjs"
+    },
     "./global.css": "./es/global.css",
     "./theme.css": "./es/theme.css",
     "./style.css": "./es/style.css",
