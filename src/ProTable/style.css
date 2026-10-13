@@ -69,7 +69,7 @@
     background: var(--lobe-color-fill-secondary);
 
     &[data-top] {
-      color: var(--lobe-color-text-light-solid);
+      color: var(--lobe-color-bg-layout);
       background: var(--lobe-color-primary);
     }
   }

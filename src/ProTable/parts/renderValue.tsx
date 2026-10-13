@@ -109,6 +109,7 @@ export const renderValue = (value: any, options: RenderValueOptions): ReactNode 
           percent={Number.isNaN(number) ? 0 : number}
           size="small"
           style={{ minWidth: 100 }}
+          variant="inset"
         />
       );
     }
