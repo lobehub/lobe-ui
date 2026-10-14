@@ -1,12 +1,18 @@
 import { Flexbox } from '@lobehub/ui';
-import { Button, DatePicker, type PickerPanelProps, Slider, Text } from '@lobehub/ui/base-ui';
-import dayjs from 'dayjs';
+import {
+  Button,
+  DayjsDatePicker as DatePicker,
+  type PickerPanelProps,
+  Slider,
+  Text,
+} from '@lobehub/ui/base-ui';
+import dayjs, { type Dayjs } from 'dayjs';
 import type { InputHTMLAttributes, ReactNode } from 'react';
 
 // `components` replaces a panel (`date` / `week` / `month` / `quarter` / `year` / `decade` /
 // `time`), the `input` or the OK `button`. A custom panel gets `value`, `onHover` (previews in
 // the input) and `onSelect` (picks, as clicking a cell would).
-const SliderPanel = ({ onHover, onSelect, value }: PickerPanelProps) => {
+const SliderPanel = ({ onHover, onSelect, value }: PickerPanelProps<Dayjs>) => {
   const today = dayjs().startOf('day');
   const offset = value ? value.startOf('day').diff(today, 'day') : 0;
 

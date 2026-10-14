@@ -1,5 +1,8 @@
 import { Flexbox } from '@lobehub/ui';
-import { DatePicker, type DatePickerProps } from '@lobehub/ui/base-ui';
+import {
+  DayjsDatePicker as DatePicker,
+  type DayjsDatePickerProps as DatePickerProps,
+} from '@lobehub/ui/base-ui';
 import dayjs, { type Dayjs } from 'dayjs';
 
 const onChange: DatePickerProps<Dayjs[]>['onChange'] = (date, dateString) => {

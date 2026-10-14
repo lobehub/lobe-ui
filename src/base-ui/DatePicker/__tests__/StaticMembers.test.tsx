@@ -9,8 +9,8 @@ import { expectTypeOf } from 'vitest';
 import { MotionProvider } from '@/MotionProvider';
 
 import * as entry from '..';
-import DatePicker from '../DatePicker';
-import DateRangePicker from '../DateRangePicker';
+import DatePicker from '../DayjsDatePicker';
+import DateRangePicker from '../DayjsDateRangePicker';
 import generatePicker from '../generatePicker';
 import type {
   DatePickerProps,
@@ -285,13 +285,17 @@ describe('antd-style type aliases', () => {
   test('match the component props', () => {
     expectTypeOf<WeekPickerProps>().toEqualTypeOf<MonthPickerProps>();
     expectTypeOf<PickerProps>().toEqualTypeOf<DatePickerProps>();
-    expectTypeOf<RangePickerProps['value']>().toEqualTypeOf<
-      [Dayjs | null | undefined, Dayjs | null | undefined] | null | undefined
+    expectTypeOf<[Dayjs | null | undefined, Dayjs | null | undefined]>().toMatchTypeOf<
+      NonNullable<RangePickerProps<Dayjs>['value']>
     >();
+    expectTypeOf<RangePickerProps<Dayjs>['onChange']>()
+      .parameter(0)
+      .toEqualTypeOf<[Dayjs | null, Dayjs | null] | null>();
+    // The default (native Date) range never emits `null`: a cleared range is `[null, null]`.
     expectTypeOf<RangePickerProps<Date>['onChange']>()
       .parameter(0)
-      .toEqualTypeOf<[Date | null, Date | null] | null>();
-    expectTypeOf<PickerProps<Date>['value']>().toEqualTypeOf<Date | null | undefined>();
+      .toEqualTypeOf<[Date | null, Date | null]>();
+    expectTypeOf<Date | null | undefined>().toMatchTypeOf<PickerProps<Date>['value']>();
     expectTypeOf<TimePickerProps>().not.toHaveProperty('showTime');
     expectTypeOf<WeekPickerProps>().not.toHaveProperty('picker');
     expectTypeOf<DatePickerSemanticType['classNames']>().toMatchTypeOf<

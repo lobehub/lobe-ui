@@ -1,9 +1,9 @@
 import { Flexbox } from '@lobehub/ui';
 import {
-  DatePicker,
-  type DatePickerProps,
-  DateRangePicker,
-  type DateRangePickerProps,
+  DayjsDatePicker as DatePicker,
+  type DayjsDatePickerProps as DatePickerProps,
+  DayjsDateRangePicker as DateRangePicker,
+  type DayjsDateRangePickerProps as DateRangePickerProps,
 } from '@lobehub/ui/base-ui';
 
 import { createStaticStyles } from '@/utils/styleEngine';

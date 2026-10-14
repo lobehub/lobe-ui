@@ -2,10 +2,10 @@ import 'dayjs/locale/zh-cn';
 
 import { ConfigProvider, Flexbox } from '@lobehub/ui';
 import {
-  DatePicker,
   datePickerLocaleEnUS,
   datePickerLocaleZhCN,
-  DateRangePicker,
+  DayjsDatePicker as DatePicker,
+  DayjsDateRangePicker as DateRangePicker,
   type PickerLocaleInput,
   Segmented,
   Text,

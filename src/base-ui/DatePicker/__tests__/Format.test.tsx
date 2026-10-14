@@ -4,8 +4,8 @@ import { motion } from 'motion/react';
 
 import { MotionProvider } from '@/MotionProvider';
 
-import DatePicker from '../DatePicker';
-import DateRangePicker from '../DateRangePicker';
+import DatePicker from '../DayjsDatePicker';
+import DateRangePicker from '../DayjsDateRangePicker';
 
 if (!globalThis.ResizeObserver) {
   globalThis.ResizeObserver = class {

@@ -6,8 +6,8 @@ import { useState } from 'react';
 
 import { MotionProvider } from '@/MotionProvider';
 
-import DatePicker from '../DatePicker';
-import type { DatePickerProps, PickerTagProps } from '../type';
+import DatePicker from '../DayjsDatePicker';
+import type { DayjsDatePickerProps as DatePickerProps, PickerTagProps } from '../type';
 
 if (!globalThis.ResizeObserver) {
   globalThis.ResizeObserver = class {
@@ -175,7 +175,7 @@ describe('DatePicker multiple', () => {
 
   test('tagRender renders each tag with its label, value and onClose', () => {
     const onChange = vi.fn();
-    const tagRender = vi.fn(({ label, onClose, value }: PickerTagProps) => (
+    const tagRender = vi.fn(({ label, onClose, value }: PickerTagProps<Dayjs>) => (
       <span className="custom-tag" data-date={value.format('YYYY-MM-DD')}>
         {label}
         <button type="button" onClick={onClose}>

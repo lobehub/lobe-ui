@@ -1,8 +1,8 @@
 import { useThemeMode } from 'antd-style';
 import { type ReactNode } from 'react';
 
-import DatePicker from '@/base-ui/DatePicker/DatePicker';
-import DateRangePicker from '@/base-ui/DatePicker/DateRangePicker';
+import DatePicker from '@/base-ui/DatePicker/DayjsDatePicker';
+import DateRangePicker from '@/base-ui/DatePicker/DayjsDateRangePicker';
 import Input from '@/base-ui/Input/Input';
 import InputNumber from '@/base-ui/Input/InputNumber';
 import Select from '@/base-ui/Select';
