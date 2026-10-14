@@ -67,7 +67,7 @@ export const styles = stylex.create({
     '::before': {
       insetInline: 0,
       transition: { default: 'opacity 200ms ease', [reducedMotion]: 'none' },
-      backgroundColor: cssVar.colorBorderSecondary,
+      backgroundColor: `var(--lobe-fill-border, ${cssVar.colorFill})`,
       blockSize: 1,
       content: '""',
       insetBlockStart: -6,
@@ -287,7 +287,7 @@ export const styles = stylex.create({
     flexDirection: 'column',
   },
   topItemsDivided: {
-    borderBlockEndColor: cssVar.colorBorderSecondary,
+    borderBlockEndColor: `var(--lobe-fill-border, ${cssVar.colorFill})`,
     borderBlockEndStyle: 'solid',
     borderBlockEndWidth: 1,
     marginBlockEnd: 6,

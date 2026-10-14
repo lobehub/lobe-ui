@@ -50,7 +50,7 @@ export const styles = stylex.create({
     color: cssVar.colorWarning,
   },
   frame: {
-    '--filter-seam': cssVar.colorBorderSecondary,
+    '--filter-seam': `var(--lobe-fill-border, ${cssVar.colorFill})`,
     'borderRadius': 'inherit',
     'overflow': 'hidden',
   },

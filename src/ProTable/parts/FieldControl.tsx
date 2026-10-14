@@ -1,3 +1,4 @@
+import dayjs, { type Dayjs } from 'dayjs';
 import { type ReactNode } from 'react';
 
 import DatePicker from '@/DatePicker/DatePicker';
@@ -22,6 +23,10 @@ export interface FieldControlProps {
 }
 
 const SELECT_TYPES = new Set<ProTableValueType>(['select', 'radio', 'checkbox']);
+
+// Form values stay native Date (ProTable's contract); the picker works in Dayjs.
+const toDayjs = (value: unknown) => (value ? dayjs(value as Date) : null);
+const toDate = (value: Dayjs | null | undefined) => value?.toDate() ?? null;
 
 const FieldControl = ({ column, form, light, onChange, placeholder, value }: FieldControlProps) => {
   const valueType = resolveValueType(column) ?? 'text';
@@ -104,10 +109,10 @@ const FieldControl = ({ column, form, light, onChange, placeholder, value }: Fie
           placeholder={light ? label : placeholder.select}
           size={size}
           style={{ width: '100%' }}
-          value={value ?? null}
+          value={toDayjs(value)}
           variant={variant}
           {...fieldProps}
-          onChange={(next) => onChange(next ?? undefined)}
+          onChange={(next) => onChange(toDate(next) ?? undefined)}
         />
       );
     }
@@ -118,10 +123,12 @@ const FieldControl = ({ column, form, light, onChange, placeholder, value }: Fie
           allowClear
           size={size}
           style={{ width: '100%' }}
-          value={value ?? [null, null]}
+          value={value ? [toDayjs(value[0]), toDayjs(value[1])] : null}
           variant={variant}
           {...fieldProps}
-          onChange={(next) => onChange(next && (next[0] || next[1]) ? next : undefined)}
+          onChange={(next) =>
+            onChange(next && (next[0] || next[1]) ? [toDate(next[0]), toDate(next[1])] : undefined)
+          }
         />
       );
     }

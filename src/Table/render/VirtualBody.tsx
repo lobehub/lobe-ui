@@ -95,7 +95,9 @@ const VirtualBody = <T,>({
           {rows.length === 0 ? (
             <div className={`${prefixCls}-placeholder`}>{emptyNode}</div>
           ) : (
-            <div style={{ transform: `translateY(${offset}px)` }}>
+            // Not a transform: that opens a stacking context and FixedFrost's rail would
+            // cover the fixed cells inside it.
+            <div style={{ position: 'relative', top: offset }}>
               {virtual.items.map((item) => {
                 const row = rows[item.index];
                 if (!row) return null;

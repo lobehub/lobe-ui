@@ -47,7 +47,7 @@ export const styles = stylex.create({
    * track, which reads louder than the cells.
    */
   frame: {
-    '--metric-seam': cssVar.colorBorderSecondary,
+    '--metric-seam': `var(--lobe-fill-border, ${cssVar.colorFill})`,
     'borderRadius': 'inherit',
     'overflow': 'hidden',
     'backgroundColor': 'transparent',

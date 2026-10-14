@@ -2,6 +2,7 @@ import type { Rule } from '../../report';
 import { antClassNames } from './antClassNames';
 import { antdImports } from './antdImports';
 import { changedComponents } from './changedComponents';
+import { datePickerProps } from './datePickerProps';
 import { removedExports } from './removedExports';
 import { removedSubpathStrings } from './removedSubpathStrings';
 import { staticCss } from './staticCss';
@@ -23,4 +24,5 @@ export const v6Rules: Rule[] = [
   antClassNames,
   videoProps,
   tableProps,
+  datePickerProps,
 ];

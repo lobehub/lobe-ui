@@ -37,5 +37,6 @@ Reported with file, line and fix, linking the [migration guide](https://ui.lobeh
 | R9   | `.ant-*` selectors and `--ant-*` variables in strings                           |
 | R10  | removed v5 `Video` props                                                        |
 | R11  | removed `Table` / `ProTable` props and aliases                                  |
+| R12  | removed `DatePicker` / `DateRangePicker` aliases                                |
 
 Run your formatter afterwards; merged imports are written on one line when short, one specifier per line otherwise. Then work through the report by hand, or give it to a coding agent with the `lobe-ui-v6-migration` skill (`npx skills add lobehub/lobe-ui`).

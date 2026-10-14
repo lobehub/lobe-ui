@@ -24,6 +24,7 @@ import Column from './Column';
 import ColumnGroup from './ColumnGroup';
 import { PREFIX_CLS } from './constants';
 import { getStickyOffsets } from './engine/fixed';
+import type { TableInternalProps } from './internal';
 import { EXPAND_COLUMN } from './pipeline/columnUtils';
 import {
   SELECTION_ALL,
@@ -32,6 +33,7 @@ import {
   SELECTION_NONE,
 } from './pipeline/selectionUtils';
 import { HeaderContext, SelectionContext, TableViewContext } from './render/context';
+import FixedFrost from './render/FixedFrost';
 import TableLoadingSkeleton from './render/LoadingSkeleton';
 import { renderPaginationBars } from './render/PaginationBar';
 import { TableSummary } from './render/Summary';
@@ -41,7 +43,6 @@ import { useViewContexts } from './render/useViewContexts';
 import { useStableSemantic } from './semantic';
 import { TableStoreProvider } from './store/hooks';
 import { styles } from './style';
-import type { TableInternalProps } from './internal';
 import type { TableProps, TableRef } from './type';
 import { useTableController } from './useTableController';
 
@@ -228,6 +229,7 @@ const TableInner = <T,>(props: TableInternalProps<T>) => {
                     {tip as ReactNode}
                   </div>
                 )}
+                <FixedFrost rootRef={rootRef} />
               </div>
               {pager.bottom}
             </div>

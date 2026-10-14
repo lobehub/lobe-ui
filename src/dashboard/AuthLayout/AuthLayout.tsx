@@ -9,9 +9,9 @@ import { Flexbox } from '@/Flex';
 import Skeleton from '@/Skeleton';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import { styleProps } from '@/styles/stylex/props';
+import { useThemeMode } from '@/styles/theme/scope';
 import Text from '@/Text';
 
-import { useSurfaceCardStyles } from '../Surface/link';
 import Aside from './Aside';
 import { styles } from './style';
 import type { AuthLayoutProps } from './type';
@@ -49,7 +49,7 @@ function AuthLayout({
   variant = 'default',
   ...rest
 }: AuthLayoutProps) {
-  const cardStyles = useSurfaceCardStyles();
+  const { isDarkMode } = useThemeMode();
   const split = Boolean(aside);
   const art = isValidElement(background) ? background : null;
   const heading =
@@ -77,7 +77,15 @@ function AuthLayout({
     <div
       data-auth-layout=""
       {...rest}
-      {...styleProps([styles.page, background === 'grid' && styles.grid], className, style)}
+      {...styleProps(
+        [
+          styles.page,
+          background === 'grid' && styles.grid,
+          background === 'grid' && isDarkMode && styles.gridDark,
+        ],
+        className,
+        style,
+      )}
     >
       {art ? <div {...stylex.props(styles.backdrop)}>{art}</div> : null}
       <header {...stylex.props(styles.header)}>
@@ -91,7 +99,6 @@ function AuthLayout({
             {...stylex.props(
               styles.lift,
               split && styles.liftSplit,
-              cardStyles,
               variant === 'elevated' && styles.elevated,
             )}
           >

@@ -78,7 +78,10 @@ export default defineConfig(
               'uuid',
             ].map((name) => ({ message: 'Removed from @lobehub/ui dependencies in v6.', name })),
           ],
-          patterns: [{ group: ['ahooks/*'], message: 'Use the hooks in src/hooks.' }],
+          patterns: [
+            { group: ['ahooks/*'], message: 'Use the hooks in src/hooks.' },
+            { group: ['@rc-component/*', 'rc-*'], message: 'v6 ships without rc-* packages.' },
+          ],
         },
       ],
     },

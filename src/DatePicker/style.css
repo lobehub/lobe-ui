@@ -1,0 +1,1312 @@
+@layer lobe-ui {
+  .lobe-picker.lobe-picker-underlined {
+    border-block-end-color: var(--lobe-color-border);
+    border-radius: 0;
+
+    &:hover:not(:focus-within, .lobe-picker-disabled) {
+      border-block-end-color: var(--lobe-color-primary-hover);
+    }
+
+    &:focus-within {
+      border-block-end-color: var(--lobe-color-primary);
+    }
+  }
+
+  .lobe-picker-root {
+    /* ---------------------------------------------------------------- input box */
+
+    /* Size to content like antd: the shared Input root is width: 100%, which made the
+         picker stretch in a flex row and squeeze its siblings. Default to auto width (capped by
+         the container); a style / className width (e.g. 100%) still wins and the inputs grow. */
+    &.lobe-picker {
+      position: relative;
+      width: auto;
+      max-width: 100%;
+    }
+
+    /* flex-basis auto, not 0: the input keeps its natural width from rc-picker's size
+         attribute (format length + 2) instead of collapsing when the root is auto width. */
+    &.lobe-picker .lobe-picker-input {
+      position: relative;
+
+      display: inline-flex;
+      flex: 1 1 auto;
+      gap: 8px;
+      align-items: center;
+
+      min-width: 0;
+    }
+
+    &.lobe-picker .lobe-picker-input > input {
+      flex: 1 1 auto;
+
+      width: auto;
+      min-width: 0;
+      padding: 0;
+      border: none;
+
+      font: inherit;
+      font-variant-numeric: tabular-nums;
+      color: inherit;
+      text-overflow: ellipsis;
+
+      appearance: none;
+      background: transparent;
+      outline: none;
+
+      &::placeholder {
+        color: var(--lobe-color-text-placeholder);
+      }
+
+      &:disabled {
+        cursor: not-allowed;
+      }
+    }
+
+    /*
+       * `disabled: [boolean, boolean]`: Input greys the whole root on `:has(input:disabled)`;
+       * while one end stays editable (rc adds `-disabled` only when both are), grey just that end.
+       */
+    &.lobe-picker-range:not(.lobe-picker-disabled):has(input:disabled) {
+      cursor: auto;
+      color: var(--lobe-color-text);
+      opacity: 1;
+    }
+
+    &.lobe-picker-range:not(.lobe-picker-disabled) .lobe-picker-input:has(> input:disabled) {
+      cursor: not-allowed;
+      color: var(--lobe-color-text-quaternary);
+    }
+
+    /* hover preview text from presets / cells */
+    &.lobe-picker .lobe-picker-input-placeholder > input {
+      color: var(--lobe-color-text-placeholder);
+    }
+
+    &.lobe-picker .lobe-picker-prefix {
+      display: inline-flex;
+      flex: none;
+      align-items: center;
+      color: var(--lobe-color-text-tertiary);
+    }
+
+    &.lobe-picker .lobe-picker-suffix {
+      pointer-events: none;
+
+      display: inline-flex;
+      flex: none;
+      align-items: center;
+      justify-content: center;
+
+      width: 16px;
+
+      color: var(--lobe-color-text-tertiary);
+
+      transition: opacity 150ms var(--lobe-motion-ease-out);
+    }
+
+    /* the clear button sits on top of the suffix icon (16px wide + 8px gap) */
+    &.lobe-picker .lobe-picker-clear {
+      cursor: pointer;
+
+      position: relative;
+      z-index: 1;
+
+      display: inline-flex;
+      flex: none;
+      align-items: center;
+      justify-content: center;
+
+      width: 16px;
+      height: 16px;
+      margin-inline-start: -24px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+
+      color: var(--lobe-color-bg-container);
+
+      opacity: 0;
+      background: var(--lobe-color-text-quaternary);
+
+      transition: opacity 150ms var(--lobe-motion-ease-out);
+
+      &:hover {
+        background: var(--lobe-color-text-tertiary);
+      }
+    }
+
+    &.lobe-picker:not(.lobe-picker-disabled):hover .lobe-picker-clear {
+      opacity: 1;
+    }
+
+    &.lobe-picker:not(.lobe-picker-disabled):hover .lobe-picker-suffix:not(:last-child) {
+      opacity: 0;
+    }
+
+    &.lobe-picker-disabled .lobe-picker-clear {
+      display: none;
+    }
+
+    /*
+       * multiple: rc-picker's tags (`-selection-item`, also the `+ N ...` rest) in base-ui Tag's
+       * filled look, sized as antd (control height - 8px) and wrapping the box when they overflow.
+       */
+    &.lobe-picker-multiple {
+      --lobe-picker-tag-height: 24px;
+
+      cursor: pointer;
+      padding-block: 1px;
+    }
+
+    &.lobe-picker-multiple.lobe-picker-small {
+      --lobe-picker-tag-height: 16px;
+    }
+
+    &.lobe-picker-multiple.lobe-picker-large {
+      --lobe-picker-tag-height: 32px;
+    }
+
+    &.lobe-picker-multiple .lobe-picker-selector {
+      position: relative;
+      flex: 1;
+      min-width: 0;
+    }
+
+    &.lobe-picker-multiple .lobe-picker-selection-overflow {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      max-width: 100%;
+    }
+
+    &.lobe-picker-multiple .lobe-picker-selection-overflow-item {
+      flex: none;
+      max-width: 100%;
+    }
+
+    &.lobe-picker-multiple .lobe-picker-selection-item {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+
+      box-sizing: border-box;
+      max-width: 100%;
+      height: var(--lobe-picker-tag-height);
+      margin-block: 2px;
+      margin-inline-end: 4px;
+      padding-inline: 8px 4px;
+      border-radius: var(--lobe-border-radius-sm);
+
+      font-size: var(--lobe-font-size-sm);
+      line-height: var(--lobe-picker-tag-height);
+      color: var(--lobe-color-text);
+      white-space: nowrap;
+
+      background: var(--lobe-color-fill-secondary);
+    }
+
+    &.lobe-picker-multiple.lobe-picker-large .lobe-picker-selection-item {
+      font-size: var(--lobe-font-size);
+    }
+
+    &.lobe-picker-multiple
+      .lobe-picker-selection-item:not(:has(.lobe-picker-selection-item-remove)) {
+      padding-inline-end: 8px;
+    }
+
+    &.lobe-picker-multiple .lobe-picker-selection-item-content {
+      overflow: hidden;
+      font-variant-numeric: tabular-nums;
+      text-overflow: ellipsis;
+    }
+
+    &.lobe-picker-multiple .lobe-picker-selection-item-remove {
+      cursor: pointer;
+
+      display: inline-flex;
+      flex: none;
+      align-items: center;
+
+      color: var(--lobe-color-icon);
+
+      &:hover {
+        color: var(--lobe-color-text-heading);
+      }
+    }
+
+    &.lobe-picker-multiple .lobe-picker-selection-placeholder {
+      overflow: hidden;
+      display: block;
+
+      line-height: calc(var(--lobe-picker-tag-height) + 4px);
+      color: var(--lobe-color-text-placeholder);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* the selector shows the value; rc-picker keeps this readonly input only for focus */
+    &.lobe-picker-multiple .lobe-picker-multiple-input {
+      position: absolute;
+      z-index: -1;
+
+      width: 0;
+      height: 0;
+      padding: 0;
+      border: 0;
+
+      opacity: 0;
+    }
+
+    &.lobe-picker-multiple.lobe-picker-disabled {
+      cursor: not-allowed;
+      color: var(--lobe-color-text-quaternary);
+      opacity: 0.66;
+    }
+
+    /* status: border + focus ring per variant, as antd's genStatusStyle */
+    &.lobe-picker-status-error {
+      --lobe-picker-status: var(--lobe-color-error);
+      --lobe-picker-status-hover: var(--lobe-color-error-border-hover);
+      --lobe-picker-status-bg: var(--lobe-color-error-bg);
+      --lobe-picker-status-bg-hover: var(--lobe-color-error-bg-hover);
+    }
+
+    &.lobe-picker-status-warning {
+      --lobe-picker-status: var(--lobe-color-warning);
+      --lobe-picker-status-hover: var(--lobe-color-warning-border-hover);
+      --lobe-picker-status-bg: var(--lobe-color-warning-bg);
+      --lobe-picker-status-bg-hover: var(--lobe-color-warning-bg-hover);
+    }
+
+    &:is(.lobe-picker-status-error, .lobe-picker-status-warning):not(.lobe-picker-disabled) {
+      &.lobe-picker-outlined {
+        border-color: var(--lobe-picker-status);
+
+        &:hover:not(:focus-within) {
+          border-color: var(--lobe-picker-status-hover);
+        }
+
+        &:focus-within {
+          border-color: var(--lobe-picker-status);
+          box-shadow: 0 0 0 2px var(--lobe-picker-status-bg);
+        }
+      }
+
+      &.lobe-picker-filled {
+        background: var(--lobe-picker-status-bg);
+
+        &:hover:not(:focus-within) {
+          background: var(--lobe-picker-status-bg-hover);
+        }
+
+        &:focus-within {
+          border-color: var(--lobe-picker-status);
+          background: var(--lobe-color-bg-container);
+        }
+      }
+
+      &.lobe-picker-underlined {
+        border-block-end-color: var(--lobe-picker-status);
+      }
+
+      &:is(.lobe-picker-borderless, .lobe-picker-underlined) .lobe-picker-input > input {
+        color: var(--lobe-picker-status);
+      }
+
+      .lobe-picker-prefix {
+        color: var(--lobe-picker-status);
+      }
+    }
+
+    /* rtl: rc-picker adds the -rtl modifier to the box and the popup; lucide arrows are mirrored */
+    &.lobe-picker-rtl,
+    &.lobe-picker-dropdown-rtl {
+      direction: rtl;
+    }
+
+    &.lobe-picker-rtl .lobe-picker-range-separator .lucide,
+    &.lobe-picker-dropdown-rtl .lobe-picker-header > button .lucide {
+      transform: scaleX(-1);
+    }
+
+    /* range: two inputs, a separator and the bar under the active field */
+    &.lobe-picker-range .lobe-picker-input {
+      flex: 1 1 auto;
+    }
+
+    &.lobe-picker-range .lobe-picker-range-separator {
+      display: inline-flex;
+      flex: none;
+      align-items: center;
+      color: var(--lobe-color-text-tertiary);
+    }
+
+    &.lobe-picker-range .lobe-picker-active-bar {
+      pointer-events: none;
+
+      position: absolute;
+      inset-block-end: -1px;
+
+      height: 2px;
+
+      opacity: 0;
+      background: var(--lobe-color-primary);
+
+      transition:
+        inset-inline-start 200ms var(--lobe-motion-ease-out),
+        width 200ms var(--lobe-motion-ease-out),
+        opacity 200ms var(--lobe-motion-ease-out);
+    }
+
+    &.lobe-picker-range.lobe-picker-focused .lobe-picker-active-bar {
+      opacity: 1;
+    }
+
+    /* ---------------------------------------------------------------- popup */
+    &.lobe-picker-dropdown {
+      /* nested in a base-ui Modal / Popover layer that sets pointer-events: none */
+      pointer-events: auto;
+      font-size: 14px;
+      color: var(--lobe-color-text);
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-range-arrow {
+      display: none;
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-panel-container {
+      overflow: hidden;
+      display: inline-block;
+
+      border-radius: 16px;
+
+      vertical-align: top;
+
+      background: var(--lobe-color-bg-elevated);
+      box-shadow: var(--lobe-box-shadow), var(--lobe-ring);
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-panel-layout {
+      display: flex;
+      align-items: stretch;
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-panels {
+      display: flex;
+      flex-wrap: nowrap;
+    }
+
+    /* presets: a sidebar on the start side of the panels, as in antd */
+    &.lobe-picker-dropdown .lobe-picker-presets {
+      display: flex;
+      flex-direction: column;
+
+      min-width: 120px;
+      max-width: 200px;
+
+      /* divider one step lighter than the panel borders: light colorFillSecondary,
+           dark colorFillTertiary (see the -dropdown-dark rule below) */
+      border-inline-end: 1px solid var(--lobe-color-fill-secondary);
+
+      /* slightly tinted; the panel container's radius + overflow clip it */
+      background: var(--lobe-color-fill-quaternary);
+
+      ul {
+        overflow: auto;
+        flex: auto;
+
+        height: 0;
+        margin: 0;
+        padding: 6px;
+
+        list-style: none;
+      }
+
+      li {
+        cursor: pointer;
+
+        overflow: hidden;
+
+        padding-block: 4px;
+        padding-inline: 8px;
+        border-radius: 6px;
+
+        font-size: 13px;
+        line-height: 20px;
+        color: var(--lobe-color-text);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+
+        transition: background-color 150ms var(--lobe-motion-ease-out);
+
+        &:hover {
+          background: var(--lobe-color-fill-tertiary);
+        }
+
+        &:has(> .lobe-picker-preset-active) {
+          font-weight: 500;
+          background: var(--lobe-color-fill-secondary);
+        }
+      }
+
+      li + li {
+        margin-block-start: 2px;
+      }
+    }
+
+    /* dark: fill tokens are white-alpha and would lighten the sidebar, so darken it */
+    &.lobe-picker-dropdown.lobe-picker-dropdown-dark .lobe-picker-presets {
+      border-inline-end-color: var(--lobe-color-fill-tertiary);
+      background: rgb(0 0 0 / 12%);
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-panel {
+      display: inline-flex;
+      flex-direction: column;
+      outline: none;
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-panels > .lobe-picker-panel + .lobe-picker-panel {
+      border-inline-start: 1px solid var(--lobe-color-border-secondary);
+    }
+
+    &.lobe-picker-dropdown
+      :is(
+        .lobe-picker-date-panel,
+        .lobe-picker-week-panel,
+        .lobe-picker-month-panel,
+        .lobe-picker-quarter-panel,
+        .lobe-picker-year-panel,
+        .lobe-picker-decade-panel
+      ) {
+      width: 288px;
+    }
+
+    /* header: << < [month year] > >> */
+    &.lobe-picker-dropdown .lobe-picker-header {
+      display: flex;
+      gap: 2px;
+      align-items: center;
+
+      padding-block: 12px 4px;
+      padding-inline: 12px;
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-header > button {
+      cursor: pointer;
+
+      display: inline-flex;
+      flex: none;
+      align-items: center;
+      justify-content: center;
+
+      width: 28px;
+      height: 28px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+
+      color: var(--lobe-color-text-secondary);
+
+      background: none;
+
+      &:focus-visible:not([data-lobe-focus-ring='managed']) {
+        --lobe-focus-ring-color: var(--lobe-color-info);
+
+        outline: 2px solid color-mix(in srgb, var(--lobe-color-info) 90%, transparent);
+        outline-offset: 2px;
+        animation: lobe-picker-ring-in 200ms cubic-bezier(0.22, 1, 0.36, 1);
+
+        @media (prefers-reduced-motion: reduce) {
+          animation: none;
+        }
+
+        @media (forced-colors: active) {
+          outline-color: CanvasText;
+          animation: none;
+        }
+      }
+
+      &:hover:not(:disabled) {
+        color: var(--lobe-color-text);
+        background: var(--lobe-color-fill-tertiary);
+      }
+    }
+
+    &.lobe-picker-dropdown
+      :is(
+        .lobe-picker-header-prev-btn-disabled,
+        .lobe-picker-header-next-btn-disabled,
+        .lobe-picker-header-super-prev-btn-disabled,
+        .lobe-picker-header-super-next-btn-disabled
+      ) {
+      cursor: not-allowed;
+      opacity: 0.3;
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-header-view {
+      display: flex;
+      flex: 1;
+      gap: 4px;
+      align-items: center;
+      justify-content: center;
+
+      min-width: 0;
+
+      font-weight: 600;
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-header-view > button {
+      cursor: pointer;
+
+      padding-block: 2px;
+      padding-inline: 4px;
+      border: 0;
+      border-radius: 6px;
+
+      font: inherit;
+      color: inherit;
+
+      background: none;
+
+      &:focus-visible:not([data-lobe-focus-ring='managed']) {
+        --lobe-focus-ring-color: var(--lobe-color-info);
+
+        outline: 2px solid color-mix(in srgb, var(--lobe-color-info) 90%, transparent);
+        outline-offset: 2px;
+        animation: lobe-picker-ring-in 200ms cubic-bezier(0.22, 1, 0.36, 1);
+
+        @media (prefers-reduced-motion: reduce) {
+          animation: none;
+        }
+
+        @media (forced-colors: active) {
+          outline-color: CanvasText;
+          animation: none;
+        }
+      }
+
+      &:hover:not(:disabled) {
+        color: var(--lobe-color-primary);
+      }
+
+      &:disabled {
+        cursor: default;
+      }
+    }
+
+    /* body + cells */
+    &.lobe-picker-dropdown .lobe-picker-body {
+      padding-block: 4px 12px;
+      padding-inline: 12px;
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-content {
+      table-layout: fixed;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-content th {
+      height: 28px;
+      padding: 0;
+
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--lobe-color-text-tertiary);
+      text-align: center;
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-cell {
+      cursor: pointer;
+
+      position: relative;
+
+      padding-block: 2px;
+      padding-inline: 0;
+
+      color: var(--lobe-color-text-quaternary);
+      text-align: center;
+
+      &::before {
+        content: '';
+
+        position: absolute;
+        z-index: 0;
+        inset-block-start: 50%;
+        inset-inline: 0;
+        transform: translateY(-50%);
+
+        height: 32px;
+      }
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-cell-in-view {
+      color: var(--lobe-color-text);
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-cell-inner {
+      position: relative;
+      z-index: 1;
+
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      box-sizing: border-box;
+      min-width: 32px;
+      height: 32px;
+      border-radius: 999px;
+
+      font-size: 13px;
+      font-variant-numeric: tabular-nums;
+
+      transition:
+        background 150ms var(--lobe-motion-ease-out),
+        color 150ms var(--lobe-motion-ease-out);
+    }
+
+    &.lobe-picker-dropdown
+      .lobe-picker-cell:not(
+        .lobe-picker-cell-disabled,
+        .lobe-picker-cell-selected,
+        .lobe-picker-cell-range-start,
+        .lobe-picker-cell-range-end
+      ):hover
+      .lobe-picker-cell-inner {
+      background: var(--lobe-color-fill-tertiary);
+    }
+
+    /* today: bold only, no ring, fill or border */
+    &.lobe-picker-dropdown
+      .lobe-picker-cell-in-view.lobe-picker-cell-today
+      .lobe-picker-cell-inner {
+      font-weight: var(--lobe-font-weight-strong);
+    }
+
+    &.lobe-picker-dropdown
+      :is(
+        .lobe-picker-cell-in-view.lobe-picker-cell-selected,
+        .lobe-picker-cell-in-view.lobe-picker-cell-range-start,
+        .lobe-picker-cell-in-view.lobe-picker-cell-range-end
+      )
+      .lobe-picker-cell-inner {
+      font-weight: 600;
+      color: var(--lobe-color-bg-container);
+      background: var(--lobe-color-text);
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-cell-in-view.lobe-picker-cell-in-range::before {
+      background: var(--lobe-color-fill-secondary);
+    }
+
+    &.lobe-picker-dropdown
+      .lobe-picker-cell-in-view.lobe-picker-cell-range-start:not(
+        .lobe-picker-cell-range-end
+      )::before {
+      inset-inline-start: 50%;
+      background: var(--lobe-color-fill-secondary);
+    }
+
+    &.lobe-picker-dropdown
+      .lobe-picker-cell-in-view.lobe-picker-cell-range-end:not(
+        .lobe-picker-cell-range-start
+      )::before {
+      inset-inline-end: 50%;
+      background: var(--lobe-color-fill-secondary);
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-cell-disabled {
+      cursor: not-allowed;
+      color: var(--lobe-color-text-quaternary);
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-cell-disabled::before {
+      background: transparent;
+    }
+
+    /* month / quarter / year / decade: wider pills in a 3-column grid */
+    &.lobe-picker-dropdown
+      :is(
+        .lobe-picker-month-panel,
+        .lobe-picker-quarter-panel,
+        .lobe-picker-year-panel,
+        .lobe-picker-decade-panel
+      )
+      .lobe-picker-cell {
+      padding-block: 8px;
+    }
+
+    &.lobe-picker-dropdown
+      :is(
+        .lobe-picker-month-panel,
+        .lobe-picker-quarter-panel,
+        .lobe-picker-year-panel,
+        .lobe-picker-decade-panel
+      )
+      .lobe-picker-cell::before {
+      height: 36px;
+    }
+
+    &.lobe-picker-dropdown
+      :is(
+        .lobe-picker-month-panel,
+        .lobe-picker-quarter-panel,
+        .lobe-picker-year-panel,
+        .lobe-picker-decade-panel
+      )
+      .lobe-picker-cell-inner {
+      min-width: 64px;
+      height: 36px;
+      padding-inline: 8px;
+      font-size: 14px;
+    }
+
+    /* decade labels ("2020-2029") stay on one line */
+    &.lobe-picker-dropdown .lobe-picker-decade-panel .lobe-picker-cell-inner {
+      padding-inline: 6px;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    /* week number column: always on the week panel, on the date panel with showWeek */
+    &.lobe-picker-dropdown :is(.lobe-picker-week-panel, .lobe-picker-date-panel-show-week) {
+      width: 320px;
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-cell-week {
+      font-size: 12px;
+      color: var(--lobe-color-text-tertiary);
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-date-panel-show-week .lobe-picker-cell-week {
+      cursor: default;
+    }
+
+    /* week panel: the whole row is one tile, painted through each cell's band */
+    &.lobe-picker-dropdown .lobe-picker-week-panel .lobe-picker-cell:hover .lobe-picker-cell-inner {
+      background: none;
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-week-panel .lobe-picker-cell:first-child::before {
+      inset-inline-start: 2px;
+      border-start-start-radius: 999px;
+      border-end-start-radius: 999px;
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-week-panel .lobe-picker-cell:last-child::before {
+      inset-inline-end: 2px;
+      border-start-end-radius: 999px;
+      border-end-end-radius: 999px;
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-week-panel-row:hover .lobe-picker-cell::before {
+      background: var(--lobe-color-fill-tertiary);
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-week-panel-row-range-hover .lobe-picker-cell::before,
+    &.lobe-picker-dropdown .lobe-picker-week-panel-row-hover .lobe-picker-cell::before {
+      background: var(--lobe-color-fill-secondary);
+    }
+
+    /* multiple: rc-picker marks every picked week but the first with `-row-hover` */
+    &.lobe-picker-dropdown
+      :is(
+        .lobe-picker-week-panel-row-selected,
+        .lobe-picker-dropdown-multiple .lobe-picker-week-panel-row-hover,
+        .lobe-picker-week-panel-row-range-start,
+        .lobe-picker-week-panel-row-range-end
+      )
+      .lobe-picker-cell {
+      color: var(--lobe-color-bg-container);
+
+      &::before {
+        background: var(--lobe-color-text);
+      }
+
+      .lobe-picker-cell-inner {
+        font-weight: 600;
+        box-shadow: none;
+      }
+    }
+
+    /* keyboard: the tile arrow keys moved to on month / quarter / year / decade panels */
+    &.lobe-picker-dropdown .lobe-picker-cell-keyboard-active {
+      display: none;
+    }
+
+    &.lobe-picker-dropdown
+      .lobe-picker-cell-in-view:has(> .lobe-picker-cell-keyboard-active)
+      .lobe-picker-cell-inner {
+      outline: 2px solid var(--lobe-color-primary);
+      outline-offset: 1px;
+    }
+
+    /* time: hour / minute / second / meridiem columns, beside the date panel with showTime */
+    &.lobe-picker-dropdown .lobe-picker-datetime-panel {
+      display: flex;
+      align-items: stretch;
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-datetime-panel > .lobe-picker-time-panel {
+      border-inline-start: 1px solid var(--lobe-color-border-secondary);
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-time-panel {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-time-panel .lobe-picker-header-view {
+      height: 28px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-time-panel .lobe-picker-content {
+      display: flex;
+      flex: auto;
+
+      height: 224px;
+      padding-block: 4px 12px;
+      padding-inline: 4px;
+    }
+
+    /* next to the date panel the columns take its height instead */
+    &.lobe-picker-dropdown
+      .lobe-picker-datetime-panel
+      .lobe-picker-time-panel
+      .lobe-picker-content {
+      flex: 1 1 0;
+      height: auto;
+      min-height: 0;
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-time-panel-column {
+      scrollbar-width: thin;
+
+      overflow-y: hidden;
+      flex: none;
+
+      width: 56px;
+      margin: 0;
+      padding: 0;
+
+      list-style: none;
+
+      /* lets the last option scroll up to the top, as in antd */
+      &::after {
+        content: '';
+        display: block;
+        height: calc(100% - 28px);
+      }
+
+      &:hover {
+        overflow-y: auto;
+      }
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-time-panel-column + .lobe-picker-time-panel-column {
+      border-inline-start: 1px solid var(--lobe-color-border-secondary);
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-time-panel-cell {
+      cursor: pointer;
+      padding-block: 1px;
+      padding-inline: 4px;
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-time-panel-cell-inner {
+      height: 26px;
+      border-radius: 6px;
+
+      font-size: 13px;
+      font-variant-numeric: tabular-nums;
+      line-height: 26px;
+      color: var(--lobe-color-text);
+      text-align: center;
+
+      transition:
+        background 150ms var(--lobe-motion-ease-out),
+        color 150ms var(--lobe-motion-ease-out);
+    }
+
+    &.lobe-picker-dropdown
+      .lobe-picker-time-panel-cell:not(
+        .lobe-picker-time-panel-cell-disabled,
+        .lobe-picker-time-panel-cell-selected
+      ):hover
+      .lobe-picker-time-panel-cell-inner {
+      background: var(--lobe-color-fill-tertiary);
+    }
+
+    &.lobe-picker-dropdown
+      .lobe-picker-time-panel-cell-selected
+      .lobe-picker-time-panel-cell-inner {
+      font-weight: 600;
+      color: var(--lobe-color-bg-container);
+      background: var(--lobe-color-text);
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-time-panel-cell-disabled {
+      cursor: not-allowed;
+
+      .lobe-picker-time-panel-cell-inner {
+        color: var(--lobe-color-text-quaternary);
+      }
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-time-clock-header {
+      display: flex;
+      flex: 1;
+      gap: 2px;
+      align-items: center;
+      justify-content: center;
+
+      min-height: 28px;
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-time-clock-segment {
+      cursor: pointer;
+
+      padding-block: 2px;
+      padding-inline: 6px;
+      border: 0;
+      border-radius: 8px;
+
+      font-family: inherit;
+      font-size: 22px;
+      font-variant-numeric: tabular-nums;
+      line-height: 1.2;
+      color: var(--lobe-color-text-tertiary);
+
+      background: none;
+
+      transition:
+        background 150ms var(--lobe-motion-ease-out),
+        color 150ms var(--lobe-motion-ease-out);
+
+      &:hover:not(:disabled) {
+        color: var(--lobe-color-text);
+      }
+
+      &:disabled {
+        cursor: not-allowed;
+        opacity: 0.4;
+      }
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-time-clock-segment-active {
+      color: var(--lobe-color-text);
+      background: var(--lobe-color-fill-tertiary);
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-time-clock-colon {
+      font-size: 22px;
+      line-height: 1.2;
+      color: var(--lobe-color-text-quaternary);
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-time-clock-stepper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      > button {
+        cursor: pointer;
+
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 24px;
+        height: 14px;
+        padding: 0;
+        border: 0;
+        border-radius: 4px;
+
+        color: var(--lobe-color-text-tertiary);
+
+        background: none;
+
+        &:hover {
+          color: var(--lobe-color-text);
+          background: var(--lobe-color-fill-tertiary);
+        }
+      }
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-time-clock-stepper-value {
+      cursor: ns-resize;
+
+      font-size: 15px;
+      font-variant-numeric: tabular-nums;
+      line-height: 1.2;
+      color: var(--lobe-color-text-secondary);
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-time-clock-meridiem {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      margin-inline-start: 6px;
+
+      .lobe-picker-time-clock-segment {
+        padding-block: 1px;
+        padding-inline: 6px;
+        font-size: 11px;
+        font-weight: 500;
+      }
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-time-clock-body {
+      display: flex;
+      justify-content: center;
+      padding-block: 8px 14px;
+      padding-inline: 14px;
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-time-clock-dial {
+      touch-action: none;
+      cursor: pointer;
+      user-select: none;
+
+      position: relative;
+
+      flex: none;
+
+      border-radius: 50%;
+
+      background: var(--lobe-color-fill-quaternary);
+      outline: none;
+
+      &:focus-visible {
+        box-shadow: 0 0 0 2px color-mix(in srgb, var(--lobe-color-info) 90%, transparent);
+      }
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-time-clock-hand {
+      position: absolute;
+      z-index: 1;
+      inset-inline-start: calc(50% - 1px);
+      transform-origin: 50% 100%;
+
+      width: 2px;
+
+      background: var(--lobe-color-text);
+
+      /* the dial is a physical clock face: it never mirrors in RTL */
+      /* stylelint-disable-next-line liberty/use-logical-spec */
+      transition:
+        transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+        top 220ms cubic-bezier(0.22, 1, 0.36, 1),
+        height 220ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-time-clock-center {
+      position: absolute;
+      z-index: 1;
+      inset-block-start: calc(50% - 3px);
+      inset-inline-start: calc(50% - 3px);
+
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+
+      background: var(--lobe-color-text);
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-time-clock-knob {
+      position: absolute;
+      z-index: 1;
+      transform: translate(-50%, -50%);
+
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+
+      background: var(--lobe-color-text);
+
+      /* stylelint-disable-next-line liberty/use-logical-spec */
+      transition:
+        left 220ms cubic-bezier(0.22, 1, 0.36, 1),
+        top 220ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-time-clock-knob-inner {
+      width: 26px;
+      height: 26px;
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-time-clock-knob-off-tick {
+      box-shadow:
+        inset 0 0 0 12px var(--lobe-color-text),
+        inset 0 0 0 15px var(--lobe-color-bg-container);
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-time-clock-dial-dragging :is(
+        .lobe-picker-time-clock-hand,
+        .lobe-picker-time-clock-knob
+      ) {
+      transition: none;
+    }
+
+    &.lobe-picker-dropdown :is(.lobe-picker-time-clock-hand, .lobe-picker-time-clock-knob) {
+      @media (prefers-reduced-motion: reduce) {
+        transition: none;
+      }
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-time-clock-number {
+      pointer-events: none;
+
+      position: absolute;
+      z-index: 2;
+      transform: translate(-50%, -50%);
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 30px;
+      height: 30px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+
+      font-family: inherit;
+      font-size: 13px;
+      font-variant-numeric: tabular-nums;
+      color: var(--lobe-color-text);
+
+      background: none;
+
+      transition: color 120ms var(--lobe-motion-ease-out);
+
+      &:disabled {
+        color: var(--lobe-color-text-quaternary);
+      }
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-time-clock-number-inner {
+      width: 26px;
+      height: 26px;
+      font-size: 11px;
+      color: var(--lobe-color-text-tertiary);
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-time-clock-number-selected {
+      font-weight: 600;
+      color: var(--lobe-color-bg-container);
+    }
+
+    /* footer: no background of its own; dividers match the presets sidebar divider */
+
+    /* footer: ONE row in one container — renderExtraFooter content on the start side,
+         Today / Now / OK on the end side — under a single divider. No background. */
+    &.lobe-picker-dropdown .lobe-picker-footer {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+
+      min-width: 0;
+      border-block-start: 1px solid var(--lobe-color-fill-secondary);
+
+      background: none;
+    }
+
+    &.lobe-picker-dropdown.lobe-picker-dropdown-dark .lobe-picker-footer {
+      border-block-start-color: var(--lobe-color-fill-tertiary);
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-footer-extra {
+      flex: 1;
+
+      min-width: 0;
+      padding-block: 8px;
+      padding-inline: 12px;
+
+      font-size: 13px;
+      line-height: 20px;
+      color: var(--lobe-color-text-secondary);
+      text-align: start;
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-footer-extra + .lobe-picker-ranges {
+      flex: none;
+      padding-inline-start: 0;
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-ranges {
+      display: flex;
+      flex: 1;
+      gap: 8px;
+      align-items: center;
+      justify-content: space-between;
+
+      margin: 0;
+      padding-block: 8px;
+      padding-inline: 12px;
+
+      list-style: none;
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-ranges > .lobe-picker-now {
+      margin-inline: auto;
+    }
+
+    /* Now on the start side, OK on the end side */
+    &.lobe-picker-dropdown .lobe-picker-ranges > .lobe-picker-now:has(+ .lobe-picker-ok) {
+      margin-inline: 0;
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-ranges > .lobe-picker-ok {
+      margin-inline-start: auto;
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-now-btn {
+      cursor: pointer;
+
+      padding-block: 2px;
+      padding-inline: 8px;
+      border-radius: 6px;
+
+      font-size: 13px;
+      color: var(--lobe-color-text);
+
+      &:focus-visible:not([data-lobe-focus-ring='managed']) {
+        --lobe-focus-ring-color: var(--lobe-color-info);
+
+        outline: 2px solid color-mix(in srgb, var(--lobe-color-info) 90%, transparent);
+        outline-offset: 2px;
+        animation: lobe-picker-ring-in 200ms cubic-bezier(0.22, 1, 0.36, 1);
+
+        @media (prefers-reduced-motion: reduce) {
+          animation: none;
+        }
+
+        @media (forced-colors: active) {
+          outline-color: CanvasText;
+          animation: none;
+        }
+      }
+
+      &:hover {
+        background: var(--lobe-color-fill-tertiary);
+      }
+    }
+
+    &.lobe-picker-dropdown .lobe-picker-now-btn-disabled {
+      cursor: not-allowed;
+      color: var(--lobe-color-text-quaternary);
+    }
+  }
+}
+
+@keyframes lobe-picker-ring-in {
+  from {
+    outline-color: transparent;
+    outline-offset: 5px;
+  }
+}

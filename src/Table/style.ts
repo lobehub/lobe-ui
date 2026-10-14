@@ -82,6 +82,30 @@ export const styles = stylex.create({
     overflow: 'auto',
     maxHeight: 264,
   },
+  frostEnd: {
+    flex: 'none',
+    backdropFilter: 'blur(16px)',
+    insetInlineEnd: 0,
+    marginInlineStart: 'auto',
+    position: 'sticky',
+    height: '100%',
+  },
+  // z-index 1: above scrolling cells (z auto), below fixed cells (z >= 2).
+  frostRail: {
+    display: 'flex',
+    insetBlockStart: 0,
+    insetInlineStart: 0,
+    pointerEvents: 'none',
+    position: 'absolute',
+    zIndex: 1,
+  },
+  frostStart: {
+    flex: 'none',
+    backdropFilter: 'blur(16px)',
+    insetInlineStart: 0,
+    position: 'sticky',
+    height: '100%',
+  },
   headerInner: {
     gap: 6,
     alignItems: 'center',
@@ -161,7 +185,7 @@ export const styles = stylex.create({
   },
   skeletonRow: {
     alignItems: 'stretch',
-    borderBlockEndColor: cssVar.colorBorderSecondary,
+    borderBlockEndColor: `var(--lobe-fill-border, ${cssVar.colorFill})`,
     borderBlockEndStyle: 'solid',
     borderBlockEndWidth: { 'default': 1, ':last-child': 0 },
     display: 'grid',

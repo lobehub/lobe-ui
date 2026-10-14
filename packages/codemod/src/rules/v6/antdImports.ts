@@ -42,6 +42,9 @@ const packageHint = (source: string) => {
       ? '`@ant-design/icons` is not part of the @lobehub/ui stack; use lucide-react icons with Icon.'
       : `\`${source}\` is not part of the @lobehub/ui stack; remove it.`;
   }
+  if (/^@rc-component\/picker($|\/)/.test(source)) {
+    return `\`${source}\` is no longer a @lobehub/ui dependency: take \`PickerRef\` / \`GenerateConfig\` types from @lobehub/ui; a non-Dayjs config for \`generatePicker\` still works if you install @rc-component/picker yourself.`;
+  }
   if (/^(rc-|@rc-component\/)/.test(source)) {
     return `\`${source}\` is an antd internal; replace it with the matching @lobehub/ui component.`;
   }

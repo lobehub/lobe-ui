@@ -1,10 +1,18 @@
 @layer lobe-ui {
   .lobe-table {
-    /* Surface of the table and of every cell that must occlude scrolled content
-       (header, fixed columns, sticky summary). Override it where a transparent
+    /* Surface of the table and of its opaque cells. Override it where a transparent
        variant (borderless / filled) sits on a different surface, e.g. a card. */
-    --lobe-table-border: 1px solid var(--lobe-color-border-secondary);
+    --lobe-table-border-color: var(--lobe-fill-border, var(--lobe-color-fill));
+    --lobe-table-border: 1px solid var(--lobe-table-border-color);
     --lobe-table-z-fixed: 2;
+
+    /* Reset per root so nested tables never inherit a parent's variant vars. Outlined /
+       filled switch the cell to transparent in dark and set the fill to the dark surface. */
+    --lobe-table-cell: var(--lobe-table-bg, var(--lobe-color-bg-container));
+    --lobe-table-fill: transparent;
+    --lobe-table-hover-bg: var(--lobe-color-fill-tertiary);
+    --lobe-table-selected-bg: color-mix(in srgb, var(--lobe-color-primary) 6%, transparent);
+    --lobe-table-selected-hover-bg: color-mix(in srgb, var(--lobe-color-primary) 10%, transparent);
 
     font-size: 14px;
     color: var(--lobe-color-text);
@@ -23,9 +31,37 @@
     & tfoot > tr > th,
     & tfoot > tr > td {
       position: relative;
+
       padding-block: var(--lobe-table-padding-block);
       padding-inline: var(--lobe-table-padding-inline);
+
       overflow-wrap: break-word;
+
+      /* The global `* { vertical-align: baseline }` reset drops the UA's middle for cells. */
+      vertical-align: middle;
+    }
+
+    /* Row-merged body cells get vertical dividers so the block reads apart from the
+       neighbour rows' lines. ::before because ::after is the fixed-column scroll shadow. */
+    & .lobe-table-tbody > tr > td[rowspan]:not([rowspan='0'], [rowspan='1'])::before,
+    & .lobe-table-tbody-virtual .lobe-table-cell[rowspan]:not([rowspan='0'], [rowspan='1'])::before {
+      pointer-events: none;
+      content: '';
+
+      position: absolute;
+      inset: 0;
+
+      border-inline: var(--lobe-table-border);
+    }
+
+    & .lobe-table-tbody > tr > td[rowspan]:first-child::before,
+    & .lobe-table-tbody-virtual .lobe-table-cell[rowspan]:first-child::before {
+      border-inline-start: 0;
+    }
+
+    & .lobe-table-tbody > tr > td[rowspan]:last-child::before,
+    & .lobe-table-tbody-virtual .lobe-table-cell[rowspan]:last-child::before {
+      border-inline-end: 0;
     }
 
     & .lobe-table-thead > tr > th,
@@ -35,9 +71,9 @@
       color: var(--lobe-color-text-secondary);
       text-align: start;
 
-      background: var(--lobe-table-bg, var(--lobe-color-bg-container));
+      background: var(--lobe-table-cell);
       box-shadow:
-        inset 0 -1px 0 var(--lobe-color-border-secondary),
+        inset 0 -1px 0 var(--lobe-table-border-color),
         inset 0 999px 0 var(--lobe-color-fill-quaternary);
 
       &[colspan]:not([colspan='1']) {
@@ -53,13 +89,19 @@
       font-variant-numeric: tabular-nums;
       text-align: start;
 
-      background: var(--lobe-table-bg, var(--lobe-color-bg-container));
+      background: var(--lobe-table-cell);
 
       transition: background-color var(--lobe-motion-duration-mid);
     }
 
-    &:not(.lobe-table-outlined) .lobe-table-tbody > tr:last-child > td,
-    &:not(.lobe-table-outlined) .lobe-table-tbody > tr:last-child > th {
+    /* Filled's fill is its edge and outlined's container draws the frame bottom (which
+       scroll.y / virtual cannot scroll away). Borderless keeps the closing rule. */
+    &.lobe-table-filled .lobe-table-tbody > tr:last-child > td,
+    &.lobe-table-filled .lobe-table-tbody > tr:last-child > th,
+    &.lobe-table-outlined .lobe-table-tbody > tr:last-child > td,
+    &.lobe-table-outlined .lobe-table-tbody > tr:last-child > th,
+    &.lobe-table-borderless table:has(> tfoot) > .lobe-table-tbody > tr:last-child > td,
+    &.lobe-table-borderless table:has(> tfoot) > .lobe-table-tbody > tr:last-child > th {
       border-block-end: 0;
     }
 
@@ -161,8 +203,9 @@
       z-index: calc(var(--z-offset-reverse) + var(--lobe-table-z-fixed));
     }
 
+    /* See-through: FixedFrost paints one continuous frosted pane per fixed side. */
     & .lobe-table-cell-fix {
-      background: var(--lobe-table-bg, var(--lobe-color-bg-container));
+      background: transparent;
 
       &::after {
         pointer-events: none;
@@ -196,41 +239,19 @@
     & .lobe-table-sticky-holder {
       position: sticky;
       z-index: calc(var(--columns-count, 1) * 2 + var(--lobe-table-z-fixed) + 1);
-      background: var(--lobe-table-bg, var(--lobe-color-bg-container));
+      background: transparent;
+      backdrop-filter: blur(16px);
     }
 
     & .lobe-table-sticky-scroll {
       position: sticky;
       z-index: calc(var(--columns-count, 1) * 2 + var(--lobe-table-z-fixed) + 1);
       inset-block-end: 0;
-
-      display: flex;
-      align-items: center;
-
-      height: 8px;
-      border-block-start: var(--lobe-table-border);
-
-      opacity: 0.65;
-      background: var(--lobe-color-fill-quaternary);
     }
 
     & .lobe-table-sticky-scroll-bar {
       position: absolute;
       inset-block-end: 0;
-
-      height: 8px;
-      border-radius: 100px;
-
-      background-color: var(--lobe-color-fill);
-
-      transition:
-        all var(--lobe-motion-duration-slow),
-        transform 0s;
-
-      &:hover,
-      &.lobe-table-sticky-scroll-bar-active {
-        background-color: var(--lobe-color-fill-secondary);
-      }
     }
 
     & .lobe-table-selection-col {
@@ -258,19 +279,12 @@
       }
     }
 
-    & .lobe-table-tbody > tr.lobe-table-row-selected > td {
-      background: color-mix(
-        in srgb,
-        var(--lobe-table-bg, var(--lobe-color-bg-container)),
-        var(--lobe-color-primary) 6%
-      );
+    /* Repeated root class: outranks hover and the variants' transparent fixed cells. */
+    &.lobe-table.lobe-table.lobe-table .lobe-table-tbody > tr.lobe-table-row-selected > td {
+      background: var(--lobe-table-selected-bg);
 
       &.lobe-table-cell-row-hover {
-        background: color-mix(
-          in srgb,
-          var(--lobe-table-bg, var(--lobe-color-bg-container)),
-          var(--lobe-color-primary) 10%
-        );
+        background: var(--lobe-table-selected-hover-bg);
       }
     }
 
@@ -319,6 +333,7 @@
     & .lobe-table-expanded-row-fixed {
       position: sticky;
       inset-inline-start: 0;
+
       overflow: hidden;
 
       width: var(--lobe-table-component-width, auto);
@@ -352,6 +367,7 @@
           border-block: 0;
           border-inline-end: 0;
           border-radius: 0;
+          box-shadow: none;
         }
 
         & > .lobe-table-title + .lobe-table-container {
@@ -371,7 +387,9 @@
     & .lobe-table-summary {
       position: relative;
       z-index: var(--lobe-table-z-fixed);
-      background: var(--lobe-table-bg, var(--lobe-color-bg-container));
+
+      /* See-through; a sticky summary is a sticky holder and gets its frost there. */
+      background: transparent;
 
       & > tr > th,
       & > tr > td {
@@ -380,7 +398,7 @@
     }
 
     & div.lobe-table-summary {
-      box-shadow: 0 -1px 0 var(--lobe-color-border-secondary);
+      box-shadow: 0 -1px 0 var(--lobe-table-border-color);
     }
 
     & .lobe-table-summary.lobe-table-sticky-holder {
@@ -399,6 +417,12 @@
         box-sizing: border-box;
         width: 100%;
 
+        /* Locked to the integer row estimate, so a rowSpan cell (summed row sizes) ends
+           exactly on the neighbour rows' divider instead of drifting by sub-pixels. */
+        &:not(.lobe-table-row-extra, .lobe-table-expanded-row) {
+          height: var(--lobe-table-virtual-row-height);
+        }
+
         & > .lobe-table-cell {
           align-content: center;
         }
@@ -406,7 +430,7 @@
 
       & .lobe-table-cell {
         border-block-end: var(--lobe-table-border);
-        background: var(--lobe-table-bg, var(--lobe-color-bg-container));
+        background: var(--lobe-table-cell);
         transition: background-color var(--lobe-motion-duration-mid);
       }
 
@@ -420,37 +444,48 @@
   }
 
   .lobe-table-small {
+    /* VIRTUAL_ROW_HEIGHT in constants.ts: padding * 2 + 22px line + 1px divider. */
+    --lobe-table-virtual-row-height: calc(8px * 2 + 23px);
     --lobe-table-padding-block: 8px;
     --lobe-table-padding-inline: 12px;
   }
 
   .lobe-table-medium {
+    /* VIRTUAL_ROW_HEIGHT in constants.ts: padding * 2 + 22px line + 1px divider. */
+    --lobe-table-virtual-row-height: calc(12px * 2 + 23px);
     --lobe-table-padding-block: 12px;
     --lobe-table-padding-inline: 16px;
   }
 
   .lobe-table-large {
+    /* VIRTUAL_ROW_HEIGHT in constants.ts: padding * 2 + 22px line + 1px divider. */
+    --lobe-table-virtual-row-height: calc(16px * 2 + 23px);
     --lobe-table-padding-block: 16px;
     --lobe-table-padding-inline: 16px;
   }
 
-  .lobe-table.lobe-table-hoverable {
+  /* Repeated root class: outranks the variants' clear and transparent fixed cells. */
+  .lobe-table.lobe-table.lobe-table-hoverable {
     & .lobe-table-tbody > tr > .lobe-table-cell-row-hover,
     & .lobe-table-tbody-virtual .lobe-table-row:hover > .lobe-table-cell {
-      background: color-mix(
-        in srgb,
-        var(--lobe-table-bg, var(--lobe-color-bg-container)),
-        var(--lobe-color-text) 3%
-      );
+      background: var(--lobe-table-hover-bg);
     }
   }
 
   .lobe-table.lobe-table-outlined {
+    --lobe-table-cell: var(
+      --lobe-table-cell-bg,
+      var(--lobe-table-bg, var(--lobe-color-bg-container))
+    );
+    --lobe-table-fill: var(--lobe-table-surface, transparent);
+
+    /* The square root must not paint behind the rounded frame: the clipped container is
+       the one layer carrying the body (light colorBgContainer, dark colorFillQuaternary). */
     background: transparent;
 
     & > .lobe-table-title,
     & > .lobe-table-footer {
-      background: var(--lobe-table-bg, var(--lobe-color-bg-container));
+      background: var(--lobe-table-surface, var(--lobe-table-bg, var(--lobe-color-bg-container)));
     }
 
     & > .lobe-table-title {
@@ -460,14 +495,16 @@
       border-start-end-radius: var(--lobe-border-radius-lg);
     }
 
+    /* The container draws the full frame: with scroll.y / virtual the last row sits inside
+       the body viewport, where overflow: clip + radius would eat a last-row bottom edge. */
     & > .lobe-table-container {
       overflow: clip;
 
-      border-block-start: var(--lobe-table-border);
-      border-inline: var(--lobe-table-border);
+      border: var(--lobe-table-border);
       border-radius: var(--lobe-border-radius-lg);
 
-      background: var(--lobe-table-bg, var(--lobe-color-bg-container));
+      background: var(--lobe-table-surface, var(--lobe-table-bg, var(--lobe-color-bg-container)));
+      box-shadow: rgb(0 0 0 / 4%) 0 1px 2px 0;
     }
 
     & > .lobe-table-title + .lobe-table-container {
@@ -476,6 +513,7 @@
     }
 
     &:has(> .lobe-table-footer) > .lobe-table-container {
+      border-block-end: 0;
       border-end-start-radius: 0;
       border-end-end-radius: 0;
     }
@@ -489,17 +527,38 @@
 
     & > .lobe-table-container > * > table > thead > tr > th {
       border-block-end: var(--lobe-table-border);
+      background: var(--lobe-table-cell);
+      box-shadow: inset 0 999px 0 var(--lobe-color-fill-quaternary);
+    }
+
+    & .lobe-table-tbody > tr > td.lobe-table-cell-fix,
+    & .lobe-table-tbody-virtual .lobe-table-cell.lobe-table-cell-fix {
+      background: transparent;
+      box-shadow: none;
+    }
+
+    & .lobe-table-thead > tr > th.lobe-table-cell-fix,
+    & .lobe-table-thead > tr > td.lobe-table-cell-fix {
+      background: transparent;
       box-shadow: inset 0 999px 0 var(--lobe-color-fill-quaternary);
     }
   }
 
+  /* Mirrors Block filled: one fill on the clipped container (light colorFillTertiary,
+     dark colorFillQuaternary), the page behind it as the base, no frame border. */
   .lobe-table.lobe-table-filled {
+    --lobe-table-cell: var(
+      --lobe-table-cell-bg,
+      var(--lobe-table-bg, var(--lobe-color-bg-container))
+    );
+    --lobe-table-fill: var(--lobe-table-surface, var(--lobe-color-fill-tertiary));
+
     background: transparent;
 
     & > .lobe-table-title,
     & > .lobe-table-footer {
       border-radius: var(--lobe-border-radius-lg);
-      background: var(--lobe-color-fill-quaternary);
+      background: var(--lobe-table-fill);
     }
 
     & > .lobe-table-title {
@@ -515,7 +574,7 @@
     & > .lobe-table-container {
       overflow: clip;
       border-radius: var(--lobe-border-radius-lg);
-      background: var(--lobe-color-fill-tertiary);
+      background: var(--lobe-table-fill);
     }
 
     & > .lobe-table-title + .lobe-table-container {
@@ -532,7 +591,7 @@
     & .lobe-table-thead > tr > td {
       background: transparent;
       box-shadow:
-        inset 0 -1px 0 var(--lobe-color-border-secondary),
+        inset 0 -1px 0 var(--lobe-table-border-color),
         inset 0 999px 0 var(--lobe-color-fill-quaternary);
     }
 
@@ -544,35 +603,20 @@
 
     & .lobe-table-thead > tr > th.lobe-table-cell-fix,
     & .lobe-table-thead > tr > td.lobe-table-cell-fix {
-      background: var(--lobe-table-bg, var(--lobe-color-bg-container));
+      background: transparent;
       box-shadow:
-        inset 0 -1px 0 var(--lobe-color-border-secondary),
-        inset 0 999px 0 var(--lobe-color-fill-quaternary),
-        inset 0 999px 0 var(--lobe-color-fill-tertiary);
+        inset 0 -1px 0 var(--lobe-table-border-color),
+        inset 0 999px 0 var(--lobe-color-fill-quaternary);
     }
 
     & .lobe-table-tbody > tr > td.lobe-table-cell-fix {
-      background: var(--lobe-table-bg, var(--lobe-color-bg-container));
-      box-shadow: inset 0 999px 0 var(--lobe-color-fill-tertiary);
+      background: transparent;
+      box-shadow: none;
     }
   }
 
   .lobe-table.lobe-table-borderless {
     background: transparent;
-
-    & .lobe-table-thead > tr > th,
-    & .lobe-table-thead > tr > td {
-      background: transparent;
-    }
-
-    & .lobe-table-thead > tr > th.lobe-table-cell-fix,
-    & .lobe-table-thead > tr > td.lobe-table-cell-fix {
-      background: var(--lobe-table-bg, var(--lobe-color-bg-container));
-      box-shadow:
-        inset 0 -1px 0 var(--lobe-color-border-secondary),
-        inset 0 999px 0 var(--lobe-color-fill-quaternary),
-        inset 0 999px 0 var(--lobe-color-fill-tertiary);
-    }
 
     & .lobe-table-tbody > tr > td,
     & .lobe-table-tbody > tr > th,
@@ -586,45 +630,17 @@
 
     & .lobe-table-tbody > tr > td.lobe-table-cell-row-hover,
     & .lobe-table-tbody-virtual .lobe-table-row:hover > .lobe-table-cell {
-      background: color-mix(in srgb, var(--lobe-color-text) 3%, transparent);
-    }
-
-    & .lobe-table-tbody > tr.lobe-table-row-selected > td {
-      background: color-mix(in srgb, var(--lobe-color-primary) 6%, transparent);
-
-      &.lobe-table-cell-row-hover {
-        background: color-mix(in srgb, var(--lobe-color-primary) 10%, transparent);
-      }
+      background: var(--lobe-table-hover-bg);
     }
 
     & .lobe-table-tbody > tr > td.lobe-table-cell-fix,
     & .lobe-table-tbody > tr > th.lobe-table-cell-fix,
     & .lobe-table-tbody-virtual .lobe-table-cell.lobe-table-cell-fix {
-      background: var(--lobe-table-bg, var(--lobe-color-bg-container));
+      background: transparent;
     }
 
     & .lobe-table-tbody > tr > td.lobe-table-cell-fix.lobe-table-cell-row-hover {
-      background: color-mix(
-        in srgb,
-        var(--lobe-table-bg, var(--lobe-color-bg-container)),
-        var(--lobe-color-text) 3%
-      );
-    }
-
-    & .lobe-table-tbody > tr.lobe-table-row-selected > td.lobe-table-cell-fix {
-      background: color-mix(
-        in srgb,
-        var(--lobe-table-bg, var(--lobe-color-bg-container)),
-        var(--lobe-color-primary) 6%
-      );
-
-      &.lobe-table-cell-row-hover {
-        background: color-mix(
-          in srgb,
-          var(--lobe-table-bg, var(--lobe-color-bg-container)),
-          var(--lobe-color-primary) 10%
-        );
-      }
+      background: var(--lobe-table-hover-bg);
     }
   }
 

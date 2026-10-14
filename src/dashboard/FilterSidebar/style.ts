@@ -100,7 +100,7 @@ export const styles = stylex.create({
   },
   panel: {
     overflow: 'hidden',
-    borderInlineEndColor: cssVar.colorBorderSecondary,
+    borderInlineEndColor: `var(--lobe-fill-border, ${cssVar.colorFill})`,
     borderInlineEndStyle: 'solid',
     borderInlineEndWidth: 1,
     display: 'flex',
@@ -109,7 +109,7 @@ export const styles = stylex.create({
   },
   panelSplit: {
     blockSize: '100%',
-    borderInlineEndColor: cssVar.colorBorder,
+    borderInlineEndColor: `var(--lobe-fill-border-strong, ${cssVar.colorFill})`,
   },
   row: {
     flex: '1',

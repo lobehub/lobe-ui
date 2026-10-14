@@ -280,6 +280,28 @@ describe('ProTable', () => {
     });
   });
 
+  it('keeps native Date values in date search fields', async () => {
+    const formRef = { current: undefined } as any;
+    render(
+      <ProTable<Row>
+        columns={[{ dataIndex: 'created', title: 'Created', valueType: 'date' }]}
+        dataSource={data}
+        formRef={formRef}
+        rowKey="id"
+      />,
+    );
+    act(() => formRef.current.setFieldValue('created', new Date(2026, 0, 2)));
+    const input = await screen.findByDisplayValue('2026-01-02');
+
+    fireEvent.click(input);
+    fireEvent.click(
+      document.querySelector('.lobe-picker-dropdown td[title="2026-01-05"]')!.querySelector('div')!,
+    );
+
+    await waitFor(() => expect(formRef.current.getFieldValue('created')).toBeInstanceOf(Date));
+    expect(formRef.current.getFieldsFormatValue()).toEqual({ created: '2026-01-05' });
+  });
+
   it('shows the selection alert and clears it', async () => {
     const onChange = vi.fn();
     render(

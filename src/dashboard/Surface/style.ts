@@ -8,15 +8,16 @@ import { surfaceMarker } from './marker.stylex';
  * A content card sitting on the workspace.
  *
  * Backgrounds: light mode uses `colorBgContainer`. Dark mode uses the translucent
- * `colorFillTertiary` (white 6%): on the #0d0d0d workspace it reads as about #1c1c1c, a subtle
- * raised step. `colorFillQuaternary` (white 2%, about #111) would barely separate from the page.
+ * `colorFillQuaternary` (white 2%), one step below `colorFillTertiary`, for a quieter raised
+ * step on the workspace.
  *
- * Borders and inner dividers (table, header and cell lines, PageSkeleton, strip seams) use `colorBorderSecondary`
- * (white 10% / black 6%); hover and focus use the stronger `colorFill`. Painted over the dark card
- * the border lands near #2f2f2f against #1c1c1c, and in light near #f0f0f0 against #ffffff.
+ * Borders and inner dividers (table, header and cell lines, PageSkeleton, strip seams) use
+ * `--lobe-fill-border` (`colorFill` in light, `colorFillSecondary` in dark; from theme.css).
+ * Hover / focus / stronger edges use `--lobe-fill-border-strong` (light: `colorFill` mixed 15%
+ * toward `colorText`; dark: `colorFill`).
  *
  * Anything that must hide content scrolled beneath it (table header cells, pinned and sticky
- * cells) uses `--lobe-surface-bg-solid`: the same white 6% blended onto `--lobe-surface-canvas`
+ * cells) uses `--lobe-surface-bg-solid`: the same white 2% blended onto `--lobe-surface-canvas`
  * (default `colorBgContainer`, the ConsoleShell workspace). `color-mix` in srgb with an opaque
  * base is plain alpha compositing, so it matches the translucent card. Set
  * `--lobe-surface-canvas` when a card sits on another page color.
@@ -60,7 +61,7 @@ export const styles = stylex.create({
   card: {
     '--lobe-surface-bg': cssVar.colorBgContainer,
     '--lobe-surface-bg-solid': cssVar.colorBgContainer,
-    'borderColor': cssVar.colorBorderSecondary,
+    'borderColor': `var(--lobe-fill-border, ${cssVar.colorFill})`,
     'borderRadius': cssVar.borderRadiusLG,
     'borderStyle': 'solid',
     'borderWidth': 1,
@@ -68,14 +69,14 @@ export const styles = stylex.create({
     'boxShadow': 'rgb(0 0 0 / 4%) 0 1px 2px 0',
   },
   cardDark: {
-    '--lobe-surface-bg': cssVar.colorFillTertiary,
-    '--lobe-surface-bg-solid': `color-mix(in srgb, #fff 6%, var(--lobe-surface-canvas, ${cssVar.colorBgContainer}))`,
+    '--lobe-surface-bg': cssVar.colorFillQuaternary,
+    '--lobe-surface-bg-solid': `color-mix(in srgb, #fff 2%, var(--lobe-surface-canvas, ${cssVar.colorBgContainer}))`,
   },
   cardLinked: {
     borderColor: {
-      'default': cssVar.colorBorderSecondary,
-      ':focus-within': cssVar.colorFill,
-      ':hover': cssVar.colorFill,
+      'default': `var(--lobe-fill-border, ${cssVar.colorFill})`,
+      ':focus-within': `var(--lobe-fill-border-strong, ${cssVar.colorFill})`,
+      ':hover': `var(--lobe-fill-border-strong, ${cssVar.colorFill})`,
     },
   },
   cardNested: {
@@ -112,7 +113,7 @@ export const styles = stylex.create({
     paddingBlock: 8,
     paddingInline: 16,
     alignItems: 'flex-start',
-    borderBlockEndColor: cssVar.colorBorderSecondary,
+    borderBlockEndColor: `var(--lobe-fill-border, ${cssVar.colorFill})`,
     borderBlockEndStyle: 'solid',
     borderBlockEndWidth: 1,
     boxSizing: 'border-box',

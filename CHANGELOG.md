@@ -2,6 +2,175 @@
 
 # Changelog
 
+## [5.64.1](https://github.com/lobehub/lobe-ui/compare/v5.64.0...v5.64.1) (2026-10-14)
+
+### 🐛 Bug Fixes
+
+- **base-ui**: DatePicker size to content by default, closes [#720](https://github.com/lobehub/lobe-ui/issues/720) ([20c4e04](https://github.com/lobehub/lobe-ui/commit/20c4e04))
+
+# [5.64.0](https://github.com/lobehub/lobe-ui/compare/v5.63.4...v5.64.0) (2026-10-14)
+
+### ✨ Features
+
+- Base UI datepicker rc align, closes [#719](https://github.com/lobehub/lobe-ui/issues/719) ([dcf5f6e](https://github.com/lobehub/lobe-ui/commit/dcf5f6e))
+
+### 💥 BREAKING CHANGES
+
+- values are Dayjs instead of Date, `mode` now means the controlled
+  panel (use `picker` for month / year pickers), and DateRangePicker clears to null.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+- ✅ test(base-ui): DatePicker keeps the value when the input text is emptied, as antd does
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+- ✨ feat(base-ui): DatePicker input look and popup placement aligned with antd (WP-2)
+
+* size large/medium/small (middle alias), variant + underlined (bordered alias),
+  status error/warning, prefix/suffixIcon, allowClear { clearIcon }, onClear,
+  separator, prev/next/super icons, placement, getPopupContainer, direction (RTL);
+  lobe shadow kept
+* nested in base-ui Modal/Popover: popup no longer inherits the Modal viewport's
+  pointer-events: none, and Escape closes the picker before the host
+* demos: switchable, size, variant, status, suffix, placement, rtl, nested,
+  suffixIcon-debug, filled-debug; ALIGNMENT.md WP-2 rows backfilled
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+- ♻️ refactor(base-ui): DatePicker takes antd-style helpers through @/utils/styleEngine
+
+Keeps src/base-ui/DatePicker free of any `from 'antd…'` import, so the WP
+acceptance grep is empty; styling engine and behaviour are unchanged.
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+- 📝 docs(base-ui): fix DatePicker ALIGNMENT.md WP-2 rows split on escaped pipes
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+- ✨ feat(base-ui): DatePicker week / quarter / decade panels, cellRender and panel keyboard (WP-3)
+
+* week / quarter pickers (single and range), 10-year year panel with decade drill-up,
+  two adjacent panels for month / quarter / year / week ranges
+* showWeek, cellRender with every antd info field, dateRender / monthCellRender aliases
+* per-picker default placeholders (single and range, en / zh-CN)
+* usePanelKeyboard: arrow / PageUp / PageDown / Home / End / Enter on month, quarter,
+  year and decade panels (ADR §8 step 6)
+* demos: range-picker, cell-render, show-week, keyboard; basic gains week / quarter
+* ALIGNMENT.md WP-3 rows backfilled
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+- ✨ feat(base-ui): DatePicker format string / function / array / mask with tests and demos (WP-5)
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+- 📝 docs(base-ui): mark DatePicker WP-5 done in the ALIGNMENT.md work package table
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+- 📝 docs(base-ui): fix DatePicker ALIGNMENT.md §3 WP-5 notes landing on switchable / time rows
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+- ✨ feat(base-ui): DatePicker time panel, showTime, disabledTime, needConfirm / OK and previewValue (WP-4)
+
+* OK button is a small primary base-ui Button injected through components.button
+* changeOnBlur (dropped by rc-picker) maps to needConfirm={false}
+* time / range time placeholders (en + zhCn), datetime / time panel and Now / OK footer styles
+* Time.test.tsx (16 cases); demos time, needConfirm, disabled-date, preview-value, plus the
+  time parts of mode, start-end, switchable, range-picker, mask, filled-debug and cell-render
+* ALIGNMENT.md WP-4 rows backfilled
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+- ✨ feat(base-ui): DateRangePicker allowEmpty, disabled tuple, id, info.range / info.from, order, focus(index) and active end (WP-6)
+
+* type.ts: declare allowEmpty, disabled [boolean, boolean], id { start, end },
+  onFocus / onBlur / onCalendarChange info.range, disabledDate info.from, order
+  and ref focus(index) on DateRangePickerProps; pass them through explicitly
+* style.ts: a partly disabled range greys only the disabled end instead of the
+  whole box (base-ui Input greys the root on :has(input:disabled))
+* tests: RangeInteraction.test.tsx covers allowEmpty, disabled tuple, id,
+  focus / blur / calendarChange info.range, end-first picking, Tab switching,
+  disabledDate info.from, order on / off, focus(index) and range + showTime
+* demos: disabled, allow-empty, select-in-range, range-interaction; range-picker
+  gains id and info.range; mounted in index.mdx
+* ALIGNMENT.md: WP-6 rows backfilled (T-784)
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+- ✨ feat(base-ui): DatePicker presets, renderExtraFooter(mode), Today footer / showToday, panelRender, components and inputRender (WP-7)
+
+* presets on DatePicker and DateRangePicker (function values, hover preview, sidebar styles)
+* renderExtraFooter(mode) with the deprecated `footer` alias, now on the range picker too
+* Today footer tests and the `showToday` alias; panelRender; components (panels / input / button) and inputRender
+* PresetDate / PickerComponents / PickerPanelProps types
+* demos: preset-ranges, extra-footer, render-panel (panelRender), components; ALIGNMENT.md WP-7 rows marked done
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+- ✨ feat(base-ui): DatePicker locale prop with antd PickerLocale, i18n default locales, buddhist-era and locale demos (WP-9)
+
+* `locale` takes antd's `PickerLocale` (`lang` texts / placeholders / field and header
+  formats / shortWeekDays / shortMonths, `timePickerLocale`), merged field by field over
+  the default locale generated from `@lobehub/ui/i18n` `datePicker.*` resources
+* i18n: today / now / ok / clear / backToToday, week / month / year, every *Select,
+  every prev / next level, yearFormat / monthBeforeYear (en, zh-CN)
+* export `datePickerLocaleEnUS`, `datePickerLocaleZhCN`, `createPickerLocale`
+* demos: buddhist-era, locale switching; ALIGNMENT.md WP-9 rows marked done
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+- ✨ feat(base-ui): DatePicker Semantic DOM classNames / styles (object, function, popup string), rootClassName, deprecated popupClassName / dropdownClassName / popupStyle, style-class and _semantic demos (WP-10)
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+- ✨ feat(base-ui): DatePicker multiple on every picker, maxTagCount (incl. responsive), tagRender, removeIcon, multiple order and needConfirm, PickerPropsWithMultiple value types, multiple / multiple-custom / multiple-debug demos (WP-8)
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+- ✨ feat(base-ui): DatePicker static members (RangePicker, Week/Month/Year/Quarter/TimePicker), pure panels, generatePicker(generateConfig), antd-style type aliases, static-members / render-panel / generate-picker / external-panel demos (WP-11)
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+- 📝 docs(base-ui): DatePicker docs in antd demo order, full API tables (common / DatePicker / showTime / picker variants / RangePicker / formatType / ref), FAQ, differences and migration from antd incl. not-aligned items; merge legacy index / range demos (WP-12, WP-13)
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+- 🎨 style(base-ui): DatePicker demos import antd-style through @/utils/styleEngine; drop empty Semantic DOM column (WP-12)
+
+Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
+
+- 💄 style(base-ui): DatePicker presets sidebar tint and selected preset, footer hidden by default, lighter dividers, bold today
+
+- 💄 style(base-ui): DatePicker fix open jitter, one-row footer, trim demos
+
+## [5.63.4](https://github.com/lobehub/lobe-ui/compare/v5.63.3...v5.63.4) (2026-10-14)
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Guard Table FixedFrost against missing ResizeObserver, closes [#715](https://github.com/lobehub/lobe-ui/issues/715) ([143973c](https://github.com/lobehub/lobe-ui/commit/143973c))
+
+## [5.63.3](https://github.com/lobehub/lobe-ui/compare/v5.63.2...v5.63.3) (2026-10-13)
+
+### 💄 Styles
+
+- **dashboard**: AuthLayout panel bgContainer + colorBorder, drop Surface, grid bg colorBgLayout, dark grid lines, closes [#716](https://github.com/lobehub/lobe-ui/issues/716) ([e3f182c](https://github.com/lobehub/lobe-ui/commit/e3f182c))
+
+## [5.63.2](https://github.com/lobehub/lobe-ui/compare/v5.63.1...v5.63.2) (2026-10-13)
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Table cell vertical center, continuous frost, outline bottom, closes [#715](https://github.com/lobehub/lobe-ui/issues/715) ([df46262](https://github.com/lobehub/lobe-ui/commit/df46262))
+
+## [5.63.1](https://github.com/lobehub/lobe-ui/compare/v5.63.0...v5.63.1) (2026-10-13)
+
+### 💄 Styles
+
+- **dashboard,base-ui**: Surface 暗色 Quaternary 与 fill 边框 / Table 表面, closes [#714](https://github.com/lobehub/lobe-ui/issues/714) ([3490f2d](https://github.com/lobehub/lobe-ui/commit/3490f2d))
+
 # [5.63.0](https://github.com/lobehub/lobe-ui/compare/v5.62.1...v5.63.0) (2026-10-13)
 
 ### ✨ Features

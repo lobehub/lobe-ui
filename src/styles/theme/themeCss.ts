@@ -11,6 +11,23 @@ const ring: Record<LobeAppearance, string> = {
   light: '0 0 0 1px rgb(0 0 0 / 5%)',
 };
 
+/* `initial` makes a light scope nested in a dark one fall back to each variant's own fill
+   instead of inheriting the dark table surface. */
+const surface: Record<LobeAppearance, Record<string, string>> = {
+  dark: {
+    '--lobe-fill-border': v('colorFillSecondary'),
+    '--lobe-fill-border-strong': v('colorFill'),
+    '--lobe-table-cell-bg': 'transparent',
+    '--lobe-table-surface': v('colorFillQuaternary'),
+  },
+  light: {
+    '--lobe-fill-border': v('colorFill'),
+    '--lobe-fill-border-strong': `color-mix(in srgb, ${v('colorFill')}, ${v('colorText')} 15%)`,
+    '--lobe-table-cell-bg': 'initial',
+    '--lobe-table-surface': 'initial',
+  },
+};
+
 const rule = (selector: string, declarations: Record<string, number | string>) =>
   `${selector} {\n${Object.entries(declarations)
     .map(([name, value]) => `  ${name}: ${value};`)
@@ -26,6 +43,7 @@ const appearanceRule = (selector: string, appearance: LobeAppearance) => {
   return rule(selector, {
     ...toCssVariables(token),
     '--lobe-ring': ring[appearance],
+    ...surface[appearance],
     'color-scheme': appearance,
   });
 };

@@ -13,6 +13,8 @@ import DemoServer from './demos/server.tsx?demo';
 import DemoExpand from './demos/expand.tsx?demo';
 import DemoTreeData from './demos/tree-data.tsx?demo';
 import DemoFixedColumns from './demos/fixed-columns.tsx?demo';
+import DemoSurfaces from './demos/surfaces.tsx?demo';
+import DemoCellMerging from './demos/cell-merging.tsx?demo';
 import DemoGroupingColumns from './demos/grouping-columns.tsx?demo';
 import DemoEditRow from './demos/edit-row.tsx?demo';
 import DemoDragColumnSorting from './demos/drag-column-sorting.tsx?demo';
@@ -121,6 +123,18 @@ Records with a `children` array render as a collapsible tree; `expandable.childr
 `scroll.x` becomes the `<table>`'s width, so the table scrolls inside its own frame. When that frame is a flex or grid item, give it `min-width: 0` — otherwise the item's `min-width: auto` resolves to the table's width and the table stretches the layout (pushing siblings out) instead of scrolling.
 
 <Demo of={DemoFixedColumns} layout="bare" />
+
+## Variants and surfaces
+
+**lobe.** `filled`, `outlined` and `borderless` side by side, for checking the surfaces in light and dark: the header layer over the body, fixed start / end columns frosted while content scrolls under them, translucent hover and selected fills (also on fixed cells), the fixed summary row, vertically centered cells next to a wrapped one, and the outlined frame's bottom border when `scroll.y` clips the body.
+
+<Demo of={DemoSurfaces} layout="bare" />
+
+## colSpan and rowSpan
+
+`onCell` returns `rowSpan` to merge body cells down (`rowSpan: 0` hides the covered cells) and `column.colSpan` merges header cells (`0` hides one). Merged cells keep their dividers on both sides, also next to a fixed column while the table scrolls.
+
+<Demo of={DemoCellMerging} layout="bare" />
 
 ## Grouping table head
 

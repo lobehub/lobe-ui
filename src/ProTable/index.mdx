@@ -8,6 +8,7 @@ import DemoIndex from './demos/index.tsx?demo';
 import DemoBasic from './demos/basic.tsx?demo';
 import DemoValueType from './demos/value-type.tsx?demo';
 import DemoSearchForm from './demos/search-form.tsx?demo';
+import DemoDateFields from './demos/date-fields.tsx?demo';
 import DemoLightFilter from './demos/light-filter.tsx?demo';
 import DemoRowSelection from './demos/row-selection.tsx?demo';
 import DemoColumnsState from './demos/columns-state.tsx?demo';
@@ -71,6 +72,12 @@ Every built-in `valueType` in read mode, plus `valueEnum` (single and array valu
 The form is a `Form` driven by a `useForm` instance; each column is a `Form.Field`, so `formItemProps.rules` / `formItemProps.required` validate on change / blur and block the query until they pass (errors show under the control). Columns become fields unless `hideInSearch` / `search: false` (or `index` / `indexBorder` / `option`). `order` sorts fields, `initialValue` presets them, `colSize` widens them and `search.transform` reshapes the submitted value. The form is responsive (1–4 per row) or fixed by `span`; it collapses to one row with `defaultCollapsed` / `defaultColsNumber`, and `optionRender` / `collapseRender` / `searchText` / `resetText` customize the buttons.
 
 <Demo of={DemoSearchForm} layout="bare" />
+
+## Date fields
+
+`date`, `dateTime` and `dateRange` search fields keep native `Date` form values while the pickers work in Dayjs. Fill them through `formRef` or pick dates, then read the raw values (each a `Date`) and the formatted ones the request receives.
+
+<Demo of={DemoDateFields} layout="bare" />
 
 ## Light filter
 

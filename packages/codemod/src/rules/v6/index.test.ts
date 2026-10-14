@@ -95,6 +95,22 @@ describe('v6Rules', () => {
     ]);
   });
 
+  it('R6 flags @rc-component/picker: DatePicker no longer depends on it', () => {
+    const items = collectReport(
+      [
+        `import dateFnsConfig from '@rc-component/picker/generate/dateFns';`,
+        `import type { PickerRef } from '@rc-component/picker';`,
+        `import Trigger from '@rc-component/trigger';`,
+      ].join('\n'),
+      'a.tsx',
+      v6Rules,
+    );
+    expect(items.map((i) => `${i.rule}:${i.line}`)).toEqual(['R6:1', 'R6:2', 'R6:3']);
+    expect(items[0].message).toContain('generatePicker');
+    expect(items[1].message).toContain('`PickerRef`');
+    expect(items[2].message).toContain('antd internal');
+  });
+
   it('R6 gives specific hints for antd reset, locales and cssinjs', () => {
     const items = collectReport(
       [
@@ -259,6 +275,49 @@ describe('v6Rules', () => {
     expect(messages[10]).toContain('`ghost`');
     expect(messages[13]).toContain('virtual');
     expect(items.every((item) => item.anchor.endsWith('#table-and-protable'))).toBe(true);
+  });
+
+  it('R12 flags removed DatePicker aliases, following the local name and RangePicker', () => {
+    const all = collectReport(
+      [
+        `import { DatePicker as Picker, DateRangePicker } from '@lobehub/ui';`,
+        `const a = <Picker min={x} max={y} footer="f" bordered={false} onSelect={s} size="middle" />;`,
+        `const b = <DateRangePicker min={x} mode="month" />;`,
+        `const c = <Picker.RangePicker max={y} />;`,
+        `const d = <Picker minDate={x} size="medium" renderExtraFooter={() => 'f'} variant="borderless" />;`,
+        `const e = <input min={1} />;`,
+        `const f = <Picker transitionName="" popupAlign={{}} builtinPlacements={{}} />;`,
+      ].join('\n'),
+      'a.tsx',
+      v6Rules,
+    );
+    const items = all.filter((item) => item.rule === 'R12');
+    expect(items.map((i) => `${i.rule}:${i.line}:${i.level}`)).toEqual([
+      'R12:2:error',
+      'R12:2:error',
+      'R12:2:error',
+      'R12:2:error',
+      'R12:2:error',
+      'R12:2:error',
+      'R12:3:error',
+      'R12:3:info',
+      'R12:4:error',
+      'R12:7:error',
+      'R12:7:error',
+      'R12:7:error',
+    ]);
+    const messages = items.map((i) => i.message);
+    expect(messages[0]).toContain('`minDate`');
+    expect(messages[1]).toContain('`maxDate`');
+    expect(messages[2]).toContain('renderExtraFooter');
+    expect(messages[3]).toContain('variant="borderless"');
+    expect(messages[4]).toContain('onCalendarChange');
+    expect(messages[5]).toContain('"medium"');
+    expect(messages[7]).toContain('picker="month"');
+    expect(messages[9]).toContain('Motion');
+    expect(messages[10]).toContain('`placement`');
+    expect(messages[11]).toContain('`placement`');
+    expect(items.every((item) => item.anchor.endsWith('#datepicker'))).toBe(true);
   });
 
   it('reports nothing for clean v6 code', () => {
