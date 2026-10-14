@@ -2,6 +2,18 @@
 
 # Changelog
 
+# [6.0.0-beta.9](https://github.com/lobehub/lobe-ui/compare/v6.0.0-beta.8...v6.0.0-beta.9) (2026-10-14)
+
+### 🎫 Chores
+
+- **release**: Docs-kit@5.27.6 [skip ci] ([ed1c634](https://github.com/lobehub/lobe-ui/commit/ed1c634))
+- **release**: Docs-kit@5.27.6-beta.1 [skip ci] ([8f7456f](https://github.com/lobehub/lobe-ui/commit/8f7456f))
+- **release**: V5.64.2 [skip ci] ([cecc45f](https://github.com/lobehub/lobe-ui/commit/cecc45f))
+
+### 🐛 Bug Fixes
+
+- **base-ui**: DatePicker backward-compatible value/onChange types, closes [#721](https://github.com/lobehub/lobe-ui/issues/721) ([5a56024](https://github.com/lobehub/lobe-ui/commit/5a56024))
+
 # [6.0.0-beta.8](https://github.com/lobehub/lobe-ui/compare/v6.0.0-beta.7...v6.0.0-beta.8) (2026-10-14)
 
 ### ⚡ Performance Improvements
