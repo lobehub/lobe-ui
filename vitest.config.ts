@@ -25,6 +25,12 @@ export default defineConfig({
     environment: 'jsdom',
     globals: true,
     hookTimeout: 30_000,
+    server: {
+      deps: {
+        // Apply source aliases to @lobehub/ui imports inside the ESM icons package.
+        inline: ['@lobehub/icons'],
+      },
+    },
     // Production Vite compiler integration can exceed one minute when the
     // complete suite runs with coverage on constrained CI runners.
     testTimeout: 120_000,
