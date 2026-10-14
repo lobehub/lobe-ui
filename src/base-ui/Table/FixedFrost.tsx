@@ -125,8 +125,10 @@ const FixedFrost = memo<{ rootRef: RefObject<HTMLElement | null> }>(({ rootRef }
     };
 
     update();
-    const resize = new ResizeObserver(schedule);
-    resize.observe(root);
+    // Environments without ResizeObserver (e.g. jsdom in consumer tests) still get
+    // the initial measurement and DOM-mutation updates.
+    const resize = typeof ResizeObserver === 'undefined' ? undefined : new ResizeObserver(schedule);
+    resize?.observe(root);
     const mutation = new MutationObserver((records) => {
       // Ignore our own rail nodes.
       if (records.every((r) => (r.target as Element).closest?.('[data-table-frost]'))) return;
@@ -136,7 +138,7 @@ const FixedFrost = memo<{ rootRef: RefObject<HTMLElement | null> }>(({ rootRef }
 
     return () => {
       if (frame) cancelAnimationFrame(frame);
-      resize.disconnect();
+      resize?.disconnect();
       mutation.disconnect();
     };
   }, [rootRef]);
