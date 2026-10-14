@@ -23,6 +23,7 @@ import useCellRender from './hooks/useCellRender';
 import useFieldsInvalidate from './hooks/useFieldsInvalidate';
 import useFilledProps from './hooks/useFilledProps';
 import useFocusEvents, { isTargetInContainers } from './hooks/useFocusEvents';
+import useHoverStore, { type HoverSource } from './hooks/useHoverStore';
 import useOpen from './hooks/useOpen';
 import usePickerRef from './hooks/usePickerRef';
 import usePresets from './hooks/usePresets';
@@ -31,7 +32,7 @@ import useRangeValue, { useInnerValue } from './hooks/useRangeValue';
 import useRangeValueChange, { type RangeValueChangeSource } from './hooks/useRangeValueChange';
 import useShowNow from './hooks/useShowNow';
 import Popup from './Popup';
-import SingleSelector from './Selector/SingleSelector';
+import HoverSelector from './Selector/SingleSelector/HoverSelector';
 
 // TODO: isInvalidateDate with showTime.disabledTime should not provide `range` prop
 
@@ -446,38 +447,26 @@ function Picker<DateType extends object = any>(
   };
 
   // ======================== Hover =========================
-  const [hoverSource, setHoverSource] = React.useState<'cell' | 'preset' | null>(null);
-  const [internalHoverValue, setInternalHoverValue] = React.useState<DateType | null>(null);
+  // The hovered date lives outside React state: only the selector's preview reads it, so a
+  // cell hover must not re-render the popup and every panel cell.
+  const hoverStore = useHoverStore<DateType>();
 
-  const hoverValues = React.useMemo(() => {
-    const values = [internalHoverValue, ...calendarValue].filter((date) => date);
-
+  const panelHoverValues = React.useMemo(() => {
+    const values = calendarValue.filter((date) => date);
     return multiple ? values : values.slice(0, 1);
-  }, [calendarValue, internalHoverValue, multiple]);
+  }, [calendarValue, multiple]);
 
-  // Selector values is different with RangePicker
-  // which can not use `hoverValue` directly
-  const selectorValues = React.useMemo(() => {
-    if (!multiple && internalHoverValue) {
-      return [internalHoverValue];
-    }
-
-    return calendarValue.filter((date) => date);
-  }, [calendarValue, internalHoverValue, multiple]);
-
-  // Clean up `internalHoverValues` when closed
   React.useEffect(() => {
     if (!mergedOpen) {
-      setInternalHoverValue(null);
+      hoverStore.set(null, null);
     }
-  }, [mergedOpen]);
+  }, [mergedOpen, hoverStore]);
 
-  const onSetHover = (date: DateType | null, source: 'cell' | 'preset') => {
+  const onSetHover = (date: DateType | null, source: HoverSource) => {
     if (previewValue !== 'hover') {
       return;
     }
-    setInternalHoverValue(date);
-    setHoverSource(source);
+    hoverStore.set(date, date ? source : null);
   };
 
   // ========================================================
@@ -599,7 +588,7 @@ function Picker<DateType extends object = any>(
       // Styles
       onPickerValueChange={setCurrentPickerValue}
       // Hover
-      hoverValue={hoverValues}
+      hoverValue={panelHoverValues}
       onSelect={onPanelSelect}
       // PickerValue
       pickerValue={currentPickerValue}
@@ -693,20 +682,23 @@ function Picker<DateType extends object = any>(
         // Visible
         visible={mergedOpen}
       >
-        <SingleSelector
+        <HoverSelector
           // Shared
           {...filledProps}
           // Ref
-          allHelp={!!internalHoverValue && hoverSource === 'preset'}
+          calendarValue={calendarValue}
           focused={focused}
+          hoverStore={hoverStore}
           maskFormat={maskFormat}
           open={mergedOpen}
           removeIcon={removeIcon}
+          tagRender={tagRender}
           onBlur={onSelectorBlur}
           onChange={onSelectorChange}
           onFocus={onSelectorFocus}
           onInputChange={onSelectorInputChange}
           onKeyDown={onSelectorKeyDown}
+          onSubmit={() => triggerConfirm('keyboard-submit')}
           onInvalid={(invalid) => {
             // Only `single` mode support type date.
             // `multiple` mode can not typing.
@@ -718,25 +710,19 @@ function Picker<DateType extends object = any>(
           internalPicker={internalPicker}
           // Format
           format={formatList}
+          // Open
           ref={selectorRef}
           // Style
           className={clsx(filledProps.className, rootClassName, mergedClassNames.root)}
           style={{ ...mergedStyles.root, ...filledProps.style }}
           // Icon
           suffixIcon={suffixIcon}
-          // Open
-          tagRender={tagRender}
-          // Active
-          activeHelp={!!internalHoverValue}
           onClear={onSelectorClear}
           // Invalid
           invalid={submitInvalidate}
           onOpenChange={triggerOpen}
           // Click
           onClick={onSelectorClick}
-          onSubmit={() => triggerConfirm('keyboard-submit')}
-          // Change
-          value={selectorValues}
         />
       </PickerPopup>
     </PickerContext>
