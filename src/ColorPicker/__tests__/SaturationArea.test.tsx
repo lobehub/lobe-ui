@@ -10,6 +10,7 @@ describe('SaturationArea', () => {
     const onChangeComplete = vi.fn();
     render(
       <SaturationArea
+        color="#336699"
         hue={210}
         label="Colour"
         saturation={0.5}
@@ -31,6 +32,7 @@ describe('SaturationArea', () => {
   test('describes both axes', () => {
     render(
       <SaturationArea
+        color="#000000"
         hue={0}
         label="Colour"
         saturation={0.25}

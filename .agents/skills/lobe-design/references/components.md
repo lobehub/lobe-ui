@@ -26,7 +26,7 @@ Tree · Typography · Upload
 - `Card` → `Block`，控制台面板用 dashboard 的 `Surface`。`FloatButton` 没有对应件，用定位过的 `ActionIcon` 或 `Button`。
 - antd 的 `message` / `notification` → `toast`；`App` / `ConfigProvider` 删掉，主题见 [design.md](design.md)。
 - `@ant-design/icons` 的 `LoadingOutlined`、以及整个 `thinking-orbs` 包 → `Spin`（AI 等待用 `variant="network"`）。
-- `@ant-design/pro-components` → `Table`。
+- `@ant-design/pro-components` 的 `ProTable` → `@lobehub/ui/pro-table` 的 `ProTable`；只是展示表格时用 `Table`。
 
 在消费方项目里接上配套 eslint 就能拦住这些误用：
 
@@ -144,6 +144,7 @@ const form = useForm<Values>({ schema, initialValues, onSubmit });
 | 标签（分类 / 状态）                | `Tag`                                                                                                            |
 | 可选择的行（图标、描述、尾部操作） | `List`（`items` + `activeKey`）                                                                                  |
 | 数据表格                           | `Table`（列形状接近 antd，内核是 TanStack Table。服务端排序用 `sorter: true` + `onChange`）                      |
+| 增删改查 / 后台列表（请求驱动）    | `ProTable`（`@lobehub/ui/pro-table`，`request` 拉数据，带查询表单或轻量筛选、工具栏、`actionRef` / `formRef`）   |
 | 计数或状态点                       | `Badge`（锚在子元素角上）                                                                                        |
 | 页码                               | `Pagination`                                                                                                     |
 | 评分                               | `Rate`（只读可以是小数）                                                                                         |
@@ -175,28 +176,29 @@ const form = useForm<Values>({ schema, initialValues, onSubmit });
 
 外观相似、语义不同。混用会让用户重新学习每个组件在这个产品里的含义。
 
-| 组件对                                                | 看起来像       | 真正差别                                                                                                             |
-| ----------------------------------------------------- | -------------- | -------------------------------------------------------------------------------------------------------------------- |
-| `Tag` / `Badge`                                       | 都是小标签     | `Tag` 表分类、独立、可移除；`Badge` 附着在别的元素上、表计数或状态                                                   |
-| `Modal` / `Drawer` / `FloatingSheet`                  | 都是弹出层     | 打断程度、信息密度、退出方式递减；Modal 最强打断                                                                     |
-| `Modal` 里的表单                                      | 都是对话框     | `Modal` 包 `@lobehub/ui/form` 的 `Form`。v5 的 `FormModal` 已删除                                                    |
-| `Tabs` / `Segmented`                                  | 都能切换       | Tabs 管同空间内的多个面板；Segmented 管少量互斥选项，没有独立面板区                                                  |
-| `DropdownMenu` / `ContextMenu` / `SideNav`            | 都是菜单       | DropdownMenu 挂在 trigger 上；ContextMenu 命令式、出现在指针处；SideNav 是常驻导航                                   |
-| `Tooltip` / `Popover`                                 | 都是浮层       | Tooltip 只放简短提示、不能含可交互内容；要放链接或按钮必须用 Popover                                                 |
-| `Alert` / `toast`                                     | 都是提示       | Alert 常驻行内；toast 瞬时且命令式调用                                                                               |
-| `Skeleton` / `Spin` / `Spin variant="network"`        | 都是等待       | Skeleton 模拟已知布局、只给首屏；默认 Spin 是通用不确定等待或遮罩；`network` 用于等模型，以及控制台卡片 / 外壳的刷新 |
-| `Accordion` / `Collapsible`                           | 都能折叠       | Accordion 管多节（可单开）；Collapsible 只管一个区域                                                                 |
-| `SideNav` / `DraggableSideNav` / `LayoutSidebar`      | 都是侧栏       | SideNav 固定窄栏不可调；DraggableSideNav 是通用可伸缩容器（不限导航）；LayoutSidebar 是整页骨架插槽                  |
-| `ScrollArea` / `ScrollShadow` / `MaskShadow`          | 都处理滚动边缘 | ScrollArea 替换滚动条 UI；ScrollShadow 保留原生滚动只加阴影；MaskShadow 是单边静态遮罩                               |
-| `Highlighter` / `CodeEditor` / `Snippet` / `CodeDiff` | 都是代码块     | 只读 / 可编辑 / 单行可复制命令 / 前后差异                                                                            |
-| `FileTypeIcon` / `MaterialFileTypeIcon`               | 都是文件图标   | 前者内置 SVG 按扩展名；后者走 CDN 的 Material 图标按文件名，失败回退前者                                             |
-| `Icon` / `ActionIcon` / `ActionIconGroup`             | 都是图标       | 纯展示 / 可点击按钮 / 一组按钮带溢出菜单                                                                             |
-| `Text` / `Markdown`                                   | 都渲染文字     | Text 是排版原语；Markdown 是完整管线（代码、公式、mermaid、流式）                                                    |
-| `Select` / `AutoComplete` / `EmojiPicker`             | 都是选择       | 固定选项 / 自由文本加建议 / 头像与 emoji 选择弹层                                                                    |
-| `ColorSwatches` / `ColorPicker`                       | 都是选颜色     | Swatches 点预设色；ColorPicker 拾取任意 hex，写入放在 `onChangeComplete`                                             |
-| `SideNav` / `ConsoleNav`                              | 都是导航       | `SideNav` 是通用固定窄栏；`ConsoleNav` 是控制台分组侧栏，会随 `ConsoleShell` 收成图标轨                              |
-| `Block` / `Surface`                                   | 都是卡片表面   | `Block` 是通用表面（`variant` / `shadow`）；`Surface` 是控制台工作区里抬高一档的面板                                 |
-| `Statistic` / `StatCard`                              | 都是数字       | `Statistic` 只排一个带格式的数；`StatCard` 是控制台指标瓦片，带标签和语义涨跌                                        |
+| 组件对                                                | 看起来像       | 真正差别                                                                                                                           |
+| ----------------------------------------------------- | -------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| `Tag` / `Badge`                                       | 都是小标签     | `Tag` 表分类、独立、可移除；`Badge` 附着在别的元素上、表计数或状态                                                                 |
+| `Table` / `ProTable`                                  | 都是表格       | `Table` 展示已在手上的数据，排序 / 筛选简单；`ProTable` 用于请求驱动的后台列表：查询表单或轻量筛选、分页请求、刷新 / 密度 / 列设置 |
+| `Modal` / `Drawer` / `FloatingSheet`                  | 都是弹出层     | 打断程度、信息密度、退出方式递减；Modal 最强打断                                                                                   |
+| `Modal` 里的表单                                      | 都是对话框     | `Modal` 包 `@lobehub/ui/form` 的 `Form`。v5 的 `FormModal` 已删除                                                                  |
+| `Tabs` / `Segmented`                                  | 都能切换       | Tabs 管同空间内的多个面板；Segmented 管少量互斥选项，没有独立面板区                                                                |
+| `DropdownMenu` / `ContextMenu` / `SideNav`            | 都是菜单       | DropdownMenu 挂在 trigger 上；ContextMenu 命令式、出现在指针处；SideNav 是常驻导航                                                 |
+| `Tooltip` / `Popover`                                 | 都是浮层       | Tooltip 只放简短提示、不能含可交互内容；要放链接或按钮必须用 Popover                                                               |
+| `Alert` / `toast`                                     | 都是提示       | Alert 常驻行内；toast 瞬时且命令式调用                                                                                             |
+| `Skeleton` / `Spin` / `Spin variant="network"`        | 都是等待       | Skeleton 模拟已知布局、只给首屏；默认 Spin 是通用不确定等待或遮罩；`network` 用于等模型，以及控制台卡片 / 外壳的刷新               |
+| `Accordion` / `Collapsible`                           | 都能折叠       | Accordion 管多节（可单开）；Collapsible 只管一个区域                                                                               |
+| `SideNav` / `DraggableSideNav` / `LayoutSidebar`      | 都是侧栏       | SideNav 固定窄栏不可调；DraggableSideNav 是通用可伸缩容器（不限导航）；LayoutSidebar 是整页骨架插槽                                |
+| `ScrollArea` / `ScrollShadow` / `MaskShadow`          | 都处理滚动边缘 | ScrollArea 替换滚动条 UI；ScrollShadow 保留原生滚动只加阴影；MaskShadow 是单边静态遮罩                                             |
+| `Highlighter` / `CodeEditor` / `Snippet` / `CodeDiff` | 都是代码块     | 只读 / 可编辑 / 单行可复制命令 / 前后差异                                                                                          |
+| `FileTypeIcon` / `MaterialFileTypeIcon`               | 都是文件图标   | 前者内置 SVG 按扩展名；后者走 CDN 的 Material 图标按文件名，失败回退前者                                                           |
+| `Icon` / `ActionIcon` / `ActionIconGroup`             | 都是图标       | 纯展示 / 可点击按钮 / 一组按钮带溢出菜单                                                                                           |
+| `Text` / `Markdown`                                   | 都渲染文字     | Text 是排版原语；Markdown 是完整管线（代码、公式、mermaid、流式）                                                                  |
+| `Select` / `AutoComplete` / `EmojiPicker`             | 都是选择       | 固定选项 / 自由文本加建议 / 头像与 emoji 选择弹层                                                                                  |
+| `ColorSwatches` / `ColorPicker`                       | 都是选颜色     | Swatches 点预设色；ColorPicker 拾取任意 hex，写入放在 `onChangeComplete`                                                           |
+| `SideNav` / `ConsoleNav`                              | 都是导航       | `SideNav` 是通用固定窄栏；`ConsoleNav` 是控制台分组侧栏，会随 `ConsoleShell` 收成图标轨                                            |
+| `Block` / `Surface`                                   | 都是卡片表面   | `Block` 是通用表面（`variant` / `shadow`）；`Surface` 是控制台工作区里抬高一档的面板                                               |
+| `Statistic` / `StatCard`                              | 都是数字       | `Statistic` 只排一个带格式的数；`StatCard` 是控制台指标瓦片，带标签和语义涨跌                                                      |
 
 ### 一个具体例子
 
@@ -208,6 +210,10 @@ const form = useForm<Values>({ schema, initialValues, onSubmit });
 | 高危     | 风险等级 | 稳定映射到语义色（见 design.md 的 D-03） |
 | ECS      | 资源类型 | 分类 `Tag`，不可移除                     |
 | 生产环境 | 业务分类 | 分类 `Tag`，可移除                       |
+
+- 表格选型：数据已经加载好、只做展示和简单排序 / 筛选，用 `Table`；数据由接口按页码、搜索条件、排序拉取，并需要查询表单、刷新、密度、列设置等工具栏能力的增删改查列表，用 `ProTable`。不要用 `Table` 手拼查询表单 + 请求 + 工具栏。
+- `Table` / `ProTable` 的 `variant` 按所处容器选：放在 `Surface`、卡片等已有边框的容器里用 `borderless`（默认），独立放在页面上没有外框时用 `outlined`，不要在带框容器里再给表格加一圈框。
+- `ProTable` 筛选形态：字段少（约 4 个以内）、选完即查、和标题工具栏同一行即可的，用 `search={{ filterType: 'light' }}`；字段多、需要标签、校验或显式「查询 / 重置」的，用默认查询表单（`filterType: 'query'`）；只按一个关键字搜时用工具栏 `options.search`，不要另开表单。
 
 ## C-04 对话界面的组合顺序
 
@@ -261,6 +267,7 @@ BackBottom                        ← 浮层，指向滚动容器
 | 命名空间                | 装什么                                                                                                                                                                                   |
 | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `@lobehub/ui/form`      | 受控表单：`Form` · `useForm` · `useWatch`。不要从别的入口导入 `Form`                                                                                                                     |
+| `@lobehub/ui/pro-table` | 请求驱动的后台列表：`ProTable`。主入口不导出它                                                                                                                                           |
 | `@lobehub/ui/dashboard` | 控制台骨架，见 C-07                                                                                                                                                                      |
 | `@lobehub/ui/awesome`   | 营销页。整页组合交给 `building-landing-home`。效果件：`AuroraBackground` · `GradientButton` · `Spotlight` · `SpotlightCard` · `FluidGradient` · `TypewriterEffect` · `Spline` · `Giscus` |
 | `@lobehub/ui/brand`     | `LobeHub` · `LobeChat` 及其文字标 · `Logo3d` / `LogoFlat` / `LogoMono` · `BrandLoading`                                                                                                  |

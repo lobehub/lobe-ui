@@ -300,21 +300,19 @@ https://ui.lobehub.com/components/date-picker
 import { DatePicker, DateRangePicker } from '@lobehub/ui';
 ```
 
-| v5 / antd                                                                            | v6                                                                                         |
-| ------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
-| `value` / `defaultValue: Dayjs`                                                      | `Date \| null` (`dayjs(v).toDate()`)                                                       |
-| `onChange(date: Dayjs, dateString)`                                                  | `onChange(date: Date \| null)`                                                             |
-| `picker="month" \| "year"`                                                           | `mode: 'date' \| 'month' \| 'year'`                                                        |
-| `picker="week" \| "quarter"`, `showTime`, `TimePicker`                               | no equivalent                                                                              |
-| `minDate` / `maxDate`                                                                | `min` / `max` (`Date`)                                                                     |
-| `disabledDate(current: Dayjs)`                                                       | `disabledDate(date: Date)`                                                                 |
-| `renderExtraFooter`                                                                  | `footer`                                                                                   |
-| `showNow`                                                                            | removed (off by default)                                                                   |
-| `presets`                                                                            | no equivalent                                                                              |
-| `DatePicker.RangePicker`                                                             | `DateRangePicker` (`value: [Date \| null, Date \| null]`, `placeholder: [string, string]`) |
-| `open`, `onOpenChange`, `getPopupContainer`, `suffixIcon`, `status`, `inputReadOnly` | removed                                                                                    |
+antd's API on a fork of `@rc-component/picker` kept inside `@lobehub/ui` (no rc dependency), `Dayjs` values (the v5.64 base-ui picker). antd / v5 code keeps working except these (R12):
 
-`format` accepts a string or `(date: Date) => string`.
+| v5 / antd                                             | v6                                                               |
+| ----------------------------------------------------- | ---------------------------------------------------------------- |
+| `min` / `max`                                         | `minDate` / `maxDate`                                            |
+| `footer`                                              | `renderExtraFooter={() => footer}`                               |
+| `bordered={false}`                                    | `variant="borderless"`                                           |
+| `onSelect(date)`                                      | `onCalendarChange(date, dateString, info)`                       |
+| `size="middle"`                                       | `size="medium"`                                                  |
+| `popupAlign` / `builtinPlacements` / `transitionName` | removed; `placement`, popup animates with Motion                 |
+| ConfigProvider `datePicker` / `locale.DatePicker`     | not read; pass props, or `locale` / `@lobehub/ui/i18n` resources |
+
+`DatePicker.RangePicker` and `DateRangePicker` are the same component. `@rc-component/picker` imports (R6): take `PickerRef` / `GenerateConfig` from `@lobehub/ui`; a `generate/*` config for another date library needs the package installed by the app. Code written for the v6 betas' `Date` picker: wrap values with `dayjs(date)`, read `value?.toDate()`, `mode="month"` → `picker="month"`, range clears to `null`.
 
 ## Skeleton family
 
@@ -507,6 +505,30 @@ v5 `Popover` already used Base UI. From antd:
 | `fresh`, `destroyOnHidden`, `autoAdjustOverflow`, `align` | removed (`positionerProps`, `portalProps`, `popupProps` for Base UI parts) |
 | —                                                         | new: `standalone`, `nativeButton`, `backdropProps`, `PopoverGroup`         |
 
+## Table / ProTable
+
+https://ui.lobehub.com/components/table · https://ui.lobehub.com/components/pro-table
+
+```ts
+import { Table } from '@lobehub/ui';
+import { ProTable } from '@lobehub/ui/pro-table';
+```
+
+| v5                                                                                             | v6                                                                |
+| ---------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| `@lobehub/ui/base-ui/pro-table`                                                                | `@lobehub/ui/pro-table` (rewritten by the codemod)                |
+| `bordered`                                                                                     | `variant="outlined"`                                              |
+| `expandedRowRender`, `expandIcon`, `indentSize`, `childrenColumnName`, `expandIconColumnIndex` | move under `expandable`                                           |
+| `classNames` / `styles` `cell`, `row`, `wrapper`, string `header` / `body`                     | `body.cell`, `body.row`, `section`, `header.cell`, `body.wrapper` |
+| `emptyText`                                                                                    | `locale.emptyText`                                                |
+| `size="medium"`, ProTable `defaultSize="medium"`                                               | `"middle"`                                                        |
+| `pagination.position`                                                                          | `pagination.placement`                                            |
+| `locale.filterCheckall`                                                                        | `locale.filterCheckAll`                                           |
+| `expandable.expandedRowOffset`                                                                 | `Table.EXPAND_COLUMN` in `columns`, columns before it `fixed`     |
+| `measureRowRender`, `components.body` render function, ProTable `ghost`                        | removed (`virtual` replaces the custom body)                      |
+
+Everything else keeps the antd shape. Class overrides keep the `lobe-table-*` / `lobe-pro-table-*` names.
+
 ## Common pitfalls
 
 - **`DropdownItem` breaks contextual typing.** `onClick: ({ domEvent }) => …` inside a `DropdownItem[]` literal loses its parameter type, because the type is a union of item shapes. Annotate it: `onClick: (info: MenuInfo) => …`, importing `MenuInfo` from `@lobehub/ui`. Replace `MenuProps['items']` / `ItemType` / `GenericItemType` with `DropdownItem`.
@@ -516,9 +538,9 @@ v5 `Popover` already used Base UI. From antd:
 - **Forms return the whole store.** `getValues()`, `onSubmit(values)` and the second argument of `onValuesChange` include every key from `initialValues`, `setValues` and hidden or conditional fields. antd returned only mounted `Form.Item`s. Pick the fields you submit explicitly; never post a DB row back unchanged.
 - **Mount `<ModalHost />` once**, or nothing shows for `createModal` / `confirmModal`. `createRawModal` and `ModalProvider` are gone.
 - **Removed types:** `ModalProps` → `ModalComponentProps`; `DropdownProps` → `DropdownMenuProps`. antd types (`ButtonProps` from `antd`, `InputRef`, `FormInstance` from `antd`) must be replaced with the `@lobehub/ui` types or DOM element types.
-- **Callback arguments changed:** Checkbox `onChange(checked)`, InputNumber `onChange(number | null)`, Drawer `onClose()`, DatePicker `Date` instead of `Dayjs`, Tabs/Accordion keys are `string`.
+- **Callback arguments changed:** Checkbox `onChange(checked)`, InputNumber `onChange(number | null)`, Drawer `onClose()`, Tabs/Accordion keys are `string`.
 - **Refs are plain DOM elements.** `.input`, `.nativeElement`, `.resizableTextArea` and `focus({ cursor })` no longer exist.
 - **Reused names mean different things:** v6 `AccordionItem` is a Base UI atom (not the v5 item with `itemKey`); v6 `ListItem` is a type, not a component.
-- **Compound statics are gone:** `Select.Option`, `Tabs.TabPane`, `Collapse.Panel`, `Checkbox.Group`, `Avatar.Group`, `Input.Password`, `DatePicker.RangePicker`, `Modal.confirm`. Use `options` / `items` or the named exports.
+- **Compound statics are gone:** `Select.Option`, `Tabs.TabPane`, `Collapse.Panel`, `Checkbox.Group`, `Avatar.Group`, `Input.Password`, `Modal.confirm`. Use `options` / `items` or the named exports.
 - **Defaults that changed the look:** Tooltip/Popover `arrow` defaults to `false`; Skeleton animates by default and `Skeleton.Avatar` is square; `Text` renders a block `<div>`; Button `ghost` is no longer the on-dark variant.
 - **Things that type-check but do nothing:** Avatar `tooltipProps`; Tag `onClose` + `preventDefault()` no longer keeps the tag.

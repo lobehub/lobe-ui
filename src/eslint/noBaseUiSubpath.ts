@@ -3,6 +3,7 @@ import type { Rule } from 'eslint';
 const REPLACEMENTS: Record<string, string> = {
   '@lobehub/ui/base-ui': '@lobehub/ui',
   '@lobehub/ui/base-ui/form': '@lobehub/ui/form',
+  '@lobehub/ui/base-ui/pro-table': '@lobehub/ui/pro-table',
 };
 
 export const noBaseUiSubpath: Rule.RuleModule = {

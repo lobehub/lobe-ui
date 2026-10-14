@@ -1,179 +1,268 @@
 'use client';
 
 import * as stylex from '@stylexjs/stylex';
-import { type RowData, useTable } from '@tanstack/react-table';
-import { type Key, memo, type ReactNode, useEffect, useMemo } from 'react';
+import clsx from 'clsx';
+import { Inbox } from 'lucide-react';
+import {
+  type CSSProperties,
+  isValidElement,
+  memo,
+  type ReactNode,
+  type Ref,
+  useCallback,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+} from 'react';
 
-import { useEventCallback } from '@/hooks/useEventCallback';
-import Pagination from '@/Pagination';
+import Empty from '@/Empty';
+import tableMessages from '@/i18n/resources/en/table';
+import { useTranslation } from '@/i18n/useTranslation';
 import Spin from '@/Spin';
-import { styleProps } from '@/styles/stylex/props';
 
-import { tableFeatureSet } from './features';
-import FilterMenu from './FilterMenu';
-import { getFixedOffsets } from './fixedOffsets';
+import Column from './Column';
+import ColumnGroup from './ColumnGroup';
+import { PREFIX_CLS } from './constants';
+import { getStickyOffsets } from './engine/fixed';
+import type { TableInternalProps } from './internal';
+import { EXPAND_COLUMN } from './pipeline/columnUtils';
+import {
+  SELECTION_ALL,
+  SELECTION_COLUMN,
+  SELECTION_INVERT,
+  SELECTION_NONE,
+} from './pipeline/selectionUtils';
+import { HeaderContext, SelectionContext, TableViewContext } from './render/context';
+import FixedFrost from './render/FixedFrost';
+import TableLoadingSkeleton from './render/LoadingSkeleton';
+import { renderPaginationBars } from './render/PaginationBar';
+import { TableSummary } from './render/Summary';
+import { resolveSticky, toTableRef } from './render/tableHelpers';
+import TableView from './render/TableView';
+import { useViewContexts } from './render/useViewContexts';
+import { useStableSemantic } from './semantic';
+import { TableStoreProvider } from './store/hooks';
 import { styles } from './style';
-import TableBody from './TableBody';
-import TableHead from './TableHead';
-import { toColumnDefs } from './toColumnDefs';
-import type { FilterValue, TableColumn, TableProps } from './type';
-import { useTableState } from './useTableState';
+import type { TableProps, TableRef } from './type';
+import { useTableController } from './useTableController';
 
-const EMPTY_DATA: any[] = [];
-
-export interface TableInternalProps<T> extends TableProps<T> {
-  renderFilter?: (column: TableColumn<T>, id: string, table: any) => ReactNode;
-}
-
-const TableInner = <T extends RowData>(props: TableInternalProps<T>) => {
+const TableInner = <T,>(props: TableInternalProps<T>) => {
   const {
-    bordered = false,
     className,
     classNames,
-    columns,
-    dataSource = EMPTY_DATA as T[],
-    emptyText,
+    footer,
+    internalRef,
     loading = false,
-    onChange,
-    onRow,
+    onScroll,
     pagination,
     ref,
-    renderFilter,
-    rowClassName,
-    rowKey,
+    rootClassName,
+    rowHoverable = true,
+    rowSelection,
     scroll,
+    showHeader = true,
     size = 'middle',
+    sticky,
     style,
     styles: customStyles,
     tableLayout,
+    title,
+    variant = 'borderless',
+    virtual,
   } = props;
 
-  const state = useTableState({ columns, onChange, pagination });
-  const columnDefs = useMemo(() => toColumnDefs(columns), [columns]);
-  const fixedOffsets = useMemo(() => getFixedOffsets(columns), [columns]);
+  const controller = useTableController(props);
+  const { model, rows, state } = controller;
+  const { t } = useTranslation(tableMessages);
+  const { classNames: semanticClassNames, styles: semanticStyles } = useStableSemantic(
+    classNames,
+    customStyles,
+    props,
+  );
 
-  const table = useTable({
-    columns: columnDefs,
-    data: dataSource,
-    enableMultiSort: false,
-    enableSortingRemoval: true,
-    features: tableFeatureSet,
-    getRowId: (record: T) =>
-      String(typeof rowKey === 'function' ? rowKey(record) : (record[rowKey] as Key)),
-    manualSorting: state.manualSorting,
-    onColumnFiltersChange: state.onColumnFiltersChange,
-    onSortingChange: state.onSortingChange,
-    state: {
-      columnFilters: state.columnFilters,
-      sorting: state.sorting,
+  const rootRef = useRef<HTMLDivElement>(null);
+  const { measureRef } = controller;
+  const setRootRef = useCallback(
+    (element: HTMLDivElement | null) => {
+      rootRef.current = element;
+      return measureRef(element);
     },
-  } as any);
+    [measureRef],
+  );
+  useImperativeHandle(
+    ref as Ref<TableRef>,
+    () => toTableRef(rootRef.current!, controller.scrollTo),
+    [controller.scrollTo],
+  );
+  useImperativeHandle(
+    internalRef,
+    () => ({ clearSelection: controller.selection.actions.clear, store: controller.store }),
+    [controller.selection.actions.clear, controller.store],
+  );
 
-  const allRows = table.getRowModel().rows as unknown as { id: Key; original: T }[];
-  const { page } = state;
-  const clientPaginated = pagination !== false && state.config?.total === undefined;
-  const total = state.config?.total ?? allRows.length;
-  const pageCount = Math.max(1, Math.ceil(total / page.pageSize));
-  const pageIndex = Math.min(page.pageIndex, pageCount - 1);
-  const rows = clientPaginated
-    ? allRows.slice(pageIndex * page.pageSize, (pageIndex + 1) * page.pageSize)
-    : allRows;
+  const { headerValue, selectionValue, viewValue } = useViewContexts<T>({
+    controller,
+    props,
+    semanticClassNames,
+    semanticStyles,
+  });
+  const leafColumns = model.leafColumns;
 
-  const syncClampedPage = useEventCallback(() => state.clampPage(pageIndex));
+  const {
+    spinning: isLoading = true,
+    tip,
+    variant: spinVariant = 'network',
+    ...spinRest
+  } = typeof loading === 'object' ? loading : { spinning: loading };
 
-  useEffect(() => {
-    if (clientPaginated && pageIndex !== page.pageIndex) syncClampedPage();
-  }, [clientPaginated, pageIndex, page.pageIndex, syncClampedPage]);
+  const customEmpty = props.locale?.emptyText;
+  const emptyNode = isLoading ? (
+    <TableLoadingSkeleton
+      columns={controller.columns}
+      expandColumn={Boolean(controller.expandType)}
+      rows={pagination === false ? 5 : Math.min(5, state.page.pageSize)}
+      screens={controller.screens}
+      selectionColumn={Boolean(rowSelection)}
+      size={size}
+    />
+  ) : customEmpty === undefined ? (
+    <Empty description={t('table.emptyText')} icon={Inbox} imageSize={40} />
+  ) : typeof customEmpty === 'function' ? (
+    customEmpty()
+  ) : (
+    customEmpty
+  );
 
-  const minWidth = scroll?.x === 'max-content' ? '100%' : scroll?.x;
+  const stickyConfig = resolveSticky(sticky);
+  const { summaryNode } = controller;
+  const summaryFixed =
+    isValidElement<{ fixed?: boolean | 'top' | 'bottom' }>(summaryNode) &&
+    summaryNode.type === TableSummary
+      ? summaryNode.props.fixed
+      : undefined;
+  const fixFooter =
+    controller.fixHeader || stickyConfig.isSticky || virtual
+      ? virtual && summaryNode
+        ? (summaryFixed ?? 'bottom')
+        : (summaryFixed ?? false)
+      : false;
+
+  const hasFixedColumn = leafColumns.some((leaf) => leaf.fixed);
+  const mergedTableLayout =
+    tableLayout ??
+    (hasFixedColumn
+      ? scroll?.x === 'max-content'
+        ? 'auto'
+        : 'fixed'
+      : controller.fixHeader ||
+          stickyConfig.isSticky ||
+          leafColumns.some((leaf) => (leaf.column.source.column as { ellipsis?: unknown }).ellipsis)
+        ? 'fixed'
+        : 'auto');
+
+  const offsets = useMemo(
+    () => getStickyOffsets(controller.columnWidths, leafColumns),
+    [controller.columnWidths, leafColumns],
+  );
+
+  const pager = state.config
+    ? renderPaginationBars({
+        classNames: semanticClassNames.pagination,
+        config: state.config,
+        onChange: state.onPaginationChange,
+        page: state.page,
+        size: props.size,
+        styles: semanticStyles.pagination,
+        total: state.total,
+      })
+    : { bottom: null, top: null };
+
+  const rootStyle: CSSProperties = { ...semanticStyles.root, ...style };
 
   return (
-    <div ref={ref} {...styleProps(styles.root, className, style)}>
-      <div
-        data-table-wrapper=""
-        {...styleProps([styles.wrapper, bordered && styles.bordered], classNames?.wrapper, {
-          maxHeight: scroll?.y,
-          ...customStyles?.wrapper,
-        })}
-      >
-        <table
-          {...styleProps(styles.table, undefined, {
-            minWidth,
-            tableLayout,
-            width: scroll?.x === 'max-content' ? 'max-content' : '100%',
-          })}
-        >
-          <TableHead
-            bordered={bordered}
-            classNames={classNames}
-            columnIds={state.columnIds}
-            columns={columns}
-            fixedOffsets={fixedOffsets}
-            getColumn={(id) => table.getColumn(id) as any}
-            size={size}
-            styles={customStyles}
-            renderFilter={(column, id) => {
-              if (renderFilter) return renderFilter(column, id, table);
-              const tableColumn = table.getColumn(id) as any;
-              const value = (tableColumn?.getFilterValue() as FilterValue[] | undefined) ?? [];
-              return (
-                <FilterMenu
-                  filters={column.filters ?? []}
-                  label={typeof column.title === 'string' ? column.title : id}
-                  value={value}
-                  onChange={(next) =>
-                    tableColumn?.setFilterValue(next.length > 0 ? next : undefined)
-                  }
+    <TableStoreProvider value={controller.store}>
+      <TableViewContext value={viewValue}>
+        <SelectionContext value={selectionValue}>
+          <HeaderContext value={headerValue}>
+            <div
+              ref={setRootRef}
+              style={rootStyle}
+              className={clsx(
+                stylex.props(styles.root).className,
+                `${PREFIX_CLS}-wrapper`,
+                rootClassName,
+                className,
+                semanticClassNames.root,
+              )}
+            >
+              {pager.top}
+              <div className={stylex.props(styles.spinContainer).className} data-table-wrapper="">
+                <TableView<T>
+                  bodyRef={controller.bodyRef}
+                  colWidths={controller.columnWidths}
+                  emptyNode={emptyNode}
+                  fixFooter={fixFooter}
+                  fixHeader={controller.fixHeader}
+                  footer={footer ? footer(rows) : undefined}
+                  grouped={controller.grouped}
+                  headerRows={model.headerRows}
+                  hoverable={rowHoverable}
+                  offsets={offsets}
+                  rows={model.rows}
+                  scrollX={scroll?.x}
+                  scrollY={scroll?.y}
+                  showHeader={showHeader}
+                  size={size}
+                  sticky={stickyConfig}
+                  summaryNode={summaryNode}
+                  tableLayout={mergedTableLayout}
+                  title={title ? title(rows) : undefined}
+                  variant={variant}
+                  virtual={controller.virtualInput}
+                  virtualScrollRef={controller.virtualScrollRef}
+                  onColumnResize={controller.onColumnResize}
+                  onScroll={onScroll}
                 />
-              );
-            }}
-          />
-          <TableBody
-            bordered={bordered}
-            classNames={classNames}
-            columnIds={state.columnIds}
-            columns={columns}
-            emptyText={emptyText}
-            fixedOffsets={fixedOffsets}
-            loading={loading}
-            rowClassName={rowClassName}
-            rows={rows}
-            size={size}
-            styles={customStyles}
-            onRow={onRow}
-          />
-        </table>
-        {loading && rows.length > 0 && (
-          <div data-table-loading="" {...stylex.props(styles.loading)}>
-            <Spin />
-          </div>
-        )}
-      </div>
-      {pagination !== false && total > 0 && (
-        <div {...stylex.props(styles.pagination)}>
-          <Pagination
-            current={pageIndex + 1}
-            pageSize={page.pageSize}
-            pageSizeOptions={state.config?.pageSizeOptions}
-            showSizeChanger={state.config?.showSizeChanger}
-            total={total}
-            onChange={(next, pageSize) =>
-              state.onPaginationChange({ pageIndex: next - 1, pageSize })
-            }
-          />
-        </div>
-      )}
-    </div>
+                {isLoading && (
+                  <div {...stylex.props(styles.loading)} data-table-loading="">
+                    <Spin {...spinRest} variant={spinVariant} />
+                    {tip as ReactNode}
+                  </div>
+                )}
+                <FixedFrost rootRef={rootRef} />
+              </div>
+              {pager.bottom}
+            </div>
+          </HeaderContext>
+        </SelectionContext>
+      </TableViewContext>
+    </TableStoreProvider>
   );
 };
 
-const Table = memo(TableInner) as unknown as (<T extends RowData>(
-  props: TableProps<T>,
-) => ReactNode) & {
+type TableComponent = (<T>(props: TableProps<T>) => ReactNode) & {
+  Column: typeof Column;
+  ColumnGroup: typeof ColumnGroup;
   displayName?: string;
+  EXPAND_COLUMN: typeof EXPAND_COLUMN;
+  SELECTION_ALL: typeof SELECTION_ALL;
+  SELECTION_COLUMN: typeof SELECTION_COLUMN;
+  SELECTION_INVERT: typeof SELECTION_INVERT;
+  SELECTION_NONE: typeof SELECTION_NONE;
+  Summary: typeof TableSummary;
 };
 
+const Table = memo(TableInner) as unknown as TableComponent;
+
 Table.displayName = 'Table';
+Table.Column = Column;
+Table.ColumnGroup = ColumnGroup;
+Table.EXPAND_COLUMN = EXPAND_COLUMN;
+Table.SELECTION_COLUMN = SELECTION_COLUMN;
+Table.SELECTION_ALL = SELECTION_ALL;
+Table.SELECTION_INVERT = SELECTION_INVERT;
+Table.SELECTION_NONE = SELECTION_NONE;
+Table.Summary = TableSummary;
 
 export { TableInner };
 

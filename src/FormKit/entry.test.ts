@@ -43,6 +43,21 @@ describe('form entry boundaries', () => {
     );
   });
 
+  it('ProTable consumes FormKit only through its own ./pro-table entry', () => {
+    const pkg = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8'));
+    expect(pkg.exports['./pro-table']).toEqual({
+      import: './es/ProTable/index.mjs',
+      types: './es/ProTable/index.d.mts',
+    });
+    expect(statSync(join(src, 'ProTable/index.ts')).isFile()).toBe(true);
+    expect(readFileSync(join(src, 'index.ts'), 'utf8')).not.toMatch(/ProTable/);
+    const formImports = files
+      .filter(({ path }) => path.startsWith('src/ProTable/'))
+      .flatMap(({ text }) => [...text.matchAll(/from ['"]([^'"]*(?:FormKit|\/form)[^'"]*)['"]/g)])
+      .map((match) => match[1]);
+    expect(new Set(formImports)).toEqual(new Set(['@lobehub/ui/form']));
+  });
+
   it('the public index exports the documented API', async () => {
     const mod = await import('./index');
     expect(Object.keys(mod).sort()).toEqual(

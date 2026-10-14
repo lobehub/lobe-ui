@@ -1,149 +1,213 @@
 import * as stylex from '@stylexjs/stylex';
 
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
-import { focusRing } from '@/styles/stylex/focusRing';
-
-import { tableRowMarker } from './marker.stylex';
 
 export const styles = stylex.create({
-  bordered: {
-    borderColor: cssVar.colorBorderSecondary,
-    borderRadius: cssVar.borderRadiusLG,
-    borderStyle: 'solid',
-    borderWidth: 1,
-  },
-  borderedCell: {
-    borderInlineEndColor: cssVar.colorBorderSecondary,
-    borderInlineEndStyle: 'solid',
-    borderInlineEndWidth: 1,
-  },
-  caretActive: {
-    color: cssVar.colorText,
-  },
-  cell: {
-    backgroundColor: {
-      default: cssVar.colorBgContainer,
-      [stylex.when.ancestor(':hover', tableRowMarker)]:
-        `color-mix(in srgb, ${cssVar.colorBgContainer}, ${cssVar.colorText} 3%)`,
-    },
-    borderBlockEndColor: cssVar.colorBorderSecondary,
-    borderBlockEndStyle: 'solid',
-    borderBlockEndWidth: 1,
-    fontVariantNumeric: 'tabular-nums',
-  },
-  cellLastRow: {
-    borderBlockEndColor: 'currentcolor',
-    borderBlockEndStyle: 'none',
-    borderBlockEndWidth: 0,
-  },
-  cellMiddle: {
-    paddingBlock: 12,
-    paddingInline: 16,
-  },
-  cellSmall: {
-    paddingBlock: 8,
-    paddingInline: 12,
-  },
-  clickable: {
-    cursor: 'pointer',
-  },
-  ellipsis: {
+  columnTitle: {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
-    maxWidth: 0,
-  },
-  empty: {
-    color: cssVar.colorTextDescription,
-    textAlign: 'center',
+    wordBreak: 'keep-all',
+    minWidth: 0,
   },
   filterActive: {
-    color: { 'default': cssVar.colorPrimary, ':hover': cssVar.colorText },
+    color: { 'default': cssVar.colorPrimary, ':hover': cssVar.colorPrimary },
   },
   filterButton: {
-    padding: 2,
-    borderColor: 'currentcolor',
-    borderRadius: 4,
-    borderStyle: 'none',
-    borderWidth: 0,
-    alignItems: 'center',
-    backgroundColor: { 'default': 'transparent', ':hover': cssVar.colorFillTertiary },
-    color: { 'default': cssVar.colorTextQuaternary, ':hover': cssVar.colorText },
-    cursor: 'pointer',
-    display: 'inline-flex',
-    justifyContent: 'center',
+    flex: 'none',
+    marginBlock: -4,
   },
-  fixed: {
+  filterButtons: {
+    gap: 8,
+    paddingBlock: 7,
+    paddingInline: 8,
+    alignItems: 'center',
+    borderBlockStartColor: cssVar.colorSplit,
+    borderBlockStartStyle: 'solid',
+    borderBlockStartWidth: 1,
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  filterCheckAll: {
+    paddingInline: 4,
+    marginBlockEnd: 4,
+  },
+  filterDropdown: {
+    display: 'flex',
+    flexDirection: 'column',
+    minWidth: 120,
+  },
+  filterEmpty: {
+    paddingBlock: 16,
+    paddingInline: 0,
+  },
+  filterGroup: {
+    display: 'flex',
+    flexDirection: 'column',
+  },
+  filterGroupTitle: {
+    paddingBlock: 5,
+    paddingInline: 8,
+    color: cssVar.colorTextDescription,
+    fontSize: 12,
+  },
+  filterItem: {
+    borderRadius: cssVar.borderRadiusSM,
+    paddingBlock: 5,
+    paddingInline: 8,
+    alignItems: 'center',
+    backgroundColor: { 'default': null, ':hover': cssVar.colorFillTertiary },
+    display: 'flex',
+    whiteSpace: 'nowrap',
+  },
+  filterMenu: {
+    padding: 4,
+    overflow: 'auto',
+    display: 'flex',
+    flexDirection: 'column',
+    maxHeight: 264,
+  },
+  filterPopup: {
+    padding: 0,
+    overflow: 'hidden',
+  },
+  filterSearch: {
+    padding: 8,
+    borderBlockEndColor: cssVar.colorSplit,
+    borderBlockEndStyle: 'solid',
+    borderBlockEndWidth: 1,
+  },
+  filterTree: {
+    padding: 8,
+    overflow: 'auto',
+    maxHeight: 264,
+  },
+  frostEnd: {
+    flex: 'none',
+    backdropFilter: 'blur(16px)',
+    insetInlineEnd: 0,
+    marginInlineStart: 'auto',
+    position: 'sticky',
+    height: '100%',
+  },
+  // z-index 1: above scrolling cells (z auto), below fixed cells (z >= 2).
+  frostRail: {
+    display: 'flex',
+    insetBlockStart: 0,
+    insetInlineStart: 0,
+    pointerEvents: 'none',
+    position: 'absolute',
     zIndex: 1,
   },
-  header: {
-    backgroundColor: cssVar.colorBgContainer,
-    boxShadow: `inset 0 -1px 0 ${cssVar.colorBorderSecondary}, inset 0 999px 0 ${cssVar.colorFillQuaternary}`,
-    color: cssVar.colorTextSecondary,
-    fontSize: 13,
-    fontWeight: 500,
-    insetBlockStart: 0,
+  frostStart: {
+    flex: 'none',
+    backdropFilter: 'blur(16px)',
+    insetInlineStart: 0,
     position: 'sticky',
-    textAlign: 'start',
-    zIndex: 2,
+    height: '100%',
   },
   headerInner: {
     gap: 6,
     alignItems: 'center',
     display: 'inline-flex',
+    verticalAlign: 'middle',
+    maxWidth: '100%',
+    minWidth: 0,
   },
   loading: {
     inset: 0,
+    gap: 8,
     alignItems: 'center',
     backgroundColor: `color-mix(in srgb, ${cssVar.colorBgContainer} 60%, transparent)`,
+    color: cssVar.colorTextSecondary,
     display: 'flex',
+    flexDirection: 'column',
     justifyContent: 'center',
     position: 'absolute',
-    zIndex: 3,
   },
   pagination: {
+    marginBlock: 16,
     display: 'flex',
+  },
+  paginationCenter: {
+    justifyContent: 'center',
+  },
+  paginationEnd: {
     justifyContent: 'flex-end',
-    marginBlockStart: 12,
+  },
+  paginationStart: {
+    justifyContent: 'flex-start',
+  },
+  paginationTop: {
+    marginBlockEnd: '16px',
+    marginBlockStart: '0',
   },
   root: {
     minWidth: 0,
   },
-  sortButton: {
-    font: 'inherit',
-    padding: 0,
-    borderColor: 'currentcolor',
-    borderRadius: 4,
-    borderStyle: 'none',
-    borderWidth: 0,
-    gap: 6,
-    alignItems: 'center',
-    backgroundColor: 'transparent',
-    color: 'inherit',
-    cursor: 'pointer',
-    display: 'inline-flex',
-  },
-  sortCaret: {
-    color: cssVar.colorTextQuaternary,
+  selection: {
     display: 'inline-flex',
     flexDirection: 'column',
+    position: 'relative',
+    verticalAlign: 'middle',
   },
-  table: {
-    borderCollapse: 'separate',
-    borderSpacing: 0,
-    fontSize: 14,
+  selectionExtra: {
+    alignItems: 'center',
+    display: 'flex',
+    insetBlockStart: 0,
+    marginInlineStart: '100%',
+    paddingInlineStart: 2,
+    position: 'absolute',
+    zIndex: 1,
+    height: '100%',
+  },
+  selectionRadioGroup: {
+    display: 'inline-flex',
+    verticalAlign: 'middle',
+  },
+  selectionTrigger: {
+    flex: 'none',
+    marginBlock: -4,
+  },
+  skeleton: {
+    display: 'flex',
+    flexDirection: 'column',
+    textAlign: 'start',
+    minWidth: 0,
     width: '100%',
   },
-  wrapper: {
-    overflow: 'auto',
+  skeletonCell: {
+    paddingBlock: 'var(--lobe-table-padding-block)',
+    paddingInline: 'var(--lobe-table-padding-inline)',
+    alignItems: 'center',
+    display: 'flex',
+    minWidth: 0,
+  },
+  skeletonRow: {
+    alignItems: 'stretch',
+    borderBlockEndColor: `var(--lobe-fill-border, ${cssVar.colorFill})`,
+    borderBlockEndStyle: 'solid',
+    borderBlockEndWidth: { 'default': 1, ':last-child': 0 },
+    display: 'grid',
+    minWidth: 0,
+    width: '100%',
+  },
+  sortButton: {
+    gap: 4,
+    alignItems: 'center',
+    display: 'inline-flex',
+    maxWidth: '100%',
+    minWidth: 0,
+  },
+  sortCaret: {
+    flex: 'none',
+    marginBlock: -4,
+  },
+  sortTitle: {
+    cursor: 'pointer',
+    minWidth: 0,
+  },
+  spinContainer: {
     position: 'relative',
   },
 });
-
-export const cellSizeStyles = {
-  middle: styles.cellMiddle,
-  small: styles.cellSmall,
-};
-
-export const filterButtonStyles = [styles.filterButton, focusRing.info];
-export const sortButtonStyles = [styles.sortButton, focusRing.info];

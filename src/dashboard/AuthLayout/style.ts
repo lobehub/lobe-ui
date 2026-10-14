@@ -48,7 +48,7 @@ export const styles = stylex.create({
   },
   asidePlate: {
     inset: 0,
-    backgroundColor: `var(--lobe-surface-bg-solid, ${cssVar.colorBgContainer})`,
+    backgroundColor: cssVar.colorBgContainer,
     position: 'absolute',
   },
   asideScrim: {
@@ -100,10 +100,15 @@ export const styles = stylex.create({
     minInlineSize: 0,
   },
   grid: {
-    backgroundPosition: '-1px -1px',
-    backgroundColor: `color-mix(in srgb, ${cssVar.colorBgLayout}, ${cssVar.colorBgElevated} 70%)`,
-    backgroundImage: `linear-gradient(color-mix(in srgb, ${cssVar.colorText} 5%, transparent) 1px, transparent 1px), linear-gradient(90deg, color-mix(in srgb, ${cssVar.colorText} 5%, transparent) 1px, transparent 1px)`,
-    backgroundSize: '32px 32px',
+    '--lobe-auth-grid-line': `color-mix(in srgb, ${cssVar.colorText} 5%, transparent)`,
+    'backgroundPosition': '-1px -1px',
+    'backgroundColor': cssVar.colorBgLayout,
+    'backgroundImage':
+      'linear-gradient(var(--lobe-auth-grid-line) 1px, transparent 1px), linear-gradient(90deg, var(--lobe-auth-grid-line) 1px, transparent 1px)',
+    'backgroundSize': '32px 32px',
+  },
+  gridDark: {
+    '--lobe-auth-grid-line': cssVar.colorBorderSecondary,
   },
   header: {
     flex: 'none',
@@ -117,6 +122,12 @@ export const styles = stylex.create({
     zIndex: 1,
   },
   lift: {
+    borderColor: cssVar.colorBorder,
+    borderRadius: cssVar.borderRadiusLG,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    backgroundColor: cssVar.colorBgContainer,
+    boxShadow: 'rgb(0 0 0 / 4%) 0 1px 2px 0',
     display: 'flex',
     inlineSize: 'min(440px, 100%)',
     position: 'relative',

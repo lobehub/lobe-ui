@@ -10,14 +10,6 @@ const openPicker = () => fireEvent.click(screen.getByRole('button', { name: 'Pic
 describe('ColorPicker', () => {
   afterEach(cleanup);
 
-  test('shows the hex headline for the current value', () => {
-    render(<ColorPicker defaultValue="#0072f5" />);
-
-    openPicker();
-
-    expect(screen.getByText('#0072F5')).toBeTruthy();
-  });
-
   test('presets emit onChange and onChangeComplete', () => {
     const onChange = vi.fn();
     const onChangeComplete = vi.fn();
@@ -156,14 +148,13 @@ describe('ColorPicker', () => {
     expect(track.className).toContain(stylex.props(styles.alphaTrack).className);
   });
 
-  test('hex and alpha fields can shrink to fit the panel', () => {
+  test('the hex field shrinks while the format and alpha controls keep their width', () => {
     render(<ColorPicker alpha defaultValue="#0072f5cc" />);
 
     openPicker();
-    const row = screen.getByLabelText('HEX').parentElement!.parentElement!;
+    const hexField = screen.getByLabelText('HEX').parentElement!;
 
-    for (const field of Array.from(row.children).filter((el) => !el.hasAttribute('aria-hidden'))) {
-      expect(getComputedStyle(field).minWidth).toBe('0px');
-    }
+    expect(getComputedStyle(hexField).minWidth).toBe('0px');
+    expect(getComputedStyle(hexField.parentElement!).display).toBe('flex');
   });
 });

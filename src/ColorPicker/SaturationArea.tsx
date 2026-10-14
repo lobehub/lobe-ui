@@ -8,6 +8,7 @@ import { focusRing } from '@/styles/stylex/focusRing';
 import { styles } from './style';
 
 export interface SaturationAreaProps {
+  color: string;
   hue: number;
   label: string;
   onChange: (saturation: number, value: number) => void;
@@ -19,7 +20,7 @@ export interface SaturationAreaProps {
 const clamp = (n: number) => Math.min(1, Math.max(0, Math.round(n * 100) / 100));
 
 const SaturationArea = memo<SaturationAreaProps>(
-  ({ hue, label, onChange, onChangeComplete, saturation, value }) => {
+  ({ color, hue, label, onChange, onChangeComplete, saturation, value }) => {
     const areaRef = useRef<HTMLDivElement>(null);
 
     const fromPointer = (event: PointerEvent<HTMLDivElement>): [number, number] => {
@@ -75,7 +76,7 @@ const SaturationArea = memo<SaturationAreaProps>(
       >
         <span
           {...stylex.props(styles.thumb)}
-          style={{ left: `${saturation * 100}%`, top: `${(1 - value) * 100}%` }}
+          style={{ background: color, left: `${saturation * 100}%`, top: `${(1 - value) * 100}%` }}
         />
       </div>
     );

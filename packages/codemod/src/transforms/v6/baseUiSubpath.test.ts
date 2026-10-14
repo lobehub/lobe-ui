@@ -50,6 +50,12 @@ describe('baseUiSubpath', () => {
     expect(run(code)).toBe(code);
   });
 
+  it('moves ProTable to its own entry', () => {
+    expect(run(`import { ProTable } from '@lobehub/ui/base-ui/pro-table';`)).toBe(
+      `import { ProTable } from '@lobehub/ui/pro-table';`,
+    );
+  });
+
   it('leaves other sources alone', () => {
     const code = `import { Menu } from '@base-ui/react';\nimport x from '@lobehub/ui/base-ui-extra';`;
     expect(run(code)).toBe(code);

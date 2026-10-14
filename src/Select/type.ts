@@ -74,6 +74,11 @@ export interface SelectProps<Value = string> extends Pick<
   defaultOpen?: boolean;
   defaultValue?: Value | Value[] | null;
   disabled?: boolean;
+  /**
+   * Local filtering of the options while searching: `false` keeps every option (filter on the
+   * server through `onSearch`), a function decides per option. @default true
+   */
+  filterOption?: boolean | ((input: string, option: SelectOption<Value>) => boolean);
   id?: string;
   labelRender?: (option: SelectOption<Value>) => ReactNode;
   /**
@@ -89,6 +94,8 @@ export interface SelectProps<Value = string> extends Pick<
     option?: SelectOption<Value> | SelectOption<Value>[],
   ) => void;
   onOpenChange?: (open: boolean, eventDetails?: SelectRootChangeEventDetails) => void;
+  /** Called with the search text as it is typed (`showSearch`). */
+  onSearch?: (value: string) => void;
   onSelect?: (value: Value, option?: SelectOption<Value>) => void;
   open?: boolean;
   optionRender?: (option: SelectOption<Value>, info: { index: number }) => ReactNode;

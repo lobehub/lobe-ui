@@ -138,7 +138,7 @@ The root export is the former `@lobehub/ui/base-ui` set. Components that keep th
 | `Button` | [`Button`](/components/button#migrating-from-antd-s-button) |
 | `Checkbox`, `CheckboxGroup` | `Checkbox` |
 | `Collapse` | [`Accordion`](/components/accordion) for several sections, [`Collapsible`](/components/collapsible) for one region |
-| `DatePicker` | [`DatePicker`](/components/date-picker#migrating-from-antd-datepicker) |
+| `DatePicker` | [`DatePicker`](/components/date-picker#differences-from-antd-datepicker-migration): antd-shaped on a fork of `@rc-component/picker` with Dayjs values; see [DatePicker](#datepicker) |
 | `Drawer` | [`Drawer`](/components/drawer) |
 | `Dropdown` (`menu={{ items }}`) | [`DropdownMenu`](/components/dropdown-menu) (`items`, typed `DropdownItem[]`) |
 | `Form`, `FormItem`, `FormModal` | [`Form`, `FormField` from `@lobehub/ui/form`](/components/form-kit#migrating-from-antd-form); a form in a dialog is `Modal` + `Form` |
@@ -151,6 +151,8 @@ The root export is the former `@lobehub/ui/base-ui` set. Components that keep th
 | `Skeleton`, `SkeletonBlock`, `SkeletonButton`, `SkeletonTags`, `SkeletonParagraph`, `SkeletonTitle` | [`Skeleton`](/components/skeleton#migration), `SkeletonAvatar`, `SkeletonText` |
 | `Tabs` | [`Tabs`](/components/tabs) |
 | `Tag` | [`Tag`](/components/tag#migrating-from-antd-tag) |
+| `Table` (`@lobehub/ui/base-ui`) | [`Table`](/components/table): same antd-shaped API without rc-table; see [Table and ProTable](#table-and-protable) |
+| `ProTable` (`@lobehub/ui/base-ui/pro-table`) | [`ProTable`](/components/pro-table) from `@lobehub/ui/pro-table` |
 | `Video` | [`Video`](/components/video#migrating-from-v5-video): a full player with sections, markers and a player handle; `variant`, `preview`, `isLoading` and `size` are gone |
 | `Accordion`, `ActionIcon`, `DraggablePanel`, `List`, `Text` (legacy root versions) | [`Accordion`](/components/accordion), [`ActionIcon`](/components/action-icon), [`DraggablePanel`](/components/draggable-panel), [`List`](/components/list#migrating-from-antd-menu-list), [`Text`](/components/text) |
 | `Burger` | [`Burger`](/components/burger#migrating-from-v5-burger) |
@@ -171,9 +173,47 @@ antd components without a same-named counterpart:
 | `Typography`                        | `Text` (or `Typography` for long-form content)      |
 | `theme.useToken()`                  | `cssVar` / `useTheme()`                             |
 | `@ant-design/icons`                 | `lucide-react` icons rendered with `Icon`           |
-| `@ant-design/pro-components` tables | `Table`                                             |
+| `@ant-design/pro-components` tables | `ProTable` (`@lobehub/ui/pro-table`) or `Table`     |
 
 `Anchor`, `Badge`, `Breadcrumb`, `Carousel`, `ColorPicker`, `Descriptions`, `Divider`, `Empty`, `Image`, `Pagination`, `Popover`, `Progress`, `QRCode`, `Radio`, `Rate`, `Result`, `Slider`, `Spin`, `Statistic`, `Steps`, `Switch`, `Table`, `Tooltip`, `Tree` and `Upload` exist under the same name; most pages have a "Migrating from antd" section.
+
+## Table and ProTable
+
+`Table` renders its own DOM on TanStack Table instead of `@rc-component/table`; the antd-shaped API (`columns`, `rowSelection`, `expandable`, `onChange`, `scroll`, `sticky`, `summary`, `virtual`, the ref) is unchanged. The stateless parts are exported as atoms (`TableRoot`, `TableRow`, `TableCell`, …) for custom tables. Deprecated aliases are removed; the codemod reports each one (R11):
+
+| v5 | v6 |
+| --- | --- |
+| `bordered` | `variant="outlined"` |
+| `expandedRowRender`, `expandIcon`, `indentSize`, `childrenColumnName`, `expandIconColumnIndex` | the same keys under `expandable` |
+| `classNames` / `styles` keys `cell`, `row`, `wrapper`, string `header` / `body` | `body.cell`, `body.row`, `section`, `header.cell`, `body.wrapper` |
+| `emptyText` | `locale.emptyText` |
+| `size="medium"` (Table and ProTable `size` / `defaultSize`) | `size="middle"` |
+| `pagination.position` | `pagination.placement` (`topStart` … `bottomEnd`) |
+| `locale.filterCheckall` | `locale.filterCheckAll` |
+| `expandable.expandedRowOffset` | `Table.EXPAND_COLUMN` in `columns`, with the columns before it `fixed` |
+| `measureRowRender` | removed; the table measures its columns itself |
+| `components.body` as a render function | removed; use `virtual` |
+| ProTable `ghost` | removed; ProTable has no card |
+
+`ProTable` moved to its own entry, `@lobehub/ui/pro-table` (the codemod rewrites the import), so apps that only use `Table` don't load the form layer.
+
+## DatePicker
+
+`DatePicker` is the v5.64 base-ui picker on a fork of `@rc-component/picker` 1.12.2 (the core antd's DatePicker uses), kept inside `@lobehub/ui` with its popup on Popover and Motion, with `Dayjs` values and antd's API (`picker`, `mode`, `showTime`, `presets`, `multiple`, `needConfirm`, `cellRender`, Semantic DOM, `generatePicker`). Code written for antd's DatePicker or for v5's `DatePicker` keeps working, except for the aliases v5.64 still accepted; the codemod reports each one (R12):
+
+| v5 | v6 |
+| --- | --- |
+| `min` / `max` | `minDate` / `maxDate` |
+| `footer` | `renderExtraFooter={() => footer}` |
+| `bordered={false}` | `variant="borderless"` |
+| `onSelect(date)` | `onCalendarChange(date, dateString, info)` |
+| `size="middle"` | `size="medium"` |
+| `popupAlign` / `builtinPlacements` | `placement` (flips vertically, shifts to stay on screen) |
+| `transitionName` | none; the popup animates with Motion, style it through `classNames.popup.root` |
+
+`DateRangePicker` and `DatePicker.RangePicker` are the same component; both names stay. `@lobehub/ui` depends on no `@rc-component/*` package; take `PickerRef` / `GenerateConfig` types from `@lobehub/ui`. R6 reports `@rc-component/picker` imports: a date-fns, moment or Luxon config from `@rc-component/picker/generate/*` still works with `generatePicker` once you install that package yourself. The popup root carries Base UI's `data-side` / `data-open` attributes instead of the `-dropdown-hidden` / `-dropdown-placement-*` classes.
+
+If you used the hand-written picker from the v6 betas (native `Date` values), convert at the edges: pass `dayjs(date)` and read `value?.toDate()` in `onChange`; use `picker="month"` / `picker="year"` where you passed `mode` (R12 flags literal `mode="month"` / `mode="year"`); `DateRangePicker` clears to `null` instead of `[null, null]`.
 
 ## Removed APIs
 
@@ -181,6 +221,7 @@ antd components without a same-named counterpart:
 | --- | --- |
 | `@lobehub/ui/base-ui` | `@lobehub/ui` |
 | `@lobehub/ui/base-ui/form` | `@lobehub/ui/form` |
+| `@lobehub/ui/base-ui/pro-table` | `@lobehub/ui/pro-table` |
 | `@lobehub/ui/static-css`, `/static-css/emit`, `/runtime`, `/vite` | `theme.css` ships the variables statically; drop the build plugin |
 | `ThemeProvider`, `ThemeProviderProps` | see [Theming](#theming) |
 | `lobeCustomToken` | `cssVar` / `useTheme()` |

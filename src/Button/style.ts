@@ -20,6 +20,21 @@ const spin = stylex.keyframes({
 });
 
 const ease = 'cubic-bezier(0.32, 0.72, 0, 1)';
+
+const errorHover = `color-mix(in srgb, ${cssVar.colorError} 88%, white)`;
+const errorActive = `color-mix(in srgb, ${cssVar.colorError} 88%, black)`;
+const borderHover = `color-mix(in srgb, ${cssVar.colorText} 8%, ${cssVar.colorBorder})`;
+const neutralWash = `linear-gradient(${cssVar.colorFillTertiary}, ${cssVar.colorFillTertiary})`;
+const neutralWashActive = `linear-gradient(${cssVar.colorFillSecondary}, ${cssVar.colorFillSecondary})`;
+const error10 = `color-mix(in srgb, ${cssVar.colorError} 10%, transparent)`;
+const error12 = `color-mix(in srgb, ${cssVar.colorError} 12%, transparent)`;
+const error16 = `color-mix(in srgb, ${cssVar.colorError} 16%, transparent)`;
+const error18 = `color-mix(in srgb, ${cssVar.colorError} 18%, transparent)`;
+const error22 = `color-mix(in srgb, ${cssVar.colorError} 22%, transparent)`;
+const error40 = `color-mix(in srgb, ${cssVar.colorError} 40%, transparent)`;
+const error65 = `color-mix(in srgb, ${cssVar.colorError} 65%, transparent)`;
+const errorOnContainer8 = `color-mix(in srgb, ${cssVar.colorError} 8%, ${cssVar.colorBgContainer})`;
+const errorOnContainer14 = `color-mix(in srgb, ${cssVar.colorError} 14%, ${cssVar.colorBgContainer})`;
 const slotEase = 'cubic-bezier(0.22, 1, 0.36, 1)';
 
 export const styles = stylex.create({
@@ -29,7 +44,7 @@ export const styles = stylex.create({
     borderWidth: 1,
     gap: 6,
     textDecoration: 'none',
-    transition: `color 160ms ${ease}, background 160ms ${ease}, border-color 160ms ${ease}, box-shadow 160ms ${ease}`,
+    transition: `color 160ms ${ease}, background-color 160ms ${ease}, background-image 160ms ${ease}, border-color 160ms ${ease}, box-shadow 160ms ${ease}`,
     alignItems: 'center',
     boxSizing: 'border-box',
     cursor: { default: 'pointer', [disabled]: 'not-allowed' },
@@ -137,9 +152,14 @@ export const styles = stylex.create({
   },
 
   variantDefault: {
-    borderColor: { default: cssVar.colorBorder, [hover]: cssVar.colorPrimaryBorder },
+    borderColor: { default: cssVar.colorBorder, [hover]: borderHover },
     backgroundColor: cssVar.colorBgContainer,
-    color: { default: cssVar.colorText, [hover]: cssVar.colorPrimaryText },
+    backgroundImage: {
+      [active]: neutralWashActive,
+      default: null,
+      [hoverIdle]: neutralWash,
+    },
+    color: cssVar.colorText,
   },
 
   variantPrimary: {
@@ -159,10 +179,15 @@ export const styles = stylex.create({
   },
 
   variantDashed: {
-    borderColor: { default: cssVar.colorBorder, [hover]: cssVar.colorPrimaryBorder },
+    borderColor: { default: cssVar.colorBorder, [hover]: borderHover },
     borderStyle: 'dashed',
     backgroundColor: cssVar.colorBgContainer,
-    color: { default: cssVar.colorText, [hover]: cssVar.colorPrimaryText },
+    backgroundImage: {
+      [active]: neutralWashActive,
+      default: null,
+      [hoverIdle]: neutralWash,
+    },
+    color: cssVar.colorText,
   },
 
   variantFill: {
@@ -189,23 +214,28 @@ export const styles = stylex.create({
   },
 
   dangerOutlined: {
-    borderColor: { default: cssVar.colorError, [hover]: cssVar.colorErrorHover },
-    backgroundColor: cssVar.colorBgContainer,
-    color: { default: cssVar.colorError, [hover]: cssVar.colorErrorHover },
+    borderColor: { default: error40, [hover]: error65 },
+    backgroundColor: {
+      [active]: errorOnContainer14,
+      default: cssVar.colorBgContainer,
+      [hoverIdle]: errorOnContainer8,
+    },
+    backgroundImage: null,
+    color: cssVar.colorError,
   },
 
   dangerSolid: {
     borderColor: {
-      [active]: cssVar.colorErrorActive,
+      [active]: errorActive,
       default: cssVar.colorError,
-      [hoverIdleClosed]: cssVar.colorErrorHover,
-      [popupOpen]: cssVar.colorErrorActive,
+      [hoverIdleClosed]: errorHover,
+      [popupOpen]: errorActive,
     },
     backgroundColor: {
-      [active]: cssVar.colorErrorActive,
+      [active]: errorActive,
       default: cssVar.colorError,
-      [hoverIdleClosed]: cssVar.colorErrorHover,
-      [popupOpen]: cssVar.colorErrorActive,
+      [hoverIdleClosed]: errorHover,
+      [popupOpen]: errorActive,
     },
     color: cssVar.colorBgLayout,
   },
@@ -213,19 +243,24 @@ export const styles = stylex.create({
   dangerFill: {
     borderColor: 'transparent',
     backgroundColor: {
-      [active]: cssVar.colorErrorBgHover,
-      default: cssVar.colorErrorBg,
-      [hover]: cssVar.colorErrorBgHover,
+      [active]: error22,
+      default: error12,
+      [hoverIdle]: error18,
     },
-    color: {
-      [active]: cssVar.colorErrorActive,
-      default: cssVar.colorError,
-      [hoverIdle]: cssVar.colorErrorHover,
+    color: cssVar.colorError,
+  },
+
+  dangerText: {
+    backgroundColor: {
+      [active]: error16,
+      default: 'transparent',
+      [hoverIdle]: error10,
     },
+    color: cssVar.colorError,
   },
 
   dangerInline: {
-    color: { default: cssVar.colorError, [hover]: cssVar.colorErrorHover },
+    color: { default: cssVar.colorError, [hover]: errorHover },
   },
 
   ghostDefault: {
@@ -255,15 +290,11 @@ export const styles = stylex.create({
   ghostDanger: {
     borderColor: 'transparent',
     backgroundColor: {
-      [active]: cssVar.colorFill,
+      [active]: error16,
       default: 'transparent',
-      [hoverIdle]: cssVar.colorFillSecondary,
+      [hoverIdle]: error10,
     },
-    color: {
-      [active]: cssVar.colorErrorActive,
-      default: cssVar.colorError,
-      [hoverIdle]: cssVar.colorErrorHover,
-    },
+    color: cssVar.colorError,
   },
 
   spinner: {
@@ -306,8 +337,8 @@ export const splitStyles = stylex.create({
   solidDanger: {
     '--lobe-split-button-fill': {
       default: null,
-      [hasActive]: cssVar.colorErrorActive,
-      [hasHoverOnly]: cssVar.colorErrorHover,
+      [hasActive]: errorActive,
+      [hasHoverOnly]: errorHover,
     },
   },
   item: {
@@ -337,11 +368,11 @@ export const splitStyles = stylex.create({
   itemFillDanger: {
     borderColor: {
       default: `var(--lobe-split-button-fill, ${cssVar.colorError})`,
-      [popupOpen]: cssVar.colorErrorActive,
+      [popupOpen]: errorActive,
     },
     backgroundColor: {
       default: `var(--lobe-split-button-fill, ${cssVar.colorError})`,
-      [popupOpen]: cssVar.colorErrorActive,
+      [popupOpen]: errorActive,
     },
   },
   itemFillGhost: {

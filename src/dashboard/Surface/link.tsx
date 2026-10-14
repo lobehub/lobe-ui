@@ -34,7 +34,7 @@ export { SurfaceDepthContext };
 
 /**
  * StyleX styles for a dashboard card: `colorBgContainer` in light, translucent
- * `colorFillTertiary` in dark, and no fill of its own when nested in another Surface.
+ * `colorFillQuaternary` in dark, and no fill of its own when nested in another Surface.
  */
 export const useSurfaceCardStyles = () => {
   const { isDarkMode } = useThemeMode();

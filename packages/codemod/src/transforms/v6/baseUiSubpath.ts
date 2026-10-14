@@ -4,6 +4,7 @@ import type { Transform } from '../../transform';
 export const BASE_UI_REPLACEMENTS: Record<string, string> = {
   '@lobehub/ui/base-ui': '@lobehub/ui',
   '@lobehub/ui/base-ui/form': '@lobehub/ui/form',
+  '@lobehub/ui/base-ui/pro-table': '@lobehub/ui/pro-table',
 };
 
 export const baseUiSubpath: Transform = ({ ast, ms }) => {

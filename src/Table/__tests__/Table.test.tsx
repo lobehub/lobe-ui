@@ -1,7 +1,19 @@
-import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
+import { cleanup, fireEvent, render as rtlRender, screen, within } from '@testing-library/react';
+import { motion } from 'motion/react';
+import type { ReactNode } from 'react';
+
+import ConfigProvider from '@/ConfigProvider';
 
 import Table from '../Table';
 import type { TableColumn } from '../type';
+
+// Base-ui buttons (ActionIcon in the expand / filter triggers) read the motion component from
+// ConfigProvider, so every render (and rerender) goes through it.
+const MotionWrapper = ({ children }: { children: ReactNode }) => (
+  <ConfigProvider motion={motion}>{children}</ConfigProvider>
+);
+const render: typeof rtlRender = ((ui: any, options?: any) =>
+  rtlRender(ui, { wrapper: MotionWrapper, ...options })) as typeof rtlRender;
 
 if (!globalThis.ResizeObserver) {
   globalThis.ResizeObserver = class {
@@ -164,7 +176,7 @@ describe('Table', () => {
     expect(bodyModels()).toEqual(['m-05', 'm-06', 'm-07', 'm-08', 'm-09']);
   });
 
-  test('sorting resets to page 1', () => {
+  test('sorting keeps the current page, like antd', () => {
     render(
       <Table
         columns={columns}
@@ -178,7 +190,8 @@ describe('Table', () => {
     fireEvent.click(within(spend).getByRole('button'));
     fireEvent.click(within(spend).getByRole('button'));
 
-    expect(bodyModels()[0]).toBe('m-11');
+    // Descending, still on page 2: m-11..m-07 are on page 1.
+    expect(bodyModels()[0]).toBe('m-06');
   });
 
   test('shrinking dataSource clamps the page to the last existing page', () => {
@@ -244,22 +257,31 @@ describe('Table', () => {
     expect(firstRow.className).toContain('row-1');
   });
 
-  test('loading keeps rows and shows the overlay', () => {
+  test('loading keeps rows and shows the network spin overlay', () => {
     const { container } = render(
       <Table loading columns={columns} dataSource={rows} pagination={false} rowKey="id" />,
     );
 
     expect(bodyModels()).toHaveLength(3);
-    expect(container.querySelector('[data-table-loading]')).toBeTruthy();
+    const overlay = container.querySelector('[data-table-loading]')!;
+    expect(overlay).toBeTruthy();
+    expect(overlay.querySelectorAll('line').length).toBeGreaterThan(0);
   });
 
   test('empty data shows emptyText', () => {
-    render(<Table columns={columns} dataSource={[]} emptyText="Nothing here" rowKey="id" />);
+    render(
+      <Table
+        columns={columns}
+        dataSource={[]}
+        locale={{ emptyText: 'Nothing here' }}
+        rowKey="id"
+      />,
+    );
 
     expect(screen.getByText('Nothing here')).toBeTruthy();
   });
 
-  test('scroll.y limits the wrapper height', () => {
+  test('scroll.y splits the header from a height-limited body', () => {
     const { container } = render(
       <Table
         columns={columns}
@@ -270,7 +292,9 @@ describe('Table', () => {
       />,
     );
 
-    expect(container.querySelector('[data-table-wrapper]')!.getAttribute('style')).toContain(
+    expect(container.querySelectorAll('table')).toHaveLength(2);
+    expect(container.querySelector('.lobe-table-header')).toBeTruthy();
+    expect(container.querySelector('.lobe-table-body')!.getAttribute('style')).toContain(
       'max-height: 200px',
     );
   });
@@ -372,7 +396,7 @@ describe('Table', () => {
     );
 
     const cell = screen.getAllByText('Open')[0].closest('td')!;
-    expect(cell.getAttribute('style')).toContain('position: sticky');
-    expect(cell.getAttribute('style')).toContain('right: 0px');
+    expect(cell.className).toContain('lobe-table-cell-fix-end');
+    expect(cell.getAttribute('style')).toContain('inset-inline-end: 0px');
   });
 });

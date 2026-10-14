@@ -20,6 +20,10 @@ describe('no-base-ui-subpath', () => {
       "import { Form } from '@lobehub/ui/base-ui/form';",
       "import { Form } from '@lobehub/ui/form';",
     ],
+    [
+      "import { ProTable } from '@lobehub/ui/base-ui/pro-table';",
+      "import { ProTable } from '@lobehub/ui/pro-table';",
+    ],
     ["export { Tag } from '@lobehub/ui/base-ui';", "export { Tag } from '@lobehub/ui';"],
     ["export * from '@lobehub/ui/base-ui';", "export * from '@lobehub/ui';"],
     ["const m = import('@lobehub/ui/base-ui');", "const m = import('@lobehub/ui');"],

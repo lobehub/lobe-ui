@@ -65,7 +65,7 @@ const resolveVariantCls = ({
       return danger ? styles.dangerFill : styles.variantFill;
     }
     case 'text': {
-      return danger ? [styles.variantText, styles.dangerInline] : styles.variantText;
+      return danger ? [styles.variantText, styles.dangerText] : styles.variantText;
     }
     case 'link': {
       return danger ? [styles.variantLink, styles.dangerInline] : styles.variantLink;

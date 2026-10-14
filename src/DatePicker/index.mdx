@@ -1,32 +1,574 @@
 ---
 title: DatePicker
-description: Date, month and year picking with native Date values, plus a two-month range picker.
+description: Date, week, month, quarter, year and time picking with Dayjs values and a typeable input, plus a two-panel range picker. Runs on a fork of @rc-component/picker, the core antd DatePicker uses.
 category: Data Entry
 ---
 
-import DemoIndex from './demos/index.tsx?demo';
-import DemoRange from './demos/range.tsx?demo';
+import DemoPlayground from './demos/playground.tsx?demo';
+import DemoBasic from './demos/basic.tsx?demo';
+import DemoSize from './demos/size.tsx?demo';
+import DemoPlacement from './demos/placement.tsx?demo';
+import DemoRangePicker from './demos/range-picker.tsx?demo';
+import DemoMultiple from './demos/multiple.tsx?demo';
+import DemoFormat from './demos/format.tsx?demo';
+import DemoTime from './demos/time.tsx?demo';
+import DemoTimeClock from './demos/time-clock.tsx?demo';
+import DemoDateRange from './demos/date-range.tsx?demo';
+import DemoDisabledDate from './demos/disabled-date.tsx?demo';
+import DemoAllowEmpty from './demos/allow-empty.tsx?demo';
+import DemoPresetRanges from './demos/preset-ranges.tsx?demo';
+import DemoExtraFooter from './demos/extra-footer.tsx?demo';
+import DemoPanelRender from './demos/panel-render.tsx?demo';
+import DemoCellRender from './demos/cell-render.tsx?demo';
+import DemoComponents from './demos/components.tsx?demo';
+import DemoLocale from './demos/locale.tsx?demo';
+import DemoStyleClass from './demos/style-class.tsx?demo';
+import DemoNested from './demos/nested.tsx?demo';
+import DemoMode from './demos/mode.tsx?demo';
+import DemoControlled from './demos/controlled.tsx?demo';
+
+`DatePicker` follows antd DatePicker's API and behaviour: it runs on a fork of `@rc-component/picker` 1.12.2 (the core antd uses) kept in `src/DatePicker/core`, with the Dayjs adapter, the popup on lobe's Popover parts and Motion, styled from the `--lobe-*` theme tokens and composed with lobe parts only (Button, Input, lucide icons). The sections below follow the order of antd's demo list; variations of single props live in the Playground, and demos marked **lobe** are extra demos for behaviour antd shows only in its API table. Values are `Dayjs`; coming from antd or from the previous lobe DatePicker, see the differences and migration notes at the end of the page.
+
+```tsx
+import { DatePicker, DateRangePicker } from '@lobehub/ui';
+
+<DatePicker onChange={(date, dateString) => console.log(date, dateString)} />;
+<DatePicker.RangePicker />; // the same component as DateRangePicker
+```
+
+## Playground
+
+Try the common props (size, variant, picker, status, placement, disabled, allowClear, showTime, needConfirm, showNow, showWeek, range…) with the controls.
+
+<Demo of={DemoPlayground} />
 
 ## Basic
 
-<Demo of={DemoIndex} layout="bare" />
+`picker` switches between `date`, `week`, `month`, `quarter` and `year`; each has antd's default format (`YYYY-MM-DD`, `gggg-wo`, `YYYY-MM`, `YYYY-[Q]Q`, `YYYY`) and placeholder. The year panel shows a decade (10 years plus the neighbours at either end), and its header drills up to a century of decades. `onChange` receives `(date: Dayjs | null, dateString: string | null)`; clearing passes `null` for both. The input is typeable — a date in `format` is parsed as you type and committed on Enter or blur. As in antd, `DatePicker.WeekPicker` / `MonthPicker` / `QuarterPicker` / `YearPicker` are the same picker with `picker` fixed.
 
-## Range
+<Demo of={DemoBasic} layout="bare" />
 
-<Demo of={DemoRange} layout="bare" />
+## Three Sizes
 
-## APIs
+`size` is `small`, `medium` (default) or `large`. The input sizes to its content by default, so in a flex row it keeps its natural width instead of squeezing its siblings; set `style={{ width: '100%' }}` to fill the container, and the popup keeps its own width.
+
+<Demo of={DemoSize} layout="bare" />
+
+## Placement
+
+`placement` is `bottomLeft` (default), `bottomRight`, `topLeft` or `topRight`. The popup flips to the other side when there is no room and shifts sideways to stay on screen.
+
+<Demo of={DemoPlacement} layout="bare" />
+
+## Range Picker
+
+`DatePicker.RangePicker` / `DateRangePicker` takes and emits a `[Dayjs, Dayjs]` pair (or `null` once cleared), with `dateStrings` as the second argument. `picker` works here too: `week`, `month`, `quarter` and `year` show two adjacent panels (two years of months / quarters, two decades of years) and get range placeholders such as "Start month" / "End month"; `showTime` picks a time on each end. `id={{ start, end }}` sets the ids of the two inputs, and `onFocus` / `onBlur` / `onCalendarChange` receive `info.range` (`'start'` or `'end'`) — focus or pick in the first picker, which is controlled, to see it.
+
+<Demo of={DemoRangePicker} layout="bare" />
+
+## Multiple
+
+`multiple` picks several dates on any `picker` (`date`, `week`, `month`, `quarter`, `year`; not with `showTime`). Clicking a picked cell again removes it, as does a tag's remove icon. The value is a `Dayjs[]` and `onChange` gets `(dates, dateStrings)` — `<DatePicker multiple>` infers `Dayjs[]`, and `DatePickerProps<Dayjs[]>` types handlers declared apart. `needConfirm` defaults to `false`: there is no OK button, each click fires `onCalendarChange`, and `onChange` fires once with the whole list when the popup closes, as in antd. `maxTagCount="responsive"` fits as many tags as the width allows and folds the rest into `+ N ...`.
+
+<Demo of={DemoMultiple} layout="bare" />
+
+## Date Format
+
+`format` takes the same `FormatType` as antd (see the formatType table under API):
+
+- a dayjs format string (`'YYYY/MM/DD'`) — used to show the value, build the `dateString` and parse what is typed;
+- a function `(value: Dayjs) => string` — display only; typed text can no longer be parsed;
+- an array of strings / functions — the first one is used to show the value and build `dateString`, and typed text is tried against every string format in turn (`13/10/26` and `13-10-2026` both match `['DD/MM/YYYY', 'DD/MM/YY', 'DD-MM-YYYY', 'DD-MM-YY']`). Put a function first and strings after it to show custom text while still accepting typed dates.
+
+Defaults follow antd: `YYYY-MM-DD` (`YYYY-MM-DD HH:mm:ss` with `showTime`), `gggg-wo`, `YYYY-MM`, `YYYY-[Q]Q` and `YYYY` per `picker`.
+
+Typed text is parsed in strict mode through dayjs's `customParseFormat` plugin, which the picker registers itself. To build a `Dayjs` from a string in a custom format in your own code (`dayjs('2015/01/01', 'YYYY/MM/DD')`), extend dayjs with it once, as in antd:
+
+```ts
+import dayjs from 'dayjs';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+
+dayjs.extend(customParseFormat);
+```
+
+<Demo of={DemoFormat} layout="bare" />
+
+## Choose Time
+
+`showTime` puts the time panel next to the date panel; the default format becomes `YYYY-MM-DD HH:mm:ss`. `picker="time"` (or a controlled `mode="time"`) shows the time panel alone, with the `HH:mm:ss` format and the "Select time" / "Start time" placeholders. `showTime` takes the antd `SharedTimeProps` object (see the showTime table under API):
+
+- `format` decides which columns are shown (`'HH:mm'` drops seconds, `'h:mm a'` adds AM / PM); the input keeps `format`, so set both when they should match;
+- `showHour` / `showMinute` / `showSecond` / `showMillisecond` and `use12Hours` set the columns explicitly;
+- `hourStep` / `minuteStep` / `secondStep` / `millisecondStep` thin the options;
+- `hideDisabledOptions` removes the options `disabledTime` disables instead of greying them;
+- `defaultOpenValue` is the time a picked date gets before any time is chosen (`defaultValue` is its deprecated alias; a top-level `defaultOpenValue` works too);
+- `changeOnScroll` picks the option a column is scrolled to.
+
+The time props can also be passed at the top level (`use12Hours`, `hourStep`, …), as in antd. With `showTime`, picking only fills the input; `onOk(value)` fires on the OK button, which commits the value. The **Now** button (`showNow`, off by default — pass `showNow` to show it) fills in the current time.
+
+<Demo of={DemoTime} layout="bare" />
+
+### Clock dial **lobe**
+
+`timePanel="clock"` (top level or inside `showTime`) swaps the scroll columns for a clock face: pick the hour (24-hour formats put 00 and 13–23 on an inner ring), the dial moves on to minutes, and the header segments switch back. Drag around the dial or use the arrow keys; `minuteStep` snaps the hand and numbers that `disabledTime` rules out are greyed. When the format has seconds they are a small stepper in the header (click, or scroll over the value); `use12Hours` adds AM / PM toggles. Formats with milliseconds, or without hours and minutes, keep the columns.
+
+<Demo of={DemoTimeClock} layout="bare" />
+
+## Limit Date Range
+
+`minDate` / `maxDate` disable out-of-range cells and stop the header buttons from navigating past them.
+
+<Demo of={DemoDateRange} layout="bare" />
+
+## Disabled Date & Time
+
+`disabledDate(current, info)` disables cells on every panel; `disabledTime(date)` returns `disabledHours` / `disabledMinutes(hour)` / `disabledSeconds(hour, minute)` / `disabledMilliseconds(…)` for the time columns. On `DateRangePicker` it is `disabledTime(date, partial, info)`, where `partial` is `'start'` or `'end'` and `info.from` is the start already picked — the last example keeps the end from being earlier than the start on the same day.
+
+<Demo of={DemoDisabledDate} layout="bare" />
+
+## Allow Empty
+
+`allowEmpty={[false, true]}` lets the end stay empty: the range commits as `[start, null]`. `true` allows either end to be empty.
+
+<Demo of={DemoAllowEmpty} layout="bare" />
+
+## Preset Ranges
+
+`presets` adds a sidebar of quick picks to `DatePicker` (`{ label, value: Dayjs }[]`) and `DateRangePicker` (`{ label, value: [Dayjs, Dayjs] }[]`). `value` may be a function, evaluated when the preset is hovered (the input previews it) or picked, so presets relative to "now" stay current. Picking a preset commits it right away, even with `showTime`. The deprecated range `ranges` object maps to `presets`.
+
+<Demo of={DemoPresetRanges} layout="bare" />
+
+## Extra Footer
+
+`renderExtraFooter(mode)` renders a row above the Today / Now / OK footer and receives the current panel mode (`date`, `month`, `time`, …). It works on `DateRangePicker` too, and the deprecated `footer` node is an alias (`renderExtraFooter` wins). The footer row is hidden by default (lobe differs from antd here): the **Today** / **Now** button appears with `showNow` (`showToday` is its deprecated alias), OK appears when `showTime` / `needConfirm` needs confirming, and this extra row appears with `renderExtraFooter`. The last picker puts an action in the footer.
+
+<Demo of={DemoExtraFooter} layout="bare" />
+
+## Customized panel render
+
+**lobe.** `panelRender(panel)` wraps the whole popup content — presets, panels and footer — so you can add a header, a side note or any wrapper around it. Works on both pickers.
+
+<Demo of={DemoPanelRender} layout="bare" />
+
+## Customized Cell Rendering
+
+`cellRender(current, info)` renders every cell of every panel. `info` carries `originNode` (the default cell), `today`, `type` (`date` / `week` / `month` / `quarter` / `year` / `decade` / `time`), `locale`, `prefixCls`, on time cells `subType` (`hour` / `minute` / `second` / `millisecond` / `meridiem`, with `current` being the cell's number) and, on `DateRangePicker`, `range` (`'start'` / `'end'`). The deprecated `dateRender(current, today)` and `monthCellRender(current, locale)` still work for the date and month panels when `cellRender` is not set.
+
+<Demo of={DemoCellRender} layout="bare" />
+
+## Customize Panel
+
+`components` swaps in your own panel per mode (`date` / `week` / `month` / `quarter` / `year` / `decade` / `time`), the `input` element or the OK `button` (the default is a small primary `Button`). A custom panel receives `PickerPanelProps`: `value`, `onHover(date)` previews the date in the input and `onSelect(date)` picks it, closing the popup unless confirmation is needed. The deprecated `inputRender(props)` is an alias of `components.input`. The demo uses lobe `Slider`, `Button` and `Text` in place of antd's.
+
+<Demo of={DemoComponents} layout="bare" />
+
+## Locale
+
+**lobe.** `locale` takes antd's `PickerLocale`: `lang` (texts, placeholders, `field*Format` / `yearFormat` / `cellDateFormat` / `monthBeforeYear`, `shortWeekDays` / `shortMonths`, and `locale`, the code picking the dayjs locale) plus `timePickerLocale`. `datePickerLocaleEnUS` and `datePickerLocaleZhCN` are the exported defaults (antd's `date-picker/locale/en_US` / `zh_CN`; they also carry their own `shortWeekDays` / `shortMonths`), and `createPickerLocale(resources, code)` builds one from `datePicker.*` i18n resources. A partial `locale` is merged field by field over the default.
+
+Without `locale`, the texts come from the `@lobehub/ui/i18n` resources of the surrounding `ConfigProvider` and the week / month names from `dayjs.locale()` — load and set the dayjs locale yourself (`import 'dayjs/locale/zh-cn'`), as with antd.
+
+<Demo of={DemoLocale} layout="bare" />
+
+## Custom semantic dom styling
+
+`classNames` and `styles` target each part of the picker (see Semantic DOM below). Both take an object, or a function of `{ props }` returning one — `props` are the picker's props with the merged `size` — so the styles can follow `size`, `status`, `disabled` and so on. The popup parts sit under `popup`; `classNames.popup` may also be a string, which is the popup `root` class.
+
+<Demo of={DemoStyleClass} layout="bare" />
+
+## Inside Modal and Popover
+
+**lobe.** The popup nests in the enclosing Modal or Popover, so picking a date neither closes the host nor loses focus, and it stacks above the host.
+
+<Demo of={DemoNested} layout="bare" />
+
+## Controlled Panels
+
+**Debug** (antd `mode`). `mode` controls the visible panel the antd way: the panel only changes when you update `mode` from `onPanelChange`. Both pickers start on a higher panel and drill down as `mode` follows `onPanelChange`; the `showTime` picker opens on the `time` panel each time; the range picker takes a `[start, end]` mode tuple.
+
+<Demo of={DemoMode} layout="bare" />
+
+## Controlled open, panel date and ref
+
+**lobe.** `open` / `onOpenChange`, `pickerValue` / `onPickerValueChange`, focus / blur / keydown events and the `ref` (`focus`, `blur`, `nativeElement`).
+
+<Demo of={DemoControlled} layout="bare" />
+
+## Component Token
+
+**Debug** (antd `component-token`) — **omitted.** antd's demo sets DatePicker component tokens through `ConfigProvider theme.components.DatePicker`. lobe's DatePicker has no component-level Design Token: it is styled from the global `--lobe-*` theme tokens. Customise it with `classNames` / `styles` (Custom semantic dom styling above) or a `className` from `createStaticStyles`. See the differences section.
+
+## Semantic DOM
+
+Hover a key to outline that part.
+
+| Key               | Element                                                  |
+| ----------------- | -------------------------------------------------------- |
+| `root`            | Root element: the input box (`.lobe-picker`)             |
+| `prefix`          | Prefix (`prefix`)                                        |
+| `input`           | Input; both inputs on `DateRangePicker`                  |
+| `suffix`          | Suffix icon and clear button                             |
+| `popup.root`      | Popup root (`.lobe-picker-dropdown`)                     |
+| `popup.container` | Panel container (`.lobe-picker-<mode>-panel-container`)  |
+| `popup.header`    | Panel header                                             |
+| `popup.body`      | Panel body                                               |
+| `popup.content`   | Panel content (the `<table>`, or the time columns)       |
+| `popup.item`      | Cell (dates, months, … and time options)                 |
+| `popup.footer`    | Popup footer (extra footer and the Today / Now / OK row) |
+
+`classNames` / `styles` are `PickerClassNames<Props>` / `PickerStyles<Props>`: an object, or `(info: { props }) => object`. `classNames.popup` may be a string (the popup `root`). `rootClassName` goes on both the root and the popup root. The deprecated `popupClassName` / `dropdownClassName` map to `classNames.popup.root` (`popupClassName` wins when both are set) and `popupStyle` to `styles.popup.root`, merged after them.
+
+## Custom date library
+
+**lobe** (antd FAQ "use another date library"). `generatePicker(generateConfig)` (also `DatePicker.generatePicker`; antd's `antd/es/date-picker/generatePicker`) builds a DatePicker with all its statics over another date library from its `GenerateConfig` (the rc-picker format). Values, `onChange`, `disabledDate`, `minDate` / `maxDate` and the panel keys all use that library's date type; `PickerProps<DateType>` / `RangePickerProps<DateType>` type the props.
+
+```tsx
+import { generatePicker } from '@lobehub/ui';
+import dateFnsGenerateConfig from '@rc-component/picker/generate/dateFns';
+
+const DatePicker = generatePicker<Date>(dateFnsGenerateConfig);
+// DatePicker.RangePicker, DatePicker.MonthPicker, … are Date-valued too.
+```
+
+`@lobehub/ui` ships only the Dayjs config; install `@rc-component/picker` yourself to use its date-fns, moment or Luxon configs. The demo builds a native `Date` config from the Dayjs one, so it needs no extra package.
+
+## API
+
+There are several kinds of picker, as in antd:
+
+- `DatePicker`
+- `DatePicker[picker="month"]` / `DatePicker.MonthPicker`
+- `DatePicker[picker="week"]` / `DatePicker.WeekPicker`
+- `DatePicker[picker="year"]` / `DatePicker.YearPicker`
+- `DatePicker[picker="quarter"]` / `DatePicker.QuarterPicker`
+- `DatePicker.TimePicker` (`picker="time"`)
+- `DatePicker.RangePicker` (also exported as `DateRangePicker`)
+
+Values are `Dayjs` objects (`Dayjs[]` with `multiple`), exactly as in antd. Week start and week / month names follow the active dayjs locale, or `locale.lang.locale` when set (see Locale).
+
+### Common API
+
+Shared by DatePicker and RangePicker.
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| allowClear | Show the clear button; the object form customises its icon (`null` hides it) | `boolean \| { clearIcon?: ReactNode }` | `true` |
+| className | Class name of the root (input box) | `string` | - |
+| classNames | Semantic DOM class names, see Semantic DOM | `PickerSemanticClassNames \| (info: { props }) => PickerSemanticClassNames` | - |
+| ~~dateRender~~ | Deprecated, use `cellRender`; custom date cell | `(currentDate: Dayjs, today: Dayjs) => ReactNode` | - |
+| cellRender | Custom cell of every panel | `(current: Dayjs \| number, info: { originNode, today, range?, type, locale?, subType? }) => ReactNode` | - |
+| components | Replace a panel (`date` / `week` / `month` / `quarter` / `year` / `decade` / `time`), the `input` or the OK `button` | `Components<Dayjs>` | - |
+| defaultOpen | Initial open state of the popup | `boolean` | - |
+| direction | Layout direction; `rtl` mirrors the input and the popup | `'ltr' \| 'rtl'` | `'ltr'` |
+| disabled | Disable the picker | `boolean` | `false` |
+| disabledDate | Disable cells; `info.from` is the end picked first in a range | `(currentDate: Dayjs, info: { from?: Dayjs, type: PanelMode }) => boolean` | - |
+| ~~dropdownClassName~~ | Deprecated, use `classNames.popup.root` | `string` | - |
+| format | Display / parse format, see formatType | `FormatType` | per `picker`, see DatePicker[picker] |
+| order | Sort the values (range ends, `multiple` dates) | `boolean` | `true` |
+| preserveInvalidOnBlur | Keep typed text that does not parse when the input blurs | `boolean` | `false` |
+| ~~popupClassName~~ | Deprecated, use `classNames.popup.root` | `string` | - |
+| getPopupContainer | Element to mount the popup in | `(trigger: HTMLElement) => HTMLElement` | enclosing floating layer or dialog, else the app element or `document.body` |
+| inputReadOnly | Make the input read-only (avoids the virtual keyboard on touch devices) | `boolean` | `false` |
+| locale | antd `PickerLocale`; a partial object is merged over the default | `PickerLocaleInput` | from `@lobehub/ui/i18n` |
+| minDate | Earliest date; also limits panel navigation | `Dayjs` | - |
+| maxDate | Latest date; also limits panel navigation | `Dayjs` | - |
+| mode | Controlled panel mode, change it from `onPanelChange` | `'time' \| 'date' \| 'week' \| 'month' \| 'quarter' \| 'year' \| 'decade'` | - |
+| multiple | Pick several dates (not with `showTime`) | `boolean` | `false` |
+| needConfirm | Commit only through the OK button | `boolean` | `true` with `showTime` / `picker="time"`, `false` with `multiple` |
+| ~~changeOnBlur~~ | Deprecated, use `needConfirm={false}` | `boolean` | - |
+| nextIcon | Next-page icon | `ReactNode` | lucide `ChevronRight` |
+| open | Controlled open state of the popup | `boolean` | - |
+| panelRender | Wrap the popup content | `(panelNode: ReactNode) => ReactNode` | - |
+| picker | Picker type | `'date' \| 'week' \| 'month' \| 'quarter' \| 'year' \| 'time'` | `'date'` |
+| placeholder | Input placeholder | `string` (RangePicker: `[string, string]`) | per `picker`, from `locale` |
+| placement | Popup position | `'bottomLeft' \| 'bottomRight' \| 'topLeft' \| 'topRight'` | `'bottomLeft'` (`'bottomRight'` with `rtl`) |
+| ~~popupStyle~~ | Deprecated, use `styles.popup.root` | `CSSProperties` | - |
+| prefix | Content before the input | `ReactNode` | - |
+| prevIcon | Previous-page icon | `ReactNode` | lucide `ChevronLeft` |
+| presets | Quick picks; `value` may be a function | `{ label: ReactNode, value: Dayjs \| (() => Dayjs) }[]` | - |
+| previewValue | Show the hovered value in the input | `false \| 'hover'` | `'hover'` |
+| rootClassName | Class name of the root and of the popup root | `string` | - |
+| shadow | Drop shadow under the input box (lobe) | `boolean` | `false` |
+| size | Input size | `'large' \| 'medium' \| 'small'` | `'medium'` |
+| status | Validation status | `'error' \| 'warning'` | - |
+| style | Style of the root (input box) | `CSSProperties` | - |
+| styles | Semantic DOM styles, see Semantic DOM | `PickerSemanticStyles \| (info: { props }) => PickerSemanticStyles` | - |
+| suffixIcon | Suffix icon; `null` removes it | `ReactNode` | lucide `Calendar` (`Clock` for time) |
+| superNextIcon | Next-year / next-decade icon | `ReactNode` | lucide `ChevronsRight` |
+| superPrevIcon | Previous-year / previous-decade icon | `ReactNode` | lucide `ChevronsLeft` |
+| variant | Input variant | `'outlined' \| 'filled' \| 'borderless' \| 'underlined'` | `'outlined'` (light) / `'filled'` (dark) |
+| onClear | Called when the clear button is clicked | `() => void` | - |
+| onOpenChange | Called when the popup opens or closes | `(open: boolean) => void` | - |
+| onPanelChange | Called when the panel date or mode changes | `(value: Dayjs, mode: PanelMode) => void` | - |
+| onPickerValueChange | Called when the panel date changes (`info.source`: `panel`, `reset`, …) | `(date: Dayjs, info: { source, mode }) => void` | - |
+| onKeyDown | Keydown on the input; call `preventDefault()` to skip the picker's handling | `(event: KeyboardEvent, preventDefault: () => void) => void` | - |
+| autoFocus / name / tabIndex / `aria-*` | Passed to the input | - | - |
+
+`popupAlign`, `builtinPlacements` and `transitionName` are not props — see the differences section.
+
+### Common methods
+
+| Name | Description | Type |
+| --- | --- | --- |
+| blur() | Remove focus | `() => void` |
+| focus() | Focus the input; on RangePicker `index` picks the start (`0`) or end (`1`) | `(options?: FocusOptions) => void` (RangePicker: `(index?: number \| FocusOptions & { index?: number }) => void`) |
+| nativeElement | The root element | `HTMLDivElement` |
+
+The ref type is `PickerRef` (`RangePickerRef` on the range picker); the component takes React 19 `ref` as a prop.
+
+### DatePicker
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| defaultPickerValue | Panel date the popup opens on (reset on every open) | `Dayjs` | - |
+| defaultValue | Initial value | `Dayjs` (`Dayjs[]` with `multiple`) | - |
+| disabledTime | Disable time options | `(date: Dayjs) => { disabledHours?, disabledMinutes?, disabledSeconds?, disabledMilliseconds? }` | - |
+| format | Display / parse format | `FormatType` | `YYYY-MM-DD` |
+| maxTagCount | `multiple`: most tags shown; `responsive` fits the width | `number \| 'responsive'` | - |
+| multiple | Pick several dates | `boolean` | `false` |
+| pickerValue | Controlled panel date, change it from `onPickerValueChange` | `Dayjs` | - |
+| removeIcon | `multiple`: remove icon of each tag | `ReactNode` | lucide `X` |
+| renderExtraFooter | Extra footer row | `(mode: PanelMode) => ReactNode` | - |
+| showNow | Show the Today / Now button (lobe: off by default, antd: on) | `boolean` | `false` |
+| ~~showToday~~ | Deprecated, use `showNow` | `boolean` | `false` |
+| showTime | Add the time panel, see showTime | `boolean \| SharedTimeProps` | - |
+| ~~showTime.defaultValue~~ | Deprecated, use `showTime.defaultOpenValue` | `Dayjs` | `dayjs()` |
+| showTime.defaultOpenValue | Time a picked date gets before a time is chosen | `Dayjs` | `dayjs()` |
+| showWeek | Week-number column on the date panel | `boolean` | `false` |
+| tagRender | `multiple`: render each tag | `(props: PickerTagProps) => ReactNode` | - |
+| value | Value | `Dayjs` (`Dayjs[]` with `multiple`) | - |
+| onCalendarChange | Called on each pick, before commit | `(date, dateString, info) => void` | - |
+| onChange | Called when the value commits; cleared: `null` (`[]` with `multiple`) | `(date: Dayjs \| null, dateString: string \| null) => void` | - |
+| onFocus / onBlur | Focus / blur of the input | `(event: FocusEvent, info) => void` | - |
+| onOk | Called on the OK button | `(date: Dayjs) => void` | - |
+| onPanelChange | Called when the panel changes | `(value: Dayjs, mode: PanelMode) => void` | - |
+
+### showTime
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| format | Time format; decides which columns are shown | `string` | `HH:mm:ss` |
+| showHour / showMinute / showSecond / showMillisecond | Show a column explicitly | `boolean` | from `format` |
+| use12Hours | 12-hour clock with AM / PM | `boolean` | `false` |
+| hourStep / minuteStep / secondStep / millisecondStep | Option interval | `number` | `1` |
+| hideDisabledOptions | Hide the options `disabledTime` disables | `boolean` | `false` |
+| defaultOpenValue / ~~defaultValue~~ | Time a picked date gets before a time is chosen | `Dayjs` | `dayjs()` |
+| ~~disabledHours~~ / ~~disabledMinutes~~ / ~~disabledSeconds~~ | Deprecated, use `disabledTime` | `() => number[]` … | - |
+| changeOnScroll | Pick the option a column is scrolled to | `boolean` | `false` |
+| timePanel | `columns` scroll lists or a `clock` dial (lobe) | `'columns' \| 'clock'` | `columns` |
+| showNow | Show the Now button (lobe: off by default) | `boolean` | `false` |
+
+These props can also be passed at the top level of the picker.
+
+### DatePicker[picker=year]
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| defaultValue | Initial value | `Dayjs` | - |
+| format | Display / parse format | `FormatType` | `YYYY` |
+| multiple | Pick several years | `boolean` | `false` |
+| renderExtraFooter | Extra footer row | `(mode: PanelMode) => ReactNode` | - |
+| tagRender | `multiple`: render each tag | `(props: PickerTagProps) => ReactNode` | - |
+| value | Value | `Dayjs` | - |
+| onChange | Called when the value commits | `(date: Dayjs, dateString: string) => void` | - |
+
+### DatePicker[picker=quarter]
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| defaultValue | Initial value | `Dayjs` | - |
+| format | Display / parse format | `FormatType` | `YYYY-[Q]Q` |
+| multiple | Pick several quarters | `boolean` | `false` |
+| renderExtraFooter | Extra footer row | `(mode: PanelMode) => ReactNode` | - |
+| tagRender | `multiple`: render each tag | `(props: PickerTagProps) => ReactNode` | - |
+| value | Value | `Dayjs` | - |
+| onChange | Called when the value commits | `(date: Dayjs, dateString: string) => void` | - |
+
+### DatePicker[picker=month]
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| defaultValue | Initial value | `Dayjs` | - |
+| format | Display / parse format | `FormatType` | `YYYY-MM` |
+| multiple | Pick several months | `boolean` | `false` |
+| renderExtraFooter | Extra footer row | `(mode: PanelMode) => ReactNode` | - |
+| tagRender | `multiple`: render each tag | `(props: PickerTagProps) => ReactNode` | - |
+| value | Value | `Dayjs` | - |
+| onChange | Called when the value commits | `(date: Dayjs, dateString: string) => void` | - |
+
+### DatePicker[picker=week]
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| defaultValue | Initial value | `Dayjs` | - |
+| format | Display / parse format | `FormatType` | `gggg-wo` |
+| multiple | Pick several weeks | `boolean` | `false` |
+| renderExtraFooter | Extra footer row | `(mode: PanelMode) => ReactNode` | - |
+| showWeek | Week-number column | `boolean` | `true` |
+| tagRender | `multiple`: render each tag | `(props: PickerTagProps) => ReactNode` | - |
+| value | Value | `Dayjs` | - |
+| onChange | Called when the value commits | `(date: Dayjs, dateString: string) => void` | - |
+
+`DatePicker.TimePicker` (`picker="time"`) takes the DatePicker props without `picker` / `showTime`, plus the showTime props at the top level; its format defaults to `HH:mm:ss`.
+
+### RangePicker
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| allowEmpty | Allow leaving the start / end empty | `boolean \| [boolean, boolean]` | `[false, false]` |
+| cellRender | Custom cell; `info.range` is the active end | `(current, info: { originNode, today, range: 'start' \| 'end', type, … }) => ReactNode` | - |
+| ~~dateRender~~ | Deprecated, use `cellRender` | `(currentDate: Dayjs, today: Dayjs) => ReactNode` | - |
+| defaultPickerValue | Panel dates the popup opens on | `[Dayjs, Dayjs]` | - |
+| defaultValue | Initial value | `[Dayjs, Dayjs]` | - |
+| disabled | Disable the picker or each end | `boolean \| [boolean, boolean]` | `false` |
+| disabledDate | Disable cells; `info.from` is the end picked first | `(current: Dayjs, info: { from?: Dayjs, type: PanelMode }) => boolean` | - |
+| disabledTime | Disable time options per end | `(date: Dayjs, partial: 'start' \| 'end', info: { from?: Dayjs }) => DisabledTimes` | - |
+| format | Display / parse format | `FormatType` | per `picker` / `showTime` |
+| id | Ids of the two inputs | `{ start?: string, end?: string }` | - |
+| mode | Controlled panel modes | `[PanelMode, PanelMode]` | - |
+| pickerValue | Controlled panel dates | `[Dayjs, Dayjs]` | - |
+| placeholder | Placeholders of the two inputs | `[string, string]` | per `picker`, from `locale` |
+| presets | Quick picks; each value may be a function | `{ label: ReactNode, value: [Dayjs, Dayjs] \| (() => [Dayjs, Dayjs]) }[]` | - |
+| ~~ranges~~ | Deprecated, use `presets` | `Record<string, [Dayjs, Dayjs] \| (() => [Dayjs, Dayjs])>` | - |
+| renderExtraFooter | Extra footer row | `(mode: PanelMode) => ReactNode` | - |
+| separator | Separator between the inputs | `ReactNode` | lucide `ArrowRight` |
+| showNow | Show the Now button (off on ranges unless set) | `boolean` | `false` |
+| showTime | Add the time panel; per-end defaults | `boolean \| RangeTimeProps` | - |
+| ~~showTime.defaultValue~~ | Deprecated, use `showTime.defaultOpenValue` | `[Dayjs, Dayjs]` | `[dayjs(), dayjs()]` |
+| showTime.defaultOpenValue | Times the picked dates get before a time is chosen | `[Dayjs, Dayjs]` | `[dayjs(), dayjs()]` |
+| value | Value; `null` when cleared | `[Dayjs, Dayjs] \| null` | - |
+| onCalendarChange | Called on each pick, with the end it belongs to | `(dates: [Dayjs, Dayjs], dateStrings: [string, string], info: { range: 'start' \| 'end' }) => void` | - |
+| onChange | Called when the value commits | `(dates: [Dayjs, Dayjs] \| null, dateStrings: [string, string] \| null) => void` | - |
+| onFocus | Focus of an input, with its end | `(event: FocusEvent, info: { range: 'start' \| 'end' }) => void` | - |
+| onBlur | Blur of an input, with its end | `(event: FocusEvent, info: { range: 'start' \| 'end' }) => void` | - |
+| onOk | Called on the OK button | `(dates: [Dayjs, Dayjs]) => void` | - |
+| onPanelChange | Called when a panel changes | `(values: [Dayjs, Dayjs], modes: [PanelMode, PanelMode]) => void` | - |
+
+### formatType
+
+```ts
+import type { Dayjs } from 'dayjs';
+
+type Generic = string;
+type GenericFn = (value: Dayjs) => string;
+
+export type FormatType =
+  | Generic
+  | GenericFn
+  | Array<Generic | GenericFn>
+  | {
+      format: string;
+      type?: 'mask';
+    };
+```
+
+| Form | Meaning |
+| --- | --- |
+| `string` | dayjs format: display, `dateString` and parsing of typed text |
+| `(value: Dayjs) => string` | Display only; typed text is not parsed |
+| `Array<string \| (value) => string>` | The first shows the value; typed text is tried against every string |
+| `{ format: string; type?: 'mask' }` | Masked input in that format (antd 5.14.0+) |
+
+### Generated props
+
+The tables generated from the TypeScript types, with every prop the picker core passes through:
 
 <Api name="DatePicker" from=".." />
 
 <Api name="DateRangePicker" from=".." />
 
-Values are native `Date` objects; days compare by calendar day, so a `min` with a time of day still enables that day. The grid always shows six weeks and follows the active dayjs locale for week start and names. Click the title to move from days to months to years; `mode` sets the lowest level.
+### Popup and keyboard
 
-### Migrating from antd DatePicker
+The popup is a Base UI Popover positioned under the input (it flips above when there is no room below and shifts to stay on screen) and animated with Motion. Inside a floating layer (Popover, DropdownMenu) or a dialog it mounts in that layer, so picking a date never counts as an outside click for the host; elsewhere it mounts in the app element of `ConfigProvider`, or on `document.body`, like the other lobe popups. It takes its z-index from the shared layer counter. A press on the input does not close it. Pass `getPopupContainer` to mount it elsewhere.
 
-- `Dayjs` values → `Date` (`dayjs(value).toDate()` at the call site).
-- `picker="month"` → `mode="month"`; `minDate` / `maxDate` → `min` / `max`.
-- `renderExtraFooter` → `footer`; `showNow={false}` is the default.
-- `DatePicker.RangePicker` → `DateRangePicker`.
-- Time, week, quarter and `presets` are not supported.
+Input keys match antd DatePicker: type a date and press Enter to commit it, Escape closes the popup, Tab moves on (and between the two inputs of a range). The input stays the single keyboard target; the calendar cells are never focused.
+
+On top of antd, the month, quarter, year and decade panels take arrow keys, PageUp/PageDown, Home/End and Enter while the popup is open (see the keyboard demo); the highlighted tile is outlined and the page follows it. On those panels the arrow keys therefore no longer move the text caret while the popup is open. The date and week panels keep antd's behaviour: no arrow-key navigation, arrow keys move the caret.
+
+## FAQ
+
+### I set `mode` and can no longer pick a year or month
+
+A controlled `mode` freezes the panel, as in antd: drilling into a year or month only calls `onPanelChange(value, mode)`. Update `mode` from `onPanelChange`, as the Controlled Panels demo does, or leave `mode` unset.
+
+### Why does picking a year bring me back to the date panel?
+
+With `picker="date"`, the year and month panels are only steps on the way to a date: after you pick a year (from the header) the picker goes back down to the `picker` panel. Use `picker="year"` / `picker="month"` to pick a year or month as the value, or a controlled `mode` to stay on a panel.
+
+### How do I change the first day of the week?
+
+The week start follows the dayjs locale. Set it globally (`import 'dayjs/locale/zh-cn'; dayjs.locale('zh-cn')`), or per picker through `locale={{ lang: { locale: 'zh-cn' } }}` once that dayjs locale is loaded. To change only the start day, update the dayjs locale with the `updateLocale` plugin: `dayjs.updateLocale('en', { weekStart: 1 })`.
+
+### Why does the locale not change after `dayjs.locale()`?
+
+Week and month names are read from the dayjs locale when the panel renders; load the locale file (`import 'dayjs/locale/zh-cn'`) before calling `dayjs.locale()`, and re-render the pickers. The picker texts (Today, OK, placeholders) come from the `locale` prop or the `@lobehub/ui/i18n` resources of `ConfigProvider`, not from dayjs. There is no ConfigProvider `locale.DatePicker` (see below).
+
+### Why do panels reset state when I use `panelRender`?
+
+When `panelRender` returns a different element tree on each render (for example, wrapping the panel in a newly created component), React remounts the original panel, which resets its internal state (the visible month, the hovered cell). Keep the structure stable: return the same wrapper type around `panelNode` every time.
+
+### How do I use another date library?
+
+Use `generatePicker(generateConfig)` with that library's `GenerateConfig` (see Custom date library). antd's moment, date-fns and Luxon configs from `@rc-component/picker/generate/*` work once you install that package.
+
+### How do I set the defaults for every DatePicker in the app?
+
+lobe components do not read antd's ConfigProvider, so there is no global `datePicker` / `rangePicker` config. Wrap the picker in your own component with your defaults and use it everywhere — see the differences section.
+
+## Differences from antd DatePicker / migration
+
+### Breaking changes from the previous lobe DatePicker
+
+The v6 betas shipped a hand-written picker with a `<button>` trigger and native `Date` values. v6 runs on a fork of `@rc-component/picker`, the engine v5.64 uses, which changes:
+
+| Before | Now | Migration |
+| --- | --- | --- |
+| `Date` values (`value`, `defaultValue`, `onChange`) | `Dayjs` values, as in antd; `onChange(date, dateString)` | Wrap with `dayjs(date)` when passing a value and call `date?.toDate()` in `onChange` |
+| `DateRangePicker` | `DatePicker.RangePicker` (antd's name); `DateRangePicker` stays as the same component | Prefer `DatePicker.RangePicker`; `DateRangePicker` / `DateRangePickerProps` keep working |
+| `DateRangeValue` `[Date \| null, Date \| null]`, cleared to `[null, null]` | `[Dayjs \| null, Dayjs \| null]`, cleared to `null` | Handle `null` in `onChange` |
+| `mode="month"` / `mode="year"` (picker type) | `picker="month"` / `picker="year"`; `mode` is the controlled panel, as in antd | Rename `mode` to `picker` |
+| `min` / `max` (`Date`) | `minDate` / `maxDate` (`Dayjs`), which also stop panel navigation | Rename (the codemod does it) |
+| `disabledDate(date: Date)` | `disabledDate(current: Dayjs, info: { from?, type })` | Use `current` as a `Dayjs` |
+| `footer` | `renderExtraFooter(mode)` | Wrap as `() => footer` (the codemod does it) |
+| Default display format of the lobe picker | antd's defaults (`YYYY-MM-DD`, `YYYY-MM`, `YYYY`, …) | Pass `format` to keep a custom format |
+| `<button>` trigger, focus moved into the day grid | Typeable `<input>`; the input keeps the focus | Use `inputReadOnly` to forbid typing |
+| `size="middle"` | `size="medium"`, as in antd 6 | Rename (the codemod does it) |
+| `popupAlign` / `builtinPlacements` / `transitionName` (passed through to rc-trigger in v5.64) | Removed: the popup is a Base UI Popover animated with Motion; its root carries Base UI's `data-side` / `data-align` / `data-open` instead of the `-dropdown-hidden` and `-dropdown-placement-*` classes | `placement`, `getPopupContainer`; style the popup through `classNames.popup.root` (the codemod reports these props) |
+
+### What antd does that lobe does not
+
+These antd features are left out on purpose; each has a lobe replacement.
+
+| antd | lobe DatePicker | Use instead |
+| --- | --- | --- |
+| `prefixCls` | Not a prop: the class prefix is always `lobe-picker` (`lobe-picker-dropdown`, `lobe-picker-cell`, …) | `className` / `rootClassName`, Semantic DOM `classNames` / `styles`, or CSS on the fixed `lobe-picker-*` classes |
+| ConfigProvider `datePicker` / `rangePicker` (`className`, `classNames`, `style`, `styles`, `variant`, `allowClear`, `clearIcon`, `suffixIcon`, `separator`) | Not read — lobe components do not use antd's ConfigProvider | Pass the props on the picker, or wrap it in your own component with your defaults (`const AppDatePicker = (props) => <DatePicker variant="filled" {...props} />`). The global-only `clearIcon` is `allowClear={{ clearIcon }}` on the picker |
+| ConfigProvider `locale.DatePicker` | Not read | The `locale` prop (antd `PickerLocale`, merged over the default), or the `@lobehub/ui/i18n` resources of lobe `ConfigProvider`, which the default locale is built from; see Locale and Buddhist Era |
+| Component Design Token (`theme.components.DatePicker`, the `component-token` demo) | No component-level token; styled from the global `--lobe-*` theme tokens of `theme.css` | Global theme tokens, Semantic DOM `classNames` / `styles`, or `createStaticStyles` from `@lobehub/ui` on `className` / `classNames.popup.root` |
+| `popupAlign` / `builtinPlacements` / `transitionName` | Not props (antd does not document them either): the popup is a Base UI Popover animated with Motion | `placement` (4 directions, flips when there is no room), `getPopupContainer`, `direction="rtl"`, and `classNames.popup.root` / `styles.popup.root` for the popup's look |
+
+Other differences: the footer is hidden by default (`showNow` defaults to `false`, antd defaults to `true` on single pickers; pass `showNow` to get Today / Now back), the presets sidebar highlights the preset matching the current value, the popup mounts inside an enclosing Popover / DropdownMenu / Modal (antd mounts on `document.body`), `variant` defaults to `filled` in dark mode, `shadow` is a lobe extra, and the month / quarter / year / decade panels add keyboard navigation (see Popup and keyboard). Form `status` is not inherited from a form item; pass `status` on the picker.
+
+### Demo coverage
+
+Every demo of antd's DatePicker page, with the section showing it here:
+
+| antd demo | Section | File |
+| --- | --- | --- |
+| basic | Basic | `demos/basic.tsx` |
+| range-picker | Range Picker | `demos/range-picker.tsx` |
+| multiple | Multiple | `demos/multiple.tsx` |
+| format | Date Format | `demos/format.tsx` |
+| time | Choose Time | `demos/time.tsx` |
+| date-range | Limit Date Range | `demos/date-range.tsx` |
+| disabled-date | Disabled Date & Time | `demos/disabled-date.tsx` |
+| allow-empty | Allow Empty | `demos/allow-empty.tsx` |
+| preset-ranges | Preset Ranges | `demos/preset-ranges.tsx` |
+| extra-footer | Extra Footer | `demos/extra-footer.tsx` |
+| cell-render | Customized Cell Rendering | `demos/cell-render.tsx` |
+| components | Customize Panel | `demos/components.tsx` |
+| style-class | Custom semantic dom styling | `demos/style-class.tsx` |
+| mode (debug) | Controlled Panels | `demos/mode.tsx` |
+| component-token (debug) | Component Token — omitted: no component Design Token | — |
+
+The lobe-only demos are `static-members`, `range-interaction`, `multiple-custom`, `preview-value`, `panel-render`, `show-week`, `keyboard`, `locale`, `rtl`, `nested`, `controlled` and `generate-picker`.

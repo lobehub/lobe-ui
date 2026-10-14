@@ -3,6 +3,13 @@ import { neutralColors, primaryColors } from '../customTheme';
 import { createLobeToken, type CreateLobeTokenParams } from './createLobeToken';
 import { getGlobalCss, getThemeCss } from './themeCss';
 
+const SURFACE_VARS = [
+  '--lobe-fill-border',
+  '--lobe-fill-border-strong',
+  '--lobe-table-surface',
+  '--lobe-table-cell-bg',
+];
+
 const parseRules = () => {
   const rules = new Map<string, Record<string, string>>();
   for (const [, selector, body] of getThemeCss().matchAll(/^([^\s@{][^{]*)\{\n([^}]*)\n\}/gm)) {
@@ -25,7 +32,7 @@ const resolve = (
     ...(primaryColor ? rules.get(`[data-primary-color='${primaryColor}']${mode}`) : {}),
     ...(neutralColor ? rules.get(`[data-neutral-color='${neutralColor}']${mode}`) : {}),
   };
-  delete vars['--lobe-ring'];
+  for (const name of ['--lobe-ring', ...SURFACE_VARS]) delete vars[name];
   return vars;
 };
 
@@ -45,6 +52,23 @@ describe('getThemeCss', () => {
 
   it.each(variants)('resolves %o to createLobeToken', (params) => {
     expect(resolve(rules, params)).toEqual(toCssVariables(createLobeToken(params)));
+  });
+
+  it('derives the fill-series border and table surface tokens per appearance', () => {
+    const light = rules.get(":root, [data-theme='light']")!;
+    const dark = rules.get("[data-theme='dark']")!;
+
+    expect(light['--lobe-fill-border']).toBe('var(--lobe-color-fill)');
+    expect(light['--lobe-fill-border-strong']).toBe(
+      'color-mix(in srgb, var(--lobe-color-fill), var(--lobe-color-text) 15%)',
+    );
+    expect(light['--lobe-table-surface']).toBe('initial');
+    expect(light['--lobe-table-cell-bg']).toBe('initial');
+
+    expect(dark['--lobe-fill-border']).toBe('var(--lobe-color-fill-secondary)');
+    expect(dark['--lobe-fill-border-strong']).toBe('var(--lobe-color-fill)');
+    expect(dark['--lobe-table-surface']).toBe('var(--lobe-color-fill-quaternary)');
+    expect(dark['--lobe-table-cell-bg']).toBe('transparent');
   });
 
   it('keeps document resets out of theme.css', () => {

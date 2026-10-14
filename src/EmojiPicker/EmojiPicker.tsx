@@ -1,6 +1,5 @@
 'use client';
 
-import data from '@emoji-mart/data';
 import Picker from '@emoji-mart/react';
 import { getLobeIconCDN } from '@lobehub/icons/es/features/getLobeIconCDN';
 import { toc } from '@lobehub/icons/es/toc';
@@ -24,6 +23,7 @@ import Tabs, { type TabsProps } from '@/Tabs';
 import Tooltip from '@/Tooltip';
 
 import AvatarUploader from './AvatarUploader';
+import { loadEmojiData } from './loadEmojiData';
 import { styles } from './style';
 import { type EmojiPickerProps } from './type';
 import { useEmojiMartI18n } from './useEmojiMartI18n';
@@ -187,7 +187,7 @@ const EmojiPicker = memo<EmojiPickerProps>(
         {tab === 'emoji' && (
           <Picker
             custom={mergedCustomEmojis}
-            data={data}
+            data={loadEmojiData}
             i18n={i18n}
             icons={'outline'}
             locale={locale.split('-')[0]}
