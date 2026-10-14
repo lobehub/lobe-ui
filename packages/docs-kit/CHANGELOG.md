@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.27.7-beta.1](https://github.com/lobehub/lobe-ui/compare/docs-kit@5.27.6...docs-kit@5.27.7-beta.1) (2026-10-14)
+
+### 🐛 Bug Fixes
+
+- **docs-kit**: Inline ESM icons in Vitest, closes [#722](https://github.com/lobehub/lobe-ui/issues/722) ([5ddac2a](https://github.com/lobehub/lobe-ui/commit/5ddac2a))
+
 ## [5.27.6-beta.1](https://github.com/lobehub/lobe-ui/compare/docs-kit@5.27.5...docs-kit@5.27.6-beta.1) (2026-10-14)
 
 ### 🐛 Bug Fixes
