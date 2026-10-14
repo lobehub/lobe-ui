@@ -5,7 +5,8 @@ import {
   DateRangePicker,
   type DateRangePickerProps,
 } from '@lobehub/ui/base-ui';
-import { createStaticStyles } from 'antd-style';
+
+import { createStaticStyles } from '@/utils/styleEngine';
 
 const styles = createStaticStyles(({ css, cssVar }) => ({
   root: css`

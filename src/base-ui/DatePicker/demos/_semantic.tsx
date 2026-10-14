@@ -6,10 +6,11 @@ import {
   Segmented,
   Text,
 } from '@lobehub/ui/base-ui';
-import { createStaticStyles, cx } from 'antd-style';
 import dayjs from 'dayjs';
 import { Smile } from 'lucide-react';
 import { useState } from 'react';
+
+import { createStaticStyles, cx } from '@/utils/styleEngine';
 
 const styles = createStaticStyles(({ css, cssVar }) => ({
   active: css`

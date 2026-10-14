@@ -362,19 +362,19 @@ Hover a key to outline that part.
 
 <Demo of={DemoSemantic} layout="bare" />
 
-| Key               | Element                                                  | Since |
-| ----------------- | -------------------------------------------------------- | ----- |
-| `root`            | Root element: the input box (`.lobe-picker`)             | —     |
-| `prefix`          | Prefix (`prefix`)                                        | —     |
-| `input`           | Input; both inputs on `DateRangePicker`                  | —     |
-| `suffix`          | Suffix icon and clear button                             | —     |
-| `popup.root`      | Popup root (`.lobe-picker-dropdown`)                     | —     |
-| `popup.container` | Panel container (`.lobe-picker-<mode>-panel-container`)  | —     |
-| `popup.header`    | Panel header                                             | —     |
-| `popup.body`      | Panel body                                               | —     |
-| `popup.content`   | Panel content (the `<table>`, or the time columns)       | —     |
-| `popup.item`      | Cell (dates, months, … and time options)                 | —     |
-| `popup.footer`    | Popup footer (extra footer and the Today / Now / OK row) | —     |
+| Key               | Element                                                  |
+| ----------------- | -------------------------------------------------------- |
+| `root`            | Root element: the input box (`.lobe-picker`)             |
+| `prefix`          | Prefix (`prefix`)                                        |
+| `input`           | Input; both inputs on `DateRangePicker`                  |
+| `suffix`          | Suffix icon and clear button                             |
+| `popup.root`      | Popup root (`.lobe-picker-dropdown`)                     |
+| `popup.container` | Panel container (`.lobe-picker-<mode>-panel-container`)  |
+| `popup.header`    | Panel header                                             |
+| `popup.body`      | Panel body                                               |
+| `popup.content`   | Panel content (the `<table>`, or the time columns)       |
+| `popup.item`      | Cell (dates, months, … and time options)                 |
+| `popup.footer`    | Popup footer (extra footer and the Today / Now / OK row) |
 
 `classNames` / `styles` are `PickerClassNames<Props>` / `PickerStyles<Props>`: an object, or `(info: { props }) => object`. `classNames.popup` may be a string (the popup `root`). `rootClassName` goes on both the root and the popup root. The deprecated `popupClassName` / `dropdownClassName` map to `classNames.popup.root` (`popupClassName` wins when both are set) and `popupStyle` to `styles.popup.root`, merged after them.
 
