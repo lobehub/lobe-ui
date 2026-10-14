@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.64.1](https://github.com/lobehub/lobe-ui/compare/v5.64.0...v5.64.1) (2026-10-14)
+
+### 🐛 Bug Fixes
+
+- **base-ui**: DatePicker size to content by default, closes [#720](https://github.com/lobehub/lobe-ui/issues/720) ([20c4e04](https://github.com/lobehub/lobe-ui/commit/20c4e04))
+
 # [5.64.0](https://github.com/lobehub/lobe-ui/compare/v5.63.4...v5.64.0) (2026-10-14)
 
 ### ✨ Features
