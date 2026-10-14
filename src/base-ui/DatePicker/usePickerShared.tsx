@@ -1,7 +1,7 @@
 'use client';
 
 import type { PickerProps as RcPickerProps } from '@rc-component/picker';
-import type { Dayjs } from 'dayjs';
+import type { GenerateConfig } from '@rc-component/picker/generate';
 import {
   CalendarIcon,
   ChevronLeft,
@@ -21,17 +21,17 @@ import Icon from '@/Icon';
 import { useAppElement } from '@/ThemeProvider/AppElementContext';
 import { cx, useThemeMode } from '@/utils/styleEngine';
 
-import generateConfig from './generateConfig';
+import dayjsGenerateConfig from './generateConfig';
 import {
   type FilledPickerClassNames,
   type FilledPickerStyles,
   mergePickerSemantic,
 } from './semantic';
 import { PREFIX_CLS, styles as pickerStyles } from './style';
-import type { DatePickerProps, PickerClassNames, PickerStyles } from './type';
+import type { DatePickerBaseProps, PickerClassNames, PickerStyles } from './type';
 
 type SharedInput = Pick<
-  DatePickerProps,
+  DatePickerBaseProps<any>,
   | 'allowClear'
   | 'bordered'
   | 'changeOnBlur'
@@ -65,13 +65,15 @@ type SharedInput = Pick<
   | 'variant'
 > & {
   classNames?: PickerClassNames;
+  /** The date library adapter, from `generatePicker`; Dayjs by default. */
+  generateConfig?: GenerateConfig<any>;
   /** The picker's props, passed as `info.props` to the function forms of `classNames` / `styles`. */
   semanticProps: object;
   styles?: PickerStyles;
 };
 
 type SharedOutput = Pick<
-  RcPickerProps<Dayjs>,
+  RcPickerProps<any>,
   | 'allowClear'
   | 'className'
   | 'components'
@@ -126,6 +128,7 @@ export const usePickerShared = ({
   components,
   defaultOpen,
   dropdownClassName,
+  generateConfig = dayjsGenerateConfig,
   getPopupContainer,
   max,
   maxDate,

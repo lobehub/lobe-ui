@@ -1,9 +1,10 @@
 'use client';
 
+import type { GenerateConfig } from '@rc-component/picker/generate';
 import type { CellRender, PanelMode, PickerMode } from '@rc-component/picker/interface';
-import dayjs, { type Dayjs } from 'dayjs';
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
 
+import dayjsGenerateConfig from './generateConfig';
 import { PREFIX_CLS } from './style';
 
 /** Panels with a fixed grid of month / quarter / year / decade tiles. */
@@ -23,89 +24,132 @@ const GRID: Record<
   year: { col: 1, page: 10, row: 3, unit: 'year' },
 };
 
+// Date math goes through rc-picker's `generateConfig`, so `generatePicker` works with any
+// date library; the default is the Dayjs one.
+const defaultConfig = dayjsGenerateConfig as GenerateConfig<any>;
+
+/** Months since year 0, to compare tiles by position. */
+const monthIndex = <D,>(date: D, config: GenerateConfig<D>) =>
+  config.getYear(date) * 12 + config.getMonth(date);
+
 /** First cell of the page `date` is on: Jan / Q1 of its year, first year of its decade… */
-export const getPageStart = (date: Dayjs, mode: GridPanelMode) => {
-  const year = date.year();
-  if (mode === 'year') return date.year(Math.floor(year / 10) * 10).startOf('year');
-  if (mode === 'decade') return date.year(Math.floor(year / 100) * 100).startOf('year');
-  return date.startOf('year');
+export const getPageStart = <D,>(
+  date: D,
+  mode: GridPanelMode,
+  config: GenerateConfig<D> = defaultConfig,
+) => {
+  const year = config.getYear(date);
+  const startYear =
+    mode === 'year'
+      ? Math.floor(year / 10) * 10
+      : mode === 'decade'
+        ? Math.floor(year / 100) * 100
+        : year;
+  const start = config.setDate(config.setMonth(config.setYear(date, startYear), 0), 1);
+  return config.setHour(
+    config.setMinute(config.setSecond(config.setMillisecond(start, 0), 0), 0),
+    0,
+  );
 };
 
-const getPageEnd = (date: Dayjs, mode: GridPanelMode) => {
-  const start = getPageStart(date, mode);
-  if (mode === 'month') return start.month(11);
-  if (mode === 'quarter') return start.month(9);
-  return start.add(mode === 'year' ? 9 : 90, 'year');
+const getPageEnd = <D,>(date: D, mode: GridPanelMode, config: GenerateConfig<D>) => {
+  const start = getPageStart(date, mode, config);
+  if (mode === 'month') return config.setMonth(start, 11);
+  if (mode === 'quarter') return config.setMonth(start, 9);
+  return config.addYear(start, mode === 'year' ? 9 : 90);
 };
 
 /** Whether `a` and `b` fall in the same tile of a `mode` panel. */
-export const isSameCell = (a: Dayjs, b: Dayjs, mode: GridPanelMode) => {
-  if (mode === 'decade') return Math.floor(a.year() / 10) === Math.floor(b.year() / 10);
-  if (mode === 'year') return a.year() === b.year();
+export const isSameCell = <D,>(
+  a: D,
+  b: D,
+  mode: GridPanelMode,
+  config: GenerateConfig<D> = defaultConfig,
+) => {
+  const yearA = config.getYear(a);
+  const yearB = config.getYear(b);
+  if (mode === 'decade') return Math.floor(yearA / 10) === Math.floor(yearB / 10);
+  if (mode === 'year') return yearA === yearB;
   if (mode === 'quarter') {
-    return a.year() === b.year() && Math.floor(a.month() / 3) === Math.floor(b.month() / 3);
+    return (
+      yearA === yearB && Math.floor(config.getMonth(a) / 3) === Math.floor(config.getMonth(b) / 3)
+    );
   }
-  return a.year() === b.year() && a.month() === b.month();
+  return yearA === yearB && config.getMonth(a) === config.getMonth(b);
 };
 
 /**
  * Where `key` moves the active tile of a `mode` panel, or `undefined` for other keys.
  * `rtl` mirrors ←/→.
  */
-export const moveGridCell = (date: Dayjs, key: string, mode: GridPanelMode, rtl = false) => {
+export const moveGridCell = <D,>(
+  date: D,
+  key: string,
+  mode: GridPanelMode,
+  rtl = false,
+  config: GenerateConfig<D> = defaultConfig,
+) => {
   const { col, page, row, unit } = GRID[mode];
+  const add = (diff: number) =>
+    unit === 'year' ? config.addYear(date, diff) : config.addMonth(date, diff);
   switch (key) {
     case 'ArrowLeft': {
-      return date.add(rtl ? col : -col, unit);
+      return add(rtl ? col : -col);
     }
     case 'ArrowRight': {
-      return date.add(rtl ? -col : col, unit);
+      return add(rtl ? -col : col);
     }
     case 'ArrowUp': {
-      return date.add(-row, unit);
+      return add(-row);
     }
     case 'ArrowDown': {
-      return date.add(row, unit);
+      return add(row);
     }
     case 'PageUp': {
-      return date.add(-page, unit);
+      return add(-page);
     }
     case 'PageDown': {
-      return date.add(page, unit);
+      return add(page);
     }
     case 'Home': {
-      return getPageStart(date, mode);
+      return getPageStart(date, mode, config);
     }
     case 'End': {
-      return getPageEnd(date, mode);
+      return getPageEnd(date, mode, config);
     }
   }
 };
 
 const ACTIVE_CLS = `${PREFIX_CLS}-cell-keyboard-active`;
 
-type Pair = [Dayjs | undefined, Dayjs | undefined];
+/** A date of the picker's library (`Dayjs` by default). */
+type DateValue = object;
+type Pair = [DateValue | undefined, DateValue | undefined];
 type MaybePair<T> = T | [T, T] | null | undefined;
 
-const toPair = (value: MaybePair<Dayjs | null | undefined>): Pair =>
+const toPair = (value: MaybePair<DateValue | null | undefined>): Pair =>
   Array.isArray(value)
     ? [value[0] ?? undefined, value[1] ?? undefined]
     : [value ?? undefined, undefined];
 
 /** The selection the keys start from; with `multiple`, the last picked date. */
-const toValuePair = (value: MaybePair<Dayjs | null | undefined> | Dayjs[], range?: boolean) =>
-  !range && Array.isArray(value) ? toPair(value.at(-1)) : toPair(value as MaybePair<Dayjs>);
+const toValuePair = (
+  value: MaybePair<DateValue | null | undefined> | DateValue[],
+  range?: boolean,
+) =>
+  !range && Array.isArray(value) ? toPair(value.at(-1)) : toPair(value as MaybePair<DateValue>);
 
 export interface PanelKeyboardOptions {
-  cellRender?: CellRender<Dayjs>;
-  dateRender?: (currentDate: Dayjs, today: Dayjs) => React.ReactNode;
+  cellRender?: CellRender<any>;
+  dateRender?: (currentDate: any, today: any) => React.ReactNode;
   defaultOpen?: boolean;
-  defaultPickerValue?: MaybePair<Dayjs | null | undefined>;
-  /** `Dayjs[]` with DatePicker `multiple`. */
-  defaultValue?: MaybePair<Dayjs | null | undefined> | Dayjs[];
+  defaultPickerValue?: MaybePair<DateValue | null | undefined>;
+  /** An array with DatePicker `multiple`. */
+  defaultValue?: MaybePair<DateValue | null | undefined> | DateValue[];
   direction?: 'ltr' | 'rtl';
+  generateConfig?: GenerateConfig<any>;
   mode?: MaybePair<PanelMode>;
-  monthCellRender?: (currentDate: Dayjs, locale: any) => React.ReactNode;
+  monthCellRender?: (currentDate: any, locale: any) => React.ReactNode;
   onChange?: (...args: any[]) => void;
   onFocus?: (...args: any[]) => void;
   onOpenChange?: (open: boolean) => void;
@@ -113,10 +157,10 @@ export interface PanelKeyboardOptions {
   onPickerValueChange?: (...args: any[]) => void;
   open?: boolean;
   picker?: PickerMode;
-  pickerValue?: MaybePair<Dayjs | null | undefined>;
+  pickerValue?: MaybePair<DateValue | null | undefined>;
   /** RangePicker: values, panel modes and picker values are `[start, end]` tuples. */
   range?: boolean;
-  value?: MaybePair<Dayjs | null | undefined> | Dayjs[];
+  value?: MaybePair<DateValue | null | undefined> | DateValue[];
 }
 
 /**
@@ -136,6 +180,7 @@ export const usePanelKeyboard = ({
   defaultPickerValue,
   defaultValue,
   direction,
+  generateConfig: config = defaultConfig,
   mode,
   monthCellRender,
   onChange,
@@ -157,7 +202,7 @@ export const usePanelKeyboard = ({
   const [activeIndex, setActiveIndex] = useState<0 | 1>(0);
   const [innerMode, setInnerMode] = useState<PanelMode>(picker);
   const [innerPickerValue, setInnerPickerValue] = useState<Pair>([undefined, undefined]);
-  const [activeCell, setActiveCell] = useState<Dayjs>();
+  const [activeCell, setActiveCell] = useState<DateValue>();
   // Uncontrolled: the last committed value, so the first key starts from it.
   const [innerValue, setInnerValue] = useState<Pair>();
 
@@ -185,6 +230,7 @@ export const usePanelKeyboard = ({
   const state = {
     activeCell,
     activeIndex,
+    config,
     defaultPickerValue: toPair(defaultPickerValue),
     direction,
     mergedPickerValue,
@@ -200,7 +246,7 @@ export const usePanelKeyboard = ({
   const stateRef = useRef(state);
   stateRef.current = state;
 
-  const commitPickerValue = useCallback((next: Dayjs) => {
+  const commitPickerValue = useCallback((next: DateValue) => {
     const { activeIndex, mergedPickerValue, onPickerValueChange, panelMode, range } =
       stateRef.current;
     const nextPair: Pair = [...mergedPickerValue];
@@ -224,6 +270,7 @@ export const usePanelKeyboard = ({
       const {
         activeCell,
         activeIndex,
+        config,
         defaultPickerValue,
         direction,
         mergedPickerValue,
@@ -252,14 +299,17 @@ export const usePanelKeyboard = ({
         mergedPickerValue[activeIndex] ??
         defaultPickerValue[activeIndex] ??
         value[activeIndex] ??
-        dayjs();
+        config.getNow();
+      const rtl = direction === 'rtl';
       // Two side-by-side pages on a RangePicker showing its own `picker` panel.
       const pages = range && panelMode === picker ? 2 : 1;
-      const firstPage = getPageStart(pageDate, panelMode);
-      const lastPage = getPageStart(moveGridCell(firstPage, 'PageDown', panelMode)!, panelMode);
-      const isVisible = (date: Dayjs) => {
-        const page = getPageStart(date, panelMode);
-        return page.isSame(firstPage) || (pages === 2 && page.isSame(lastPage));
+      const pageIndex = (date: DateValue) =>
+        monthIndex(getPageStart(date, panelMode, config), config);
+      const firstPage = pageIndex(pageDate);
+      const lastPage = pageIndex(moveGridCell(pageDate, 'PageDown', panelMode, rtl, config)!);
+      const isVisible = (date: DateValue) => {
+        const page = pageIndex(date);
+        return page === firstPage || (pages === 2 && page === lastPage);
       };
 
       // The first key starts from the selected tile when on screen, otherwise from the page.
@@ -271,19 +321,20 @@ export const usePanelKeyboard = ({
             ? selected
             : undefined;
       const next = base
-        ? moveGridCell(base, event.key, panelMode, direction === 'rtl')
-        : moveGridCell(pageDate, event.key, panelMode, direction === 'rtl') && pageDate;
+        ? moveGridCell(base, event.key, panelMode, rtl, config)
+        : moveGridCell(pageDate, event.key, panelMode, rtl, config) && pageDate;
       if (!next) return;
 
       event.preventDefault();
       event.stopPropagation();
       setActiveCell(next);
 
-      const nextPage = getPageStart(next, panelMode);
-      if (nextPage.isBefore(firstPage)) {
+      if (pageIndex(next) < firstPage) {
         commitPickerValue(next);
       } else if (!isVisible(next)) {
-        commitPickerValue(pages === 2 ? moveGridCell(next, 'PageUp', panelMode)! : next);
+        commitPickerValue(
+          pages === 2 ? moveGridCell(next, 'PageUp', panelMode, rtl, config)! : next,
+        );
       }
     };
 
@@ -291,17 +342,17 @@ export const usePanelKeyboard = ({
     return () => document.removeEventListener('keydown', onKeyDown, true);
   }, [mergedOpen, scopeClassName, commitPickerValue]);
 
-  const mergedCellRender: CellRender<Dayjs> = (current, info) => {
+  const mergedCellRender: CellRender<any> = (current, info) => {
     let node: React.ReactNode = info.originNode;
     if (cellRender) node = cellRender(current, info);
-    // rc-picker's legacy aliases: only date / month cells, which always get a Dayjs.
-    else if (dateRender && info.type === 'date') node = dateRender(current as Dayjs, info.today);
+    // rc-picker's legacy aliases: only date / month cells, which always get a date.
+    else if (dateRender && info.type === 'date') node = dateRender(current, info.today);
     else if (monthCellRender && info.type === 'month') {
-      node = monthCellRender(current as Dayjs, info.locale);
+      node = monthCellRender(current, info.locale);
     }
 
     if (!activeCell || info.type !== panelMode || !isGridMode(info.type)) return node;
-    if (!isSameCell(current as Dayjs, activeCell, info.type)) return node;
+    if (!isSameCell(current as DateValue, activeCell, info.type, config)) return node;
     return (
       <>
         {node}

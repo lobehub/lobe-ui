@@ -14,6 +14,11 @@ export default () => {
       <DatePicker picker="month" onChange={onChange} />
       <DatePicker picker="quarter" onChange={onChange} />
       <DatePicker picker="year" onChange={onChange} />
+      <Text type="secondary">Static members</Text>
+      <DatePicker.WeekPicker onChange={onChange} />
+      <DatePicker.MonthPicker onChange={onChange} />
+      <DatePicker.QuarterPicker onChange={onChange} />
+      <DatePicker.YearPicker onChange={onChange} />
       <Text type="secondary">onChange dateString: {last === null ? 'null' : `"${last}"`}</Text>
     </Flexbox>
   );

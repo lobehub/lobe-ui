@@ -38,7 +38,11 @@ import DemoRtl from './demos/rtl.tsx?demo';
 import DemoNested from './demos/nested.tsx?demo';
 import DemoPresetRanges from './demos/preset-ranges.tsx?demo';
 import DemoExtraFooter from './demos/extra-footer.tsx?demo';
+import DemoPanelRender from './demos/panel-render.tsx?demo';
 import DemoRenderPanel from './demos/render-panel.tsx?demo';
+import DemoStaticMembers from './demos/static-members.tsx?demo';
+import DemoGeneratePicker from './demos/generate-picker.tsx?demo';
+import DemoExternalPanel from './demos/external-panel.tsx?demo';
 import DemoComponents from './demos/components.tsx?demo';
 import DemoBuddhistEra from './demos/buddhist-era.tsx?demo';
 import DemoLocale from './demos/locale.tsx?demo';
@@ -49,9 +53,15 @@ import DemoFilledDebug from './demos/filled-debug.tsx?demo';
 
 ## Basic
 
-`picker` switches between `date`, `week`, `month`, `quarter` and `year`; each has antd's default format (`YYYY-MM-DD`, `gggg-wo`, `YYYY-MM`, `YYYY-[Q]Q`, `YYYY`) and placeholder. The year panel shows a decade (10 years plus the neighbours at either end), and its header drills up to a century of decades. `onChange` receives `(date: Dayjs | null, dateString: string | null)`; clearing passes `null` for both. The input is typeable — a date in `format` is parsed as you type and committed on Enter or blur.
+`picker` switches between `date`, `week`, `month`, `quarter` and `year`; each has antd's default format (`YYYY-MM-DD`, `gggg-wo`, `YYYY-MM`, `YYYY-[Q]Q`, `YYYY`) and placeholder. The year panel shows a decade (10 years plus the neighbours at either end), and its header drills up to a century of decades. `onChange` receives `(date: Dayjs | null, dateString: string | null)`; clearing passes `null` for both. The input is typeable — a date in `format` is parsed as you type and committed on Enter or blur. As in antd, `DatePicker.WeekPicker` / `MonthPicker` / `QuarterPicker` / `YearPicker` are the same picker with `picker` fixed.
 
 <Demo of={DemoBasic} layout="bare" />
+
+## Static members
+
+antd's statics: `DatePicker.RangePicker` (`DateRangePicker` is the same component, kept as a standalone export), `DatePicker.WeekPicker` / `MonthPicker` / `QuarterPicker` / `YearPicker`, and `DatePicker.TimePicker` (`picker="time"`, with the clock suffix icon). The preset pickers fix `picker` — a `picker` prop does not override it — and take every other DatePicker prop, `multiple` included; `TimePicker` drops `showTime` too. Their props types are `WeekPickerProps`, `MonthPickerProps`, `QuarterPickerProps`, `YearPickerProps`, `TimePickerProps` and `RangePickerProps`.
+
+<Demo of={DemoStaticMembers} layout="bare" />
 
 ## Range
 
@@ -127,7 +137,7 @@ Two `showTime` pickers linked through `disabledDate(current, info)` and a contro
 
 ## Switchable picker
 
-`picker` can change at runtime; placeholder and format follow it, including `time` (`HH:mm:ss`, "Select time").
+`picker` can change at runtime; placeholder and format follow it. As in antd's demo, `time` swaps in `DatePicker.TimePicker` (`HH:mm:ss`, "Select time").
 
 <Demo of={DemoSwitchable} layout="bare" />
 
@@ -271,6 +281,18 @@ The footer can hold actions too:
 
 `panelRender(panel)` wraps the whole popup content — presets, panels and footer — so you can add a header, a side note or any wrapper around it. Works on both pickers.
 
+<Demo of={DemoPanelRender} layout="bare" />
+
+## External panel
+
+As in antd's `external-panel` demo, hide the picker's root with `styles.root` and open its popup from your own UI through a controlled `open` — here the "Customize…" item of a base-ui `DropdownMenu`. `onOpenChange(false)` fires when the user clicks outside or presses Escape.
+
+<Demo of={DemoExternalPanel} layout="bare" />
+
+## Debug: render panel
+
+`DatePicker._InternalPanelDoNotUseOrYouWillBeFired` and `DatePicker._InternalRangePanelDoNotUseOrYouWillBeFired` (antd's `render-panel` debug demo) render the picker with its popup always open and placed in flow below the input, without motion or a stacking z-index. They take the same props as `DatePicker` / `DatePicker.RangePicker`. They are for docs and visual tests only — in apps use `open` and `panelRender`.
+
 <Demo of={DemoRenderPanel} layout="bare" />
 
 ## Customized components
@@ -292,6 +314,22 @@ Format fields of `locale.lang` (`fieldDateFormat`, `fieldDateTimeFormat`, `yearF
 Without `locale`, the texts come from the `@lobehub/ui/i18n` resources of the surrounding `ConfigProvider` and the week / month names from `dayjs.locale()` — load and set the dayjs locale yourself (`import 'dayjs/locale/zh-cn'`), as with antd.
 
 <Demo of={DemoLocale} layout="bare" />
+
+## Custom date library
+
+`generatePicker(generateConfig)` (also `DatePicker.generatePicker`; antd's `antd/es/date-picker/generatePicker`) builds a DatePicker with all its statics over another date library from its rc-picker config. Values, `onChange`, `disabledDate`, `minDate` / `maxDate` and the panel keys all use that library's date type; `PickerProps<DateType>` / `RangePickerProps<DateType>` type the props.
+
+```tsx
+import { generatePicker } from '@lobehub/ui/base-ui';
+import dateFnsGenerateConfig from '@rc-component/picker/generate/dateFns';
+
+const DatePicker = generatePicker<Date>(dateFnsGenerateConfig);
+// DatePicker.RangePicker, DatePicker.MonthPicker, … are Date-valued too.
+```
+
+The demo builds a native `Date` config from the Dayjs one, so it needs no extra package.
+
+<Demo of={DemoGeneratePicker} layout="bare" />
 
 ## Custom semantic classNames and styles
 

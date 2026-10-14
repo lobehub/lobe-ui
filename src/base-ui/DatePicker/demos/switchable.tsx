@@ -17,7 +17,12 @@ export default () => {
           value={picker}
           onChange={(value) => setPicker(value as PickerMode)}
         />
-        <DatePicker picker={picker} onChange={(_date, dateString) => setLast(dateString)} />
+        {/* As in antd's demo: `time` swaps in `DatePicker.TimePicker`. */}
+        {picker === 'time' ? (
+          <DatePicker.TimePicker onChange={(_date, dateString) => setLast(dateString)} />
+        ) : (
+          <DatePicker picker={picker} onChange={(_date, dateString) => setLast(dateString)} />
+        )}
       </Flexbox>
       <Text type="secondary">dateString: {last === null ? 'null' : `"${last}"`}</Text>
     </Flexbox>

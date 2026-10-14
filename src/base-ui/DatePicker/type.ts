@@ -3,6 +3,7 @@ import type {
   PickerRef,
   RangePickerProps as RcRangePickerProps,
 } from '@rc-component/picker';
+import type { GenerateConfig } from '@rc-component/picker/generate';
 import type {
   BaseInfo,
   CellRender,
@@ -16,7 +17,7 @@ import type {
   ValueDate,
 } from '@rc-component/picker/interface';
 import type { Dayjs } from 'dayjs';
-import type { CSSProperties, FocusEvent, MouseEvent, ReactNode, Ref } from 'react';
+import type { ComponentType, CSSProperties, FocusEvent, MouseEvent, ReactNode, Ref } from 'react';
 
 export type { CellRender, CellRenderInfo, PanelMode, PickerMode, PickerRef, RangePickerRef };
 
@@ -147,14 +148,14 @@ interface LobePickerProps {
 }
 
 /** Props `tagRender` receives for each picked date in `multiple` mode. */
-export interface PickerTagProps {
+export interface PickerTagProps<DateType extends object = Dayjs> {
   closable: boolean;
   disabled: boolean;
   /** The date formatted with `format`. */
   label: ReactNode;
   /** Removes the date from the value. */
   onClose: (event?: MouseEvent<HTMLElement>) => void;
-  value: Dayjs;
+  value: DateType;
 }
 
 /** `dateString` of a value: a string per date in `multiple` mode. */
@@ -182,10 +183,13 @@ export type PickerPropsWithMultiple<DateType, InnerPickerProps, ValueType = Date
   value?: ValueType | null;
 };
 
-/** DatePicker props other than the value ones, which `PickerPropsWithMultiple` adds. */
-export interface DatePickerBaseProps
+/**
+ * DatePicker props other than the value ones, which `PickerPropsWithMultiple` adds.
+ * `DateType` is the date library's type (`Dayjs`, or another one with `generatePicker`).
+ */
+export interface DatePickerBaseProps<DateType extends object = Dayjs>
   extends
-    Omit<RcPickerProps<Dayjs>, InternalRcProps | MultipleRcProps | ValueRcProps>,
+    Omit<RcPickerProps<DateType>, InternalRcProps | MultipleRcProps | ValueRcProps>,
     LobePickerProps {
   /** Semantic DOM class names: `root` / `prefix` / `input` / `suffix` and `popup.*`. */
   classNames?: PickerClassNames<DatePickerProps<any>>;
@@ -198,14 +202,14 @@ export interface DatePickerBaseProps
    */
   locale?: PickerLocaleInput;
   /** @deprecated Use `maxDate` instead. */
-  max?: Dayjs;
+  max?: DateType;
   /**
    * `multiple`: at most this many tags; `'responsive'` fits as many as the width allows.
    * The rest collapse into a `+ N ...` tag.
    */
   maxTagCount?: number | 'responsive';
   /** @deprecated Use `minDate` instead. */
-  min?: Dayjs;
+  min?: DateType;
   /**
    * Pick several dates, shown as tags; clicking a picked cell again removes it. Works on
    * every `picker` except with `showTime`. Values are `Dayjs[]`, sorted unless
@@ -214,7 +218,7 @@ export interface DatePickerBaseProps
    */
   multiple?: boolean;
   /** @deprecated Use `onCalendarChange` instead. Not called with `multiple`. */
-  onSelect?: (date: Dayjs) => void;
+  onSelect?: (date: DateType) => void;
   /**
    * `multiple`: sort the picked dates; `false` keeps them in picking order.
    * @default true
@@ -227,7 +231,7 @@ export interface DatePickerBaseProps
   /** Semantic DOM styles: `root` / `prefix` / `input` / `suffix` and `popup.*`. */
   styles?: PickerStyles<DatePickerProps<any>>;
   /** `multiple`: render each picked date's tag, e.g. with base-ui `Tag`. */
-  tagRender?: (props: PickerTagProps) => ReactNode;
+  tagRender?: (props: PickerTagProps<DateType>) => ReactNode;
 }
 
 /**
@@ -240,7 +244,7 @@ export type DatePickerProps<ValueType = Dayjs> = PickerPropsWithMultiple<
   ValueType
 >;
 
-export type DateRangeValue = [Dayjs | null, Dayjs | null];
+export type DateRangeValue<DateType extends object = Dayjs> = [DateType | null, DateType | null];
 
 /** Which end of a range an event belongs to. */
 export interface RangeInfo {
@@ -248,17 +252,17 @@ export interface RangeInfo {
 }
 
 /** `info.from` is the end picked first in the current range selection. */
-export type RangeDisabledDate = (
-  current: Dayjs,
-  info: { from?: Dayjs; type: PanelMode },
+export type RangeDisabledDate<DateType extends object = Dayjs> = (
+  current: DateType,
+  info: { from?: DateType; type: PanelMode },
 ) => boolean;
 
 type RangeRcProps =
   'allowEmpty' | 'disabled' | 'disabledDate' | 'id' | 'onBlur' | 'onFocus' | 'order';
 
-export interface DateRangePickerProps
+export interface DateRangePickerProps<DateType extends object = Dayjs>
   extends
-    Omit<RcRangePickerProps<Dayjs>, InternalRcProps | RangeRcProps | ValueRcProps>,
+    Omit<RcRangePickerProps<DateType>, InternalRcProps | RangeRcProps | ValueRcProps>,
     LobePickerProps {
   /**
    * Allow leaving the start / end empty; `true` applies to both ends.
@@ -266,12 +270,12 @@ export interface DateRangePickerProps
    */
   allowEmpty?: boolean | [boolean, boolean];
   /** Semantic DOM class names, see `DatePickerProps['classNames']`. */
-  classNames?: PickerClassNames<DateRangePickerProps>;
-  defaultValue?: [Dayjs | null | undefined, Dayjs | null | undefined];
+  classNames?: PickerClassNames<DateRangePickerProps<DateType>>;
+  defaultValue?: [DateType | null | undefined, DateType | null | undefined];
   /** Disable the whole picker, or each end separately with `[start, end]`. */
   disabled?: boolean | [boolean, boolean];
   /** Receives `info.from` once one end is picked, e.g. to limit the range length. */
-  disabledDate?: RangeDisabledDate;
+  disabledDate?: RangeDisabledDate<DateType>;
   /** @deprecated Use `renderExtraFooter` instead. */
   footer?: ReactNode;
   /** Ids of the start and end inputs. */
@@ -279,18 +283,18 @@ export interface DateRangePickerProps
   /** antd `PickerLocale`, see `DatePickerProps['locale']`. */
   locale?: PickerLocaleInput;
   /** @deprecated Use `maxDate` instead. */
-  max?: Dayjs;
+  max?: DateType;
   /** @deprecated Use `minDate` instead. */
-  min?: Dayjs;
+  min?: DateType;
   onBlur?: (event: FocusEvent<HTMLElement>, info: RangeInfo) => void;
   onCalendarChange?: (
-    dates: DateRangeValue,
+    dates: DateRangeValue<DateType>,
     dateStrings: [string, string],
     info: RangeInfo,
   ) => void;
-  onChange?: (dates: DateRangeValue | null, dateStrings: [string, string] | null) => void;
+  onChange?: (dates: DateRangeValue<DateType> | null, dateStrings: [string, string] | null) => void;
   onFocus?: (event: FocusEvent<HTMLElement>, info: RangeInfo) => void;
-  onOk?: (dates: DateRangeValue) => void;
+  onOk?: (dates: DateRangeValue<DateType>) => void;
   /**
    * Swap the ends when the end is earlier than the start; `false` keeps them as entered.
    * @default true
@@ -300,9 +304,86 @@ export interface DateRangePickerProps
   /** `focus(index)` / `focus({ index })` focuses the start (`0`) or end (`1`) input. */
   ref?: Ref<RangePickerRef>;
   /** Semantic DOM styles, see `DatePickerProps['styles']`. */
-  styles?: PickerStyles<DateRangePickerProps>;
-  value?: [Dayjs | null | undefined, Dayjs | null | undefined] | null;
+  styles?: PickerStyles<DateRangePickerProps<DateType>>;
+  value?: [DateType | null | undefined, DateType | null | undefined] | null;
 }
 
-/** antd-style aliases. */
-export type RangePickerProps = DateRangePickerProps;
+/* ------------------------- Static members and generatePicker ------------------------- */
+
+/** antd `PickerProps<DateType>`: DatePicker props over any date library's type. */
+export type PickerProps<
+  DateType extends object = Dayjs,
+  ValueType = DateType,
+> = PickerPropsWithMultiple<DateType, DatePickerBaseProps<DateType>, ValueType>;
+
+/** Props of `DatePicker.WeekPicker` / `MonthPicker` / … : `picker` is fixed. */
+export type PresetPickerProps<DateType extends object = Dayjs, ValueType = DateType> = Omit<
+  PickerProps<DateType, ValueType>,
+  'picker'
+>;
+
+export type WeekPickerProps<ValueType = Dayjs> = PresetPickerProps<Dayjs, ValueType>;
+export type MonthPickerProps<ValueType = Dayjs> = PresetPickerProps<Dayjs, ValueType>;
+export type YearPickerProps<ValueType = Dayjs> = PresetPickerProps<Dayjs, ValueType>;
+export type QuarterPickerProps<ValueType = Dayjs> = PresetPickerProps<Dayjs, ValueType>;
+
+/** antd `GenericTimePickerProps`: `DatePicker.TimePicker` has no `picker` / `showTime`. */
+export type GenericTimePickerProps<DateType extends object = Dayjs, ValueType = DateType> = Omit<
+  PickerProps<DateType, ValueType>,
+  'picker' | 'showTime'
+>;
+export type TimePickerProps<ValueType = Dayjs> = GenericTimePickerProps<Dayjs, ValueType>;
+
+/** antd-style alias of `DateRangePickerProps`. */
+export type RangePickerProps<DateType extends object = Dayjs> = DateRangePickerProps<DateType>;
+
+/** antd `DatePickerSemanticType`: the Semantic DOM `classNames` / `styles` shapes. */
+export interface DatePickerSemanticType {
+  classNames?: PickerSemanticClassNames;
+  styles?: PickerSemanticStyles;
+}
+
+/**
+ * A single-date picker component: `multiple` (as `IsMultiple`) picks `DateType[]` values,
+ * otherwise `DateType`; a `value` / `defaultValue` infers `ValueType` directly.
+ */
+export interface SinglePickerComponent<
+  DateType extends object,
+  InnerProps = DatePickerBaseProps<DateType>,
+> {
+  <IsMultiple extends boolean = false, ValueType = IsMultiple extends true ? DateType[] : DateType>(
+    props: PickerPropsWithMultiple<DateType, InnerProps, ValueType> & { multiple?: IsMultiple },
+  ): ReactNode;
+  displayName?: string;
+}
+
+export interface RangePickerComponent<DateType extends object> {
+  (props: DateRangePickerProps<DateType>): ReactNode;
+  displayName?: string;
+}
+
+/** What `generatePicker(generateConfig)` returns: DatePicker with its static pickers. */
+export interface GeneratedDatePicker<
+  DateType extends object,
+> extends SinglePickerComponent<DateType> {
+  MonthPicker: SinglePickerComponent<DateType, Omit<DatePickerBaseProps<DateType>, 'picker'>>;
+  QuarterPicker: SinglePickerComponent<DateType, Omit<DatePickerBaseProps<DateType>, 'picker'>>;
+  RangePicker: RangePickerComponent<DateType>;
+  TimePicker: SinglePickerComponent<
+    DateType,
+    Omit<DatePickerBaseProps<DateType>, 'picker' | 'showTime'>
+  >;
+  WeekPicker: SinglePickerComponent<DateType, Omit<DatePickerBaseProps<DateType>, 'picker'>>;
+  YearPicker: SinglePickerComponent<DateType, Omit<DatePickerBaseProps<DateType>, 'picker'>>;
+}
+
+/** The default `DatePicker` (Dayjs), with antd's pure panels and `generatePicker`. */
+export interface DatePickerType extends GeneratedDatePicker<Dayjs> {
+  /** Debug only: the popup panel rendered inline, always open (antd `render-panel`). */
+  _InternalPanelDoNotUseOrYouWillBeFired: ComponentType<DatePickerProps<any>>;
+  /** Debug only: the RangePicker popup panel rendered inline, always open. */
+  _InternalRangePanelDoNotUseOrYouWillBeFired: ComponentType<DateRangePickerProps>;
+  generatePicker: <DateType extends object>(
+    generateConfig: GenerateConfig<DateType>,
+  ) => GeneratedDatePicker<DateType>;
+}
