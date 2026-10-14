@@ -138,7 +138,7 @@ The root export is the former `@lobehub/ui/base-ui` set. Components that keep th
 | `Button` | [`Button`](/components/button#migrating-from-antd-s-button) |
 | `Checkbox`, `CheckboxGroup` | `Checkbox` |
 | `Collapse` | [`Accordion`](/components/accordion) for several sections, [`Collapsible`](/components/collapsible) for one region |
-| `DatePicker` | [`DatePicker`](/components/date-picker#differences-from-antd-datepicker-migration): antd-shaped on a fork of `@rc-component/picker` with Dayjs values; see [DatePicker](#datepicker) |
+| `DatePicker` | [`DatePicker`](/components/date-picker#differences-from-antd-datepicker-migration): on a fork of `@rc-component/picker`, native `Date` values as before (`DayjsDatePicker` for antd's `Dayjs` API); see [DatePicker](#datepicker) |
 | `Drawer` | [`Drawer`](/components/drawer) |
 | `Dropdown` (`menu={{ items }}`) | [`DropdownMenu`](/components/dropdown-menu) (`items`, typed `DropdownItem[]`) |
 | `Form`, `FormItem`, `FormModal` | [`Form`, `FormField` from `@lobehub/ui/form`](/components/form-kit#migrating-from-antd-form); a form in a dialog is `Modal` + `Form` |
@@ -199,7 +199,7 @@ antd components without a same-named counterpart:
 
 ## DatePicker
 
-`DatePicker` is the v5.64 base-ui picker on a fork of `@rc-component/picker` 1.12.2 (the core antd's DatePicker uses), kept inside `@lobehub/ui` with its popup on Popover and Motion, with `Dayjs` values and antd's API (`picker`, `mode`, `showTime`, `presets`, `multiple`, `needConfirm`, `cellRender`, Semantic DOM, `generatePicker`). Code written for antd's DatePicker or for v5's `DatePicker` keeps working, except for the aliases v5.64 still accepted; the codemod reports each one (R12):
+`DatePicker` is the v5.64 base-ui picker on a fork of `@rc-component/picker` 1.12.2 (the core antd's DatePicker uses), kept inside `@lobehub/ui` with its popup on Popover and Motion, with antd's API (`picker`, `mode`, `showTime`, `presets`, `multiple`, `needConfirm`, `cellRender`, Semantic DOM, `generatePicker`). `DatePicker` / `DateRangePicker` keep native `Date` values (inputs also accept `Dayjs`, strings and timestamps); code written for antd's `Dayjs` DatePicker moves to `DayjsDatePicker` / `DayjsDateRangePicker`. Code written for v5's `DatePicker` keeps working, except for the aliases v5.64 still accepted; the codemod reports each one (R12):
 
 | v5 | v6 |
 | --- | --- |
@@ -213,7 +213,7 @@ antd components without a same-named counterpart:
 
 `DateRangePicker` and `DatePicker.RangePicker` are the same component; both names stay. `@lobehub/ui` depends on no `@rc-component/*` package; take `PickerRef` / `GenerateConfig` types from `@lobehub/ui`. R6 reports `@rc-component/picker` imports: a date-fns, moment or Luxon config from `@rc-component/picker/generate/*` still works with `generatePicker` once you install that package yourself. The popup root carries Base UI's `data-side` / `data-open` attributes instead of the `-dropdown-hidden` / `-dropdown-placement-*` classes.
 
-If you used the hand-written picker from the v6 betas (native `Date` values), convert at the edges: pass `dayjs(date)` and read `value?.toDate()` in `onChange`; use `picker="month"` / `picker="year"` where you passed `mode` (R12 flags literal `mode="month"` / `mode="year"`); `DateRangePicker` clears to `null` instead of `[null, null]`.
+If you used the hand-written picker from the v6 betas, values stay native `Date`; use `picker="month"` / `picker="year"` where you passed `mode` (R12 flags literal `mode="month"` / `mode="year"`). If you moved to `Dayjs` on beta.8, switch those call sites to `DayjsDatePicker` / `DayjsDateRangePicker` or back to `Date`.
 
 ## Removed APIs
 

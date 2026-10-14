@@ -1,8 +1,8 @@
 import dayjs, { type Dayjs } from 'dayjs';
 import { type ReactNode } from 'react';
 
-import DatePicker from '@/DatePicker/DatePicker';
-import DateRangePicker from '@/DatePicker/DateRangePicker';
+import DatePicker from '@/DatePicker/DayjsDatePicker';
+import DateRangePicker from '@/DatePicker/DayjsDateRangePicker';
 import Input from '@/Input/Input';
 import InputNumber from '@/Input/InputNumber';
 import Select from '@/Select';

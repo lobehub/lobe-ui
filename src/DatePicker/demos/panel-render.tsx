@@ -1,4 +1,9 @@
-import { DatePicker, DateRangePicker, Flexbox, Text } from '@lobehub/ui';
+import {
+  DayjsDatePicker as DatePicker,
+  DayjsDateRangePicker as DateRangePicker,
+  Flexbox,
+  Text,
+} from '@lobehub/ui';
 import dayjs from 'dayjs';
 import type { ReactNode } from 'react';
 

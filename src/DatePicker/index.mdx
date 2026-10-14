@@ -1,6 +1,6 @@
 ---
 title: DatePicker
-description: Date, week, month, quarter, year and time picking with Dayjs values and a typeable input, plus a two-panel range picker. Runs on a fork of @rc-component/picker, the core antd DatePicker uses.
+description: Date, week, month, quarter, year and time picking with native Date (or Dayjs) values and a typeable input, plus a two-panel range picker. Runs on a fork of @rc-component/picker, the core antd DatePicker uses.
 category: Data Entry
 ---
 
@@ -27,7 +27,7 @@ import DemoNested from './demos/nested.tsx?demo';
 import DemoMode from './demos/mode.tsx?demo';
 import DemoControlled from './demos/controlled.tsx?demo';
 
-`DatePicker` follows antd DatePicker's API and behaviour: it runs on a fork of `@rc-component/picker` 1.12.2 (the core antd uses) kept in `src/DatePicker/core`, with the Dayjs adapter, the popup on lobe's Popover parts and Motion, styled from the `--lobe-*` theme tokens and composed with lobe parts only (Button, Input, lucide icons). The sections below follow the order of antd's demo list; variations of single props live in the Playground, and demos marked **lobe** are extra demos for behaviour antd shows only in its API table. Values are `Dayjs`; coming from antd or from the previous lobe DatePicker, see the differences and migration notes at the end of the page.
+`DatePicker` follows antd DatePicker's API and behaviour: it runs on a fork of `@rc-component/picker` 1.12.2 (the core antd uses) kept in `src/DatePicker/core`, with the Dayjs adapter, the popup on lobe's Popover parts and Motion, styled from the `--lobe-*` theme tokens and composed with lobe parts only (Button, Input, lucide icons). The sections below follow the order of antd's demo list; variations of single props live in the Playground, and demos marked **lobe** are extra demos for behaviour antd shows only in its API table. `DatePicker` / `DateRangePicker` take and return native `Date` like the previous lobe DatePicker; `DayjsDatePicker` / `DayjsDateRangePicker` are the antd-shaped `Dayjs` versions, which the demos use (see Date types and compatibility). Coming from antd or from the previous lobe DatePicker, see the differences and migration notes at the end of the page.
 
 ```tsx
 import { DatePicker, DateRangePicker } from '@lobehub/ui';
@@ -519,15 +519,15 @@ lobe components do not read antd's ConfigProvider, so there is no global `datePi
 
 ### Breaking changes from the previous lobe DatePicker
 
-The v6 betas shipped a hand-written picker with a `<button>` trigger and native `Date` values. v6 runs on a fork of `@rc-component/picker`, the engine v5.64 uses, which changes:
+The v6 betas up to beta.8 shipped a hand-written picker with a `<button>` trigger and native `Date` values. v6 runs on a fork of `@rc-component/picker`, the engine v5.64 uses; `DatePicker` keeps native `Date` values, `DayjsDatePicker` is the antd-shaped one. The changes:
 
 | Before | Now | Migration |
 | --- | --- | --- |
-| `Date` values (`value`, `defaultValue`, `onChange`) | `Dayjs` values, as in antd; `onChange(date, dateString)` | Wrap with `dayjs(date)` when passing a value and call `date?.toDate()` in `onChange` |
+| `Date` values (`value`, `defaultValue`, `onChange`) | `DatePicker` still takes and returns `Date` (and also accepts `Dayjs`, strings, timestamps); `onChange(date, dateString)` | None; switch to `DayjsDatePicker` for antd's `Dayjs` API |
 | `DateRangePicker` | `DatePicker.RangePicker` (antd's name); `DateRangePicker` stays as the same component | Prefer `DatePicker.RangePicker`; `DateRangePicker` / `DateRangePickerProps` keep working |
-| `DateRangeValue` `[Date \| null, Date \| null]`, cleared to `[null, null]` | `[Dayjs \| null, Dayjs \| null]`, cleared to `null` | Handle `null` in `onChange` |
+| `DateRangeValue` `[Date \| null, Date \| null]`, cleared to `[null, null]` | Unchanged on `DateRangePicker`; `DayjsDateRangePicker` uses `DayjsDateRangeValue` and clears to `null` | None |
 | `mode="month"` / `mode="year"` (picker type) | `picker="month"` / `picker="year"`; `mode` is the controlled panel, as in antd | Rename `mode` to `picker` |
-| `min` / `max` (`Date`) | `minDate` / `maxDate` (`Dayjs`), which also stop panel navigation | Rename (the codemod does it) |
+| `min` / `max` (`Date`) | `minDate` / `maxDate`, which also stop panel navigation | Rename (the codemod reports it) |
 | `disabledDate(date: Date)` | `disabledDate(current: Dayjs, info: { from?, type })` | Use `current` as a `Dayjs` |
 | `footer` | `renderExtraFooter(mode)` | Wrap as `() => footer` (the codemod does it) |
 | Default display format of the lobe picker | antd's defaults (`YYYY-MM-DD`, `YYYY-MM`, `YYYY`, …) | Pass `format` to keep a custom format |
@@ -572,3 +572,9 @@ Every demo of antd's DatePicker page, with the section showing it here:
 | component-token (debug) | Component Token — omitted: no component Design Token | — |
 
 The lobe-only demos are `static-members`, `range-interaction`, `multiple-custom`, `preview-value`, `panel-render`, `show-week`, `keyboard`, `locale`, `rtl`, `nested`, `controlled` and `generate-picker`.
+
+## Date types and compatibility
+
+The default `DatePicker` / `DateRangePicker` keep the previous lobe API built on native `Date`: `value`, `onChange` and `disabledDate` use `Date`, `DateRangeValue` is `[Date | null, Date | null]`, and a cleared range emits `[null, null]` (never `null`). Inputs (`value`, `defaultValue`, `minDate`, `maxDate`, …) also accept `Dayjs`, date strings and timestamps.
+
+For the antd-aligned `Dayjs` API (values and callbacks are `Dayjs`, a cleared range emits `null`), use `DayjsDatePicker` / `DayjsDateRangePicker` with `DayjsDatePickerProps`, `DayjsDateRangePickerProps` and `DayjsDateRangeValue`; the demos above use them. Any other date library works through `DatePicker.generatePicker(generateConfig)`.

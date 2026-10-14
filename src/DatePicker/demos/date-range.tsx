@@ -1,4 +1,8 @@
-import { DatePicker, DateRangePicker, Flexbox } from '@lobehub/ui';
+import {
+  DayjsDatePicker as DatePicker,
+  DayjsDateRangePicker as DateRangePicker,
+  Flexbox,
+} from '@lobehub/ui';
 import dayjs from 'dayjs';
 
 const minDate = dayjs('2019-08-01');

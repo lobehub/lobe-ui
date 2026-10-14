@@ -6,8 +6,8 @@ import type { ReactNode } from 'react';
 import Button from '@/Button';
 import { MotionProvider } from '@/MotionProvider';
 
-import DatePicker from '../DatePicker';
-import DateRangePicker from '../DateRangePicker';
+import DatePicker from '../DayjsDatePicker';
+import DateRangePicker from '../DayjsDateRangePicker';
 import type { CellRenderInfo } from '../type';
 
 if (!globalThis.ResizeObserver) {

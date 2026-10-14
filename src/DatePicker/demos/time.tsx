@@ -1,9 +1,9 @@
 import { Flexbox } from '@lobehub/ui';
 import {
-  DatePicker,
-  type DatePickerProps,
-  DateRangePicker,
-  type DateRangePickerProps,
+  DayjsDatePicker as DatePicker,
+  type DayjsDatePickerProps as DatePickerProps,
+  DayjsDateRangePicker as DateRangePicker,
+  type DayjsDateRangePickerProps as DateRangePickerProps,
   Text,
 } from '@lobehub/ui';
 import { useState } from 'react';
