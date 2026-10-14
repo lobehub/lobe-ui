@@ -5,7 +5,7 @@ import type { ReactNode, RefObject } from 'react';
 
 import { MotionProvider } from '@/MotionProvider';
 
-import DateRangePicker from '../DateRangePicker';
+import DateRangePicker from '../DayjsDateRangePicker';
 import type { RangePickerRef } from '../type';
 
 if (!globalThis.ResizeObserver) {

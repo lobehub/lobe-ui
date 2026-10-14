@@ -10,8 +10,8 @@ const REMOVED_PROPS: Record<string, string> = {
   builtinPlacements:
     '`builtinPlacements` is gone; use `placement` (the popup flips vertically and shifts to stay on screen)',
   footer: '`footer` is gone; use `renderExtraFooter={() => footer}`',
-  max: '`max` is gone; use `maxDate` (a `Dayjs`)',
-  min: '`min` is gone; use `minDate` (a `Dayjs`)',
+  max: '`max` is gone; use `maxDate`',
+  min: '`min` is gone; use `minDate`',
   onSelect: '`onSelect` is gone; use `onCalendarChange(date, dateString, info)`',
   popupAlign:
     '`popupAlign` is gone; use `placement` (the popup flips vertically and shifts to stay on screen)',

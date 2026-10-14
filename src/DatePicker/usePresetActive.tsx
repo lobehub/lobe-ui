@@ -10,6 +10,7 @@ interface Preset {
 const sameDay = (a: any, b: any): boolean => {
   if (!a || !b) return !a && !b;
   if (typeof a.isSame === 'function') return a.isSame(b, 'day');
+  if (a instanceof Date && b instanceof Date) return a.toDateString() === b.toDateString();
   return a === b;
 };
 

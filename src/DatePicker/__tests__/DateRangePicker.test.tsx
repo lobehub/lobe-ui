@@ -3,7 +3,7 @@ import dayjs, { type Dayjs } from 'dayjs';
 import type { RefObject } from 'react';
 
 import type { RangePickerRef } from '../core/interface';
-import DateRangePicker from '../DateRangePicker';
+import DateRangePicker from '../DayjsDateRangePicker';
 import { render } from './render';
 
 if (!globalThis.ResizeObserver) {

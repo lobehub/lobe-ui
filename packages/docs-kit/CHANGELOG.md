@@ -8,6 +8,12 @@
 
 - **docs-kit**: Inline ESM icons in Vitest, closes [#722](https://github.com/lobehub/lobe-ui/issues/722) ([5ddac2a](https://github.com/lobehub/lobe-ui/commit/5ddac2a))
 
+## [5.27.6](https://github.com/lobehub/lobe-ui/compare/docs-kit@5.27.5...docs-kit@5.27.6) (2026-10-14)
+
+### 🐛 Bug Fixes
+
+- **docs-kit**: Inline ESM icons in Vitest, closes [#722](https://github.com/lobehub/lobe-ui/issues/722) ([e7c5edf](https://github.com/lobehub/lobe-ui/commit/e7c5edf))
+
 ## [5.27.5](https://github.com/lobehub/lobe-ui/compare/docs-kit@5.27.4...docs-kit@5.27.5) (2026-10-06)
 
 ### 🐛 Bug Fixes

@@ -8,6 +8,7 @@ import Icon from '@/Icon';
 import RcPicker from './core';
 import type { GenerateConfig } from './core/generate';
 import type { PickerMode } from './core/interface';
+import { normalizeLegacyDateProps } from './legacyDate';
 import { usePickerLocale } from './locale';
 import { PREFIX_CLS } from './style';
 import type { GeneratedDatePicker, PickerProps, SinglePickerComponent } from './type';
@@ -21,7 +22,8 @@ const generateSinglePicker = <DateType extends object>(
   generateConfig: GenerateConfig<DateType>,
 ) => {
   const getPicker = (presetPicker?: PickerMode, displayName = 'DatePicker') => {
-    const Picker = (props: PickerProps<DateType, any>) => {
+    const Picker = (rawProps: PickerProps<DateType, any>) => {
+      const props = normalizeLegacyDateProps(rawProps, generateConfig);
       const {
         allowClear,
         cellRender,

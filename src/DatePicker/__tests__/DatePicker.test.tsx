@@ -6,7 +6,7 @@ import AppElementContext from '@/ConfigProvider/AppElementContext';
 import { FloatingLayerProvider } from '@/hooks/useFloatingLayer';
 
 import type { PickerRef } from '../core';
-import DatePicker from '../DatePicker';
+import DatePicker from '../DayjsDatePicker';
 import { render } from './render';
 
 if (!globalThis.ResizeObserver) {

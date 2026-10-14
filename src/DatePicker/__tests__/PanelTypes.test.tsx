@@ -1,8 +1,8 @@
 import { cleanup, fireEvent, screen, waitFor } from '@testing-library/react';
 import dayjs, { type Dayjs } from 'dayjs';
 
-import DatePicker from '../DatePicker';
-import DateRangePicker from '../DateRangePicker';
+import DatePicker from '../DayjsDatePicker';
+import DateRangePicker from '../DayjsDateRangePicker';
 import type { CellRenderInfo } from '../type';
 import { getPageStart, isSameCell, moveGridCell } from '../usePanelKeyboard';
 import { render } from './render';

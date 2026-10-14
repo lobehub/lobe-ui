@@ -328,7 +328,15 @@ Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
 - **styles**: `controlOutline` is dropped from the lobe token; `generateColorPalette` / `generateColorNeutralPalette` return precise key types instead of `Partial<AliasToken>`.
 - **deps**: `motion` peer dependency is now ^13.
 
-||||||| 2d759848
+## [5.64.2](https://github.com/lobehub/lobe-ui/compare/v5.64.1...v5.64.2) (2026-10-14)
+
+### 🎫 Chores
+
+- **release**: Docs-kit@5.27.6 [skip ci] ([ed1c634](https://github.com/lobehub/lobe-ui/commit/ed1c634))
+
+### 🐛 Bug Fixes
+
+- **base-ui**: DatePicker backward-compatible value/onChange types, closes [#721](https://github.com/lobehub/lobe-ui/issues/721) ([5a56024](https://github.com/lobehub/lobe-ui/commit/5a56024))
 
 ## [5.64.1](https://github.com/lobehub/lobe-ui/compare/v5.64.0...v5.64.1) (2026-10-14)
 

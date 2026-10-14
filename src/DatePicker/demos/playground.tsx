@@ -1,4 +1,7 @@
-import { DatePicker, type DatePickerProps } from '@lobehub/ui';
+import {
+  DayjsDatePicker as DatePicker,
+  type DayjsDatePickerProps as DatePickerProps,
+} from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {
