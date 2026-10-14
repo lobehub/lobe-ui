@@ -4,52 +4,27 @@ description: Date, week, month, quarter, year and time picking with Dayjs values
 category: Data Entry
 ---
 
+import DemoPlayground from './demos/playground.tsx?demo';
 import DemoBasic from './demos/basic.tsx?demo';
-import DemoStaticMembers from './demos/static-members.tsx?demo';
 import DemoRangePicker from './demos/range-picker.tsx?demo';
-import DemoRangeInteraction from './demos/range-interaction.tsx?demo';
 import DemoMultiple from './demos/multiple.tsx?demo';
-import DemoMultipleCustom from './demos/multiple-custom.tsx?demo';
-import DemoMultipleDebug from './demos/multiple-debug.tsx?demo';
-import DemoNeedConfirm from './demos/needConfirm.tsx?demo';
-import DemoSwitchable from './demos/switchable.tsx?demo';
 import DemoFormat from './demos/format.tsx?demo';
 import DemoTime from './demos/time.tsx?demo';
-import DemoPreviewValue from './demos/preview-value.tsx?demo';
-import DemoMask from './demos/mask.tsx?demo';
 import DemoDateRange from './demos/date-range.tsx?demo';
-import DemoDisabled from './demos/disabled.tsx?demo';
 import DemoDisabledDate from './demos/disabled-date.tsx?demo';
 import DemoAllowEmpty from './demos/allow-empty.tsx?demo';
-import DemoSelectInRange from './demos/select-in-range.tsx?demo';
 import DemoPresetRanges from './demos/preset-ranges.tsx?demo';
 import DemoExtraFooter from './demos/extra-footer.tsx?demo';
 import DemoPanelRender from './demos/panel-render.tsx?demo';
-import DemoSize from './demos/size.tsx?demo';
 import DemoCellRender from './demos/cell-render.tsx?demo';
-import DemoShowWeek from './demos/show-week.tsx?demo';
-import DemoKeyboard from './demos/keyboard.tsx?demo';
 import DemoComponents from './demos/components.tsx?demo';
-import DemoExternalPanel from './demos/external-panel.tsx?demo';
-import DemoBuddhistEra from './demos/buddhist-era.tsx?demo';
 import DemoLocale from './demos/locale.tsx?demo';
-import DemoStatus from './demos/status.tsx?demo';
-import DemoVariant from './demos/variant.tsx?demo';
 import DemoStyleClass from './demos/style-class.tsx?demo';
-import DemoFilledDebug from './demos/filled-debug.tsx?demo';
-import DemoPlacement from './demos/placement.tsx?demo';
-import DemoRtl from './demos/rtl.tsx?demo';
 import DemoNested from './demos/nested.tsx?demo';
 import DemoMode from './demos/mode.tsx?demo';
 import DemoControlled from './demos/controlled.tsx?demo';
-import DemoStartEnd from './demos/start-end.tsx?demo';
-import DemoSuffix from './demos/suffix.tsx?demo';
-import DemoRenderPanel from './demos/render-panel.tsx?demo';
-import DemoSuffixIconDebug from './demos/suffixIcon-debug.tsx?demo';
-import DemoGeneratePicker from './demos/generate-picker.tsx?demo';
-import DemoSemantic from './demos/_semantic.tsx?demo';
 
-`DatePicker` follows antd DatePicker's API and behaviour: it is generated from `@rc-component/picker` (the core antd uses) with the Dayjs adapter, and is styled with antd-style and composed with base-ui parts only (Button, Tag, lucide icons). The sections below follow the order of antd's demo list; demos marked **Debug** are antd's debug demos, and those marked **lobe** are extra demos for behaviour antd shows only in its API table. Values are `Dayjs`; coming from antd or from the previous lobe DatePicker, see the differences and migration notes at the end of the page.
+`DatePicker` follows antd DatePicker's API and behaviour: it is generated from `@rc-component/picker` (the core antd uses) with the Dayjs adapter, and is styled with antd-style and composed with base-ui parts only (Button, Tag, lucide icons). The sections below follow the order of antd's demo list; variations of single props live in the Playground, and demos marked **lobe** are extra demos for behaviour antd shows only in its API table. Values are `Dayjs`; coming from antd or from the previous lobe DatePicker, see the differences and migration notes at the end of the page.
 
 ```tsx
 import { DatePicker, DateRangePicker } from '@lobehub/ui/base-ui';
@@ -58,17 +33,17 @@ import { DatePicker, DateRangePicker } from '@lobehub/ui/base-ui';
 <DatePicker.RangePicker />; // the same component as DateRangePicker
 ```
 
+## Playground
+
+Try the common props (size, variant, picker, status, placement, disabled, allowClear, showTime, needConfirm, showNow, showWeek, range…) with the controls.
+
+<Demo of={DemoPlayground} />
+
 ## Basic
 
 `picker` switches between `date`, `week`, `month`, `quarter` and `year`; each has antd's default format (`YYYY-MM-DD`, `gggg-wo`, `YYYY-MM`, `YYYY-[Q]Q`, `YYYY`) and placeholder. The year panel shows a decade (10 years plus the neighbours at either end), and its header drills up to a century of decades. `onChange` receives `(date: Dayjs | null, dateString: string | null)`; clearing passes `null` for both. The input is typeable — a date in `format` is parsed as you type and committed on Enter or blur. As in antd, `DatePicker.WeekPicker` / `MonthPicker` / `QuarterPicker` / `YearPicker` are the same picker with `picker` fixed.
 
 <Demo of={DemoBasic} layout="bare" />
-
-## Static members
-
-**lobe.** antd's statics: `DatePicker.RangePicker` (`DateRangePicker` is the same component, kept as a standalone export), `DatePicker.WeekPicker` / `MonthPicker` / `QuarterPicker` / `YearPicker`, and `DatePicker.TimePicker` (`picker="time"`, with the clock suffix icon). The preset pickers fix `picker` — a `picker` prop does not override it — and take every other DatePicker prop, `multiple` included; `TimePicker` drops `showTime` too. Their props types are `WeekPickerProps`, `MonthPickerProps`, `QuarterPickerProps`, `YearPickerProps`, `TimePickerProps` and `RangePickerProps`.
-
-<Demo of={DemoStaticMembers} layout="bare" />
 
 ## Range Picker
 
@@ -76,41 +51,11 @@ import { DatePicker, DateRangePicker } from '@lobehub/ui/base-ui';
 
 <Demo of={DemoRangePicker} layout="bare" />
 
-## Range interaction
-
-**lobe.** Clicking the end input first makes the end active, so the end date is picked first and the start second. Tab moves to the other end (as in antd, an empty end that does not allow empty keeps the focus). `ref.focus(index)` / `ref.focus({ index })` focuses the start (`0`) or end (`1`). `order` (default `true`) swaps a reversed pair; `order={false}` keeps it as entered.
-
-<Demo of={DemoRangeInteraction} layout="bare" />
-
 ## Multiple
 
 `multiple` picks several dates on any `picker` (`date`, `week`, `month`, `quarter`, `year`; not with `showTime`). Clicking a picked cell again removes it, as does a tag's remove icon. The value is a `Dayjs[]` and `onChange` gets `(dates, dateStrings)` — `<DatePicker multiple>` infers `Dayjs[]`, and `DatePickerProps<Dayjs[]>` types handlers declared apart. `needConfirm` defaults to `false`: there is no OK button, each click fires `onCalendarChange`, and `onChange` fires once with the whole list when the popup closes, as in antd. `maxTagCount="responsive"` fits as many tags as the width allows and folds the rest into `+ N ...`.
 
 <Demo of={DemoMultiple} layout="bare" />
-
-## Multiple: tags and order
-
-**lobe.** `order` (default `true`) sorts the dates; `order={false}` keeps them in picking order. `maxTagCount={2}` shows at most two tags. `tagRender` renders each tag — here with base-ui `Tag`, coloured by weekday — and `removeIcon` swaps the remove icon. `multiple` on the week, month, quarter and year pickers, and disabled.
-
-<Demo of={DemoMultipleCustom} layout="bare" />
-
-## Debug: multiple
-
-**Debug** (antd `multiple-debug`). Many tags wrap and grow the box at every `size`; an empty multiple picker shows its `placeholder`.
-
-<Demo of={DemoMultipleDebug} layout="bare" />
-
-## Need Confirm
-
-`needConfirm` adds the OK button to any picker, so the value is only committed once confirmed. It defaults to `true` with `showTime` and `picker="time"`; `needConfirm={false}` commits as soon as the popup closes (on blur, Enter or a click outside). The deprecated `changeOnBlur` maps to `needConfirm={false}`. The OK button is a small primary base-ui `Button`; `components.button` replaces it.
-
-<Demo of={DemoNeedConfirm} layout="bare" />
-
-## Switchable picker
-
-`picker` can change at runtime; placeholder and format follow it. As in antd's demo, `time` swaps in `DatePicker.TimePicker` (`HH:mm:ss`, "Select time"); the picker type is chosen with base-ui `Select`.
-
-<Demo of={DemoSwitchable} layout="bare" />
 
 ## Date Format
 
@@ -148,29 +93,11 @@ The time props can also be passed at the top level (`use12Hours`, `hourStep`, �
 
 <Demo of={DemoTime} layout="bare" />
 
-## Preview value
-
-**lobe.** While you hover a cell, the input shows that value in a muted colour (`previewValue="hover"`, the default); leaving the cell restores it. `previewValue={false}` turns this off. On the range picker the hover only fills the field being picked.
-
-<Demo of={DemoPreviewValue} layout="bare" />
-
-## Mask Format
-
-`format={{ format, type: 'mask' }}` turns the input into a masked field, as in antd 5.14+: on focus the empty input shows the format as a template, digits fill one segment at a time and move on, ArrowUp / ArrowDown step the focused segment, ArrowLeft / ArrowRight move between segments, Backspace resets one, and pasting a full date in the format fills it. Enter commits the date. Works with `showTime` and on the range picker too.
-
-<Demo of={DemoMask} layout="bare" />
-
 ## Limit Date Range
 
 `minDate` / `maxDate` disable out-of-range cells and stop the header buttons from navigating past them.
 
 <Demo of={DemoDateRange} layout="bare" />
-
-## Disabled
-
-`disabled` disables the whole picker; on `DateRangePicker` a `[boolean, boolean]` tuple disables each end separately.
-
-<Demo of={DemoDisabled} layout="bare" />
 
 ## Disabled Date & Time
 
@@ -183,12 +110,6 @@ The time props can also be passed at the top level (`use12Hours`, `hourStep`, �
 `allowEmpty={[false, true]}` lets the end stay empty: the range commits as `[start, null]`. `true` allows either end to be empty.
 
 <Demo of={DemoAllowEmpty} layout="bare" />
-
-## Select range dates
-
-`disabledDate(current, { from, type })` gets the end picked first as `info.from`, so the range length can be capped — here at 7 days, and at 6 months on a month picker.
-
-<Demo of={DemoSelectInRange} layout="bare" />
 
 ## Preset Ranges
 
@@ -208,47 +129,17 @@ The time props can also be passed at the top level (`use12Hours`, `hourStep`, �
 
 <Demo of={DemoPanelRender} layout="bare" />
 
-## Three Sizes
-
-`size` is `large`, `medium` (default) or `small`; `middle` stays as an alias of `medium`. The size is chosen with base-ui `Segmented`.
-
-<Demo of={DemoSize} layout="bare" />
-
 ## Customized Cell Rendering
 
 `cellRender(current, info)` renders every cell of every panel. `info` carries `originNode` (the default cell), `today`, `type` (`date` / `week` / `month` / `quarter` / `year` / `decade` / `time`), `locale`, `prefixCls`, on time cells `subType` (`hour` / `minute` / `second` / `millisecond` / `meridiem`, with `current` being the cell's number) and, on `DateRangePicker`, `range` (`'start'` / `'end'`). The deprecated `dateRender(current, today)` and `monthCellRender(current, locale)` still work for the date and month panels when `cellRender` is not set.
 
 <Demo of={DemoCellRender} layout="bare" />
 
-## Show week numbers
-
-**lobe.** `showWeek` adds the week-number column to the date panel; the `week` picker shows it by default and `showWeek={false}` hides it.
-
-<Demo of={DemoShowWeek} layout="bare" />
-
-## Keyboard on month, quarter and year panels
-
-**lobe.** While the popup shows a month, quarter, year or decade panel, ←/→ move one tile, ↑/↓ one row, PageUp/PageDown one page (a year, or a decade / century), Home/End jump to the first / last tile of the page, and Enter picks the highlighted tile — the same as clicking it. The page follows the highlighted tile. See Keyboard under API.
-
-<Demo of={DemoKeyboard} layout="bare" />
-
 ## Customize Panel
 
 `components` swaps in your own panel per mode (`date` / `week` / `month` / `quarter` / `year` / `decade` / `time`), the `input` element or the OK `button` (the default is a small primary base-ui `Button`). A custom panel receives `PickerPanelProps`: `value`, `onHover(date)` previews the date in the input and `onSelect(date)` picks it, closing the popup unless confirmation is needed. The deprecated `inputRender(props)` is an alias of `components.input`. The demo uses base-ui `Slider`, `Button` and `Text` in place of antd's.
 
 <Demo of={DemoComponents} layout="bare" />
-
-## External use panel
-
-As in antd's `external-panel` demo, hide the picker's root with `styles.root` and open its popup from your own UI through a controlled `open` — here the "Customize…" item of a base-ui `DropdownMenu` (antd uses `Dropdown`). `onOpenChange(false)` fires when the user clicks outside or presses Escape.
-
-<Demo of={DemoExternalPanel} layout="bare" />
-
-## Buddhist Era
-
-Format fields of `locale.lang` (`fieldDateFormat`, `fieldDateTimeFormat`, `yearFormat`, `cellYearFormat`) with the dayjs `buddhistEra` plugin's `BBBB` token. Values stay Gregorian `Dayjs` objects; only the display changes. antd's "By ConfigProvider" half sets `locale.DatePicker` on ConfigProvider; lobe has no such global field, so a locale shared by several pickers goes through a wrapper component (shown in the demo).
-
-<Demo of={DemoBuddhistEra} layout="bare" />
 
 ## Locale
 
@@ -258,41 +149,11 @@ Without `locale`, the texts come from the `@lobehub/ui/i18n` resources of the su
 
 <Demo of={DemoLocale} layout="bare" />
 
-## Status
-
-`status="error"` or `status="warning"` tints the border (or the fill, for `filled`), on single and range pickers.
-
-<Demo of={DemoStatus} layout="bare" />
-
-## Variants
-
-`variant` is `outlined`, `filled`, `borderless` or `underlined`; the lobe `shadow` prop still adds a drop shadow. The deprecated `bordered={false}` maps to `borderless`; an explicit `variant` wins. Unlike antd, the default is `filled` in dark mode.
-
-<Demo of={DemoVariant} layout="bare" />
-
 ## Custom semantic dom styling
 
 `classNames` and `styles` target each part of the picker (see Semantic DOM below). Both take an object, or a function of `{ props }` returning one — `props` are the picker's props with the merged `size` — so the styles can follow `size`, `status`, `disabled` and so on. The popup parts sit under `popup`; `classNames.popup` may also be a string, which is the popup `root` class.
 
 <Demo of={DemoStyleClass} layout="bare" />
-
-## Debug: filled
-
-**Debug** (antd `filled-debug`). `variant="filled"` with `disabled`, `status` and `previewValue`, on several pickers.
-
-<Demo of={DemoFilledDebug} layout="bare" />
-
-## Placement
-
-`placement` is `bottomLeft` (default), `bottomRight`, `topLeft` or `topRight`; the popup flips when there is no room. The placement is chosen with base-ui `Segmented`.
-
-<Demo of={DemoPlacement} layout="bare" />
-
-## RTL
-
-**lobe.** `direction="rtl"` lays the input and the popup out right-to-left, mirrors the header arrows and defaults the popup to `bottomRight`. `allowClear={{ clearIcon }}` and `separator` customise the clear button and the range separator.
-
-<Demo of={DemoRtl} layout="bare" />
 
 ## Inside Modal and Popover
 
@@ -312,55 +173,13 @@ Without `locale`, the texts come from the `@lobehub/ui/i18n` resources of the su
 
 <Demo of={DemoControlled} layout="bare" />
 
-## Customized Range Picker
-
-**Debug** (antd `start-end`). Two `showTime` pickers linked through `disabledDate(current, info)` and a controlled `open`, so confirming the start picker opens the end one.
-
-<Demo of={DemoStartEnd} layout="bare" />
-
-## Prefix and Suffix
-
-`prefix` renders before the input; `suffixIcon` replaces the calendar icon, on every picker and on the range picker. Icons are lucide icons through `Icon`.
-
-<Demo of={DemoSuffix} layout="bare" />
-
-## Debug: render panel
-
-**Debug** (antd `render-panel`). `DatePicker._InternalPanelDoNotUseOrYouWillBeFired` and `DatePicker._InternalRangePanelDoNotUseOrYouWillBeFired` render the picker with its popup always open and placed in flow below the input, without motion or a stacking z-index. They take the same props as `DatePicker` / `DatePicker.RangePicker`. They are for docs and visual tests only — in apps use `open` and `panelRender`.
-
-<Demo of={DemoRenderPanel} layout="bare" />
-
 ## Component Token
 
 **Debug** (antd `component-token`) — **omitted.** antd's demo sets DatePicker component tokens through `ConfigProvider theme.components.DatePicker`. lobe's DatePicker has no component-level Design Token: it is styled from the antd-style global theme tokens of `ThemeProvider`. Customise it with `classNames` / `styles` (Custom semantic dom styling above) or a `className` with antd-style `createStyles`. See the differences section.
 
-## Debug: suffixIcon
-
-**Debug** (antd `suffixIcon-debug`). A custom `suffixIcon`, and `suffixIcon={null}`, which removes the icon.
-
-<Demo of={DemoSuffixIconDebug} layout="bare" />
-
-## Custom date library
-
-**lobe** (antd FAQ "use another date library"). `generatePicker(generateConfig)` (also `DatePicker.generatePicker`; antd's `antd/es/date-picker/generatePicker`) builds a DatePicker with all its statics over another date library from its rc-picker config. Values, `onChange`, `disabledDate`, `minDate` / `maxDate` and the panel keys all use that library's date type; `PickerProps<DateType>` / `RangePickerProps<DateType>` type the props.
-
-```tsx
-import { generatePicker } from '@lobehub/ui/base-ui';
-import dateFnsGenerateConfig from '@rc-component/picker/generate/dateFns';
-
-const DatePicker = generatePicker<Date>(dateFnsGenerateConfig);
-// DatePicker.RangePicker, DatePicker.MonthPicker, … are Date-valued too.
-```
-
-The demo builds a native `Date` config from the Dayjs one, so it needs no extra package.
-
-<Demo of={DemoGeneratePicker} layout="bare" />
-
 ## Semantic DOM
 
 Hover a key to outline that part.
-
-<Demo of={DemoSemantic} layout="bare" />
 
 | Key               | Element                                                  |
 | ----------------- | -------------------------------------------------------- |
@@ -377,6 +196,20 @@ Hover a key to outline that part.
 | `popup.footer`    | Popup footer (extra footer and the Today / Now / OK row) |
 
 `classNames` / `styles` are `PickerClassNames<Props>` / `PickerStyles<Props>`: an object, or `(info: { props }) => object`. `classNames.popup` may be a string (the popup `root`). `rootClassName` goes on both the root and the popup root. The deprecated `popupClassName` / `dropdownClassName` map to `classNames.popup.root` (`popupClassName` wins when both are set) and `popupStyle` to `styles.popup.root`, merged after them.
+
+## Custom date library
+
+**lobe** (antd FAQ "use another date library"). `generatePicker(generateConfig)` (also `DatePicker.generatePicker`; antd's `antd/es/date-picker/generatePicker`) builds a DatePicker with all its statics over another date library from its rc-picker config. Values, `onChange`, `disabledDate`, `minDate` / `maxDate` and the panel keys all use that library's date type; `PickerProps<DateType>` / `RangePickerProps<DateType>` type the props.
+
+```tsx
+import { generatePicker } from '@lobehub/ui/base-ui';
+import dateFnsGenerateConfig from '@rc-component/picker/generate/dateFns';
+
+const DatePicker = generatePicker<Date>(dateFnsGenerateConfig);
+// DatePicker.RangePicker, DatePicker.MonthPicker, … are Date-valued too.
+```
+
+The demo builds a native `Date` config from the Dayjs one, so it needs no extra package.
 
 ## API
 
@@ -706,35 +539,17 @@ Every demo of antd's DatePicker page, with the section showing it here:
 | basic | Basic | `demos/basic.tsx` |
 | range-picker | Range Picker | `demos/range-picker.tsx` |
 | multiple | Multiple | `demos/multiple.tsx` |
-| multiple-debug (debug) | Debug: multiple | `demos/multiple-debug.tsx` |
-| needConfirm | Need Confirm | `demos/needConfirm.tsx` |
-| switchable | Switchable picker | `demos/switchable.tsx` |
 | format | Date Format | `demos/format.tsx` |
 | time | Choose Time | `demos/time.tsx` |
-| mask | Mask Format | `demos/mask.tsx` |
 | date-range | Limit Date Range | `demos/date-range.tsx` |
-| disabled | Disabled | `demos/disabled.tsx` |
 | disabled-date | Disabled Date & Time | `demos/disabled-date.tsx` |
 | allow-empty | Allow Empty | `demos/allow-empty.tsx` |
-| select-in-range | Select range dates | `demos/select-in-range.tsx` |
 | preset-ranges | Preset Ranges | `demos/preset-ranges.tsx` |
 | extra-footer | Extra Footer | `demos/extra-footer.tsx` |
-| size | Three Sizes | `demos/size.tsx` |
 | cell-render | Customized Cell Rendering | `demos/cell-render.tsx` |
 | components | Customize Panel | `demos/components.tsx` |
-| external-panel | External use panel | `demos/external-panel.tsx` |
-| buddhist-era | Buddhist Era | `demos/buddhist-era.tsx` |
-| status | Status | `demos/status.tsx` |
-| variant | Variants | `demos/variant.tsx` |
 | style-class | Custom semantic dom styling | `demos/style-class.tsx` |
-| filled-debug (debug) | Debug: filled | `demos/filled-debug.tsx` |
-| placement | Placement | `demos/placement.tsx` |
 | mode (debug) | Controlled Panels | `demos/mode.tsx` |
-| start-end (debug) | Customized Range Picker | `demos/start-end.tsx` |
-| suffix | Prefix and Suffix | `demos/suffix.tsx` |
-| render-panel (debug) | Debug: render panel | `demos/render-panel.tsx` |
 | component-token (debug) | Component Token — omitted: no component Design Token | — |
-| suffixIcon-debug (debug) | Debug: suffixIcon | `demos/suffixIcon-debug.tsx` |
-| \_semantic (Semantic DOM) | Semantic DOM | `demos/_semantic.tsx` |
 
 The lobe-only demos are `static-members`, `range-interaction`, `multiple-custom`, `preview-value`, `panel-render`, `show-week`, `keyboard`, `locale`, `rtl`, `nested`, `controlled` and `generate-picker`.

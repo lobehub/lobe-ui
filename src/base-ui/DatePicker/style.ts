@@ -914,21 +914,28 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
 
     /* footer: no background of its own; dividers match the presets sidebar divider */
+
+    /* footer: ONE row in one container — renderExtraFooter content on the start side,
+       Today / Now / OK on the end side — under a single divider. No background. */
     &.${P}-dropdown .${P}-footer {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+
+      min-width: 0;
       border-block-start: 1px solid ${cssVar.colorFillSecondary};
+
       background: none;
     }
 
-    &.${P}-dropdown.${P}-dropdown-dark
-      .${P}-footer,
-      &.${P}-dropdown.${P}-dropdown-dark
-      .${P}-footer-extra
-      + .${P}-ranges {
+    &.${P}-dropdown.${P}-dropdown-dark .${P}-footer {
       border-block-start-color: ${cssVar.colorFillTertiary};
     }
 
-    /* renderExtraFooter: start-aligned above Today / Now / OK, as in antd */
     &.${P}-dropdown .${P}-footer-extra {
+      flex: 1;
+
+      min-width: 0;
       padding-block: 8px;
       padding-inline: 12px;
 
@@ -939,11 +946,13 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
 
     &.${P}-dropdown .${P}-footer-extra + .${P}-ranges {
-      border-block-start: 1px solid ${cssVar.colorFillSecondary};
+      flex: none;
+      padding-inline-start: 0;
     }
 
     &.${P}-dropdown .${P}-ranges {
       display: flex;
+      flex: 1;
       gap: 8px;
       align-items: center;
       justify-content: space-between;
@@ -992,6 +1001,14 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     /* motion (transitionName = lobe-picker-slide-up) */
     &.${MOTION}-appear, &.${MOTION}-enter {
       transform-origin: top center;
+    }
+
+    /* rc-motion's prepare frame is where the trigger measures and aligns the popup, so it
+       must stay untransformed (a scaled box would misalign). Without an opacity of its own
+       it painted fully visible at the final spot for one frame, then snapped back to the
+       start state below and animated in again: that flash + jump read as jitter on open. */
+    &.${MOTION}-appear-prepare, &.${MOTION}-enter-prepare {
+      opacity: 0;
     }
 
     &.${MOTION}-appear-start, &.${MOTION}-enter-start {
