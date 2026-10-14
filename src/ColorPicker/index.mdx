@@ -1,14 +1,28 @@
 ---
 title: ColorPicker
-description: Hex colour picking with a saturation area, hue and alpha sliders, presets and the EyeDropper API.
+description: Hex colour picking with a saturation area, hue and alpha sliders, HEX / RGB / HSL inputs, presets, recent colours and the EyeDropper API.
 category: Data Entry
 ---
 
+import DemoAlpha from './demos/alpha.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
+import DemoSizes from './demos/sizes.tsx?demo';
 
-## Basic
+## Triggers
+
+`trigger="swatch"` (default) is a colour tile, `field` sits in forms next to inputs, `chip` is a rounded pill for toolbars.
 
 <Demo of={DemoIndex} layout="bare" />
+
+## Sizes
+
+<Demo of={DemoSizes} layout="bare" />
+
+## Alpha, formats and empty values
+
+`defaultFormat` picks the channel inputs the panel opens with; the format select in the panel switches between HEX, RGB and HSL. An empty `value` renders as “No colour”.
+
+<Demo of={DemoAlpha} layout="bare" />
 
 ## APIs
 
@@ -16,9 +30,13 @@ import DemoIndex from './demos/index.tsx?demo';
 
 Values are lowercase hex strings; with `alpha` they are always 8 digits. `onChange` fires while dragging, `onChangeComplete` when the pointer is released or an input commits, so write to a store in `onChangeComplete`. Pass a single element as `children` to use your own trigger.
 
+The panel keeps the colour it opened with in the compare swatch: click its top half to restore it. Committed colours collect under a Recent tab next to Presets for the rest of the session; set `recent={false}` to hide them.
+
 ### Migrating from antd ColorPicker
 
 - `Color` objects → hex strings; `onChangeComplete={(c) => c.toHexString()}` → `onChangeComplete={(hex) => …}`.
 - `disabledAlpha` is the default; set `alpha` to enable it.
 - `presets={[{ label, colors }]}` → `presets={colors}`.
-- RGB / HSL inputs, gradients and `format` are not supported.
+- `showText` → `trigger="field"` (`showText` still works).
+- `format` / `defaultFormat` → `defaultFormat` only; values are always hex, the format only changes the panel inputs.
+- Gradients are not supported.

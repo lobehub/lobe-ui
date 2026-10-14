@@ -191,23 +191,48 @@ describe('Button', () => {
     expect(style.marginInlineEnd.replaceAll(' ', '')).toBe('calc(var(--button-padding-inline)*-1)');
     expect(style.marginInlineStart.replaceAll(' ', '')).not.toContain('--button-padding-inline');
   });
-  test.each([
-    [false, cssVar.colorPrimaryActive],
-    [true, cssVar.colorErrorActive],
-  ])(
-    'solid button (danger=%s) shows its active fill while its popup is open',
-    (danger, expected) => {
-      renderButton(
-        <Button data-popup-open danger={danger} type={'primary'}>
-          Open
-        </Button>,
-      );
+  test('solid primary button shows its active fill while its popup is open', () => {
+    renderButton(
+      <Button data-popup-open type={'primary'}>
+        Open
+      </Button>,
+    );
 
-      const style = getComputedStyle(screen.getByRole('button', { name: 'Open' }));
+    const style = getComputedStyle(screen.getByRole('button', { name: 'Open' }));
 
-      expect(style.backgroundColor).toBe(expected);
-    },
-  );
+    expect(style.backgroundColor).toBe(cssVar.colorPrimaryActive);
+  });
+
+  // jsdom drops color-mix() declarations, so the danger fills are checked in the browser;
+  // here only the variant wiring is asserted.
+  test('danger buttons take the tinted danger styles', () => {
+    renderButton(
+      <>
+        <Button danger type={'primary'}>
+          Solid
+        </Button>
+        <Button danger>Outlined</Button>
+        <Button danger type={'fill'}>
+          Fill
+        </Button>
+        <Button danger type={'text'}>
+          Text
+        </Button>
+        <Button danger ghost>
+          Ghost
+        </Button>
+      </>,
+    );
+
+    const classOf = (name: string) => screen.getByRole('button', { name }).className;
+    const firstClass = (key: keyof typeof buttonStyles) => buttonStyles[key].split(' ')[0];
+
+    expect(classOf('Solid')).toContain(firstClass('dangerSolid'));
+    expect(classOf('Outlined')).toContain(firstClass('dangerOutlined'));
+    expect(classOf('Fill')).toContain(firstClass('dangerFill'));
+    expect(classOf('Text')).toContain(firstClass('dangerText'));
+    expect(classOf('Ghost')).toContain(firstClass('ghostDanger'));
+  });
 });
 
 {
