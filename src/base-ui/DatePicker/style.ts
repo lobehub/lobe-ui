@@ -30,15 +30,23 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
   root: css`
     /* ---------------------------------------------------------------- input box */
+
+    /* Size to content like antd: the shared Input root is width: 100%, which made the
+       picker stretch in a flex row and squeeze its siblings. Default to auto width (capped by
+       the container); a style / className width (e.g. 100%) still wins and the inputs grow. */
     &.${P} {
       position: relative;
+      width: auto;
+      max-width: 100%;
     }
 
+    /* flex-basis auto, not 0: the input keeps its natural width from rc-picker's size
+       attribute (format length + 2) instead of collapsing when the root is auto width. */
     &.${P} .${P}-input {
       position: relative;
 
       display: inline-flex;
-      flex: 1;
+      flex: 1 1 auto;
       gap: 8px;
       align-items: center;
 
@@ -46,9 +54,9 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
 
     &.${P} .${P}-input > input {
-      flex: 1;
+      flex: 1 1 auto;
 
-      width: 100%;
+      width: auto;
       min-width: 0;
       padding: 0;
       border: none;
@@ -338,7 +346,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
 
     /* range: two inputs, a separator and the bar under the active field */
     &.${P}-range .${P}-input {
-      flex: 1;
+      flex: 1 1 auto;
     }
 
     &.${P}-range .${P}-range-separator {

@@ -169,3 +169,14 @@ describe('DateRangePicker', () => {
     expect(document.activeElement).not.toBe(inputs()[0]);
   });
 });
+
+describe('DateRangePicker sizing', () => {
+  it('sizes to content: both inputs keep a natural size', () => {
+    const { container } = render(<DateRangePicker />);
+    const root = container.querySelector<HTMLElement>('.lobe-picker')!;
+    expect(getComputedStyle(root).width).not.toBe('100%');
+    const inputs = root.querySelectorAll('input');
+    expect(inputs).toHaveLength(2);
+    inputs.forEach((input) => expect(Number(input.getAttribute('size'))).toBeGreaterThan(0));
+  });
+});
