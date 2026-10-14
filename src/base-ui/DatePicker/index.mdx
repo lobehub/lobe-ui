@@ -553,3 +553,9 @@ Every demo of antd's DatePicker page, with the section showing it here:
 | component-token (debug) | Component Token — omitted: no component Design Token | — |
 
 The lobe-only demos are `static-members`, `range-interaction`, `multiple-custom`, `preview-value`, `panel-render`, `show-week`, `keyboard`, `locale`, `rtl`, `nested`, `controlled` and `generate-picker`.
+
+## Date types and compatibility
+
+The default `DatePicker` / `DateRangePicker` keep the previous lobe API built on native `Date`: `value`, `onChange` and `disabledDate` use `Date`, `DateRangeValue` is `[Date | null, Date | null]`, and a cleared range emits `[null, null]` (never `null`). Inputs (`value`, `defaultValue`, `min`, `max`, …) also accept `Dayjs`, date strings and timestamps.
+
+For the antd-aligned `Dayjs` API (values and callbacks are `Dayjs`, a cleared range emits `null`), use `DayjsDatePicker` / `DayjsDateRangePicker` with `DayjsDatePickerProps`, `DayjsDateRangePickerProps` and `DayjsDateRangeValue`; the demos above use them. Any other date library works through `DatePicker.generatePicker(generateConfig)`.

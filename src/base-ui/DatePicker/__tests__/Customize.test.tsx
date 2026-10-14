@@ -5,8 +5,8 @@ import type { InputHTMLAttributes, ReactNode } from 'react';
 
 import { MotionProvider } from '@/MotionProvider';
 
-import DatePicker from '../DatePicker';
-import DateRangePicker from '../DateRangePicker';
+import DatePicker from '../DayjsDatePicker';
+import DateRangePicker from '../DayjsDateRangePicker';
 import type { PickerPanelProps } from '../type';
 
 if (!globalThis.ResizeObserver) {
@@ -249,7 +249,7 @@ describe('DatePicker panelRender / components / inputRender', () => {
 
   test('components.date replaces the date panel; onSelect / onHover drive the value', () => {
     const onChange = vi.fn();
-    const MyPanel = ({ onHover, onSelect, value }: PickerPanelProps) => (
+    const MyPanel = ({ onHover, onSelect, value }: PickerPanelProps<Dayjs>) => (
       <div data-testid="my-panel">
         <span>value: {value?.format('YYYY-MM-DD') ?? 'none'}</span>
         <button type="button" onMouseEnter={() => onHover?.(dayjs('2026-05-05'))}>
@@ -319,7 +319,7 @@ describe('DatePicker panelRender / components / inputRender', () => {
   });
 
   test('a custom panel closes the popup after select when no confirm is needed', async () => {
-    const MyPanel = ({ onSelect }: PickerPanelProps) => (
+    const MyPanel = ({ onSelect }: PickerPanelProps<Dayjs>) => (
       <button type="button" onClick={() => onSelect(dayjs('2026-07-07'))}>
         pick
       </button>

@@ -6,7 +6,7 @@ import type { RefObject } from 'react';
 import { FloatingLayerProvider } from '@/hooks/useFloatingLayer';
 import AppElementContext from '@/ThemeProvider/AppElementContext';
 
-import DatePicker from '../DatePicker';
+import DatePicker from '../DayjsDatePicker';
 
 if (!globalThis.ResizeObserver) {
   globalThis.ResizeObserver = class {

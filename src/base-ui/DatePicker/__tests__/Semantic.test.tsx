@@ -1,9 +1,12 @@
 import { cleanup, render, screen } from '@testing-library/react';
 import dayjs from 'dayjs';
 
-import DatePicker from '../DatePicker';
-import DateRangePicker from '../DateRangePicker';
-import type { DatePickerProps, DateRangePickerProps } from '../type';
+import DatePicker from '../DayjsDatePicker';
+import DateRangePicker from '../DayjsDateRangePicker';
+import type {
+  DayjsDatePickerProps as DatePickerProps,
+  DayjsDateRangePickerProps as DateRangePickerProps,
+} from '../type';
 
 if (!globalThis.ResizeObserver) {
   globalThis.ResizeObserver = class {

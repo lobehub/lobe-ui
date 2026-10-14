@@ -7,6 +7,7 @@ import { ArrowRight } from 'lucide-react';
 import Icon from '@/Icon';
 import { cx } from '@/utils/styleEngine';
 
+import { isNativeDateConfig, normalizeLegacyDateProps } from './legacyDate';
 import { usePickerLocale } from './locale';
 import type { DateRangePickerProps, RangePickerComponent } from './type';
 import { usePanelKeyboard } from './usePanelKeyboard';
@@ -15,7 +16,18 @@ import { usePresetActive } from './usePresetActive';
 
 /** antd `generateRangePicker`: `DatePicker.RangePicker` over `generateConfig`'s date type. */
 const generateRangePicker = <DateType extends object>(generateConfig: GenerateConfig<DateType>) => {
-  const RangePicker = (props: DateRangePickerProps<DateType>) => {
+  const RangePicker = (rawProps: DateRangePickerProps<DateType>) => {
+    const normalized = normalizeLegacyDateProps(rawProps, generateConfig);
+    // The default (native Date) picker keeps the previous lobe contract: a cleared range is
+    // `[null, null]` with empty strings, never `null`.
+    const props =
+      isNativeDateConfig(generateConfig) && normalized.onChange
+        ? {
+            ...normalized,
+            onChange: (dates: any, dateStrings: any) =>
+              (normalized.onChange as any)(dates ?? [null, null], dateStrings ?? ['', '']),
+          }
+        : normalized;
     const {
       allowClear,
       allowEmpty,

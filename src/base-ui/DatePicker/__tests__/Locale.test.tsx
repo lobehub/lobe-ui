@@ -12,8 +12,8 @@ import * as enResources from '@/i18n/resources/en';
 import * as zhCnResources from '@/i18n/resources/zhCn';
 import { MotionProvider } from '@/MotionProvider';
 
-import DatePicker from '../DatePicker';
-import DateRangePicker from '../DateRangePicker';
+import DatePicker from '../DayjsDatePicker';
+import DateRangePicker from '../DayjsDateRangePicker';
 import { createPickerLocale, datePickerLocaleEnUS, datePickerLocaleZhCN } from '../locale';
 import type { PickerLocale } from '../type';
 

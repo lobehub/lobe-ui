@@ -3,7 +3,7 @@ import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
 import dayjs, { type Dayjs } from 'dayjs';
 import type { RefObject } from 'react';
 
-import DateRangePicker from '../DateRangePicker';
+import DateRangePicker from '../DayjsDateRangePicker';
 
 if (!globalThis.ResizeObserver) {
   globalThis.ResizeObserver = class {
