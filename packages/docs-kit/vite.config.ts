@@ -89,6 +89,13 @@ export default defineConfig({
     tsconfigPaths: true,
   },
   ssr: {
-    noExternal: [/^@lobehub\/ui(?:\/.*)?$/, '@lobehub/icons', '@lobehub/fluent-emoji'],
+    // `@rc-component/picker` / `trigger` ship extensionless ESM that Node cannot load
+    // directly, so let Vite transform the rc-component family during SSR.
+    noExternal: [
+      /^@lobehub\/ui(?:\/.*)?$/,
+      /^@rc-component\//,
+      '@lobehub/icons',
+      '@lobehub/fluent-emoji',
+    ],
   },
 });
