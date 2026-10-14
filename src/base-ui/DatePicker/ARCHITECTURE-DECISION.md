@@ -1,6 +1,6 @@
 # ADR：base-ui DatePicker 底层方案 —— 继续自研面板 vs @rc-component/picker
 
-- 状态：Accepted —— T-763 评估结论；T-765 已按 §8 第 1–5、7 步落地；T-771（WP-3）落地第 6 步的可选键盘增强层 `usePanelKeyboard`，范围限定为 month / quarter / year / decade 面板（date / week 面板保持 antd 行为，`index.mdx`「Keyboard」一节写明）
+- 状态：Accepted —— T-763 评估结论；T-765 已按 §8 第 1–5、7 步落地；T-771（WP-3）落地第 6 步的可选键盘增强层 `usePanelKeyboard`，范围限定为 month / quarter / year / decade 面板（date / week 面板保持 antd 行为，`index.mdx`「Keyboard on month, quarter and year panels」与「Popup and keyboard」两节写明）；T-795（WP-12 / WP-13，2026-10-14）完成文档汇总，D-4 破坏性变更与不对齐项写入 `index.mdx`「Differences from antd DatePicker / migration」。本 ADR 的全部步骤均已落地，状态为最终的 **Accepted**
 - 日期：2026-10-13
 - 范围：`src/base-ui/DatePicker`，目标是让接口、能力、demo 与 antd DatePicker 对齐（差距清单见同目录 `ALIGNMENT.md`）
 - 约束：可以引入 `@rc-component/picker`；不得引入 `antd` 或其他 antd 组件包
