@@ -42,3 +42,5 @@ minimumReleaseAgeExclude:
   - vitest@5.0.4
   - zod@4.6.6
   - virtua@0.53.5
+  - '@tanstack/react-virtual@3.14.18'
+  - '@tanstack/virtual-core@3.19.3'

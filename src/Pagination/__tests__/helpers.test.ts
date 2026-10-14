@@ -51,4 +51,16 @@ describe('getPaginationItems', () => {
   test('current near the end keeps a contiguous run to the last page', () => {
     expect(getPaginationItems(18, 20)).toEqual([1, 'ellipsis-prev', 16, 17, 18, 19, 20]);
   });
+
+  test('a smaller buffer shows fewer neighbours', () => {
+    expect(getPaginationItems(10, 20, 1)).toEqual([
+      1,
+      'ellipsis-prev',
+      9,
+      10,
+      11,
+      'ellipsis-next',
+      20,
+    ]);
+  });
 });

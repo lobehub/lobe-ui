@@ -43,3 +43,19 @@ export const normalizeValueFor = (isMultiple: boolean) => (nextValue: any) => {
   if (Array.isArray(nextValue)) return nextValue[0] ?? null;
   return nextValue === undefined ? null : nextValue;
 };
+
+/**
+ * Base UI reports value changes it derives itself (e.g. pruning selected values that are
+ * missing from the filtered options) with reason 'none'. While the popup is open, or while
+ * it is closing and the search term has not been reset yet, those are not user selections.
+ * A 'none' change on a fully closed select is a typeahead selection and stays valid.
+ */
+export const shouldIgnoreRootValueChange = ({
+  mergedOpen,
+  reason,
+  searchValue,
+}: {
+  mergedOpen: boolean;
+  reason?: string;
+  searchValue: string;
+}) => reason === 'none' && (mergedOpen || searchValue !== '');

@@ -169,7 +169,10 @@ export const styles = stylex.create({
     backgroundColor: `color-mix(in srgb, ${cssVar.colorBgLayout} 50%, ${cssVar.colorBgContainer})`,
   },
   workspace: {
-    borderColor: { default: cssVar.colorBorderSecondary, [media.laptop]: 'currentcolor' },
+    borderColor: {
+      default: `color-mix(in srgb, ${cssVar.colorBorderSecondary} 70%, ${cssVar.colorBorder})`,
+      [media.laptop]: 'currentcolor',
+    },
     borderRadius: { default: cssVar.borderRadiusLG, [media.laptop]: 0 },
     borderStyle: { default: 'solid', [media.laptop]: 'none' },
     borderWidth: { default: 1, [media.laptop]: 'medium' },

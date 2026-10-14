@@ -45,7 +45,6 @@ function Surface({
   const placeholder = Boolean(loading) && !defined(children);
   const hasHeader = defined(title) || defined(description) || defined(extra) || refreshing;
   const pad = bleed ? false : (padded ?? (hasHeader || placeholder));
-  const clip = hasHeader || bleed || pad || defined(chart);
 
   const heading = (
     <div {...stylex.props(styles.heading)}>
@@ -79,7 +78,7 @@ function Surface({
           [
             cardStyles,
             styles.content,
-            clip && styles.clip,
+            styles.clip,
             Boolean(href) && [styles.cardLinked, surfaceMarker],
           ],
           clsx(surfaceClassNames.root, bleed && surfaceClassNames.bleed, className),

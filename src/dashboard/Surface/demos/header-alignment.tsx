@@ -19,9 +19,7 @@ const Scope = () => {
 };
 
 const Figure = ({ value }: { value: string }) => (
-  <div style={{ fontSize: 24, fontVariantNumeric: 'tabular-nums', fontWeight: 600, padding: 16 }}>
-    {value}
-  </div>
+  <div style={{ fontSize: 24, fontVariantNumeric: 'tabular-nums', fontWeight: 600 }}>{value}</div>
 );
 
 const grid = {

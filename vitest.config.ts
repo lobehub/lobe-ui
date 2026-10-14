@@ -15,6 +15,7 @@ export default defineConfig({
     alias: [
       { find: '@', replacement: srcPath },
       { find: `${name}/form`, replacement: `${srcPath}/FormKit` },
+      { find: `${name}/pro-table`, replacement: `${srcPath}/ProTable` },
       // Published @lobehub/icons still imports the removed `base-ui` subpath.
       { find: `${name}/base-ui`, replacement: srcPath },
       { find: name, replacement: srcPath },

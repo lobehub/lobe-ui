@@ -6,6 +6,7 @@ import { removedExports } from './removedExports';
 import { removedSubpathStrings } from './removedSubpathStrings';
 import { staticCss } from './staticCss';
 import { styleProvider } from './styleProvider';
+import { tableProps } from './tableProps';
 import { themeMode } from './themeMode';
 import { themeProvider } from './themeProvider';
 import { videoProps } from './videoProps';
@@ -21,4 +22,5 @@ export const v6Rules: Rule[] = [
   themeMode,
   antClassNames,
   videoProps,
+  tableProps,
 ];
