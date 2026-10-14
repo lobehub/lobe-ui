@@ -473,3 +473,20 @@ describe('DatePicker', () => {
     scope.remove();
   });
 });
+
+describe('DatePicker sizing', () => {
+  it('sizes to content instead of stretching (auto width, natural input size)', () => {
+    const { container } = render(<DatePicker />);
+    const root = container.querySelector<HTMLElement>('.lobe-picker')!;
+    expect(getComputedStyle(root).width).not.toBe('100%');
+    expect(getComputedStyle(root).maxWidth).toBe('100%');
+    const input = root.querySelector('input')!;
+    expect(Number(input.getAttribute('size'))).toBeGreaterThan(0);
+    expect(getComputedStyle(input).width).not.toBe('100%');
+  });
+
+  it('still honours a width passed through style', () => {
+    const { container } = render(<DatePicker style={{ width: '100%' }} />);
+    expect(container.querySelector<HTMLElement>('.lobe-picker')!.style.width).toBe('100%');
+  });
+});
