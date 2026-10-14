@@ -205,7 +205,11 @@ export const usePickerShared = ({
       ...semanticClassNames,
       popup: {
         ...semanticClassNames.popup,
-        root: cx(themeScopeClassName, semanticClassNames.popup.root),
+        root: cx(
+          themeScopeClassName,
+          isDarkMode && `${PREFIX_CLS}-dropdown-dark`,
+          semanticClassNames.popup.root,
+        ),
       },
     },
     className: cx(

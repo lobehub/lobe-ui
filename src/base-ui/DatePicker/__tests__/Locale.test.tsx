@@ -184,7 +184,7 @@ describe('DatePicker locale', () => {
   });
 
   test('by default the texts come from the i18n resources in context', () => {
-    renderZhCn(<DatePicker defaultPickerValue={day} />);
+    renderZhCn(<DatePicker showNow defaultPickerValue={day} />);
     expect(input().placeholder).toBe('选择日期');
     open();
     expect(navLabels()).toEqual(['上一年', '上个月', '选择年份', '选择月份', '下个月', '下一年']);
@@ -206,7 +206,7 @@ describe('DatePicker locale', () => {
   });
 
   test('the locale prop replaces the default locale, incl. footer buttons', () => {
-    render(<DatePicker showTime defaultPickerValue={day} locale={datePickerLocaleZhCN} />);
+    render(<DatePicker showNow showTime defaultPickerValue={day} locale={datePickerLocaleZhCN} />);
     expect(input().placeholder).toBe('选择日期');
     open();
     expect(footerText()).toBe('此刻确定');

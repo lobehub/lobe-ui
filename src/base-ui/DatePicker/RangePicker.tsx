@@ -11,6 +11,7 @@ import { usePickerLocale } from './locale';
 import type { DateRangePickerProps, RangePickerComponent } from './type';
 import { usePanelKeyboard } from './usePanelKeyboard';
 import { usePickerShared } from './usePickerShared';
+import { usePresetActive } from './usePresetActive';
 
 /** antd `generateRangePicker`: `DatePicker.RangePicker` over `generateConfig`'s date type. */
 const generateRangePicker = <DateType extends object>(generateConfig: GenerateConfig<DateType>) => {
@@ -137,6 +138,8 @@ const generateRangePicker = <DateType extends object>(generateConfig: GenerateCo
       variant,
     });
 
+    const presetActive = usePresetActive((rest as any).presets, value, defaultValue);
+
     return (
       <RcRangePicker<DateType>
         {...rest}
@@ -157,16 +160,20 @@ const generateRangePicker = <DateType extends object>(generateConfig: GenerateCo
         picker={picker}
         pickerValue={keyboard.pickerValue}
         placeholder={placeholder ?? rangePlaceholder(picker)}
+        presets={presetActive.presets as any}
         renderExtraFooter={renderExtraFooter ?? (footer ? () => footer : undefined)}
         separator={separator ?? <Icon icon={ArrowRight} size={14} />}
         value={value as any}
         onBlur={onBlur as any}
         onCalendarChange={onCalendarChange as any}
-        onChange={keyboard.onChange}
         onFocus={keyboard.onFocus}
         onOk={onOk as any}
         onPanelChange={keyboard.onPanelChange}
         onPickerValueChange={keyboard.onPickerValueChange}
+        onChange={(...args: any[]) => {
+          presetActive.track(args[0]);
+          (keyboard.onChange as any)(...args);
+        }}
       />
     );
   };

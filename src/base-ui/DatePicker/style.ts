@@ -417,8 +417,16 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     &.${P}-dropdown .${P}-presets {
       display: flex;
       flex-direction: column;
+
       min-width: 120px;
       max-width: 200px;
+
+      /* divider one step lighter than the panel borders: light colorFillSecondary,
+         dark colorFillTertiary (see the -dropdown-dark rule below) */
+      border-inline-end: 1px solid ${cssVar.colorFillSecondary};
+
+      /* slightly tinted; the panel container's radius + overflow clip it */
+      background: ${cssVar.colorFillQuaternary};
 
       ul {
         overflow: auto;
@@ -427,7 +435,6 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
         height: 0;
         margin: 0;
         padding: 6px;
-        border-inline-end: 1px solid ${cssVar.colorBorderSecondary};
 
         list-style: none;
       }
@@ -452,11 +459,22 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
         &:hover {
           background: ${cssVar.colorFillTertiary};
         }
+
+        &:has(> .${P}-preset-active) {
+          font-weight: 500;
+          background: ${cssVar.colorFillSecondary};
+        }
       }
 
       li + li {
         margin-block-start: 2px;
       }
+    }
+
+    /* dark: fill tokens are white-alpha and would lighten the sidebar, so darken it */
+    &.${P}-dropdown.${P}-dropdown-dark .${P}-presets {
+      border-inline-end-color: ${cssVar.colorFillTertiary};
+      background: rgb(0 0 0 / 12%);
     }
 
     &.${P}-dropdown .${P}-panel {
@@ -644,8 +662,9 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       background: ${cssVar.colorFillTertiary};
     }
 
+    /* today: bold only, no ring, fill or border */
     &.${P}-dropdown .${P}-cell-in-view.${P}-cell-today .${P}-cell-inner {
-      box-shadow: inset 0 0 0 1px ${cssVar.colorText};
+      font-weight: ${cssVar.fontWeightStrong};
     }
 
     &.${P}-dropdown
@@ -894,9 +913,18 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       }
     }
 
-    /* footer */
+    /* footer: no background of its own; dividers match the presets sidebar divider */
     &.${P}-dropdown .${P}-footer {
-      border-block-start: 1px solid ${cssVar.colorBorderSecondary};
+      border-block-start: 1px solid ${cssVar.colorFillSecondary};
+      background: none;
+    }
+
+    &.${P}-dropdown.${P}-dropdown-dark
+      .${P}-footer,
+      &.${P}-dropdown.${P}-dropdown-dark
+      .${P}-footer-extra
+      + .${P}-ranges {
+      border-block-start-color: ${cssVar.colorFillTertiary};
     }
 
     /* renderExtraFooter: start-aligned above Today / Now / OK, as in antd */
@@ -911,7 +939,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
 
     &.${P}-dropdown .${P}-footer-extra + .${P}-ranges {
-      border-block-start: 1px solid ${cssVar.colorBorderSecondary};
+      border-block-start: 1px solid ${cssVar.colorFillSecondary};
     }
 
     &.${P}-dropdown .${P}-ranges {

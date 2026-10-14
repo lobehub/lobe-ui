@@ -144,7 +144,7 @@ dayjs.extend(customParseFormat);
 - `defaultOpenValue` is the time a picked date gets before any time is chosen (`defaultValue` is its deprecated alias; a top-level `defaultOpenValue` works too);
 - `changeOnScroll` picks the option a column is scrolled to.
 
-The time props can also be passed at the top level (`use12Hours`, `hourStep`, …), as in antd. With `showTime`, picking only fills the input; `onOk(value)` fires on the OK button, which commits the value. The **Now** button (`showNow`, on by default on single pickers, off on `DateRangePicker`) fills in the current time.
+The time props can also be passed at the top level (`use12Hours`, `hourStep`, …), as in antd. With `showTime`, picking only fills the input; `onOk(value)` fires on the OK button, which commits the value. The **Now** button (`showNow`, off by default — pass `showNow` to show it) fills in the current time.
 
 <Demo of={DemoTime} layout="bare" />
 
@@ -198,7 +198,7 @@ The time props can also be passed at the top level (`use12Hours`, `hourStep`, �
 
 ## Extra Footer
 
-`renderExtraFooter(mode)` renders a row above the Today / Now / OK footer and receives the current panel mode (`date`, `month`, `time`, …). It works on `DateRangePicker` too, and the deprecated `footer` node is an alias (`renderExtraFooter` wins). The date panel shows a **Today** button (the `showNow` footer); `showToday` is its deprecated alias, and range pickers hide it unless `showNow` is set. The last picker puts an action in the footer.
+`renderExtraFooter(mode)` renders a row above the Today / Now / OK footer and receives the current panel mode (`date`, `month`, `time`, …). It works on `DateRangePicker` too, and the deprecated `footer` node is an alias (`renderExtraFooter` wins). The footer row is hidden by default (lobe differs from antd here): the **Today** / **Now** button appears with `showNow` (`showToday` is its deprecated alias), OK appears when `showTime` / `needConfirm` needs confirming, and this extra row appears with `renderExtraFooter`. The last picker puts an action in the footer.
 
 <Demo of={DemoExtraFooter} layout="bare" />
 
@@ -479,8 +479,8 @@ The ref type is `PickerRef` (`RangePickerRef` on the range picker); the componen
 | removeIcon | `multiple`: remove icon of each tag | `ReactNode` | lucide `X` |
 | renderExtraFooter | Extra footer row | `(mode: PanelMode) => ReactNode` | - |
 | ~~footer~~ | Deprecated alias of `renderExtraFooter` (lobe) | `ReactNode` | - |
-| showNow | Show the Today / Now button | `boolean` | `true` |
-| ~~showToday~~ | Deprecated, use `showNow` | `boolean` | `true` |
+| showNow | Show the Today / Now button (lobe: off by default, antd: on) | `boolean` | `false` |
+| ~~showToday~~ | Deprecated, use `showNow` | `boolean` | `false` |
 | showTime | Add the time panel, see showTime | `boolean \| SharedTimeProps` | - |
 | ~~showTime.defaultValue~~ | Deprecated, use `showTime.defaultOpenValue` | `Dayjs` | `dayjs()` |
 | showTime.defaultOpenValue | Time a picked date gets before a time is chosen | `Dayjs` | `dayjs()` |
@@ -505,7 +505,7 @@ The ref type is `PickerRef` (`RangePickerRef` on the range picker); the componen
 | defaultOpenValue / ~~defaultValue~~ | Time a picked date gets before a time is chosen | `Dayjs` | `dayjs()` |
 | ~~disabledHours~~ / ~~disabledMinutes~~ / ~~disabledSeconds~~ | Deprecated, use `disabledTime` | `() => number[]` … | - |
 | changeOnScroll | Pick the option a column is scrolled to | `boolean` | `false` |
-| showNow | Show the Now button | `boolean` | `true` |
+| showNow | Show the Now button (lobe: off by default) | `boolean` | `false` |
 
 These props can also be passed at the top level of the picker.
 
@@ -695,7 +695,7 @@ These antd features are left out on purpose; each has a lobe replacement.
 | Component Design Token (`theme.components.DatePicker`, the `component-token` demo) | No component-level token; styled from the antd-style global theme tokens of `ThemeProvider` | Global theme tokens, Semantic DOM `classNames` / `styles`, or `createStyles` from antd-style on `className` / `classNames.popup.root` |
 | `popupAlign` / `builtinPlacements` / `transitionName` | Not part of the API (antd does not document them either). The types still let them through to `@rc-component/trigger` as-is, but lobe does not support or test them: the popup position comes from `placement` and the motion is lobe's own `lobe-picker-slide-up` | `placement` (4 directions, flips when there is no room), `getPopupContainer`, `direction="rtl"`, and `classNames.popup.root` / `styles.popup.root` for the popup's look |
 
-Other differences: the popup mounts inside an enclosing base-ui Popover / DropdownMenu / Modal (antd mounts on `document.body`), `variant` defaults to `filled` in dark mode, `shadow` is a lobe extra, and the month / quarter / year / decade panels add keyboard navigation (see Popup and keyboard). Form `status` is not inherited from a form item; pass `status` on the picker.
+Other differences: the footer is hidden by default (`showNow` defaults to `false`, antd defaults to `true` on single pickers; pass `showNow` to get Today / Now back), the presets sidebar highlights the preset matching the current value, the popup mounts inside an enclosing base-ui Popover / DropdownMenu / Modal (antd mounts on `document.body`), `variant` defaults to `filled` in dark mode, `shadow` is a lobe extra, and the month / quarter / year / decade panels add keyboard navigation (see Popup and keyboard). Form `status` is not inherited from a form item; pass `status` on the picker.
 
 ### Demo coverage
 

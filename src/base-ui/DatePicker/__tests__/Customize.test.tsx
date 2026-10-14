@@ -184,7 +184,7 @@ describe('DatePicker footer', () => {
   test('the date panel shows a Today button that picks today', () => {
     vi.useFakeTimers({ now: new Date('2026-10-13T10:00:00'), toFake: ['Date'] });
     const onChange = vi.fn();
-    render(<DatePicker open onChange={onChange} />);
+    render(<DatePicker open showNow onChange={onChange} />);
     expect(nowButton()?.textContent).toContain('Today');
     fireEvent.click(nowButton()!);
     expect(onChange.mock.calls[0][1]).toBe('2026-10-13');
@@ -192,8 +192,13 @@ describe('DatePicker footer', () => {
   });
 
   test('Today is disabled when today is a disabled date', () => {
-    render(<DatePicker open disabledDate={(current) => current.isSame(dayjs(), 'day')} />);
+    render(<DatePicker open showNow disabledDate={(current) => current.isSame(dayjs(), 'day')} />);
     expect(nowButton()?.classList.contains('lobe-picker-now-btn-disabled')).toBe(true);
+  });
+
+  test('the footer is hidden by default', () => {
+    render(<DatePicker open />);
+    expect(popup().querySelector('.lobe-picker-footer')).toBeNull();
   });
 
   test('showToday is the deprecated alias of showNow; showNow wins', () => {

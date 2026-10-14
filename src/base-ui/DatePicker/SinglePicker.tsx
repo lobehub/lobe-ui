@@ -13,6 +13,7 @@ import { PREFIX_CLS } from './style';
 import type { GeneratedDatePicker, PickerProps, SinglePickerComponent } from './type';
 import { usePanelKeyboard } from './usePanelKeyboard';
 import { usePickerShared, withDefault } from './usePickerShared';
+import { usePresetActive } from './usePresetActive';
 
 const defaultRemoveIcon = <Icon icon={X} size={10} style={{ strokeWidth: 3 }} />;
 
@@ -144,10 +145,19 @@ const generateSinglePicker = <DateType extends object>(
         variant,
       });
 
+      const presetActive = usePresetActive(
+        (rest as any).presets,
+        multiple ? undefined : value,
+        multiple ? undefined : defaultValue,
+      );
+
       return (
         <RcPicker<DateType>
           {...rest}
           {...shared}
+          presets={presetActive.presets as any}
+          // No footer row by default: Today / Now only when asked for (showNow or the
+          // deprecated showToday); showTime + needConfirm still shows OK.
           cellRender={keyboard.cellRender}
           dateRender={dateRender}
           defaultPickerValue={defaultPickerValue as any}
@@ -163,6 +173,7 @@ const generateSinglePicker = <DateType extends object>(
           ref={ref}
           removeIcon={withDefault(removeIcon, defaultRemoveIcon)}
           renderExtraFooter={renderExtraFooter ?? (footer ? () => footer : undefined)}
+          showNow={(rest as any).showNow ?? (rest as any).showToday ?? false}
           value={value as any}
           classNames={
             multiple
@@ -175,7 +186,6 @@ const generateSinglePicker = <DateType extends object>(
                 }
               : shared.classNames
           }
-          onChange={keyboard.onChange}
           onFocus={keyboard.onFocus}
           onOk={onOk as any}
           onPanelChange={keyboard.onPanelChange}
@@ -188,6 +198,10 @@ const generateSinglePicker = <DateType extends object>(
                 }
               : undefined
           }
+          onChange={(...args: any[]) => {
+            presetActive.track(args[0]);
+            (keyboard.onChange as any)(...args);
+          }}
         />
       );
     };

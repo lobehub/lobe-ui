@@ -15,8 +15,8 @@ export default () => {
       <DateRangePicker renderExtraFooter={() => 'extra footer'} />
       <DateRangePicker showTime renderExtraFooter={() => 'extra footer'} />
       <DatePicker picker="month" renderExtraFooter={() => 'extra footer'} />
-      {/* The date panel shows a Today button; `showToday` is the deprecated alias of `showNow`. */}
-      <DatePicker placeholder="showToday={false}" showToday={false} />
+      {/* The footer is hidden by default; `showNow` adds the Today button (`showToday` is its deprecated alias). */}
+      <DatePicker showNow placeholder="showNow" />
       <DateRangePicker showNow />
       <Text type="secondary">The footer can hold actions too:</Text>
       <DatePicker
