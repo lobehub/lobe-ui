@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.63.4](https://github.com/lobehub/lobe-ui/compare/v5.63.3...v5.63.4) (2026-10-14)
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Guard Table FixedFrost against missing ResizeObserver, closes [#715](https://github.com/lobehub/lobe-ui/issues/715) ([143973c](https://github.com/lobehub/lobe-ui/commit/143973c))
+
 ## [5.63.3](https://github.com/lobehub/lobe-ui/compare/v5.63.2...v5.63.3) (2026-10-13)
 
 ### 💄 Styles
