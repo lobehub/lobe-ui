@@ -2,6 +2,23 @@
 
 # Changelog
 
+# [6.0.0-beta.11](https://github.com/lobehub/lobe-ui/compare/v6.0.0-beta.10...v6.0.0-beta.11) (2026-10-15)
+
+### ✨ Features
+
+- **theme**: Named status palettes and readable custom primary, closes [#727](https://github.com/lobehub/lobe-ui/issues/727) ([c19330c](https://github.com/lobehub/lobe-ui/commit/c19330c))
+
+### 🎫 Chores
+
+- **release**: Docs-kit@5.27.7-beta.2 [skip ci] ([578b919](https://github.com/lobehub/lobe-ui/commit/578b919))
+- **release**: V5.64.3 [skip ci] ([9722214](https://github.com/lobehub/lobe-ui/commit/9722214))
+- **release**: V5.64.4 [skip ci] ([9946f54](https://github.com/lobehub/lobe-ui/commit/9946f54))
+
+### 🐛 Bug Fixes
+
+- **base-ui**: ProTable null request, light filter labels, Switch text fit, Form compact spacing, closes [#728](https://github.com/lobehub/lobe-ui/issues/728) ([e4c41bb](https://github.com/lobehub/lobe-ui/commit/e4c41bb))
+- **base-ui**: Table outlined fixed-column corner radius, closes [#729](https://github.com/lobehub/lobe-ui/issues/729) ([876a3db](https://github.com/lobehub/lobe-ui/commit/876a3db))
+
 # [6.0.0-beta.10](https://github.com/lobehub/lobe-ui/compare/v6.0.0-beta.9...v6.0.0-beta.10) (2026-10-15)
 
 ### ✨ Features
