@@ -13,6 +13,7 @@ import DemoServer from './demos/server.tsx?demo';
 import DemoExpand from './demos/expand.tsx?demo';
 import DemoTreeData from './demos/tree-data.tsx?demo';
 import DemoFixedColumns from './demos/fixed-columns.tsx?demo';
+import DemoLoadingFixed from './demos/loading-fixed.tsx?demo';
 import DemoGroupingColumns from './demos/grouping-columns.tsx?demo';
 import DemoEditRow from './demos/edit-row.tsx?demo';
 import DemoDragColumnSorting from './demos/drag-column-sorting.tsx?demo';
@@ -118,6 +119,12 @@ Records with a `children` array render as a collapsible tree; `expandable.childr
 `fixed` accepts `'start'` / `'end'` (`true` and `'left'` / `'right'` also work). Offsets come from the measured column widths, and a shadow shows when content scrolls under a pinned edge. Set `scroll.x` so the table can scroll. Switch `pinning` to `stacked`: pinned columns need not be adjacent, each one sticks right after the pinned columns before it. Raise `scrollY` to combine `scroll.x` and `scroll.y` (fixed columns and header).
 
 <Demo of={DemoFixedColumns} layout="bare" />
+
+### Loading with fixed columns
+
+The frosted backdrop of a fixed side only appears while content is scrolled under it; it is never drawn over the empty / loading skeleton, so row dividers stay continuous.
+
+<Demo of={DemoLoadingFixed} layout="bare" />
 
 ## Grouping table head
 

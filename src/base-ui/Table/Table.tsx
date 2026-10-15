@@ -13,6 +13,7 @@ import RcTable, {
 import { cx } from 'antd-style';
 import { ArrowDownFromLine, ArrowUpDown, ArrowUpToLine, Inbox } from 'lucide-react';
 import {
+  type CSSProperties,
   type HTMLAttributes,
   type Key,
   memo,
@@ -29,6 +30,7 @@ import ActionIcon from '@/base-ui/ActionIcon';
 import Pagination, { type PaginationAlign } from '@/base-ui/Pagination';
 import Spin from '@/base-ui/Spin';
 import Tooltip from '@/base-ui/Tooltip';
+import Block from '@/Block';
 import Empty from '@/Empty';
 import { useEventCallback } from '@/hooks/useEventCallback';
 import tableMessages from '@/i18n/resources/en/table';
@@ -711,13 +713,16 @@ const TableInner = <T,>(props: TableProps<T>) => {
     customEmpty
   );
 
+  // Every column node (groups included) plus selection / expand: an upper bound of the
+  // rendered columns, enough for the fixed-cell z-index ceiling.
+  const columnsCount = flattenColumns(columns).length + 2;
+
   // Like antd: `virtual` swaps in rc-table's VirtualTable (rc-virtual-list body).
   const TableComponent = (virtual ? RcVirtualTable : RcTable) as typeof RcTable;
 
   return (
     <div
       ref={rootRef}
-      style={{ ...mergedStyles.root, ...style }}
       className={cx(
         styles.root,
         `${PREFIX_CLS}-wrapper`,
@@ -725,6 +730,16 @@ const TableInner = <T,>(props: TableProps<T>) => {
         className,
         mergedClassNames.root,
       )}
+      style={
+        {
+          // rc-table gives fixed cells z-index up to 2 × column count; the loading mask, fixed
+          // header and summary sit above them via this var (as in antd). Unset, fixed start
+          // cells painted over the loading mask.
+          '--columns-count': columnsCount,
+          ...mergedStyles.root,
+          ...style,
+        } as CSSProperties
+      }
     >
       {topPagination}
       <div className={styles.spinContainer} data-table-wrapper="">
@@ -786,8 +801,17 @@ const TableInner = <T,>(props: TableProps<T>) => {
         <FixedFrost rootRef={rootRef} />
         {isLoading && (
           <div className={styles.loading} data-table-loading="">
-            <Spin {...spinProps} />
-            {tip}
+            {/* A small outlined box behind the indicator keeps it legible over the rows. */}
+            <Block
+              align={'center'}
+              data-table-loading-indicator=""
+              gap={8}
+              padding={12}
+              variant={'outlined'}
+            >
+              <Spin {...spinProps} />
+              {tip}
+            </Block>
           </div>
         )}
       </div>
