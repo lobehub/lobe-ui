@@ -22,7 +22,7 @@
   ],
   "dependencies": {
     "@giscus/react": "^3.1.0",
-    "@lobehub/ui": "^5.21.0",
+    "@lobehub/ui": "^6.0.0",
     "@mdx-js/rollup": "3.1.1",
     "cheerio": "^1.2.0",
     "code-inspector-plugin": "^2.0.9",
