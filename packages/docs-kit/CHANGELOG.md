@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [6.0.0](https://github.com/lobehub/lobe-ui/compare/docs-kit@5.28.0...docs-kit@6.0.0) (2026-10-15)
+
+### 🎫 Chores
+
+- **docs-kit**: Force major release ([4f468b9](https://github.com/lobehub/lobe-ui/commit/4f468b9))
+
 # [5.28.0](https://github.com/lobehub/lobe-ui/compare/docs-kit@5.27.6...docs-kit@5.28.0) (2026-10-15)
 
 ### ✨ Features
