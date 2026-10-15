@@ -85,6 +85,8 @@ export const styles = stylex.create({
   frostEnd: {
     flex: 'none',
     backdropFilter: 'blur(16px)',
+    borderEndEndRadius: 'var(--lobe-table-radius-bottom, 0)',
+    borderStartEndRadius: 'var(--lobe-table-radius-top, 0)',
     insetInlineEnd: 0,
     marginInlineStart: 'auto',
     position: 'sticky',
@@ -102,6 +104,8 @@ export const styles = stylex.create({
   frostStart: {
     flex: 'none',
     backdropFilter: 'blur(16px)',
+    borderEndStartRadius: 'var(--lobe-table-radius-bottom, 0)',
+    borderStartStartRadius: 'var(--lobe-table-radius-top, 0)',
     insetInlineStart: 0,
     position: 'sticky',
     height: '100%',

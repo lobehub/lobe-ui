@@ -73,9 +73,16 @@ const raw = stylex.create({
     flexWrap: 'wrap',
   },
   lightFilterLabel: {
-    color: cssVar.colorTextSecondary,
-    fontSize: cssVar.fontSizeSM,
-    whiteSpace: 'nowrap',
+    'flex': 'none',
+    'color': cssVar.colorTextSecondary,
+    'fontSize': cssVar.fontSizeSM,
+    'whiteSpace': 'nowrap',
+    '::after': { content: "':'" },
+  },
+  lightFilterSwitch: {
+    gap: 8,
+    alignItems: 'center',
+    display: 'inline-flex',
   },
   optionCell: {
     gap: 4,
@@ -222,6 +229,7 @@ export const styles = {
   lightFilter: cls(raw.lightFilter),
   lightFilterItem: `${PRO_PREFIX_CLS}-light-filter-item`,
   lightFilterLabel: cls(raw.lightFilterLabel),
+  lightFilterSwitch: cls(raw.lightFilterSwitch),
   optionCell: cls(raw.optionCell),
   part: cls(raw.part),
   partBordered: cls(raw.partBordered),

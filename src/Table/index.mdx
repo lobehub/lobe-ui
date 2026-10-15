@@ -15,6 +15,7 @@ import DemoTreeData from './demos/tree-data.tsx?demo';
 import DemoFixedColumns from './demos/fixed-columns.tsx?demo';
 import DemoSurfaces from './demos/surfaces.tsx?demo';
 import DemoCellMerging from './demos/cell-merging.tsx?demo';
+import DemoLoadingFixed from './demos/loading-fixed.tsx?demo';
 import DemoGroupingColumns from './demos/grouping-columns.tsx?demo';
 import DemoEditRow from './demos/edit-row.tsx?demo';
 import DemoDragColumnSorting from './demos/drag-column-sorting.tsx?demo';
@@ -123,6 +124,12 @@ Records with a `children` array render as a collapsible tree; `expandable.childr
 `scroll.x` becomes the `<table>`'s width, so the table scrolls inside its own frame. When that frame is a flex or grid item, give it `min-width: 0` — otherwise the item's `min-width: auto` resolves to the table's width and the table stretches the layout (pushing siblings out) instead of scrolling.
 
 <Demo of={DemoFixedColumns} layout="bare" />
+
+### Loading with fixed columns
+
+The frosted backdrop of a fixed side only appears while content is scrolled under it; it is never drawn over the empty / loading skeleton, so row dividers stay continuous.
+
+<Demo of={DemoLoadingFixed} layout="bare" />
 
 ## Variants and surfaces
 

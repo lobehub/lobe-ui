@@ -15,6 +15,7 @@ import {
   useRef,
 } from 'react';
 
+import Block from '@/Block';
 import Empty from '@/Empty';
 import tableMessages from '@/i18n/resources/en/table';
 import { useTranslation } from '@/i18n/useTranslation';
@@ -177,7 +178,13 @@ const TableInner = <T,>(props: TableInternalProps<T>) => {
       })
     : { bottom: null, top: null };
 
-  const rootStyle: CSSProperties = { ...semanticStyles.root, ...style };
+  // The loading mask is a sibling of the table, so it needs the column count here to stack
+  // above fixed cells (z-index up to 2 × columns).
+  const rootStyle = {
+    '--columns-count': leafColumns.length,
+    ...semanticStyles.root,
+    ...style,
+  } as CSSProperties;
 
   return (
     <TableStoreProvider value={controller.store}>
@@ -225,8 +232,16 @@ const TableInner = <T,>(props: TableInternalProps<T>) => {
                 />
                 {isLoading && (
                   <div {...stylex.props(styles.loading)} data-table-loading="">
-                    <Spin {...spinRest} variant={spinVariant} />
-                    {tip as ReactNode}
+                    <Block
+                      align={'center'}
+                      data-table-loading-indicator=""
+                      gap={8}
+                      padding={12}
+                      variant={'outlined'}
+                    >
+                      <Spin {...spinRest} variant={spinVariant} />
+                      {tip as ReactNode}
+                    </Block>
                   </div>
                 )}
                 <FixedFrost rootRef={rootRef} />

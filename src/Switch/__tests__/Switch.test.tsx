@@ -76,8 +76,10 @@ describe('Switch', () => {
     render(<Switch checkedChildren={<i>on</i>} unCheckedChildren={<i>off</i>} />);
 
     const switchEl = screen.getByRole('switch');
-    const iconOn = screen.getByText('on').parentElement!;
-    const iconOff = screen.getByText('off').parentElement!;
+    const icon = (text: string) =>
+      screen.getAllByText(text).find((el) => !el.closest('[aria-hidden]'))!.parentElement!;
+    const iconOn = icon('on');
+    const iconOff = icon('off');
 
     expect(getComputedStyle(iconOn).opacity).toBe('0');
     expect(getComputedStyle(iconOff).opacity).toBe('1');

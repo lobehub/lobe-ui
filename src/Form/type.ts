@@ -24,6 +24,11 @@ export interface FormProps extends BaseFormProps {
     item?: string;
   };
   collapsible?: boolean;
+  /**
+   * Compact spacing for narrow containers (Drawer / Modal): `gap` 12px and `itemPadding` 10px
+   * unless set explicitly. Default `false` (unchanged spacing).
+   */
+  compact?: boolean;
   defaultActiveKey?: (string | number)[];
   footer?: ReactNode;
   gap?: number | string;
@@ -33,6 +38,8 @@ export interface FormProps extends BaseFormProps {
    */
   initialValues?: FormValues;
   itemMinWidth?: FormFieldProps['minWidth'];
+  /** Block (top / bottom) padding of every Form.Field. Default `16px`. */
+  itemPadding?: number | string;
   items?: FormGroupItemType[] | FormFieldProps[];
   itemsType?: ItemsType;
   layout?: FormLayout;

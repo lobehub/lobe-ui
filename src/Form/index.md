@@ -33,26 +33,37 @@ Per-field via `validate`, or form-level with `safeParse` + the `errors` prop.
 
 <code src="./demos/float.tsx" nopadding></code>
 
+## Compact (Drawer / Modal)
+
+In narrow containers use `compact` (12px `gap`, 10px field padding) or tune `gap` and
+`itemPadding` directly; the defaults (16px field padding, 48px gap in borderless forms) stay
+unchanged. `layout="vertical"` stacks inputs under their labels, and `layout="horizontal"` on a
+single `Form.Field` keeps a Switch inline with its label.
+
+<code src="./demos/compact.tsx" nopadding></code>
+
 ## APIs
 
 ### Form
 
 Wraps Base UI `Form`: native validation, `errors` prop passthrough for external/server errors, `validationMode`.
 
-| Property       | Description                                                                    | Type                                              | Default      |
-| -------------- | ------------------------------------------------------------------------------ | ------------------------------------------------- | ------------ |
-| items          | Config-driven groups or fields                                                 | `FormGroupItemType[] \| FormFieldProps[]`         | -            |
-| itemsType      | Interpret `items` as grouped or flat                                           | `'group' \| 'flat'`                               | `group`      |
-| variant        | Visual variant of groups                                                       | `'filled' \| 'outlined' \| 'borderless'`          | `borderless` |
-| layout         | Field layout, mobile falls back to vertical                                    | `'horizontal' \| 'vertical'`                      | `horizontal` |
-| initialValues  | Distributed to fields as `defaultValue` by name; baseline for unsaved tracking | `Record<string, any>`                             | -            |
-| onFinish       | Submit callback with collected values; async drives submit loading             | `(values, eventDetails) => void \| Promise<void>` | -            |
-| errors         | External validation errors keyed by field name                                 | `Record<string, string \| string[]>`              | -            |
-| validationMode | When fields validate                                                           | `'onSubmit' \| 'onBlur' \| 'onChange'`            | `onSubmit`   |
-| collapsible    | Whether groups are collapsible                                                 | `boolean`                                         | -            |
-| footer         | Rendered after fields, e.g. `<Form.SubmitFooter />`                            | `ReactNode`                                       | -            |
-| itemMinWidth   | Min width of field controls                                                    | `string \| number`                                | -            |
-| gap            | Gap between groups                                                             | `string \| number`                                | -            |
+| Property       | Description                                                                     | Type                                              | Default      |
+| -------------- | ------------------------------------------------------------------------------- | ------------------------------------------------- | ------------ |
+| items          | Config-driven groups or fields                                                  | `FormGroupItemType[] \| FormFieldProps[]`         | -            |
+| itemsType      | Interpret `items` as grouped or flat                                            | `'group' \| 'flat'`                               | `group`      |
+| variant        | Visual variant of groups                                                        | `'filled' \| 'outlined' \| 'borderless'`          | `borderless` |
+| layout         | Field layout, mobile falls back to vertical                                     | `'horizontal' \| 'vertical'`                      | `horizontal` |
+| initialValues  | Distributed to fields as `defaultValue` by name; baseline for unsaved tracking  | `Record<string, any>`                             | -            |
+| onFinish       | Submit callback with collected values; async drives submit loading              | `(values, eventDetails) => void \| Promise<void>` | -            |
+| errors         | External validation errors keyed by field name                                  | `Record<string, string \| string[]>`              | -            |
+| validationMode | When fields validate                                                            | `'onSubmit' \| 'onBlur' \| 'onChange'`            | `onSubmit`   |
+| collapsible    | Whether groups are collapsible                                                  | `boolean`                                         | -            |
+| footer         | Rendered after fields, e.g. `<Form.SubmitFooter />`                             | `ReactNode`                                       | -            |
+| itemMinWidth   | Min width of field controls                                                     | `string \| number`                                | -            |
+| gap            | Gap between groups                                                              | `string \| number`                                | -            |
+| itemPadding    | Block (top / bottom) padding of every Form.Field                                | `string \| number`                                | `16px`       |
+| compact        | Compact preset for Drawers / Modals (`gap` 12px, `itemPadding` 10px unless set) | `boolean`                                         | `false`      |
 
 ### Form.Field (FormField)
 
