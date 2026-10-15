@@ -16,7 +16,7 @@ lobe-ui 的状态色是用 `scripts/generateColorTokens.ts` **生成**的：每�
 
 ## 工作流
 
-1. **测量现状。** 跑 `pnpm exec tsx .agents/skills/tuning-color-palettes/scripts/audit-palette.ts`。可选参数：`--primary '#hex'`、`--neutral sand`、`--scales file.json`（`{ error?, warning?, info?, success?, primary? }`，值是 `ColorScaleItem`，用来审计自定义 scale）、`--json`。它按角色输出 hex、H/C/T、WCAG 比值和 APCA Lc，亮暗各一套。改之前跑一次，改之后再跑一次。
+1. **测量现状。** 跑 `pnpm exec tsx .agents/skills/tuning-color-palettes/scripts/audit-palette.ts`。可选参数：`--primary '#hex'`、`--neutral sand`、`--scales file.json`（`{ error?, warning?, info?, success?, primary? }`，值是 `ColorScaleItem`，也就是要注册的命名色板）、`--json`。它按角色输出 hex、H/C/T、WCAG 比值和 APCA Lc，亮暗各一套。改之前跑一次，改之后再跑一次。
 2. **向需求方一次问清下面几项，不要自己拍：**
    - 锚点：现有哪个组件在哪个主题下「看着对」。lobe 自己的锚点是亮色 Warning Alert 和暗色 Info Alert。
    - 每个状态的种子 hex，或者可以接受的色相方向；品牌色是否必须精确命中。
@@ -59,21 +59,21 @@ lobe-ui 的状态色是用 `scripts/generateColorTokens.ts` **生成**的：每�
 
 ## 主色（品牌色）
 
-生成器不覆盖 primary，运行时的 `generatePrimaryScale` 遇到深色品牌色会坏：`#1a7f5a` 在亮色下 Border 只有 1.08:1，Active 掉到 T19；在暗色下 main 仍停在 T47，只有 3.9:1。改用同一条 HCT 梯度生成静态 scale：
+先用 `setLobeTheme({ primaryColor: '#hex' })` 加 `audit-palette.ts --primary '#hex'` 看效果。`generatePrimaryScale` 的规则：
 
-- hue 取品牌 hue；chroma 按「品牌 C / 梯度 step 9 的 C」等比缩放。
-- 亮色 step 9 pin 成品牌 hex，同时检查白字在上面的对比度 ≥ 4.5:1。
-- 暗色的 main pull 只能往上拉，不能往下：设一个下限（约 T60–66），让品牌色在 `#0d0d0d` 上 ≥ 4.5:1，并告诉需求方暗色主色会变亮。
+- 参考 preset 按 hue 和亮度一起选。只按 hue 选的话，深绿会选中极浅的 `cyan` 薄荷绿。
+- 亮色 step 9 就是选定的 hex，相邻阶按渐变权重跟随，整条色阶保持单调。
+- 暗色下，如果它在暗色容器上不到 4.5:1，就保持 hue 和 chroma 不变、把亮度提到 4.5:1。比如 `#1a7f5a` 在暗色下是 `#298a64`。需求方要求暗色也精确命中 hex 时，要明确告诉对方这会牺牲可读性。
+
+运行时结果不满意（tint 不够，或需要按色相旋转）时，可以按状态色的方法生成静态 scale，但 `registerLobePalette` 不收 primary。这种情况下只能写覆盖 CSS：`--lobe-color-primary*` 变量，选择器与 `themeCss.ts` 一致，在 `theme.css` 之后加载，并且不要再设 `data-primary-color`。`useTheme()` 拿到的 `colorPrimary` 仍是运行时生成的值，交付时要把这一点告诉需求方。
 
 ## 交付
 
-状态色是静态 import（`statusColorScales`），没有运行时开关，所以企业色板要么是构建产物，要么是覆盖层：
-
-| 形态             | 做法                                                                                                                                                                                                                                                                                                                                                                                 | 已知缺口                                                                                                                                                                                                               |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 覆盖 CSS（默认） | 用自定义 scale 跑一遍 token 推导（`generateColorPalette`，加上亮色 Text override、`colorLink*`、`colorHighlight`、`*Affix`、`controlItemBgActive*`、`color{Error,Warning}Outline`），与默认 token 做 diff，只输出变化的 `--lobe-*` 变量。选择器与 `themeCss.ts` 一致：`:root, [data-theme='light']` 和 `[data-theme='dark']`，不放进 layer，在 `@lobehub/ui` 的 `theme.css` 之后加载 | 不能再设 `data-primary-color` 或调 `setLobeTheme({ primaryColor })`，那些规则的选择器优先级更高，会盖掉覆盖层。`useTheme()` 在 JS 里用 `createLobeToken` 重算，图表和 canvas 拿到的仍是默认色，需要另附 `palette.json` |
-| 仓库内 preset    | 生成器读 preset，输出覆盖 CSS 和 JSON，默认文件不变                                                                                                                                                                                                                                                                                                                                  | 客户名会进入公开仓库，先确认是否允许                                                                                                                                                                                   |
-| 只换主色         | `setLobeTheme({ primaryColor: '#hex' })`                                                                                                                                                                                                                                                                                                                                             | 先 audit。深色品牌色按「主色」一节处理                                                                                                                                                                                 |
+| 形态             | 做法                                                                                                                                                                                                                                                                                                     | 注意                                                                                             |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| 命名色板（默认） | 生成器输出四个状态的 `ColorScaleItem`，客户在模块顶层调用 `registerLobePalette('acme', { error, warning, info, success })`，再用 `setLobeTheme({ palette: 'acme' })`、`<ThemeScope palette>` 或 `<LobeThemeScript palette>` 启用。CSS 和 `useTheme()` 读同一份注册表；SSR 用 `getCustomPaletteCss(name)` | 名字只能用字母、数字、`_`、`-`。同名重新注册后要再调一次 `setLobeTheme`，root 上的样式表才会重写 |
+| 主色             | `primaryColor: '#hex'`，按「主色」一节检查                                                                                                                                                                                                                                                               | 不需要再写覆盖 CSS                                                                               |
+| 仓库内 preset    | 生成器读 preset，输出 scale 文件，默认文件不变                                                                                                                                                                                                                                                           | 客户名会进入公开仓库，先确认是否允许                                                             |
 
 ## 常见错误
 
