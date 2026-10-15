@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.64.4](https://github.com/lobehub/lobe-ui/compare/v5.64.3...v5.64.4) (2026-10-15)
+
+### 🐛 Bug Fixes
+
+- **base-ui**: Table outlined fixed-column corner radius, closes [#729](https://github.com/lobehub/lobe-ui/issues/729) ([876a3db](https://github.com/lobehub/lobe-ui/commit/876a3db))
+
 ## [5.64.3](https://github.com/lobehub/lobe-ui/compare/v5.64.2...v5.64.3) (2026-10-15)
 
 ### 🐛 Bug Fixes
