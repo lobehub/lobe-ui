@@ -1,0 +1,106 @@
+---
+title: Design Tokens
+description: Every theme token a Lobe UI component reads, grouped by role, with live light and dark values.
+order: 2
+---
+
+import { MotionScene } from './design-tokens/Motion';
+import { HueScene, SurfaceScene } from './design-tokens/Scenes';
+import { StatusMatrix, StatusScene } from './design-tokens/Status';
+import { TokenTable } from './design-tokens/TokenTable';
+import {
+  borderTokens,
+  fillTokens,
+  fontSizeTokens,
+  fontTokens,
+  primaryTokens,
+  radiusTokens,
+  shadowTokens,
+  surfaceTokens,
+  textTokens,
+} from './design-tokens/tokens';
+
+Lobe UI's theme is a set of CSS variables (`--lobe-*`) in `@lobehub/ui/theme.css`, switched by `data-theme`, `data-primary-color` and `data-neutral-color` on `<html>` or a `ThemeScope`. This page lists the tokens the components actually read, grouped by role. Every value is live: the light and dark columns are rendered in their own `ThemeScope`, and they follow the primary and neutral colors you pick in the site theme switcher.
+
+```tsx | pure
+import { createStaticStyles, cssVar, useTheme } from '@lobehub/ui';
+
+const styles = createStaticStyles(({ css }) => ({
+  card: css`
+    border: 1px solid ${cssVar.colorBorderSecondary};
+    border-radius: ${cssVar.borderRadiusLG};
+    background: ${cssVar.colorBgContainer};
+  `,
+}));
+
+// Concrete values, for canvas or charts
+const { colorText } = useTheme();
+```
+
+In plain CSS, use the variable name directly: `var(--lobe-color-bg-container)`. Prefer a role token over a raw scale color, so your UI follows theme changes the same way the components do.
+
+## Surface
+
+Three surfaces stack from back to front: layout, container, elevated. Overlays dim everything behind them with the mask.
+
+<SurfaceScene />
+
+<TokenTable group={surfaceTokens} />
+
+## Text
+
+Four ink levels. The aliases exist so code reads by intent; they always resolve to one of the four. The ratio is WCAG contrast against `colorBgContainer`.
+
+<TokenTable group={textTokens} />
+
+## Border
+
+<TokenTable group={borderTokens} />
+
+## Fill
+
+Translucent fills for interactive states, so they work on any surface.
+
+<TokenTable group={fillTokens} />
+
+## Shadow
+
+<TokenTable group={shadowTokens} />
+
+## Primary and link
+
+Primary follows `data-primary-color`. Links follow the info status text color.
+
+<TokenTable group={primaryTokens} />
+
+## Status
+
+Error, warning, info and success share one structure: the same nine roles, generated from one tone ladder per theme, so a role reads at a similar weight across the four statuses. Read a role as `color` + status + suffix, for example `colorWarningBorder`. Base and Text rows also show their contrast ratio on `colorBgContainer`.
+
+<StatusMatrix />
+
+The same tokens in components:
+
+<StatusScene />
+
+## Hue accents
+
+Twelve accent hues for tags, avatars, charts and syntax highlighting. Each also has a numbered scale (`blue1` … `blue11`) and translucent fills.
+
+<HueScene />
+
+## Radius
+
+<TokenTable group={radiusTokens} />
+
+## Typography
+
+<TokenTable group={fontTokens} />
+
+<TokenTable group={fontSizeTokens} />
+
+## Motion
+
+Durations and easing curves. The three springs are CSS `linear()` curves normalized to their settle time, so pair one with any duration and that duration becomes the spring's settle time.
+
+<MotionScene />
