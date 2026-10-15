@@ -27,8 +27,9 @@ export default defineConfig({
     hookTimeout: 30_000,
     server: {
       deps: {
-        // Apply source aliases to @lobehub/ui imports inside the ESM icons package.
-        inline: ['@lobehub/icons'],
+        // Apply source aliases to @lobehub/ui imports inside the ESM icons package;
+        // material-color-utilities ships extensionless ESM imports Node can't resolve.
+        inline: ['@lobehub/icons', '@material/material-color-utilities'],
       },
     },
     // Production Vite compiler integration can exceed one minute when the

@@ -28,6 +28,7 @@ import {
   sectionOverviewPathname,
 } from '../../content/sectionOverview';
 import type { DocumentManifestEntry, NavigationSection } from '../../types/content';
+import { namedIcon } from './namedIcon';
 
 const sectionIcons: Record<string, LucideIcon> = {
   'Awesome': Sparkles,
@@ -49,12 +50,14 @@ export const sectionIcon = (title: string): LucideIcon => sectionIcons[title] ??
 export interface DocsNavItemConfig {
   external?: boolean;
   href: string;
+  icon?: string;
   label: string;
 }
 
 export interface TopLink {
   external: boolean;
   href: string;
+  icon?: string;
   label: string;
 }
 
@@ -86,6 +89,7 @@ export function buildTopLinks(navItems: readonly DocsNavItemConfig[] = []): TopL
   const links: TopLink[] = navItems.map((item) => ({
     external: Boolean(item.external) || isExternalHref(item.href),
     href: item.href,
+    icon: item.icon,
     label: item.label,
   }));
   const changelogIndex = links.findIndex((link) => link.href === CHANGELOG_PATHNAME);
@@ -105,10 +109,16 @@ const topLinkIcons: Record<string, LucideIcon> = {
 };
 
 const topLinkIcon = (link: TopLink): LucideIcon =>
-  topLinkIcons[link.href] ?? (link.external ? ExternalLink : FileText);
+  (link.icon && namedIcon(link.icon)) ||
+  topLinkIcons[link.href] ||
+  (link.external ? ExternalLink : FileText);
 
 export const buildNavItems = (navItems?: readonly DocsNavItemConfig[]): ConsoleNavItem[] =>
-  buildTopLinks(navItems).map((link) => ({ end: true, icon: topLinkIcon(link), ...link }));
+  buildTopLinks(navItems).map(({ icon, ...link }) => ({
+    end: true,
+    icon: topLinkIcon({ icon, ...link }),
+    ...link,
+  }));
 
 export function orderSections(navigation: readonly NavigationSection[]): NavigationSection[] {
   const sections = navigation.filter((section) => sectionDocuments(section).length > 0);

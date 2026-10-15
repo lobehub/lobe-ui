@@ -7,9 +7,9 @@ const startingOrEnding = ':is([data-starting-style], [data-ending-style])';
 const pushTransform = 'translate(var(--drawer-push-x, 0), var(--drawer-push-y, 0))';
 const edge = `var(--drawer-edge-width, 1px)`;
 
-/* antd's boxShadowDrawer{Left,Right,Up,Down} geometry and alphas, scaled against colorShadow's own
-   alpha (opaque black in light, rgba(255,255,255,0.2) in dark). Direction styles set the cast sign
-   and weight styles scale the alpha, so the two compose without a style per combination. */
+/* antd's boxShadowDrawer{Left,Right,Up,Down} geometry and alphas, mixed against colorShadow.
+   Direction styles set the cast sign and weight styles scale the alpha, so the two compose without
+   a style per combination. */
 const castShadow = (x: number, y: number, blur: number, spread: number, alpha: number) =>
   `calc(var(--drawer-cast-x, 0) * ${x}px) calc(var(--drawer-cast-y, 0) * ${y}px) ${blur}px ${spread}px color-mix(in srgb, var(--lobe-color-shadow, #000) calc(${alpha}% * var(--drawer-cast-alpha, 1)), transparent)`;
 
@@ -198,14 +198,14 @@ export const styles = stylex.create({
     'borderWidth': 'medium',
     'transition': `color 160ms ${softEase}, background 160ms ${softEase}, transform 160ms ${softEase}`,
     'alignItems': 'center',
-    'backgroundColor': { default: 'transparent', ':hover': cssVar.colorFillSecondary },
-    'color': { default: cssVar.colorTextTertiary, ':hover': cssVar.colorText },
+    'backgroundColor': { 'default': 'transparent', ':hover': cssVar.colorFillSecondary },
+    'color': { 'default': cssVar.colorTextTertiary, ':hover': cssVar.colorText },
     'cursor': 'pointer',
     'display': 'flex',
     'justifyContent': 'center',
     'position': 'relative',
     'transform': {
-      default: null,
+      'default': null,
       ':hover:not(:active)': 'scale(1.04)',
       ':active': 'scale(0.96)',
     },

@@ -4,6 +4,7 @@ import { mixColors, parseRgb } from '@/utils/colorMath';
 
 import type { NeutralColors } from '../../customTheme';
 import { generateColorNeutralPalette } from '../generateColorPalette';
+import { neutralText } from './neutralText';
 
 const isChannel = (value: number) => value >= 0 && value <= 255;
 
@@ -32,7 +33,17 @@ export const createNeutralToken = (
   status: { colorErrorBg: string; colorWarningBg: string },
 ) => {
   const scale = (neutralColor && neutralColorScales[neutralColor]) || gray;
-  const token = generateColorNeutralPalette({ appearance, scale });
+  const [colorText, colorTextSecondary, colorTextTertiary, colorTextQuaternary] =
+    neutralText[(neutralColor && neutralColorScales[neutralColor] && neutralColor) || 'gray'][
+      appearance
+    ];
+  const token = {
+    ...generateColorNeutralPalette({ appearance, scale }),
+    colorText,
+    colorTextQuaternary,
+    colorTextSecondary,
+    colorTextTertiary,
+  };
 
   return {
     ...token,

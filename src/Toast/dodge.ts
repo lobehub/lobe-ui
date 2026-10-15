@@ -7,7 +7,6 @@ export const TOAST_ROW_HEIGHT = 88;
 export const TOAST_DODGE_GUTTER = 12;
 
 export const TOAST_DODGE_DURATION = toastDodge.duration;
-export const TOAST_DODGE_EASE = toastDodge.ease;
 
 export const TOAST_SHIFT_X_VAR = '--toast-shift-x';
 export const TOAST_SHIFT_Y_VAR = '--toast-shift-y';

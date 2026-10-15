@@ -1,5 +1,5 @@
 import { SkillsIcon } from '@lobehub/ui/icons';
-import { Bot, Folder, History, House } from 'lucide-react';
+import { Bot, FileText, Folder, History, House } from 'lucide-react';
 
 import type { DocumentManifestEntry, NavigationSection } from '../../types/content';
 import {
@@ -60,6 +60,18 @@ describe('buildNavItems', () => {
       ['Releases', '/changelog', false],
       ['Blog', 'https://example.com/blog', true],
     ]);
+  });
+
+  it('renders a configured lucide icon name, reusing one component per name', () => {
+    const [, palette, other] = buildNavItems([
+      { href: '/tokens', icon: 'palette', label: 'Tokens' },
+      { href: '/guide', label: 'Guide' },
+    ]);
+    const again = buildNavItems([{ href: '/tokens', icon: 'palette', label: 'Tokens' }])[1];
+
+    expect(palette.icon).toBe(again.icon);
+    expect(palette.icon).not.toBe(FileText);
+    expect(other.icon).toBe(FileText);
   });
 });
 
