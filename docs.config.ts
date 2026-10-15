@@ -51,6 +51,10 @@ export default defineDocsConfig({
           'https://repository-images.githubusercontent.com/643435168/789cab53-cae5-43fa-965d-5928c3c63c1c',
       },
     },
+    navItems: [
+      { href: '/design-tokens', label: 'Design Tokens' },
+      { href: '/migration-v6', label: 'Migrating to v6' },
+    ],
     prefersColor: 'auto',
     socialLinks: [
       { href: 'https://github.com/lobehub/lobe-ui', icon: 'github', label: 'GitHub' },
