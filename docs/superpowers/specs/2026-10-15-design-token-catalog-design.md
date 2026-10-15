@@ -86,10 +86,11 @@ The reviewed canvas, with any chip overrides, is the decision list Phase 2 imple
 
 The reviewed catalog is published as a standalone docs page, `docs/design-tokens.mdx` (route `/design-tokens`, listed in `docs.config.ts` `publicDocs`). Unlike the canvas, it renders with the real `@lobehub/ui` CSS, so it cannot drift from the shipped values.
 
-- **Layout:** one `h2` per board, in reading order: Surface, Text, Border, Fill, Shadow, Primary and link, Status, Hue accents, Radius, Typography, Motion. Each section is a three-column table: token (camelCase, `--lobe-*` name, role, alias target), then a light cell and a dark cell. Every cell is its own `ThemeScope`, so both themes show side by side whatever the site theme is, and the cells follow the site's primary and neutral colors.
-- **Values** come from `useTheme()` inside each scope; swatches paint `var(--lobe-*)`. Text rows add WCAG contrast on `colorBgContainer`.
-- **Scenes** use real components instead of HTML specimens: a layout → container → elevated stack for Surface, `Alert` and `Tag` for Status, and a play button that runs every easing and spring over the same duration for Motion.
-- **Status** is shown as the 9 × 4 role matrix per theme.
+- **Layout:** one `h2` per board, in reading order: Surface, Text, Border, Fill, Shadow, Primary and link, Status, Hue accents, Radius, Typography, Motion. Each board follows the canvas: a grid of token cards, then light and dark scenes. Everything is drawn with plain elements and `docs/design-tokens/board.css`, not with Lobe UI components, so the layout is not bound to a component's API.
+- **Token cards:** a split swatch on its real parent surface, light half and dark half, each half its own `ThemeScope`; then the camelCase name, an alias chip, the `--lobe-*` name, the light and dark values, and the role. Values come from `createLobeToken` for both appearances with the site's `data-primary-color` / `data-neutral-color`, so they follow the theme switcher.
+- **Scenes** redraw the canvas specimens with `var(--lobe-*)`: the layout → container → menu stack and a modal over the mask, a settings form for text, a list with split lines, fill states, tabs / menu / modal shadows, primary buttons and a selected row, alerts, tags and an error input for status, and radius and type ladders.
+- **Status** is the 9 × 4 role matrix; each cell has a split mini swatch, both values, and contrast for base and Text.
+- **Motion** plots every easing and spring curve and animates them over the same 600ms.
 - Only surviving tokens are listed; drops are not documented. Source: `docs/design-tokens/` (`tokens.ts` holds the groups and role copy).
 
 ## Phase 2: code (PR into `v6`)

@@ -4,23 +4,13 @@ description: Every theme token a Lobe UI component reads, grouped by role, with 
 order: 2
 ---
 
-import { MotionScene } from './design-tokens/Motion';
-import { HueScene, SurfaceScene } from './design-tokens/Scenes';
-import { StatusMatrix, StatusScene } from './design-tokens/Status';
-import { TokenTable } from './design-tokens/TokenTable';
-import {
-  borderTokens,
-  fillTokens,
-  fontSizeTokens,
-  fontTokens,
-  primaryTokens,
-  radiusTokens,
-  shadowTokens,
-  surfaceTokens,
-  textTokens,
-} from './design-tokens/tokens';
+import { BorderBoard, FillBoard, SurfaceBoard, TextBoard } from './design-tokens/NeutralBoards';
+import { HueBoard, PrimaryBoard, ShadowBoard } from './design-tokens/BrandBoards';
+import { MotionBoard } from './design-tokens/MotionBoard';
+import { RadiusBoard, TypographyBoard } from './design-tokens/ShapeBoards';
+import { StatusBoard } from './design-tokens/StatusBoard';
 
-Lobe UI's theme is a set of CSS variables (`--lobe-*`) in `@lobehub/ui/theme.css`, switched by `data-theme`, `data-primary-color` and `data-neutral-color` on `<html>` or a `ThemeScope`. This page lists the tokens the components actually read, grouped by role. Every value is live: the light and dark columns are rendered in their own `ThemeScope`, and they follow the primary and neutral colors you pick in the site theme switcher.
+Lobe UI's theme is a set of CSS variables (`--lobe-*`) in `@lobehub/ui/theme.css`, switched by `data-theme`, `data-primary-color` and `data-neutral-color` on `<html>` or a `ThemeScope`. This page lists the tokens the components actually read, grouped by role. Every swatch is split: the left half renders in the light theme and the right half in the dark theme, whichever theme the site is in. Values are live and follow the primary and neutral colors picked in the site theme switcher.
 
 ```tsx | pure
 import { createStaticStyles, cssVar, useTheme } from '@lobehub/ui';
@@ -43,64 +33,58 @@ In plain CSS, use the variable name directly: `var(--lobe-color-bg-container)`. 
 
 Three surfaces stack from back to front: layout, container, elevated. Overlays dim everything behind them with the mask.
 
-<SurfaceScene />
-
-<TokenTable group={surfaceTokens} />
+<SurfaceBoard />
 
 ## Text
 
-Four ink levels. The aliases exist so code reads by intent; they always resolve to one of the four. The ratio is WCAG contrast against `colorBgContainer`.
+A four-step ink ladder. The aliases exist so code reads by intent; each resolves to one ladder step.
 
-<TokenTable group={textTokens} />
+<TextBoard />
 
 ## Border
 
-<TokenTable group={borderTokens} />
+<BorderBoard />
 
 ## Fill
 
 Translucent fills for interactive states, so they work on any surface.
 
-<TokenTable group={fillTokens} />
+<FillBoard />
 
 ## Shadow
 
-<TokenTable group={shadowTokens} />
+Three elevation steps, black in both themes.
+
+<ShadowBoard />
 
 ## Primary and link
 
 Primary follows `data-primary-color`. Links follow the info status text color.
 
-<TokenTable group={primaryTokens} />
+<PrimaryBoard />
 
 ## Status
 
-Error, warning, info and success share one structure: the same nine roles, generated from one tone ladder per theme, so a role reads at a similar weight across the four statuses. Read a role as `color` + status + suffix, for example `colorWarningBorder`. Base and Text rows also show their contrast ratio on `colorBgContainer`.
+Error, warning, info and success share one structure: the same nine roles, generated from one tone ladder per theme, so a role reads at a similar weight across the four statuses. Read a token as `color` + status + role, for example `colorWarningBorder` (`base` is plain `colorWarning`). Each cell shows the light and dark value; base and Text add their contrast on `colorBgContainer`.
 
-<StatusMatrix />
-
-The same tokens in components:
-
-<StatusScene />
+<StatusBoard />
 
 ## Hue accents
 
 Twelve accent hues for tags, avatars, charts and syntax highlighting. Each also has a numbered scale (`blue1` … `blue11`) and translucent fills.
 
-<HueScene />
+<HueBoard />
 
 ## Radius
 
-<TokenTable group={radiusTokens} />
+<RadiusBoard />
 
 ## Typography
 
-<TokenTable group={fontTokens} />
-
-<TokenTable group={fontSizeTokens} />
+<TypographyBoard />
 
 ## Motion
 
-Durations and easing curves. The three springs are CSS `linear()` curves normalized to their settle time, so pair one with any duration and that duration becomes the spring's settle time.
+The three springs are CSS `linear()` curves normalized to their settle time: pair one with any duration, and that duration becomes the spring's settle time. Press play to run every curve over the same 600ms.
 
-<MotionScene />
+<MotionBoard />
