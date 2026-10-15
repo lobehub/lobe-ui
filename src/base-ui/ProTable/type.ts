@@ -257,12 +257,15 @@ export type ProTableRequestSort = Record<string, SortOrder>;
 /** `filter` argument of `request`: column key → selected filter values (ProComponents shape). */
 export type ProTableRequestFilter = Record<string, (string | number)[] | null>;
 
-/** `request(params, sort, filter)`; resolves `{ data, total, success }` (all optional). */
+/**
+ * `request(params, sort, filter)`; resolves `{ data, total, success }` (all optional). A `null` /
+ * `undefined` result is treated as empty data.
+ */
 export type ProTableRequest<T, Params = Record<string, any>> = (
   params: Params & { [key: string]: any; current?: number; keyword?: string; pageSize?: number },
   sort: ProTableRequestSort,
   filter: ProTableRequestFilter,
-) => Promise<Partial<ProTableRequestData<T>>>;
+) => Promise<Partial<ProTableRequestData<T>> | null | undefined>;
 
 /**
  * `loading` as an object: Spin options of the table overlay (`tip`, `variant`, …) plus `delay`

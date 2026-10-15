@@ -4,7 +4,7 @@ import { Switch } from '@base-ui/react/switch';
 import { cx } from 'antd-style';
 import { animate, motionValue } from 'motion';
 import type { CSSProperties, KeyboardEvent, MouseEvent, PointerEvent } from 'react';
-import { createContext, use, useEffect, useMemo, useRef, useState } from 'react';
+import { createContext, use, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import useControlledState from 'use-merge-value';
 
 import { rootVariants, styles, thumbVariants } from './style';
@@ -185,7 +185,26 @@ export const SwitchThumb = ({
   const baseClassName = thumbVariants({ size });
 
   const metrics = THUMB_METRICS[size];
-  const targetX = isChecked ? (isPressed ? metrics.pressedCheckedX : metrics.checkedX) : 0;
+  // Track travel: the fixed metric, or the measured width when the root grows (inner text).
+  const [travel, setTravel] = useState(metrics.checkedX);
+  useLayoutEffect(() => {
+    const root = ref.current?.parentElement;
+    if (!root) return;
+    const measure = () => {
+      const width = root.clientWidth;
+      // root padding 2px each side
+      setTravel(
+        width > 0 ? Math.max(metrics.checkedX, width - 4 - metrics.width) : metrics.checkedX,
+      );
+    };
+    measure();
+    if (typeof ResizeObserver === 'undefined') return;
+    const observer = new ResizeObserver(measure);
+    observer.observe(root);
+    return () => observer.disconnect();
+  }, [metrics]);
+  const extra = travel - metrics.checkedX;
+  const targetX = isChecked ? (isPressed ? metrics.pressedCheckedX : metrics.checkedX) + extra : 0;
   const targetWidth = isPressed ? metrics.pressedWidth : metrics.width;
 
   const [values] = useState(() => ({

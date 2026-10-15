@@ -42,8 +42,12 @@ const Form = memo<FormProps>(
     onFormSubmit,
     layout,
     ref,
+    compact,
+    itemPadding,
     ...rest
   }) => {
+    const resolvedGap = gap ?? (compact ? 12 : undefined);
+    const resolvedItemPadding = itemPadding ?? (compact ? 10 : undefined);
     const { mobile } = useResponsive();
     const formRef = useRef<HTMLFormElement>(null);
     const [submitLoading, setSubmitLoading] = useState(false);
@@ -173,7 +177,18 @@ const Form = memo<FormProps>(
         <BaseForm
           className={cx(rootVariants({ variant }), className)}
           ref={mergedRef}
-          style={{ gap, ...style }}
+          style={{
+            gap: resolvedGap,
+            ...(resolvedItemPadding === undefined
+              ? undefined
+              : {
+                  '--lobe-form-item-padding-block':
+                    typeof resolvedItemPadding === 'number'
+                      ? `${resolvedItemPadding}px`
+                      : resolvedItemPadding,
+                }),
+            ...style,
+          }}
           onFormSubmit={async (values, eventDetails) => {
             onFormSubmit?.(values, eventDetails);
             if (!onFinish) return;

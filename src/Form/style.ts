@@ -200,7 +200,7 @@ export const itemStyles = createStaticStyles(({ css }) => ({
   `,
   root: css`
     &.${prefixCls}-form-item {
-      padding-block: 16px;
+      padding-block: var(--lobe-form-item-padding-block, 16px);
       padding-inline: 0;
 
       .${prefixCls}-form-item-label {

@@ -20,10 +20,20 @@ export interface FormProps extends Omit<AntFormProps, 'variant' | 'styles' | 'cl
     item?: string;
   };
   collapsible?: boolean;
+  /**
+   * Compact spacing for narrow containers (Drawer / Modal): `gap` 12px and `itemPadding` 10px
+   * unless set explicitly. Default `false` (unchanged spacing).
+   */
+  compact?: boolean;
   defaultActiveKey?: (string | number)[];
   footer?: ReactNode;
   gap?: number | string;
   itemMinWidth?: FormItemProps['minWidth'];
+  /**
+   * Block padding (top / bottom) of every Form.Item. Default `16px`.
+   * Use a smaller value for compact forms in Drawers / Modals.
+   */
+  itemPadding?: number | string;
   items?: FormGroupItemType[] | FormItemProps[];
   itemsType?: ItemsType;
   itemVariant?: AntFormProps['variant'];

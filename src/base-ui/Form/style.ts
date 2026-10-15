@@ -74,7 +74,7 @@ export const fieldStyles = createStaticStyles(({ css, cssVar }) => ({
 
     box-sizing: border-box;
     width: 100%;
-    padding-block: 16px;
+    padding-block: var(--lobe-form-item-padding-block, 16px);
   `,
   vertical: css`
     flex-direction: column;

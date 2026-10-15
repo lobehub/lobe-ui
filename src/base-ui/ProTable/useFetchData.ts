@@ -2,7 +2,12 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import type { SortOrder } from '@/base-ui/Table/type';
 
-import type { ProTablePageInfo, ProTableRequest, ProTableRequestFilter } from './type';
+import type {
+  ProTablePageInfo,
+  ProTableRequest,
+  ProTableRequestData,
+  ProTableRequestFilter,
+} from './type';
 
 type Filter = Record<string, (string | number | boolean)[] | null>;
 
@@ -54,11 +59,12 @@ export const useFetchData = <T>(options: UseFetchDataOptions<T>) => {
         params.current = opts.pageInfo.current;
         params.pageSize = opts.pageInfo.pageSize;
       }
-      const response = await opts.request(
+      // A `request` resolving `null` / `undefined` (e.g. an empty API body) is treated as empty data.
+      const response: Partial<ProTableRequestData<T>> = (await opts.request(
         params as any,
         opts.sort,
         opts.filter as ProTableRequestFilter,
-      );
+      )) ?? { data: [] };
       if (id !== requestId.current) return;
       if (response.success === false) {
         // Pro keeps the previous data when the request reports failure.
