@@ -320,10 +320,14 @@ describe('ProTable request typing', () => {
     expectTypeOf<
       Parameters<ProTableRequest<User, { status?: string }>>[0]['status']
     >().toEqualTypeOf<string | undefined>();
-    expectTypeOf<ReturnType<ProTableRequest<User>>>().resolves.toMatchTypeOf<{
-      data?: User[] | undefined;
-      total?: number;
-    }>();
+    expectTypeOf<ReturnType<ProTableRequest<User>>>().resolves.toMatchTypeOf<
+      | {
+          data?: User[] | undefined;
+          total?: number;
+        }
+      | null
+      | undefined
+    >();
   });
 
   it('column request / loading / span / form props type-check', () => {

@@ -18,8 +18,9 @@ export const styles = createStaticStyles(({ css }) => ({
       padding-block: 0;
     }
 
+    /* Mobile stacks flush, unless the Form sets gap / compact (--lobe-form-gap). */
     ${responsive.sm} {
-      gap: 0 !important;
+      gap: var(--lobe-form-gap, 0) !important;
     }
   `,
   rootBorderless: css`
@@ -74,7 +75,7 @@ export const fieldStyles = createStaticStyles(({ css, cssVar }) => ({
 
     box-sizing: border-box;
     width: 100%;
-    padding-block: 16px;
+    padding-block: var(--lobe-form-item-padding-block, 16px);
   `,
   vertical: css`
     flex-direction: column;

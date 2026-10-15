@@ -39,11 +39,14 @@ const Switch = memo<SwitchProps>(
     const resolvedChecked = value ?? checked;
     const resolvedDefaultChecked = defaultValue ?? defaultChecked;
 
+    // With inner text the switch grows to fit it (antd): an invisible sizer reserves the width
+    // of the longer label and the thumb travels the measured track.
+    const hasText = !!(checkedChildren || unCheckedChildren);
+
     return (
       <SwitchRoot
         autoFocus={autoFocus}
         checked={resolvedChecked}
-        className={cx(className, rootClassName, classNames?.root)}
         defaultChecked={resolvedDefaultChecked}
         disabled={isDisabled}
         id={id}
@@ -53,6 +56,12 @@ const Switch = memo<SwitchProps>(
         style={{ ...style, ...customStyles?.root }}
         tabIndex={tabIndex}
         title={title}
+        className={cx(
+          hasText && (size === 'small' ? styles.rootTextSmall : styles.rootText),
+          className,
+          rootClassName,
+          classNames?.root,
+        )}
         onCheckedChange={onChange}
         onClick={onClick}
       >
@@ -75,6 +84,15 @@ const Switch = memo<SwitchProps>(
           >
             {unCheckedChildren}
           </SwitchIcon>
+        )}
+        {hasText && (
+          <span
+            aria-hidden
+            className={cx(styles.textSizer, size === 'small' && styles.textSizerSmall)}
+          >
+            <span>{checkedChildren}</span>
+            <span>{unCheckedChildren}</span>
+          </span>
         )}
         <SwitchThumb className={classNames?.thumb} size={size} style={customStyles?.thumb}>
           {loading && (

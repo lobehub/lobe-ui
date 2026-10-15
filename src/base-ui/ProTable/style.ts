@@ -135,16 +135,29 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     display: inline-flex;
     flex: none;
     align-items: center;
-    width: 160px;
+
+    width: auto;
+    min-width: 160px;
+    max-width: 320px;
 
     & > * {
       width: 100%;
     }
   `,
   lightFilterLabel: css`
+    flex: none;
     font-size: ${cssVar.fontSizeSM};
     color: ${cssVar.colorTextSecondary};
     white-space: nowrap;
+
+    &::after {
+      content: ':';
+    }
+  `,
+  lightFilterSwitch: css`
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
   `,
   optionCell: css`
     display: flex;

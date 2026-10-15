@@ -35,8 +35,12 @@ const Form = memo<FormProps>(
     onFinish,
     ref,
     layout,
+    itemPadding,
+    compact,
     ...rest
   }) => {
+    const resolvedGap = gap ?? (compact ? 12 : undefined);
+    const resolvedItemPadding = itemPadding ?? (compact ? 10 : undefined);
     const { mobile } = useResponsive();
     const [submitLoading, setSubmitLoading] = useState(false);
 
@@ -107,7 +111,21 @@ const Form = memo<FormProps>(
           ref={ref}
           variant={itemVariant}
           style={{
-            gap,
+            gap: resolvedGap,
+            ...(resolvedGap === undefined
+              ? undefined
+              : {
+                  '--lobe-form-gap':
+                    typeof resolvedGap === 'number' ? `${resolvedGap}px` : resolvedGap,
+                }),
+            ...(resolvedItemPadding === undefined
+              ? undefined
+              : {
+                  '--lobe-form-item-padding-block':
+                    typeof resolvedItemPadding === 'number'
+                      ? `${resolvedItemPadding}px`
+                      : resolvedItemPadding,
+                }),
             ...style,
           }}
           onFinish={async (...finishProps) => {

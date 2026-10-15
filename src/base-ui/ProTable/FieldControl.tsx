@@ -8,6 +8,7 @@ import InputNumber from '@/base-ui/Input/InputNumber';
 import Select from '@/base-ui/Select';
 import Switch from '@/base-ui/Switch';
 
+import { styles } from './style';
 import type { ProColumnType, ProTableFormInstance, ProTableValueType } from './type';
 import { useColumnRequest } from './useColumnRequest';
 import { resolveValueEnum, resolveValueType, valueEnumToList } from './utils';
@@ -29,12 +30,23 @@ const FieldControl = ({ column, form, light, onChange, placeholder, value }: Fie
   const valueType = resolveValueType(column) ?? 'text';
   const valueEnum = resolveValueEnum(column);
   const { fieldProps = {} } = column;
-  const label = typeof column.title === 'string' ? column.title : undefined;
   const size = light ? 'small' : undefined;
   const { isDarkMode } = useThemeMode();
   // Light filter: outlined on light backgrounds, filled in dark mode.
   const variant = light ? (isDarkMode ? 'filled' : 'outlined') : undefined;
   const remote = useColumnRequest(column);
+  // Light filter: the field label always stays visible inside the control (Pro `FieldLabel`
+  // style, "Status: All"), so a placeholder such as "All" is never ambiguous.
+  const lightLabel =
+    light &&
+    column.title !== undefined &&
+    column.title !== null &&
+    typeof column.title !== 'function' ? (
+      <span className={styles.lightFilterLabel} data-pro-table-light-label="">
+        {column.title as ReactNode}
+      </span>
+    ) : undefined;
+  const labelProps = lightLabel ? { prefix: lightLabel } : {};
 
   if (column.renderFormItem) {
     return column.renderFormItem(
@@ -59,8 +71,9 @@ const FieldControl = ({ column, form, light, onChange, placeholder, value }: Fie
         loading={remote.loading}
         mode={valueType === 'checkbox' ? 'multiple' : undefined}
         options={options as any}
-        placeholder={light ? label : placeholder.select}
+        placeholder={placeholder.select}
         size={size}
+        {...labelProps}
         style={{ width: '100%' }}
         value={value ?? (valueType === 'checkbox' ? [] : null)}
         variant={variant}
@@ -85,8 +98,9 @@ const FieldControl = ({ column, form, light, onChange, placeholder, value }: Fie
     case 'progress': {
       return (
         <InputNumber
-          placeholder={light ? label : placeholder.input}
+          placeholder={placeholder.input}
           size={size}
+          {...labelProps}
           style={{ width: '100%' }}
           value={value ?? null}
           variant={variant}
@@ -96,15 +110,26 @@ const FieldControl = ({ column, form, light, onChange, placeholder, value }: Fie
       );
     }
     case 'switch': {
-      return <Switch checked={!!value} {...fieldProps} onChange={(next) => onChange(next)} />;
+      const control = (
+        <Switch checked={!!value} {...fieldProps} onChange={(next) => onChange(next)} />
+      );
+      return lightLabel ? (
+        <span className={styles.lightFilterSwitch}>
+          {lightLabel}
+          {control}
+        </span>
+      ) : (
+        control
+      );
     }
     case 'date':
     case 'dateTime': {
       return (
         <DatePicker
           allowClear
-          placeholder={light ? label : placeholder.select}
+          placeholder={placeholder.select}
           size={size}
+          {...labelProps}
           style={{ width: '100%' }}
           value={value ?? null}
           variant={variant}
@@ -119,6 +144,7 @@ const FieldControl = ({ column, form, light, onChange, placeholder, value }: Fie
         <DateRangePicker
           allowClear
           size={size}
+          {...labelProps}
           style={{ width: '100%' }}
           value={value ?? [null, null]}
           variant={variant}
@@ -131,8 +157,9 @@ const FieldControl = ({ column, form, light, onChange, placeholder, value }: Fie
       return (
         <Input
           allowClear
-          placeholder={light ? label : placeholder.input}
+          placeholder={placeholder.input}
           size={size}
+          {...labelProps}
           type={valueType === 'password' ? 'password' : undefined}
           value={value ?? ''}
           variant={variant}

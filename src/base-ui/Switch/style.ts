@@ -15,6 +15,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     justify-content: center;
 
     color: ${cssVar.colorBgLayout};
+    white-space: nowrap;
 
     transition:
       opacity 200ms ${cssVar.motionEaseOut},
@@ -25,7 +26,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
   `,
   iconLeft: css`
-    inset-inline-start: 4px;
+    inset-inline-start: 7px;
     scale: 0;
     opacity: 0;
 
@@ -45,7 +46,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
   `,
   iconRight: css`
-    inset-inline-end: 4px;
+    inset-inline-end: 7px;
 
     [data-checked] & {
       scale: 0;
@@ -145,6 +146,52 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     width: 36px;
     min-width: 36px;
     height: 22px;
+  `,
+  /* Text mode: the root sizes to the sizer only. The thumb is taken out of flow (its press
+     animation widens it) so pressing never resizes the control; the sizer reserves its slot. */
+  rootText: css`
+    width: auto;
+    min-width: 44px;
+    font-size: 12px;
+    line-height: 1;
+
+    & > :last-child {
+      position: absolute;
+      inset-inline-start: 2px;
+    }
+  `,
+  rootTextSmall: css`
+    width: auto;
+    min-width: 32px;
+    font-size: 10px;
+    line-height: 1;
+
+    & > :last-child {
+      position: absolute;
+      inset-inline-start: 2px;
+    }
+  `,
+  textSizer: css`
+    pointer-events: none;
+
+    display: grid;
+    flex: none;
+    order: 1;
+
+    /* thumb slot (18px) + gaps */
+    padding-inline: 24px 4px;
+
+    white-space: nowrap;
+
+    visibility: hidden;
+
+    & > * {
+      grid-area: 1 / 1;
+    }
+  `,
+  textSizerSmall: css`
+    /* thumb slot (12px) + gaps */
+    padding-inline: 16px 2px;
   `,
   rootSmall: css`
     width: 28px;
