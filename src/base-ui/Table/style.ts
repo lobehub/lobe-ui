@@ -70,10 +70,64 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
   const startShadow = `box-shadow: inset 10px 0 8px -8px ${cssVar.colorSplit};`;
   const endShadow = `box-shadow: inset -10px 0 8px -8px ${cssVar.colorSplit};`;
 
+  /* Rounded corners. overflow:clip + radius on the container alone is not enough: corner
+     fixed cells (own stacking layer), header washes and the FixedFrost backdrop-filter panes
+     are composited separately and WebKit (and browsers without overflow:clip) paint them
+     square past the radius. So the corner cells and frost panes carry the matching inner
+     radius themselves (vars inherit from the container; 0 next to title / footer). A
+     clip-path on the sections is avoided: it becomes a backdrop root and kills the blur. */
+  const cornerClip = (radius: string) => `
+    & > ${p}-container {
+      --lobe-table-radius-top: ${radius};
+      --lobe-table-radius-bottom: ${radius};
+    }
+
+    & > ${p}-title + ${p}-container {
+      --lobe-table-radius-top: 0px;
+    }
+
+    &:has(> ${p}-footer) > ${p}-container {
+      --lobe-table-radius-bottom: 0px;
+    }
+
+    ${ownRows
+      .split(', ')
+      .map((r) => r.replace(' > * > tr', ' > thead > tr:first-child > :first-child'))
+      .join(', ')} {
+      border-start-start-radius: var(--lobe-table-radius-top);
+    }
+
+    ${ownRows
+      .split(', ')
+      .map((r) => r.replace(' > * > tr', ' > thead > tr:first-child > :last-child'))
+      .join(', ')} {
+      border-start-end-radius: var(--lobe-table-radius-top);
+    }
+
+    ${ownRows
+      .split(', ')
+      .map((r) => r.replace(' > * > tr', ' > tbody > tr:last-child > :first-child'))
+      .join(', ')} {
+      border-end-start-radius: var(--lobe-table-radius-bottom);
+    }
+
+    ${ownRows
+      .split(', ')
+      .map((r) => r.replace(' > * > tr', ' > tbody > tr:last-child > :last-child'))
+      .join(', ')} {
+      border-end-end-radius: var(--lobe-table-radius-bottom);
+    }
+
+    & ${p}-frost-start, & ${p}-frost-end {
+      border-radius: inherit;
+    }
+  `;
+
   return {
     outlined: css`
       &${p}-outlined {
         ${variantVars}
+        ${cornerClip(`calc(${cssVar.borderRadiusLG} - 1px)`)}
         /* The square root must not paint behind the rounded frame: the clipped container
            is the ONE layer carrying the body (light colorBgContainer, dark
            colorFillQuaternary). Title / footer are siblings, so they paint it once too. */
@@ -166,13 +220,23 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
     `,
     frostStart: css`
       position: sticky;
+
+      border-start-start-radius: var(--lobe-table-radius-top, 0);
+      border-end-start-radius: var(--lobe-table-radius-bottom, 0);
+
       inset-inline-start: 0;
+
       flex: none;
+
       height: 100%;
       ${frost}
     `,
     frostEnd: css`
       position: sticky;
+
+      border-start-end-radius: var(--lobe-table-radius-top, 0);
+      border-end-end-radius: var(--lobe-table-radius-bottom, 0);
+
       inset-inline-end: 0;
 
       flex: none;
@@ -184,6 +248,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => {
     filled: css`
       &${p}-filled {
         ${variantVars}
+        ${cornerClip(cssVar.borderRadiusLG)}
         /* Filled owns its fill in both modes (Block filled = colorFillTertiary; dark uses the
            Quaternary surface) and its opaque base is the page behind it, not colorBgContainer. */
         --lobe-table-fill: var(--lobe-table-surface, ${cssVar.colorFillTertiary});
