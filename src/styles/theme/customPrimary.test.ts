@@ -1,6 +1,6 @@
 import chroma from 'chroma-js';
 
-import { colorScales } from '@/color/colors';
+import { colorScales, gray } from '@/color/colors';
 
 import { primaryColors } from '../customTheme';
 import { createLobeToken } from './createLobeToken';
@@ -19,13 +19,26 @@ describe('custom primary colour', () => {
     expect(isCustomPrimaryColor(undefined)).toBe(false);
   });
 
-  test('the picked colour is the solid step in both appearances', () => {
+  test('the picked colour is the light solid step', () => {
     const scale = generatePrimaryScale('#7C5CFF');
 
     expect(scale.light[9]).toBe('#7c5cff');
-    expect(scale.dark[9]).toBe('#7c5cff');
     for (const steps of Object.values(scale)) expect(steps).toHaveLength(13);
   });
+
+  test('a colour readable on dark surfaces is also the dark solid step', () => {
+    expect(generatePrimaryScale('#60b1ff').dark[9]).toBe('#60b1ff');
+  });
+
+  test.each(['#1a7f5a', '#0b3d91', '#8b1e3f', '#7c5cff'] as const)(
+    '%s is lifted to a readable dark solid step with the same hue',
+    (hex) => {
+      const solid = generatePrimaryScale(hex).dark[9];
+
+      expect(chroma.contrast(solid, gray.dark[1])).toBeGreaterThanOrEqual(4.5);
+      expect(Math.abs(hueOf(solid) - hueOf(hex))).toBeLessThan(8);
+    },
+  );
 
   test('backgrounds keep the nearest preset lightness and take the picked hue', () => {
     const scale = generatePrimaryScale('#7c5cff');
@@ -53,6 +66,24 @@ describe('custom primary colour', () => {
     scale.dark.forEach((step, i) => {
       expect(chroma.deltaE(step, colorScales.blue.dark[i])).toBeLessThan(3);
     });
+  });
+
+  test.each(['#1a7f5a', '#7c5cff', '#0b3d91', '#ffd400', '#8b1e3f', '#e65c00'] as const)(
+    '%s keeps both ramps in lightness order',
+    (hex) => {
+      const scale = generatePrimaryScale(hex);
+      const light = scale.light.map(lightnessOf);
+      const dark = scale.dark.map(lightnessOf);
+
+      light.slice(1).forEach((l, i) => expect(l).toBeLessThan(light[i]));
+      dark.slice(1).forEach((l, i) => expect(l).toBeGreaterThan(dark[i]));
+    },
+  );
+
+  test('a deep colour borrows tints from a preset of similar lightness', () => {
+    const scale = generatePrimaryScale('#1a7f5a');
+
+    expect(chroma.contrast(scale.light[4], '#ffffff')).toBeGreaterThan(1.2);
   });
 
   test('greys produce valid colours', () => {

@@ -36,7 +36,7 @@ Theme appearance and colors are not configured here: import `@lobehub/ui/theme.c
 
 ## Custom primary colour
 
-`primaryColor` also takes any 6-digit hex (`setLobeTheme`, `ThemeScope`, `LobeThemeScript`). Lobe UI builds the 13-step light and dark scale from the preset nearest in hue: the picked colour becomes `colorPrimary`, hover and active steps keep the preset's lightness offsets around it, and backgrounds and borders keep the preset's lightness with the new hue. The generated rules are injected once per colour under `[data-primary-color='#rrggbb']`, so light / dark switching and nested scopes keep working. For server rendering, `getCustomPrimaryCss(hex)` returns the same CSS.
+`primaryColor` also takes any 6-digit hex (`setLobeTheme`, `ThemeScope`, `LobeThemeScript`). Lobe UI builds the 13-step light and dark scale from the preset nearest in hue and lightness: the picked colour becomes the light `colorPrimary`, neighbouring steps follow its lightness on a taper so the ramp stays in order, and backgrounds and borders keep the preset's lightness with the new hue. In dark mode, a colour below 4.5:1 on the dark container is lifted (same hue and chroma) until it reaches 4.5:1, so deep brand colours stay readable. The generated rules are injected once per colour under `[data-primary-color='#rrggbb']`, so light / dark switching and nested scopes keep working. For server rendering, `getCustomPrimaryCss(hex)` returns the same CSS.
 
 <Demo of={DemoCustomPrimary} layout="bare" />
 
