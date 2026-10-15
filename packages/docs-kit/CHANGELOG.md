@@ -2,6 +2,17 @@
 
 # Changelog
 
+# [5.28.0](https://github.com/lobehub/lobe-ui/compare/docs-kit@5.27.6...docs-kit@5.28.0) (2026-10-15)
+
+### ✨ Features
+
+- **docs-kit**: Depend on @lobehub/ui 6 [force major], closes [#730](https://github.com/lobehub/lobe-ui/issues/730) ([94cc34d](https://github.com/lobehub/lobe-ui/commit/94cc34d))
+
+### 🐛 Bug Fixes
+
+- **docs-kit**: Inline ESM icons in Vitest, closes [#722](https://github.com/lobehub/lobe-ui/issues/722) ([5ddac2a](https://github.com/lobehub/lobe-ui/commit/5ddac2a))
+- **docs-kit**: Load @lobehub/ui style.css for consumers without StyleX, closes [#726](https://github.com/lobehub/lobe-ui/issues/726) ([fa64c3a](https://github.com/lobehub/lobe-ui/commit/fa64c3a))
+
 ## [5.27.6](https://github.com/lobehub/lobe-ui/compare/docs-kit@5.27.5...docs-kit@5.27.6) (2026-10-14)
 
 ### 🐛 Bug Fixes
