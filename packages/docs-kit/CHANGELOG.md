@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [5.27.7-beta.2](https://github.com/lobehub/lobe-ui/compare/docs-kit@5.27.7-beta.1...docs-kit@5.27.7-beta.2) (2026-10-15)
+
+### 🐛 Bug Fixes
+
+- **docs-kit**: Load @lobehub/ui style.css for consumers without StyleX, closes [#726](https://github.com/lobehub/lobe-ui/issues/726) ([fa64c3a](https://github.com/lobehub/lobe-ui/commit/fa64c3a))
+
 ## [5.27.7-beta.1](https://github.com/lobehub/lobe-ui/compare/docs-kit@5.27.6...docs-kit@5.27.7-beta.1) (2026-10-14)
 
 ### 🐛 Bug Fixes
