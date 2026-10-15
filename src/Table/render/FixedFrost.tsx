@@ -41,6 +41,19 @@ const measureSides = (rows: Element[]) => {
 const collectRails = (table: HTMLElement): Rail[] => {
   const rails: Rail[] = [];
   const own = (el: Element) => el.closest(p) === table;
+  const ownMatch = (selector: string) =>
+    Array.from(table.querySelectorAll(selector)).some((el) => own(el));
+
+  // Empty / skeleton body: the placeholder row spans every column, so there is nothing fixed
+  // in the body and nothing scrolled under the fixed side; a rail would only blur the
+  // skeleton and its row dividers.
+  if (ownMatch(`${p}-placeholder`) || ownMatch('[data-table-skeleton]')) return rails;
+
+  // useScrollSync flags the table with `*-shadow-show` exactly while content sits under a
+  // fixed side; at rest the transparent fixed cells cover nothing.
+  const showStart = table.classList.contains(`${PREFIX_CLS}-fix-start-shadow-show`);
+  const showEnd = table.classList.contains(`${PREFIX_CLS}-fix-end-shadow-show`);
+  if (!showStart && !showEnd) return rails;
   const hosts = table.querySelectorAll<HTMLElement>(
     `${p}-content, ${p}-header, ${p}-body, ${p}-tbody-virtual-holder-inner`,
   );
@@ -54,7 +67,9 @@ const collectRails = (table: HTMLElement): Rail[] => {
       const rows = Array.from(host.querySelectorAll(`${p}-row`)).filter(
         (el) => own(el) && !el.classList.contains(`${PREFIX_CLS}-row-extra`),
       );
-      const { start, end } = measureSides(rows.slice(0, 3));
+      const measured = measureSides(rows.slice(0, 3));
+      const start = showStart ? measured.start : 0;
+      const end = showEnd ? measured.end : 0;
       if (start || end) rails.push({ end, fill: true, height: 0, host, start, width: 0 });
       continue;
     }
@@ -64,7 +79,9 @@ const collectRails = (table: HTMLElement): Rail[] => {
     const rows = Array.from(tableEl.querySelectorAll(':scope > thead > tr, :scope > tbody > tr'))
       .filter((row) => !row.classList.contains(`${PREFIX_CLS}-measure-row`))
       .slice(0, 6);
-    const { start, end } = measureSides(rows);
+    const measured = measureSides(rows);
+    const start = showStart ? measured.start : 0;
+    const end = showEnd ? measured.end : 0;
     if (!start && !end) continue;
     rails.push({
       end,
@@ -90,7 +107,9 @@ const sameRails = (a: Rail[], b: Rail[]) =>
   );
 
 // A per-cell backdrop-filter blurs each box on its own and shows seams at every row, so
-// each scroll host gets one rail holding a sticky pane per fixed side instead.
+// each scroll host gets one rail holding a sticky pane per fixed side instead. A side is only
+// frosted while content is scrolled under it and never over an empty / skeleton body, so row
+// dividers stay continuous through fixed columns.
 const FixedFrost = memo<{ rootRef: RefObject<HTMLElement | null> }>(({ rootRef }) => {
   const [rails, setRails] = useState<Rail[]>([]);
 

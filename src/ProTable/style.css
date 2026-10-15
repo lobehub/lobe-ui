@@ -78,7 +78,10 @@
     display: inline-flex;
     flex: none;
     align-items: center;
-    width: 160px;
+
+    width: auto;
+    min-width: 160px;
+    max-width: 320px;
 
     & > * {
       width: 100%;

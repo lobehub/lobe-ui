@@ -1,6 +1,7 @@
 import { toCssVariables, toCssVarName } from '../css';
 import { neutralColors, primaryColors } from '../customTheme';
 import { createLobeTokenGroups } from './createLobeToken';
+import { isRegisteredPalette } from './customPalette';
 import type { CustomPrimaryColor } from './customPrimary';
 import type { LobeAppearance } from './scope';
 
@@ -77,6 +78,23 @@ export const getCustomPrimaryCss = (color: CustomPrimaryColor) => {
         ),
       ),
     )
+    .join('\n\n');
+};
+
+export const getCustomPaletteCss = (name: string) => {
+  if (!isRegisteredPalette(name)) return '';
+  return (['light', 'dark'] as const)
+    .map((appearance) => {
+      const { neutral, palette } = createLobeTokenGroups({ appearance, palette: name });
+      return rule(
+        `[data-palette='${name}']${appearanceSelector(appearance)}`,
+        toCssVariables({
+          ...palette,
+          colorErrorOutline: neutral.colorErrorOutline,
+          colorWarningOutline: neutral.colorWarningOutline,
+        }),
+      );
+    })
     .join('\n\n');
 };
 

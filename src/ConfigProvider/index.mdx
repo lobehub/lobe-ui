@@ -36,9 +36,24 @@ Theme appearance and colors are not configured here: import `@lobehub/ui/theme.c
 
 ## Custom primary colour
 
-`primaryColor` also takes any 6-digit hex (`setLobeTheme`, `ThemeScope`, `LobeThemeScript`). Lobe UI builds the 13-step light and dark scale from the preset nearest in hue: the picked colour becomes `colorPrimary`, hover and active steps keep the preset's lightness offsets around it, and backgrounds and borders keep the preset's lightness with the new hue. The generated rules are injected once per colour under `[data-primary-color='#rrggbb']`, so light / dark switching and nested scopes keep working. For server rendering, `getCustomPrimaryCss(hex)` returns the same CSS.
+`primaryColor` also takes any 6-digit hex (`setLobeTheme`, `ThemeScope`, `LobeThemeScript`). Lobe UI builds the 13-step light and dark scale from the preset nearest in hue and lightness: the picked colour becomes the light `colorPrimary`, neighbouring steps follow its lightness on a taper so the ramp stays in order, and backgrounds and borders keep the preset's lightness with the new hue. In dark mode, a colour below 4.5:1 on the dark container is lifted (same hue and chroma) until it reaches 4.5:1, so deep brand colours stay readable. The generated rules are injected once per colour under `[data-primary-color='#rrggbb']`, so light / dark switching and nested scopes keep working. For server rendering, `getCustomPrimaryCss(hex)` returns the same CSS.
 
 <Demo of={DemoCustomPrimary} layout="bare" />
+
+## Custom status palette
+
+Error, warning, info and success can be replaced as a named palette. Register the 13-step scales once at module scope (the same `ColorScaleItem` shape as `statusColorScales` in `@lobehub/ui/color`), then select the palette like any other theme attribute. Statuses you leave out keep the default scales.
+
+```tsx
+import { registerLobePalette, setLobeTheme } from '@lobehub/ui';
+
+import { error, success } from './acme-palette';
+
+registerLobePalette('acme', { error, success });
+setLobeTheme({ palette: 'acme' });
+```
+
+`ThemeScope` and `LobeThemeScript` take the same `palette` prop. The rules go under `[data-palette='acme']`, and `useTheme()` returns the same values, so charts and canvas code match the CSS. For server rendering, `getCustomPaletteCss(name)` returns that CSS. Names are limited to letters, digits, `_` and `-`. If you register the same name again, call `setLobeTheme` afterwards so the root stylesheet is rewritten.
 
 ## Motion
 

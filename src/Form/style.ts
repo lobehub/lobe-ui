@@ -9,10 +9,10 @@ const reducedMotion = '@media (prefers-reduced-motion: reduce)';
 
 export const rootStyles = stylex.create({
   borderless: {
-    gap: { default: 48, [media.sm]: '0 !important' },
+    gap: { default: 48, [media.sm]: 'var(--lobe-form-gap, 0) !important' },
   },
   root: {
-    gap: { default: 16, [media.sm]: '0 !important' },
+    gap: { default: 16, [media.sm]: 'var(--lobe-form-gap, 0) !important' },
     display: 'flex',
     flexDirection: 'column',
     position: 'relative',
@@ -49,7 +49,7 @@ export const fieldStyles = stylex.create({
   },
   root: {
     gap: 12,
-    paddingBlock: 16,
+    paddingBlock: 'var(--lobe-form-item-padding-block,16px)',
     boxSizing: 'border-box',
     display: 'flex',
     width: '100%',
