@@ -52,8 +52,8 @@ export default defineDocsConfig({
       },
     },
     navItems: [
-      { href: '/design-tokens', label: 'Design Tokens' },
-      { href: '/migration-v6', label: 'Migrating to v6' },
+      { href: '/design-tokens', icon: 'swatch-book', label: 'Design Tokens' },
+      { href: '/migration-v6', icon: 'milestone', label: 'Migrating to v6' },
     ],
     prefersColor: 'auto',
     socialLinks: [
