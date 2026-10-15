@@ -18,6 +18,7 @@ export {
   type CreateLobeTokenParams,
   type LobeToken,
 } from './theme/createLobeToken';
+export { type LobeStatusPalette, registerLobePalette } from './theme/customPalette';
 export {
   type CustomPrimaryColor,
   isCustomPrimaryColor,
@@ -39,4 +40,9 @@ export {
   useTheme,
   useThemeMode,
 } from './theme/scope';
-export { getCustomPrimaryCss, getGlobalCss, getThemeCss } from './theme/themeCss';
+export {
+  getCustomPaletteCss,
+  getCustomPrimaryCss,
+  getGlobalCss,
+  getThemeCss,
+} from './theme/themeCss';

@@ -40,6 +40,21 @@ Theme appearance and colors are not configured here: import `@lobehub/ui/theme.c
 
 <Demo of={DemoCustomPrimary} layout="bare" />
 
+## Custom status palette
+
+Error, warning, info and success can be replaced as a named palette. Register the 13-step scales once at module scope (the same `ColorScaleItem` shape as `statusColorScales` in `@lobehub/ui/color`), then select the palette like any other theme attribute. Statuses you leave out keep the default scales.
+
+```tsx
+import { registerLobePalette, setLobeTheme } from '@lobehub/ui';
+
+import { error, success } from './acme-palette';
+
+registerLobePalette('acme', { error, success });
+setLobeTheme({ palette: 'acme' });
+```
+
+`ThemeScope` and `LobeThemeScript` take the same `palette` prop. The rules go under `[data-palette='acme']`, and `useTheme()` returns the same values, so charts and canvas code match the CSS. For server rendering, `getCustomPaletteCss(name)` returns that CSS. Names are limited to letters, digits, `_` and `-`. If you register the same name again, call `setLobeTheme` afterwards so the root stylesheet is rewritten.
+
 ## Motion
 
 Lobe UI uses Motion components via context. You must pass a motion component to `ConfigProvider`. If your app uses `LazyMotion`, pass `m`:
