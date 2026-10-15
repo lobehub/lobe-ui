@@ -11,12 +11,13 @@ import {
 
 import type { NeutralColors } from '../customTheme';
 import { createLobeToken, type LobeToken } from './createLobeToken';
+import { getPaletteRevision, isRegisteredPalette, subscribePalettes } from './customPalette';
 import {
   type CustomPrimaryColor,
   isCustomPrimaryColor,
   type LobePrimaryColor,
 } from './customPrimary';
-import { getCustomPrimaryCss } from './themeCss';
+import { getCustomPaletteCss, getCustomPrimaryCss } from './themeCss';
 import { staticToken } from './token/static';
 
 export type LobeAppearance = 'light' | 'dark';
@@ -24,13 +25,15 @@ export type LobeAppearance = 'light' | 'dark';
 export interface LobeThemeState {
   appearance: LobeAppearance;
   neutralColor?: NeutralColors;
+  palette?: string;
   primaryColor?: LobePrimaryColor;
 }
 
-const ATTRIBUTES = ['data-theme', 'data-primary-color', 'data-neutral-color'];
+const ATTRIBUTES = ['data-theme', 'data-primary-color', 'data-neutral-color', 'data-palette'];
 
-const toAttributes = ({ appearance, neutralColor, primaryColor }: LobeThemeState) => ({
+const toAttributes = ({ appearance, neutralColor, palette, primaryColor }: LobeThemeState) => ({
   'data-neutral-color': neutralColor,
+  'data-palette': palette,
   'data-primary-color': primaryColor,
   'data-theme': appearance,
 });
@@ -49,6 +52,20 @@ const ensureCustomPrimaryStyle = (color: CustomPrimaryColor, doc: Document) => {
   doc.head.append(style);
 };
 
+const paletteStyleId = (name: string) => `lobe-palette-${name}`;
+
+const ensurePaletteStyle = (name: string, doc: Document) => {
+  const id = paletteStyleId(name);
+  let style = doc.getElementById(id);
+  if (!style) {
+    style = doc.createElement('style');
+    style.id = id;
+    doc.head.append(style);
+  }
+  const css = getCustomPaletteCss(name);
+  if (style.textContent !== css) style.textContent = css;
+};
+
 export const setLobeTheme = (
   state: Partial<LobeThemeState>,
   root: HTMLElement = document.documentElement,
@@ -57,6 +74,7 @@ export const setLobeTheme = (
   next.primaryColor = normalizePrimary(next.primaryColor);
   if (isCustomPrimaryColor(next.primaryColor))
     ensureCustomPrimaryStyle(next.primaryColor, root.ownerDocument);
+  if (isRegisteredPalette(next.palette)) ensurePaletteStyle(next.palette, root.ownerDocument);
   for (const [name, value] of Object.entries(toAttributes(next))) {
     if (value) root.setAttribute(name, value);
     else root.removeAttribute(name);
@@ -66,11 +84,15 @@ export const setLobeTheme = (
 const readThemeState = (el: HTMLElement): LobeThemeState => ({
   appearance: el.dataset.theme === 'dark' ? 'dark' : 'light',
   neutralColor: (el.dataset.neutralColor as NeutralColors) || undefined,
+  palette: el.dataset.palette || undefined,
   primaryColor: (el.dataset.primaryColor as LobePrimaryColor) || undefined,
 });
 
 const stateKey = (state: LobeThemeState) =>
-  `${state.appearance}|${state.primaryColor ?? ''}|${state.neutralColor ?? ''}`;
+  `${state.appearance}|${state.primaryColor ?? ''}|${state.neutralColor ?? ''}|${state.palette ?? ''}`;
+
+const usePaletteRevision = () =>
+  useSyncExternalStore(subscribePalettes, getPaletteRevision, getPaletteRevision);
 
 const SERVER_STATE: LobeThemeState = { appearance: 'light' };
 let rootSnapshot: LobeThemeState = SERVER_STATE;
@@ -106,6 +128,7 @@ export const ThemeScope = ({
   children,
   className,
   neutralColor,
+  palette,
   primaryColor,
   style,
 }: ThemeScopeProps) => {
@@ -114,17 +137,25 @@ export const ThemeScope = ({
     () => ({
       appearance: appearance ?? parent.appearance,
       neutralColor: neutralColor ?? parent.neutralColor,
+      palette: palette ?? parent.palette,
       primaryColor: normalizePrimary(primaryColor) ?? parent.primaryColor,
     }),
-    [appearance, neutralColor, primaryColor, parent],
+    [appearance, neutralColor, palette, primaryColor, parent],
   );
   const customPrimary = isCustomPrimaryColor(state.primaryColor) ? state.primaryColor : undefined;
+  const paletteRevision = usePaletteRevision();
+  const customPalette = isRegisteredPalette(state.palette) ? state.palette : undefined;
 
   return (
     <ThemeScopeContext value={state}>
       {customPrimary && (
         <style href={customPrimaryStyleId(customPrimary)} precedence="lobe-theme">
           {getCustomPrimaryCss(customPrimary)}
+        </style>
+      )}
+      {customPalette && (
+        <style href={`${paletteStyleId(customPalette)}-${paletteRevision}`} precedence="lobe-theme">
+          {getCustomPaletteCss(customPalette)}
         </style>
       )}
       <div className={className} style={style} {...toAttributes(state)}>
@@ -145,7 +176,7 @@ const themeCache = new Map<string, LobeTheme>();
 
 export const useTheme = (): LobeTheme => {
   const state = useThemeState();
-  const key = stateKey(state);
+  const key = `${stateKey(state)}@${usePaletteRevision()}`;
   let theme = themeCache.get(key);
   if (!theme) {
     theme = {
@@ -219,6 +250,7 @@ export interface LobeThemeScriptProps {
   appearance?: LobeAppearance | 'system';
   neutralColor?: NeutralColors;
   nonce?: string;
+  palette?: string;
   primaryColor?: LobePrimaryColor;
 }
 
@@ -226,19 +258,23 @@ export const LobeThemeScript = ({
   appearance,
   neutralColor,
   nonce,
+  palette,
   primaryColor,
 }: LobeThemeScriptProps) => {
   const primary = normalizePrimary(primaryColor);
-  const custom = isCustomPrimaryColor(primary)
-    ? [customPrimaryStyleId(primary), getCustomPrimaryCss(primary)]
-    : [null, null];
+  const styles: [string, string][] = [];
+  if (isCustomPrimaryColor(primary))
+    styles.push([customPrimaryStyleId(primary), getCustomPrimaryCss(primary)]);
+  if (isRegisteredPalette(palette))
+    styles.push([paletteStyleId(palette), getCustomPaletteCss(palette)]);
   const args = JSON.stringify([
     appearance ?? null,
     primary ?? null,
     neutralColor ?? null,
-    ...custom,
+    palette ?? null,
+    styles,
   ]);
-  const script = `(function(a,p,n,i,c){var d=document.documentElement;if(a==='system')a=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';if(a)d.setAttribute('data-theme',a);else if(!d.hasAttribute('data-theme'))d.setAttribute('data-theme','light');if(p)d.setAttribute('data-primary-color',p);if(n)d.setAttribute('data-neutral-color',n);if(c&&!document.getElementById(i)){var s=document.createElement('style');s.id=i;s.textContent=c;document.head.appendChild(s);}}).apply(null,${args})`;
+  const script = `(function(a,p,n,q,t){var d=document.documentElement;if(a==='system')a=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';if(a)d.setAttribute('data-theme',a);else if(!d.hasAttribute('data-theme'))d.setAttribute('data-theme','light');if(p)d.setAttribute('data-primary-color',p);if(n)d.setAttribute('data-neutral-color',n);if(q)d.setAttribute('data-palette',q);t.forEach(function(x){if(document.getElementById(x[0]))return;var s=document.createElement('style');s.id=x[0];s.textContent=x[1];document.head.appendChild(s);});}).apply(null,${args})`;
 
   return (
     <script suppressHydrationWarning dangerouslySetInnerHTML={{ __html: script }} nonce={nonce} />

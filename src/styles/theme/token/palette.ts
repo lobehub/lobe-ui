@@ -1,4 +1,4 @@
-import { statusColorScales } from '@/color/status';
+import { type StatusColorScales, statusColorScales } from '@/color/status';
 import type { ColorScaleItem } from '@/color/types';
 
 import { generateCustomColorToken } from '../customToken';
@@ -16,11 +16,14 @@ const createStatusPalette = <T extends string>(
   return { ...palette, [`color${type}Text`]: scale.light[10] } as typeof palette;
 };
 
-export const createPaletteToken = (appearance: 'light' | 'dark') => {
-  const error = createStatusPalette(appearance, statusColorScales.error, 'Error');
-  const info = createStatusPalette(appearance, statusColorScales.info, 'Info');
-  const success = createStatusPalette(appearance, statusColorScales.success, 'Success');
-  const warning = createStatusPalette(appearance, statusColorScales.warning, 'Warning');
+export const createPaletteToken = (
+  appearance: 'light' | 'dark',
+  scales: StatusColorScales = statusColorScales,
+) => {
+  const error = createStatusPalette(appearance, scales.error, 'Error');
+  const info = createStatusPalette(appearance, scales.info, 'Info');
+  const success = createStatusPalette(appearance, scales.success, 'Success');
+  const warning = createStatusPalette(appearance, scales.warning, 'Warning');
 
   return {
     ...legacyToken[appearance],

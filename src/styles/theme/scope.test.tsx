@@ -52,6 +52,8 @@ describe('theme scope', () => {
 
     expect(document.documentElement.dataset.primaryColor).toBe('#7c5cff');
     expect(document.querySelectorAll('style#lobe-primary-7c5cff')).toHaveLength(1);
-    expect(screen.getByTestId('probe').textContent).toBe('dark|#7c5cff');
+    expect(screen.getByTestId('probe').textContent).toBe(
+      `dark|${createLobeToken({ appearance: 'dark', primaryColor: '#7c5cff' }).colorPrimary}`,
+    );
   });
 });
