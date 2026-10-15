@@ -147,17 +147,29 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     min-width: 36px;
     height: 22px;
   `,
+  /* Text mode: the root sizes to the sizer only. The thumb is taken out of flow (its press
+     animation widens it) so pressing never resizes the control; the sizer reserves its slot. */
   rootText: css`
     width: auto;
     min-width: 44px;
     font-size: 12px;
     line-height: 1;
+
+    & > :last-child {
+      position: absolute;
+      inset-inline-start: 2px;
+    }
   `,
   rootTextSmall: css`
     width: auto;
     min-width: 32px;
     font-size: 10px;
     line-height: 1;
+
+    & > :last-child {
+      position: absolute;
+      inset-inline-start: 2px;
+    }
   `,
   textSizer: css`
     pointer-events: none;
@@ -166,7 +178,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     flex: none;
     order: 1;
 
-    padding-inline: 6px 4px;
+    /* thumb slot (18px) + gaps */
+    padding-inline: 24px 4px;
 
     white-space: nowrap;
 
@@ -177,7 +190,8 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     }
   `,
   textSizerSmall: css`
-    padding-inline: 4px 2px;
+    /* thumb slot (12px) + gaps */
+    padding-inline: 16px 2px;
   `,
   rootSmall: css`
     width: 28px;

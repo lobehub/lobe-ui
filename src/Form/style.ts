@@ -69,8 +69,9 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       border-radius: ${cssVar.borderRadius} !important;
     }
 
+    /* Mobile stacks flush, unless the Form sets gap / compact (--lobe-form-gap). */
     ${responsive.sm} {
-      gap: 0 !important;
+      gap: var(--lobe-form-gap, 0) !important;
     }
   `,
 }));

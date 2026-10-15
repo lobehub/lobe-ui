@@ -112,6 +112,12 @@ const Form = memo<FormProps>(
           variant={itemVariant}
           style={{
             gap: resolvedGap,
+            ...(resolvedGap === undefined
+              ? undefined
+              : {
+                  '--lobe-form-gap':
+                    typeof resolvedGap === 'number' ? `${resolvedGap}px` : resolvedGap,
+                }),
             ...(resolvedItemPadding === undefined
               ? undefined
               : {

@@ -179,6 +179,12 @@ const Form = memo<FormProps>(
           ref={mergedRef}
           style={{
             gap: resolvedGap,
+            ...(resolvedGap === undefined
+              ? undefined
+              : {
+                  '--lobe-form-gap':
+                    typeof resolvedGap === 'number' ? `${resolvedGap}px` : resolvedGap,
+                }),
             ...(resolvedItemPadding === undefined
               ? undefined
               : {

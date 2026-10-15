@@ -39,4 +39,13 @@ describe('Switch inner text', () => {
     expect(root.querySelector('[aria-hidden]')).toBeNull();
     expect(root.querySelector('span')!.style.getPropertyValue('--switch-x')).toBe('14px');
   });
+
+  it('keeps the thumb last (out of flow in text mode) so pressing does not resize the root', () => {
+    render(<Switch checkedChildren="On" unCheckedChildren="Off" />);
+    const root = screen.getByRole('switch');
+    const last = root.lastElementChild as HTMLElement;
+    // the thumb is the last child (the rule taking it out of flow targets :last-child)
+    expect(last.hasAttribute('aria-hidden')).toBe(false);
+    expect(last.style.getPropertyValue('--switch-x')).not.toBe('');
+  });
 });

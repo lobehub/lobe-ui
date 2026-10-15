@@ -38,4 +38,13 @@ describe('base-ui Form spacing options', () => {
     expect(rootOf(c2).style.gap).toBe('20px');
     expect(rootOf(c2).style.getPropertyValue(VAR)).toBe('4px');
   });
+
+  it('exposes the configured gap as --lobe-form-gap so it also applies on mobile', () => {
+    const { container } = render(<Form compact />);
+    expect(rootOf(container).style.getPropertyValue('--lobe-form-gap')).toBe('12px');
+    const { container: c2 } = render(<Form gap={'1rem'} />);
+    expect(rootOf(c2).style.getPropertyValue('--lobe-form-gap')).toBe('1rem');
+    const { container: c3 } = render(<Form />);
+    expect(rootOf(c3).style.getPropertyValue('--lobe-form-gap')).toBe('');
+  });
 });
