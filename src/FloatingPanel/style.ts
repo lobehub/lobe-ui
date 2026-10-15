@@ -3,8 +3,7 @@ import * as stylex from '@stylexjs/stylex';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
 const dodgeDuration = '608ms';
-const dodgeEase =
-  'linear(0, 0.08, 0.249, 0.437, 0.607, 0.745, 0.847, 0.917, 0.963, 0.99, 1.004, 1.011, 1.012, 1.011, 1.009, 1.007, 1.005, 1.003, 1.002, 1)';
+const dodgeEase = cssVar.motionSpringSnappy;
 const reducedMotion = '@media (prefers-reduced-motion: reduce)';
 const dodge = `${dodgeDuration} ${dodgeEase}`;
 const wrapperTransition = `padding-block-end ${dodge}, padding-block-start ${dodge}, padding-inline-end ${dodge}, padding-inline-start ${dodge}`;

@@ -285,7 +285,7 @@ export const styles = stylex.create({
       'translate(calc(-1 * var(--toast-shift-x, 0px)), calc(-1 * var(--toast-shift-y, 0px)))',
     transitionDuration: { default: toastDodge.duration, [reducedMotion]: '0s' },
     transitionProperty: { default: 'transform', [reducedMotion]: 'none' },
-    transitionTimingFunction: { default: toastDodge.ease, [reducedMotion]: 'ease' },
+    transitionTimingFunction: { default: cssVar.motionSpringSnappy, [reducedMotion]: 'ease' },
   },
 
   viewportTop: {
