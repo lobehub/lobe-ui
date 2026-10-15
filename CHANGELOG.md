@@ -2,6 +2,89 @@
 
 # Changelog
 
+# [6.0.0](https://github.com/lobehub/lobe-ui/compare/v5.64.4...v6.0.0) (2026-10-15)
+
+### ♻ Code Refactoring
+
+- **styles**: Migrate the remaining components to StyleX, closes [#705](https://github.com/lobehub/lobe-ui/issues/705) ([4ee89e4](https://github.com/lobehub/lobe-ui/commit/4ee89e4))
+- **styles**: Own the design token engine with createLobeToken, closes [#695](https://github.com/lobehub/lobe-ui/issues/695) ([d88deae](https://github.com/lobehub/lobe-ui/commit/d88deae))
+- Flatten src/base-ui into src and drop the base-ui subpaths, closes [#702](https://github.com/lobehub/lobe-ui/issues/702) ([b8b0921](https://github.com/lobehub/lobe-ui/commit/b8b0921))
+
+### ⚡ Performance Improvements
+
+- **date-picker**: Hovering cells re-renders only the input preview ([de23e47](https://github.com/lobehub/lobe-ui/commit/de23e47))
+- V6 re-render bench and first render-granularity fixes, closes [#709](https://github.com/lobehub/lobe-ui/issues/709) ([0c0b6c1](https://github.com/lobehub/lobe-ui/commit/0c0b6c1))
+
+### ✨ Features
+
+- **colorswatches**: Custom colour chip and renderPicker slot ([1131830](https://github.com/lobehub/lobe-ui/commit/1131830))
+- **styles**: Accept any hex as primaryColor ([3046084](https://github.com/lobehub/lobe-ui/commit/3046084))
+- **styles**: Compile component styles with StyleX (core + pilot), closes [#701](https://github.com/lobehub/lobe-ui/issues/701) ([815ccb6](https://github.com/lobehub/lobe-ui/commit/815ccb6))
+- **styles**: Own the antd-style static styling API on --lobe-* variables, closes [#697](https://github.com/lobehub/lobe-ui/issues/697) ([c944276](https://github.com/lobehub/lobe-ui/commit/c944276))
+- **styles**: Theme.css, ThemeScope and provider-free theme hooks, closes [#698](https://github.com/lobehub/lobe-ui/issues/698) ([e3d49c6](https://github.com/lobehub/lobe-ui/commit/e3d49c6))
+- **table**: V6 Table and ProTable without rc-table, closes [#717](https://github.com/lobehub/lobe-ui/issues/717) [#710](https://github.com/lobehub/lobe-ui/issues/710) ([6c9bd0b](https://github.com/lobehub/lobe-ui/commit/6c9bd0b))
+- **theme**: Named status palettes and readable custom primary, closes [#727](https://github.com/lobehub/lobe-ui/issues/727) ([c19330c](https://github.com/lobehub/lobe-ui/commit/c19330c))
+- **theme**: Retune status palette and neutral text, spring tokens, Design Tokens page, closes [#723](https://github.com/lobehub/lobe-ui/issues/723) [#724](https://github.com/lobehub/lobe-ui/issues/724) ([682a574](https://github.com/lobehub/lobe-ui/commit/682a574))
+- **ui**: ColorPicker redesign and Button polish ([4dfe7c4](https://github.com/lobehub/lobe-ui/commit/4dfe7c4))
+- **video**: Rebuild Video as a player with sections, markers and a player handle ([92fe925](https://github.com/lobehub/lobe-ui/commit/92fe925))
+- Drop antd components, ThemeProvider and merge base-ui into the root export, closes [#699](https://github.com/lobehub/lobe-ui/issues/699) ([86977ad](https://github.com/lobehub/lobe-ui/commit/86977ad))
+- Remove antd, antd-style, [@ant-design](https://github.com/ant-design) and rc-* dependencies, closes [#700](https://github.com/lobehub/lobe-ui/issues/700) ([aba687a](https://github.com/lobehub/lobe-ui/commit/aba687a))
+- Sync master v5.64.1 — DatePicker on a forked rc-picker core, clock time panel, Table polish ([da05dca](https://github.com/lobehub/lobe-ui/commit/da05dca))
+- V6 — drop antd, StyleX styling, flatten base-ui, closes [#706](https://github.com/lobehub/lobe-ui/issues/706) ([2708a0e](https://github.com/lobehub/lobe-ui/commit/2708a0e))
+
+### 🎫 Chores
+
+- **deps**: Accept motion 14 ([4e02e1f](https://github.com/lobehub/lobe-ui/commit/4e02e1f))
+- **deps**: Allow katex 0.19 ([3773ca0](https://github.com/lobehub/lobe-ui/commit/3773ca0))
+- **deps**: Bump minors and patches ([fd1d0a0](https://github.com/lobehub/lobe-ui/commit/fd1d0a0))
+- **deps**: Bump react-avatar-editor to 16 ([a506a20](https://github.com/lobehub/lobe-ui/commit/a506a20))
+- **deps**: Bump virtua to 0.53 ([2f49ada](https://github.com/lobehub/lobe-ui/commit/2f49ada))
+- **deps**: Bump vite to 8.3.4 and widen docs-kit peer ranges ([ed01c30](https://github.com/lobehub/lobe-ui/commit/ed01c30))
+- **deps**: Drop @floating-ui/react, keep its two types locally ([e9b71c5](https://github.com/lobehub/lobe-ui/commit/e9b71c5))
+- **deps**: Drop swr from EmojiPicker ([3619d96](https://github.com/lobehub/lobe-ui/commit/3619d96))
+- **deps**: Drop unused runtime dependencies ([3d60db0](https://github.com/lobehub/lobe-ui/commit/3d60db0))
+- **deps**: Replace ahooks with local useScroll, useSize and useHover ([dee837c](https://github.com/lobehub/lobe-ui/commit/dee837c))
+- **deps**: Replace fast-deep-equal with es-toolkit isEqual ([452b000](https://github.com/lobehub/lobe-ui/commit/452b000))
+- **deps**: Replace immer with plain immutable updates in messagesReducer ([716cc01](https://github.com/lobehub/lobe-ui/commit/716cc01))
+- **deps**: Replace numeral with Intl.NumberFormat ([3a882cc](https://github.com/lobehub/lobe-ui/commit/3a882cc))
+- **deps**: Replace polished with chroma-js-backed color helpers ([d4f3bb5](https://github.com/lobehub/lobe-ui/commit/d4f3bb5))
+- **deps**: Replace react-merge-refs with a local mergeRefs ([deb2071](https://github.com/lobehub/lobe-ui/commit/deb2071))
+- **deps**: Replace ts-md5 with a local string hash for highlight cache keys ([207cf7c](https://github.com/lobehub/lobe-ui/commit/207cf7c))
+- **deps**: Replace url-join with a local joinUrl in genCdnUrl ([e7f4269](https://github.com/lobehub/lobe-ui/commit/e7f4269))
+- **deps**: Replace use-merge-value with a local useControlledState ([060bde7](https://github.com/lobehub/lobe-ui/commit/060bde7))
+- **deps**: Require motion ^13, closes [#683](https://github.com/lobehub/lobe-ui/issues/683) ([545acc7](https://github.com/lobehub/lobe-ui/commit/545acc7))
+- **deps**: Upgrade eslint 10, vitest 5, tsdown 0.23 and docs-kit toolchain majors, closes [#682](https://github.com/lobehub/lobe-ui/issues/682) ([0e4abe7](https://github.com/lobehub/lobe-ui/commit/0e4abe7))
+- **eslint**: Ban imports of removed dependencies ([6b6b6f9](https://github.com/lobehub/lobe-ui/commit/6b6b6f9))
+- **release**: Force major release ([6d9ed20](https://github.com/lobehub/lobe-ui/commit/6d9ed20))
+
+### 🐛 Bug Fixes
+
+- **build**: Drop the null name lightningcss emits for unnamed [@container](https://github.com/container) rules ([304f61d](https://github.com/lobehub/lobe-ui/commit/304f61d))
+- **colorswatches**: Make texts.custom and texts.presets optional ([2d75984](https://github.com/lobehub/lobe-ui/commit/2d75984))
+- **deps**: Keep vite on 8.1.4 ([cdaec43](https://github.com/lobehub/lobe-ui/commit/cdaec43))
+- **deps**: Peer @lobehub/icons 6 and @lobehub/fluent-emoji 5 betas ([49f40bb](https://github.com/lobehub/lobe-ui/commit/49f40bb))
+- **emoji-picker**: Pass emoji-mart the locale JSON, not its module namespace ([e1e88a3](https://github.com/lobehub/lobe-ui/commit/e1e88a3))
+- **styles**: Restore root typography that antd App used to apply, closes [#703](https://github.com/lobehub/lobe-ui/issues/703) ([3a6e79e](https://github.com/lobehub/lobe-ui/commit/3a6e79e))
+- **video**: Raise the caption only above overlay controls ([44953b9](https://github.com/lobehub/lobe-ui/commit/44953b9))
+- **video**: Restart after the end, keep early seeks, scope keys and menus to the player ([028b533](https://github.com/lobehub/lobe-ui/commit/028b533))
+
+### 📝 Documentation
+
+- **migration**: Cover the v6 Video and flag its removed props in the codemod ([3439e41](https://github.com/lobehub/lobe-ui/commit/3439e41))
+- **migration**: Note dependencies no longer installed by @lobehub/ui ([cb5ba58](https://github.com/lobehub/lobe-ui/commit/cb5ba58))
+- **skills**: Add lobe-ui-v6-migration skill and update lobe-design for v6 ([6732efc](https://github.com/lobehub/lobe-ui/commit/6732efc))
+- **specs**: V6 dependency cleanup design ([fe95424](https://github.com/lobehub/lobe-ui/commit/fe95424))
+- **spec**: V6 migration kit design ([04c00ac](https://github.com/lobehub/lobe-ui/commit/04c00ac))
+- Add the v6 migration guide and drop stale antd wording ([bb8a015](https://github.com/lobehub/lobe-ui/commit/bb8a015))
+
+### 💥 BREAKING CHANGES
+
+- the `@lobehub/ui/base-ui` and `@lobehub/ui/base-ui/form` subpaths are removed; import from `@lobehub/ui` and `@lobehub/ui/form`. The `@lobehub/ui/no-base-ui-subpath` eslint rule autofixes old imports.
+- `antd` and `antd-style` are no longer dependencies or peers. Import `createStaticStyles`, `cssVar`, `cx`, `css`, `keyframes`, `responsive`, `createGlobalStyle`, `useTheme`, `useThemeMode`, `useResponsive` and `extractStaticStyle` from `@lobehub/ui` instead of `antd-style`; antd type re-exports (`ImageProps`, `SelectProps`, `InputProps`, `InputRef`, …) are replaced by React types.
+- `@lobehub/ui` now exports the base-ui component set; the antd-based components (Alert, AutoComplete, Avatar, Burger, Button, Collapse, DatePicker, Drawer, Dropdown, Input family, Modal, Segmented, Select, Tabs, Tag, Form / FormModal, Menu, Footer, Toc, ThemeSwitch, SliderWithInput) and the legacy Accordion, ActionIcon, Checkbox, DraggablePanel, List, Skeleton, Text are replaced by their base-ui versions. `ThemeProvider` is removed: import `@lobehub/ui/theme.css`, set `data-theme` / `data-primary-color` / `data-neutral-color` on `<html>` (`setLobeTheme`, `LobeThemeScript`) or wrap a subtree in `ThemeScope`. `@lobehub/ui/static-css*`, `lobeCustomToken`, `lobeCustomStylish` and `createLobeAntdTheme` are removed; `cssVar` resolves to `var(--lobe-*)` only.
+- **styles**: `controlOutline` is dropped from the lobe token; `generateColorPalette` / `generateColorNeutralPalette` return precise key types instead of `Partial<AliasToken>`.
+- **deps**: `motion` peer dependency is now ^13.
+
 ## [5.64.4](https://github.com/lobehub/lobe-ui/compare/v5.64.3...v5.64.4) (2026-10-15)
 
 ### 🐛 Bug Fixes
