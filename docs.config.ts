@@ -24,7 +24,7 @@ export default defineDocsConfig({
   },
   homePage: './docs/home/home.tsx',
   legacyRedirects,
-  publicDocs: ['docs/migration-v6.mdx'],
+  publicDocs: ['docs/design-tokens.mdx', 'docs/migration-v6.mdx'],
   siteUrl: 'https://ui.lobehub.com',
   stylex: './config/stylex.ts',
   themeConfig: {
@@ -51,6 +51,10 @@ export default defineDocsConfig({
           'https://repository-images.githubusercontent.com/643435168/789cab53-cae5-43fa-965d-5928c3c63c1c',
       },
     },
+    navItems: [
+      { href: '/design-tokens', icon: 'swatch-book', label: 'Design Tokens' },
+      { href: '/migration-v6', icon: 'milestone', label: 'Migrating to v6' },
+    ],
     prefersColor: 'auto',
     socialLinks: [
       { href: 'https://github.com/lobehub/lobe-ui', icon: 'github', label: 'GitHub' },

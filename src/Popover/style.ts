@@ -23,9 +23,6 @@ const placementLeft =
 const placementRight =
   ":is([data-placement='right'], [data-placement='rightTop'], [data-placement='rightBottom'])";
 
-const springGlide =
-  'linear(0, 0.041, 0.14, 0.268, 0.407, 0.541, 0.661, 0.765, 0.849, 0.915, 0.964, 0.998, 1.02, 1.032, 1.038, 1.039, 1.036, 1.032, 1.027, 1.022, 1.016, 1.012, 1.008, 1.005, 1.003)';
-
 export const styles = stylex.create({
   arrow: {
     '--lobe-popover-arrow-offset-block': '5px',
@@ -125,7 +122,7 @@ export const styles = stylex.create({
     '--lobe-popover-animation-scale': '0.96',
     '--lobe-popover-animation-translate': '6px',
     '--lobe-popover-layout-duration': { default: '380ms', [reducedMotion]: '0s' },
-    '--lobe-popover-layout-ease': springGlide,
+    '--lobe-popover-layout-ease': cssVar.motionSpringBouncy,
     '--lobe-popover-translate-x': {
       default: '0',
       [placementLeft]: 'var(--lobe-popover-animation-translate)',

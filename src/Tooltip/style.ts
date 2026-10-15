@@ -23,11 +23,6 @@ const placementLeft =
 const placementRight =
   ":is([data-placement='right'], [data-placement='rightTop'], [data-placement='rightBottom'])";
 
-const springEnter =
-  'linear(0, 0.041, 0.14, 0.268, 0.407, 0.541, 0.662, 0.765, 0.849, 0.915, 0.964, 0.998, 1.02, 1.032, 1.038, 1.039, 1.036, 1.032, 1.027, 1.022, 1.016, 1.012, 1.008, 1.005, 1.003)';
-const springGlide =
-  'linear(0, 0.041, 0.14, 0.268, 0.407, 0.541, 0.661, 0.765, 0.849, 0.915, 0.964, 0.998, 1.02, 1.032, 1.038, 1.039, 1.036, 1.032, 1.027, 1.022, 1.016, 1.012, 1.008, 1.005, 1.003)';
-
 export const styles = stylex.create({
   arrow: {
     '--lobe-tooltip-arrow-offset-block': '4px',
@@ -134,19 +129,18 @@ export const styles = stylex.create({
   },
 
   positioner: {
-    /* Springs baked as linear(): stiffness 700 / damping 38 (enter) and 380 / 28 (glide),
-       both zeta ~0.72 with ~4% overshoot. Durations are the springs' settle times —
-       change them together with the curves, not independently. */
+    /* motionSpringBouncy is a spring shape normalized to its settle time, so each duration
+       here is that spring's settle time — change them together, not independently. */
     '--lobe-tooltip-animation-duration': { default: '280ms', [reducedMotion]: '0s' },
     '--lobe-tooltip-animation-duration-exit': { default: '100ms', [reducedMotion]: '0s' },
     '--lobe-tooltip-animation-ease-in': 'cubic-bezier(0.4, 0, 1, 1)',
-    '--lobe-tooltip-animation-ease-out': springEnter,
+    '--lobe-tooltip-animation-ease-out': cssVar.motionSpringBouncy,
     '--lobe-tooltip-animation-scale': '0.97',
     '--lobe-tooltip-animation-translate': '3px',
     '--lobe-tooltip-fade-duration': { default: '160ms', [reducedMotion]: '0s' },
     '--lobe-tooltip-fade-ease': 'cubic-bezier(0.33, 1, 0.68, 1)',
     '--lobe-tooltip-layout-duration': { default: '380ms', [reducedMotion]: '0s' },
-    '--lobe-tooltip-layout-ease': springGlide,
+    '--lobe-tooltip-layout-ease': cssVar.motionSpringBouncy,
     '--lobe-tooltip-translate-x': {
       default: '0',
       [placementLeft]: 'var(--lobe-tooltip-animation-translate)',

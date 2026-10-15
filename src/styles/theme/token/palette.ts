@@ -1,21 +1,26 @@
-import { blue, geekblue, gold, green, lime, red, volcano } from '@/color/colors';
+import { statusColorScales } from '@/color/status';
+import type { ColorScaleItem } from '@/color/types';
 
 import { generateCustomColorToken } from '../customToken';
 import { generateColorPalette } from '../generateColorPalette';
 import { legacyToken } from './legacy';
 import { shadowToken } from './shadow';
 
-const statusScales = {
-  dark: { error: red, info: blue, success: lime, warning: gold },
-  light: { error: volcano, info: geekblue, success: green, warning: gold },
+const createStatusPalette = <T extends string>(
+  appearance: 'light' | 'dark',
+  scale: ColorScaleItem,
+  type: T,
+) => {
+  const palette = generateColorPalette({ appearance, scale, type });
+  if (appearance === 'dark') return palette;
+  return { ...palette, [`color${type}Text`]: scale.light[10] } as typeof palette;
 };
 
 export const createPaletteToken = (appearance: 'light' | 'dark') => {
-  const scales = statusScales[appearance];
-  const error = generateColorPalette({ appearance, scale: scales.error, type: 'Error' });
-  const info = generateColorPalette({ appearance, scale: scales.info, type: 'Info' });
-  const success = generateColorPalette({ appearance, scale: scales.success, type: 'Success' });
-  const warning = generateColorPalette({ appearance, scale: scales.warning, type: 'Warning' });
+  const error = createStatusPalette(appearance, statusColorScales.error, 'Error');
+  const info = createStatusPalette(appearance, statusColorScales.info, 'Info');
+  const success = createStatusPalette(appearance, statusColorScales.success, 'Success');
+  const warning = createStatusPalette(appearance, statusColorScales.warning, 'Warning');
 
   return {
     ...legacyToken[appearance],
