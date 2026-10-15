@@ -1,5 +1,4 @@
-import type { InputProps } from 'antd';
-import type { CSSProperties } from 'react';
+import type { CSSProperties,FocusEventHandler  } from 'react';
 
 export interface HotkeyInputProps {
   allowClear?: boolean;
@@ -9,11 +8,11 @@ export interface HotkeyInputProps {
   disabled?: boolean;
   hotkeyConflicts?: string[];
   isApple?: boolean;
-  onBlur?: InputProps['onBlur'];
+  onBlur?: FocusEventHandler<HTMLInputElement>;
   onChange?: (value: string) => void;
   onClear?: (currentValue: string) => void;
   onConflict?: (conflictKey: string) => void;
-  onFocus?: InputProps['onFocus'];
+  onFocus?: FocusEventHandler<HTMLInputElement>;
   onReset?: (currentValue: string, resetValue: string) => void;
   placeholder?: string;
   resetValue?: string;

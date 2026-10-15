@@ -1,4 +1,4 @@
-import { describe, expect, it } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import {
   checkIsAppleDevice,
@@ -9,10 +9,7 @@ import {
 } from './utils';
 
 const mockUserAgent = (agent: string) => {
-  // @ts-ignore
-  global.navigator = {
-    userAgent: agent,
-  };
+  vi.stubGlobal('navigator', { userAgent: agent });
 };
 
 describe('splitKeysByPlus', () => {
@@ -49,11 +46,8 @@ describe('startCase', () => {
 });
 
 describe('checkIsAppleDevice', () => {
-  const originalNavigator = global.navigator;
-
   afterEach(() => {
-    // @ts-ignore
-    global.navigator = originalNavigator;
+    vi.unstubAllGlobals();
   });
 
   it('should return provided isApple value when defined', () => {
@@ -73,8 +67,7 @@ describe('checkIsAppleDevice', () => {
   });
 
   it('should handle SSR environment', () => {
-    // @ts-ignore
-    global.navigator = undefined;
+    vi.stubGlobal('navigator', undefined);
     expect(checkIsAppleDevice()).toBe(false);
   });
 });

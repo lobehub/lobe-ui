@@ -1,4 +1,3 @@
-import type { SelectProps } from 'antd';
 import type { CSSProperties, ReactNode, Ref } from 'react';
 
 import type { FlexboxProps } from '@/Flex';
@@ -17,7 +16,7 @@ export interface ImageSelectProps extends FlexboxProps {
   classNames?: {
     img?: string;
   };
-  defaultValue?: SelectProps['defaultValue'];
+  defaultValue?: any;
   /**
    * @default 86
    */
@@ -30,7 +29,7 @@ export interface ImageSelectProps extends FlexboxProps {
     img?: CSSProperties;
   };
   unoptimized?: boolean;
-  value?: SelectProps['value'];
+  value?: any;
   /**
    * @default 144
    */

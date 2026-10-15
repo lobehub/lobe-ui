@@ -132,7 +132,7 @@ Explain the dimension first, then show it.
 
 <Api name="Button" />
 
-Additionally, Button supports all props of antd's Button except `icon`.
+Additionally, Button forwards the native `<button>` attributes.
 ```
 
 ### Frontmatter
@@ -150,7 +150,7 @@ Additionally, Button supports all props of antd's Button except `icon`.
 Anything else (`group`, `nav`, `apiHeader`, dumi's `hero`) is ignored — remove it.
 
 URL is derived from the folder: `src/Button/index.mdx` → `/components/button`,
-`src/base-ui/Select/index.mdx` → `/components/base-ui/select` (each segment kebab-cased).
+`src/chat/ChatItem/index.mdx` → `/components/chat/chat-item` (each segment kebab-cased).
 
 ### Headings
 

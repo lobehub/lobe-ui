@@ -2,7 +2,7 @@
 
 import { memo, useRef } from 'react';
 
-import { TextArea } from '@/base-ui/Input';
+import { TextArea } from '@/Input';
 
 import type { ChatInputAreaInnerProps } from '../type';
 

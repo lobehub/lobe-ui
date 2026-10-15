@@ -1,81 +1,62 @@
-import { createStaticStyles } from 'antd-style';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  container: css`
-    display: inline-block;
-    white-space: pre-wrap;
-  `,
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-  cursor: css`
-    transform: translateY(10%);
-
-    display: inline-block;
-    align-items: center;
-
-    width: 3px;
-    height: 1em;
-    margin-inline-start: 0.25rem;
-    border-radius: 2px;
-
-    opacity: 1;
-    background-color: ${cssVar.colorPrimary};
-  `,
-
-  cursorBlock: css`
-    transform: translateY(10%);
-
-    display: inline-block;
-    align-items: center;
-
-    width: 0.5em;
-    height: 1em;
-    margin-inline-start: 0.25rem;
-    border-radius: 2px;
-
-    opacity: 1;
-    background-color: ${cssVar.colorPrimary};
-  `,
-
-  cursorCustom: css`
-    display: inline-block;
-    align-items: center;
-    margin-inline-start: 0.25rem;
-    opacity: 1;
-  `,
-
-  cursorDot: css`
-    display: inline-block;
-    align-items: center;
-
-    width: 0.75em;
-    height: 0.75em;
-    margin-inline-start: 0.25rem;
-    border-radius: 50%;
-
-    opacity: 1;
-    background-color: ${cssVar.colorPrimary};
-  `,
-
-  cursorHidden: css`
-    display: none;
-  `,
-
-  cursorUnderscore: css`
-    transform: translateY(0.3em);
-
-    display: inline-block;
-    align-items: center;
-
-    width: 0.6em;
-    height: 0.15em;
-    margin-inline-start: 0.25rem;
-    border-radius: 2px;
-
-    opacity: 1;
-    background-color: ${cssVar.colorPrimary};
-  `,
-
-  text: css`
-    color: ${cssVar.colorText};
-  `,
-}));
+export const styles = stylex.create({
+  container: {
+    display: 'inline-block',
+    whiteSpace: 'pre-wrap',
+  },
+  cursor: {
+    borderRadius: 2,
+    alignItems: 'center',
+    backgroundColor: cssVar.colorPrimary,
+    display: 'inline-block',
+    marginInlineStart: '0.25rem',
+    opacity: 1,
+    transform: 'translateY(10%)',
+    height: '1em',
+    width: 3,
+  },
+  cursorBlock: {
+    borderRadius: 2,
+    alignItems: 'center',
+    backgroundColor: cssVar.colorPrimary,
+    display: 'inline-block',
+    marginInlineStart: '0.25rem',
+    opacity: 1,
+    transform: 'translateY(10%)',
+    height: '1em',
+    width: '0.5em',
+  },
+  cursorCustom: {
+    alignItems: 'center',
+    display: 'inline-block',
+    marginInlineStart: '0.25rem',
+    opacity: 1,
+  },
+  cursorDot: {
+    borderRadius: '50%',
+    alignItems: 'center',
+    backgroundColor: cssVar.colorPrimary,
+    display: 'inline-block',
+    marginInlineStart: '0.25rem',
+    opacity: 1,
+    height: '0.75em',
+    width: '0.75em',
+  },
+  cursorUnderscore: {
+    borderRadius: 2,
+    alignItems: 'center',
+    backgroundColor: cssVar.colorPrimary,
+    display: 'inline-block',
+    marginInlineStart: '0.25rem',
+    opacity: 1,
+    transform: 'translateY(0.3em)',
+    height: '0.15em',
+    width: '0.6em',
+  },
+  text: {
+    color: cssVar.colorText,
+  },
+});

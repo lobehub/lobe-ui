@@ -1,0 +1,28 @@
+@layer lobe-ui {
+  .lobe-markdown-table-copy {
+    position: absolute;
+    z-index: 1;
+    inset-block-start: calc(0.75em + (var(--lobe-markdown-line-height) * 0.5em));
+    inset-inline-end: 0.5em;
+    transform: translateY(-50%);
+
+    opacity: 0;
+    background: var(--lobe-color-bg-container);
+    box-shadow: 0 0 0 1px var(--lobe-color-border-secondary);
+
+    transition: opacity var(--lobe-motion-duration-mid) var(--lobe-motion-ease-in-out);
+  }
+
+  .lobe-markdown-table:hover .lobe-markdown-table-copy,
+  .lobe-markdown-table:focus-within .lobe-markdown-table-copy {
+    opacity: 1;
+  }
+
+  .lobe-markdown-table > table {
+    margin-block: 0;
+  }
+
+  .lobe-markdown-table > table thead th:last-child {
+    padding-inline-end: calc(1em + 32px);
+  }
+}

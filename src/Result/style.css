@@ -1,0 +1,5 @@
+@layer lobe-ui {
+  .lobe-result-extra > :is(div, section, form) {
+    flex: 1 1 100%;
+  }
+}

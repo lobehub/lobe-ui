@@ -1,29 +1,41 @@
-import type { CSSProperties, ReactNode } from 'react';
+import type { Checkbox as BaseCheckbox } from '@base-ui/react/checkbox';
+import type { CheckboxGroup as BaseCheckboxGroup } from '@base-ui/react/checkbox-group';
+import type { ComponentProps, CSSProperties, ReactNode } from 'react';
 
 import type { FlexboxProps } from '@/Flex';
 import type { TextProps } from '@/Text';
-import type { DivProps } from '@/types';
+import type { DistributiveOmit } from '@/types';
 
-export interface CheckboxProps extends Omit<DivProps, 'onChange'> {
+export type CheckboxShape = 'square' | 'circle';
+
+type BaseCheckboxProps = Omit<
+  ComponentProps<typeof BaseCheckbox.Root>,
+  'className' | 'style' | 'render' | 'children' | 'onCheckedChange'
+>;
+
+export interface CheckboxProps extends BaseCheckboxProps {
   backgroundColor?: string;
-  checked?: boolean;
+  children?: ReactNode;
+  className?: string;
   classNames?: {
     checkbox?: string;
     text?: string;
     wrapper?: string;
   };
-  defaultChecked?: boolean;
-  disabled?: boolean;
-  indeterminate?: boolean;
   onChange?: (checked: boolean) => void;
-  shape?: 'square' | 'circle';
+  shape?: CheckboxShape;
+  /**
+   * Box size in pixels
+   * @default 16
+   */
   size?: number;
+  style?: CSSProperties;
   styles?: {
     checkbox?: CSSProperties;
     text?: CSSProperties;
     wrapper?: CSSProperties;
   };
-  textProps?: Omit<TextProps, 'children' | 'className' | 'style'>;
+  textProps?: DistributiveOmit<TextProps, 'children' | 'className' | 'style'>;
 }
 
 export interface CheckboxGroupOption {
@@ -32,13 +44,18 @@ export interface CheckboxGroupOption {
   value: string;
 }
 
-export interface CheckboxGroupProps extends Omit<FlexboxProps, 'defaultValue' | 'onChange'> {
-  defaultValue?: string[];
-  disabled?: boolean;
+type BaseCheckboxGroupProps = Omit<
+  ComponentProps<typeof BaseCheckboxGroup>,
+  'className' | 'style' | 'render' | 'children' | 'onValueChange' | 'onChange'
+>;
+
+export interface CheckboxGroupProps
+  extends BaseCheckboxGroupProps, Pick<FlexboxProps, 'gap' | 'horizontal'> {
+  className?: string;
   onChange?: (value: string[]) => void;
-  options: string[] | CheckboxGroupOption[];
-  shape?: 'square' | 'circle';
+  options: (string | CheckboxGroupOption)[];
+  shape?: CheckboxShape;
   size?: number;
-  textProps?: Omit<TextProps, 'children' | 'className' | 'style'>;
-  value?: string[];
+  style?: CSSProperties;
+  textProps?: CheckboxProps['textProps'];
 }

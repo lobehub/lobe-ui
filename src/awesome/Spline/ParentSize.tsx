@@ -9,7 +9,8 @@ import {
   useRef,
   useState,
 } from 'react';
-import { mergeRefs } from 'react-merge-refs';
+
+import { mergeRefs } from '@/utils/mergeRefs';
 
 interface ResizeObserverCallback {
   (entries: ResizeObserverEntry[], observer: ResizeObserver): void;

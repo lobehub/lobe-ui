@@ -1,138 +1,70 @@
-import { createStaticStyles, responsive } from 'antd-style';
+import * as stylex from '@stylexjs/stylex';
+
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { media } from '@/styles/stylex/media.stylex';
+
+import { spotlightCardMarker } from './marker.stylex';
 
 export const CHILDREN_CLASSNAME = 'hover-card';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  container: css`
-    &:hover > .${CHILDREN_CLASSNAME}::after {
-      opacity: 1;
-    }
-  `,
-
-  content: css`
-    z-index: 2;
-
-    flex-grow: 1;
-
-    height: 100%;
-    margin: 1px;
-    border-radius: calc(var(--spotlight-card-border-radius, 12px) - 1px);
-
-    background: ${cssVar.colorBgContainer};
-  `,
-  grid: css`
-    display: grid;
-
-    ${responsive.sm} {
-      display: flex;
-      flex-direction: column;
-    }
-  `,
-  itemContainerDark: css`
-    cursor: pointer;
-
-    position: relative;
-
-    overflow: hidden;
-
-    width: 100%;
-    border-radius: var(--spotlight-card-border-radius, 12px);
-
-    background: color-mix(in srgb, ${cssVar.colorBorderSecondary} 75%, transparent);
-
-    &::before,
-    &::after {
-      content: '';
-
-      position: absolute;
-      inset-block-start: 0;
-      inset-inline-start: 0;
-
-      width: 100%;
-      height: 100%;
-      border-radius: inherit;
-
-      opacity: 0;
-
-      transition: opacity 500ms;
-    }
-
-    &::before {
-      pointer-events: none;
-      user-select: none;
-      z-index: 3;
-      background: radial-gradient(
-        var(--spotlight-card-size, 800px) circle at var(--mouse-x) var(--mouse-y),
-        color-mix(in srgb, ${cssVar.colorTextBase} 6%, transparent),
-        transparent 40%
-      );
-    }
-
-    &::after {
-      z-index: 1;
-      background: radial-gradient(
-        calc(var(--spotlight-card-size, 800px) * 0.75) circle at var(--mouse-x) var(--mouse-y),
-        color-mix(in srgb, ${cssVar.colorTextBase} 40%, transparent),
-        transparent 40%
-      );
-    }
-
-    :hover::before {
-      opacity: 1;
-    }
-  `,
-
-  itemContainerLight: css`
-    cursor: pointer;
-
-    position: relative;
-
-    overflow: hidden;
-
-    width: 100%;
-    border-radius: var(--spotlight-card-border-radius, 12px);
-
-    background: color-mix(in srgb, ${cssVar.colorBorderSecondary} 75%, transparent);
-
-    &::before,
-    &::after {
-      content: '';
-
-      position: absolute;
-      inset-block-start: 0;
-      inset-inline-start: 0;
-
-      width: 100%;
-      height: 100%;
-      border-radius: inherit;
-
-      opacity: 0;
-
-      transition: opacity 500ms;
-    }
-
-    &::before {
-      pointer-events: none;
-      user-select: none;
-      z-index: 3;
-      background: radial-gradient(
-        var(--spotlight-card-size, 800px) circle at var(--mouse-x) var(--mouse-y),
-        color-mix(in srgb, ${cssVar.colorTextBase} 2%, transparent),
-        transparent 40%
-      );
-    }
-
-    &::after {
-      z-index: 1;
-      background: radial-gradient(
-        calc(var(--spotlight-card-size, 800px) * 0.75) circle at var(--mouse-x) var(--mouse-y),
-        color-mix(in srgb, ${cssVar.colorTextBase} 20%, transparent),
-        transparent 40%
-      );
-    }
-
-    :hover::before {
-      opacity: 1;
-    }
-  `,
-}));
+export const styles = stylex.create({
+  content: {
+    margin: 1,
+    borderRadius: 'calc(var(--spotlight-card-border-radius, 12px) - 1px)',
+    backgroundColor: cssVar.colorBgContainer,
+    zIndex: 2,
+  },
+  grid: {
+    display: { default: 'grid', [media.sm]: 'flex' },
+    flexDirection: { default: null, [media.sm]: 'column' },
+  },
+  item: {
+    'borderRadius': 'var(--spotlight-card-border-radius, 12px)',
+    'overflow': 'hidden',
+    'backgroundColor': `color-mix(in srgb, ${cssVar.colorBorderSecondary} 75%, transparent)`,
+    'cursor': 'pointer',
+    'position': 'relative',
+    '::after': {
+      borderRadius: 'inherit',
+      transition: 'opacity 500ms',
+      content: '""',
+      insetBlockStart: 0,
+      insetInlineStart: 0,
+      opacity: { default: 0, [stylex.when.ancestor(':hover', spotlightCardMarker)]: 1 },
+      position: 'absolute',
+      zIndex: 1,
+      height: '100%',
+      width: '100%',
+    },
+    '::before': {
+      borderRadius: 'inherit',
+      transition: 'opacity 500ms',
+      content: '""',
+      insetBlockStart: 0,
+      insetInlineStart: 0,
+      opacity: { 'default': 0, ':hover': 1 },
+      pointerEvents: 'none',
+      position: 'absolute',
+      userSelect: 'none',
+      zIndex: 3,
+      height: '100%',
+      width: '100%',
+    },
+  },
+  itemDark: {
+    '::after': {
+      backgroundImage: `radial-gradient(calc(var(--spotlight-card-size, 800px) * 0.75) circle at var(--mouse-x) var(--mouse-y), color-mix(in srgb, ${cssVar.colorTextBase} 40%, transparent), transparent 40%)`,
+    },
+    '::before': {
+      backgroundImage: `radial-gradient(var(--spotlight-card-size, 800px) circle at var(--mouse-x) var(--mouse-y), color-mix(in srgb, ${cssVar.colorTextBase} 6%, transparent), transparent 40%)`,
+    },
+  },
+  itemLight: {
+    '::after': {
+      backgroundImage: `radial-gradient(calc(var(--spotlight-card-size, 800px) * 0.75) circle at var(--mouse-x) var(--mouse-y), color-mix(in srgb, ${cssVar.colorTextBase} 20%, transparent), transparent 40%)`,
+    },
+    '::before': {
+      backgroundImage: `radial-gradient(var(--spotlight-card-size, 800px) circle at var(--mouse-x) var(--mouse-y), color-mix(in srgb, ${cssVar.colorTextBase} 2%, transparent), transparent 40%)`,
+    },
+  },
+});

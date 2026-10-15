@@ -6,7 +6,7 @@ import {
 } from '@lobehub/streamdown/profiler';
 import { type CSSProperties, type ReactNode, useDeferredValue, useSyncExternalStore } from 'react';
 
-import Button from '@/base-ui/Button';
+import Button from '@/Button';
 
 const EMPTY_SNAPSHOT: StreamdownProfilerSnapshot = {
   animation: {

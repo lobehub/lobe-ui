@@ -1,6 +1,6 @@
 // @vitest-environment node
 
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { mkdirSync, mkdtempSync, realpathSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 
@@ -21,7 +21,9 @@ const writeFixture = (root: string, path: string, contents: string): string => {
 };
 
 const createTemporaryProject = (files: Record<string, string>): string => {
-  const root = mkdtempSync(join(tmpdir(), 'lobe-ui-demo-plugin-'));
+  // Vite >= 8.3 realpaths `root`, and macOS tmpdir lives behind the
+  // /var -> /private/var symlink, so watcher events only match canonical paths.
+  const root = realpathSync(mkdtempSync(join(tmpdir(), 'lobe-ui-demo-plugin-')));
   temporaryRoots.push(root);
   for (const [path, contents] of Object.entries(files)) writeFixture(root, path, contents);
   return root;
@@ -148,7 +150,7 @@ it('preserves every frozen alias by source, including repeated and punctuation-b
     'src-dropdown-menu-demo-demos',
     'src-base-ui-dropdown-menu-demo-demos',
   ]);
-  expect(repeated.routeId).toBe('');
+  expect(repeated.routeId).toBe('components/DropdownMenu/index');
   expect(punctuated.legacyIds).toEqual(['cards, card-demo-demos']);
 });
 
@@ -159,9 +161,9 @@ it('does not execute browser-only entries during descriptor evaluation or hide e
   expect((globalThis as any).__lobeDemoExecutionLog).toEqual([]);
 });
 
-it('selects route metadata from each importing MDX document for a shared demo source', async () => {
+it('keeps the demo route when an importing MDX document does not reference the demo', async () => {
   const rootImporter = resolve(repositoryRoot, 'src/DropdownMenu/index.mdx');
-  const baseImporter = resolve(repositoryRoot, 'src/base-ui/DropdownMenu/index.mdx');
+  const baseImporter = resolve(repositoryRoot, 'src/ContextMenu/index.mdx');
   const importers = new Map([
     ['virtual:root-dropdown-demo', rootImporter],
     ['virtual:base-dropdown-demo', baseImporter],
@@ -190,7 +192,7 @@ it('selects route metadata from each importing MDX document for a shared demo so
     .default as DemoModule;
 
   expect(rootDescriptor.routeId).toBe('components/DropdownMenu/index');
-  expect(baseDescriptor.routeId).toBe('components/base-ui/DropdownMenu/index');
+  expect(baseDescriptor.routeId).toBe('components/DropdownMenu/index');
   expect(baseDescriptor.legacyIds).toEqual(rootDescriptor.legacyIds);
 });
 

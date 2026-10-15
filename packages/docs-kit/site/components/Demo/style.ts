@@ -1,4 +1,4 @@
-import { createStaticStyles, injectGlobal } from 'antd-style';
+import { createStaticStyles, injectGlobal } from '@lobehub/ui';
 
 export const styles = createStaticStyles(({ css, cssVar }) => ({
   actionGroup: css`
@@ -314,6 +314,10 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
 
   preview: css`
+    /* The canvas a demo table sits on. Opaque cells (pinned columns, sticky
+       header/summary) paint --lobe-table-bg, so it has to track this surface. */
+    --lobe-table-bg: var(--docs-background);
+
     display: block;
 
     width: 100%;
@@ -323,12 +327,16 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     background: var(--docs-background);
 
     [data-demo-appearance='light'] > & {
+      --lobe-table-bg: #fff;
+
       color: #111113;
       color-scheme: light;
       background: #fff;
     }
 
     [data-demo-appearance='dark'] > & {
+      --lobe-table-bg: #000;
+
       color: #f4f4f5;
       color-scheme: dark;
       background: #000;
@@ -351,8 +359,7 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
       grid-template-rows: minmax(min-content, 1fr);
       padding: 0;
 
-      > *,
-      .ant-app:has([data-lobe-storybook]) {
+      > * {
         height: 100%;
         min-height: 100%;
       }
@@ -388,6 +395,10 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
 
   standalonePage: css`
+    /* Same surface hand-off as the preview rule: tables framed on their own
+       page (iframe demos) need it too. */
+    --lobe-table-bg: var(--docs-background);
+
     overflow: auto;
     display: grid;
     grid-template-columns: minmax(0, 1fr);
@@ -401,12 +412,16 @@ export const styles = createStaticStyles(({ css, cssVar }) => ({
     background: var(--docs-background);
 
     &[data-demo-appearance='light'] {
+      --lobe-table-bg: #fff;
+
       color: #111113;
       color-scheme: light;
       background: #fff;
     }
 
     &[data-demo-appearance='dark'] {
+      --lobe-table-bg: #000;
+
       color: #f4f4f5;
       color-scheme: dark;
       background: #000;

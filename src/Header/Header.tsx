@@ -1,9 +1,10 @@
 'use client';
 
-import { cx, useResponsive } from 'antd-style';
 import { memo } from 'react';
 
 import { Flexbox } from '@/Flex';
+import { styleProps } from '@/styles/stylex/props';
+import { useResponsive } from '@/styles/theme/scope';
 
 import { styles } from './style';
 import type { HeaderProps } from './type';
@@ -31,7 +32,7 @@ const Header = memo<HeaderProps>(
         horizontal
         align={'center'}
         as={'section'}
-        className={cx(styles.root, className)}
+        className={styleProps(styles.root, className).className}
         distribution={'space-between'}
         ref={ref}
         width={'auto'}
@@ -45,7 +46,7 @@ const Header = memo<HeaderProps>(
             </Flexbox>
             <Flexbox
               horizontal
-              className={cx(styles.left, logoClassName)}
+              className={styleProps(styles.left, logoClassName).className}
               style={{ flex: 1, overflow: 'hidden', ...logoStyle }}
             >
               {logo}
@@ -58,7 +59,7 @@ const Header = memo<HeaderProps>(
           <>
             <Flexbox
               horizontal
-              className={cx(styles.left, logoClassName)}
+              className={styleProps(styles.left, logoClassName).className}
               style={{ flex: 0, ...logoStyle }}
             >
               {logo}
@@ -72,7 +73,7 @@ const Header = memo<HeaderProps>(
             </Flexbox>
             <Flexbox
               horizontal
-              className={cx(styles.right, actionsClassName)}
+              className={styleProps(styles.right, actionsClassName).className}
               flex={1}
               justify={'space-between'}
               style={actionsStyle}

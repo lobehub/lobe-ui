@@ -1,62 +1,49 @@
-import { createStaticStyles } from 'antd-style';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css, cssVar, responsive }) => ({
-  ancestor: css`
-    color: ${cssVar.colorTextSecondary};
-    white-space: nowrap;
-  `,
-  link: css`
-    color: ${cssVar.colorTextSecondary};
-    text-decoration: none;
-    white-space: nowrap;
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { media } from '@/styles/stylex/media.stylex';
 
-    &:hover {
-      color: ${cssVar.colorText};
-    }
-  `,
-  optional: css`
-    display: flex;
-    flex: none;
-    gap: 6px;
-    align-items: center;
-
-    ${responsive.mobile} {
-      /* Outranks the root's direct-child span rule. */
-      &&& {
-        display: none;
-      }
-    }
-  `,
-  page: css`
-    overflow: hidden;
-
-    min-inline-size: 0;
-
-    font-weight: 600;
-    color: ${cssVar.colorText};
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  `,
-  root: css`
-    overflow: hidden;
-    display: flex;
-    flex: 1;
-    align-items: center;
-
-    min-inline-size: 0;
-
-    font-size: ${cssVar.fontSize};
-    line-height: 1.4;
-
-    > span {
-      display: flex;
-      align-items: center;
-      min-inline-size: 0;
-    }
-  `,
-  separator: css`
-    flex: none;
-    margin-inline: 8px;
-    color: ${cssVar.colorTextQuaternary};
-  `,
-}));
+export const styles = stylex.create({
+  ancestor: {
+    color: cssVar.colorTextSecondary,
+    whiteSpace: 'nowrap',
+  },
+  crumb: {
+    alignItems: 'center',
+    display: 'flex',
+    minInlineSize: 0,
+  },
+  link: {
+    textDecoration: 'none',
+    color: { 'default': cssVar.colorTextSecondary, ':hover': cssVar.colorText },
+    whiteSpace: 'nowrap',
+  },
+  optional: {
+    flex: 'none',
+    gap: 6,
+    alignItems: 'center',
+    display: { default: 'flex', [media.mobile]: 'none' },
+  },
+  page: {
+    overflow: 'hidden',
+    color: cssVar.colorText,
+    fontWeight: 600,
+    minInlineSize: 0,
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+  },
+  root: {
+    flex: '1',
+    overflow: 'hidden',
+    alignItems: 'center',
+    display: 'flex',
+    fontSize: cssVar.fontSize,
+    lineHeight: 1.4,
+    minInlineSize: 0,
+  },
+  separator: {
+    flex: 'none',
+    marginInline: 8,
+    color: cssVar.colorTextQuaternary,
+  },
+});

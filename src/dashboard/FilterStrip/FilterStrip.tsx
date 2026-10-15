@@ -1,15 +1,15 @@
 'use client';
 
-import { cx } from 'antd-style';
+import * as stylex from '@stylexjs/stylex';
 
-import Skeleton from '@/base-ui/Skeleton';
+import Skeleton from '@/Skeleton';
 
 import { styles as surfaceStyles } from '../Surface/style';
 import Surface from '../Surface/Surface';
 import { styles } from './style';
 import type { FilterStripProps } from './type';
 
-const countClass = {
+const countStyles = {
   danger: styles.countDanger,
   warning: styles.countWarning,
 } as const;
@@ -27,9 +27,9 @@ const FilterStrip = ({
   onChange,
   value,
 }: FilterStripProps) => (
-  <Surface className={surfaceStyles.clip}>
-    <div aria-label={label} className={styles.frame} role="radiogroup">
-      <div className={styles.grid}>
+  <Surface className={stylex.props(surfaceStyles.clip).className}>
+    <div aria-label={label} role="radiogroup" {...stylex.props(styles.frame)}>
+      <div {...stylex.props(styles.grid)}>
         {items.map((item) => {
           const active = item.key === value;
           const missing = item.count === undefined || item.count === null;
@@ -38,15 +38,17 @@ const FilterStrip = ({
           return (
             <button
               aria-checked={active}
-              className={cx(styles.cell, active && styles.cellActive)}
               key={item.key}
               role="radio"
               title={item.hint}
               type="button"
               onClick={() => onChange(item.key)}
+              {...stylex.props(styles.cell, active && styles.cellActive)}
             >
-              <span className={cx(styles.label, active && styles.labelActive)}>{item.label}</span>
-              <span className={cx(styles.count, emphasize && countClass[item.tone!])}>
+              <span {...stylex.props(styles.label, active && styles.labelActive)}>
+                {item.label}
+              </span>
+              <span {...stylex.props(styles.count, emphasize && countStyles[item.tone!])}>
                 {item.loading ? (
                   <Skeleton height={22} radius={6} width={48} />
                 ) : missing ? (

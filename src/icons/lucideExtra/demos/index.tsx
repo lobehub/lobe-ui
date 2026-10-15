@@ -1,5 +1,4 @@
-import { ActionIcon, copyToClipboard } from '@lobehub/ui';
-import { message } from 'antd';
+import { ActionIcon, copyToClipboard, toast } from '@lobehub/ui';
 
 import { Flexbox } from '@/Flex';
 
@@ -16,7 +15,7 @@ export default () => (
         variant={'filled'}
         onClick={async () => {
           await copyToClipboard(name);
-          message.success(`Copied: ${name}`);
+          toast.success(`Copied: ${name}`);
         }}
       />
     ))}

@@ -1,37 +1,31 @@
-import { Burger, type BurgerProps } from '@lobehub/ui';
-import { useState } from 'react';
+import { Flexbox } from '@lobehub/ui';
+import { Burger, Button, type ListItem } from '@lobehub/ui';
+import { BookOpen, Bot, House, MessageSquare } from 'lucide-react';
+import { type Key, useState } from 'react';
 
-const items: BurgerProps['items'] = [
-  {
-    key: 'home',
-    label: 'Home',
-  },
-  {
-    key: 'about',
-    label: 'About',
-  },
-  {
-    children: [
-      {
-        key: 'group',
-        label: 'Group Title',
-        type: 'group',
-      },
-      {
-        key: 'item1',
-        label: 'Item1',
-      },
-      {
-        key: 'item2',
-        label: 'Item2',
-      },
-    ],
-    key: 'contact',
-    label: 'Contact',
-  },
+const items: ListItem[] = [
+  { icon: House, key: 'home', label: 'Home' },
+  { icon: MessageSquare, key: 'chat', label: 'Chat' },
+  { icon: Bot, key: 'agents', label: 'Agents' },
+  { type: 'divider' },
+  { icon: BookOpen, key: 'docs', label: 'Docs' },
 ];
 
 export default () => {
   const [opened, setOpened] = useState(false);
-  return <Burger items={items} opened={opened} setOpened={setOpened} />;
+  const [active, setActive] = useState<Key>('chat');
+
+  return (
+    <Flexbox horizontal align="center" justify="space-between" padding={16} style={{ height: 64 }}>
+      <strong>LobeHub</strong>
+      <Burger
+        activeKey={active}
+        footer={<Button type="primary">Sign in</Button>}
+        items={items}
+        opened={opened}
+        onOpenChange={setOpened}
+        onSelect={setActive}
+      />
+    </Flexbox>
+  );
 };

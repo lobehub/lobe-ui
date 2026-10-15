@@ -1,0 +1,5 @@
+@layer lobe-ui {
+  .lobe-chat-input-area-textarea {
+    height: 100% !important;
+  }
+}

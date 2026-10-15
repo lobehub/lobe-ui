@@ -1,0 +1,9 @@
+@layer lobe-ui {
+  .lobe-mdx-citation a {
+    color: inherit;
+  }
+
+  .lobe-mdx-citation-link :hover {
+    color: var(--lobe-color-text);
+  }
+}

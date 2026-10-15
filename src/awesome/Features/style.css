@@ -1,0 +1,9 @@
+@layer lobe-ui {
+  .lobe-features-item p {
+    font-size: 16px;
+    line-height: 1.2;
+    text-align: start;
+    word-break: normal;
+    overflow-wrap: anywhere;
+  }
+}

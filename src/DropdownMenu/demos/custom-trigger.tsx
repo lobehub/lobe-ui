@@ -1,5 +1,4 @@
-import { Button, DropdownMenu } from '@lobehub/ui';
-import { createStaticStyles } from 'antd-style';
+import { Button, createStaticStyles, DropdownMenu } from '@lobehub/ui';
 import { MoreHorizontal } from 'lucide-react';
 
 import { items } from './data';

@@ -1,0 +1,41 @@
+@layer lobe-ui {
+  .lobe-code-diff .language-title {
+    opacity: 0.5;
+    filter: grayscale(100%);
+    transition:
+      opacity,
+      grayscale 0.2s var(--lobe-motion-ease-in-out);
+  }
+
+  .lobe-code-diff .panel-actions {
+    opacity: 0;
+    transition: opacity 0.2s var(--lobe-motion-ease-in-out);
+  }
+
+  .lobe-code-diff:hover .language-title {
+    opacity: 1;
+    filter: grayscale(0%);
+  }
+
+  .lobe-code-diff:hover .panel-actions,
+  .lobe-code-diff:hover .lobe-code-diff-actions-compact,
+  .lobe-code-diff:hover .lobe-code-diff-lang {
+    opacity: 1;
+  }
+
+  .lobe-code-diff-lang {
+    position: absolute;
+    z-index: 2;
+    inset-block-end: 8px;
+    inset-inline-end: 8px;
+
+    font-family: var(--lobe-font-family-code);
+    color: var(--lobe-color-text-secondary);
+
+    opacity: 0;
+    background: var(--lobe-color-fill-quaternary);
+    backdrop-filter: saturate(150%) blur(10px);
+
+    transition: opacity 0.1s;
+  }
+}

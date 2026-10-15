@@ -1,8 +1,8 @@
 'use client';
 
-import { cx } from 'antd-style';
+import * as stylex from '@stylexjs/stylex';
 
-import { useSurfaceCardClassName } from '../Surface/link';
+import { useSurfaceCardStyles } from '../Surface/link';
 import { styles as surfaceStyles } from '../Surface/style';
 import Surface from '../Surface/Surface';
 import MetricCell from './MetricCell';
@@ -14,13 +14,13 @@ import type { MetricStripProps } from './type';
  * identical to StatCard.
  */
 const MetricStrip = ({ items, loading, renderLink, variant = 'joined' }: MetricStripProps) => {
-  const cardClassName = useSurfaceCardClassName();
+  const cardStyles = useSurfaceCardStyles();
 
   if (variant === 'split') {
     return (
-      <div className={styles.split}>
+      <div {...stylex.props(styles.split)}>
         {items.map((item, index) => (
-          <div className={cx(styles.card, cardClassName, surfaceStyles.clip)} key={index}>
+          <div key={index} {...stylex.props(styles.card, cardStyles, surfaceStyles.clip)}>
             <MetricCell item={item} loading={loading} renderLink={renderLink} />
           </div>
         ))}
@@ -29,9 +29,9 @@ const MetricStrip = ({ items, loading, renderLink, variant = 'joined' }: MetricS
   }
 
   return (
-    <Surface className={surfaceStyles.clip}>
-      <div className={styles.frame}>
-        <div className={styles.grid}>
+    <Surface className={stylex.props(surfaceStyles.clip).className}>
+      <div {...stylex.props(styles.frame)}>
+        <div {...stylex.props(styles.grid)}>
           {items.map((item, index) => (
             <MetricCell seam item={item} key={index} loading={loading} renderLink={renderLink} />
           ))}

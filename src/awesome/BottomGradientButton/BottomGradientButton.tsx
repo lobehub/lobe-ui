@@ -1,9 +1,8 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { memo } from 'react';
 
-import Button from '@/base-ui/Button';
+import { ButtonImpl } from '@/Button/Button';
 
 import { styles } from './style';
 import type { BottomGradientButtonProps } from './type';
@@ -11,11 +10,12 @@ import type { BottomGradientButtonProps } from './type';
 const BottomGradientButton = memo<BottomGradientButtonProps>(
   ({ className, children, style, ref, ...rest }) => {
     return (
-      <Button
-        className={cx(styles, className)}
+      <ButtonImpl
+        className={className}
         ref={ref}
         shape={'round'}
         type={'fill'}
+        xstyle={styles.root}
         style={{
           paddingInline: 16,
           width: 'unset',
@@ -24,7 +24,7 @@ const BottomGradientButton = memo<BottomGradientButtonProps>(
         {...rest}
       >
         {children}
-      </Button>
+      </ButtonImpl>
     );
   },
 );

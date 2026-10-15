@@ -1,5 +1,5 @@
 import { SkillsIcon } from '@lobehub/ui/icons';
-import { Bot, Folder, History, House } from 'lucide-react';
+import { Bot, FileText, Folder, History, House } from 'lucide-react';
 
 import type { DocumentManifestEntry, NavigationSection } from '../../types/content';
 import {
@@ -20,13 +20,13 @@ const createDocument = (pathname: string, title: string): DocumentManifestEntry 
 
 const alpha = createDocument('/components/alpha', 'Alpha');
 const beta = createDocument('/components/beta', 'Beta');
-const button = createDocument('/base-ui/button', 'Button');
+const button = createDocument('/mobile/button', 'Button');
 const intro = createDocument('/guides/intro', 'Intro');
 const changelog = createDocument('/changelog', 'Changelog');
 
 const navigation: NavigationSection[] = [
   { categories: [{ documents: [intro], title: 'Guides' }], title: 'Guides' },
-  { categories: [{ documents: [button], title: 'General' }], title: 'Base UI' },
+  { categories: [{ documents: [button], title: 'General' }], title: 'Mobile' },
   {
     categories: [
       { documents: [alpha], title: 'General' },
@@ -61,13 +61,25 @@ describe('buildNavItems', () => {
       ['Blog', 'https://example.com/blog', true],
     ]);
   });
+
+  it('renders a configured lucide icon name, reusing one component per name', () => {
+    const [, palette, other] = buildNavItems([
+      { href: '/tokens', icon: 'palette', label: 'Tokens' },
+      { href: '/guide', label: 'Guide' },
+    ]);
+    const again = buildNavItems([{ href: '/tokens', icon: 'palette', label: 'Tokens' }])[1];
+
+    expect(palette.icon).toBe(again.icon);
+    expect(palette.icon).not.toBe(FileText);
+    expect(other.icon).toBe(FileText);
+  });
 });
 
 describe('buildNavGroups', () => {
   const groups = buildNavGroups(navigation);
 
   it('orders preferred sections first and gives only sections an icon', () => {
-    expect(groups.map((group) => group.label)).toEqual(['Components', 'Base UI', 'Guides']);
+    expect(groups.map((group) => group.label)).toEqual(['Components', 'Guides', 'Mobile']);
     expect(groups.every((group) => group.icon)).toBe(true);
     expect(groups[0].groups?.every((category) => !category.icon)).toBe(true);
     expect(
@@ -81,7 +93,7 @@ describe('buildNavGroups', () => {
   });
 
   it('nests categories and links every group to its overview page', () => {
-    const [components, baseUi, guides] = groups;
+    const [components, guides, mobile] = groups;
 
     expect(components.href).toBe('/sections/components');
     expect(components.groups?.map((category) => [category.label, category.href])).toEqual([
@@ -90,7 +102,7 @@ describe('buildNavGroups', () => {
     ]);
     expect(components.defaultExpanded).toBeUndefined();
     expect(components.groups?.every((category) => category.defaultExpanded)).toBe(true);
-    expect(baseUi.groups?.map((category) => category.label)).toEqual(['General']);
+    expect(mobile.groups?.map((category) => category.label)).toEqual(['General']);
     expect(guides.groups).toBeUndefined();
     expect(guides.items?.map((item) => item.href)).toEqual(['/guides/intro']);
   });

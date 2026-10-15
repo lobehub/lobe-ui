@@ -1,11 +1,17 @@
 'use client';
 
-import { cssVar, cx, useTheme } from 'antd-style';
+import './style.css';
+
+import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { AlertOctagon, AlertTriangle, Info, Lightbulb, MessageSquareWarning } from 'lucide-react';
 import { type FC, useMemo } from 'react';
 
 import { Flexbox, type FlexboxProps } from '@/Flex';
 import Icon from '@/Icon';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { styleProps } from '@/styles/stylex/props';
+import { useTheme } from '@/styles/theme/scope';
 
 import { styles } from './style';
 
@@ -54,18 +60,25 @@ const Callout: FC<CalloutProps> = ({ children, type = 'info', className, style, 
     <Flexbox
       horizontal
       align={'flex-start'}
-      className={cx(styles.container, className)}
-      style={{
+      gap={'0.75em'}
+      paddingBlock={'calc(var(--lobe-markdown-margin-multiple) * 1em)'}
+      paddingInline={'1em'}
+      {...styleProps(styles.container, className, {
         background,
         boxShadow: `0 0 0 1px ${background} inset`,
         color,
         ...style,
-      }}
+      })}
       {...rest}
     >
       <Icon icon={icon} size={{ size: '1.2em' }} style={{ marginBlock: '0.25em' }} />
-      <div className={cx(styles.content, type === 'info' && styles.underlineAnchor)}>
-        <div>{children}</div>
+      <div
+        {...styleProps(
+          styles.content,
+          clsx('lobe-mdx-callout-content', type === 'info' && 'lobe-mdx-callout-underline'),
+        )}
+      >
+        <div {...stylex.props(styles.inner)}>{children}</div>
       </div>
     </Flexbox>
   );

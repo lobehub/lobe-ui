@@ -1,6 +1,5 @@
-import { Button } from '@lobehub/ui';
+import { Button, Divider } from '@lobehub/ui';
 import { MessageModal } from '@lobehub/ui/chat';
-import { Divider } from 'antd';
 import { useState } from 'react';
 
 export default () => {

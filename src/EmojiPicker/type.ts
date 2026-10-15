@@ -1,6 +1,6 @@
 import type { CSSProperties, ReactNode } from 'react';
 
-import type { AvatarProps } from '@/base-ui/Avatar';
+import type { AvatarProps } from '@/Avatar';
 import type { FlexboxProps } from '@/Flex/type';
 import type { PopoverProps } from '@/Popover';
 

@@ -1,14 +1,14 @@
 'use client';
 
-import { cx } from 'antd-style';
 import type { FC } from 'react';
 
 import Spotlight from '@/awesome/Spotlight';
 import CopyButton from '@/CopyButton';
 import { Flexbox } from '@/Flex';
-import SyntaxHighlighter from '@/Highlighter/SyntaxHighlighter';
+import { SyntaxHighlighterImpl } from '@/Highlighter/SyntaxHighlighter';
+import { styleProps } from '@/styles/stylex/props';
 
-import { styles, variants } from './style';
+import { styles, variantStyles } from './style';
 import { type SnippetProps } from './type';
 
 const Snippet: FC<SnippetProps> = ({
@@ -29,16 +29,27 @@ const Snippet: FC<SnippetProps> = ({
     <Flexbox
       horizontal
       align={'center'}
-      className={cx(variants({ shadow, variant }), className)}
       data-code-type="highlighter"
       gap={8}
+      height={38}
+      paddingBlock={0}
+      paddingInline={'12px 8px'}
       ref={ref}
       {...rest}
+      {...styleProps(
+        [styles.root, variantStyles[variant], shadow && styles.shadow],
+        className,
+        rest.style,
+      )}
     >
       {spotlight && <Spotlight />}
-      <SyntaxHighlighter className={styles.hightlight} language={language}>
+      <SyntaxHighlighterImpl
+        className={'lobe-snippet-highlight'}
+        language={language}
+        xstyle={styles.highlight}
+      >
         {[prefix, tirmedChildren].filter(Boolean).join(' ')}
-      </SyntaxHighlighter>
+      </SyntaxHighlighterImpl>
       {copyable && <CopyButton content={tirmedChildren} size={'small'} />}
     </Flexbox>
   );

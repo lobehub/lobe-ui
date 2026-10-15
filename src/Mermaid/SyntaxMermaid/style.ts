@@ -1,98 +1,20 @@
-import { createStaticStyles, cx, keyframes } from 'antd-style';
-import { cva } from 'class-variance-authority';
+import './style.css';
 
-const fadeIn = keyframes`
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-`;
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => {
-  return {
-    animated: css`
-      img {
-        opacity: 1;
-        animation: ${fadeIn} 0.5s ease-in-out;
-      }
-    `,
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-    mermaid: cx(
-      'ant-mermaid-mermaid',
-      css`
-        img {
-          display: block;
-          width: 100%;
-          height: auto;
-        }
-
-        svg {
-          display: block;
-          width: 100%;
-          height: auto;
-          max-height: 480px;
-        }
-
-        svg text {
-          font-family: ${cssVar.fontFamily};
-        }
-      `,
-    ),
-
-    noBackground: css`
-      img {
-        background: transparent !important;
-      }
-    `,
-
-    noPadding: css`
-      padding: 0;
-    `,
-
-    padding: css`
-      padding: 16px;
-    `,
-
-    root: css`
-      direction: ltr;
-      margin: 0;
-      padding: 0;
-      text-align: start;
-    `,
-
-    unmermaid: css`
-      color: ${cssVar.colorTextDescription};
-    `,
-  };
-});
-
-export const variants = cva(styles.root, {
-  defaultVariants: {
-    animated: false,
-    mermaid: true,
-    showBackground: false,
-    variant: 'borderless',
+export const styles = stylex.create({
+  padded: {
+    padding: 16,
   },
-
-  variants: {
-    mermaid: {
-      false: styles.unmermaid,
-      true: styles.mermaid,
-    },
-    showBackground: {
-      false: styles.noBackground,
-      true: null,
-    },
-    animated: {
-      true: styles.animated,
-      false: null,
-    },
-    variant: {
-      filled: styles.padding,
-      outlined: styles.padding,
-      borderless: styles.noPadding,
-    },
+  root: {
+    margin: 0,
+    padding: 0,
+    direction: 'ltr',
+    textAlign: 'start',
+  },
+  unmermaid: {
+    color: cssVar.colorTextDescription,
   },
 });

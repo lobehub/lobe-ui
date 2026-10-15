@@ -1,9 +1,10 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { memo } from 'react';
 
-import { ToastHost } from '@/base-ui/Toast';
 import { Flexbox } from '@/Flex';
+import { ToastHost } from '@/Toast';
 
 import type { ColorScaleItem } from '../types';
 import ScaleRow from './ScaleRow';
@@ -30,7 +31,12 @@ const ColorScales = memo<ColorScalesProps>(({ name, scale, midHighLight }) => {
       <div style={{ padding: '8px 16px 32px 0' }}>
         <Flexbox gap={2}>
           <Flexbox horizontal align={'center'} gap={2} key="scale-title">
-            <Flexbox horizontal align={'center'} className={styles.scaleRowTitle} key="scale-num" />
+            <Flexbox
+              horizontal
+              align={'center'}
+              {...stylex.props(styles.scaleRowTitle)}
+              key="scale-num"
+            />
             {Array.from({ length: scale.light.length })
               .fill('')
               .map((_, index) => {
@@ -39,12 +45,12 @@ const ColorScales = memo<ColorScalesProps>(({ name, scale, midHighLight }) => {
                 const isMidHighlight = midHighLight === index;
 
                 return (
-                  <div className={styles.scaleBox} key={`num${index}`}>
-                    <div className={styles.scaleBox}>
+                  <div {...stylex.props(styles.scaleBox)} key={`num${index}`}>
+                    <div {...stylex.props(styles.scaleBox)}>
                       <Flexbox
                         horizontal
                         align={'center'}
-                        className={styles.scaleItem}
+                        {...stylex.props(styles.scaleItem)}
                         justify={'center'}
                         style={{
                           fontWeight: isMidHighlight ? 700 : 400,

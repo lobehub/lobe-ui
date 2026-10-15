@@ -1,0 +1,20 @@
+@layer lobe-ui {
+  .lobe-switch {
+    --switch-dir: 1;
+  }
+
+  .lobe-switch:dir(rtl),
+  [dir='rtl'] .lobe-switch {
+    --switch-dir: -1;
+  }
+
+  /* The thumb leaves the flow in text mode so its press animation never resizes the control. */
+  .lobe-switch-text > :last-child {
+    position: absolute;
+    inset-inline-start: 2px;
+  }
+
+  .lobe-switch-text > [aria-hidden] > * {
+    grid-area: 1 / 1;
+  }
+}

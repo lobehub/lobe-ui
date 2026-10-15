@@ -1,0 +1,123 @@
+@layer lobe-ui {
+  @keyframes lobe-syntax-highlighter-fade-in {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  .lobe-syntax-highlighter pre {
+    overflow-x: auto;
+    margin: 0;
+  }
+
+  .lobe-syntax-highlighter-shiki pre {
+    user-select: none;
+  }
+
+  .lobe-syntax-highlighter-shiki pre code {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .lobe-syntax-highlighter-shiki pre code .line {
+    user-select: text;
+
+    display: block;
+
+    width: calc(100% + 32px);
+    margin-block: 0;
+    margin-inline: -16px;
+    padding-block: 0;
+    padding-inline: 16px;
+  }
+
+  .lobe-syntax-highlighter-shiki pre.has-focused .line:not(.focused) {
+    opacity: 0.5;
+  }
+
+  .lobe-syntax-highlighter-shiki pre .highlighted {
+    background: var(--lobe-color-fill-tertiary);
+  }
+
+  .lobe-syntax-highlighter-shiki pre .highlighted.warning {
+    background: var(--lobe-color-warning-bg);
+  }
+
+  .lobe-syntax-highlighter-shiki pre .highlighted.error {
+    background: var(--lobe-color-error-bg);
+  }
+
+  .lobe-syntax-highlighter-shiki pre .highlighted-word {
+    padding-block: 0.1em;
+    padding-inline: 0.2em;
+    border: 1px solid var(--lobe-color-border-secondary);
+    border-radius: var(--lobe-border-radius);
+
+    background: var(--lobe-color-fill-tertiary);
+  }
+
+  .lobe-syntax-highlighter-shiki pre .diff.remove {
+    background: var(--lobe-color-error-bg);
+  }
+
+  .lobe-syntax-highlighter-shiki pre .diff.remove::before {
+    content: '-';
+
+    position: absolute;
+    inset-inline-start: 4px;
+
+    display: inline-block;
+
+    color: var(--lobe-color-error-text);
+  }
+
+  .lobe-syntax-highlighter-shiki pre .diff.add {
+    background: var(--lobe-color-success-bg);
+  }
+
+  .lobe-syntax-highlighter-shiki pre .diff.add::before {
+    content: '+';
+
+    position: absolute;
+    inset-inline-start: 4px;
+
+    display: inline-block;
+
+    color: var(--lobe-color-success-text);
+  }
+
+  .lobe-syntax-highlighter-transparent pre {
+    background: transparent !important;
+  }
+
+  .lobe-syntax-highlighter-animated .animate-fade-in,
+  .lobe-syntax-highlighter-animated .katex-html > .katex-base,
+  .lobe-syntax-highlighter-animated code:not(:has(span.line)) {
+    opacity: 1;
+    animation: lobe-syntax-highlighter-fade-in 1s ease-in-out;
+  }
+
+  .lobe-syntax-highlighter-animated span.line > span.stream-char {
+    opacity: 0;
+    animation: lobe-syntax-highlighter-fade-in var(--lobe-syntax-highlighter-stream-fade)
+      cubic-bezier(0.33, 0, 0.67, 1) forwards;
+  }
+
+  .lobe-syntax-highlighter-animated .katex-display .katex-html span {
+    mask: none !important;
+    animation: none !important;
+  }
+
+  .lobe-syntax-highlighter-padded pre {
+    padding: 16px;
+  }
+
+  .lobe-syntax-highlighter-unpadded pre {
+    padding: 0;
+  }
+}

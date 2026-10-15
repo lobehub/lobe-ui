@@ -1,8 +1,7 @@
 'use client';
 
-import { DropdownMenu, type DropdownMenuProps, Icon } from '@lobehub/ui';
-import { Upload, type UploadFile, type UploadProps } from 'antd';
-import { createStaticStyles } from 'antd-style';
+import { DropdownMenu, type DropdownMenuProps, Icon, Upload } from '@lobehub/ui';
+import { createStaticStyles } from '@lobehub/ui';
 import { FileIcon, MoreHorizontal, UploadIcon, XIcon } from 'lucide-react';
 import { useRef, useState } from 'react';
 
@@ -113,28 +112,24 @@ const formatFileSize = (bytes: number) => {
   return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 };
 
+interface UploadedFile {
+  name: string;
+  size: number;
+  uid: string;
+}
+
 export default () => {
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
+  const [fileList, setFileList] = useState<UploadedFile[]>([]);
   // 使用 actionsRef 来命令式关闭菜单（无需受控模式）
   const actionsRef = useRef<{ close: () => void; unmount: () => void } | null>(null);
 
-  const uploadProps: UploadProps = {
-    beforeUpload: (file) => {
-      setFileList((prev) => [
-        ...prev,
-        {
-          name: file.name,
-          size: file.size,
-          status: 'done',
-          uid: file.uid,
-        },
-      ]);
-      // 业务逻辑完成后，通过 actionsRef 关闭菜单
-      actionsRef.current?.close();
-      return false;
-    },
-    fileList,
-    showUploadList: false,
+  const handleFiles = (files: File[]) => {
+    setFileList((prev) => [
+      ...prev,
+      ...files.map((file) => ({ name: file.name, size: file.size, uid: crypto.randomUUID() })),
+    ]);
+    // 业务逻辑完成后，通过 actionsRef 关闭菜单
+    actionsRef.current?.close();
   };
 
   const handleRemoveFile = (uid: string) => {
@@ -149,7 +144,7 @@ export default () => {
       icon: <Icon icon={UploadIcon} />,
       key: 'upload',
       label: (
-        <Upload {...uploadProps}>
+        <Upload onFiles={handleFiles}>
           <span>Upload File</span>
         </Upload>
       ),

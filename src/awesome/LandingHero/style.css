@@ -1,0 +1,14 @@
+@layer lobe-ui {
+  .lobe-landing-hero-badge a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .lobe-landing-hero-badge a:hover {
+    color: var(--lobe-color-text);
+  }
+
+  .lobe-landing-hero-aside > * {
+    inline-size: 100%;
+  }
+}

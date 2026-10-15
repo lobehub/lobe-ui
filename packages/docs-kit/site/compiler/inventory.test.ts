@@ -55,7 +55,7 @@ describe('documentation inventory', () => {
     const inventory = buildRealInventory();
 
     expect(inventory.documents.length).toBeGreaterThanOrEqual(166);
-    expect(inventory.demoReferences.length).toBeGreaterThanOrEqual(524);
+    expect(inventory.demoReferences.length).toBeGreaterThanOrEqual(460);
     expect(new Set(inventory.documents.map(({ pathname }) => pathname)).size).toBe(
       inventory.documents.length,
     );
@@ -240,7 +240,7 @@ title: Fixture
   it('normalizes top-level sections from namespaces and public document roles', () => {
     const root = createFixture({
       'src/Button/index.md': '---\nnav: Components\ntitle: Button\n---\n',
-      'src/base-ui/Button/index.md': '---\nnav: Components\ntitle: Button\n---\n',
+      'src/mobile/Button/index.md': '---\nnav: Components\ntitle: Button\n---\n',
       'src/i18n/index.md': '---\nnav: Hooks & Providers\ntitle: i18n\n---\n',
     });
 
@@ -251,7 +251,7 @@ title: Fixture
     );
 
     expect(sections['src/Button/index.md']).toBe('Components');
-    expect(sections['src/base-ui/Button/index.md']).toBe('Base UI');
+    expect(sections['src/mobile/Button/index.md']).toBe('Mobile');
     expect(sections['src/i18n/index.md']).toBe('Hooks & Providers');
     expect(sections['docs/index.md']).toBe('Home');
     expect(sections['docs/changelog.md']).toBe('Changelog');

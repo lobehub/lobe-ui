@@ -1,5 +1,4 @@
-import { Icon } from '@lobehub/ui';
-import { createStaticStyles, cssVar, useThemeMode } from 'antd-style';
+import { createStaticStyles, cssVar, Icon, useThemeMode } from '@lobehub/ui';
 import { SparkleIcon } from 'lucide-react';
 import { memo, type PropsWithChildren } from 'react';
 
@@ -17,10 +16,6 @@ const styles = createStaticStyles(({ css, cssVar }) => ({
     color: ${cssVar.colorText};
 
     background: ${cssVar.colorFillTertiary};
-
-    &:hover {
-      background: '';
-    }
   `,
   containerLight: css`
     cursor: pointer;

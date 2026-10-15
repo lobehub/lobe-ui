@@ -1,22 +1,31 @@
 'use client';
 
-import { cx } from 'antd-style';
+import * as stylex from '@stylexjs/stylex';
+
+import { styleProps } from '@/styles/stylex/props';
 
 import { styles } from './style';
 import type { AuthLayoutAsideProps } from './type';
 
 /** Inset art panel for `AuthLayout`'s `aside` slot, with a scrim and copy at the bottom. */
-function AuthLayoutAside({ background, className, kicker, line, ...rest }: AuthLayoutAsideProps) {
+function AuthLayoutAside({
+  background,
+  className,
+  kicker,
+  line,
+  style,
+  ...rest
+}: AuthLayoutAsideProps) {
   return (
-    <div className={cx(styles.asidePlate, className)} {...rest}>
-      <div className={styles.asidePanel}>
+    <div {...rest} {...styleProps(styles.asidePlate, className, style)}>
+      <div {...stylex.props(styles.asidePanel)}>
         {background}
         {kicker || line ? (
           <>
-            <div className={styles.asideScrim} />
-            <div className={styles.asideCopy}>
-              {kicker ? <p className={styles.asideKicker}>{kicker}</p> : null}
-              {line ? <p className={styles.asideLine}>{line}</p> : null}
+            <div {...stylex.props(styles.asideScrim)} />
+            <div {...stylex.props(styles.asideCopy)}>
+              {kicker ? <p {...stylex.props(styles.asideKicker)}>{kicker}</p> : null}
+              {line ? <p {...stylex.props(styles.asideLine)}>{line}</p> : null}
             </div>
           </>
         ) : null}

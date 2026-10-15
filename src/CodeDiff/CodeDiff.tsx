@@ -2,8 +2,9 @@
 
 import type { FileDiffOptions } from '@pierre/diffs';
 import { MultiFileDiff } from '@pierre/diffs/react';
-import { useThemeMode } from 'antd-style';
 import { memo, useMemo } from 'react';
+
+import { useThemeMode } from '@/styles/theme/scope';
 
 import { DiffPanel } from './DiffPanel';
 import { getLobeDiffOptions, registerLobeDiffThemes } from './theme';
@@ -97,7 +98,7 @@ export const CodeDiff = memo<CodeDiffProps>(
       [newContent, language, fileName],
     );
 
-    const options = useMemo<FileDiffOptions<string>>(
+    const options = useMemo<FileDiffOptions<string, undefined>>(
       () => getLobeDiffOptions({ diffOptions, isDarkMode, viewMode }),
       [isDarkMode, viewMode, diffOptions],
     );

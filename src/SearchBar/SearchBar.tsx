@@ -1,18 +1,24 @@
 'use client';
 
-import { cx } from 'antd-style';
+import * as stylex from '@stylexjs/stylex';
 import { LucideLoader2, Search } from 'lucide-react';
 import { memo, useMemo, useRef, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
-import useControlledState from 'use-merge-value';
 
 import Spotlight from '@/awesome/Spotlight';
-import { Input } from '@/base-ui/Input';
+import { useControlledState } from '@/hooks/useControlledState';
+import { useEventCallback } from '@/hooks/useEventCallback';
 import Hotkey from '@/Hotkey';
 import Icon from '@/Icon';
+import { Input } from '@/Input';
+import { styleProps } from '@/styles/stylex/props';
 
 import { styles } from './style';
 import { type SearchBarProps } from './type';
+
+type HandlerEvent<K extends 'onBlur' | 'onChange' | 'onFocus' | 'onPressEnter'> = Parameters<
+  NonNullable<SearchBarProps[K]>
+>[0];
 
 const SearchBar = memo<SearchBarProps>(
   ({
@@ -48,6 +54,40 @@ const SearchBar = memo<SearchBarProps>(
       [shortKey],
     );
 
+    const prefix = useMemo(
+      () => (
+        <Icon
+          {...stylex.props(styles.icon)}
+          icon={loading ? LucideLoader2 : Search}
+          size="small"
+          spin={loading}
+          style={{ marginRight: 4 }}
+        />
+      ),
+      [loading],
+    );
+
+    const handleBlur = useEventCallback((e: HandlerEvent<'onBlur'>) => {
+      onBlur?.(e);
+      setInputValue(e.target.value);
+      setShowTag(true);
+    });
+
+    const handleChange = useEventCallback((e: HandlerEvent<'onChange'>) => {
+      setInputValue(e.target.value);
+      onChange?.(e);
+    });
+
+    const handleFocus = useEventCallback((e: HandlerEvent<'onFocus'>) => {
+      onFocus?.(e);
+      setShowTag(false);
+    });
+
+    const handlePressEnter = useEventCallback((e: HandlerEvent<'onPressEnter'>) => {
+      onPressEnter?.(e);
+      onSearch?.(inputValue);
+    });
+
     useHotkeys(
       hotkey,
       () => {
@@ -62,49 +102,28 @@ const SearchBar = memo<SearchBarProps>(
     );
 
     return (
-      <div className={cx(styles.search, className)} style={style}>
+      <div {...styleProps(styles.search, className, style)}>
         {spotlight && <Spotlight />}
         <Input
           allowClear
           className={inputClassName}
           placeholder={placeholder ?? 'Type keywords...'}
+          prefix={prefix}
           ref={inputReference}
           style={inputStyle}
           value={inputValue}
-          prefix={
-            <Icon
-              className={styles.icon}
-              icon={loading ? LucideLoader2 : Search}
-              size="small"
-              spin={loading}
-              style={{ marginRight: 4 }}
-            />
-          }
-          onBlur={(e) => {
-            onBlur?.(e);
-            setInputValue(e.target.value);
-            setShowTag(true);
-          }}
-          onChange={(e) => {
-            setInputValue(e.target.value);
-            onChange?.(e);
-          }}
-          onFocus={(e) => {
-            onFocus?.(e);
-            setShowTag(false);
-          }}
-          onPressEnter={(e) => {
-            onPressEnter?.(e);
-            onSearch?.(inputValue);
-          }}
+          onBlur={handleBlur}
+          onChange={handleChange}
+          onFocus={handleFocus}
+          onPressEnter={handlePressEnter}
           {...rest}
         />
         {enableShortKey && showTag && !inputValue && (
           <Hotkey
             compact
-            className={cx(styles.tag, shortKeyClassName)}
             keys={hotkey}
-            style={shortKeyStyle}
+            styles={{ kbdStyle: { color: 'inherit' } }}
+            {...styleProps(styles.tag, shortKeyClassName, shortKeyStyle)}
           />
         )}
       </div>

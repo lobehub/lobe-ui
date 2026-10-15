@@ -1,4 +1,4 @@
-import { Avatar, Menu, Text } from '@lobehub/ui';
+import { Avatar, List, type ListItem, type ListItemType, Text } from '@lobehub/ui';
 import { FolderIcon } from 'lucide-react';
 import type { FC } from 'react';
 
@@ -29,7 +29,7 @@ export const DemoBody: FC<{
 
   // Agents 项
   const agentItems = agents.map((agent) => ({
-    icon: <Avatar avatar={agent.avatar} size={36} />,
+    avatar: <Avatar avatar={agent.avatar} size={36} />,
     key: agent.name,
     label: (
       <Flexbox
@@ -46,39 +46,16 @@ export const DemoBody: FC<{
     ),
   }));
 
-  // 根据展开状态决定是否显示分组标题和分隔符
-  // @ts-ignore
-  const items = expand
-    ? ([
-        {
-          children: projectItems,
-          key: 'projects-group',
-          label: 'Repositories',
-          type: 'group',
-        },
-        { key: 'divider-2', style: { marginBlock: 4, opacity: 0 }, type: 'divider' },
-        {
-          children: agentItems,
-          key: 'agents-group',
-          label: 'Agents',
-          type: 'group',
-        },
-      ] as any)
-    : [...projectItems, ...agentItems];
+  const collapse = (item: ListItemType): ListItemType => (expand ? item : { ...item, label: null });
+  const items: ListItem[] = [
+    ...projectItems.map(collapse),
+    { key: 'agents-divider', type: 'divider' },
+    ...agentItems.map(collapse),
+  ];
 
   return (
     <Flexbox style={{ flex: 1, overflow: 'hidden', position: 'relative' }}>
-      <Menu
-        selectable
-        inlineCollapsed={!expand}
-        items={items}
-        mode={'inline'}
-        selectedKeys={[activeKey]}
-        variant={'borderless'}
-        onSelect={({ key }) => {
-          onSelect(key);
-        }}
-      />
+      <List activeKey={activeKey} items={items} onClick={({ key }) => onSelect(String(key))} />
     </Flexbox>
   );
 };

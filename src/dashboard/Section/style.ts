@@ -1,31 +1,27 @@
-import { createStaticStyles } from 'antd-style';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  desc: css`
-    font-size: 13px;
-    font-weight: 400;
-    line-height: 1.45;
-    color: ${cssVar.colorTextSecondary};
-  `,
-  more: css`
-    display: inline-flex;
-    gap: 2px;
-    align-items: center;
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-    font-size: 13px;
-    color: ${cssVar.colorTextSecondary};
-    text-decoration: none;
-
-    &:hover {
-      color: ${cssVar.colorText};
-    }
-  `,
-  title: css`
-    margin: 0;
-
-    font-size: 15px;
-    font-weight: 600;
-    line-height: 1.4;
-    color: ${cssVar.colorText};
-  `,
-}));
+export const styles = stylex.create({
+  desc: {
+    color: cssVar.colorTextSecondary,
+    fontSize: 13,
+    fontWeight: 400,
+    lineHeight: 1.45,
+  },
+  more: {
+    gap: 2,
+    textDecoration: 'none',
+    alignItems: 'center',
+    color: { 'default': cssVar.colorTextSecondary, ':hover': cssVar.colorText },
+    display: 'inline-flex',
+    fontSize: 13,
+  },
+  title: {
+    margin: 0,
+    color: cssVar.colorText,
+    fontSize: 15,
+    fontWeight: 600,
+    lineHeight: 1.4,
+  },
+});

@@ -1,5 +1,4 @@
-import { ScrollArea } from '@lobehub/ui';
-import { cssVar } from 'antd-style';
+import { cssVar, ScrollArea } from '@lobehub/ui';
 
 const codeSample = `const veryLongVariableName = 'This single non-breaking line is much wider than the surrounding flex container';
 function example(input) {

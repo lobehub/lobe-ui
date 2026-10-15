@@ -1,5 +1,5 @@
 import { Avatar, Button, DropdownMenu, type DropdownMenuProps, Flexbox, Icon } from '@lobehub/ui';
-import { cssVar } from 'antd-style';
+import { cssVar } from '@lobehub/ui';
 import {
   CreditCardIcon,
   LifeBuoyIcon,

@@ -1,19 +1,27 @@
 'use client';
 
-import { cx } from 'antd-style';
+import clsx from 'clsx';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { memo, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import ActionIcon from '@/base-ui/ActionIcon';
+import ActionIcon from '@/ActionIcon';
 import CopyButton from '@/CopyButton';
 import { Flexbox } from '@/Flex';
 import { getCodeLanguageDisplayName, getCodeLanguageFilename } from '@/Highlighter/const';
 import MaterialFileTypeIcon from '@/MaterialFileTypeIcon';
+import { styleProps } from '@/styles/stylex/props';
 import Text from '@/Text';
 import { stopPropagation } from '@/utils/dom';
 
 import LangSelect from './LangSelect';
-import { bodyVariants, headerVariants, variants } from './style';
+import {
+  bodyStyles,
+  expandCls,
+  headerFlexProps,
+  headerStyles,
+  rootClassName,
+  rootStyles,
+} from './style';
 import { type HighlighterProps } from './type';
 
 interface HeaderLanguageProps {
@@ -150,18 +158,18 @@ export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps & { chi
 
     return (
       <Flexbox
-        className={cx(variants({ shadow, variant, wrap }), className)}
         data-code-type="highlighter"
-        style={style}
+        width={'100%'}
         {...rest}
+        {...styleProps(rootStyles({ shadow, variant }), rootClassName(wrap, className), style)}
       >
         <Flexbox
           horizontal
           align={'center'}
-          className={cx(headerVariants({ variant }), classNames?.header)}
           justify={'space-between'}
-          style={customStyles?.header}
           onClick={handleToggleExpand}
+          {...headerFlexProps(variant)}
+          {...styleProps(headerStyles(variant), classNames?.header, customStyles?.header)}
         >
           <HeaderLanguage
             allowChangeLanguage={allowChangeLanguage}
@@ -185,8 +193,12 @@ export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps & { chi
           </Flexbox>
         </Flexbox>
         <Flexbox
-          className={cx(bodyVariants({ expand }), classNames?.body)}
-          style={customStyles?.body}
+          height={expand ? undefined : 0}
+          {...styleProps(
+            bodyStyles(expand, variant),
+            clsx(expand && expandCls, classNames?.body),
+            customStyles?.body,
+          )}
         >
           {children}
         </Flexbox>

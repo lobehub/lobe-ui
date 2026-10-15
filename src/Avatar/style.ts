@@ -1,70 +1,44 @@
-import { createStaticStyles } from 'antd-style';
-import { cva } from 'class-variance-authority';
+import * as stylex from '@stylexjs/stylex';
 
-import { lobeStaticStylish } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => {
-  return {
-    borderless: lobeStaticStylish.variantBorderlessWithoutHover,
-    filled: lobeStaticStylish.variantFilledWithoutHover,
-    loading: css`
-      position: absolute;
-      color: #fff;
-      background: ${cssVar.colorBgMask};
-    `,
-    outlined: lobeStaticStylish.variantOutlinedWithoutHover,
-    root: css`
-      flex: none;
-      background: transparent;
-
-      &[class*='ant-avatar'] {
-        user-select: none;
-
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        border: none;
-
-        [class*='ant-avatar-string'] {
-          transform: none !important;
-
-          overflow: hidden;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-
-          width: 100%;
-          height: 100%;
-          padding: 0;
-
-          font-size: inherit;
-          font-weight: bolder;
-          line-height: 1;
-          color: inherit;
-        }
-      }
-    `,
-    shadow: lobeStaticStylish.shadow,
-  };
-});
-
-export const variants = cva(styles.root, {
-  defaultVariants: {
-    shadow: false,
-    variant: 'borderless',
+export const styles = stylex.create({
+  content: {
+    padding: 0,
+    overflow: 'hidden',
+    alignItems: 'center',
+    color: 'inherit',
+    display: 'flex',
+    fontSize: 'inherit',
+    fontWeight: 'bolder',
+    justifyContent: 'center',
+    lineHeight: 1,
+    height: '100%',
+    width: '100%',
   },
-
-  variants: {
-    variant: {
-      filled: styles.filled,
-      outlined: styles.outlined,
-      borderless: styles.borderless,
-    },
-    shadow: {
-      false: null,
-      true: styles.shadow,
-    },
+  img: {
+    flex: 'none',
+    objectFit: 'cover',
+    height: '100%',
+    width: '100%',
+  },
+  loading: {
+    inset: 0,
+    backgroundColor: cssVar.colorBgMask,
+    color: '#fff',
+    position: 'absolute',
+  },
+  root: {
+    flex: 'none',
+    overflow: 'hidden',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    display: 'flex',
+    justifyContent: 'center',
+    position: 'relative',
+    userSelect: 'none',
+  },
+  shadow: {
+    boxShadow: `0 1px 0 -1px ${cssVar.colorBorder}, 0 1px 2px -0.5px ${cssVar.colorBorder}, 0 2px 2px -1px ${cssVar.colorBorderSecondary}, 0 3px 6px -4px ${cssVar.colorBorderSecondary}`,
   },
 });

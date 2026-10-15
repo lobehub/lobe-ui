@@ -1,27 +1,21 @@
 'use client';
 
-import { DatePicker as AntDatePicker } from 'antd';
-import { cx, useThemeMode } from 'antd-style';
-import { memo } from 'react';
+import dateGenerateConfig from './dateGenerateConfig';
+import generatePicker from './generatePicker';
+import genPurePanel from './PurePanel';
+import type { DatePickerType } from './type';
 
-import { variants } from './style';
-import type { DatePickerProps } from './type';
+/**
+ * DatePicker over native `Date` — the previous lobe DatePicker API: values, `onChange`
+ * and `disabledDate` use `Date`, a cleared range is `[null, null]`; inputs may also be
+ * `Dayjs`, date strings or timestamps. Statics as in antd: `DatePicker.RangePicker`,
+ * `WeekPicker`, `MonthPicker`, `YearPicker`, `QuarterPicker`, `TimePicker`, the pure panels
+ * and `generatePicker`. For the antd `Dayjs` API use `DayjsDatePicker`.
+ */
+const DatePicker = generatePicker(dateGenerateConfig) as DatePickerType;
 
-const DatePicker = memo<DatePickerProps>(({ variant, shadow, className, ...rest }) => {
-  const { isDarkMode } = useThemeMode();
-
-  return (
-    <AntDatePicker
-      variant={variant || (isDarkMode ? 'filled' : 'outlined')}
-      className={cx(
-        variants({ shadow, variant: variant || (isDarkMode ? 'filled' : 'outlined') }),
-        className,
-      )}
-      {...rest}
-    />
-  );
-});
-
-DatePicker.displayName = 'DatePicker';
+DatePicker._InternalPanelDoNotUseOrYouWillBeFired = genPurePanel(DatePicker);
+DatePicker._InternalRangePanelDoNotUseOrYouWillBeFired = genPurePanel(DatePicker.RangePicker);
+DatePicker.generatePicker = generatePicker;
 
 export default DatePicker;

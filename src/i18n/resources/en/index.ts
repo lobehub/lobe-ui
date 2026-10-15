@@ -12,3 +12,4 @@ export { default as messageModal } from './messageModal';
 export { default as qrCode } from './qrCode';
 export { default as sideNav } from './sideNav';
 export { default as table } from './table';
+export { default as video } from './video';

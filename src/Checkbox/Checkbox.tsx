@@ -1,127 +1,98 @@
-import { cx } from 'antd-style';
-import { CheckIcon, Minus } from 'lucide-react';
-import type { CSSProperties, FC, MouseEvent } from 'react';
-import useMergeState from 'use-merge-value';
+'use client';
 
-import Block from '@/Block';
-import { Flexbox } from '@/Flex';
+import { Checkbox as BaseCheckbox } from '@base-ui/react/checkbox';
+import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
+import { CheckIcon, Minus } from 'lucide-react';
+import { type CSSProperties, memo } from 'react';
+
+import { focusRing } from '@/styles/stylex/focusRing';
+import { styleProps } from '@/styles/stylex/props';
 import Text from '@/Text';
 
 import { styles } from './style';
 import type { CheckboxProps } from './type';
 
-const Checkbox: FC<CheckboxProps> = ({
-  checked,
-  defaultChecked,
-  onChange,
-  size = 16,
-  className,
-  style,
-  children,
-  textProps,
-  backgroundColor,
-  classNames,
-  styles: customStyles,
-  shape = 'square',
-  disabled,
-  indeterminate,
-  ...rest
-}) => {
-  const [value, setValue] = useMergeState(defaultChecked || false, {
-    defaultValue: defaultChecked,
+const Checkbox = memo<CheckboxProps>(
+  ({
+    size = 16,
+    shape = 'square',
+    backgroundColor,
+    children,
+    className,
+    classNames,
+    styles: customStyles,
+    style,
+    textProps,
     onChange,
-    value: checked,
-  });
+    disabled,
+    indeterminate,
+    ...rest
+  }) => {
+    const boxStyle: CSSProperties = {
+      borderRadius: shape === 'square' ? `max(4px, ${Math.round(size / 4)}px)` : '50%',
+      height: size,
+      width: size,
+      ...(backgroundColor ? { '--lobe-checkbox-bg': backgroundColor } : {}),
+      ...(children ? {} : style),
+      ...customStyles?.checkbox,
+    };
 
-  const checkboxStyles: CSSProperties = {
-    borderRadius: shape === 'square' ? `max(4px, ${Math.round(size / 4)}px)` : '50%',
-    ...style,
-    ...customStyles?.checkbox,
-  };
-
-  const handleClick = (e?: MouseEvent) => {
-    if (!disabled) {
-      e?.preventDefault();
-      setValue(!value);
-    }
-  };
-
-  const isIndeterminate = indeterminate;
-  const isChecked = !isIndeterminate && value;
-
-  const checkIcon = (
-    <Block
-      align={'center'}
-      flex={'none'}
-      height={size}
-      justify={'center'}
-      variant={'outlined'}
-      width={size}
-      className={cx(
-        styles.root,
-        isChecked && styles.checked,
-        isIndeterminate && styles.indeterminate,
-        disabled && styles.disabled,
-        className,
-        classNames?.checkbox,
-      )}
-      style={
-        backgroundColor && (isChecked || isIndeterminate)
-          ? { backgroundColor, borderColor: backgroundColor, ...checkboxStyles }
-          : { ...checkboxStyles }
-      }
-      onClick={handleClick}
-      {...rest}
-    >
-      {isIndeterminate ? (
-        <Minus
-          size={size}
-          strokeWidth={3}
-          style={{
-            transform: `scale(${shape === 'square' ? 0.75 : 0.66})`,
-          }}
-        />
-      ) : isChecked ? (
-        <CheckIcon
-          size={size}
-          strokeWidth={3}
-          style={{
-            transform: `scale(${shape === 'square' ? 0.75 : 0.66})`,
-          }}
-        />
-      ) : null}
-    </Block>
-  );
-
-  if (!children) return checkIcon;
-
-  return (
-    <Flexbox
-      horizontal
-      align={'center'}
-      className={classNames?.wrapper}
-      gap={Math.floor(size / 2)}
-      style={{
-        cursor: disabled ? 'not-allowed' : 'pointer',
-        userSelect: 'none',
-        ...customStyles?.wrapper,
-      }}
-      onClick={handleClick}
-    >
-      {checkIcon}
-      <Text
-        as={'span'}
-        className={cx(classNames?.text)}
-        style={customStyles?.text}
-        {...textProps}
-        type={disabled ? 'secondary' : textProps?.type}
+    const box = (
+      <BaseCheckbox.Root
+        disabled={disabled}
+        indeterminate={indeterminate}
+        onCheckedChange={onChange}
+        {...rest}
+        {...styleProps(
+          [styles.root, focusRing.info],
+          clsx(children ? classNames?.checkbox : className, classNames?.checkbox),
+          boxStyle,
+        )}
       >
-        {children}
-      </Text>
-    </Flexbox>
-  );
-};
+        <BaseCheckbox.Indicator {...stylex.props(styles.indicator)}>
+          {indeterminate ? (
+            <Minus
+              size={size}
+              strokeWidth={3}
+              style={{ transform: `scale(${shape === 'square' ? 0.75 : 0.66})` }}
+            />
+          ) : (
+            <CheckIcon
+              size={size}
+              strokeWidth={3}
+              style={{ transform: `scale(${shape === 'square' ? 0.75 : 0.66})` }}
+            />
+          )}
+        </BaseCheckbox.Indicator>
+      </BaseCheckbox.Root>
+    );
+
+    if (!children) return box;
+
+    return (
+      <label
+        {...styleProps(styles.label, clsx(className, classNames?.wrapper), {
+          gap: Math.floor(size / 2),
+          ...style,
+          ...customStyles?.wrapper,
+        })}
+      >
+        {box}
+        <Text
+          as={'span'}
+          className={classNames?.text}
+          style={customStyles?.text}
+          {...textProps}
+          type={disabled ? 'secondary' : textProps?.type}
+        >
+          {children}
+        </Text>
+      </label>
+    );
+  },
+);
 
 Checkbox.displayName = 'Checkbox';
 
-export default Checkbox;
+export default Object.assign(Checkbox, { formBinding: { valueProp: 'checked' } as const });

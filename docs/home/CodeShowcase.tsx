@@ -1,10 +1,7 @@
-import { Flexbox } from '@lobehub/ui';
+import { Button, Flexbox, Tag, ThemeScope } from '@lobehub/ui';
 import { CodeShowcase, type CodeShowcaseItem } from '@lobehub/ui/awesome';
-import Button from '@lobehub/ui/Button';
 import { ChatItem } from '@lobehub/ui/chat';
 import Markdown from '@lobehub/ui/Markdown';
-import Tag from '@lobehub/ui/Tag';
-import ThemeProvider from '@lobehub/ui/ThemeProvider';
 
 const MARKDOWN_CONTENT = `## Hello
 
@@ -55,25 +52,23 @@ export default () => (
     ),
   },
   {
-    code: `import { ThemeProvider, Button } from '@lobehub/ui'
+    code: `import { Button, ThemeScope } from '@lobehub/ui'
 
 export default () => (
-  <ThemeProvider
-    customTheme={{ primaryColor: 'purple' }}
-  >
+  <ThemeScope primaryColor={'purple'}>
     <Button type={'primary'}>Purple</Button>
-  </ThemeProvider>
+  </ThemeScope>
 )`,
     key: 'theming',
     label: 'Theming',
     preview: (
-      <ThemeProvider customTheme={{ primaryColor: 'purple' }} enableGlobalStyle={false}>
+      <ThemeScope primaryColor={'purple'}>
         <Flexbox horizontal align={'center'} gap={10} wrap={'wrap'}>
           <Button type={'primary'}>Purple</Button>
           <Button>Default</Button>
           <Tag color={'purple'}>primaryColor</Tag>
         </Flexbox>
-      </ThemeProvider>
+      </ThemeScope>
     ),
   },
 ];

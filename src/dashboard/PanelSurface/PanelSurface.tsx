@@ -1,11 +1,12 @@
 'use client';
 
-import { cx } from 'antd-style';
+import * as stylex from '@stylexjs/stylex';
 
-import Skeleton from '@/base-ui/Skeleton';
-import Spin from '@/base-ui/Spin';
+import Skeleton from '@/Skeleton';
+import Spin from '@/Spin';
+import { styleProps } from '@/styles/stylex/props';
 
-import { styles as surfaceStyles } from '../Surface/style';
+import { surfaceClassNames } from '../Surface/style';
 import Surface from '../Surface/Surface';
 import { styles } from './style';
 import type { PanelSurfaceProps } from './type';
@@ -34,12 +35,15 @@ const PanelSurface = ({
     title={title}
   >
     {loading && !children ? (
-      <div aria-busy="true" className={styles.loadingBody}>
+      <div aria-busy="true" {...stylex.props(styles.loadingBody)}>
         <Skeleton height={220} radius={8} />
       </div>
     ) : (
       <div
-        className={cx(size === 'small' ? styles.bodySmall : styles.body, surfaceStyles.tableBleed)}
+        {...styleProps(
+          size === 'small' ? styles.bodySmall : styles.body,
+          surfaceClassNames.tableBleed,
+        )}
       >
         {children}
       </div>

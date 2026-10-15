@@ -1,41 +1,16 @@
-import { createStaticStyles, cx } from 'antd-style';
-import { cva } from 'class-variance-authority';
+import * as stylex from '@stylexjs/stylex';
 
-import { lobeStaticStylish } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => {
-  return {
-    borderless: lobeStaticStylish.variantBorderlessWithoutHover,
-    filled: cx(
-      lobeStaticStylish.variantFilledWithoutHover,
-      css`
-        background: ${cssVar.colorBgContainer};
-      `,
-    ),
-    outlined: lobeStaticStylish.variantOutlinedWithoutHover,
-    root: css`
-      position: relative;
-      border-radius: ${cssVar.borderRadius};
-    `,
-    shadow: lobeStaticStylish.shadow,
-  };
-});
-
-export const variants = cva(styles.root, {
-  defaultVariants: {
-    shadow: false,
-    variant: 'filled',
+export const styles = stylex.create({
+  filled: {
+    backgroundColor: cssVar.colorBgContainer,
   },
-
-  variants: {
-    variant: {
-      filled: styles.filled,
-      outlined: styles.outlined,
-      borderless: styles.borderless,
-    },
-    shadow: {
-      false: null,
-      true: styles.shadow,
-    },
+  root: {
+    borderRadius: cssVar.borderRadius,
+    position: 'relative',
+  },
+  shadow: {
+    boxShadow: `0 1px 0 -1px ${cssVar.colorBorder}, 0 1px 2px -0.5px ${cssVar.colorBorder}, 0 2px 2px -1px ${cssVar.colorBorderSecondary}, 0 3px 6px -4px ${cssVar.colorBorderSecondary}`,
   },
 });

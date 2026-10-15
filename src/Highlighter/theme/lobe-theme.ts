@@ -1,4 +1,4 @@
-import { cssVar } from 'antd-style';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
 export default {
   displayName: 'Lobe Theme',

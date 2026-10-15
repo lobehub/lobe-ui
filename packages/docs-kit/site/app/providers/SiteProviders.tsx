@@ -1,13 +1,10 @@
-import { ConfigProvider, ThemeProvider as LobeThemeProvider } from '@lobehub/ui';
-import type { ThemeMode } from 'antd-style';
+import { ConfigProvider } from '@lobehub/ui';
 import { motion } from 'motion/react';
 import { ThemeProvider as NextThemeProvider, useTheme } from 'next-themes';
 import { type PropsWithChildren, useEffect, useState } from 'react';
 import siteConfig from 'virtual:lobedocs/site-config';
 
-import { StyleRegistry } from './StyleRegistry';
 import { THEME_STORAGE_KEY } from './themeConstants';
-import { cssVarTokenOverrides } from './themeCssVars';
 
 export type ThemePreference = 'light' | 'system' | 'dark';
 export type ResolvedAppearance = 'light' | 'dark';
@@ -42,22 +39,9 @@ export function useSiteTheme(): SiteThemeValue {
 }
 
 function LibraryProviders({ children }: PropsWithChildren) {
-  const { forcedTheme, theme } = useTheme();
-  const mode = forcedTheme ?? theme;
-  const themeMode: ThemeMode = mode === 'dark' || mode === 'light' ? mode : 'auto';
-
   return (
-    <ConfigProvider motion={motion}>
-      <LobeThemeProvider
-        appId="lobe-docs-site"
-        customToken={() => cssVarTokenOverrides}
-        defaultAppearance={forcedTheme === 'dark' ? 'dark' : 'light'}
-        enableCustomFonts={false}
-        enableGlobalStyle={false}
-        themeMode={themeMode}
-      >
-        {children}
-      </LobeThemeProvider>
+    <ConfigProvider enableCustomFonts={false} motion={motion}>
+      {children}
     </ConfigProvider>
   );
 }
@@ -76,9 +60,7 @@ export function SiteProviders({ children }: PropsWithChildren) {
       forcedTheme={forcedTheme}
       storageKey={THEME_STORAGE_KEY}
     >
-      <StyleRegistry>
-        <LibraryProviders>{children}</LibraryProviders>
-      </StyleRegistry>
+      <LibraryProviders>{children}</LibraryProviders>
     </NextThemeProvider>
   );
 }

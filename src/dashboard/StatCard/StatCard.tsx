@@ -1,10 +1,10 @@
 'use client';
 
-import { cx } from 'antd-style';
+import { styleProps } from '@/styles/stylex/props';
 
 import MetricCell from '../MetricStrip/MetricCell';
 import { styles as metricStyles } from '../MetricStrip/style';
-import { useSurfaceCardClassName } from '../Surface/link';
+import { useSurfaceCardStyles } from '../Surface/link';
 import { styles as surfaceStyles } from '../Surface/style';
 import type { StatCardProps } from './type';
 
@@ -25,10 +25,10 @@ function StatCard({
   value,
   valueTone,
 }: StatCardProps) {
-  const cardClassName = useSurfaceCardClassName();
+  const cardStyles = useSurfaceCardStyles();
 
   return (
-    <div className={cx(metricStyles.card, cardClassName, surfaceStyles.clip, className)}>
+    <div {...styleProps([metricStyles.card, cardStyles, surfaceStyles.clip], className)}>
       <MetricCell
         renderLink={renderLink}
         item={{

@@ -36,7 +36,7 @@ it('retains route metadata on each alias of a shared source', () => {
   expect(shared).toEqual(
     expect.arrayContaining([
       expect.objectContaining({ routeId: 'components/DropdownMenu/index' }),
-      expect.objectContaining({ routeId: 'components/base-ui/DropdownMenu/index' }),
+      expect.objectContaining({ routeId: 'components/DropdownMenu/index' }),
     ]),
   );
 });

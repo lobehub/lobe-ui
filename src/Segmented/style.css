@@ -1,0 +1,5 @@
+@layer lobe-ui {
+  [data-orientation='horizontal'] .lobe-segmented-indicator:dir(rtl) {
+    --lobe-segmented-indicator-start: var(--active-item-right);
+  }
+}

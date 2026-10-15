@@ -1,7 +1,9 @@
 'use client';
 
-import { cx, useThemeMode } from 'antd-style';
+import * as stylex from '@stylexjs/stylex';
 import { createContext, type ReactNode, use } from 'react';
+
+import { useThemeMode } from '@/styles/theme/scope';
 
 import { styles } from './style';
 import type { SurfaceLinkProps, SurfaceRenderLink } from './type';
@@ -31,11 +33,14 @@ export const useSurfaceDepth = () => use(SurfaceDepthContext);
 export { SurfaceDepthContext };
 
 /**
- * Class for a dashboard card: `colorBgContainer` in light, translucent `colorFillQuaternary` in
- * dark, and no fill of its own when nested in another Surface.
+ * StyleX styles for a dashboard card: `colorBgContainer` in light, translucent
+ * `colorFillQuaternary` in dark, and no fill of its own when nested in another Surface.
  */
-export const useSurfaceCardClassName = () => {
+export const useSurfaceCardStyles = () => {
   const { isDarkMode } = useThemeMode();
   const depth = useSurfaceDepth();
-  return cx(styles.card, isDarkMode && styles.cardDark, depth > 0 && styles.cardNested);
+  return [styles.card, isDarkMode && styles.cardDark, depth > 0 && styles.cardNested] as const;
 };
+
+/** Class name form of `useSurfaceCardStyles`, for markup that is not styled with StyleX. */
+export const useSurfaceCardClassName = () => stylex.props(useSurfaceCardStyles()).className ?? '';

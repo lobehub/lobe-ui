@@ -1,0 +1,5 @@
+@layer lobe-ui {
+  .lobe-mdx-tabs-tab.lobe-mdx-tabs-tab:hover:not([data-disabled]) {
+    background: var(--lobe-color-fill-tertiary);
+  }
+}

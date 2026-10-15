@@ -2,7 +2,8 @@ import { render, screen } from '@testing-library/react';
 
 import { CodeBlock } from './CodeBlock';
 
-vi.mock('@lobehub/ui', () => ({
+vi.mock('@lobehub/ui', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('@lobehub/ui')>()),
   Highlighter: ({ children, language }: { children: string; language: string }) => (
     <pre data-language={language} data-testid="docs-code-block">
       {children}

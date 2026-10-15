@@ -1,53 +1,62 @@
 ---
 title: Tag
-description: Tag is used for marking and categorizing content with small colorful labels. It offers multiple styles, sizes, and color options for different scenarios.
+description: Standalone colored tag for statuses and categorization, with preset and hex colors, sizes, shapes, variants, and a closable affordance.
 category: Data Display
 ---
 
+import DemoClosable from './demos/closable.tsx?demo';
+import DemoHex from './demos/hex.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
-import DemoColor from './demos/Color.tsx?demo';
+import DemoSizes from './demos/sizes.tsx?demo';
+import DemoVariants from './demos/variants.tsx?demo';
 
-## Default
+## Presets
 
 <Demo of={DemoIndex} layout="bare" />
 
-## Color
+## Hex color
 
-<Demo of={DemoColor} layout="center" />
+<Demo of={DemoHex} layout="bare" />
+
+## Variants
+
+<Demo of={DemoVariants} layout="bare" />
+
+## Shapes & sizes
+
+<Demo of={DemoSizes} layout="bare" />
+
+## Closable
+
+<Demo of={DemoClosable} layout="bare" />
 
 ## APIs
 
-### Tag
+<Api name="Tag" from=".." />
 
-<Api name="Tag" migrationKey="heading:%5B%22Tag%22%5D:0" />
+`Tag` renders a native `<span>`. All standard span HTML attributes including `onClick`, `aria-*`, `data-*`, `style`, and `ref` are forwarded to the root element.
 
-Additionally, Tag inherits all properties from Ant Design's Tag component except for 'color', which has been enhanced with additional options.
+### Color
 
-### Color Presets
+`color` accepts one of the 13 preset names (`red`, `volcano`, `orange`, `gold`, `yellow`, `lime`, `green`, `cyan`, `blue`, `geekblue`, `purple`, `magenta`, `gray`), the system colors (`success`, `warning`, `error`, `info`, `processing`), or any raw hex string. Preset and system colors resolve through theme tokens, so they follow light/dark themes automatically.
 
-The component supports the following color presets:
+### Variants
 
-#### System Colors
+- `filled` (default): tinted background with a subtle border.
+- `outlined`: transparent background with a colored border.
+- `borderless`: transparent background without a border.
+- `solid`: solid background with an auto-computed readable text color.
 
-- `success`: Green color indicating successful actions
-- `warning`: Yellow/orange color for warnings
-- `error`: Red color for errors
-- `info`: Blue color for informational content
+### Migrating from antd Tag
 
-#### Theme Colors
+The core migration is an import replacement:
 
-- `red`
-- `volcano`
-- `orange`
-- `gold`
-- `yellow`
-- `lime`
-- `green`
-- `cyan`
-- `blue`
-- `geekblue`
-- `purple`
-- `magenta`
-- `gray`
+```tsx | pure
+import { Tag } from '@lobehub/ui';
 
-You can also provide any hex color code (e.g., `#ff5500`) for custom colors.
+<Tag color="success" variant="solid">
+  online
+</Tag>;
+```
+
+`closable` renders a built-in close button that stops propagation, invokes `onClose`, and removes the tag. Use `closeIcon` to replace the default close glyph. `classNames.root` / `styles.root` and `classNames.closeIcon` / `styles.closeIcon` provide slot-level overrides for the root span and the close button.

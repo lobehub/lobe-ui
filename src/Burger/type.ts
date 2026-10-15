@@ -1,22 +1,18 @@
-import type { DrawerProps, MenuProps } from 'antd';
-import type { CSSProperties, Ref } from 'react';
+import type { CSSProperties, Key, ReactNode } from 'react';
 
-import type { ActionIconProps } from '@/base-ui/ActionIcon';
+import type { ActionIconProps } from '@/ActionIcon';
+import type { ListItem } from '@/List';
 
 export interface BurgerProps {
+  activeKey?: Key | null;
   className?: string;
-  drawerProps?: Partial<Omit<DrawerProps, 'items' | 'opened' | 'setOpened'>>;
+  footer?: ReactNode;
   fullscreen?: boolean;
   headerHeight?: number;
-  iconProps?: Partial<ActionIconProps>;
-  items: MenuProps['items'];
-  onClick?: MenuProps['onClick'];
+  items: ListItem[];
+  onOpenChange: (opened: boolean) => void;
+  onSelect?: (key: Key) => void;
   opened: boolean;
-  openKeys?: MenuProps['openKeys'];
-  ref?: Ref<HTMLDivElement>;
-  rootClassName?: string;
-  selectedKeys?: MenuProps['selectedKeys'];
-  setOpened: (state: boolean) => void;
   size?: ActionIconProps['size'];
   style?: CSSProperties;
   variant?: ActionIconProps['variant'];

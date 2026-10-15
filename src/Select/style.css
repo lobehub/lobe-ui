@@ -1,0 +1,6 @@
+@layer lobe-ui {
+  .lobe-select-arrow > svg {
+    width: 100%;
+    height: 100%;
+  }
+}

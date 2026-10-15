@@ -1,6 +1,5 @@
-import { ActionIcon, Segmented } from '@lobehub/ui/base-ui';
+import { ActionIcon, cssVar, Segmented } from '@lobehub/ui';
 import { StatCard } from '@lobehub/ui/dashboard';
-import { cssVar } from 'antd-style';
 import { RefreshCw } from 'lucide-react';
 import { useId, useState } from 'react';
 

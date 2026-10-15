@@ -1,14 +1,22 @@
 'use client';
 
-import { cx } from 'antd-style';
+import clsx from 'clsx';
 import { ChevronDown, ChevronRight } from 'lucide-react';
 import { memo, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import ActionIcon from '@/base-ui/ActionIcon';
+import ActionIcon from '@/ActionIcon';
 import CopyButton from '@/CopyButton';
 import { Flexbox } from '@/Flex';
-import { bodyVariants, headerVariants, variants } from '@/Highlighter/style';
+import {
+  bodyStyles,
+  expandCls,
+  headerFlexProps,
+  headerStyles,
+  rootClassName,
+  rootStyles,
+} from '@/Highlighter/style';
 import MaterialFileTypeIcon from '@/MaterialFileTypeIcon';
+import { styleProps } from '@/styles/stylex/props';
 import Text from '@/Text';
 import { stopPropagation } from '@/utils/dom';
 
@@ -109,18 +117,18 @@ export const MermaidFullFeatured = memo<MermaidFullFeaturedProps>(
 
     return (
       <Flexbox
-        className={cx(variants({ shadow, variant }), className)}
         data-code-type="mermaid"
-        style={style}
+        width={'100%'}
         {...rest}
+        {...styleProps(rootStyles({ shadow, variant }), rootClassName(false, className), style)}
       >
         <Flexbox
           horizontal
           align={'center'}
-          className={cx(headerVariants({ variant }), classNames?.header)}
           justify={'space-between'}
-          style={customStyles?.header}
           onClick={handleToggleExpand}
+          {...headerFlexProps(variant)}
+          {...styleProps(headerStyles(variant), classNames?.header, customStyles?.header)}
         >
           <MermaidHeaderLanguage
             fileName={fileName}
@@ -139,8 +147,12 @@ export const MermaidFullFeatured = memo<MermaidFullFeaturedProps>(
           </Flexbox>
         </Flexbox>
         <Flexbox
-          className={cx(bodyVariants({ expand }), classNames?.body)}
-          style={customStyles?.body}
+          height={expand ? undefined : 0}
+          {...styleProps(
+            bodyStyles(expand, variant),
+            clsx(expand && expandCls, classNames?.body),
+            customStyles?.body,
+          )}
         >
           {children}
         </Flexbox>

@@ -1,231 +1,171 @@
-import { createStaticStyles } from 'antd-style';
-import { cva } from 'class-variance-authority';
+import * as stylex from '@stylexjs/stylex';
 
-import { lobeStaticStylish } from '@/styles';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => {
-  // Bare viewer controls float directly over arbitrary image content; the
-  // theme-side halo (light halo around dark icons in light mode and vice
-  // versa) is what keeps them readable without a container panel.
-  const controlHalo = `drop-shadow(0 0 2px ${cssVar.colorBgLayout}) drop-shadow(0 1px 6px ${cssVar.colorBgLayout})`;
-  return {
-    actionsHidden: css`
-      cursor: pointer;
+import { actualSizeMarker, imageMarker } from './marker.stylex';
 
-      position: absolute;
-      z-index: 1;
-      inset-block-start: 0;
-      inset-inline-end: 0;
+const reducedMotion = '@media (prefers-reduced-motion: reduce)';
 
-      opacity: 0;
-    `,
-    actionsVisible: css`
-      cursor: pointer;
+// Bare viewer controls float directly over arbitrary image content; the
+// theme-side halo (light halo around dark icons in light mode and vice
+// versa) is what keeps them readable without a container panel.
+const controlHalo = `drop-shadow(0 0 2px ${cssVar.colorBgLayout}) drop-shadow(0 1px 6px ${cssVar.colorBgLayout})`;
 
-      position: absolute;
-      z-index: 1;
-      inset-block-start: 0;
-      inset-inline-end: 0;
-
-      opacity: 1;
-    `,
-    borderless: lobeStaticStylish.variantBorderlessWithoutHover,
-    filled: css`
-      ${lobeStaticStylish.variantOutlinedWithoutHover};
-      ${lobeStaticStylish.variantFilledWithoutHover};
-    `,
-    image: css`
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      width: auto;
-      height: auto;
-    `,
-    outlined: lobeStaticStylish.variantOutlinedWithoutHover,
-    previewable: css`
-      cursor: zoom-in;
-    `,
-    root: css`
-      cursor: pointer;
-      user-select: none;
-
-      position: relative;
-
-      overflow: hidden;
-
-      width: fit-content;
-      border-radius: ${cssVar.borderRadius};
-
-      line-height: 1;
-
-      &:hover {
-        .actions-hidden {
-          opacity: 1;
-        }
-      }
-    `,
-    toolbar: css`
-      pointer-events: auto;
-
-      position: absolute;
-      inset-block-end: 16px;
-      inset-inline-start: 50%;
-      transform: translateX(-50%);
-    `,
-    // The glass lives on the icon row, not the toolbar itself: tooltips and
-    // the more-menu portal into the toolbar element, and an ancestor
-    // backdrop-filter/filter would distort those popups too.
-    toolbarRow: css`
-      padding-block: 4px;
-      padding-inline: 6px;
-      border-radius: 999px;
-
-      background: color-mix(in srgb, ${cssVar.colorBgLayout} 60%, transparent);
-      backdrop-filter: blur(12px);
-    `,
-    actualSizeCorner: css`
-      /* view-box, so the per-corner transform-origin below is read in the 24x24
-         user space the path coordinates are written in rather than the rendered
-         pixel box. */
-      transform-box: view-box;
-      transition: transform 300ms ${cssVar.motionEaseInOut};
-
-      [data-actual-size='fit'] & {
-        transform: rotate(180deg);
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        transition: none;
-      }
-    `,
-
-    toolbarPercentage: css`
-      user-select: none;
-
-      /* Fixed, not min-width: this is a readout that changes digit count as it
-         zooms (9% → 100% → 800%), and letting it size to content shifts every
-         control beside it on each wheel tick. Wide enough for four digits. */
-      width: 56px;
-      height: 36px;
-
-      font-size: 12px;
-      font-variant-numeric: tabular-nums;
-      color: ${cssVar.colorTextTertiary};
-    `,
-
-    viewerBackdrop: css`
-      position: fixed;
-      inset: 0;
-
-      opacity: 0;
-      background: color-mix(in srgb, ${cssVar.colorBgLayout} 90%, transparent);
-      backdrop-filter: blur(8px);
-    `,
-    viewerChrome: css`
-      pointer-events: none;
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-    `,
-    viewerChromeIdle: css`
-      pointer-events: none;
-      position: absolute;
-      inset: 0;
-      transition:
-        opacity 200ms ${cssVar.motionEaseOut},
-        visibility 200ms;
-
-      &[data-idle-hidden] {
-        visibility: hidden;
-        opacity: 0;
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        transition: none;
-      }
-    `,
-    viewerClose: css`
-      pointer-events: auto;
-
-      position: absolute;
-      inset-block-start: 16px;
-      inset-inline-end: 16px;
-
-      filter: ${controlHalo};
-    `,
-    viewerCounter: css`
-      pointer-events: none;
-
-      position: absolute;
-      inset-block-start: 16px;
-      inset-inline-start: 50%;
-      transform: translateX(-50%);
-
-      padding-block: 4px;
-      padding-inline: 12px;
-      border-radius: 999px;
-
-      font-size: 12px;
-      font-variant-numeric: tabular-nums;
-      color: ${cssVar.colorTextSecondary};
-
-      background: color-mix(in srgb, ${cssVar.colorBgLayout} 60%, transparent);
-      backdrop-filter: blur(12px);
-    `,
-    viewerImage: css`
-      will-change: transform;
-      cursor: zoom-out;
-      user-select: none;
-
-      position: absolute;
-      transform-origin: center center;
-
-      object-fit: contain;
-
-      -webkit-user-drag: none;
-    `,
-    viewerNavButton: css`
-      pointer-events: auto;
-
-      position: absolute;
-      inset-block-start: 50%;
-      transform: translateY(-50%);
-
-      filter: ${controlHalo};
-    `,
-    viewerNavNext: css`
-      inset-inline-end: 16px;
-    `,
-    viewerNavPrev: css`
-      inset-inline-start: 16px;
-    `,
-    viewerPopup: css`
-      position: fixed;
-      inset: 0;
-      overflow: hidden;
-      outline: none;
-    `,
-    wrapper: css`
-      position: relative;
-      overflow: hidden;
-      max-width: 100%;
-      height: auto;
-    `,
-  };
-});
-
-export const variants = cva(styles.root, {
-  defaultVariants: {
-    variant: 'filled',
+export const styles = stylex.create({
+  actions: {
+    cursor: 'pointer',
+    insetBlockStart: 0,
+    insetInlineEnd: 0,
+    position: 'absolute',
+    zIndex: 1,
   },
-
-  variants: {
-    variant: {
-      filled: styles.filled,
-      outlined: styles.outlined,
-      borderless: styles.borderless,
+  actionsHidden: {
+    opacity: { default: 0, [stylex.when.ancestor(':hover', imageMarker)]: 1 },
+  },
+  actualSizeCorner: {
+    transition: {
+      default: `transform 300ms ${cssVar.motionEaseInOut}`,
+      [reducedMotion]: 'none',
     },
+    transform: {
+      default: null,
+      [stylex.when.ancestor('[data-actual-size="fit"]', actualSizeMarker)]: 'rotate(180deg)',
+    },
+    // view-box, so the per-corner transform-origin is read in the 24x24 user
+    // space the path coordinates are written in rather than the rendered pixel box.
+    transformBox: 'view-box',
+  },
+  filled: {
+    borderColor: cssVar.colorBorderSecondary,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    backgroundColor: cssVar.colorFillTertiary,
+  },
+  image: {
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+    height: 'auto',
+    width: 'auto',
+  },
+  previewable: {
+    cursor: 'zoom-in',
+  },
+  root: {
+    borderRadius: cssVar.borderRadius,
+    overflow: 'hidden',
+    cursor: 'pointer',
+    lineHeight: 1,
+    position: 'relative',
+    userSelect: 'none',
+    width: 'fit-content',
+  },
+  toolbar: {
+    insetBlockEnd: 16,
+    insetInlineStart: '50%',
+    pointerEvents: 'auto',
+    position: 'absolute',
+    transform: 'translateX(-50%)',
+  },
+  // Fixed, not min-width: this is a readout that changes digit count as it
+  // zooms (9% → 100% → 800%), and letting it size to content shifts every
+  // control beside it on each wheel tick. Wide enough for four digits.
+  toolbarPercentage: {
+    color: cssVar.colorTextTertiary,
+    fontSize: 12,
+    fontVariantNumeric: 'tabular-nums',
+    userSelect: 'none',
+    height: 36,
+    width: 56,
+  },
+  // The glass lives on the icon row, not the toolbar itself: tooltips and
+  // the more-menu portal into the toolbar element, and an ancestor
+  // backdrop-filter/filter would distort those popups too.
+  toolbarRow: {
+    borderRadius: 999,
+    paddingBlock: 4,
+    paddingInline: 6,
+    backdropFilter: 'blur(12px)',
+    backgroundColor: `color-mix(in srgb, ${cssVar.colorBgLayout} 60%, transparent)`,
+  },
+  viewerBackdrop: {
+    inset: 0,
+    backdropFilter: 'blur(8px)',
+    backgroundColor: `color-mix(in srgb, ${cssVar.colorBgLayout} 90%, transparent)`,
+    opacity: 0,
+    position: 'fixed',
+  },
+  viewerChrome: {
+    inset: 0,
+    opacity: 0,
+    pointerEvents: 'none',
+    position: 'absolute',
+  },
+  viewerChromeIdle: {
+    inset: 0,
+    transition: {
+      default: `opacity 200ms ${cssVar.motionEaseOut}, visibility 200ms`,
+      [reducedMotion]: 'none',
+    },
+    opacity: { 'default': null, ':is([data-idle-hidden])': 0 },
+    pointerEvents: 'none',
+    position: 'absolute',
+    visibility: { 'default': null, ':is([data-idle-hidden])': 'hidden' },
+  },
+  viewerClose: {
+    filter: controlHalo,
+    insetBlockStart: 16,
+    insetInlineEnd: 16,
+    pointerEvents: 'auto',
+    position: 'absolute',
+  },
+  viewerCounter: {
+    borderRadius: 999,
+    paddingBlock: 4,
+    paddingInline: 12,
+    backdropFilter: 'blur(12px)',
+    backgroundColor: `color-mix(in srgb, ${cssVar.colorBgLayout} 60%, transparent)`,
+    color: cssVar.colorTextSecondary,
+    fontSize: 12,
+    fontVariantNumeric: 'tabular-nums',
+    insetBlockStart: 16,
+    insetInlineStart: '50%',
+    pointerEvents: 'none',
+    position: 'absolute',
+    transform: 'translateX(-50%)',
+  },
+  viewerImage: {
+    cursor: 'zoom-out',
+    objectFit: 'contain',
+    position: 'absolute',
+    transformOrigin: 'center center',
+    userSelect: 'none',
+    willChange: 'transform',
+  },
+  viewerNavButton: {
+    filter: controlHalo,
+    insetBlockStart: '50%',
+    pointerEvents: 'auto',
+    position: 'absolute',
+    transform: 'translateY(-50%)',
+  },
+  viewerNavNext: {
+    insetInlineEnd: 16,
+  },
+  viewerNavPrev: {
+    insetInlineStart: 16,
+  },
+  viewerPopup: {
+    inset: 0,
+    outline: 'none',
+    overflow: 'hidden',
+    position: 'fixed',
+  },
+  wrapper: {
+    overflow: 'hidden',
+    position: 'relative',
+    height: 'auto',
+    maxWidth: '100%',
   },
 });
 

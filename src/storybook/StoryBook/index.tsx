@@ -1,11 +1,15 @@
 'use client';
 
-import { cx, useResponsive } from 'antd-style';
+import './style.css';
+
+import * as stylex from '@stylexjs/stylex';
 import { LevaPanel } from 'leva';
 import { memo, type Ref } from 'react';
 
-import { DraggablePanel } from '@/base-ui/DraggablePanel';
+import { DraggablePanel } from '@/DraggablePanel';
 import { Center, Flexbox, type FlexboxProps } from '@/Flex';
+import { styleProps } from '@/styles/stylex/props';
+import { useResponsive } from '@/styles/theme/scope';
 
 import { styles } from './style';
 
@@ -22,7 +26,7 @@ export const StoryBook = memo<StoryBookProps>(
     return (
       <Flexbox
         align={'stretch'}
-        className={cx(styles.editor, className)}
+        {...styleProps(styles.editor, className)}
         data-lobe-storybook=""
         flex={1}
         height={'100%'}
@@ -31,15 +35,21 @@ export const StoryBook = memo<StoryBookProps>(
         ref={ref}
         width={'100%'}
       >
-        <Center className={cx(noPadding ? styles.left : styles.leftWithPadding)} flex={1} {...rest}>
+        <Center
+          {...stylex.props(styles.left)}
+          flex={1}
+          paddingBlock={noPadding ? undefined : 40}
+          paddingInline={noPadding ? undefined : 24}
+          {...rest}
+        >
           {children}
         </Center>
         <DraggablePanel
-          className={styles.right}
+          className="lobe-storybook-right"
           minWidth={280}
           placement={mobile ? 'bottom' : 'right'}
         >
-          <div className={styles.leva}>
+          <div className="lobe-storybook-leva">
             <LevaPanel fill flat store={levaStore} titleBar={false} />{' '}
           </div>
         </DraggablePanel>

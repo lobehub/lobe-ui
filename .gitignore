@@ -52,3 +52,6 @@ bun.lockb
 # lobedocs generated (removed on exit)
 react-router.config.mjs
 .vercel
+
+# render bench output
+scripts/render-bench/results/

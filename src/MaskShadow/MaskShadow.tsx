@@ -1,11 +1,11 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { memo, useMemo } from 'react';
 
 import { Flexbox } from '@/Flex';
+import { styleProps } from '@/styles/stylex/props';
 
-import { variants } from './style';
+import { styles } from './style';
 import type { MaskShadowProps } from './type';
 
 const MaskShadow = memo<MaskShadowProps>(
@@ -20,7 +20,7 @@ const MaskShadow = memo<MaskShadowProps>(
 
     return (
       <Flexbox
-        className={cx(variants({ position }), className)}
+        className={styleProps([styles.root, styles[position]], className).className}
         style={{
           ...cssVariables,
           ...rest.style,

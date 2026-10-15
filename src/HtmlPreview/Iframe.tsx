@@ -1,27 +1,15 @@
 'use client';
 
-import { createStaticStyles, cx } from 'antd-style';
 import { memo, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
+
+import { styleProps } from '@/styles/stylex/props';
 
 import { buildShellSrcDoc, SHELL_UPDATE_MESSAGE_TYPE } from './buildShellSrcDoc';
 import { buildStaticSrcDoc } from './buildStaticSrcDoc';
 import { DEFAULT_HEIGHT, DEFAULT_SANDBOX, SRCDOC_MAX_LENGTH } from './const';
 import { AUTO_HEIGHT_MESSAGE_TYPE } from './injectAutoHeightScript';
+import { styles } from './style';
 import type { HtmlPreviewIframeProps } from './type';
-
-const styles = createStaticStyles(({ css, cssVar }) => ({
-  fallback: css`
-    padding: 16px;
-    font-size: 13px;
-    color: ${cssVar.colorTextDescription};
-  `,
-  iframe: css`
-    display: block;
-    width: 100%;
-    border: none;
-    background: transparent;
-  `,
-}));
 
 interface Payload {
   bodyHtml: string;
@@ -205,7 +193,7 @@ export const HtmlPreviewIframe = memo<HtmlPreviewIframeProps>(
 
     if (tooLarge) {
       return (
-        <div className={cx(styles.fallback, className)} style={style}>
+        <div {...styleProps(styles.fallback, className, style)}>
           Content too large to preview inline.
         </div>
       );
@@ -224,13 +212,12 @@ export const HtmlPreviewIframe = memo<HtmlPreviewIframeProps>(
 
     return (
       <iframe
-        className={cx(styles.iframe, className)}
         key={iframeKey}
         ref={setRef}
         sandbox={sandbox}
         srcDoc={srcDoc}
-        style={{ height, ...style }}
         title={title}
+        {...styleProps(styles.iframe, className, { height, ...style })}
       />
     );
   },

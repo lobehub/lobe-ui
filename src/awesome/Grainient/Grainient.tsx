@@ -1,7 +1,10 @@
 'use client';
 
-import { cx, useThemeMode } from 'antd-style';
+import * as stylex from '@stylexjs/stylex';
 import { memo, useEffect, useRef } from 'react';
+
+import { styleProps } from '@/styles/stylex/props';
+import { useThemeMode } from '@/styles/theme/scope';
 
 import { styles } from './style';
 import type { GrainientProps } from './type';
@@ -160,6 +163,7 @@ const Grainient = memo<GrainientProps>(
     grainAnimated = false,
     lightMode = false,
     className,
+    style,
     ...rest
   }) => {
     const containerRef = useRef<HTMLDivElement>(null);
@@ -173,6 +177,7 @@ const Grainient = memo<GrainientProps>(
       if (!container) return;
 
       const canvas = document.createElement('canvas');
+      canvas.className = stylex.props(styles.canvas).className ?? '';
       const gl = canvas.getContext('webgl2', { alpha: true, antialias: false });
       if (!gl) return;
       container.append(canvas);
@@ -331,7 +336,14 @@ const Grainient = memo<GrainientProps>(
       light,
     ]);
 
-    return <div aria-hidden className={cx(styles.root, className)} ref={containerRef} {...rest} />;
+    return (
+      <div
+        aria-hidden
+        ref={containerRef}
+        {...rest}
+        {...styleProps(styles.root, className, style)}
+      />
+    );
   },
 );
 

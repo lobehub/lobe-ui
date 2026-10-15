@@ -77,4 +77,25 @@ describe('genCdnUrl', () => {
 
     expect(url).toBe(`${UNPKG_API}/@scope/package@1.0.0/dist/index.js`);
   });
+
+  it('should not double slashes when the aliyun path has a leading slash', () => {
+    const url = genCdnUrl({
+      path: '/dist/index.js',
+      pkg: 'test-package',
+      version: '1.0.0',
+    });
+
+    expect(url).toBe(`${ALIYUN_API}/test-package/1.0.0/files/dist/index.js`);
+  });
+
+  it('should keep a trailing slash on the path', () => {
+    const url = genCdnUrl({
+      path: 'assets/',
+      pkg: 'test-package',
+      proxy: 'unpkg',
+      version: '1.0.0',
+    });
+
+    expect(url).toBe(`${UNPKG_API}/test-package@1.0.0/assets/`);
+  });
 });

@@ -1,6 +1,6 @@
 'use client';
 
-import ActionIcon from '@/base-ui/ActionIcon';
+import ActionIcon from '@/ActionIcon';
 import { Flexbox } from '@/Flex';
 
 import type { TableIconActionProps, TableIconActionsProps } from './type';

@@ -1,62 +1,31 @@
-import { Alert, type AlertProps, Button, Highlighter } from '@lobehub/ui';
-import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
-import { RefreshCw } from 'lucide-react';
+import { Alert,Flexbox, Highlighter  } from '@lobehub/ui';
 
-const demoError = {
-  details: {
-    exception: 'Validation filter failed',
-    msgId: 'Id-f5aab7304f6c754804f70000',
-  },
-  reasons: [
-    {
-      language: 'en',
-      title: 'Validation filter failed',
-    },
-  ],
+const details = {
+  code: 'ECONNREFUSED',
+  endpoint: 'https://api.example.com/v1/models',
+  requestId: 'req_7f9a2d',
 };
-export default () => {
-  const store = useCreateStore();
-  const control = useControls(
-    {
-      banner: false,
-      closable: true,
-      colorfulText: true,
-      description: '',
-      extraIsolate: false,
-      glass: false,
-      showIcon: true,
-      title: 'Provider connection failed during the final response',
-      type: {
-        options: ['info', 'success', 'warning', 'error', 'secondary'],
-        value: 'secondary',
-      },
-      variant: {
-        options: ['filled', 'outlined', 'borderless'],
-        value: 'filled',
-      },
-    },
-    { store },
-  ) as AlertProps;
-  return (
-    <StoryBook levaStore={store}>
-      <Alert
-        action={
-          <Button icon={RefreshCw} size={'small'}>
-            Regenerate
-          </Button>
-        }
-        extra={
-          <Highlighter
-            actionIconSize={'small'}
-            language={'json'}
-            padding={8}
-            variant={'borderless'}
-          >
-            {JSON.stringify(demoError, null, 2)}
-          </Highlighter>
-        }
-        {...control}
-      />
-    </StoryBook>
-  );
-};
+
+export default () => (
+  <Flexbox gap={16} padding={16}>
+    <Alert
+      extraDefaultExpand
+      description="Check the service status before retrying."
+      text={{ detail: 'Show technical details' }}
+      title="The model registry could not be reached."
+      type="error"
+      extra={
+        <Highlighter actionIconSize="small" language="json" padding={0} variant="borderless">
+          {JSON.stringify(details, null, 2)}
+        </Highlighter>
+      }
+    />
+    <Alert
+      extraIsolate
+      extra={<span>Check the service status before retrying the request.</span>}
+      title="Maintenance is in progress."
+      type="warning"
+      variant="outlined"
+    />
+  </Flexbox>
+);

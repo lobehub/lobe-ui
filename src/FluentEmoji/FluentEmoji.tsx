@@ -1,11 +1,11 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { type FC, useMemo, useState } from 'react';
 
 import { useCdnFn } from '@/ConfigProvider';
 import { Center } from '@/Flex';
 import Img from '@/Img';
+import { styleProps } from '@/styles/stylex/props';
 
 import { styles } from './style';
 import type { FluentEmojiProps } from './type';
@@ -29,14 +29,13 @@ const FluentEmoji: FC<FluentEmojiProps> = ({
   if (type === 'raw' || !emojiUrl || loadingFail)
     return (
       <Center
-        className={cx(styles.container, className)}
         flex={'none'}
         height={size}
         ref={ref}
         role={'img'}
-        style={{ fontSize: size * 0.9, ...style }}
         width={size}
         {...rest}
+        {...styleProps(styles.container, className, { fontSize: size * 0.9, ...style })}
       >
         {emoji}
       </Center>

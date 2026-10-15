@@ -1,23 +1,18 @@
-import { createStaticStyles } from 'antd-style';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css }) => ({
-  root: css`
-    pointer-events: none;
-
-    position: absolute;
-    z-index: 0;
-    inset: 0;
-
-    overflow: hidden;
-
-    canvas {
-      position: absolute;
-      inset: 0;
-
-      display: block;
-
-      inline-size: 100%;
-      block-size: 100%;
-    }
-  `,
-}));
+export const styles = stylex.create({
+  canvas: {
+    inset: 0,
+    blockSize: '100%',
+    display: 'block',
+    inlineSize: '100%',
+    position: 'absolute',
+  },
+  root: {
+    inset: 0,
+    overflow: 'hidden',
+    pointerEvents: 'none',
+    position: 'absolute',
+    zIndex: 0,
+  },
+});

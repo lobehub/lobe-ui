@@ -1,4 +1,4 @@
-import { Button, Input } from '@lobehub/ui/base-ui';
+import { Button, Input } from '@lobehub/ui';
 import { PageToolbar } from '@lobehub/ui/dashboard';
 
 export default () => (

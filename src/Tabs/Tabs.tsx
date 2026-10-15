@@ -1,52 +1,100 @@
 'use client';
 
-import { Tabs as AntdTabs } from 'antd';
-import { cx } from 'antd-style';
-import { MoreHorizontalIcon } from 'lucide-react';
-import { type FC } from 'react';
+import clsx from 'clsx';
+import { type FC, useMemo } from 'react';
 
-import ActionIcon from '@/base-ui/ActionIcon';
+import { useControlledState } from '@/hooks/useControlledState';
+import { styleProps } from '@/styles/stylex/props';
 
-import { styles, variants } from './style';
+import { TabsIndicator, TabsList, TabsPanel, TabsRoot, TabsTab } from './atoms';
+import { styles } from './style';
 import type { TabsProps } from './type';
 
-/**
- * @deprecated Use `Tabs` from `@lobehub/ui/base-ui` instead.
- */
 const Tabs: FC<TabsProps> = ({
+  activeKey,
   className,
-  compact,
-  variant = 'rounded',
-  items,
   classNames,
-  ...rest
+  defaultActiveKey,
+  items,
+  onChange,
+  orientation = 'horizontal',
+  ref,
+  size = 'middle',
+  style,
+  styles: customStyles,
+  variant = 'rounded',
 }) => {
-  const hasContent = items?.some((item) => !!item.children);
-  const popupClassNames = {
-    root: styles.dropdown,
-    ...(typeof classNames === 'function' ? undefined : classNames?.popup),
-  };
-  const mergedClassNames: TabsProps['classNames'] =
-    typeof classNames === 'function'
-      ? Object.assign((info: Parameters<typeof classNames>[0]) => classNames(info), {
-          popup: popupClassNames,
-        })
-      : {
-          ...classNames,
-          popup: popupClassNames,
-        };
+  const initialActiveKey = defaultActiveKey ?? items?.find((item) => !item.disabled)?.key ?? null;
+  const [value, setValue] = useControlledState<string | null>(initialActiveKey, {
+    defaultValue: initialActiveKey,
+    onChange: (next) => {
+      if (next != null) onChange?.(next);
+    },
+    value: activeKey,
+  });
+
+  const list = useMemo(
+    () => (
+      <TabsList className={classNames?.list} style={customStyles?.list}>
+        <TabsIndicator className={classNames?.indicator} style={customStyles?.indicator} />
+        {items?.map((item) => (
+          <TabsTab
+            className={classNames?.tab}
+            disabled={item.disabled}
+            key={item.key}
+            style={customStyles?.tab}
+            value={item.key}
+          >
+            {item.icon}
+            {item.label}
+          </TabsTab>
+        ))}
+      </TabsList>
+    ),
+    [
+      classNames?.indicator,
+      classNames?.list,
+      classNames?.tab,
+      customStyles?.indicator,
+      customStyles?.list,
+      customStyles?.tab,
+      items,
+    ],
+  );
+
+  const panels = useMemo(
+    () =>
+      items?.some((item) => item.children != null)
+        ? items.map((item) => (
+            <TabsPanel
+              className={classNames?.panel}
+              key={item.key}
+              style={customStyles?.panel}
+              value={item.key}
+            >
+              {item.children}
+            </TabsPanel>
+          ))
+        : null,
+    [classNames?.panel, customStyles?.panel, items],
+  );
 
   return (
-    <AntdTabs
-      className={cx(variants({ compact, underlined: hasContent, variant }), className)}
-      items={items}
-      {...rest}
-      classNames={mergedClassNames}
-      more={{
-        icon: <ActionIcon icon={MoreHorizontalIcon} />,
-        ...rest?.more,
-      }}
-    />
+    <TabsRoot
+      {...styleProps(styles.root, clsx(classNames?.root, className), {
+        ...style,
+        ...customStyles?.root,
+      })}
+      orientation={orientation}
+      ref={ref}
+      size={size}
+      value={value}
+      variant={variant}
+      onValueChange={(next) => setValue(next ?? null)}
+    >
+      {list}
+      {panels}
+    </TabsRoot>
   );
 };
 

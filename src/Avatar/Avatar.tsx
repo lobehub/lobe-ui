@@ -1,84 +1,85 @@
 'use client';
 
 import { getEmoji } from '@lobehub/fluent-emoji';
-import { Avatar as AntAvatar } from 'antd';
-import { cssVar, cx } from 'antd-style';
+import clsx from 'clsx';
 import { Loader2 } from 'lucide-react';
-import { memo, useMemo, useState } from 'react';
+import { memo, type ReactNode, useMemo, useState } from 'react';
 
 import { Center } from '@/Flex';
 import FluentEmoji from '@/FluentEmoji';
 import Icon from '@/Icon';
-import Img from '@/Img';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { styleProps } from '@/styles/stylex/props';
+import { stylish } from '@/styles/stylex/stylish';
 import { safeReadableColor } from '@/utils/safeReadableColor';
 
-import { styles, variants } from './style';
+import { styles } from './style';
 import { type AvatarProps } from './type';
 import {
   calculateEmojiSize,
   formatAvatarText,
   hasValidBackground,
-  isDefaultAntAvatar as checkIsDefaultAntAvatar,
+  isDefaultAntAvatar,
 } from './utils';
 
-/**
- * @deprecated Use `Avatar` from `@lobehub/ui/base-ui` instead.
- */
-const Avatar = memo<AvatarProps>(
+const variantStyles = {
+  borderless: stylish.variantBorderlessWithoutHover,
+  filled: stylish.variantFilledWithoutHover,
+  outlined: stylish.variantOutlinedWithoutHover,
+};
+
+type AvatarImplProps = AvatarProps & {
+  contentXstyle?: Parameters<typeof styleProps>[0];
+  xstyle?: Parameters<typeof styleProps>[0];
+};
+
+export const AvatarImpl = memo<AvatarImplProps>(
   ({
-    bordered,
-    className,
-    avatar,
-    title,
-    animation,
-    borderedColor,
-    size = 48,
-    shape = 'square',
-    background,
-    style,
-    unoptimized,
     alt,
-    variant = 'borderless',
-    shadow,
-    loading,
-    sliceText = true,
+    animation,
+    avatar,
+    background,
+    bordered,
+    borderedColor,
+    className,
+    classNames,
+    crossOrigin,
+    draggable = false,
     emojiScaleWithBackground = true,
+    loading,
     ref,
+    shadow,
+    shape = 'square',
+    size = 48,
+    sliceText = true,
+    style,
+    styles: customStyles,
+    title,
+    tooltipProps,
+    unoptimized,
+    variant = 'borderless',
+    xstyle,
+    contentXstyle,
     ...rest
   }) => {
     const isStringAvatar = typeof avatar === 'string';
 
-    const isDefaultAntAvatar = useMemo(() => checkIsDefaultAntAvatar(avatar), [avatar]);
     const [isImgError, setIsImgError] = useState(false);
 
+    const isUrlOrElement = useMemo(() => isDefaultAntAvatar(avatar), [avatar]);
+
     const emoji = useMemo(
-      () => avatar && !isDefaultAntAvatar && isStringAvatar && getEmoji(avatar),
-      [avatar, isStringAvatar, isDefaultAntAvatar],
+      () => (avatar && isStringAvatar && !isUrlOrElement ? getEmoji(avatar) : undefined),
+      [avatar, isStringAvatar, isUrlOrElement],
     );
 
-    const text = String(isDefaultAntAvatar ? title : avatar);
+    const text = isUrlOrElement ? title : typeof avatar === 'string' ? avatar : undefined;
 
     const imgAlt = alt || title || 'avatar';
 
-    const defaultAvatar = useMemo(
-      () =>
-        typeof avatar === 'string' ? (
-          <Img
-            alt={imgAlt}
-            height={size}
-            loading={'lazy'}
-            src={avatar}
-            unoptimized={unoptimized}
-            width={size}
-            onError={() => setIsImgError(true)}
-          />
-        ) : (
-          avatar
-        ),
-      [avatar, imgAlt, size, unoptimized],
-    );
-
     const hasBackground = hasValidBackground(background);
+    const showImage = isUrlOrElement && isStringAvatar && !isImgError;
+    const showElement = isUrlOrElement && !isStringAvatar && !isImgError;
 
     const customAvatar = useMemo(
       () =>
@@ -105,60 +106,75 @@ const Avatar = memo<AvatarProps>(
       ],
     );
 
-    const avatarStyle = useMemo(
-      () => ({
-        backgroundColor:
-          (isDefaultAntAvatar && !isImgError) || emoji
-            ? background
-            : background || cssVar.colorBorder,
-        borderRadius: shape === 'square' && size && size < 24 ? '33%' : undefined,
-        boxShadow: bordered
-          ? `${cssVar.colorBgLayout} 0 0 0 2px, ${borderedColor || cssVar.colorTextTertiary} 0 0 0 4px`
-          : undefined,
-        color: safeReadableColor(background || cssVar.colorBorder),
-        cursor: rest?.onClick ? 'pointer' : undefined,
-        fontSize: size * (emoji ? 0.7 : 0.5),
-        ...style,
-      }),
-      [
-        isDefaultAntAvatar,
-        isImgError,
-        background,
-        shape,
-        emoji,
-        size,
-        bordered,
-        borderedColor,
-        rest?.onClick,
-        style,
-      ],
-    );
-
-    const showFallback = !isDefaultAntAvatar || isImgError;
-
     return (
-      <AntAvatar
-        alt={imgAlt}
-        className={cx(variants({ shadow, variant }), className)}
-        draggable={false}
-        ref={ref}
-        shape={shape}
-        size={size}
-        src={isDefaultAntAvatar && !isImgError ? defaultAvatar : undefined}
-        style={avatarStyle}
+      <div
         {...rest}
+        ref={ref}
+        className={
+          styleProps(
+            [styles.root, variantStyles[variant], shadow && styles.shadow, xstyle],
+            clsx(className, classNames?.root),
+          ).className
+        }
+        style={{
+          backgroundColor:
+            (isUrlOrElement && !isImgError) || emoji
+              ? background
+              : background || cssVar.colorBorder,
+          borderRadius: shape === 'circle' ? '50%' : size < 24 ? '33%' : Math.max(size / 6, 2),
+          boxShadow: bordered
+            ? `${cssVar.colorBgLayout} 0 0 0 2px, ${borderedColor || cssVar.colorTextTertiary} 0 0 0 4px`
+            : undefined,
+          color: safeReadableColor(background || cssVar.colorBorder),
+          cursor: rest?.onClick ? 'pointer' : undefined,
+          fontSize: size * (emoji ? 0.7 : 0.5),
+          height: size,
+          width: size,
+          ...style,
+          ...customStyles?.root,
+        }}
       >
         {loading && (
-          <Center className={styles.loading} height={'100%'} width={'100%'}>
+          <Center
+            flex={'none'}
+            height={'100%'}
+            width={'100%'}
+            {...styleProps(styles.loading, classNames?.loading, customStyles?.loading)}
+          >
             <Icon spin icon={Loader2} />
           </Center>
         )}
-        {showFallback && customAvatar}
-      </AntAvatar>
+        {typeof avatar === 'string' && showImage && (
+          <img
+            alt={imgAlt}
+            crossOrigin={crossOrigin}
+            draggable={draggable}
+            height={size}
+            loading={'lazy'}
+            src={avatar}
+            width={size}
+            {...styleProps(styles.img, classNames?.img, customStyles?.img)}
+            onError={() => setIsImgError(true)}
+          />
+        )}
+        {!showImage && (
+          <span
+            {...styleProps(
+              [styles.content, contentXstyle],
+              classNames?.content,
+              customStyles?.content,
+            )}
+          >
+            {showElement ? avatar : customAvatar}
+          </span>
+        )}
+      </div>
     );
   },
 );
 
-Avatar.displayName = 'Avatar';
+AvatarImpl.displayName = 'Avatar';
+
+const Avatar = AvatarImpl as (props: AvatarProps) => ReactNode;
 
 export default Avatar;

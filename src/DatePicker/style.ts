@@ -1,33 +1,7 @@
-import { createStaticStyles } from 'antd-style';
-import { cva } from 'class-variance-authority';
+import './style.css';
 
-import { lobeStaticStylish } from '@/styles';
+export const PREFIX_CLS = 'lobe-picker';
 
-export const styles = createStaticStyles(({ css }) => {
-  return {
-    borderless: lobeStaticStylish.variantBorderless,
-    filled: lobeStaticStylish.variantFilled,
-    outlined: lobeStaticStylish.variantOutlined,
-    root: css``,
-    shadow: lobeStaticStylish.shadow,
-  };
-});
-
-export const variants = cva(styles.root, {
-  defaultVariants: {
-    shadow: false,
-  },
-
-  variants: {
-    variant: {
-      filled: styles.filled,
-      outlined: styles.outlined,
-      borderless: styles.borderless,
-      underlined: null,
-    },
-    shadow: {
-      false: null,
-      true: styles.shadow,
-    },
-  },
-});
+// rc-picker puts rootClassName on both the input box and the popup; style.css hangs every
+// rule off it.
+export const ROOT_CLS = `${PREFIX_CLS}-root`;

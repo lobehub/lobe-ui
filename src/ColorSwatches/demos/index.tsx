@@ -1,6 +1,6 @@
 import { ColorSwatches, type ColorSwatchesProps } from '@lobehub/ui';
+import { cssVar } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
-import { cssVar } from 'antd-style';
 
 export default () => {
   const store = useCreateStore();

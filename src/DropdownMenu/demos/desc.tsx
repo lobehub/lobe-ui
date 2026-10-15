@@ -1,6 +1,6 @@
 import { DropdownMenu, type DropdownMenuProps, Icon } from '@lobehub/ui';
+import { createStaticStyles } from '@lobehub/ui';
 import { GithubIcon } from '@lobehub/ui/icons';
-import { createStaticStyles } from 'antd-style';
 import { GlobeIcon, MoreHorizontal, PencilIcon, UploadIcon } from 'lucide-react';
 
 const styles = createStaticStyles(({ css, cssVar }) => ({

@@ -1,11 +1,11 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { isString } from 'es-toolkit/compat';
 import { type FC } from 'react';
 import { useMemo } from 'react';
 
 import { Flexbox } from '@/Flex';
+import { styleProps } from '@/styles/stylex/props';
 
 import { styles } from './style';
 import type { GridProps } from './type';
@@ -32,7 +32,7 @@ const Grid: FC<GridProps> = ({
 
   return (
     <Flexbox
-      className={cx(styles, className)}
+      className={styleProps(styles.root, className).className}
       gap={gap as any}
       ref={ref}
       style={{

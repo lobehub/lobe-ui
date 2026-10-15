@@ -4,7 +4,7 @@ This file provides guidance to coding agents when working with code in this repo
 
 ## What this repo is
 
-`@lobehub/ui` — an open-source React component library for AIGC web apps, plus `@lobehub/docs-kit` (in `packages/docs-kit`), the React Router + Vite documentation-site toolkit that builds this repo's own docs site (https://ui.lobehub.com). ESM-only, React 19, antd v6 as a peer dependency.
+`@lobehub/ui` — an open-source React component library for AIGC web apps, plus `@lobehub/docs-kit` (in `packages/docs-kit`), the React Router + Vite documentation-site toolkit that builds this repo's own docs site (https://ui.lobehub.com). ESM-only, React 19, no antd: components are built on `@base-ui/react` and styled with StyleX. Peers: `react`, `react-dom`, `motion`, `@lobehub/icons`, `@lobehub/fluent-emoji`.
 
 Package manager is **pnpm** (workspace: root + `packages/*`). Node >= 22.
 
@@ -38,7 +38,7 @@ src/Button/
   Button.tsx     # implementation
   index.ts       # export { default } from './Button'; export type * from './type';
   type.ts        # props types
-  style.ts       # antd-style createStyles
+  style.ts       # StyleX styles (stylex.create on cssVar from @/styles/stylex)
   index.mdx      # docs page (compiled by docs-kit)
   demos/         # live demo components referenced from index.mdx
 ```
@@ -47,13 +47,12 @@ Tests are colocated as `*.test.ts(x)` next to source.
 
 ### Subpath entries
 
-`src/` also holds namespace directories that map 1:1 to package exports (`@lobehub/ui/<name>`): `chat`, `base-ui`, `mdx`, `mobile`, `awesome`, `brand`, `color`, `icons`, `i18n`, `storybook`, `eslint`. New components in a namespace must be re-exported from that namespace's `index.ts`. `tsdown.config.ts` auto-discovers `src/*/index.ts` as entries — no config edit needed for new dirs.
-
-`base-ui/` components are built on `@base-ui/react`; classic components use antd + `antd-style`.
+`src/` also holds namespace directories that map 1:1 to package exports (`@lobehub/ui/<name>`): `chat`, `dashboard`, `mdx`, `mobile`, `awesome`, `brand`, `color`, `icons`, `i18n`, `storybook`, `eslint`, plus `@lobehub/ui/form` → `src/FormKit`. Shared non-component modules live in `src/internal/` (never an entry). New components in a namespace must be re-exported from that namespace's `index.ts`. `tsdown.config.ts` auto-discovers `src/*/index.ts` as entries — no config edit needed for new dirs.
 
 ### Styling & theming
 
-- `antd-style` `createStyles` in `style.ts` files; theme tokens from `ThemeProvider` / `ConfigProvider` (`src/styles/`).
+- Component styles are StyleX (`style.ts`), compiled at build time into `style.css` inside the `lobe-base` / `lobe-popup` / `lobe-ui` layers; tokens are `--lobe-*` variables from `theme.css`, switched by `data-theme` / `data-primary-color` / `data-neutral-color` (`setLobeTheme`, `ThemeScope`). See `docs/superpowers/specs/2026-10-07-stylex-core-design.md`.
+- `src/styles/` also exports the emotion-backed `createStaticStyles` / `cssVar` / `cx` API for downstream apps (the antd-style replacement).
 - Motion via the `motion` package, gated through `MotionProvider`.
 
 ### Docs site (`packages/docs-kit`)
@@ -68,5 +67,6 @@ Tests are colocated as `*.test.ts(x)` next to source.
 
 ## Conventions
 
+- `packages/codemod` (`@lobehub/ui-codemod`) holds the major-version codemods; the v6 migration guide is `docs/migration-v6.mdx`. Keep both in sync when an export is removed or renamed.
 - Commit messages use gitmoji style (enforced by commitlint), e.g. `🐛 fix(docs-kit): ...`, `✨ feat(ui): ...`. Releases are automated via semantic-release — never bump versions manually.
 - The project `local-testing` skill covers browser verification of components/demos against the dev server.

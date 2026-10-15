@@ -1,8 +1,8 @@
 import type { FileDiffOptions } from '@pierre/diffs';
 import { registerCustomTheme, resolveTheme } from '@pierre/diffs';
-import { cssVar } from 'antd-style';
 
 import lobeTheme from '@/Highlighter/theme/lobe-theme';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
 import type { DiffViewMode } from './type';
 
@@ -49,10 +49,10 @@ export const getLobeDiffOptions = ({
   isDarkMode,
   viewMode,
 }: {
-  diffOptions?: FileDiffOptions<string>;
+  diffOptions?: FileDiffOptions<string, undefined>;
   isDarkMode: boolean;
   viewMode: DiffViewMode;
-}): FileDiffOptions<string> => ({
+}): FileDiffOptions<string, undefined> => ({
   theme: {
     dark: 'lobe-theme',
     light: 'lobe-theme',

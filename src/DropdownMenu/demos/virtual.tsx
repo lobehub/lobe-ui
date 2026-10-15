@@ -1,5 +1,6 @@
-import { Button, Icon, Input } from '@lobehub/ui';
 import {
+  Button,
+  createStaticStyles,
   DropdownMenuFooter,
   DropdownMenuHeader,
   DropdownMenuItem,
@@ -14,8 +15,9 @@ import {
   DropdownMenuRoot,
   DropdownMenuScrollViewport,
   DropdownMenuTrigger,
-} from '@lobehub/ui/base-ui';
-import { createStaticStyles } from 'antd-style';
+  Icon,
+  Input,
+} from '@lobehub/ui';
 import { CheckIcon, GitBranchIcon, GitBranchPlusIcon, SearchIcon } from 'lucide-react';
 import { type KeyboardEvent, useMemo, useState } from 'react';
 
@@ -26,10 +28,6 @@ const styles = createStaticStyles(({ css, cssVar }) => ({
   `,
   header: css`
     padding-block: 4px;
-
-    .ant-input-affix-wrapper {
-      padding-inline: 0;
-    }
   `,
   popup: css`
     width: 300px;

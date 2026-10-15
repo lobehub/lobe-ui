@@ -1,5 +1,4 @@
-import { Button, DropdownMenu, Flexbox, Icon, Tooltip, TooltipGroup } from '@lobehub/ui';
-import { cssVar } from 'antd-style';
+import { Button, cssVar, DropdownMenu, Flexbox, Icon, Tooltip, TooltipGroup } from '@lobehub/ui';
 import { Info } from 'lucide-react';
 import { useState } from 'react';
 

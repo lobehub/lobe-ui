@@ -16,6 +16,7 @@ export interface AtomDirConfig {
 export interface DocsNavItem {
   external?: boolean;
   href: string;
+  icon?: string;
   label: string;
 }
 
@@ -99,6 +100,7 @@ export interface DocsConfig {
   navSections?: Record<string, string>;
   publicDocs?: string[];
   siteUrl: string;
+  stylex?: Record<string, unknown> | string;
   themeConfig?: DocsThemeConfig;
   title: string;
 }

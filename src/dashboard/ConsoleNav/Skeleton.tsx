@@ -1,8 +1,9 @@
 'use client';
 
-import { cx } from 'antd-style';
+import * as stylex from '@stylexjs/stylex';
 
-import Skeleton from '@/base-ui/Skeleton';
+import Skeleton from '@/Skeleton';
+import { styleProps } from '@/styles/stylex/props';
 
 import { styles } from './style';
 import type { ConsoleNavGroup, ConsoleNavSkeletonProps } from './type';
@@ -10,7 +11,7 @@ import type { ConsoleNavGroup, ConsoleNavSkeletonProps } from './type';
 const DEFAULT_GROUPS = [3, 6, 4, 3];
 
 const Row = ({ group, index }: { group: number; index: number }) => (
-  <div className={cx(styles.item, styles.skeletonRow)} data-indent={0}>
+  <div data-indent={0} {...stylex.props(styles.item, styles.skeletonRow)}>
     <Skeleton height={16} radius={4} width={16} />
     <Skeleton height={14} radius={4} width={56 + ((index + group) % 3) * 20} />
   </div>
@@ -29,17 +30,26 @@ function ConsoleNavSkeleton({
     typeof group === 'number' ? group : (group.items?.length ?? 0),
   );
   return (
-    <div aria-hidden className={cx(styles.nav, className)} data-console-nav-skeleton="">
+    <div aria-hidden data-console-nav-skeleton="" {...styleProps(styles.nav, className)}>
       {Array.from({ length: items }, (_, index) => (
         <Row group={0} index={index} key={index} />
       ))}
       {counts.map((count, group) => (
-        <div className={styles.skeletonGroup} key={group}>
-          <div className={cx(styles.groupHeader, styles.skeletonRow)} data-level={0}>
+        <div key={group} {...stylex.props(styles.skeletonGroup)}>
+          <div data-level={0} {...stylex.props(styles.groupHeader, styles.skeletonRow)}>
             <Skeleton height={12} radius={4} width={64 + (group % 2) * 16} />
           </div>
           {Array.from({ length: count }, (_, index) => (
-            <div className={cx(styles.item, styles.skeletonRow)} data-indent={1} key={index}>
+            <div
+              data-indent={1}
+              key={index}
+              {...stylex.props(
+                styles.item,
+                styles.itemIndented,
+                styles.itemIndent1,
+                styles.skeletonRow,
+              )}
+            >
               <Skeleton height={14} radius={4} width={56 + ((index + group) % 3) * 20} />
             </div>
           ))}
@@ -54,7 +64,7 @@ ConsoleNavSkeleton.displayName = 'ConsoleNavSkeleton';
 /** Footer placeholder matching an account row: avatar plus name. */
 export function ConsoleFooterSkeleton() {
   return (
-    <div aria-hidden className={styles.skeletonFooter}>
+    <div aria-hidden {...stylex.props(styles.skeletonFooter)}>
       <Skeleton height={32} radius={16} width={32} />
       <Skeleton height={14} radius={4} width={96} />
     </div>

@@ -1,19 +1,19 @@
 'use client';
 
-import { cx } from 'antd-style';
+import './style.css';
+
+import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { ArrowUpRight } from 'lucide-react';
 import type { ReactNode } from 'react';
 
-import Skeleton from '@/base-ui/Skeleton';
-import Spin from '@/base-ui/Spin';
+import Skeleton from '@/Skeleton';
+import Spin from '@/Spin';
+import { styleProps } from '@/styles/stylex/props';
 
-import {
-  SurfaceDepthContext,
-  useSurfaceCardClassName,
-  useSurfaceDepth,
-  useSurfaceLink,
-} from './link';
-import { styles } from './style';
+import { SurfaceDepthContext, useSurfaceCardStyles, useSurfaceDepth, useSurfaceLink } from './link';
+import { surfaceMarker } from './marker.stylex';
+import { styles, surfaceClassNames } from './style';
 import type { SurfaceProps } from './type';
 
 const defined = (node: ReactNode) => node !== null && node !== undefined && node !== false;
@@ -34,26 +34,27 @@ function Surface({
   loading,
   padded,
   renderLink,
+  style,
   title,
   ...rest
 }: SurfaceProps) {
   const depth = useSurfaceDepth();
   const link = useSurfaceLink(renderLink);
-  const cardClassName = useSurfaceCardClassName();
+  const cardStyles = useSurfaceCardStyles();
   const refreshing = Boolean(loading) && defined(children);
   const placeholder = Boolean(loading) && !defined(children);
   const hasHeader = defined(title) || defined(description) || defined(extra) || refreshing;
   const pad = bleed ? false : (padded ?? (hasHeader || placeholder));
 
   const heading = (
-    <div className={styles.heading}>
-      {defined(title) ? <div className={styles.title}>{title}</div> : null}
-      {defined(description) ? <div className={styles.desc}>{description}</div> : null}
+    <div {...stylex.props(styles.heading)}>
+      {defined(title) ? <div {...stylex.props(styles.title)}>{title}</div> : null}
+      {defined(description) ? <div {...stylex.props(styles.desc)}>{description}</div> : null}
     </div>
   );
 
   const body = placeholder ? (
-    <div aria-busy="true" className={styles.loading}>
+    <div aria-busy="true" {...stylex.props(styles.loading)}>
       <Skeleton height={220} radius={8} />
     </div>
   ) : (
@@ -62,23 +63,31 @@ function Surface({
 
   // With header actions, the arrow sits after them as the rightmost item.
   const trailing = refreshing || defined(extra);
-  const arrow = <ArrowUpRight aria-hidden data-surface-arrow className={styles.arrow} size={16} />;
+  const arrow = (
+    <ArrowUpRight
+      aria-hidden
+      size={16}
+      {...stylex.props(styles.arrow, trailing && styles.arrowInLink)}
+    />
+  );
 
   return (
     <SurfaceDepthContext value={depth + 1}>
       <div
-        className={cx(
-          cardClassName,
-          styles.content,
-          styles.clip,
-          href && styles.cardLinked,
-          bleed && styles.bleed,
-          className,
+        {...styleProps(
+          [
+            cardStyles,
+            styles.content,
+            styles.clip,
+            Boolean(href) && [styles.cardLinked, surfaceMarker],
+          ],
+          clsx(surfaceClassNames.root, bleed && surfaceClassNames.bleed, className),
+          style,
         )}
         {...rest}
       >
         {hasHeader ? (
-          <div className={styles.header}>
+          <div {...stylex.props(styles.header)}>
             {href
               ? link({
                   children: (
@@ -87,19 +96,19 @@ function Surface({
                       {trailing ? null : arrow}
                     </>
                   ),
-                  className: styles.headingLink,
+                  className: stylex.props(styles.headingLink).className,
                   href,
                 })
               : heading}
             {trailing ? (
-              <div className={styles.extra}>
+              <div {...stylex.props(styles.extra)}>
                 {refreshing ? <Spin size="small" variant="network" /> : null}
                 {extra}
                 {href
                   ? link({
                       'aria-hidden': true,
                       'children': arrow,
-                      'className': styles.arrowLink,
+                      'className': stylex.props(styles.arrowLink).className,
                       href,
                       'tabIndex': -1,
                     } as any)
@@ -108,8 +117,8 @@ function Surface({
             ) : null}
           </div>
         ) : null}
-        {pad ? <div className={cx(styles.body, styles.tableBleed)}>{body}</div> : body}
-        {defined(chart) ? <div className={styles.chart}>{chart}</div> : null}
+        {pad ? <div {...styleProps(styles.body, surfaceClassNames.tableBleed)}>{body}</div> : body}
+        {defined(chart) ? <div {...stylex.props(styles.chart)}>{chart}</div> : null}
       </div>
     </SurfaceDepthContext>
   );

@@ -1,0 +1,11 @@
+@layer lobe-ui {
+  .lobe-html-preview-loading-source [data-code-type='highlighter'] {
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .lobe-html-preview-loading-source pre,
+  .lobe-html-preview-loading-source code {
+    background: transparent !important;
+  }
+}

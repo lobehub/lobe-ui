@@ -1,10 +1,13 @@
 'use client';
 
-import { cx } from 'antd-style';
+import './style.css';
+
+import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { GlobeIcon } from 'lucide-react';
 
-import Select from '@/base-ui/Select';
 import Icon from '@/Icon';
+import Select from '@/Select';
 
 import { styles } from './style';
 import type { AuthLocaleSwitchProps } from './type';
@@ -21,9 +24,9 @@ function AuthLocaleSwitch({
   return (
     <Select
       aria-label={ariaLabel}
-      className={cx(styles.locale, className)}
+      className={clsx('lobe-auth-locale-switch', className)}
       options={options}
-      prefix={<Icon className={styles.localeIcon} icon={GlobeIcon} />}
+      prefix={<Icon icon={GlobeIcon} {...stylex.props(styles.localeIcon)} />}
       size="small"
       style={style}
       value={value}

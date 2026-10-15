@@ -1,5 +1,5 @@
+import { Button, Input } from '@lobehub/ui';
 import { Grainient } from '@lobehub/ui/awesome';
-import { Button, Input } from '@lobehub/ui/base-ui';
 import { AuthLayout } from '@lobehub/ui/dashboard';
 import { Box } from 'lucide-react';
 

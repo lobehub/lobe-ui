@@ -1,5 +1,4 @@
-import { Flexbox, Tag, Text } from '@lobehub/ui';
-import { createStaticStyles } from 'antd-style';
+import { createStaticStyles, Flexbox, Tag, Text } from '@lobehub/ui';
 import { type MouseEvent, type ReactNode, useCallback, useEffect, useRef, useState } from 'react';
 
 const styles = createStaticStyles(({ css, cssVar }) => ({

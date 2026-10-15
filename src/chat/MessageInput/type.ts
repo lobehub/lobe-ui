@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react';
 
-import type { ButtonProps } from '@/base-ui/Button';
+import type { ButtonProps } from '@/Button';
 import type { CodeEditorProps } from '@/CodeEditor';
 import type { FlexboxProps } from '@/Flex';
 

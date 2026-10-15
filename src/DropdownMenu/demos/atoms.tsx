@@ -1,4 +1,5 @@
 import {
+  createStaticStyles,
   DropdownMenuPopup,
   DropdownMenuPortal,
   DropdownMenuPositioner,
@@ -6,7 +7,6 @@ import {
   DropdownMenuTrigger,
   renderDropdownMenuItems,
 } from '@lobehub/ui';
-import { createStaticStyles } from 'antd-style';
 import { MoreHorizontal } from 'lucide-react';
 
 import { items } from './data';

@@ -1,18 +1,24 @@
 'use client';
 
+import './style.css';
+
+import * as stylex from '@stylexjs/stylex';
 import { Filter } from 'lucide-react';
 import { useState } from 'react';
 
-import Button from '@/base-ui/Button';
-import { DraggablePanel } from '@/base-ui/DraggablePanel';
-import { Drawer } from '@/base-ui/Drawer';
+import Button from '@/Button';
+import { DraggablePanel } from '@/DraggablePanel';
+import { Drawer } from '@/Drawer';
+import { styleProps } from '@/styles/stylex/props';
 
 import { useIsCompact, useLocalStorage } from '../hooks';
-import { useSurfaceCardClassName } from '../Surface/link';
+import { useSurfaceCardStyles } from '../Surface/link';
 import { FilterSplitProvider } from './context';
 import { styles } from './style';
 import type { FilterOptionProps, FilterRowProps, FilterSidebarProps } from './type';
 import { clampSidebarWidth, sidebarWidth } from './width';
+
+const contentClassName = 'lobe-filter-sidebar-content';
 
 function usePageSidebar(wide: boolean | undefined, storageKey: string | undefined) {
   const fallback = wide ? sidebarWidth.wide : sidebarWidth.narrow;
@@ -42,7 +48,7 @@ function FilterSidebar({
   summary,
   wide,
 }: FilterSidebarProps) {
-  const cardClassName = useSurfaceCardClassName();
+  const cardStyles = useSurfaceCardStyles();
   const isCompact = useIsCompact();
   const [drawerOpen, setDrawerOpen] = useState(false);
   const sidebar = usePageSidebar(wide, storageKey);
@@ -51,18 +57,18 @@ function FilterSidebar({
   if (isCompact) {
     return (
       <FilterSplitProvider active={!flush}>
-        <div className={styles.layout}>
+        <div {...stylex.props(styles.layout)}>
           {header}
           <Button block icon={Filter} onClick={() => setDrawerOpen(true)}>
             {summary}
           </Button>
           <Drawer open={drawerOpen} placement="left" title={label} width={300} onClose={close}>
-            <div className={styles.drawerPanel}>
+            <div {...stylex.props(styles.drawerPanel)}>
               {head?.(close)}
               {body(close)}
             </div>
           </Drawer>
-          <div className={styles.content}>{children}</div>
+          <div {...styleProps(styles.content, contentClassName)}>{children}</div>
         </div>
       </FilterSplitProvider>
     );
@@ -71,7 +77,10 @@ function FilterSidebar({
   return (
     <FilterSplitProvider active={!flush}>
       <div
-        className={flush ? styles.layout : `${styles.layout} ${cardClassName}`}
+        {...stylex.props(
+          styles.layout,
+          flush ? styles.layoutFlush : [cardStyles, styles.layoutSplit],
+        )}
         data-flush={flush ? true : undefined}
         data-page-layout={flush ? 'flush' : undefined}
         data-split-card={flush ? undefined : true}
@@ -80,8 +89,7 @@ function FilterSidebar({
           expandable
           showHandleWhenCollapsed
           aria-label={label}
-          className={styles.sidebar}
-          classNames={{ content: styles.panel }}
+          className={stylex.props(styles.sidebar, flush && styles.sidebarFlush).className}
           collapseThreshold={sidebarWidth.collapse}
           data-flush={flush ? true : undefined}
           defaultSize={{ width: wide ? sidebarWidth.wide : sidebarWidth.narrow }}
@@ -92,15 +100,27 @@ function FilterSidebar({
           placement="left"
           showBorder={false}
           size={{ width: sidebar.width }}
+          classNames={{
+            content: stylex.props(styles.panel, !flush && styles.panelSplit).className,
+          }}
           onExpandChange={sidebar.onExpandChange}
           onSizeChange={(_delta, size) => sidebar.onSizeChange(size)}
         >
-          {head ? <div className={styles.head}>{head(close)}</div> : null}
-          <div className={styles.body} data-flush={flush ? true : undefined}>
+          {head ? <div {...stylex.props(styles.head)}>{head(close)}</div> : null}
+          <div
+            data-flush={flush ? true : undefined}
+            {...stylex.props(styles.body, flush && styles.bodyFlush)}
+          >
             {body(close)}
           </div>
         </DraggablePanel>
-        <div className={styles.content} data-flush={flush ? true : undefined}>
+        <div
+          data-flush={flush ? true : undefined}
+          {...styleProps(
+            [styles.content, flush ? styles.contentFlush : styles.contentSplit],
+            contentClassName,
+          )}
+        >
           {header}
           {children}
         </div>
@@ -113,9 +133,9 @@ FilterSidebar.displayName = 'FilterSidebar';
 
 function FilterRow({ count, name }: FilterRowProps) {
   return (
-    <span className={styles.row}>
-      <span className={styles.name}>{name}</span>
-      {count !== undefined ? <span className={styles.count}>{count}</span> : null}
+    <span {...stylex.props(styles.row)}>
+      <span {...stylex.props(styles.name)}>{name}</span>
+      {count !== undefined ? <span {...stylex.props(styles.count)}>{count}</span> : null}
     </span>
   );
 }
@@ -127,14 +147,14 @@ function FilterOption({ count, icon, label, name, onClick, selected, title }: Fi
     <button
       aria-label={label}
       aria-pressed={selected}
-      className={styles.option}
       title={title}
       type="button"
       onClick={onClick}
+      {...stylex.props(styles.option)}
     >
       {icon}
-      <span className={styles.name}>{name}</span>
-      {count !== undefined ? <span className={styles.count}>{count}</span> : null}
+      <span {...stylex.props(styles.name)}>{name}</span>
+      {count !== undefined ? <span {...stylex.props(styles.count)}>{count}</span> : null}
     </button>
   );
 }

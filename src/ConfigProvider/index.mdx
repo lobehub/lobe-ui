@@ -6,6 +6,7 @@ category: Theme
 
 import DemoConfigProvider from './demos/config-provider.tsx?demo';
 import DemoConfigProvider2 from './demos/config-provider-2.tsx?demo';
+import DemoCustomPrimary from './demos/custom-primary.tsx?demo';
 import DemoGlobalFocusRing from './demos/global-focus-ring.tsx?demo';
 import DemoLazyMotion from './demos/lazy-motion.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
@@ -24,17 +25,35 @@ At the same time, it provides custom CDN configuration, set `proxy` to `custom` 
 
 <Demo of={DemoConfigProvider} />
 
-## Provider order
+## What it provides
 
-`ConfigProvider` must wrap `ThemeProvider`, never the other way round. `ThemeProvider` renders the antd `App` that hosts the static `notification` / `modal` holders, and it reads the CDN config for its webfonts — both need the contexts from `ConfigProvider` above them. Components never provide these contexts themselves; anything rendered inside a `ConfigProvider` (including through antd's static APIs) receives them.
+- the motion component used by animated components (required);
+- web fonts (`enableCustomFonts`, default `true`; `customFonts` to replace the list);
+- `direction` (`'ltr' | 'rtl'`, read with `useDirection`);
+- the portal container for popups (`useAppElement`, element id `LOBE_THEME_APP_ID`).
+
+Theme appearance and colors are not configured here: import `@lobehub/ui/theme.css` and `@lobehub/ui/style.css`, and set `data-theme` / `data-primary-color` / `data-neutral-color` on `<html>` (or wrap a subtree in `ThemeScope`).
+
+## Custom primary colour
+
+`primaryColor` also takes any 6-digit hex (`setLobeTheme`, `ThemeScope`, `LobeThemeScript`). Lobe UI builds the 13-step light and dark scale from the preset nearest in hue and lightness: the picked colour becomes the light `colorPrimary`, neighbouring steps follow its lightness on a taper so the ramp stays in order, and backgrounds and borders keep the preset's lightness with the new hue. In dark mode, a colour below 4.5:1 on the dark container is lifted (same hue and chroma) until it reaches 4.5:1, so deep brand colours stay readable. The generated rules are injected once per colour under `[data-primary-color='#rrggbb']`, so light / dark switching and nested scopes keep working. For server rendering, `getCustomPrimaryCss(hex)` returns the same CSS.
+
+<Demo of={DemoCustomPrimary} layout="bare" />
+
+## Custom status palette
+
+Error, warning, info and success can be replaced as a named palette. Register the 13-step scales once at module scope (the same `ColorScaleItem` shape as `statusColorScales` in `@lobehub/ui/color`), then select the palette like any other theme attribute. Statuses you leave out keep the default scales.
 
 ```tsx
-<ConfigProvider motion={motion}>
-  <ThemeProvider>
-    <App />
-  </ThemeProvider>
-</ConfigProvider>
+import { registerLobePalette, setLobeTheme } from '@lobehub/ui';
+
+import { error, success } from './acme-palette';
+
+registerLobePalette('acme', { error, success });
+setLobeTheme({ palette: 'acme' });
 ```
+
+`ThemeScope` and `LobeThemeScript` take the same `palette` prop. The rules go under `[data-palette='acme']`, and `useTheme()` returns the same values, so charts and canvas code match the CSS. For server rendering, `getCustomPaletteCss(name)` returns that CSS. Names are limited to letters, digits, `_` and `-`. If you register the same name again, call `setLobeTheme` afterwards so the root stylesheet is rewritten.
 
 ## Motion
 

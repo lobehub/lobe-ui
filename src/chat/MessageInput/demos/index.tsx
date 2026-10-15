@@ -1,5 +1,5 @@
+import { Divider } from '@lobehub/ui';
 import { MessageInput } from '@lobehub/ui/chat';
-import { Divider } from 'antd';
 import { useState } from 'react';
 
 import { Flexbox } from '@/Flex';

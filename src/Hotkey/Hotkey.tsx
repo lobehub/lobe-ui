@@ -1,6 +1,5 @@
 'use client';
 
-import { cx, useThemeMode } from 'antd-style';
 import {
   ArrowBigUpIcon,
   ArrowDownIcon,
@@ -25,9 +24,12 @@ import LeftClickIcon from '@/icons/lucideExtra/LeftClickIcon';
 import LeftDoubleClickIcon from '@/icons/lucideExtra/LeftDoubleClickIcon';
 import RightClickIcon from '@/icons/lucideExtra/RightClickIcon';
 import RightDoubleClickIcon from '@/icons/lucideExtra/RightDoubleClickIcon';
+import { styleProps } from '@/styles/stylex/props';
+import { stylish } from '@/styles/stylex/stylish';
+import { useThemeMode } from '@/styles/theme/scope';
 
 import { KeyMapEnum } from './const';
-import { variants } from './style';
+import { styles } from './style';
 import type { HotkeyProps } from './type';
 import { checkIsAppleDevice, splitKeysByPlus, startCase } from './utils';
 
@@ -83,6 +85,12 @@ const mappingKey = (isAppleDevice: boolean) => ({
   [KeyMapEnum.Equal]: '+',
 });
 
+const variantStyles = {
+  borderless: [stylish.variantBorderlessWithoutHover, styles.borderless],
+  filled: stylish.variantFilledWithoutHover,
+  outlined: stylish.variantOutlinedWithoutHover,
+};
+
 const Hotkey = memo<HotkeyProps>(
   ({
     variant = 'filled',
@@ -108,6 +116,16 @@ const Hotkey = memo<HotkeyProps>(
 
     const mapping: Record<string, any> = useMemo(() => mappingKey(isAppleDevice), [isAppleDevice]);
 
+    const kbdProps = styleProps(
+      [
+        styles.root,
+        variantStyles[variant],
+        inverseTheme && (isDarkMode ? styles.inverseThemeDark : styles.inverseThemeLight),
+      ],
+      classNames?.kbdClassName,
+      customStyles?.kbdStyle,
+    );
+
     return (
       <Flexbox
         horizontal
@@ -118,31 +136,14 @@ const Hotkey = memo<HotkeyProps>(
         {...rest}
       >
         {compact || isBorderless ? (
-          <Center
-            horizontal
-            as={'kbd'}
-            gap={6}
-            style={customStyles?.kbdStyle}
-            className={cx(
-              variants({ inverseTheme, isDarkMode, variant }),
-              classNames?.kbdClassName,
-            )}
-          >
+          <Center horizontal as={'kbd'} gap={6} {...kbdProps}>
             {keysGroup.map((key, index) => (
               <div key={index}>{mapping[key] ?? startCase(key)}</div>
             ))}
           </Center>
         ) : (
           keysGroup.map((key, index) => (
-            <Center
-              as={'kbd'}
-              key={index}
-              style={customStyles?.kbdStyle}
-              className={cx(
-                variants({ inverseTheme, isDarkMode, variant }),
-                classNames?.kbdClassName,
-              )}
-            >
+            <Center as={'kbd'} key={index} {...kbdProps}>
               {mapping[key] ?? startCase(key)}
             </Center>
           ))

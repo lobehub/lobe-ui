@@ -1,4 +1,4 @@
-import { Text } from '@lobehub/ui/base-ui';
+import { Text } from '@lobehub/ui';
 import { Surface } from '@lobehub/ui/dashboard';
 
 export default () => {

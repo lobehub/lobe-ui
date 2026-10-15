@@ -1,10 +1,13 @@
 'use client';
 
-import { cx } from 'antd-style';
+import './style.css';
+
+import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { Monitor, Moon, Sun } from 'lucide-react';
 
-import Segmented from '@/base-ui/Segmented';
 import Icon from '@/Icon';
+import Segmented from '@/Segmented';
 
 import { styles } from './style';
 import type { AuthThemeMode, AuthThemeSwitchProps } from './type';
@@ -32,16 +35,15 @@ function AuthThemeSwitch({
   const names = { ...DEFAULT_LABELS, ...labels };
   return (
     <Segmented<AuthThemeMode>
-      className={cx(styles.theme, className)}
+      className={clsx('lobe-auth-theme-switch', className)}
       size="small"
       style={style}
       value={value}
       variant="outlined"
       classNames={{
-        indicator: styles.themeIndicator,
-        item: styles.themeItem,
-        itemIcon: styles.themeIcon,
-        itemLabel: styles.themeLabel,
+        item: 'lobe-auth-theme-switch-item',
+        itemIcon: stylex.props(styles.themeIcon).className,
+        itemLabel: stylex.props(styles.themeLabel).className,
       }}
       options={OPTIONS.map((option) => ({
         icon: <Icon icon={option.icon} />,

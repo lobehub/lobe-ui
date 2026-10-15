@@ -53,4 +53,11 @@ export default {
   'datePicker.yearFormat': 'YYYY年',
   'datePicker.yearPlaceholder': '选择年份',
   'datePicker.yearSelect': '选择年份',
+  'datePicker.hour': '时',
+  'datePicker.hours': '小时',
+  'datePicker.minute': '分',
+  'datePicker.minutes': '分钟',
+  'datePicker.nextSecond': '下一秒',
+  'datePicker.previousSecond': '上一秒',
+  'datePicker.seconds': '秒',
 } as const;

@@ -11,7 +11,7 @@ import {
   Tooltip,
   TooltipGroup,
 } from '@lobehub/ui';
-import { createStaticStyles } from 'antd-style';
+import { createStaticStyles } from '@lobehub/ui';
 import { FileTextIcon, PlusIcon, StoreIcon, WrenchIcon } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { useCallback, useMemo, useRef, useState } from 'react';
@@ -253,7 +253,7 @@ const LobeUiWrappedCase = () => {
       <div className={styles.triggerRow}>
         <TooltipGroup openDelay={0}>
           <DropdownMenuRoot open={rootOpen} onOpenChange={handleRootOpenChange}>
-            <DropdownMenuTrigger nativeButton={false}>
+            <DropdownMenuTrigger>
               <ActionIcon
                 icon={PlusIcon}
                 title="Add files, skills, and more context"

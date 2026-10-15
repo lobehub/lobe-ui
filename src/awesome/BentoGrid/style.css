@@ -1,0 +1,5 @@
+@layer lobe-ui {
+  .lobe-bento-card-body > * {
+    max-inline-size: 100%;
+  }
+}

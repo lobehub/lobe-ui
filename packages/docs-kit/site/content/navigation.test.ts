@@ -31,12 +31,12 @@ describe('reviewed documentation navigation', () => {
     });
     const baseAction = document({
       category: 'General',
-      source: 'src/base-ui/Action/index.mdx',
-      title: 'Base Action',
+      source: 'src/mobile/Action/index.mdx',
+      title: 'Mobile Action',
     });
     const navigation = createNavigation([baseAction, componentsAction]);
 
-    expect(navigation.map(({ title }) => title)).toEqual(['Components', 'Base UI']);
+    expect(navigation.map(({ title }) => title)).toEqual(['Components', 'Mobile']);
     expect(navigation[0]?.categories[0]?.documents).toEqual([componentsAction]);
     expect(navigation[1]?.categories[0]?.documents).toEqual([baseAction]);
   });
@@ -99,7 +99,6 @@ describe('reviewed documentation navigation', () => {
       ['Color', 'src/color/index.mdx'],
       ['Components', 'src/Button/index.mdx'],
       ['Icons', 'src/icons/Foo/index.mdx'],
-      ['Base UI', 'src/base-ui/Foo/index.mdx'],
       ['Hooks & Providers', 'src/i18n/index.mdx'],
       ['Mobile', 'src/mobile/Foo/index.mdx'],
       ['Mdx', 'src/mdx/Foo/index.mdx'],
@@ -114,7 +113,6 @@ describe('reviewed documentation navigation', () => {
 
     expect(createNavigation(documents).map(({ title }) => title)).toEqual([
       'Components',
-      'Base UI',
       'Chat',
       'Dashboard',
       'Mobile',

@@ -1,4 +1,4 @@
-import { ActionIcon, Segmented } from '@lobehub/ui/base-ui';
+import { ActionIcon, Segmented } from '@lobehub/ui';
 import { Surface } from '@lobehub/ui/dashboard';
 import { Download } from 'lucide-react';
 import { useState } from 'react';

@@ -1,19 +1,19 @@
 'use client';
 
-import { cssVar } from 'antd-style';
 import { ChevronLeftIcon, ImageUpIcon } from 'lucide-react';
 import { memo, useCallback, useRef, useState } from 'react';
 import AvatarEditor from 'react-avatar-editor';
 
-import Button from '@/base-ui/Button';
-import Tag from '@/base-ui/Tag';
-import { toast, ToastHost } from '@/base-ui/Toast';
-import { UploadDragger } from '@/base-ui/Upload';
+import Button from '@/Button';
 import { Center, Flexbox } from '@/Flex';
 import emojiPickerMessages from '@/i18n/resources/en/emojiPicker';
 import { useTranslation } from '@/i18n/useTranslation';
 import Icon from '@/Icon';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import Tag from '@/Tag';
 import Text from '@/Text';
+import { toast, ToastHost } from '@/Toast';
+import { UploadDragger } from '@/Upload';
 
 import { type AvatarUploaderProps } from './type';
 

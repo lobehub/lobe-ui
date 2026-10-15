@@ -5,12 +5,21 @@ category: Data Entry
 ---
 
 import DemoIndex from './demos/index.tsx?demo';
+import DemoRenderPicker from './demos/render-picker.tsx?demo';
 
 ColorSwatches is a component for displaying and selecting colors. It provides a set of predefined color swatches and optionally a color picker for custom colors.
 
 ## Default
 
 <Demo of={DemoIndex} layout="bare" />
+
+## Custom colour
+
+With `enableColorPicker`, a "+" button after the swatches opens the built-in picker. A picked colour that is not in `colors` shows as its own chip in front of the "+"; click it to edit that colour, or click "+" to pick another. Only the current custom colour is shown, not a history.
+
+Use `renderPicker(props, defaultPicker)` to wrap the built-in picker or to replace it. `props.onChange` sets the same value the swatches do, so `value` / `defaultValue` / `onChange` keep working.
+
+<Demo of={DemoRenderPicker} layout="bare" />
 
 ## APIs
 
@@ -23,5 +32,16 @@ ColorSwatches is a component for displaying and selecting colors. It provides a 
 | color    | The color value (hex, rgb, etc.) | `string`    | -       |
 | key      | Unique identifier                | `Key`       | -       |
 | title    | Tooltip text for the color       | `ReactNode` | -       |
+
+### ColorSwatchesPickerRenderProps
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| active | Whether the current value is a custom colour (not one of `colors`) | `boolean` | - |
+| value | The custom colour, `undefined` while a preset is selected | `string` | - |
+| onChange | Select a colour | `(color?: string) => void` | - |
+| presets | The `color` of every item in `colors` | `string[]` | - |
+| shape | Swatch shape | `'circle' \| 'square'` | - |
+| size | Swatch size in px | `number` | - |
 
 > ColorSwatches also inherits properties from Flexbox component except for 'onChange'

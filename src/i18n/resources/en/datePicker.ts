@@ -53,4 +53,11 @@ export default {
   'datePicker.yearFormat': 'YYYY',
   'datePicker.yearPlaceholder': 'Select year',
   'datePicker.yearSelect': 'Choose a year',
+  'datePicker.hour': 'Hour',
+  'datePicker.hours': 'Hours',
+  'datePicker.minute': 'Minute',
+  'datePicker.minutes': 'Minutes',
+  'datePicker.nextSecond': 'Next second',
+  'datePicker.previousSecond': 'Previous second',
+  'datePicker.seconds': 'Seconds',
 } as const;

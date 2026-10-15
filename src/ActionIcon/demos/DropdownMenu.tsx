@@ -1,18 +1,22 @@
-import { ActionIcon, DropdownMenu } from '@lobehub/ui';
-import { MoreHorizontal } from 'lucide-react';
+import { ActionIcon, DropdownMenu,Flexbox  } from '@lobehub/ui';
+import { CopyIcon, MoreHorizontal, SettingsIcon, Trash2Icon } from 'lucide-react';
 
-import { items } from '@/DropdownMenu/demos/data';
-import { Center } from '@/Flex';
+const items = [
+  { key: 'copy', label: 'Copy', icon: CopyIcon },
+  { key: 'settings', label: 'Settings', icon: SettingsIcon },
+  { type: 'divider' as const },
+  { danger: true, key: 'delete', label: 'Delete', icon: Trash2Icon },
+];
 
 export default () => {
   return (
-    <Center horizontal gap={16} wrap={'wrap'}>
+    <Flexbox horizontal gap={16} padding={16} wrap={'wrap'}>
       <DropdownMenu items={items} placement="bottomRight">
         <ActionIcon aria-label="Open actions" icon={MoreHorizontal} />
       </DropdownMenu>
       <DropdownMenu items={items} placement="bottomRight">
         <ActionIcon aria-label="More options" icon={MoreHorizontal} variant={'outlined'} />
       </DropdownMenu>
-    </Center>
+    </Flexbox>
   );
 };

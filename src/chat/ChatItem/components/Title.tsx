@@ -1,3 +1,4 @@
+import * as stylex from '@stylexjs/stylex';
 import type { FC } from 'react';
 
 import { type ChatItemProps } from '@/chat/ChatItem';
@@ -18,9 +19,9 @@ const Title: FC<TitleProps> = ({ showTitle, placement = 'left', time, avatar, ti
   return (
     <Flexbox
       align={'center'}
-      className={placement === 'left' ? styles.nameLeft : styles.nameRight}
       direction={placement === 'left' ? 'horizontal' : 'horizontal-reverse'}
       gap={4}
+      {...stylex.props(styles.name, placement === 'left' ? styles.nameLeft : styles.nameRight)}
     >
       {showTitle ? avatar.title || 'untitled' : undefined}
       {showTitle ? titleAddon : undefined}

@@ -1,7 +1,8 @@
-import type { ReactNode } from 'react';
+import { type ReactNode, useEffect } from 'react';
 import type { LinksFunction } from 'react-router';
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
 import siteConfig from 'virtual:lobedocs/site-config';
+import { loadStylexRuntime, stylexLinks } from 'virtual:lobedocs/stylex';
 
 import { SiteProviders } from './app/providers/SiteProviders';
 import { ThemeBootstrap } from './app/providers/ThemeBootstrap';
@@ -22,17 +23,22 @@ export const links: LinksFunction = () => {
     { href: favicons.icon16, rel: 'icon', sizes: '16x16', type: 'image/png' },
     { href: favicons.icon32, rel: 'icon', sizes: '32x32', type: 'image/png' },
     { href: favicons.appleTouchIcon, rel: 'apple-touch-icon', sizes: '180x180' },
-    { href: '/antd.css', rel: 'stylesheet' },
     { href: '/theme-vars.css', rel: 'stylesheet' },
+    ...stylexLinks,
   ];
 };
 
 export function Layout({ children }: { children: ReactNode }) {
+  useEffect(() => {
+    void loadStylexRuntime();
+  }, []);
+
   return (
     <html suppressHydrationWarning lang="en">
       <head>
         <meta charSet="utf-8" />
         <meta content="width=device-width, initial-scale=1" name="viewport" />
+        <style>{'@layer docs-reset, lobe-base, lobe-popup, lobe-ui;'}</style>
         <ThemeBootstrap prefersColor={siteConfig.themeConfig?.prefersColor} />
         <Meta />
         <Links />

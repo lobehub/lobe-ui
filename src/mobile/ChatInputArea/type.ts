@@ -1,6 +1,6 @@
 import type { CSSProperties, MouseEventHandler, ReactNode, Ref } from 'react';
 
-import type { ButtonProps } from '@/base-ui/Button';
+import type { ButtonProps } from '@/Button';
 import type { ChatInputAreaInnerProps } from '@/chat/ChatInputArea';
 
 export interface ChatInputAreaProps extends ChatInputAreaInnerProps {

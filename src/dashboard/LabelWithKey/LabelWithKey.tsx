@@ -1,7 +1,7 @@
 'use client';
 
-import Tag from '@/base-ui/Tag';
 import { Flexbox } from '@/Flex';
+import Tag from '@/Tag';
 
 import type { LabelWithKeyProps } from './type';
 

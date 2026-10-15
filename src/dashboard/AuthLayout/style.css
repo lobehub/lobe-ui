@@ -1,0 +1,7 @@
+@layer lobe-ui {
+  .lobe-auth-layout-footer a {
+    font-weight: 600;
+    color: var(--lobe-color-link);
+    text-decoration: none;
+  }
+}

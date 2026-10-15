@@ -1,47 +1,55 @@
-import { createStaticStyles, keyframes } from 'antd-style';
+import * as stylex from '@stylexjs/stylex';
 
-const shimmer = keyframes`
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: .5;
-  }
-  100% {
-    opacity: 1;
-  }
-`;
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => {
-  return {
-    active: css`
-      background: ${cssVar.colorFillSecondary};
-      animation: ${shimmer} 2s linear infinite;
-    `,
+const reducedMotion = '@media (prefers-reduced-motion: reduce)';
 
-    avatar: css`
-      flex-shrink: 0;
-    `,
+const sweep = stylex.keyframes({
+  '0%': { translate: '-100% 0' },
+  '100%': { translate: '100% 0' },
+});
 
-    base: css`
-      user-select: none;
+const fade = stylex.keyframes({
+  '0%, 100%': { opacity: 1 },
+  '50%': { opacity: 0.5 },
+});
 
-      position: relative;
-
-      overflow: hidden;
-
-      border-radius: ${cssVar.borderRadius};
-
-      background: ${cssVar.colorFillTertiary};
-    `,
-
-    text: css`
-      display: flex;
-      flex: 1;
-      flex-direction: column;
-      gap: ${cssVar.paddingXS};
-
-      width: 100%;
-    `,
-  };
+export const styles = stylex.create({
+  avatar: {
+    flex: 'none',
+  },
+  base: {
+    borderRadius: cssVar.borderRadius,
+    overflow: 'hidden',
+    backgroundColor: cssVar.colorFillContent,
+    position: 'relative',
+    userSelect: 'none',
+  },
+  fade: {
+    animationDuration: '1.6s',
+    animationIterationCount: 'infinite',
+    animationName: { default: fade, [reducedMotion]: 'none' },
+    animationTimingFunction: 'ease-in-out',
+    willChange: 'opacity',
+  },
+  sweep: {
+    '::after': {
+      inset: 0,
+      animationDuration: '1.4s',
+      animationIterationCount: 'infinite',
+      animationName: sweep,
+      animationTimingFunction: 'ease',
+      backgroundImage: `linear-gradient(90deg, transparent 0%, ${cssVar.colorFill} 50%, transparent 100%)`,
+      content: "''",
+      display: { default: null, [reducedMotion]: 'none' },
+      pointerEvents: 'none',
+      position: 'absolute',
+      willChange: 'transform',
+    },
+  },
+  text: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+  },
 });

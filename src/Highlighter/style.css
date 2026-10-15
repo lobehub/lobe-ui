@@ -1,0 +1,61 @@
+@layer lobe-ui {
+  .lobe-highlighter .language-title {
+    opacity: 0.5;
+    filter: grayscale(100%);
+    transition:
+      opacity,
+      grayscale 0.2s var(--lobe-motion-ease-in-out);
+  }
+
+  .lobe-highlighter .panel-actions {
+    opacity: 0;
+    transition: opacity 0.2s var(--lobe-motion-ease-in-out);
+  }
+
+  .lobe-highlighter:hover .language-title {
+    opacity: 1;
+    filter: grayscale(0%);
+  }
+
+  .lobe-highlighter:hover .panel-actions,
+  .lobe-highlighter:hover .lobe-highlighter-actions,
+  .lobe-highlighter:hover .lobe-highlighter-lang {
+    opacity: 1;
+  }
+
+  .lobe-highlighter pre {
+    height: 100%;
+    font-size: 12px;
+  }
+
+  .lobe-highlighter code {
+    background: transparent !important;
+  }
+
+  .lobe-highlighter-nowrap pre,
+  .lobe-highlighter-nowrap code {
+    text-wrap: nowrap;
+  }
+
+  .lobe-highlighter-wrap pre,
+  .lobe-highlighter-wrap code {
+    text-wrap: wrap;
+  }
+
+  .lobe-highlighter-lang.lobe-highlighter-lang {
+    position: absolute;
+    z-index: 2;
+    inset-block: auto 8px;
+    inset-inline: auto 8px;
+
+    font-family: var(--lobe-font-family-code);
+    color: var(--lobe-color-text-secondary);
+
+    opacity: 0;
+    background: var(--lobe-color-fill-quaternary);
+    backdrop-filter: saturate(150%) blur(10px);
+    box-shadow: none;
+
+    transition: opacity 0.1s;
+  }
+}

@@ -5,8 +5,8 @@ import { prepareInlineMermaidSvg, toStandaloneSvgString } from './prepareInlineS
 
 const render = () =>
   renderMermaidSVG('flowchart LR\n  A[Start] --> B{Go}', {
-    bg: 'var(--ant-color-bg-container)',
-    fg: 'var(--ant-color-text)',
+    bg: 'var(--lobe-color-bg-container)',
+    fg: 'var(--lobe-color-text)',
   });
 
 describe('prepareInlineMermaidSvg', () => {

@@ -1,5 +1,5 @@
+import { cssVar } from '@lobehub/ui';
 import { ChartGrid, Surface } from '@lobehub/ui/dashboard';
-import { cssVar } from 'antd-style';
 import { type ReactNode, useId } from 'react';
 
 const Area = ({ points }: { points: number[] }) => {

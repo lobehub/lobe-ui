@@ -51,9 +51,9 @@ describe('createMermaidOptions', () => {
     const result = createMermaidOptions('lobe-theme');
 
     expect(result).toMatchObject({
-      accent: 'var(--ant-color-primary)',
-      bg: 'var(--ant-color-bg-container)',
-      fg: 'var(--ant-color-text)',
+      accent: 'var(--lobe-color-primary)',
+      bg: 'var(--lobe-color-bg-container)',
+      fg: 'var(--lobe-color-text)',
       transparent: true,
     });
   });

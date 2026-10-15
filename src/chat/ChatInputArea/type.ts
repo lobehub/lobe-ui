@@ -1,8 +1,8 @@
 import type { CSSProperties, ReactNode, Ref } from 'react';
 
-import type { DraggablePanelProps } from '@/base-ui/DraggablePanel';
-import type { TextAreaProps } from '@/base-ui/Input';
+import type { DraggablePanelProps } from '@/DraggablePanel';
 import type { FlexboxProps } from '@/Flex';
+import type { TextAreaProps } from '@/Input';
 
 export interface ChatInputAreaProps extends Omit<ChatInputAreaInnerProps, 'classNames'> {
   bottomAddons?: ReactNode;

@@ -1,0 +1,5 @@
+@layer lobe-ui {
+  .lobe-code-showcase-preview > * {
+    max-inline-size: 100%;
+  }
+}

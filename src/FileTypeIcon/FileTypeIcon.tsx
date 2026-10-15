@@ -1,9 +1,12 @@
 'use client';
 
-import { cssVar, cx, useThemeMode } from 'antd-style';
+import * as stylex from '@stylexjs/stylex';
 import { type FC, useMemo } from 'react';
 
 import { Center } from '@/Flex';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { styleProps } from '@/styles/stylex/props';
+import { useThemeMode } from '@/styles/theme/scope';
 
 import FileIcon from './components/FileIcon';
 import FolderIcon from './components/FolderIcon';
@@ -70,16 +73,15 @@ const FileTypeIcon: FC<FileTypeIconProps> = ({
 
   return (
     <Center
-      className={cx(styles.container, className)}
       flex={'none'}
       height={size}
       ref={ref}
-      style={style}
       width={size}
       {...rest}
+      {...styleProps(styles.container, className, style)}
     >
       <div
-        className={styles.inner}
+        {...stylex.props(styles.inner)}
         style={{
           fontSize: size / 2.4,
           top: type === 'file' ? '20%' : '16%',

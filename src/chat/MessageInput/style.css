@@ -1,0 +1,11 @@
+@layer lobe-ui {
+  .lobe-message-input-editor {
+    position: relative;
+
+    height: 100%;
+
+    font-family: var(--lobe-font-family-code);
+    font-size: 13px;
+    line-height: 1.8;
+  }
+}

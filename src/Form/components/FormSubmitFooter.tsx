@@ -1,10 +1,8 @@
 'use client';
 
-import { Form } from 'antd';
-import { cssVar, cx } from 'antd-style';
-import isEqual from 'fast-deep-equal';
+import * as stylex from '@stylexjs/stylex';
 import { InfoIcon } from 'lucide-react';
-import { memo, useEffect, useMemo, useState } from 'react';
+import { memo, useEffect } from 'react';
 
 import Button from '@/Button';
 import { Flexbox } from '@/Flex';
@@ -12,11 +10,12 @@ import formMessages from '@/i18n/resources/en/form';
 import { useTranslation } from '@/i18n/useTranslation';
 import Icon from '@/Icon';
 import { useMotionComponent } from '@/MotionProvider';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { styleProps } from '@/styles/stylex/props';
 
-import { submitFooterStyles } from '../style';
-import { type FormSubmitFooterProps } from '../type';
-import { useFormContext } from './FormProvider';
-import { merge, removeUndefined } from './merge';
+import { useFormContext } from '../context';
+import { submitFooterStyles as styles } from '../style';
+import type { FormSubmitFooterProps } from '../type';
 
 const FormSubmitFooter = memo<FormSubmitFooterProps>(
   ({
@@ -30,43 +29,24 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
     children,
     texts,
     className,
+    style,
     ...rest
   }) => {
     const Motion = useMotionComponent();
-    const { form, initialValues, submitLoading } = useFormContext();
-    const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
-    const values = Form.useWatch([], form) || {};
+    const { hasUnsavedChanges, requestReset, submitLoading } = useFormContext();
     const { t } = useTranslation(formMessages);
-
-    const styles = submitFooterStyles;
-
-    const v = useMemo(() => removeUndefined(values), [values]);
-
-    const initialV = useMemo(() => removeUndefined(initialValues), [initialValues]);
-
-    const mergedV = useMemo(() => merge(initialV, v), [v, initialV]);
-
-    useEffect(() => {
-      setHasUnsavedChanges(!isEqual(mergedV, initialV));
-    }, [mergedV, initialV, submitLoading]);
 
     const unsavedWarningText = texts?.unSavedWarning ?? t('form.unsavedWarning');
     const unsavedText = texts?.unSaved ?? t('form.unsavedChanges');
     const resetText = texts?.reset ?? t('form.reset');
     const submitText = texts?.submit ?? t('form.submit');
 
-    const fn = (e: BeforeUnloadEvent) => {
-      if (hasUnsavedChanges) {
-        e.returnValue = unsavedWarningText;
-      } else {
-        delete e.returnValue;
-      }
-    };
-
     useEffect(() => {
-      if (!enableUnsavedWarning) return;
-      if (typeof window === 'undefined' || !hasUnsavedChanges) return;
-      // 添加离开页面的提示
+      if (!enableUnsavedWarning || typeof window === 'undefined' || !hasUnsavedChanges) return;
+      const fn = (e: BeforeUnloadEvent) => {
+        e.preventDefault();
+        e.returnValue = unsavedWarningText;
+      };
       window.addEventListener('beforeunload', fn);
       return () => window.removeEventListener('beforeunload', fn);
     }, [enableUnsavedWarning, hasUnsavedChanges, unsavedWarningText]);
@@ -96,12 +76,12 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
         {children}
         {enableReset && (float || hasUnsavedChanges) && (
           <Button
-            htmlType="button"
+            htmlType={'button'}
             shape={float ? 'round' : undefined}
-            variant={'filled'}
+            type={'fill'}
             onClick={() => {
-              onReset?.(v, initialV);
-              form?.resetFields();
+              requestReset();
+              onReset?.();
             }}
             {...buttonProps}
             {...resetButtonProps}
@@ -110,10 +90,10 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
           </Button>
         )}
         <Button
-          htmlType="submit"
+          htmlType={'submit'}
           loading={submitLoading}
           shape={float ? 'round' : undefined}
-          type="primary"
+          type={'primary'}
           {...buttonProps}
           {...saveButtonProps}
         >
@@ -127,10 +107,10 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
         <Flexbox
           horizontal
           align={'center'}
-          className={cx(styles.footer, className)}
           gap={8}
           justify={'flex-end'}
           {...rest}
+          {...styleProps(styles.footer, className, style)}
         >
           {content}
         </Flexbox>
@@ -139,7 +119,7 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
     return (
       <Motion.div
         animate={hasUnsavedChanges ? 'visible' : 'hidden'}
-        className={styles.floatFooter}
+        {...stylex.props(styles.floatFooter)}
         initial={'hidden'}
         transition={{ duration: 0.1, ease: 'easeOut' }}
         variants={{
@@ -161,6 +141,7 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
           className={className}
           gap={8}
           justify={'center'}
+          style={style}
           {...rest}
         >
           {content}

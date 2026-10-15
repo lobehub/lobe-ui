@@ -1,32 +1,21 @@
-import { createStaticStyles, keyframes } from 'antd-style';
-import { cva } from 'class-variance-authority';
+import * as stylex from '@stylexjs/stylex';
 
-const spin = keyframes`
-  0% {
-    rotate: 0deg;
-  }
-  100% {
-    rotate: 360deg;
-  }
-`;
-
-export const styles = createStaticStyles(({ css }) => {
-  return {
-    spin: css`
-      animation: ${spin} 1s linear infinite;
-    `,
-  };
+const spin = stylex.keyframes({
+  '0%': { rotate: '0deg' },
+  '100%': { rotate: '360deg' },
 });
 
-export const variants = cva('anticon', {
-  defaultVariants: {
-    spin: false,
+export const styles = stylex.create({
+  root: {
+    alignItems: 'center',
+    display: 'inline-flex',
+    lineHeight: 0,
+    verticalAlign: '-0.125em',
   },
-
-  variants: {
-    spin: {
-      false: null,
-      true: styles.spin,
-    },
+  spin: {
+    animationDuration: '1s',
+    animationIterationCount: 'infinite',
+    animationName: spin,
+    animationTimingFunction: 'linear',
   },
 });

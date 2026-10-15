@@ -1,0 +1,20 @@
+import {
+  DayjsDatePicker as DatePicker,
+  DayjsDateRangePicker as DateRangePicker,
+  Flexbox,
+} from '@lobehub/ui';
+import dayjs from 'dayjs';
+
+const minDate = dayjs('2019-08-01');
+const maxDate = dayjs('2020-10-31');
+
+export default () => (
+  <Flexbox gap={12} padding={16} style={{ maxWidth: 360 }}>
+    <DatePicker defaultValue={dayjs('2019-09-03')} maxDate={maxDate} minDate={minDate} />
+    <DateRangePicker
+      defaultValue={[dayjs('2019-09-03'), dayjs('2019-11-22')]}
+      maxDate={maxDate}
+      minDate={minDate}
+    />
+  </Flexbox>
+);

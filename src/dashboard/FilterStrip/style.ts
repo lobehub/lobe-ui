@@ -1,90 +1,72 @@
-import { createStaticStyles } from 'antd-style';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  cell: css`
-    cursor: pointer;
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
-    position: relative;
-
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    align-items: flex-start;
-
-    min-inline-size: 0;
-    margin: 0;
-    padding-block: 14px 16px;
-    padding-inline: 16px;
-    border: 0;
-
-    font: inherit;
-    color: inherit;
-    text-align: start;
-
-    background: transparent;
-    box-shadow:
-      inset -1px 0 0 var(--filter-seam),
-      inset 0 -1px 0 var(--filter-seam);
-
-    &::after {
-      content: '';
-
-      position: absolute;
-      inset-block-end: 1px;
-      inset-inline: 0;
-
-      block-size: 3px;
-
-      background: transparent;
-    }
-
-    &:hover {
-      background: ${cssVar.colorFillQuaternary};
-    }
-  `,
-  cellActive: css`
-    background: ${cssVar.colorFillTertiary};
-
-    &::after {
-      background: ${cssVar.colorText};
-    }
-
-    &:hover {
-      background: ${cssVar.colorFillTertiary};
-    }
-  `,
-  count: css`
-    font-size: ${cssVar.fontSizeHeading4};
-    font-weight: 600;
-    font-variant-numeric: tabular-nums;
-    line-height: 1.15;
-    color: ${cssVar.colorText};
-  `,
-  countDanger: css`
-    color: ${cssVar.colorError};
-  `,
-  countWarning: css`
-    color: ${cssVar.colorWarning};
-  `,
-  frame: css`
-    --filter-seam: var(--lobe-fill-border, ${cssVar.colorFill});
-
-    overflow: hidden;
-    border-radius: inherit;
-  `,
-  grid: css`
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
-    inline-size: calc(100% + 1px);
-    margin-block-end: -1px;
-  `,
-  label: css`
-    font-size: 13px;
-    font-weight: 500;
-    line-height: 1.4;
-    color: ${cssVar.colorTextSecondary};
-  `,
-  labelActive: css`
-    color: ${cssVar.colorText};
-  `,
-}));
+export const styles = stylex.create({
+  cell: {
+    'font': 'inherit',
+    'margin': 0,
+    'borderWidth': 0,
+    'gap': 6,
+    'paddingInline': 16,
+    'alignItems': 'flex-start',
+    'backgroundColor': { 'default': 'transparent', ':hover': cssVar.colorFillQuaternary },
+    'boxShadow': 'inset -1px 0 0 var(--filter-seam), inset 0 -1px 0 var(--filter-seam)',
+    'color': 'inherit',
+    'cursor': 'pointer',
+    'display': 'flex',
+    'flexDirection': 'column',
+    'minInlineSize': 0,
+    'paddingBlockEnd': 16,
+    'paddingBlockStart': 14,
+    'position': 'relative',
+    'textAlign': 'start',
+    '::after': {
+      insetInline: 0,
+      backgroundColor: 'transparent',
+      blockSize: 3,
+      content: '""',
+      insetBlockEnd: 1,
+      position: 'absolute',
+    },
+  },
+  cellActive: {
+    'backgroundColor': cssVar.colorFillTertiary,
+    '::after': {
+      backgroundColor: cssVar.colorText,
+    },
+  },
+  count: {
+    color: cssVar.colorText,
+    fontSize: cssVar.fontSizeHeading4,
+    fontVariantNumeric: 'tabular-nums',
+    fontWeight: 600,
+    lineHeight: 1.15,
+  },
+  countDanger: {
+    color: cssVar.colorError,
+  },
+  countWarning: {
+    color: cssVar.colorWarning,
+  },
+  frame: {
+    '--filter-seam': `var(--lobe-fill-border, ${cssVar.colorFill})`,
+    'borderRadius': 'inherit',
+    'overflow': 'hidden',
+  },
+  grid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(148px, 1fr))',
+    inlineSize: 'calc(100% + 1px)',
+    marginBlockEnd: -1,
+  },
+  label: {
+    color: cssVar.colorTextSecondary,
+    fontSize: 13,
+    fontWeight: 500,
+    lineHeight: 1.4,
+  },
+  labelActive: {
+    color: cssVar.colorText,
+  },
+});

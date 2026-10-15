@@ -22,7 +22,6 @@ export function getPrerenderPaths(): string[] {
     ...documents.map(({ pathname }) => pathname),
     ...listOverviewPathnames(navigation),
     '/404',
-    '/antd.css',
     '/theme-vars.css',
     '/llms.txt',
     '/skills.md',

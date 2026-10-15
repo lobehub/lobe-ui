@@ -1,4 +1,4 @@
-import { Button, Input } from '@lobehub/ui/base-ui';
+import { Button, Input } from '@lobehub/ui';
 import { AuthLayout } from '@lobehub/ui/dashboard';
 import { Box } from 'lucide-react';
 

@@ -1,0 +1,44 @@
+@layer lobe-ui {
+  .lobe-chat-item time {
+    display: inline-block;
+    white-space: nowrap;
+  }
+
+  .lobe-chat-item div[role='menubar'] {
+    display: flex;
+  }
+
+  .lobe-chat-item time,
+  .lobe-chat-item div[role='menubar'] {
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 200ms var(--lobe-motion-ease-out);
+  }
+
+  .lobe-chat-item:hover time,
+  .lobe-chat-item:hover div[role='menubar'] {
+    pointer-events: unset;
+    opacity: 1;
+  }
+
+  .lobe-chat-item-bubble div[role='menubar']:has([data-popup-open]),
+  .lobe-chat-item-bubble div[role='menubar'][data-popup-open] {
+    pointer-events: unset !important;
+    opacity: 1 !important;
+  }
+
+  .lobe-chat-item-bubble div[role='menubar']:has([data-popup-open]) [data-popup-open],
+  .lobe-chat-item-bubble div[role='menubar'][data-popup-open] [data-popup-open] {
+    background: var(--lobe-color-fill-tertiary);
+  }
+
+  .lobe-chat-item-docs div[role='menubar']:has(.lobe-dropdown-menu-trigger[data-popup-open]) {
+    pointer-events: unset;
+    opacity: 1;
+  }
+
+  .lobe-chat-item-actions-editing {
+    pointer-events: none !important;
+    opacity: 0 !important;
+  }
+}

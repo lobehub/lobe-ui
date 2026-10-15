@@ -1,8 +1,7 @@
-import type { AliasToken } from 'antd/es/theme/interface';
-
-/* antd's formatToken recomputes boxShadow* after the mapping algorithm runs, so these only take
-   effect when passed through ThemeConfig.token, never from light/dark base tokens. */
-export const shadowToken: Record<'light' | 'dark', Partial<AliasToken>> = {
+export const shadowToken: Record<
+  'light' | 'dark',
+  { boxShadow: string; boxShadowSecondary: string; boxShadowTertiary: string }
+> = {
   dark: {
     boxShadow:
       '0 40px 80px rgba(0, 0, 0, 0.09), 0 20px 40px rgba(0, 0, 0, 0.08), 0 10px 20px rgba(0, 0, 0, 0.06), 0 5px 10px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.03)',

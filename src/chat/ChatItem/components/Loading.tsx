@@ -1,3 +1,4 @@
+import * as stylex from '@stylexjs/stylex';
 import { Loader2 } from 'lucide-react';
 import type { FC } from 'react';
 
@@ -18,8 +19,13 @@ const Loading: FC<LoadingProps> = ({ loading, placement = 'left' }) => {
   return (
     <Flexbox
       align={'center'}
-      className={placement === 'left' ? styles.loadingLeft : styles.loadingRight}
+      height={16}
       justify={'center'}
+      width={16}
+      {...stylex.props(
+        styles.loading,
+        placement === 'left' ? styles.loadingLeft : styles.loadingRight,
+      )}
     >
       <Icon spin icon={Loader2} size={{ size: 12, strokeWidth: 3 }} />
     </Flexbox>

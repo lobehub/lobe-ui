@@ -1,157 +1,38 @@
 'use client';
 
-import { createStaticStyles, cx, keyframes } from 'antd-style';
+import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { Download, Expand } from 'lucide-react';
 import { memo, type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
-import ActionIcon from '@/base-ui/ActionIcon';
-import Segmented from '@/base-ui/Segmented';
-import Spin from '@/base-ui/Spin';
+import ActionIcon from '@/ActionIcon';
 import CopyButton from '@/CopyButton';
 import { Flexbox } from '@/Flex';
-import { actionsHoverCls, variants } from '@/Highlighter/style';
+import { actionsHoverCls, rootClassName, rootStyles } from '@/Highlighter/style';
 import SyntaxHighlighter from '@/Highlighter/SyntaxHighlighter';
+import Segmented, { type SegmentedStyles } from '@/Segmented';
+import Spin from '@/Spin';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { styleProps } from '@/styles/stylex/props';
 import { stopPropagation } from '@/utils/dom';
 import { downloadBlob } from '@/utils/downloadBlob';
 
 import { containsScript, DEFAULT_HEIGHT, isFullHtmlDocument, isHtmlContentClosed } from './const';
 import HtmlPreviewIframe from './Iframe';
+import { styles } from './style';
 import type { HtmlPreviewMode, HtmlPreviewProps } from './type';
 
-// Sheen sweep direction: left → right.
-// `background-position` works inversely from "where the image is drawn":
-// at `200%` the over-sized gradient starts off to the left of the
-// container, at `-200%` it ends off to the right — so animating
-// 200% → -200% moves the visible bright spot from left to right.
-const shimmer = keyframes`
-  0%   { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-`;
-
-const styles = createStaticStyles(({ css, cssVar }) => ({
-  loadingBackdrop: css`
-    pointer-events: none;
-
-    position: absolute;
-    z-index: 1;
-    inset: 0;
-
-    /* Subtle moving sheen so it doesn't look frozen. */
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      color-mix(in srgb, ${cssVar.colorText} 4%, transparent) 50%,
-      transparent 100%
-    );
-    background-repeat: no-repeat;
-    background-size: 200% 100%;
-
-    animation: ${shimmer} 1.6s ${cssVar.motionEaseInOut} infinite;
-  `,
-  loadingBadge: css`
-    position: absolute;
-    z-index: 2;
-    inset-block-start: 12px;
-    inset-inline-start: 12px;
-
-    display: inline-flex;
-    gap: 8px;
-    align-items: center;
-
-    padding-block: 4px;
-    padding-inline: 6px 10px;
-    border-radius: 999px;
-
-    font-size: 12px;
-    color: ${cssVar.colorTextDescription};
-
-    background: ${cssVar.colorBgContainer};
-    backdrop-filter: blur(8px);
-    box-shadow: 0 0 0 1px ${cssVar.colorBorderSecondary};
-  `,
-  // The streaming source visible during Phase 1 — heavily faded so it
-  // reads as "this is preview-pending content" rather than the finished
-  // article. Auto-follows the tail so the user can see new tokens land
-  // even on slow models.
-  loadingSource: css`
-    pointer-events: none;
-    overflow: hidden;
-    height: 100%;
-
-    /* Faded out so the iframe transition feels like content lighting up,
-       not like one document jump-cutting to another. */
-    opacity: 0.45;
-
-    /* SyntaxHighlighter sets its own background; flatten so the shimmer
-       overlay reads cleanly on top. */
-    & [data-code-type='highlighter'] {
-      background: transparent;
-      box-shadow: none;
-    }
-
-    /* Tail-follow is layout-only — we anchor the scrollable element to
-       its scrollHeight via the ref + effect; CSS just keeps the
-       overflow hidden. */
-    & pre,
-    & code {
-      background: transparent !important;
-    }
-  `,
-  loadingRoot: css`
-    position: relative;
-    overflow: hidden;
-    background: color-mix(in srgb, ${cssVar.colorText} 3%, ${cssVar.colorBgContainer});
-  `,
-  segmented: css`
-    && {
-      gap: 0;
-      padding: 2px;
-      border-radius: ${cssVar.borderRadiusSM};
-    }
-  `,
-  segmentedIndicator: css`
-    && {
-      border-radius: ${cssVar.borderRadiusXS};
-    }
-  `,
-  segmentedItem: css`
-    && {
-      height: 23px;
-      padding-inline: 7px;
-      border-radius: ${cssVar.borderRadiusXS};
-
-      font-size: 14px;
-      font-weight: 400;
-    }
-  `,
-  // Inline top-right toolbar. Tagged with `actionsHoverCls` so the Highlighter
-  // container's `&:hover .${actionsHoverCls} { opacity: 1 }` rule flips it
-  // in/out as the user moves over the preview — same UX as the regular code
-  // block actions.
-  toolbar: cx(
-    actionsHoverCls,
-    css`
-      position: absolute;
-      z-index: 2;
-      inset-block-start: 8px;
-      inset-inline-end: 8px;
-
-      padding: 4px;
-      border-radius: ${cssVar.borderRadiusLG};
-
-      opacity: 0;
-      background: ${cssVar.colorBgContainer};
-      backdrop-filter: blur(8px);
-      box-shadow: 0 0 0 1px ${cssVar.colorBorderSecondary};
-
-      transition: opacity 0.2s ${cssVar.motionEaseOut};
-
-      &:focus-within {
-        opacity: 1;
-      }
-    `,
-  ),
-}));
+const segmentedStyles: SegmentedStyles = {
+  indicator: { borderRadius: cssVar.borderRadiusXS },
+  item: {
+    borderRadius: cssVar.borderRadiusXS,
+    fontSize: 14,
+    fontWeight: 400,
+    height: 23,
+    paddingInline: 7,
+  },
+  root: { borderRadius: cssVar.borderRadiusSM, gap: 0, padding: 2 },
+};
 
 const themeBackground = (theme?: 'light' | 'dark') => {
   if (theme === 'dark') return '#1f1f1f';
@@ -417,14 +298,20 @@ const HtmlPreview = memo<HtmlPreviewProps>(
     // to the latest tokens — see the `useEffect` below.
     const loadingBody = useMemo(
       () => (
-        <div className={styles.loadingRoot} style={{ height: defaultHeight ?? DEFAULT_HEIGHT }}>
-          <div className={styles.loadingSource} ref={loadingSourceRef}>
+        <div
+          {...stylex.props(styles.loadingRoot)}
+          style={{ height: defaultHeight ?? DEFAULT_HEIGHT }}
+        >
+          <div
+            ref={loadingSourceRef}
+            {...styleProps(styles.loadingSource, 'lobe-html-preview-loading-source')}
+          >
             <SyntaxHighlighter animated={animated} language={'html'} variant={'borderless'}>
               {trimmedChildren}
             </SyntaxHighlighter>
           </div>
-          <div className={styles.loadingBackdrop} />
-          <div className={styles.loadingBadge}>
+          <div {...stylex.props(styles.loadingBackdrop)} />
+          <div {...stylex.props(styles.loadingBadge)}>
             <Spin size={16} variant="network" />
             <span>Preparing preview…</span>
           </div>
@@ -462,12 +349,8 @@ const HtmlPreview = memo<HtmlPreviewProps>(
           <Segmented
             options={segmentOptions}
             size={'small'}
+            styles={segmentedStyles}
             value={effectiveMode}
-            classNames={{
-              indicator: styles.segmentedIndicator,
-              item: styles.segmentedItem,
-              root: styles.segmented,
-            }}
             onChange={(v) => setMode(v as HtmlPreviewMode)}
           />
         )}
@@ -504,20 +387,23 @@ const HtmlPreview = memo<HtmlPreviewProps>(
 
     return (
       <div
-        className={cx(variants({ shadow, variant }), className)}
         data-code-type="html-preview"
         data-html-preview-language={language}
-        style={style}
         {...rest}
+        {...styleProps(rootStyles({ shadow, variant }), rootClassName(false, className), style)}
       >
         <Flexbox
           horizontal
           align={'center'}
-          className={cx(styles.toolbar, classNames?.header)}
           flex={'none'}
           gap={4}
-          style={customStyles?.header}
+          padding={4}
           onClick={stopPropagation}
+          {...styleProps(
+            styles.toolbar,
+            clsx(actionsHoverCls, classNames?.header),
+            customStyles?.header,
+          )}
         >
           {actions}
         </Flexbox>

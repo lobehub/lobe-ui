@@ -2,8 +2,9 @@
 
 import type { FileDiffOptions } from '@pierre/diffs';
 import { PatchDiff as PierrePatchDiff } from '@pierre/diffs/react';
-import { useThemeMode } from 'antd-style';
 import { memo, useMemo } from 'react';
+
+import { useThemeMode } from '@/styles/theme/scope';
 
 import { DiffPanel } from './DiffPanel';
 import { getLobeDiffOptions, registerLobeDiffThemes } from './theme';
@@ -65,7 +66,7 @@ export const PatchDiff = memo<PatchDiffProps>(
       });
     }, [actionsRender, patch]);
 
-    const options = useMemo<FileDiffOptions<string>>(
+    const options = useMemo<FileDiffOptions<string, undefined>>(
       () => getLobeDiffOptions({ diffOptions, isDarkMode, viewMode }),
       [isDarkMode, viewMode, diffOptions],
     );

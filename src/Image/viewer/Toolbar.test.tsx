@@ -16,8 +16,8 @@ if (!globalThis.ResizeObserver) {
   } as any;
 }
 
-vi.mock('antd-style', async (importOriginal) => {
-  const actual = await importOriginal<typeof import('antd-style')>();
+vi.mock('@/styles/css', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/styles/css')>();
   return {
     ...actual,
     createStaticStyles: vi.fn((fn: any) => {
@@ -54,7 +54,7 @@ const toastMock = vi.hoisted(() => ({
   success: vi.fn(),
 }));
 
-vi.mock('@/base-ui/Toast', () => ({
+vi.mock('@/Toast', () => ({
   ToastHost: () => null,
   toast: toastMock,
 }));
@@ -93,8 +93,8 @@ const stubRect = (element: HTMLElement, rect: Partial<DOMRect>) => {
 const renderWithMotion = (node: ReactNode) =>
   render(<ConfigProvider motion={motion}>{node}</ConfigProvider>);
 
-const getViewerImage = () => document.querySelector<HTMLImageElement>('.viewerImage');
-const getToolbar = () => document.querySelector('.toolbar') as HTMLElement;
+const getViewerImage = () => document.querySelector<HTMLImageElement>('.lobe-image-viewer-image');
+const getToolbar = () => document.querySelector('.lobe-image-viewer-toolbar') as HTMLElement;
 const getToolbarButtons = () =>
   Array.from(getToolbar().querySelectorAll<HTMLElement>('button, [role="button"]'));
 const iconClassOf = (button: HTMLElement) =>

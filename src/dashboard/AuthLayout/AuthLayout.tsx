@@ -1,15 +1,27 @@
 'use client';
 
-import { cx, useThemeMode } from 'antd-style';
+import './style.css';
+
+import * as stylex from '@stylexjs/stylex';
 import { isValidElement } from 'react';
 
-import Skeleton from '@/base-ui/Skeleton';
-import Text from '@/base-ui/Text';
 import { Flexbox } from '@/Flex';
+import Skeleton from '@/Skeleton';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { styleProps } from '@/styles/stylex/props';
+import { useThemeMode } from '@/styles/theme/scope';
+import Text from '@/Text';
 
 import Aside from './Aside';
 import { styles } from './style';
 import type { AuthLayoutProps } from './type';
+
+const titleStyle = {
+  fontSize: cssVar.fontSizeHeading3,
+  lineHeight: cssVar.lineHeightHeading3,
+  margin: 0,
+};
+const descriptionStyle = { color: cssVar.colorTextSecondary, lineHeight: 1.6 };
 
 const FormSkeleton = () => (
   <Flexbox aria-hidden gap={12}>
@@ -31,6 +43,7 @@ function AuthLayout({
   footer,
   loading,
   logo,
+  style,
   title,
   tools,
   variant = 'default',
@@ -41,19 +54,19 @@ function AuthLayout({
   const art = isValidElement(background) ? background : null;
   const heading =
     title === undefined || title === null ? null : typeof title === 'string' ? (
-      <Text as="h1" className={styles.title} weight="bold">
+      <Text as="h1" style={titleStyle} weight="bold">
         {title}
       </Text>
     ) : (
-      <div className={styles.titleNode}>{title}</div>
+      <div {...stylex.props(styles.titleNode)}>{title}</div>
     );
   const intro =
     logo || heading || description ? (
       <Flexbox gap={8}>
-        {logo ? <div className={styles.logo}>{logo}</div> : null}
+        {logo ? <div {...stylex.props(styles.logo)}>{logo}</div> : null}
         {heading}
         {description ? (
-          <Text className={styles.description} type="secondary">
+          <Text style={descriptionStyle} type="secondary">
             {description}
           </Text>
         ) : null}
@@ -63,37 +76,42 @@ function AuthLayout({
   return (
     <div
       data-auth-layout=""
-      className={cx(
-        styles.page,
-        background === 'grid' && styles.grid,
-        background === 'grid' && isDarkMode && styles.gridDark,
-        className,
-      )}
       {...rest}
+      {...styleProps(
+        [
+          styles.page,
+          background === 'grid' && styles.grid,
+          background === 'grid' && isDarkMode && styles.gridDark,
+        ],
+        className,
+        style,
+      )}
     >
-      {art ? <div className={styles.backdrop}>{art}</div> : null}
-      <header className={styles.header}>
+      {art ? <div {...stylex.props(styles.backdrop)}>{art}</div> : null}
+      <header {...stylex.props(styles.header)}>
         {brand}
-        {tools ? <div className={styles.tools}>{tools}</div> : null}
+        {tools ? <div {...stylex.props(styles.tools)}>{tools}</div> : null}
       </header>
-      <main className={styles.main}>
+      <main {...stylex.props(styles.main)}>
         {card ? (
           <div
             data-auth-card=""
-            className={cx(
+            {...stylex.props(
               styles.lift,
               split && styles.liftSplit,
               variant === 'elevated' && styles.elevated,
             )}
           >
-            <div className={cx(styles.frame, split && styles.split)}>
-              <div className={cx(styles.form, split && styles.formSplit)}>
+            <div {...stylex.props(styles.frame, split && styles.split)}>
+              <div {...stylex.props(styles.form, split && styles.formSplit)}>
                 {intro}
                 {alert}
                 {loading ? <FormSkeleton /> : children}
-                {footer ? <div className={styles.footer}>{footer}</div> : null}
+                {footer ? (
+                  <div {...styleProps(styles.footer, 'lobe-auth-layout-footer')}>{footer}</div>
+                ) : null}
               </div>
-              {aside ? <div className={styles.aside}>{aside}</div> : null}
+              {aside ? <div {...stylex.props(styles.aside)}>{aside}</div> : null}
             </div>
           </div>
         ) : (

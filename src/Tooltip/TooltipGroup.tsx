@@ -1,0 +1,157 @@
+'use client';
+
+import { Tooltip as BaseTooltip } from '@base-ui/react/tooltip';
+import clsx from 'clsx';
+import { type FC, useCallback, useRef, useState } from 'react';
+
+import { useAppElement } from '@/ConfigProvider/AppElementContext';
+import { useFloatingLayer } from '@/hooks/useFloatingLayer';
+import { getFloatingCollisionPadding } from '@/internal/floating';
+import { styleProps } from '@/styles/stylex/props';
+import {
+  useDestroyOnInvalidActiveTriggerElement,
+  useHidePopupWhenPositionerAtOrigin,
+  usePopupHandleStore,
+} from '@/utils/destroyOnInvalidActiveTriggerElement';
+import { placementMap } from '@/utils/placement';
+import { useRepopOnFarTriggerSwitch } from '@/utils/useRepopOnFarTriggerSwitch';
+
+import { TooltipArrowIcon } from './ArrowIcon';
+import {
+  TooltipGroupHandleContext,
+  type TooltipGroupItem,
+  TooltipGroupPropsContext,
+} from './groupContext';
+import { styles } from './style';
+import TooltipContent from './TooltipContent';
+import { type TooltipGroupProps } from './type';
+
+const TooltipGroup: FC<TooltipGroupProps> = ({
+  children,
+  disableDestroyOnInvalidTrigger = false,
+  disableZeroOriginGuard = false,
+  layoutAnimation = true,
+  popupContainer,
+  ...sharedProps
+}) => {
+  const [{ handle, key }, setHandleState] = useState(() => ({
+    handle: BaseTooltip.createHandle<TooltipGroupItem>(),
+    key: 0,
+  }));
+  const activeItemRef = useRef<TooltipGroupItem | null>(null);
+
+  const destroy = useCallback(() => {
+    activeItemRef.current = null;
+    setHandleState(({ key }) => ({
+      handle: BaseTooltip.createHandle<TooltipGroupItem>(),
+      key: key + 1,
+    }));
+  }, []);
+
+  const handleOpenChange = useCallback((open: boolean) => {
+    activeItemRef.current?.onOpenChange?.(open);
+  }, []);
+
+  const appElement = useAppElement();
+  const floatingLayerContainer = useFloatingLayer();
+  const portalContainer = floatingLayerContainer ?? appElement;
+
+  const store = usePopupHandleStore(handle);
+  useDestroyOnInvalidActiveTriggerElement(store, destroy, {
+    enabled: !disableDestroyOnInvalidTrigger,
+  });
+  useHidePopupWhenPositionerAtOrigin(store, { enabled: !disableZeroOriginGuard });
+  const repop = useRepopOnFarTriggerSwitch(store, { enabled: layoutAnimation });
+
+  return (
+    <TooltipGroupHandleContext value={handle}>
+      <TooltipGroupPropsContext value={sharedProps}>
+        {/* Outside Root on purpose: the handle/key reset remounts Root's subtree; children must
+            survive it. Triggers bind to the group via the handle, not DOM nesting. */}
+        {children}
+        <BaseTooltip.Root handle={handle} key={key} onOpenChange={handleOpenChange}>
+          {({ payload }) => {
+            const item = (payload as TooltipGroupItem | null) ?? null;
+            activeItemRef.current = item;
+
+            if (!item || (item.title == null && !item.hotkey)) {
+              return null;
+            }
+
+            const arrow = item.arrow ?? false;
+            const placement = item.placement ?? 'top';
+            const placementConfig = placementMap[placement] ?? placementMap.top;
+            const baseSideOffset = arrow ? 8 : 6;
+
+            const customStyles = typeof item.styles === 'function' ? undefined : item.styles;
+            const slots = {
+              arrow: styleProps(styles.arrow, item.classNames?.arrow, customStyles?.arrow),
+              popup: styleProps(
+                styles.popup,
+                clsx(item.className, item.classNames?.root, item.classNames?.container),
+                { ...customStyles?.root, ...customStyles?.container },
+              ),
+              positioner: styleProps(styles.positioner, undefined, {
+                zIndex: item.zIndex ?? 114_514,
+              }),
+              viewport: styleProps(
+                styles.viewport,
+                clsx('lobe-tooltip-viewport', item.classNames?.content),
+                customStyles?.content,
+              ),
+            };
+
+            const body = (
+              <BaseTooltip.Viewport data-repop={repop || undefined} {...slots.viewport}>
+                <TooltipContent
+                  hotkey={item.hotkey}
+                  hotkeyProps={item.hotkeyProps}
+                  title={item.title}
+                />
+              </BaseTooltip.Viewport>
+            );
+
+            const popup = (
+              <BaseTooltip.Positioner
+                align={placementConfig.align}
+                data-layout-animation={layoutAnimation || undefined}
+                data-placement={placement}
+                data-repop={repop || undefined}
+                side={placementConfig.side}
+                sideOffset={baseSideOffset}
+                {...slots.positioner}
+                {...item.positionerProps}
+                collisionPadding={
+                  item.positionerProps?.collisionPadding ?? getFloatingCollisionPadding()
+                }
+              >
+                <BaseTooltip.Popup
+                  data-layout-animation={layoutAnimation || undefined}
+                  data-repop={repop || undefined}
+                  {...slots.popup}
+                  {...item.popupProps}
+                >
+                  {arrow && (
+                    <BaseTooltip.Arrow {...slots.arrow}>{TooltipArrowIcon}</BaseTooltip.Arrow>
+                  )}
+                  {body}
+                </BaseTooltip.Popup>
+              </BaseTooltip.Positioner>
+            );
+
+            const resolvedPortalContainer =
+              item.popupContainer ?? popupContainer ?? portalContainer;
+
+            return resolvedPortalContainer ? (
+              <BaseTooltip.Portal container={resolvedPortalContainer}>{popup}</BaseTooltip.Portal>
+            ) : null;
+          }}
+        </BaseTooltip.Root>
+      </TooltipGroupPropsContext>
+    </TooltipGroupHandleContext>
+  );
+};
+
+TooltipGroup.displayName = 'TooltipGroup';
+
+export default TooltipGroup;

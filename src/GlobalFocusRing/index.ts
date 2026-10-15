@@ -94,7 +94,7 @@ export const installGlobalFocusRing = (doc: Document = document): (() => void) =
     const borderRadius = computed.borderRadius;
     const color =
       computed.getPropertyValue('--lobe-focus-ring-color').trim() ||
-      computed.getPropertyValue('--ant-color-info').trim() ||
+      computed.getPropertyValue('--lobe-color-info').trim() ||
       '#1677ff';
     const styleChanged =
       ring.style.borderRadius !== borderRadius ||

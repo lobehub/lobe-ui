@@ -1,5 +1,4 @@
-import { Icon } from '@lobehub/ui';
-import { Badge } from 'antd';
+import { Badge, Icon } from '@lobehub/ui';
 import { Bell, FileText, Folder, Home, MessageCircle, Settings, Star, Users } from 'lucide-react';
 
 // Mock agents data

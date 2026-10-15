@@ -1,12 +1,13 @@
 'use client';
 
-import { cx } from 'antd-style';
+import * as stylex from '@stylexjs/stylex';
 import { ChevronLeft } from 'lucide-react';
 import { memo } from 'react';
 
-import ActionIcon from '@/base-ui/ActionIcon';
+import ActionIcon from '@/ActionIcon';
 import { Flexbox } from '@/Flex';
 import MobileSafeArea from '@/mobile/SafeArea';
+import { styleProps } from '@/styles/stylex/props';
 
 import { styles } from './style';
 import type { ChatHeaderProps } from './type';
@@ -31,25 +32,29 @@ const ChatHeader = memo<ChatHeaderProps>(
     return (
       <Flexbox
         as={'header'}
-        className={cx(styles.container, className)}
+        flex={'none'}
         ref={ref}
-        style={style}
+        width={'100vw'}
+        {...styleProps(styles.container, className, style)}
         {...rest}
       >
         {safeArea && <MobileSafeArea position={'top'} />}
         <Flexbox
           horizontal
           align={'center'}
-          className={styles.inner}
           flex={1}
+          height={44}
           justify={'space-between'}
+          paddingInline={6}
+          {...stylex.props(styles.inner)}
         >
           <Flexbox
             horizontal
             align={'center'}
-            className={cx(styles.left, classNames?.left)}
+            className={classNames?.left}
             flex={1}
             gap={gaps?.left}
+            height={'100%'}
             style={custmStyles?.left}
           >
             {showBackButton && <ActionIcon icon={ChevronLeft} onClick={() => onBackClick?.()} />}
@@ -58,9 +63,10 @@ const ChatHeader = memo<ChatHeaderProps>(
           <Flexbox
             horizontal
             align={'center'}
-            className={cx(styles.center, classNames?.center)}
+            className={classNames?.center}
             flex={1}
             gap={gaps?.center}
+            height={'100%'}
             justify={'center'}
             style={custmStyles?.center}
           >
@@ -70,9 +76,11 @@ const ChatHeader = memo<ChatHeaderProps>(
           <Flexbox
             horizontal
             align={'center'}
-            className={cx(styles.right, classNames?.right)}
+            className={classNames?.right}
             flex={1}
             gap={gaps?.right}
+            height={'100%'}
+            justify={'flex-end'}
             style={custmStyles?.right}
           >
             {right}

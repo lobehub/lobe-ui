@@ -1,0 +1,65 @@
+@layer lobe-ui {
+  @keyframes lobe-text-sweep {
+    0% {
+      translate: -100% 0;
+    }
+
+    100% {
+      translate: 100% 0;
+    }
+  }
+
+  /* Animating background-position repaints every glyph each frame. Where
+   * mask-clip: text is supported, clip a transform-animated overlay to the
+   * glyphs instead so the sweep stays on the compositor. The mask clips every
+   * descendant too, so rows that also render icons or chips keep the
+   * background-clip path — masking would erase that non-text paint. */
+  @supports (-webkit-mask-clip: text) {
+    .lobe-text-shiny:not(:has(*)) {
+      position: var(--shiny-origin, relative);
+
+      background: none;
+
+      animation: none;
+
+      /* stylelint-disable-next-line property-no-vendor-prefix */
+      -webkit-mask-clip: text;
+      /* stylelint-disable-next-line declaration-property-value-no-unknown */
+      mask-clip: text;
+      mask-image: linear-gradient(#fff, #fff);
+    }
+
+    .lobe-text-shiny:not(:has(*))::after {
+      pointer-events: none;
+      will-change: transform;
+      content: '';
+
+      position: absolute;
+      inset: 0;
+
+      background: linear-gradient(90deg, transparent 25%, var(--shiny-color) 50%, transparent 75%);
+
+      animation: lobe-text-sweep var(--shiny-duration) linear infinite;
+    }
+
+    /* Coordinate layer for a row that shimmers several separate text spans. Each
+     * span's sweep overlay resolves against the nearest positioned ancestor, so
+     * dropping `position` on the spans and holding it here gives every span the
+     * same row-wide overlay — one continuous wave instead of one sweep per span. */
+    .lobe-text-shiny-group {
+      --shiny-origin: static;
+
+      position: relative;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lobe-text-shiny {
+      animation: none;
+    }
+
+    .lobe-text-shiny::after {
+      display: none;
+    }
+  }
+}

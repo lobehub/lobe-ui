@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react';
 
-import ActionIcon from '@/base-ui/ActionIcon';
-import Button from '@/base-ui/Button';
+import ActionIcon from '@/ActionIcon';
+import Button from '@/Button';
 
 import { useNativeButton } from './useNativeButton';
 

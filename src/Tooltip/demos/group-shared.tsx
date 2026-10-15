@@ -1,0 +1,21 @@
+import { Button,Tooltip, TooltipGroup  } from '@lobehub/ui';
+
+import { Flexbox } from '@/Flex';
+
+export default () => {
+  return (
+    <Flexbox horizontal gap={12}>
+      <TooltipGroup arrow closeDelay={300} openDelay={300} placement="bottom">
+        <Tooltip title="Shared arrow + placement">
+          <Button type="primary">Shared</Button>
+        </Tooltip>
+        <Tooltip arrow={false} placement="right" title="Overrides shared props">
+          <Button>Override</Button>
+        </Tooltip>
+        <Tooltip title="Shared delay">
+          <Button>Delay</Button>
+        </Tooltip>
+      </TooltipGroup>
+    </Flexbox>
+  );
+};

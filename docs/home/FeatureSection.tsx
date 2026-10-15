@@ -7,7 +7,7 @@ const FEATURES: FeatureGridItem[] = [
   {
     description:
       'Customize colors, typography, breakpoints, and other design foundations through the theme system.',
-    href: '/components/theme-provider',
+    href: '/components/config-provider',
     icon: Palette,
     title: 'Themeable',
   },

@@ -1,19 +1,26 @@
 'use client';
 
-import { useThemeMode } from 'antd-style';
+import * as stylex from '@stylexjs/stylex';
 import { PanelLeft, X } from 'lucide-react';
 import { useEffect, useId, useRef, useState } from 'react';
 
-import Button from '@/base-ui/Button';
-import { Drawer } from '@/base-ui/Drawer';
+import Button from '@/Button';
+import { Drawer } from '@/Drawer';
 import { Flexbox } from '@/Flex';
+import { styleProps } from '@/styles/stylex/props';
+import { useThemeMode } from '@/styles/theme/scope';
 
 import ConsoleNavSkeleton, { ConsoleFooterSkeleton } from '../ConsoleNav/Skeleton';
 import { useIsCompact, useLocalStorage, usePrefersReducedMotion } from '../hooks';
 import PageLoading from '../PageSkeleton';
 import { ConsoleShellContext } from './context';
+import { consoleBrandMarker } from './marker.stylex';
 import { styles } from './style';
 import type { ConsoleShellProps, ConsoleShellState } from './type';
+
+// The drawer body is the scroll container. Without its default padding the scrollbar sits on
+// the panel edge; the brand row, nav and footer keep their own insets.
+const drawerBodyStyle = { minBlockSize: '100%', padding: 0 };
 
 function isTypingTarget(target: EventTarget | null) {
   if (!(target instanceof HTMLElement)) return false;
@@ -41,6 +48,7 @@ function ConsoleShell({
   openNavigationLabel = 'Open navigation',
   skipToContentLabel = 'Skip to content',
   storageKey,
+  style,
   tools,
   ...rest
 }: ConsoleShellProps) {
@@ -102,14 +110,14 @@ function ConsoleShell({
   const sidebar = (rail: boolean) => (
     <ConsoleShellContext value={stateFor(rail)}>
       {brand || isCompact ? (
-        <div className={styles.brand} data-collapsed={rail}>
+        <div data-collapsed={rail} {...stylex.props(styles.brand, consoleBrandMarker)}>
           {brand}
           {isCompact ? (
             // In the drawer the close button sits in the brand row's flow, so it never
             // overlaps a brand switcher the way the drawer's floating close button did.
             <Button
               aria-label={closeNavigationLabel}
-              className={styles.brandClose}
+              className={stylex.props(styles.brandClose).className}
               icon={X}
               type="text"
               onClick={closeNavigation}
@@ -117,8 +125,8 @@ function ConsoleShell({
           ) : null}
         </div>
       ) : null}
-      {navigation ? <div className={styles.navSlot}>{navigation}</div> : null}
-      {footer ? <div className={styles.sidebarBottom}>{footer}</div> : null}
+      {navigation ? <div {...stylex.props(styles.navSlot)}>{navigation}</div> : null}
+      {footer ? <div {...stylex.props(styles.sidebarBottom)}>{footer}</div> : null}
     </ConsoleShellContext>
   );
 
@@ -126,52 +134,63 @@ function ConsoleShell({
 
   return (
     <div
-      className={className ? `${styles.shell} ${className}` : styles.shell}
       data-console-shell=""
       ref={shellRef}
+      {...styleProps(styles.shell, className, style)}
       {...rest}
     >
       <a
-        className={styles.skipLink}
         href={`#${mainId}`}
         onClick={(event) => {
           event.preventDefault();
           document.getElementById(mainId)?.focus();
         }}
+        {...stylex.props(styles.skipLink)}
       >
         {skipToContentLabel}
       </a>
-      <aside className={styles.sidebar} data-collapsed={railed} data-instant={reducedMotion}>
+      <aside
+        data-collapsed={railed}
+        data-instant={reducedMotion}
+        {...stylex.props(
+          styles.sidebar,
+          railed && styles.sidebarCollapsed,
+          reducedMotion && styles.sidebarInstant,
+        )}
+      >
         {!isCompact && sidebar(railed)}
       </aside>
       {isCompact ? (
         <Drawer
           noHeader
-          classNames={{ bodyContent: styles.drawerBody }}
           closable={false}
           open={drawerOpen}
           placement="left"
+          styles={{ bodyContent: drawerBodyStyle }}
           width={272}
           onClose={closeNavigation}
         >
           <Flexbox height="100%">{sidebar(false)}</Flexbox>
         </Drawer>
       ) : null}
-      <div
-        className={isDarkMode ? styles.workspace : `${styles.workspace} ${styles.workspaceLight}`}
-      >
-        <header className={styles.topbar}>
+      <div {...stylex.props(styles.workspace, !isDarkMode && styles.workspaceLight)}>
+        <header {...stylex.props(styles.topbar)}>
           <Button
             aria-label={toggleLabel}
             icon={PanelLeft}
             type="text"
             onClick={toggleNavigation}
           />
-          <span aria-hidden className={styles.topbarDivider} />
-          <div className={styles.topbarMain}>{breadcrumb}</div>
-          {tools ? <div className={styles.tools}>{tools}</div> : null}
+          <span aria-hidden {...stylex.props(styles.topbarDivider)} />
+          <div {...stylex.props(styles.topbarMain)}>{breadcrumb}</div>
+          {tools ? <div {...stylex.props(styles.tools)}>{tools}</div> : null}
         </header>
-        <main aria-busy={loading || undefined} className={styles.main} id={mainId} tabIndex={-1}>
+        <main
+          aria-busy={loading || undefined}
+          id={mainId}
+          tabIndex={-1}
+          {...stylex.props(styles.main)}
+        >
           {body}
         </main>
       </div>

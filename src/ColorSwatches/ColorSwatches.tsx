@@ -1,19 +1,20 @@
 'use client';
 
-import { cssVar, cx } from 'antd-style';
+import * as stylex from '@stylexjs/stylex';
 import chroma from 'chroma-js';
 import { CheckIcon } from 'lucide-react';
 import { type FC, useMemo } from 'react';
-import useMergeState from 'use-merge-value';
 
-import { ColorPicker } from '@/base-ui/ColorPicker';
 import { Center, Flexbox } from '@/Flex';
+import { useControlledState } from '@/hooks/useControlledState';
 import Icon from '@/Icon';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import Tooltip from '@/Tooltip';
 import { safeReadableColor } from '@/utils/safeReadableColor';
 
+import CustomPicker from './CustomPicker';
 import { styles } from './style';
-import type { ColorSwatchesProps } from './type';
+import type { ColorSwatchesPickerRenderProps, ColorSwatchesProps } from './type';
 
 const ColorSwatches: FC<ColorSwatchesProps> = ({
   enableColorPicker,
@@ -26,10 +27,11 @@ const ColorSwatches: FC<ColorSwatchesProps> = ({
   size = 24,
   shape = 'circle',
   texts,
+  renderPicker,
   ref,
   ...rest
 }) => {
-  const [active, setActive] = useMergeState(defaultValue, {
+  const [active, setActive] = useControlledState(defaultValue, {
     defaultValue,
     onChange,
     value,
@@ -46,6 +48,24 @@ const ColorSwatches: FC<ColorSwatchesProps> = ({
   const isCustomActive = useMemo(
     () => active && active !== cssVar.colorPrimary && !colors.some((c) => c.color === active),
     [active, colors],
+  );
+
+  const pickerProps: ColorSwatchesPickerRenderProps = {
+    active: !!isCustomActive,
+    onChange: setActive,
+    presets: colors.map((c) => c.color),
+    shape,
+    size,
+    value: isCustomActive ? active : undefined,
+  };
+
+  const defaultPicker = enableColorPicker && (
+    <CustomPicker
+      {...pickerProps}
+      current={active}
+      label={texts?.custom || 'Custom'}
+      standalone={!enableColorSwatches}
+    />
   );
 
   return (
@@ -79,10 +99,10 @@ const ColorSwatches: FC<ColorSwatchesProps> = ({
           return (
             <Tooltip key={c?.key || i} title={c.title}>
               <Center
-                className={cx(
+                {...stylex.props(
                   styles.container,
-                  isTransparent && styles.transparent,
-                  isActive && styles.active,
+                  !!isTransparent && styles.transparent,
+                  isActive && styles.activeContainer,
                 )}
                 style={{
                   background: isTransparent ? undefined : color,
@@ -104,31 +124,8 @@ const ColorSwatches: FC<ColorSwatchesProps> = ({
             </Tooltip>
           );
         })}
-      {enableColorPicker && (
-        <Tooltip title={texts?.custom || 'Custom'}>
-          <span style={{ display: 'inline-flex' }}>
-            <ColorPicker
-              presets={enableColorSwatches ? undefined : colors.map((c) => c.color)}
-              value={isCustomActive ? active : undefined}
-              onChangeComplete={setActive}
-            >
-              <button
-                aria-label={texts?.custom || 'Custom'}
-                type="button"
-                className={cx(
-                  styles.picker,
-                  enableColorSwatches && styles.conic,
-                  isCustomActive && styles.active,
-                )}
-                style={{
-                  background: enableColorSwatches ? undefined : active,
-                  borderRadius: shape === 'circle' ? '50%' : cssVar.borderRadius,
-                }}
-              />
-            </ColorPicker>
-          </span>
-        </Tooltip>
-      )}
+      {enableColorPicker &&
+        (renderPicker ? renderPicker(pickerProps, defaultPicker) : defaultPicker)}
     </Flexbox>
   );
 };

@@ -1,7 +1,7 @@
 'use client';
 
 import { getTokenStyleObject } from '@shikijs/core';
-import { cx } from 'antd-style';
+import clsx from 'clsx';
 import type { CSSProperties } from 'react';
 import { memo, useRef } from 'react';
 import type { BuiltinTheme, ThemedToken } from 'shiki';
@@ -130,7 +130,7 @@ const StreamRenderer = memo<StreamRendererProps>(
 
     return (
       <div className={className} dir="ltr" style={style}>
-        <pre className={cx('shiki', theme)} style={preStyle} tabIndex={0}>
+        <pre className={clsx('shiki', theme)} style={preStyle} tabIndex={0}>
           <code style={{ display: 'flex', flexDirection: 'column', whiteSpace: 'pre' }}>
             {lines.map((line, index) => (
               <TokenLine

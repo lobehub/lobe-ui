@@ -1,12 +1,18 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { memo, useCallback, useEffect, useMemo, useRef } from 'react';
 
-import Tag from '@/base-ui/Tag';
 import CopyButton from '@/CopyButton';
 import { Flexbox } from '@/Flex';
-import { styles, variants } from '@/Highlighter/style';
+import {
+  actionsHoverCls,
+  langHoverCls,
+  rootClassName,
+  rootStyles,
+  styles,
+} from '@/Highlighter/style';
+import { styleProps } from '@/styles/stylex/props';
+import Tag from '@/Tag';
 
 import FullFeatured from './FullFeatured';
 import SyntaxMermaid from './SyntaxMermaid';
@@ -104,15 +110,20 @@ const Mermaid = memo<MermaidProps>(
 
     return (
       <div
-        className={cx(variants({ shadow, variant }), className)}
         data-code-type="mermaid"
-        style={style}
         {...rest}
+        {...styleProps(rootStyles({ shadow, variant }), rootClassName(false, className), style)}
       >
-        <Flexbox horizontal align={'center'} className={styles.actions} flex={'none'} gap={4}>
+        <Flexbox
+          horizontal
+          align={'center'}
+          flex={'none'}
+          gap={4}
+          {...styleProps(styles.actions, actionsHoverCls)}
+        >
           {actions}
         </Flexbox>
-        {showLanguage && <Tag className={styles.lang}>{language.toLowerCase()}</Tag>}
+        {showLanguage && <Tag className={langHoverCls}>{language.toLowerCase()}</Tag>}
         {body}
       </div>
     );

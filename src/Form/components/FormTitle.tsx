@@ -1,9 +1,9 @@
 'use client';
 
-import { cx } from 'antd-style';
 import { type FC } from 'react';
 
 import { Flexbox } from '@/Flex';
+import { styleProps } from '@/styles/stylex/props';
 import Tag from '@/Tag';
 
 import { titleStyles as styles } from '../style';
@@ -16,34 +16,28 @@ const FormTitle: FC<FormTitleProps> = ({
   avatar,
   classNames,
   styles: customStyles,
+  tagProps,
   ...rest
 }) => {
   return (
-    <Flexbox horizontal align={`center`} gap={8} {...rest}>
+    <Flexbox horizontal align={'center'} gap={8} {...rest}>
       {avatar}
-      <Flexbox
-        className={cx(styles.content, classNames?.content)}
-        gap={8}
-        style={customStyles?.content}
-      >
+      <Flexbox gap={8} {...styleProps(styles.content, classNames?.content, customStyles?.content)}>
         <Flexbox
+          horizontal
           align={'center'}
-          className={cx(styles.title, classNames?.title)}
-          direction={'horizontal'}
           gap={8}
-          style={customStyles?.title}
+          {...styleProps(styles.title, classNames?.title, customStyles?.title)}
         >
           {title}
           {tag && (
-            <Tag className={classNames?.tag} style={customStyles?.tag}>
+            <Tag className={classNames?.tag} style={customStyles?.tag} {...tagProps}>
               {tag}
             </Tag>
           )}
         </Flexbox>
         {desc && (
-          <small className={cx(styles.desc, classNames?.desc)} style={customStyles?.desc}>
-            {desc}
-          </small>
+          <small {...styleProps(styles.desc, classNames?.desc, customStyles?.desc)}>{desc}</small>
         )}
       </Flexbox>
     </Flexbox>

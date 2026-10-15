@@ -141,7 +141,7 @@ export default function Home({
       </LandingSection>
 
       <LandingSection
-        actions={[{ href: '/components/theme-provider', label: 'Theming guide' }]}
+        actions={[{ href: '/components/config-provider', label: 'Theming guide' }]}
         description="Design foundations that hold up beyond the demo."
         eyebrow="Foundations"
         eyebrowColor="orange"

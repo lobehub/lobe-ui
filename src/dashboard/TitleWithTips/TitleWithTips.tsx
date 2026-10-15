@@ -1,11 +1,11 @@
 'use client';
 
-import { cssVar } from 'antd-style';
 import { InfoIcon } from 'lucide-react';
 
-import Tooltip from '@/base-ui/Tooltip';
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
+import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import Tooltip from '@/Tooltip';
 
 import type { TitleWithTipsProps } from './type';
 

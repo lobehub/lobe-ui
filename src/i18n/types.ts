@@ -13,7 +13,8 @@ type BuiltinTranslationResources = typeof import('./resources/en/burger').defaul
   typeof import('./resources/en/messageModal').default &
   typeof import('./resources/en/qrCode').default &
   typeof import('./resources/en/sideNav').default &
-  typeof import('./resources/en/table').default;
+  typeof import('./resources/en/table').default &
+  typeof import('./resources/en/video').default;
 
 export type TranslationKey = keyof BuiltinTranslationResources;
 

@@ -1,9 +1,11 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { ChevronRight } from 'lucide-react';
 
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
+import { styleProps } from '@/styles/stylex/props';
 
 import { useSurfaceLink } from '../Surface/link';
 import Surface from '../Surface/Surface';
@@ -36,7 +38,7 @@ const Section = ({
             <Icon icon={ChevronRight} />
           </>
         ),
-        className: styles.more,
+        className: stylex.props(styles.more).className,
         href: moreLink,
         rel: moreLink.startsWith('http') ? 'noreferrer' : undefined,
         target: moreLink.startsWith('http') ? '_blank' : undefined,
@@ -58,7 +60,7 @@ const Section = ({
         padded={padded ?? true}
         title={
           title ? (
-            <span className={styles.title} style={fontSize ? { fontSize } : undefined}>
+            <span {...styleProps(styles.title, undefined, fontSize ? { fontSize } : undefined)}>
               {icon}
               {title}
             </span>
@@ -85,10 +87,10 @@ const Section = ({
       <Flexbox horizontal align="center" gap={12} justify="space-between" width="100%">
         <Flexbox gap={4}>
           {icon}
-          <h2 className={styles.title} style={fontSize ? { fontSize } : undefined}>
+          <h2 {...styleProps(styles.title, undefined, fontSize ? { fontSize } : undefined)}>
             {title}
           </h2>
-          {desc ? <div className={styles.desc}>{desc}</div> : null}
+          {desc ? <div {...stylex.props(styles.desc)}>{desc}</div> : null}
         </Flexbox>
         {actions ?? null}
       </Flexbox>
