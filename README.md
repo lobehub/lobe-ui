@@ -3,7 +3,7 @@
 <div align="center">
 
 <img height="120" src="https://raw.githubusercontent.com/lobehub/lobe-assets/master/packages/assets-logo/assets/logo-3d.webp">
-<img height="120" src="https://github.com/user-attachments/assets/bb48d7f1-460a-4dae-a632-66d1a7ff8f70">
+<img height="120" src="https://raw.githubusercontent.com/lobehub/lobe-assets/master/packages/assets-logo/assets/split.svg">
 <img height="120" src="https://raw.githubusercontent.com/lobehub/lobe-assets/master/packages/assets-emoji/assets/lollipop.webp">
 
 <h1>Lobe UI</h1>
