@@ -1,5 +1,7 @@
 import { existsSync } from 'node:fs';
-import { dirname, resolve } from 'node:path';
+import { createRequire } from 'node:module';
+import { dirname, join, resolve } from 'node:path';
+import { pathToFileURL } from 'node:url';
 
 import type { Plugin } from 'vite';
 
@@ -44,12 +46,23 @@ const resolveMetadataPath = (path: string, importer?: string): string => {
   return resolve(path);
 };
 
-const stylexModule = (enabled: boolean, command: 'build' | 'serve') => {
+const resolveUiStyleCss = (root: string): string | undefined => {
+  try {
+    return createRequire(pathToFileURL(join(root, 'package.json')).href).resolve(
+      '@lobehub/ui/style.css',
+    );
+  } catch {
+    return;
+  }
+};
+
+const stylexModule = (enabled: boolean, command: 'build' | 'serve', uiStyleCss?: string) => {
   if (enabled && command === 'serve') {
     return `export const stylexLinks = [{ href: '/virtual:stylex.css', rel: 'stylesheet' }];
 export const loadStylexRuntime = () => import('virtual:stylex:runtime');`;
   }
-  return `${enabled ? `import ${JSON.stringify(stylexBuildCssPath)};\n` : ''}export const stylexLinks = [];
+  const cssPath = enabled ? stylexBuildCssPath : uiStyleCss;
+  return `${cssPath ? `import ${JSON.stringify(cssPath)};\n` : ''}export const stylexLinks = [];
 export const loadStylexRuntime = () => {};`;
 };
 
@@ -61,7 +74,8 @@ export function lobeDocsSiteConfigPlugin(root: string = process.cwd()): Plugin {
     },
     load(id) {
       if (id === resolvedStylexVirtualId) {
-        return stylexModule(Boolean(getDocsConfig(root).stylex), command);
+        const enabled = Boolean(getDocsConfig(root).stylex);
+        return stylexModule(enabled, command, enabled ? undefined : resolveUiStyleCss(root));
       }
       if (id === resolvedSiteConfigVirtualId) {
         const config = getDocsConfig(root);
