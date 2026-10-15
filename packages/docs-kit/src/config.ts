@@ -16,6 +16,7 @@ export interface AtomDirConfig {
 export interface DocsNavItem {
   external?: boolean;
   href: string;
+  icon?: string;
   label: string;
 }
 
