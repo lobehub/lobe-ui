@@ -2,6 +2,16 @@
 
 # Changelog
 
+# [6.0.0-beta.10](https://github.com/lobehub/lobe-ui/compare/v6.0.0-beta.9...v6.0.0-beta.10) (2026-10-15)
+
+### ✨ Features
+
+- **theme**: Retune status palette and neutral text, spring tokens, Design Tokens page, closes [#723](https://github.com/lobehub/lobe-ui/issues/723) [#724](https://github.com/lobehub/lobe-ui/issues/724) ([682a574](https://github.com/lobehub/lobe-ui/commit/682a574))
+
+### 🎫 Chores
+
+- **release**: Docs-kit@5.27.7-beta.1 [skip ci] ([3a99149](https://github.com/lobehub/lobe-ui/commit/3a99149))
+
 # [6.0.0-beta.9](https://github.com/lobehub/lobe-ui/compare/v6.0.0-beta.8...v6.0.0-beta.9) (2026-10-14)
 
 ### 🎫 Chores
