@@ -1,3 +1,4 @@
+export const boardCss = `
 .dt-board {
   display: flex;
   flex-direction: column;
@@ -303,3 +304,25 @@
 
   background: var(--lobe-color-text);
 }
+
+.dt-grid.dt-wide {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.dt-wide .dt-card {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+}
+
+.dt-wide .dt-split {
+  height: auto;
+  min-height: 112px;
+}
+
+@media (width <= 640px) {
+  .dt-wide .dt-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+`;

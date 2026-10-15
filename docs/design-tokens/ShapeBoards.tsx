@@ -51,7 +51,7 @@ export const RadiusBoard = () => (
 
 export const TypographyBoard = () => (
   <Board>
-    <CardGrid preview="font" specs={fontFamilyTokens} />
+    <CardGrid wide preview="font" specs={fontFamilyTokens} />
     <CardGrid preview="fontSize" specs={fontSizeTokens} />
     <ThemePair onContainer>
       {() => (

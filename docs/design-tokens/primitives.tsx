@@ -1,5 +1,3 @@
-import './board.css';
-
 import {
   createLobeToken,
   cssVar,
@@ -11,6 +9,7 @@ import {
 } from '@lobehub/ui';
 import { type CSSProperties, type ReactNode, useMemo, useSyncExternalStore } from 'react';
 
+import { boardCss } from './boardCss';
 import type { Preview, TokenKey, TokenSpec } from './tokens';
 
 export const appearances: LobeAppearance[] = ['light', 'dark'];
@@ -161,10 +160,18 @@ export const TokenCard = ({
   </div>
 );
 
-export const CardGrid = ({ preview, specs }: { preview: Preview; specs: TokenSpec[] }) => {
+export const CardGrid = ({
+  preview,
+  specs,
+  wide,
+}: {
+  preview: Preview;
+  specs: TokenSpec[];
+  wide?: boolean;
+}) => {
   const tokens = useTokens();
   return (
-    <div className="dt-grid">
+    <div className={wide ? 'dt-grid dt-wide' : 'dt-grid'}>
       {specs.map((spec) => (
         <TokenCard key={spec.key} preview={preview} spec={spec} tokens={tokens} />
       ))}
@@ -172,8 +179,14 @@ export const CardGrid = ({ preview, specs }: { preview: Preview; specs: TokenSpe
   );
 };
 
+// Rendered into the SSR head so scene layout (position, overflow) holds on the first paint.
 export const Board = ({ children }: { children: ReactNode }) => (
-  <div className="dt-board">{children}</div>
+  <div className="dt-board">
+    <style href="lobe-design-tokens" precedence="default">
+      {boardCss}
+    </style>
+    {children}
+  </div>
 );
 
 export const ThemePair = ({
