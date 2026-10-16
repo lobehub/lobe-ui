@@ -1,6 +1,12 @@
+import { getThemeCss } from '@lobehub/ui';
 import { expect, it } from 'vitest';
 
-import { links } from './root';
+import { links, loader } from './root';
+
+vi.mock('@lobehub/ui', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@lobehub/ui')>();
+  return { ...actual, getThemeCss: vi.fn(actual.getThemeCss) };
+});
 
 it('publishes favicon link tags for browsers and Apple devices', async () => {
   const descriptors = await links();
@@ -15,10 +21,13 @@ it('publishes favicon link tags for browsers and Apple devices', async () => {
   );
 });
 
-it('publishes the theme-vars stylesheet for pre-paint tokens', async () => {
-  const descriptors = await links();
+it('changes the theme stylesheet cache key only when its CSS changes', () => {
+  const initial = loader().themeStylesheetHref;
 
-  expect(descriptors).toEqual(
-    expect.arrayContaining([{ href: '/theme-vars.css', rel: 'stylesheet' }]),
-  );
+  expect(initial).toMatch(/^\/theme-vars\.css\?v=[\da-f]+$/);
+  expect(loader().themeStylesheetHref).toBe(initial);
+
+  vi.mocked(getThemeCss).mockReturnValueOnce(`${getThemeCss()}\n:root { --test-theme: 1; }`);
+  expect(loader().themeStylesheetHref).not.toBe(initial);
+  expect(loader().themeStylesheetHref).toBe(initial);
 });
