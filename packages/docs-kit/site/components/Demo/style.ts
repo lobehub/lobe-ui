@@ -1,504 +1,251 @@
-import { createStaticStyles, injectGlobal } from '@lobehub/ui';
-
-export const styles = createStaticStyles(({ css, cssVar }) => ({
-  actionGroup: css`
-    display: inline-flex;
-    gap: 0.125rem;
-    align-items: center;
-
-    & + & {
-      margin-inline-start: 0.25rem;
-      padding-inline-start: 0.375rem;
-      border-inline-start: 1px solid var(--docs-border-subtle);
-    }
-  `,
-
-  actions: css`
-    display: flex;
-    flex: none;
-    gap: 0.125rem;
-    align-items: center;
-
-    margin-inline-start: auto;
-  `,
-
-  caption: css`
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-
-    min-height: 2.25rem;
-    padding-block: 0.25rem;
-    padding-inline: 0.875rem 0.5rem;
-    border-block-end: 1px solid var(--docs-border-subtle);
-
-    && h3 {
-      flex: none;
-
-      margin: 0;
-      padding: 0;
-
-      font-size: 0.8438rem;
-      font-weight: 620;
-      line-height: 1.4;
-      color: var(--docs-text-primary);
-      letter-spacing: -0.01em;
-    }
-
-    && p {
-      overflow: hidden;
-
-      min-width: 0;
-      margin: 0;
-
-      font-size: 0.7813rem;
-      line-height: 1.5;
-      color: var(--docs-text-subtle);
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    @media (width <= 47.5rem) {
-      padding-inline: 0.75rem 0.5rem;
-    }
-  `,
-
-  error: css`
-    display: grid;
-    gap: 0.75rem;
-    align-content: center;
-    justify-items: start;
-
-    min-height: var(--demo-frame-height, 10rem);
-    padding: 1.5rem;
-
-    color: var(--docs-text-secondary);
-
-    background: var(--docs-surface-muted);
-
-    strong {
-      color: var(--docs-text-primary);
-    }
-
-    code {
-      max-width: 100%;
-      font-size: 0.75rem;
-      color: var(--docs-text-secondary);
-      overflow-wrap: anywhere;
-    }
-
-    button {
-      cursor: pointer;
-
-      min-width: 2.5rem;
-      min-height: 2.5rem;
-      padding-block: 0;
-      padding-inline: 0.875rem;
-      border: 1px solid var(--docs-border-default);
-      border-radius: 0.5rem;
-
-      color: var(--docs-text-primary);
-
-      background: var(--docs-surface-raised);
-      box-shadow: var(--docs-shadow-control);
-
-      transition:
-        color 140ms ease,
-        background-color 140ms ease,
-        border-color 140ms ease,
-        box-shadow 140ms ease,
-        transform 90ms ease;
-
-      &:hover {
-        border-color: var(--docs-border-strong);
-        background: var(--docs-surface-hover);
-      }
-
-      &:active {
-        transform: scale(0.96);
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        transition-duration: 0.01ms;
-      }
-    }
-
-    @media (width <= 47.5rem) {
-      padding: 1rem;
-    }
-  `,
-
-  frame: css`
-    position: relative;
-
-    overflow: hidden;
-
-    margin-block: 1.75rem;
-    margin-inline: 0;
-    border: 1px solid var(--docs-border-default);
-    border-radius: var(--docs-radius-lg);
-
-    background: var(--docs-surface-raised);
-    box-shadow: var(--docs-shadow-control);
-  `,
-
-  iframe: css`
-    display: block;
-
-    width: 100%;
-    min-height: var(--demo-frame-height, 24rem);
-    border: 0;
-
-    background: var(--docs-background);
-  `,
-
-  liveBadge: css`
-    pointer-events: none;
-
-    position: absolute;
-    inset-block-start: 0.5rem;
-    inset-inline-end: 0.5rem;
-
-    padding-block: 0.0625rem;
-    padding-inline: 0.4375rem;
-    border: 1px solid color-mix(in srgb, var(--docs-accent) 35%, transparent);
-    border-radius: 999px;
-
-    font-size: 0.625rem;
-    font-weight: 560;
-    color: var(--docs-accent);
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-
-    background: color-mix(in srgb, var(--docs-accent) 10%, var(--docs-background));
-  `,
-
-  liveCandidate: css`
-    grid-area: 1 / 1;
-    min-width: 0;
-
-    &[data-live-state='candidate'],
-    &[data-live-state='fallback'] {
-      pointer-events: none;
-      visibility: hidden;
-      opacity: 0;
-    }
-  `,
-
-  liveDiagnostics: css`
-    padding-block: 0.75rem;
-    padding-inline: 1.25rem;
-    border-block-start: 1px solid var(--docs-border-subtle);
-
-    font-size: 0.75rem;
-    line-height: 1.55;
-    color: var(--docs-danger-text, #b42318);
-
-    background: color-mix(in srgb, #ef4444 8%, var(--docs-surface-muted));
-
-    p {
-      margin: 0;
-    }
-
-    p + p {
-      margin-block-start: 0.375rem;
-    }
-  `,
-
-  liveImports: css`
-    user-select: text;
-
-    position: relative;
-
-    overflow: auto;
-
-    margin: 0;
-    padding-block: 1rem 0.25rem;
-    padding-inline: 1.25rem;
-    border: 0;
-    border-radius: 0;
-
-    font-size: 0.75rem;
-    line-height: 1.65;
-    color: ${cssVar.colorTextSecondary};
-    tab-size: 2;
-
-    background: var(--docs-background);
-    box-shadow: none;
-
-    &::before {
-      content: '';
-
-      position: absolute;
-      inset-block: 1.125rem 0.375rem;
-      inset-inline-start: 0.625rem;
-
-      width: 2px;
-      border-radius: 2px;
-
-      background: ${cssVar.colorBorder};
-    }
-
-    @media (width <= 47.5rem) {
-      padding-inline: 1rem;
-    }
-  `,
-
-  liveInput: css`
-    overflow: auto;
-
-    max-height: 32rem;
-
-    font-family: var(--docs-font-mono);
-    font-size: 0.75rem;
-    line-height: 1.65;
-    color: ${cssVar.colorText};
-
-    background: var(--docs-background);
-
-    pre {
-      min-height: 8rem;
-      margin: 0;
-      padding-block: 1rem !important;
-      padding-inline: 1.25rem !important;
-      border: 0;
-      border-radius: 0;
-
-      box-shadow: none;
-
-      @media (width <= 47.5rem) {
-        padding-inline: 1rem !important;
-      }
-    }
-
-    [data-demo-live-imports] + & pre {
-      padding-block-start: 0.5rem !important;
-    }
-  `,
-
-  liveSource: css`
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    background: var(--docs-background);
-  `,
-
-  liveStage: css`
-    display: grid;
-    min-height: inherit;
-
-    &[hidden] {
-      display: none;
-    }
-  `,
-
-  liveStatus: css`
-    padding-block: 0.75rem;
-    padding-inline: 1.25rem;
-    border-block-start: 1px solid var(--docs-border-subtle);
-
-    font-size: 0.75rem;
-    line-height: 1.55;
-    color: var(--docs-text-secondary);
-
-    background: var(--docs-surface-muted);
-  `,
-
-  placeholder: css`
-    display: grid;
-    place-items: center;
-
-    min-height: var(--demo-frame-height, 10rem);
-
-    font-size: 0.8125rem;
-    color: var(--docs-text-subtle);
-  `,
-
-  preview: css`
-    /* The canvas a demo table sits on. Opaque cells (pinned columns, sticky
-       header/summary) paint --lobe-table-bg, so it has to track this surface. */
-    --lobe-table-bg: var(--docs-background);
-
-    display: block;
-
-    width: 100%;
-    min-height: var(--demo-frame-height, 10rem);
-    padding: 1.5rem;
-
-    background: var(--docs-background);
-
-    [data-demo-appearance='light'] > & {
-      --lobe-table-bg: #fff;
-
-      color: #111113;
-      color-scheme: light;
-      background: #fff;
-    }
-
-    [data-demo-appearance='dark'] > & {
-      --lobe-table-bg: #000;
-
-      color: #f4f4f5;
-      color-scheme: dark;
-      background: #000;
-    }
-
-    [data-demo-layout='center'] & {
-      display: grid;
-      place-items: center;
-    }
-
-    [data-demo-layout='bare'] & {
-      padding: 0;
-    }
-
-    /* A short StoryBook must still fill the frame, and a taller one must
-       keep growing. Percentage heights do not resolve against min-height,
-       so the row itself carries the free space down to the sidebar. */
-    &:has([data-lobe-storybook]) {
-      display: grid;
-      grid-template-rows: minmax(min-content, 1fr);
-      padding: 0;
-
-      > * {
-        height: 100%;
-        min-height: 100%;
-      }
-    }
-
-    @media (width <= 47.5rem) {
-      padding: 1rem;
-    }
-  `,
-
-  source: css`
-    overflow: auto;
-
-    margin: 0;
-    padding-block: 1rem;
-    padding-inline: 1.25rem;
-
-    font-size: 0.75rem;
-    line-height: 1.65;
-    color: ${cssVar.colorText};
-    tab-size: 2;
-
-    background: var(--docs-background);
-
-    @media (width <= 47.5rem) {
-      padding-inline: 1rem;
-    }
-  `,
-
-  sourcePanel: css`
-    border-block-start: 1px solid var(--docs-border-subtle);
-    background: var(--docs-background);
-  `,
-
-  standalonePage: css`
-    /* Same surface hand-off as the preview rule: tables framed on their own
-       page (iframe demos) need it too. */
-    --lobe-table-bg: var(--docs-background);
-
-    overflow: auto;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    place-items: center;
-
-    min-width: 20rem;
-    height: 100%;
-    min-height: 100%;
-    padding: 1.5rem;
-
-    background: var(--docs-background);
-
-    &[data-demo-appearance='light'] {
-      --lobe-table-bg: #fff;
-
-      color: #111113;
-      color-scheme: light;
-      background: #fff;
-    }
-
-    &[data-demo-appearance='dark'] {
-      --lobe-table-bg: #000;
-
-      color: #f4f4f5;
-      color-scheme: dark;
-      background: #000;
-    }
-
-    > [data-demo-placeholder],
-    > [id^='lobe-demo-'] {
-      width: 100%;
-    }
-
-    > [data-lobe-demo-appearance] {
-      width: 100%;
-    }
-  `,
-
-  standalonePageError: css`
-    align-content: center;
-    justify-items: start;
-    max-width: 44rem;
-    margin-inline: auto;
-
-    h1,
-    p {
-      margin: 0;
-    }
-
-    p {
-      margin-block-start: 0.75rem;
-      color: var(--docs-text-secondary);
-    }
-  `,
-
-  status: css`
-    position: absolute;
-
-    overflow: hidden;
-
-    width: 1px;
-    height: 1px;
-
-    white-space: nowrap;
-
-    clip: rect(0 0 0 0);
-    clip-path: inset(50%);
-  `,
-
-  viewport: css`
-    position: relative;
-
-    overflow: auto;
-    display: flex;
-    justify-content: center;
-
-    width: 100%;
-
-    background: var(--docs-surface-muted);
-
-    &[data-demo-viewport='tablet'] > * {
-      width: min(100%, 48rem);
-    }
-
-    &[data-demo-viewport='mobile'] > * {
-      width: min(100%, 24.375rem);
-    }
-  `,
-}));
-
-injectGlobal`
-  :root[data-standalone-appearance='light'] [data-standalone-demo] {
-    color: #111113;
-    color-scheme: light;
-    background: #fff;
-  }
-
-  :root[data-standalone-appearance='dark'] [data-standalone-demo] {
-    color: #f4f4f5;
-    color-scheme: dark;
-    background: #000;
-  }
-`;
+import * as stylex from '@stylexjs/stylex';
+
+const mobile = '@media (width <= 47.5rem)';
+const reducedMotion = '@media (prefers-reduced-motion: reduce)';
+
+export const demoClassNames = {
+  liveCandidate: 'docs-demo-live-candidate',
+  liveInput: 'docs-demo-live-input',
+  liveStage: 'docs-demo-live-stage',
+  preview: 'docs-demo-preview',
+  source: 'docs-demo-source',
+  sourcePanel: 'docs-demo-source-panel',
+  standalonePage: 'docs-demo-standalone',
+  standalonePageError: 'docs-demo-standalone-error',
+  viewport: 'docs-demo-viewport',
+} as const;
+
+export const styles = stylex.create({
+  actionGroup: {
+    gap: '0.125rem',
+    alignItems: 'center',
+    borderInlineStartColor: 'var(--docs-border-subtle)',
+    borderInlineStartStyle: 'solid',
+    borderInlineStartWidth: {
+      'default': 0,
+      ':not(:first-child)': 1,
+    },
+    display: 'inline-flex',
+    marginInlineStart: {
+      'default': null,
+      ':not(:first-child)': '0.25rem',
+    },
+    paddingInlineStart: {
+      'default': null,
+      ':not(:first-child)': '0.375rem',
+    },
+  },
+  actions: {
+    gap: '0.125rem',
+    alignItems: 'center',
+    display: 'flex',
+    flexBasis: 'auto',
+    flexGrow: 0,
+    flexShrink: 0,
+    marginInlineStart: 'auto',
+  },
+  caption: {
+    gap: '0.5rem',
+    paddingBlock: '0.25rem',
+    paddingInline: {
+      default: '0.875rem 0.5rem',
+      [mobile]: '0.75rem 0.5rem',
+    },
+    alignItems: 'center',
+    borderBlockEndColor: 'var(--docs-border-subtle)',
+    borderBlockEndStyle: 'solid',
+    borderBlockEndWidth: 1,
+    display: 'flex',
+    minHeight: '2.25rem',
+  },
+  captionDescription: {
+    margin: 0,
+    overflow: 'hidden',
+    color: 'var(--docs-text-subtle)',
+    fontSize: '0.7813rem',
+    lineHeight: 1.5,
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    maxWidth: 'none',
+    minWidth: 0,
+  },
+  captionTitle: {
+    margin: 0,
+    padding: 0,
+    color: 'var(--docs-text-primary)',
+    flexBasis: 'auto',
+    flexGrow: 0,
+    flexShrink: 0,
+    fontSize: '0.8438rem',
+    fontWeight: 620,
+    letterSpacing: '-0.01em',
+    lineHeight: 1.4,
+  },
+  error: {
+    padding: {
+      default: '1.5rem',
+      [mobile]: '1rem',
+    },
+    gap: '0.75rem',
+    alignContent: 'center',
+    backgroundColor: 'var(--docs-surface-muted)',
+    color: 'var(--docs-text-secondary)',
+    display: 'grid',
+    justifyItems: 'start',
+    minHeight: 'var(--demo-frame-height, 10rem)',
+  },
+  errorMessage: {
+    color: 'var(--docs-text-secondary)',
+    fontSize: '0.75rem',
+    overflowWrap: 'anywhere',
+    maxWidth: '100%',
+  },
+  errorRetry: {
+    borderColor: {
+      'default': 'var(--docs-border-default)',
+      ':hover': 'var(--docs-border-strong)',
+    },
+    borderRadius: '0.5rem',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    paddingBlock: 0,
+    paddingInline: '0.875rem',
+    transition:
+      'color 140ms ease, background-color 140ms ease, border-color 140ms ease, box-shadow 140ms ease, transform 90ms ease',
+    backgroundColor: {
+      'default': 'var(--docs-surface-raised)',
+      ':hover': 'var(--docs-surface-hover)',
+    },
+    boxShadow: 'var(--docs-shadow-control)',
+    color: 'var(--docs-text-primary)',
+    cursor: 'pointer',
+    transform: {
+      'default': null,
+      ':active': 'scale(0.96)',
+    },
+    transitionDuration: { default: null, [reducedMotion]: '0.01ms' },
+    minHeight: '2.5rem',
+    minWidth: '2.5rem',
+  },
+  errorTitle: {
+    color: 'var(--docs-text-primary)',
+  },
+  frame: {
+    borderColor: 'var(--docs-border-default)',
+    borderRadius: 'var(--docs-radius-lg)',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    marginBlock: '1.75rem',
+    marginInline: 0,
+    overflow: 'hidden',
+    backgroundColor: 'var(--docs-surface-raised)',
+    boxShadow: 'var(--docs-shadow-control)',
+    position: 'relative',
+  },
+  iframe: {
+    borderWidth: 0,
+    backgroundColor: 'var(--docs-background)',
+    display: 'block',
+    minHeight: 'var(--demo-frame-height, 24rem)',
+    width: '100%',
+  },
+  liveBadge: {
+    borderColor: 'color-mix(in srgb, var(--docs-accent) 35%, transparent)',
+    borderRadius: 999,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    paddingBlock: '0.0625rem',
+    paddingInline: '0.4375rem',
+    backgroundColor: 'color-mix(in srgb, var(--docs-accent) 10%, var(--docs-background))',
+    color: 'var(--docs-accent)',
+    fontSize: '0.625rem',
+    fontWeight: 560,
+    insetBlockStart: '0.5rem',
+    insetInlineEnd: '0.5rem',
+    letterSpacing: '0.04em',
+    pointerEvents: 'none',
+    position: 'absolute',
+    textTransform: 'uppercase',
+  },
+  liveDiagnostic: {
+    margin: 0,
+    marginBlockStart: {
+      'default': null,
+      ':not(:first-child)': '0.375rem',
+    },
+    maxWidth: 'none',
+  },
+  liveDiagnostics: {
+    paddingBlock: '0.75rem',
+    paddingInline: '1.25rem',
+    backgroundColor: 'color-mix(in srgb, #ef4444 8%, var(--docs-surface-muted))',
+    borderBlockStartColor: 'var(--docs-border-subtle)',
+    borderBlockStartStyle: 'solid',
+    borderBlockStartWidth: 1,
+    color: 'var(--docs-danger-text, #b42318)',
+    fontSize: '0.75rem',
+    lineHeight: 1.55,
+  },
+  liveImports: {
+    'margin': 0,
+    'borderRadius': 0,
+    'borderWidth': 0,
+    'overflow': 'auto',
+    'paddingInline': {
+      default: '1.25rem',
+      [mobile]: '1rem',
+    },
+    'backgroundColor': 'var(--docs-background)',
+    'boxShadow': 'none',
+    'color': 'var(--lobe-color-text-secondary)',
+    'fontSize': '0.75rem',
+    'lineHeight': 1.65,
+    'paddingBlockEnd': '0.25rem',
+    'paddingBlockStart': '1rem',
+    'position': 'relative',
+    'tabSize': 2,
+    'userSelect': 'text',
+    '::before': {
+      borderRadius: 2,
+      backgroundColor: 'var(--lobe-color-border)',
+      content: '""',
+      insetBlockEnd: '0.375rem',
+      insetBlockStart: '1.125rem',
+      insetInlineStart: '0.625rem',
+      position: 'absolute',
+      width: 2,
+    },
+  },
+  liveSource: {
+    backgroundColor: 'var(--docs-background)',
+    display: 'grid',
+    gridTemplateColumns: 'minmax(0, 1fr)',
+  },
+  liveStatus: {
+    paddingBlock: '0.75rem',
+    paddingInline: '1.25rem',
+    backgroundColor: 'var(--docs-surface-muted)',
+    borderBlockStartColor: 'var(--docs-border-subtle)',
+    borderBlockStartStyle: 'solid',
+    borderBlockStartWidth: 1,
+    color: 'var(--docs-text-secondary)',
+    fontSize: '0.75rem',
+    lineHeight: 1.55,
+  },
+  placeholder: {
+    placeItems: 'center',
+    color: 'var(--docs-text-subtle)',
+    display: 'grid',
+    fontSize: '0.8125rem',
+    minHeight: 'var(--demo-frame-height, 10rem)',
+  },
+  status: {
+    overflow: 'hidden',
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    position: 'absolute',
+    whiteSpace: 'nowrap',
+    height: 1,
+    width: 1,
+  },
+});

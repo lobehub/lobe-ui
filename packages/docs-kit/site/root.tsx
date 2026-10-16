@@ -1,6 +1,11 @@
+import './styles/global.css';
+// Demo frames are prerendered, so their CSS must be linked from the root route, not a lazy chunk.
+import './components/Demo/Demo.css';
+
 import { createHash } from 'node:crypto';
 
 import { getThemeCss } from '@lobehub/ui';
+import * as stylex from '@stylexjs/stylex';
 import { type ReactNode, useEffect } from 'react';
 import type { LinksFunction } from 'react-router';
 import { Links, Meta, Outlet, Scripts, ScrollRestoration, useRouteLoaderData } from 'react-router';
@@ -47,7 +52,7 @@ export function Layout({ children }: { children: ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <meta content="width=device-width, initial-scale=1" name="viewport" />
-        <style>{'@layer docs-reset, lobe-base, lobe-popup, lobe-ui;'}</style>
+        <style>{'@layer docs-reset, docs-prose, lobe-base, lobe-popup, lobe-ui;'}</style>
         <ThemeBootstrap prefersColor={siteConfig.themeConfig?.prefersColor} />
         <Meta />
         <link href={data?.themeStylesheetHref ?? '/theme-vars.css'} rel="stylesheet" />
@@ -64,9 +69,9 @@ export function Layout({ children }: { children: ReactNode }) {
 
 export function ErrorBoundary() {
   return (
-    <main className={styles.error} id="docs-content">
-      <h1>Site unavailable</h1>
-      <p>The requested page could not be rendered.</p>
+    <main {...stylex.props(styles.error)} id="docs-content">
+      <h1 {...stylex.props(styles.errorTitle)}>Site unavailable</h1>
+      <p {...stylex.props(styles.errorText)}>The requested page could not be rendered.</p>
     </main>
   );
 }

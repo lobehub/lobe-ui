@@ -1,0 +1,137 @@
+.docs-content {
+  font-size: 0.9688rem;
+  line-height: 1.8;
+  color: var(--docs-text-secondary);
+}
+
+.docs-content > :first-child {
+  margin-block-start: 0;
+}
+
+/* Below every StyleX layer so component styles (Api, Demo, code blocks) win over prose defaults. */
+@layer docs-prose {
+  .docs-content h2:not(:where([data-demo-layout] *)),
+  .docs-content h3:not(:where([data-demo-layout] *)) {
+    scroll-margin-top: 1.5rem;
+    color: var(--docs-text-primary);
+    text-wrap: balance;
+    letter-spacing: -0.025em;
+  }
+
+  .docs-content h2:not(:where([data-demo-layout] *)) {
+    margin-block: 3.5rem 1rem;
+    margin-inline: 0;
+    padding-block-start: 1rem;
+
+    font-size: 1.625rem;
+    font-weight: 640;
+    line-height: 1.25;
+  }
+
+  .docs-content h3:not(:where([data-demo-layout] *)) {
+    margin-block: 2.25rem 0.75rem;
+    margin-inline: 0;
+
+    font-size: 1.125rem;
+    font-weight: 620;
+    line-height: 1.35;
+  }
+
+  .docs-content p:not(:where([data-demo-layout] *)) {
+    max-width: 68ch;
+    margin-block: 1rem;
+    margin-inline: 0;
+    text-wrap: pretty;
+  }
+
+  .docs-content
+    pre:not(
+      :where(
+        [data-code-type='highlighter'] *,
+        [data-code-type='live-demo'] *,
+        [data-demo-layout] *
+      )
+    ) {
+    overflow-x: auto;
+
+    max-width: 100%;
+    margin-block: 1.5rem;
+    margin-inline: 0;
+    padding: 1.25rem;
+    border: 1px solid var(--lobe-color-border-secondary);
+    border-radius: var(--lobe-border-radius-lg);
+
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    color: var(--lobe-color-text);
+
+    background: var(--lobe-color-fill-quaternary);
+  }
+
+  .docs-content :where(:not(pre)) > code:not(:where([data-demo-layout] *)) {
+    padding-block: 0.15em;
+    padding-inline: 0.4em;
+    border: 1px solid var(--docs-border-subtle);
+    border-radius: 0.35rem;
+
+    font-size: 0.85em;
+    color: var(--docs-text-primary);
+
+    background: var(--docs-surface-muted);
+  }
+
+  .docs-content table:not(:where([data-demo-layout] *)) {
+    overflow-x: auto;
+    display: block;
+    border-spacing: 0;
+    border-collapse: collapse;
+
+    width: max-content;
+    max-width: 100%;
+    margin-block: 1.5rem;
+    margin-inline: 0;
+    border: 1px solid var(--docs-border-default);
+    border-radius: var(--docs-radius-lg);
+
+    text-align: start;
+
+    background: var(--docs-surface-raised);
+    box-shadow: var(--docs-shadow-inset);
+  }
+
+  .docs-content thead:not(:where([data-demo-layout] *)) {
+    background: var(--docs-surface-muted);
+  }
+
+  .docs-content tr + tr:not(:where([data-demo-layout] *)) {
+    border-block-start: 1px solid var(--docs-border-subtle);
+  }
+
+  .docs-content th:not(:where([data-demo-layout] *)),
+  .docs-content td:not(:where([data-demo-layout] *)) {
+    min-width: 7.5rem;
+    padding-block: 0.75rem;
+    padding-inline: 1rem;
+
+    font-size: 0.875rem;
+    line-height: 1.55;
+    text-align: start;
+    overflow-wrap: break-word;
+    vertical-align: top;
+  }
+
+  .docs-content th:not(:where([data-demo-layout] *)) {
+    font-weight: 620;
+    color: var(--docs-text-primary);
+    white-space: nowrap;
+  }
+
+  .docs-content td:not(:where([data-demo-layout] *)) {
+    color: var(--docs-text-secondary);
+  }
+
+  .docs-content td code:not(:where([data-demo-layout] *)) {
+    font-size: 0.8125em;
+    overflow-wrap: anywhere;
+  }
+}

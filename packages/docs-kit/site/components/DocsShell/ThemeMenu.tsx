@@ -1,4 +1,5 @@
 import { type DropdownItem, DropdownMenu } from '@lobehub/ui';
+import * as stylex from '@stylexjs/stylex';
 import { Monitor, Moon, Sun } from 'lucide-react';
 import { useEffect, useState } from 'react';
 
@@ -40,7 +41,7 @@ export function ThemeMenu() {
     <DropdownMenu items={items} placement="bottomRight">
       <button
         aria-label="Select theme"
-        className={styles.iconButton}
+        {...stylex.props(styles.iconButton)}
         title="Select theme"
         type="button"
       >

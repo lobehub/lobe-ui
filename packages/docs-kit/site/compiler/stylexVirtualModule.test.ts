@@ -64,13 +64,21 @@ it('imports the consumer @lobehub/ui style.css when StyleX is not configured', a
   );
 });
 
-it('skips the import when the consumer @lobehub/ui has no style.css', async () => {
+it('skips the @lobehub/ui import when the consumer has no style.css', async () => {
   const root = createFixtureConsumerRoot();
 
-  await expect(loadStylexModule(root)).resolves.not.toContain('import ');
+  await expect(loadStylexModule(root)).resolves.not.toContain('node_modules/@lobehub/ui');
 });
 
-it('keeps the StyleX build stylesheet when StyleX is configured', async () => {
+it('always emits the docs-kit StyleX stylesheet and dev runtime', async () => {
+  const root = createFixtureConsumerRoot();
+  installUi(root);
+
+  await expect(loadStylexModule(root)).resolves.toContain('styles/stylex.css');
+  await expect(loadStylexModule(root, 'serve')).resolves.toContain('virtual:stylex:runtime');
+});
+
+it('drops the prebuilt @lobehub/ui stylesheet when StyleX compiles it from source', async () => {
   const root = createFixtureConsumerRoot(`\n      stylex: {},`);
   installUi(root);
 

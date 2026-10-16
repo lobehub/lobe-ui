@@ -1,3 +1,4 @@
+import * as stylex from '@stylexjs/stylex';
 import type { MetaFunction } from 'react-router';
 import HomePage from 'virtual:lobedocs/home-page';
 import siteConfig from 'virtual:lobedocs/site-config';
@@ -35,8 +36,8 @@ export default function Home() {
   const getStartedPathname = firstSection ? sectionLandingPathname(firstSection) : '/changelog';
 
   return (
-    <div className={styles.root} id="docs-content">
-      <article data-pagefind-body className={styles.document}>
+    <div {...stylex.props(styles.root)} id="docs-content">
+      <article data-pagefind-body {...stylex.props(styles.document)}>
         <HomePage description={description} getStartedPathname={getStartedPathname} />
       </article>
     </div>

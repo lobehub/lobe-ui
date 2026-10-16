@@ -1,3 +1,4 @@
+import * as stylex from '@stylexjs/stylex';
 import { Link } from 'react-router';
 
 import {
@@ -12,13 +13,13 @@ const countLabel = (count: number) => `${count} ${count === 1 ? 'page' : 'pages'
 
 function DocumentGrid({ documents }: { documents: readonly DocumentManifestEntry[] }) {
   return (
-    <ul className={styles.grid}>
+    <ul {...stylex.props(styles.grid)}>
       {documents.map((document) => (
         <li key={document.pathname}>
-          <Link className={styles.card} to={document.pathname}>
-            <span className={styles.cardTitle}>{document.title}</span>
+          <Link {...stylex.props(styles.card)} to={document.pathname}>
+            <span {...stylex.props(styles.cardTitle)}>{document.title}</span>
             {document.description ? (
-              <span className={styles.cardDescription}>{document.description}</span>
+              <span {...stylex.props(styles.cardDescription)}>{document.description}</span>
             ) : null}
           </Link>
         </li>
@@ -36,10 +37,10 @@ export function SectionOverview({ category, section }: OverviewMatch) {
   const showCategoryHeadings = !category && hasSubgroups(section);
 
   return (
-    <div className={styles.root} id="docs-content">
-      <header className={styles.header}>
-        <h1>{title}</h1>
-        <p>
+    <div {...stylex.props(styles.root)} id="docs-content">
+      <header {...stylex.props(styles.header)}>
+        <h1 {...stylex.props(styles.title)}>{title}</h1>
+        <p {...stylex.props(styles.subtitle)}>
           {category ? `${section.title} · ` : ''}
           {countLabel(total)}
         </p>
@@ -48,10 +49,15 @@ export function SectionOverview({ category, section }: OverviewMatch) {
         categories.map((entry) => {
           const headingId = `overview-${categoryOverviewPathname(section, entry).split('/').pop()}`;
           return (
-            <section aria-labelledby={headingId} className={styles.group} key={entry.title}>
-              <h2 className={styles.groupTitle} id={headingId}>
-                <Link to={categoryOverviewPathname(section, entry)}>{entry.title}</Link>
-                <span className={styles.count}>{entry.documents.length}</span>
+            <section aria-labelledby={headingId} {...stylex.props(styles.group)} key={entry.title}>
+              <h2 {...stylex.props(styles.groupTitle)} id={headingId}>
+                <Link
+                  {...stylex.props(styles.groupLink)}
+                  to={categoryOverviewPathname(section, entry)}
+                >
+                  {entry.title}
+                </Link>
+                <span {...stylex.props(styles.count)}>{entry.documents.length}</span>
               </h2>
               <DocumentGrid documents={entry.documents} />
             </section>

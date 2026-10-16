@@ -1,3 +1,4 @@
+import * as stylex from '@stylexjs/stylex';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router';
 import siteConfig from 'virtual:lobedocs/site-config';
@@ -10,18 +11,18 @@ import { styles } from './homeStyle';
 const externalLinkProps = { rel: 'noreferrer', target: '_blank' } as const;
 
 const HeroAction = ({ action, primary }: { action: DocsNavItem; primary: boolean }) => {
-  const className = primary ? `${styles.button} ${styles.buttonPrimary}` : styles.button;
+  const buttonProps = stylex.props(styles.button, primary && styles.buttonPrimary);
 
   if (action.external) {
     return (
-      <a className={className} href={action.href} {...externalLinkProps}>
+      <a {...buttonProps} href={action.href} {...externalLinkProps}>
         {action.label}
       </a>
     );
   }
 
   return (
-    <Link className={className} to={action.href}>
+    <Link {...buttonProps} to={action.href}>
       {action.label}
     </Link>
   );
@@ -40,18 +41,23 @@ export const DefaultHome = ({
 
   return (
     <>
-      <section className={styles.hero}>
-        <h1 data-pagefind-meta="title">
+      <section {...stylex.props(styles.hero)}>
+        <h1 data-pagefind-meta="title" {...stylex.props(styles.heroTitle, styles.heroEnter)}>
           {home?.hero?.title ?? siteConfig.title}
           {home?.hero?.accent && (
             <>
               {' '}
-              <span className={styles.heroGradient}>{home.hero.accent}</span>
+              <span {...stylex.props(styles.heroGradient)}>{home.hero.accent}</span>
             </>
           )}
         </h1>
-        <p data-pagefind-meta="description">{description}</p>
-        <div className={styles.heroActions}>
+        <p
+          data-pagefind-meta="description"
+          {...stylex.props(styles.heroDescription, styles.heroEnter, styles.heroEnterSecond)}
+        >
+          {description}
+        </p>
+        <div {...stylex.props(styles.heroActions, styles.heroEnter, styles.heroEnterThird)}>
           {heroActions.map((action, index) => (
             <HeroAction action={action} key={action.href} primary={index === 0} />
           ))}
@@ -59,20 +65,20 @@ export const DefaultHome = ({
       </section>
 
       {features.length > 0 && (
-        <section aria-label="Features" className={styles.features}>
-          <div className={styles.featuresGrid}>
+        <section aria-label="Features" {...stylex.props(styles.features)}>
+          <div {...stylex.props(styles.featuresGrid)}>
             {features.map(({ description: featureDescription, icon, title }) => {
               const FeatureIcon = icon ? homeIcons[icon] : undefined;
 
               return (
-                <div className={styles.feature} key={title}>
+                <div {...stylex.props(styles.feature)} key={title}>
                   {FeatureIcon && (
-                    <span className={styles.featureIcon}>
+                    <span {...stylex.props(styles.featureIcon)}>
                       <FeatureIcon aria-hidden size={16} strokeWidth={1.7} />
                     </span>
                   )}
-                  <h3>{title}</h3>
-                  <p>{featureDescription}</p>
+                  <h3 {...stylex.props(styles.featureTitle)}>{title}</h3>
+                  <p {...stylex.props(styles.featureDescription)}>{featureDescription}</p>
                 </div>
               );
             })}
@@ -81,15 +87,17 @@ export const DefaultHome = ({
       )}
 
       {home?.install && (
-        <section aria-labelledby="home-install" className={styles.cta}>
-          <h2 id="home-install">{home.ctaTitle ?? 'Get started in seconds'}</h2>
-          <div className={styles.installCommand}>
-            <code>{home.install}</code>
+        <section aria-labelledby="home-install" {...stylex.props(styles.cta)}>
+          <h2 id="home-install" {...stylex.props(styles.ctaTitle)}>
+            {home.ctaTitle ?? 'Get started in seconds'}
+          </h2>
+          <div {...stylex.props(styles.installCommand)}>
+            <code {...stylex.props(styles.installCode)}>{home.install}</code>
             <CopyControl label="Copy install command" value={home.install} />
           </div>
-          <p className={styles.ctaFootnote}>
+          <p {...stylex.props(styles.ctaFootnote)}>
             {home.ctaFootnote && <>{home.ctaFootnote} · </>}
-            <Link to={getStartedPathname}>
+            <Link {...stylex.props(styles.ctaLink)} to={getStartedPathname}>
               Get Started <ArrowRight aria-hidden size={12} strokeWidth={1.8} />
             </Link>
           </p>

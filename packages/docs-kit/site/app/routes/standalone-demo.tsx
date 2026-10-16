@@ -6,7 +6,7 @@ import standaloneEntries from 'virtual:lobedocs/standalone-demos';
 
 import type { StandaloneDemoMapEntry } from '../../compiler/demo/readLegacyMap';
 import { StandaloneDemoPage } from '../../components/Demo/StandaloneDemoPage';
-import { styles as demoStyles } from '../../components/Demo/style';
+import { demoClassNames } from '../../components/Demo/style';
 import type { DemoAppearance, DemoModule } from '../../types/demo';
 import { createDescriptorPromiseCache } from '../demos/descriptorPromiseCache';
 import { useSiteTheme } from '../providers/SiteProviders';
@@ -133,7 +133,7 @@ export function ErrorBoundary() {
 
   return (
     <main
-      className={`${demoStyles.standalonePage} ${demoStyles.standalonePageError}`}
+      className={`${demoClassNames.standalonePage} ${demoClassNames.standalonePageError}`}
       data-standalone-demo=""
     >
       <h1>{notFound ? 'Demo not found' : 'Demo unavailable'}</h1>

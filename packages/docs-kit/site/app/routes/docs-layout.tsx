@@ -1,3 +1,4 @@
+import * as stylex from '@stylexjs/stylex';
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { Outlet } from 'react-router';
 
@@ -53,14 +54,14 @@ export default function DocsRouteLayout() {
         navigation={contentManifest.navigation}
         onSearchOpen={openSearch}
       >
-        <div className={styles.page}>
+        <div {...stylex.props(styles.page)}>
           <Outlet context={{ openSearch } satisfies DocsOutletContext} />
         </div>
       </DocsShell>
       {searchOpen ? (
         <Suspense
           fallback={
-            <span className={styles.searchLoading} data-pagefind-ignore="all" role="status">
+            <span {...stylex.props(styles.searchLoading)} data-pagefind-ignore="all" role="status">
               Loading search…
             </span>
           }
@@ -80,9 +81,9 @@ export default function DocsRouteLayout() {
 
 export function ErrorBoundary() {
   return (
-    <main className={styles.error} id="docs-content">
-      <h1>Documentation unavailable</h1>
-      <p>The requested documentation could not be rendered.</p>
+    <main {...stylex.props(styles.error)} id="docs-content">
+      <h1 {...stylex.props(styles.errorTitle)}>Documentation unavailable</h1>
+      <p {...stylex.props(styles.errorText)}>The requested documentation could not be rendered.</p>
     </main>
   );
 }

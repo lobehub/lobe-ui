@@ -3,7 +3,7 @@ import type { ComponentType } from 'react';
 
 import type { DemoAppearance, DemoModule } from '../../types/demo';
 import { LiveDemo } from './LiveDemo';
-import { styles } from './style';
+import { demoClassNames } from './style';
 
 interface HarnessProps {
   appearance: DemoAppearance;
@@ -165,13 +165,13 @@ it('loads scope while containing each promoted preview and its portal host in on
   expect(await screen.findByText('Edited result: Original')).toBeTruthy();
   expect(
     container
-      .querySelector(`.${styles.sourcePanel} [data-pagefind-ignore]`)
+      .querySelector(`.${demoClassNames.sourcePanel} [data-pagefind-ignore]`)
       ?.getAttribute('data-pagefind-ignore'),
   ).toBe('all');
   expect(loadScope).toHaveBeenCalledTimes(1);
   expect(screen.getByLabelText('Read-only imports').textContent).toContain("from 'react'");
   expect(getEditor().value).not.toContain("from 'react'");
-  const stage = container.querySelector(`.${styles.liveStage}`);
+  const stage = container.querySelector(`.${demoClassNames.liveStage}`);
   const active = stage?.querySelector<HTMLElement>('[data-live-state="active"]');
   expect(stage).toBeTruthy();
   expect(active?.hasAttribute('hidden')).toBe(false);

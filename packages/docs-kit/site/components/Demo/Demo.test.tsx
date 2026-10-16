@@ -7,7 +7,7 @@ import { renderToString } from 'react-dom/server';
 import { SiteProviders, useSiteTheme } from '../../app/providers/SiteProviders';
 import type { DemoModule } from '../../types/demo';
 import { Demo } from './Demo';
-import { styles } from './style';
+import { demoClassNames } from './style';
 
 const ConfigWrapper = ({ children }: { children: ReactNode }) => (
   <ConfigProvider enableCustomFonts={false} motion={motion}>
@@ -150,8 +150,10 @@ it('replaces the canonical preview in place once the live preview is ready', asy
 
   expect(await screen.findByText('Edited preview result')).toBeTruthy();
   await waitFor(() => expect(screen.queryByText('Canonical result')).toBeNull());
-  expect(container.querySelectorAll(`.${styles.preview}`)).toHaveLength(1);
-  expect(screen.getByLabelText('Edited demo preview').closest(`.${styles.preview}`)).toBeTruthy();
+  expect(container.querySelectorAll(`.${demoClassNames.preview}`)).toHaveLength(1);
+  expect(
+    screen.getByLabelText('Edited demo preview').closest(`.${demoClassNames.preview}`),
+  ).toBeTruthy();
 
   fireEvent.click(screen.getByRole('button', { name: 'Hide source editor' }));
 
@@ -189,7 +191,8 @@ it('keeps the edited session mounted and inaccessible while the editor is collap
   fireEvent.click(screen.getByRole('button', { name: 'Hide source editor' }));
   expect(screen.queryByRole('textbox', { name: 'Demo source editor' })).toBeNull();
   expect(
-    screen.getByText('Persisted edit result').closest<HTMLElement>(`.${styles.liveStage}`)?.hidden,
+    screen.getByText('Persisted edit result').closest<HTMLElement>(`.${demoClassNames.liveStage}`)
+      ?.hidden,
   ).toBe(true);
 
   fireEvent.click(screen.getByRole('button', { name: 'Show source editor' }));
@@ -308,9 +311,9 @@ it('applies an independent dark canvas and keeps it in standalone URLs', async (
   const menu = await screen.findByRole('menu');
   fireEvent.click(within(menu).getByRole('menuitemcheckbox', { name: 'Dark' }));
 
-  expect(container.querySelector(`.${styles.viewport}`)?.getAttribute('data-demo-appearance')).toBe(
-    'dark',
-  );
+  expect(
+    container.querySelector(`.${demoClassNames.viewport}`)?.getAttribute('data-demo-appearance'),
+  ).toBe('dark');
   expect(
     screen.getByRole('link', { name: 'Open standalone preview' }).getAttribute('href'),
   ).toContain('appearance=dark');
@@ -342,7 +345,7 @@ it('follows the site theme while the demo theme is auto, and stops once pinned',
   );
 
   await waitFor(() => expect(document.getElementById('lobe-demo-auto-follow')).toBeTruthy());
-  const viewport = () => document.querySelector(`.${styles.viewport}`);
+  const viewport = () => document.querySelector(`.${demoClassNames.viewport}`);
   expect(viewport()?.getAttribute('data-demo-appearance')).toBe('light');
 
   fireEvent.click(screen.getByRole('button', { name: 'force site dark' }));
@@ -414,14 +417,14 @@ it('excludes controls, rendered previews, and source while retaining the demo ti
   expect(
     screen.getByRole('toolbar', { name: 'Demo controls' }).getAttribute('data-pagefind-ignore'),
   ).toBe('all');
-  expect(container.querySelector(`.${styles.viewport}`)?.getAttribute('data-pagefind-ignore')).toBe(
-    'all',
-  );
+  expect(
+    container.querySelector(`.${demoClassNames.viewport}`)?.getAttribute('data-pagefind-ignore'),
+  ).toBe('all');
   await waitFor(() =>
     expect(screen.queryByRole('status', { name: 'Loading demo preview' })).toBeNull(),
   );
   fireEvent.click(screen.getByRole('button', { name: 'Show source' }));
   expect(
-    container.querySelector(`.${styles.sourcePanel}`)?.getAttribute('data-pagefind-ignore'),
+    container.querySelector(`.${demoClassNames.sourcePanel}`)?.getAttribute('data-pagefind-ignore'),
   ).toBe('all');
 });

@@ -56,13 +56,16 @@ const resolveUiStyleCss = (root: string): string | undefined => {
   }
 };
 
-const stylexModule = (enabled: boolean, command: 'build' | 'serve', uiStyleCss?: string) => {
-  if (enabled && command === 'serve') {
-    return `export const stylexLinks = [{ href: '/virtual:stylex.css', rel: 'stylesheet' }];
+const stylexModule = (command: 'build' | 'serve', uiStyleCss?: string) => {
+  const imports = [command === 'build' ? stylexBuildCssPath : undefined, uiStyleCss]
+    .filter(Boolean)
+    .map((cssPath) => `import ${JSON.stringify(cssPath)};\n`)
+    .join('');
+  if (command === 'serve') {
+    return `${imports}export const stylexLinks = [{ href: '/virtual:stylex.css', rel: 'stylesheet' }];
 export const loadStylexRuntime = () => import('virtual:stylex:runtime');`;
   }
-  const cssPath = enabled ? stylexBuildCssPath : uiStyleCss;
-  return `${cssPath ? `import ${JSON.stringify(cssPath)};\n` : ''}export const stylexLinks = [];
+  return `${imports}export const stylexLinks = [];
 export const loadStylexRuntime = () => {};`;
 };
 
@@ -74,8 +77,8 @@ export function lobeDocsSiteConfigPlugin(root: string = process.cwd()): Plugin {
     },
     load(id) {
       if (id === resolvedStylexVirtualId) {
-        const enabled = Boolean(getDocsConfig(root).stylex);
-        return stylexModule(enabled, command, enabled ? undefined : resolveUiStyleCss(root));
+        const compilesUi = Boolean(getDocsConfig(root).stylex);
+        return stylexModule(command, compilesUi ? undefined : resolveUiStyleCss(root));
       }
       if (id === resolvedSiteConfigVirtualId) {
         const config = getDocsConfig(root);

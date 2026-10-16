@@ -1,34 +1,27 @@
-import { createStaticStyles } from '@lobehub/ui';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css }) => ({
-  root: css`
-    cursor: pointer;
-
-    display: inline-grid;
-    flex: none;
-    place-items: center;
-
-    width: 1.75rem;
-    height: 1.75rem;
-    padding: 0;
-    border: 0;
-    border-radius: var(--docs-radius-sm);
-
-    color: var(--docs-text-subtle);
-
-    background: transparent;
-
-    transition:
-      color 140ms ease,
-      background-color 140ms ease;
-
-    &:hover {
-      color: var(--docs-text-primary);
-      background: var(--docs-surface-hover);
-    }
-
-    &[data-copied] {
-      color: var(--docs-accent);
-    }
-  `,
-}));
+export const styles = stylex.create({
+  root: {
+    padding: 0,
+    borderRadius: 'var(--docs-radius-sm)',
+    borderWidth: 0,
+    placeItems: 'center',
+    transition: 'color 140ms ease, background-color 140ms ease',
+    backgroundColor: {
+      'default': 'transparent',
+      ':hover': 'var(--docs-surface-hover)',
+    },
+    color: {
+      'default': 'var(--docs-text-subtle)',
+      ':is([data-copied])': 'var(--docs-accent)',
+      ':hover': 'var(--docs-text-primary)',
+    },
+    cursor: 'pointer',
+    display: 'inline-grid',
+    flexBasis: 'auto',
+    flexGrow: 0,
+    flexShrink: 0,
+    height: '1.75rem',
+    width: '1.75rem',
+  },
+});
