@@ -1,6 +1,7 @@
 import { toCssVariables, toCssVarName } from '../css';
 import { neutralColors, primaryColors } from '../customTheme';
 import { createLobeTokenGroups } from './createLobeToken';
+import { isCustomNeutral } from './customNeutral';
 import { isRegisteredPalette } from './customPalette';
 import type { CustomPrimaryColor } from './customPrimary';
 import type { LobeAppearance } from './scope';
@@ -76,6 +77,20 @@ export const getCustomPrimaryCss = (color: CustomPrimaryColor) => {
         toCssVariables(
           createLobeTokenGroups({ appearance, primaryColor: hex as CustomPrimaryColor }).primary,
         ),
+      ),
+    )
+    .join('\n\n');
+};
+
+/** CSS for a custom neutral (6-digit hex or a `registerLobeNeutral` name); '' for presets. */
+export const getCustomNeutralCss = (value: string) => {
+  const key = value.startsWith('#') ? value.toLowerCase() : value;
+  if (!isCustomNeutral(key)) return '';
+  return (['light', 'dark'] as const)
+    .map((appearance) =>
+      rule(
+        `[data-neutral-color='${key}']${appearanceSelector(appearance)}`,
+        toCssVariables(createLobeTokenGroups({ appearance, neutralColor: key }).neutral),
       ),
     )
     .join('\n\n');

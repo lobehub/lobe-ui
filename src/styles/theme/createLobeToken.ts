@@ -1,4 +1,4 @@
-import type { NeutralColors } from '../customTheme';
+import type { LobeNeutralColor } from './customNeutral';
 import { resolveStatusScales } from './customPalette';
 import type { LobePrimaryColor } from './customPrimary';
 import { createNeutralToken } from './token/neutral';
@@ -8,7 +8,7 @@ import { staticToken } from './token/static';
 
 export interface CreateLobeTokenParams {
   appearance: 'light' | 'dark';
-  neutralColor?: NeutralColors;
+  neutralColor?: LobeNeutralColor;
   palette?: string;
   primaryColor?: LobePrimaryColor;
 }

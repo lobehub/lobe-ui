@@ -12,6 +12,11 @@ export const registerLobePalette = (name: string, palette: LobeStatusPalette) =>
   if (!NAME.test(name))
     throw new Error(`Invalid palette name "${name}": use letters, digits, _ or -`);
   registry.set(name, palette);
+  notifyPaletteChange();
+};
+
+/** Bumps the revision so mounted scopes / useTheme pick up a re-registered palette or neutral. */
+export const notifyPaletteChange = () => {
   revision++;
   for (const listener of listeners) listener();
 };
