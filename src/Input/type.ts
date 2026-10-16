@@ -70,6 +70,22 @@ export interface InputPasswordProps extends Omit<InputProps, 'type'> {
    * @default true
    */
   visibilityToggle?: boolean;
+  /**
+   * Accessible labels (`aria-label` / `title`) of the eye toggle button
+   * @default { hide: 'Hide password', show: 'Show password' }
+   */
+  visibilityToggleLabels?: InputPasswordVisibilityToggleLabels;
+}
+
+export interface InputPasswordVisibilityToggleLabels {
+  /**
+   * Label while the password is visible (clicking hides it)
+   */
+  hide?: string;
+  /**
+   * Label while the password is hidden (clicking shows it)
+   */
+  show?: string;
 }
 
 type BaseNumberFieldProps = Omit<

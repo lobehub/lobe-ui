@@ -35,7 +35,16 @@ Remaining props are forwarded to the underlying Base UI `Input` (`onValueChange`
 
 ### InputPassword
 
-Extends Input; `visibilityToggle` (default `true`) renders the eye button.
+Extends Input.
+
+| Property               | Description                                                  | Type                               | Default                                            |
+| ---------------------- | ------------------------------------------------------------ | ---------------------------------- | -------------------------------------------------- |
+| visibilityToggle       | Render the eye button                                        | `boolean`                          | `true`                                             |
+| visibilityToggleLabels | Accessible labels (`aria-label` / `title`) of the eye button | `{ show?: string; hide?: string }` | `{ show: 'Show password', hide: 'Hide password' }` |
+
+```tsx
+<InputPassword visibilityToggleLabels={{ hide: '隐藏确认密码', show: '显示确认密码' }} />
+```
 
 ### InputNumber
 
