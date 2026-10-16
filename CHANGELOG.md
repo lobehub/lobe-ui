@@ -2,6 +2,18 @@
 
 # Changelog
 
+## [6.0.2](https://github.com/lobehub/lobe-ui/compare/v6.0.1...v6.0.2) (2026-10-16)
+
+### 🎫 Chores
+
+- **release**: Docs-kit@6.0.1 [skip ci] ([4ecba71](https://github.com/lobehub/lobe-ui/commit/4ecba71))
+- **release**: Docs-kit@6.0.2 [skip ci] ([7696d87](https://github.com/lobehub/lobe-ui/commit/7696d87))
+
+### 🐛 Bug Fixes
+
+- **styles**: Create lobeStaticStylish on first access ([ead8649](https://github.com/lobehub/lobe-ui/commit/ead8649))
+- Forward Switch aria props, customizable InputPassword toggle labels, closes [#732](https://github.com/lobehub/lobe-ui/issues/732) ([1fb0628](https://github.com/lobehub/lobe-ui/commit/1fb0628))
+
 ## [6.0.1](https://github.com/lobehub/lobe-ui/compare/v6.0.0...v6.0.1) (2026-10-16)
 
 ### 🎫 Chores
