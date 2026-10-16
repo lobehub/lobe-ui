@@ -2,6 +2,16 @@
 
 # Changelog
 
+## [6.0.5](https://github.com/lobehub/lobe-ui/compare/v6.0.4...v6.0.5) (2026-10-16)
+
+### ⚡ Performance Improvements
+
+- Move the Spline components to @lobehub/ui/spline, closes [#736](https://github.com/lobehub/lobe-ui/issues/736) ([8662ba7](https://github.com/lobehub/lobe-ui/commit/8662ba7))
+
+### 🎫 Chores
+
+- **release**: Codemod@1.2.0 [skip ci] ([5c9714b](https://github.com/lobehub/lobe-ui/commit/5c9714b))
+
 ## [6.0.4](https://github.com/lobehub/lobe-ui/compare/v6.0.3...v6.0.4) (2026-10-16)
 
 ### 🐛 Bug Fixes
