@@ -111,7 +111,7 @@ describe('render granularity', () => {
 
   it('a validation result re-renders only the validated field', async () => {
     const before = snapshot();
-    act(() => form.setValue('f3', ''));
+    fireEvent.change(screen.getByLabelText(/f3/), { target: { value: '' } });
     fireEvent.blur(screen.getByLabelText(/f3/));
     await act(() => wait());
     expect(screen.getByText('This field is required')).toBeTruthy();
