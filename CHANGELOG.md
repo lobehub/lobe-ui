@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [6.0.6](https://github.com/lobehub/lobe-ui/compare/v6.0.5...v6.0.6) (2026-10-16)
+
+### 🐛 Bug Fixes
+
+- **video**: Keep the controls usable for portrait recordings under maxHeight, closes [#738](https://github.com/lobehub/lobe-ui/issues/738) ([1616585](https://github.com/lobehub/lobe-ui/commit/1616585))
+
 ## [6.0.5](https://github.com/lobehub/lobe-ui/compare/v6.0.4...v6.0.5) (2026-10-16)
 
 ### ⚡ Performance Improvements
