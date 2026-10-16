@@ -19,6 +19,7 @@ import { useIsClient } from '@/hooks/useIsClient';
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { getFloatingCollisionPadding } from '@/internal/floating';
 import { styleProps } from '@/styles/stylex/props';
+import { getElementRef } from '@/utils/getElementRef';
 import { mergeRefs } from '@/utils/mergeRefs';
 import { placementMap } from '@/utils/placement';
 
@@ -172,7 +173,7 @@ export const TooltipStandalone = memo<TooltipProps>(
                 ...mergedProps,
                 id: shouldPreservePopupTriggerId ? childProps.id : mergedProps.id,
                 ref: mergeRefs([
-                  (children as any).ref,
+                  getElementRef(children),
                   (props as any).ref,
                   refProp,
                   triggerCallbackRef,

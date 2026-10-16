@@ -1,6 +1,7 @@
 import { toCssVariables, toCssVarName } from '../css';
 import { neutralColors, primaryColors } from '../customTheme';
 import { createLobeTokenGroups } from './createLobeToken';
+import { isCustomNeutral } from './customNeutral';
 import { isRegisteredPalette } from './customPalette';
 import type { CustomPrimaryColor } from './customPrimary';
 import type { LobeAppearance } from './scope';
@@ -81,6 +82,20 @@ export const getCustomPrimaryCss = (color: CustomPrimaryColor) => {
     .join('\n\n');
 };
 
+/** CSS for a custom neutral (6-digit hex or a `registerLobeNeutral` name); '' for presets. */
+export const getCustomNeutralCss = (value: string) => {
+  const key = value.startsWith('#') ? value.toLowerCase() : value;
+  if (!isCustomNeutral(key)) return '';
+  return (['light', 'dark'] as const)
+    .map((appearance) =>
+      rule(
+        `[data-neutral-color='${key}']${appearanceSelector(appearance)}`,
+        toCssVariables(createLobeTokenGroups({ appearance, neutralColor: key }).neutral),
+      ),
+    )
+    .join('\n\n');
+};
+
 export const getCustomPaletteCss = (name: string) => {
   if (!isRegisteredPalette(name)) return '';
   return (['light', 'dark'] as const)
@@ -90,6 +105,28 @@ export const getCustomPaletteCss = (name: string) => {
         `[data-palette='${name}']${appearanceSelector(appearance)}`,
         toCssVariables({
           ...palette,
+          colorErrorOutline: neutral.colorErrorOutline,
+          colorWarningOutline: neutral.colorWarningOutline,
+        }),
+      );
+    })
+    .join('\n\n');
+};
+
+/**
+ * The outline tokens depend on both the neutral and the status palette, so the standalone
+ * neutral / palette stylesheets each compute them against the other's default. This rule
+ * (higher specificity) recomputes them for the actual combination.
+ */
+export const getPaletteNeutralCss = (name: string, neutralColor: string) => {
+  if (!isRegisteredPalette(name) || !neutralColor) return '';
+  const key = neutralColor.startsWith('#') ? neutralColor.toLowerCase() : neutralColor;
+  return (['light', 'dark'] as const)
+    .map((appearance) => {
+      const { neutral } = createLobeTokenGroups({ appearance, neutralColor: key, palette: name });
+      return rule(
+        `[data-palette='${name}'][data-neutral-color='${key}']${appearanceSelector(appearance)}`,
+        toCssVariables({
           colorErrorOutline: neutral.colorErrorOutline,
           colorWarningOutline: neutral.colorWarningOutline,
         }),

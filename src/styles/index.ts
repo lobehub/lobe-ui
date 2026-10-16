@@ -18,6 +18,14 @@ export {
   type CreateLobeTokenParams,
   type LobeToken,
 } from './theme/createLobeToken';
+export {
+  type CustomNeutralColor,
+  generateNeutralScale,
+  isCustomNeutralColor,
+  type LobeNeutralColor,
+  type LobeNeutralScale,
+  registerLobeNeutral,
+} from './theme/customNeutral';
 export { type LobeStatusPalette, registerLobePalette } from './theme/customPalette';
 export {
   type CustomPrimaryColor,
@@ -41,6 +49,7 @@ export {
   useThemeMode,
 } from './theme/scope';
 export {
+  getCustomNeutralCss,
   getCustomPaletteCss,
   getCustomPrimaryCss,
   getGlobalCss,

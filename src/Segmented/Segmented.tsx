@@ -106,12 +106,13 @@ const Segmented = <Value extends string = string>({
 
   const groupValue = useMemo<Value[]>(() => (innerValue != null ? [innerValue] : []), [innerValue]);
 
-  const rootStyle: CSSProperties = { ...style, ...customStyles?.root };
+  // `list` is the same element as `root` (the toggle group holds the items directly).
+  const rootStyle: CSSProperties = { ...style, ...customStyles?.list, ...customStyles?.root };
 
   return (
     <SegmentedRoot<Value>
       block={block}
-      className={clsx(classNames?.root, className)}
+      className={clsx(classNames?.root, classNames?.list, className)}
       disabled={disabled}
       glass={glass}
       id={id}

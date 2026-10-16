@@ -40,6 +40,32 @@ Theme appearance and colors are not configured here: import `@lobehub/ui/theme.c
 
 <Demo of={DemoCustomPrimary} layout="bare" />
 
+## Custom neutral colour
+
+`neutralColor` takes a preset (`mauve` / `slate` / `sage` / `olive` / `sand`), any 6-digit hex, or the name of a scale registered with `registerLobeNeutral` (`setLobeTheme`, `ThemeScope`, `LobeThemeScript`).
+
+- **Hex**: the scale is built the same way as the presets: the default gray ladder keeps its lightness steps and takes the hex's hue and chroma (chroma capped so it stays neutral). Use it to tint surfaces, borders and text towards a brand hue.
+- **Full scale**: for exact surfaces (for example a dark `colorBgContainer` of `#0e1010`), register a 13-step `ColorScaleItem` (`light`, `lightA`, `dark`, `darkA`, same shape as `@lobehub/ui/color` neutrals). Optionally pass `text` (`[text, secondary, tertiary, quaternary]` per appearance); by default steps 12 / 10 / 8 / 6 are used.
+
+```ts
+import { colorScales } from '@lobehub/ui/color';
+import { registerLobeNeutral, setLobeTheme } from '@lobehub/ui';
+
+const { gray } = colorScales;
+const dark = [...gray.dark] as typeof gray.dark;
+dark[0] = '#0a0b0b'; // colorBgLayout
+dark[1] = '#0e1010'; // colorBgContainer
+dark[2] = '#151717'; // colorBgElevated
+
+registerLobeNeutral('foundry', { ...gray, dark });
+setLobeTheme({ appearance: 'dark', neutralColor: 'foundry' });
+
+// or just a tint:
+setLobeTheme({ neutralColor: '#0e1010' });
+```
+
+The rules are injected under `[data-neutral-color='…']` for both appearances, and `useTheme()` returns the same values. For server rendering, `getCustomNeutralCss(value)` returns that CSS. Names are limited to letters, digits, `_` and `-` and cannot reuse a preset name. If you register the same name again, call `setLobeTheme` afterwards so the root stylesheet is rewritten.
+
 ## Custom status palette
 
 Error, warning, info and success can be replaced as a named palette. Register the 13-step scales once at module scope (the same `ColorScaleItem` shape as `statusColorScales` in `@lobehub/ui/color`), then select the palette like any other theme attribute. Statuses you leave out keep the default scales.

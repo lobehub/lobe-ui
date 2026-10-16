@@ -22,6 +22,7 @@ import DemoPanelRender from './demos/panel-render.tsx?demo';
 import DemoCellRender from './demos/cell-render.tsx?demo';
 import DemoComponents from './demos/components.tsx?demo';
 import DemoLocale from './demos/locale.tsx?demo';
+import DemoFullWidth from './demos/full-width.tsx?demo';
 import DemoStyleClass from './demos/style-class.tsx?demo';
 import DemoNested from './demos/nested.tsx?demo';
 import DemoMode from './demos/mode.tsx?demo';
@@ -175,6 +176,12 @@ Without `locale`, the texts come from the `@lobehub/ui/i18n` resources of the su
 `classNames` and `styles` target each part of the picker (see Semantic DOM below). Both take an object, or a function of `{ props }` returning one — `props` are the picker's props with the merged `size` — so the styles can follow `size`, `status`, `disabled` and so on. The popup parts sit under `popup`; `classNames.popup` may also be a string, which is the popup `root` class.
 
 <Demo of={DemoStyleClass} layout="bare" />
+
+### Full width range picker
+
+The range picker sizes to its content by default. Give the root a width (`styles.root` / `style`) and both inputs flex to fill it; `classNames.input` / `styles.input` apply to both the start and end input.
+
+<Demo of={DemoFullWidth} layout="bare" />
 
 ## Inside Modal and Popover
 

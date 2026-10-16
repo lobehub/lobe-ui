@@ -7,6 +7,7 @@ import { cloneElement, type FC, isValidElement, useMemo } from 'react';
 import { use } from 'react';
 
 import { useNativeButton } from '@/hooks/useNativeButton';
+import { getElementRef } from '@/utils/getElementRef';
 import { mergeRefs } from '@/utils/mergeRefs';
 import { parseTrigger } from '@/utils/parseTrigger';
 
@@ -70,7 +71,7 @@ export const PopoverInGroup: FC<PopoverProps> = ({ children, ref: refProp, ...pr
           return cloneElement(children as any, {
             ...mergedProps,
             className: clsx(mergedProps.className, triggerClassName),
-            ref: mergeRefs([(children as any).ref, (renderProps as any).ref, refProp]),
+            ref: mergeRefs([getElementRef(children), (renderProps as any).ref, refProp]),
           });
         }}
       />

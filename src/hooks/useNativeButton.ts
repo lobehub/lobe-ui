@@ -143,6 +143,9 @@ export function useNativeButton({
     // If it's a string type but not a button (e.g., 'div'), return false
     if (typeof children.type === 'string') return false;
 
+    // Button / ActionIcon (and most link-capable components) render an <a> when given `href`.
+    if ((children.props as { href?: unknown } | null)?.href !== undefined) return false;
+
     // Check if it's a known component from the library
     const displayName = getComponentDisplayName(children);
     if (displayName && displayName in NATIVE_BUTTON_MAP) {

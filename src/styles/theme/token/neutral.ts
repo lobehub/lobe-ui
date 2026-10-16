@@ -1,10 +1,7 @@
-import { gray } from '@/color/colors';
-import { neutralColorScales } from '@/color/neutrals';
 import { mixColors, parseRgb } from '@/utils/colorMath';
 
-import type { NeutralColors } from '../../customTheme';
+import { type LobeNeutralColor, resolveNeutral } from '../customNeutral';
 import { generateColorNeutralPalette } from '../generateColorPalette';
-import { neutralText } from './neutralText';
 
 const isChannel = (value: number) => value >= 0 && value <= 255;
 
@@ -29,14 +26,11 @@ const getAlphaColor = (front: string, back: string) => {
 
 export const createNeutralToken = (
   appearance: 'light' | 'dark',
-  neutralColor: NeutralColors | undefined,
+  neutralColor: LobeNeutralColor | undefined,
   status: { colorErrorBg: string; colorWarningBg: string },
 ) => {
-  const scale = (neutralColor && neutralColorScales[neutralColor]) || gray;
-  const [colorText, colorTextSecondary, colorTextTertiary, colorTextQuaternary] =
-    neutralText[(neutralColor && neutralColorScales[neutralColor] && neutralColor) || 'gray'][
-      appearance
-    ];
+  const { scale, text } = resolveNeutral(neutralColor);
+  const [colorText, colorTextSecondary, colorTextTertiary, colorTextQuaternary] = text[appearance];
   const token = {
     ...generateColorNeutralPalette({ appearance, scale }),
     colorText,

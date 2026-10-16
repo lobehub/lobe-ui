@@ -6,10 +6,17 @@ category: Data Entry
 
 import DemoIndex from './demos/index.tsx?demo';
 import DemoAtoms from './demos/atoms.tsx?demo';
+import DemoSemantic from './demos/semantic.tsx?demo';
 
 ## Default
 
 <Demo of={DemoIndex} layout="bare" />
+
+## Custom semantic dom styling
+
+`classNames` and `styles` target each part: `root` (the toggle group; `list` is an alias), `indicator` (the sliding active background), `item` (each option button), `itemIcon` and `itemLabel`. For a compact control on mobile, set `height` / `paddingInline` on `item`; the indicator follows the measured item size.
+
+<Demo of={DemoSemantic} layout="bare" />
 
 ## Atom Components
 
