@@ -3,6 +3,7 @@ import { act, fireEvent, renderHook, screen } from '@testing-library/react';
 import { playerRef, renderVideo } from '../__tests__/render';
 import { useVideoPlayer } from '../useVideo';
 import CenterPlay from './CenterPlay';
+import Controls from './Controls';
 import Frame from './Frame';
 import Root from './Root';
 
@@ -60,6 +61,51 @@ describe('Video.Root', () => {
     const root = container.firstElementChild as HTMLElement;
     expect(root.style.maxWidth).toBe('640px');
     expect(root.style.width).toBe('100%');
+  });
+
+  it('keeps a portrait player wide enough for controls below a centered frame', () => {
+    const { container, video } = renderVideo(
+      <Root maxHeight={360} src="a.mp4">
+        <Frame />
+        <Controls />
+      </Root>,
+    );
+    act(() => video.setMeta({ duration: 10, height: 1280, width: 720 }));
+    const root = container.firstElementChild as HTMLElement;
+    const frame = video.parentElement as HTMLElement;
+    expect(root.style.maxWidth).toBe('480px');
+    expect(frame.style.maxWidth).toBe('203px');
+    expect(frame.style.marginInline).toBe('auto');
+    expect(frame.style.aspectRatio).toBe('720 / 1280');
+  });
+
+  it('letterboxes a portrait frame that hosts the controls', () => {
+    const { container, video } = renderVideo(
+      <Root maxHeight={360} src="a.mp4">
+        <Frame>
+          <Controls />
+        </Frame>
+      </Root>,
+    );
+    act(() => video.setMeta({ duration: 10, height: 1280, width: 720 }));
+    const root = container.firstElementChild as HTMLElement;
+    const frame = video.parentElement as HTMLElement;
+    expect(root.style.maxWidth).toBe('480px');
+    expect(frame.style.maxWidth).toBe('');
+    expect(frame.style.aspectRatio).toBe('480 / 360');
+  });
+
+  it('leaves landscape sizing to the intrinsic aspect ratio', () => {
+    const { container, video } = renderVideo(
+      <Root maxHeight={360} src="a.mp4">
+        <Frame>
+          <Controls />
+        </Frame>
+      </Root>,
+    );
+    const frame = video.parentElement as HTMLElement;
+    expect((container.firstElementChild as HTMLElement).style.maxWidth).toBe('640px');
+    expect(frame.style.aspectRatio).toBe('1280 / 720');
   });
 });
 
