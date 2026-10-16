@@ -2,6 +2,16 @@
 
 # Changelog
 
+## [6.0.3](https://github.com/lobehub/lobe-ui/compare/v6.0.2...v6.0.3) (2026-10-16)
+
+### ⚡ Performance Improvements
+
+- Insert static styles in emotion speedy mode, closes [#734](https://github.com/lobehub/lobe-ui/issues/734) ([b8666fa](https://github.com/lobehub/lobe-ui/commit/b8666fa))
+
+### 🎫 Chores
+
+- **release**: Codemod@1.1.0 [skip ci] ([41d4e61](https://github.com/lobehub/lobe-ui/commit/41d4e61))
+
 ## [6.0.2](https://github.com/lobehub/lobe-ui/compare/v6.0.1...v6.0.2) (2026-10-16)
 
 ### 🎫 Chores
