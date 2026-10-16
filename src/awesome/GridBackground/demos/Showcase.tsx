@@ -1,5 +1,5 @@
 import { GridShowcase } from '@lobehub/ui/awesome';
-import { LogoThree } from '@lobehub/ui/brand';
+import { LogoThree } from '@lobehub/ui/spline';
 
 export default () => {
   return (

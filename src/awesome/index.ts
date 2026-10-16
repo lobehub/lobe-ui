@@ -52,7 +52,6 @@ export {
   type LandingPalette,
 } from './landingTokens';
 export { default as LogoMarquee, type LogoMarqueeItem, type LogoMarqueeProps } from './LogoMarquee';
-export { default as Spline, type SplineProps } from './Spline';
 export { default as Spotlight, type SpotlightProps } from './Spotlight';
 export { default as SpotlightCard, type SpotlightCardProps } from './SpotlightCard';
 export {

@@ -2,10 +2,10 @@
 
 import { type CSSProperties, memo, useState } from 'react';
 
-import Spline, { type SplineProps } from '@/awesome/Spline';
 import { useCdnFn } from '@/ConfigProvider';
 import { Flexbox } from '@/Flex';
 import Img from '@/Img';
+import Spline, { type SplineProps } from '@/spline/Spline';
 
 const LOGO_3D = {
   path: 'assets/logo-3d.webp',

@@ -3793,30 +3793,6 @@
       "source": "src/brand/LogoMono/demos/logo-mono.tsx"
     },
     {
-      "document": "src/brand/LogoThree/index.mdx",
-      "legacyId": "logothree-demo-logospline",
-      "legacyRouteId": "components/brand/LogoThree/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/brand/logo-three",
-      "source": "src/brand/LogoThree/demos/LogoSpline.tsx"
-    },
-    {
-      "document": "src/brand/LogoThree/index.mdx",
-      "legacyId": "logothree-demo-demos",
-      "legacyRouteId": "components/brand/LogoThree/index",
-      "options": {
-        "inline": false,
-        "isolated": false,
-        "layout": "bare"
-      },
-      "pathname": "/components/brand/logo-three",
-      "source": "src/brand/LogoThree/demos/index.tsx"
-    },
-    {
       "document": "src/chat/BackBottom/index.mdx",
       "legacyId": "src-chat-back-bottom-demo-demos",
       "legacyRouteId": "components/chat/BackBottom/index",
@@ -5741,7 +5717,7 @@
     },
     {
       "category": "Data Display",
-      "description": "HtmlPreview renders LLM-generated HTML inline using a hardened iframe sandbox. It mirrors how Mermaid is embedded in Markdown, but treats the content as code rather than data \u2014 scripts execute inside an isolated frame that cannot reach the host page.",
+      "description": "HtmlPreview renders LLM-generated HTML inline using a hardened iframe sandbox. It mirrors how Mermaid is embedded in Markdown, but treats the content as code rather than data — scripts execute inside an isolated frame that cannot reach the host page.",
       "legacyRouteId": "components/HtmlPreview/index",
       "pathname": "/components/html-preview",
       "section": "Components",
@@ -5920,7 +5896,7 @@
     },
     {
       "category": "Feedback",
-      "description": "A wrapper component for giscus \ud83d\udc8e, a comments system powered by GitHub Discussions.",
+      "description": "A wrapper component for giscus 💎, a comments system powered by GitHub Discussions.",
       "legacyRouteId": "components/awesome/Giscus/index",
       "pathname": "/components/awesome/giscus",
       "section": "Awesome",
@@ -6031,7 +6007,7 @@
     },
     {
       "category": "Data Entry",
-      "description": "Base UI-powered Segmented control \u2014 toggle-group semantics with a sliding active indicator. Drops antd dependency in favor of @base-ui/react/toggle-group.",
+      "description": "Base UI-powered Segmented control — toggle-group semantics with a sliding active indicator. Drops antd dependency in favor of @base-ui/react/toggle-group.",
       "legacyRouteId": "components/Segmented/index",
       "pathname": "/components/segmented",
       "source": "src/Segmented/index.mdx",
@@ -6063,7 +6039,7 @@
     },
     {
       "category": "Navigation",
-      "description": "Base UI-powered Tabs with iOS-flavored interactions \u2014 no hover background, tap-scale feedback, and a sliding active indicator across rounded / square / point variants.",
+      "description": "Base UI-powered Tabs with iOS-flavored interactions — no hover background, tap-scale feedback, and a sliding active indicator across rounded / square / point variants.",
       "legacyRouteId": "components/Tabs/index",
       "pathname": "/components/tabs",
       "source": "src/Tabs/index.mdx",
@@ -6152,15 +6128,6 @@
       "section": "Brand",
       "source": "src/brand/LogoMono/index.mdx",
       "title": "LogoMono"
-    },
-    {
-      "category": "Spline",
-      "description": "A 3D interactive logo component that renders a Spline-based 3D model of the LobeHub logo with a fallback image while loading.",
-      "legacyRouteId": "components/brand/LogoThree/index",
-      "pathname": "/components/brand/logo-three",
-      "section": "Brand",
-      "source": "src/brand/LogoThree/index.mdx",
-      "title": "LogoThree"
     },
     {
       "category": "Navigation",

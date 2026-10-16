@@ -1,7 +1,6 @@
 'use client';
 
-import { type SplineEvent, type SplineEventName } from '@splinetool/runtime';
-import { Application } from '@splinetool/runtime';
+import type { Application, SplineEvent, SplineEventName } from '@splinetool/runtime';
 import { memo, useEffect, useRef, useState } from 'react';
 
 import ParentSize from './ParentSize';
@@ -51,7 +50,11 @@ const Spline = memo<SplineProps>(
     useEffect(() => {
       setIsLoading(true);
 
-      let speApp: Application;
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+
+      let disposed = false;
+      let speApp: Application | undefined;
       const events: {
         cb?: (e: SplineEvent) => void;
         name: SplineEventName;
@@ -94,12 +97,15 @@ const Spline = memo<SplineProps>(
         },
       ];
 
-      if (canvasRef.current) {
-        speApp = new Application(canvasRef.current, { renderOnDemand });
-        init(speApp, events);
-      }
+      void import('@splinetool/runtime').then((runtime) => {
+        if (disposed) return;
+        speApp = new runtime.Application(canvas, { renderOnDemand });
+        void init(speApp, events);
+      });
 
       return () => {
+        disposed = true;
+        if (!speApp) return;
         for (const event of events) {
           if (event.cb) {
             speApp.removeEventListener(event.name, event.cb);
@@ -131,4 +137,4 @@ Spline.displayName = 'Spline';
 
 export default Spline;
 
-export { type SPEObject, type SplineEvent, type SplineEventName } from '@splinetool/runtime';
+export type { SPEObject, SplineEvent, SplineEventName } from '@splinetool/runtime';

@@ -14,6 +14,7 @@ const migrated = [
   'awesome',
   'dashboard',
   'brand',
+  'spline',
   'mobile',
   'chat',
   'mdx',

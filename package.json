@@ -49,6 +49,10 @@
       "types": "./es/brand/index.d.mts",
       "import": "./es/brand/index.mjs"
     },
+    "./spline": {
+      "types": "./es/spline/index.d.mts",
+      "import": "./es/spline/index.mjs"
+    },
     "./chat": {
       "types": "./es/chat/index.d.mts",
       "import": "./es/chat/index.mjs"
@@ -167,7 +171,6 @@
     "@shikijs/core": "^4.5.0",
     "@shikijs/stream": "^4.5.0",
     "@shikijs/transformers": "^4.5.0",
-    "@splinetool/runtime": "1.12.98",
     "@stylexjs/stylex": "0.19.1",
     "@tanstack/form-core": "^1.33.5",
     "@tanstack/react-table": "^9.2.8",
@@ -214,6 +217,7 @@
     "@mdx-js/rollup": "3.1.1",
     "@playwright/test": "1.64.0",
     "@react-router/dev": "8.4.0",
+    "@splinetool/runtime": "1.12.98",
     "@stylexjs/eslint-plugin": "0.19.1",
     "@stylexjs/unplugin": "0.19.1",
     "@testing-library/react": "^16.3.3",
@@ -276,9 +280,15 @@
   "peerDependencies": {
     "@lobehub/fluent-emoji": "^5.0.0-beta.1",
     "@lobehub/icons": "^6.0.0-beta.1",
+    "@splinetool/runtime": "^1.12.0",
     "motion": "^13.0.0 || ^14.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@splinetool/runtime": {
+      "optional": true
+    }
   },
   "packageManager": "pnpm@12.3.4+sha512.961aa41fb077da3a04a441d9f8e15ebc0c96da8ef710b2eb67bf9ee7cb0610eabd48f1fd85f51cffe73846785fa0f87c56a3a872a1d893f8446741b5cce45457",
   "engines": {
