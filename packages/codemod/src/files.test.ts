@@ -18,6 +18,10 @@ beforeEach(() => {
     '.storybook/preview.tsx',
     'src/locales/es/index.ts',
     'src/app.tsx',
+    'src/theme.css',
+    'src/theme.less',
+    'src/theme.sass',
+    'src/theme.scss',
     'src/readme.md',
     'public/vendor.min.js',
     'coverage/lcov.js',
@@ -37,6 +41,10 @@ describe('collectFiles', () => {
       'generated/out.ts',
       'src/app.tsx',
       'src/locales/es/index.ts',
+      'src/theme.css',
+      'src/theme.less',
+      'src/theme.sass',
+      'src/theme.scss',
     ]);
   });
 
@@ -47,6 +55,10 @@ describe('collectFiles', () => {
       '.storybook/preview.tsx',
       'src/app.tsx',
       'src/locales/es/index.ts',
+      'src/theme.css',
+      'src/theme.less',
+      'src/theme.sass',
+      'src/theme.scss',
     ]);
   });
 

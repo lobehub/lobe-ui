@@ -205,7 +205,7 @@ describe('v6Rules', () => {
         ),
         'a.test.ts',
       ),
-    ).toEqual(['R4:2']);
+    ).toEqual(['R13:1', 'R4:2']);
   });
 
   it('R9 names the real portal host id', () => {
@@ -213,6 +213,104 @@ describe('v6Rules', () => {
     expect(item.message).toContain(
       '`#lobe-ui-theme-app` (`document.getElementById(LOBE_THEME_APP_ID)`)',
     );
+  });
+
+  it('R9 gives separate actionable hints for selectors and variables in the same template', () => {
+    const items = collectReport(
+      'const style = css`.ant-segmented-item { color: var(--ant-color-border); background: var(--ant-private-color); }`;',
+      'style.ts',
+      v6Rules,
+    );
+    expect(items).toHaveLength(3);
+    expect(items[0].message).toContain('Segmented `classNames.item` / `styles.item`');
+    expect(items[1].message).toContain('--lobe-color-border');
+    expect(items[2].message).toContain('No verified token mapping');
+  });
+
+  it('R9 detects compound selectors and does not invent a mapping across interpolation', () => {
+    const items = collectReport(
+      'const style = css`.app.ant-select-selector { color: var(--ant-${role}color-text); }`;',
+      'style.ts',
+      v6Rules,
+    );
+    expect(items).toHaveLength(2);
+    expect(items[0].message).toContain('Select `classNames.trigger`');
+    expect(items[0].message).not.toContain('styles.trigger');
+    expect(items[1].message).toContain('dynamically constructed');
+    expect(items[1].message).not.toContain('--lobe-color-text');
+  });
+
+  it('R9 recognizes selectors and variables assembled from a literal ant prefix', () => {
+    const items = collectReport(
+      [
+        `const prefixCls = 'ant';`,
+        'const styles = css`.${prefixCls}-tabs-nav { color: var(--${prefixCls}-color-success); }`;',
+        'const custom = css`.${unknown}-tabs-nav {}`;',
+      ].join('\n'),
+      'style.ts',
+      v6Rules,
+    );
+    expect(items).toHaveLength(2);
+    expect(items[0].message).toContain('Tabs `classNames.list` / `styles.list`');
+    expect(items[1].message).toContain('--lobe-color-success');
+  });
+
+  it('R5 skips compatible Drawer callbacks and the existing base-ui callback API', () => {
+    const code = [
+      `import { Drawer } from '@lobehub/ui';`,
+      'const a = <Drawer onClose={() => close()} />;',
+      'const b = <Drawer onClose={event => event.preventDefault()} />;',
+    ].join('\n');
+    const diagnostics = collectReport(code, 'drawer.tsx', v6Rules).filter((item) => item.line > 1);
+    expect(diagnostics).toHaveLength(1);
+    expect(diagnostics[0]).toMatchObject({ line: 3, level: 'info' });
+    expect(
+      collectReport(code, 'drawer.tsx', v6Rules, { baseUiNames: new Set(['Drawer']) }),
+    ).toEqual([]);
+  });
+
+  it('R5 reports specific changed props and spreads, following imported aliases', () => {
+    const items = collectReport(
+      [
+        `import { Select as Choice, InputNumber, Tag, Drawer } from '@lobehub/ui';`,
+        `const a = <Choice labelInValue onDropdownVisibleChange={open} {...props} />;`,
+        `const b = <InputNumber parser={parse} />;`,
+        `const c = <Tag bordered={false} />;`,
+        `const d = <Drawer bodyStyle={{ padding: 0 }} onClose={close} />;`,
+        `const e = <select labelInValue />;`,
+      ].join('\n'),
+      'a.tsx',
+      v6Rules,
+    ).filter((item) => item.line > 1);
+    expect(items).toHaveLength(7);
+    expect(items[0].message).toContain('adapt value and callbacks together');
+    expect(items[1].message).toContain('onOpenChange');
+    expect(items[2]).toMatchObject({ line: 2, level: 'info' });
+    expect(items[2].message).toContain('spread source');
+    expect(items[3].message).toContain('number entry behavior');
+    expect(items[4].message).toContain('variant="borderless"');
+    expect(items[5].message).toContain('styles.bodyContent');
+    expect(items[6]).toMatchObject({ level: 'info' });
+    expect(items[6].message).toContain('receives no event');
+  });
+
+  it('R13 warns about whole-package mocks and leaves standard partial mocks alone', () => {
+    const items = collectReport(
+      [
+        `vi.mock('@lobehub/ui', () => ({ Button: () => null }));`,
+        `jest.doMock('@lobehub/ui');`,
+        `vi.mock(import('@lobehub/ui'), () => ({}));`,
+        `vi.mock('@lobehub/ui', async (original) => ({ ...await original(), Button: () => null }));`,
+        `vi.mock('@lobehub/ui', async () => ({ ...await vi.importActual('@lobehub/ui') }));`,
+        `jest.mock('@lobehub/ui', () => ({ ...jest.requireActual('@lobehub/ui') }));`,
+        `vi.spyOn('@lobehub/ui', 'Button');`,
+      ].join('\n'),
+      'a.test.ts',
+      v6Rules,
+    ).filter((item) => item.rule === 'R13');
+    expect(items.map((item) => item.line)).toEqual([1, 2, 3]);
+    expect(items[0].message).toContain('createStaticStyles and Text');
+    expect(items[0].anchor).toContain('#test-migration');
   });
 
   it('R10 flags removed v5 Video props, following the local name', () => {

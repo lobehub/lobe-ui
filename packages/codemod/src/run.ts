@@ -4,10 +4,11 @@ import path from 'node:path';
 import { createTwoFilesPatch } from 'diff';
 
 import { namedImports, parse } from './ast';
-import { collectFiles } from './files';
+import { collectFiles, STYLESHEET_FILE } from './files';
 import { checkPackageJson } from './packageJson';
 import { collectReport, type ReportItem } from './report';
 import { v6Rules } from './rules/v6';
+import { collectAntStyleReport } from './rules/v6/antClassNames';
 import { applyTransforms } from './transform';
 import { v6Transforms } from './transforms/v6';
 
@@ -33,7 +34,8 @@ const findPackageJson = (from: string) => {
   }
 };
 
-const RELEVANT = /@lobehub\/ui|antd|@ant-design|rc-|@rc-component|ant-|useThemeMode|useTheme/;
+const RELEVANT =
+  /@lobehub\/ui|antd|@ant-design|rc-|@rc-component|ant-|['"]ant['"]|useThemeMode|useTheme/;
 
 const baseUiNamesOf = (code: string, file: string) =>
   new Set(namedImports(parse(code, file), (s) => s === '@lobehub/ui/base-ui').map((i) => i.name));
@@ -57,6 +59,10 @@ export const runCodemod = async ({ cwd, dry, paths }: RunOptions): Promise<RunRe
     const original = readFileSync(absolute, 'utf8');
     if (!RELEVANT.test(original)) continue;
     try {
+      if (STYLESHEET_FILE.test(file)) {
+        result.items.push(...collectAntStyleReport(original, file));
+        continue;
+      }
       const baseUiNames = baseUiNamesOf(original, file);
       const { changed, code } = applyTransforms(original, file, v6Transforms);
       result.items.push(...collectReport(code, file, v6Rules, { baseUiNames }));

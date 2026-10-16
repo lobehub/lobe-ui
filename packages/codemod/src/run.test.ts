@@ -52,4 +52,35 @@ describe('runCodemod', () => {
     const result = await runCodemod({ cwd: dir, dry: true, paths: ['src/b.ts'] });
     expect(result.items.map((i) => i.file)).toEqual(['package.json', 'src/b.ts']);
   });
+
+  it.each(['css', 'less', 'sass', 'scss'])(
+    'reports stylesheet leftovers without rewriting %s',
+    async (extension) => {
+      const file = `src/theme.${extension}`;
+      const source =
+        '/* .ant-ignored { color: var(--ant-ignored); } */\n.ant-drawer-body {\n  color: var(--ant-color-text);\n  border-color: var(--ant-private-token);\n}';
+      write(file, source);
+      const result = await runCodemod({ cwd: dir, dry: false, paths: [file] });
+      const items = result.items.filter((item) => item.rule === 'R9');
+
+      expect(items).toHaveLength(3);
+      expect(items[0]).toMatchObject({ file, line: 2, column: 1 });
+      expect(items[0].message).toContain('styles.bodyContent');
+      expect(items[1]).toMatchObject({ line: 3, column: 14 });
+      expect(items[1].message).toContain('--lobe-color-text');
+      expect(items[2].message).toContain('No verified token mapping');
+      expect(items[2].message).not.toContain('--lobe-private-token');
+      expect(result.errors).toEqual([]);
+      expect(result.changed).toEqual([]);
+      expect(readFileSync(path.join(dir, file), 'utf8')).toBe(source);
+    },
+  );
+
+  it('scans an ant-prefix template even without library imports or literal .ant- text', async () => {
+    write('src/prefix.ts', "const prefixCls = 'ant';\nconst style = `.${prefixCls}-tag {}`;");
+    const result = await runCodemod({ cwd: dir, dry: true, paths: ['src/prefix.ts'] });
+    expect(result.items.find((item) => item.rule === 'R9')?.message).toContain(
+      'Tag `classNames.root` / `styles.root`',
+    );
+  });
 });
