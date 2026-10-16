@@ -4,9 +4,10 @@ import { statusColorScales } from '@/color/status';
 import type { ColorScaleItem } from '@/color/types';
 
 import { createLobeToken } from './createLobeToken';
+import { registerLobeNeutral } from './customNeutral';
 import { registerLobePalette } from './customPalette';
 import { LobeThemeScript, setLobeTheme, ThemeScope, useTheme } from './scope';
-import { getCustomPaletteCss } from './themeCss';
+import { getCustomPaletteCss, getPaletteNeutralCss } from './themeCss';
 
 const shade = (hex: string): ColorScaleItem['light'] =>
   Array.from({ length: 13 }, () => hex) as ColorScaleItem['light'];
@@ -24,7 +25,8 @@ const Probe = () => {
 };
 
 afterEach(() => {
-  for (const name of ['data-theme', 'data-palette']) document.documentElement.removeAttribute(name);
+  for (const name of ['data-theme', 'data-palette', 'data-neutral-color'])
+    document.documentElement.removeAttribute(name);
   for (const style of document.querySelectorAll('style[id^="lobe-palette-"]')) style.remove();
 });
 
@@ -112,5 +114,24 @@ describe('custom status palette', () => {
     expect(script).toContain('data-palette');
     expect(script).toContain('lobe-palette-acme');
     expect(script).toContain('--lobe-color-error: #aa0033;');
+  });
+
+  it('computes outlines for the neutral + palette combination', () => {
+    registerLobePalette('acme', { error: scaleOf('#aa0033') });
+
+    const css = getPaletteNeutralCss('acme', '#0E1010');
+    const dark = createLobeToken({ appearance: 'dark', neutralColor: '#0e1010', palette: 'acme' });
+    expect(css).toContain(`[data-palette='acme'][data-neutral-color='#0e1010'][data-theme='dark']`);
+    expect(css).toContain(`--lobe-color-error-outline: ${dark.colorErrorOutline};`);
+    expect(css).toContain(`--lobe-color-warning-outline: ${dark.colorWarningOutline};`);
+    expect(getPaletteNeutralCss('missing', '#0e1010')).toBe('');
+  });
+
+  it('setLobeTheme injects the combination stylesheet', async () => {
+    registerLobePalette('acme', { error: scaleOf('#aa0033') });
+    registerLobeNeutral('foundry', scaleOf('#0e1010'));
+    await act(async () => setLobeTheme({ neutralColor: 'foundry', palette: 'acme' }));
+
+    expect(document.getElementById('lobe-palette-acme--neutral-name-foundry')).not.toBeNull();
   });
 });

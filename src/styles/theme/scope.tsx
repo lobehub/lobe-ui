@@ -17,7 +17,12 @@ import {
   isCustomPrimaryColor,
   type LobePrimaryColor,
 } from './customPrimary';
-import { getCustomNeutralCss, getCustomPaletteCss, getCustomPrimaryCss } from './themeCss';
+import {
+  getCustomNeutralCss,
+  getCustomPaletteCss,
+  getCustomPrimaryCss,
+  getPaletteNeutralCss,
+} from './themeCss';
 import { staticToken } from './token/static';
 
 export type LobeAppearance = 'light' | 'dark';
@@ -55,7 +60,11 @@ const ensureCustomPrimaryStyle = (color: CustomPrimaryColor, doc: Document) => {
 const normalizeNeutral = (color?: LobeNeutralColor) =>
   color?.startsWith('#') ? color.toLowerCase() : color;
 
-const neutralStyleId = (value: string) => `lobe-neutral-${value.replace('#', '')}`;
+/** Encodes hex vs registered name so `#0e1010` and a neutral named `0e1010` never collide. */
+const neutralKey = (value: string) =>
+  value.startsWith('#') ? `hex-${value.slice(1)}` : `name-${value}`;
+
+const neutralStyleId = (value: string) => `lobe-neutral-${neutralKey(value)}`;
 
 /** Written every time (a re-registered neutral must replace its old rules). */
 const ensureNeutralStyle = (value: string, doc: Document) => {
@@ -84,6 +93,21 @@ const ensurePaletteStyle = (name: string, doc: Document) => {
   if (style.textContent !== css) style.textContent = css;
 };
 
+const paletteNeutralStyleId = (name: string, neutral: string) =>
+  `lobe-palette-${name}--neutral-${neutralKey(neutral)}`;
+
+const ensurePaletteNeutralStyle = (name: string, neutral: string, doc: Document) => {
+  const id = paletteNeutralStyleId(name, neutral);
+  let style = doc.getElementById(id);
+  if (!style) {
+    style = doc.createElement('style');
+    style.id = id;
+    doc.head.append(style);
+  }
+  const css = getPaletteNeutralCss(name, neutral);
+  if (style.textContent !== css) style.textContent = css;
+};
+
 export const setLobeTheme = (
   state: Partial<LobeThemeState>,
   root: HTMLElement = document.documentElement,
@@ -94,7 +118,11 @@ export const setLobeTheme = (
     ensureCustomPrimaryStyle(next.primaryColor, root.ownerDocument);
   next.neutralColor = normalizeNeutral(next.neutralColor);
   if (isCustomNeutral(next.neutralColor)) ensureNeutralStyle(next.neutralColor, root.ownerDocument);
-  if (isRegisteredPalette(next.palette)) ensurePaletteStyle(next.palette, root.ownerDocument);
+  if (isRegisteredPalette(next.palette)) {
+    ensurePaletteStyle(next.palette, root.ownerDocument);
+    if (next.neutralColor)
+      ensurePaletteNeutralStyle(next.palette, next.neutralColor, root.ownerDocument);
+  }
   for (const [name, value] of Object.entries(toAttributes(next))) {
     if (value) root.setAttribute(name, value);
     else root.removeAttribute(name);
@@ -182,6 +210,14 @@ export const ThemeScope = ({
       {customPalette && (
         <style href={`${paletteStyleId(customPalette)}-${paletteRevision}`} precedence="lobe-theme">
           {getCustomPaletteCss(customPalette)}
+        </style>
+      )}
+      {customPalette && state.neutralColor && (
+        <style
+          href={`${paletteNeutralStyleId(customPalette, state.neutralColor)}-${paletteRevision}`}
+          precedence="lobe-theme"
+        >
+          {getPaletteNeutralCss(customPalette, state.neutralColor)}
         </style>
       )}
       <div className={className} style={style} {...toAttributes(state)}>
@@ -294,8 +330,14 @@ export const LobeThemeScript = ({
   const neutral = normalizeNeutral(neutralColor);
   if (isCustomNeutral(neutral))
     styles.push([neutralStyleId(neutral), getCustomNeutralCss(neutral)]);
-  if (isRegisteredPalette(palette))
+  if (isRegisteredPalette(palette)) {
     styles.push([paletteStyleId(palette), getCustomPaletteCss(palette)]);
+    if (neutral)
+      styles.push([
+        paletteNeutralStyleId(palette, neutral),
+        getPaletteNeutralCss(palette, neutral),
+      ]);
+  }
   const args = JSON.stringify([
     appearance ?? null,
     primary ?? null,

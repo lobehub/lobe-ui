@@ -67,12 +67,13 @@ describe('custom neutral colour', () => {
     render(<Probe />);
     await act(async () => setLobeTheme({ appearance: 'dark', neutralColor: 'foundry' }));
     expect(document.documentElement.dataset.neutralColor).toBe('foundry');
-    expect(document.getElementById('lobe-neutral-foundry')?.textContent).toContain('#0e1010');
+    expect(document.getElementById('lobe-neutral-name-foundry')?.textContent).toContain('#0e1010');
     expect(screen.getByTestId('probe').textContent).toBe('#0e1010');
 
     await act(async () => setLobeTheme({ neutralColor: '#0E1010' }));
     expect(document.documentElement.dataset.neutralColor).toBe('#0e1010');
-    expect(document.getElementById('lobe-neutral-0e1010')).not.toBeNull();
+    expect(document.getElementById('lobe-neutral-hex-0e1010')).not.toBeNull();
+    expect(document.getElementById('lobe-neutral-name-0e1010')).toBeNull();
   });
 
   it('ThemeScope accepts a hex neutral', () => {

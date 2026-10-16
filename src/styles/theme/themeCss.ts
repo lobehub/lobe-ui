@@ -113,6 +113,28 @@ export const getCustomPaletteCss = (name: string) => {
     .join('\n\n');
 };
 
+/**
+ * The outline tokens depend on both the neutral and the status palette, so the standalone
+ * neutral / palette stylesheets each compute them against the other's default. This rule
+ * (higher specificity) recomputes them for the actual combination.
+ */
+export const getPaletteNeutralCss = (name: string, neutralColor: string) => {
+  if (!isRegisteredPalette(name) || !neutralColor) return '';
+  const key = neutralColor.startsWith('#') ? neutralColor.toLowerCase() : neutralColor;
+  return (['light', 'dark'] as const)
+    .map((appearance) => {
+      const { neutral } = createLobeTokenGroups({ appearance, neutralColor: key, palette: name });
+      return rule(
+        `[data-palette='${name}'][data-neutral-color='${key}']${appearanceSelector(appearance)}`,
+        toCssVariables({
+          colorErrorOutline: neutral.colorErrorOutline,
+          colorWarningOutline: neutral.colorWarningOutline,
+        }),
+      );
+    })
+    .join('\n\n');
+};
+
 const essentialCss = `@layer lobe-ui {
   .lobe-brand-loading path {
     fill: currentcolor;
