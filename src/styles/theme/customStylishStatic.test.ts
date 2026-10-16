@@ -1,7 +1,9 @@
 import { staticStylish } from './customStylishStatic';
 
 const emotionRules = () =>
-  [...document.querySelectorAll('style[data-emotion]')].map((node) => node.textContent).join('');
+  [...document.querySelectorAll<HTMLStyleElement>('style[data-emotion]')]
+    .flatMap((node) => [...(node.sheet?.cssRules ?? [])].map((rule) => rule.cssText))
+    .join('');
 
 it('does not insert any styles until a class is read', () => {
   expect(emotionRules()).not.toContain('saturate(150%) blur(36px)');
