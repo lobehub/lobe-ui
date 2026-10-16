@@ -26,9 +26,11 @@ What changes at runtime: `cssVar.x` is `var(--lobe-x)` instead of `var(--ant-x)`
 
 ## antd class names and variables (R9)
 
-- `.ant-*` selectors in `css` templates, global CSS or `querySelector`: they match nothing. Use the component's `className` / `classNames` slots or a `data-*` attribute it documents. Inspect the v6 DOM before choosing.
-- `var(--ant-*)` in CSS: use the matching `--lobe-*` variable (same token name in kebab case, e.g. `--ant-color-text` → `--lobe-color-text`) or `cssVar` in JS.
+- `.ant-*` selectors in `css` templates, global CSS or `querySelector` no longer target lobe-ui v6. R9 scans JS/TS strings and CSS / Less / Sass and suggests verified component slots where known. Use the component's `className` / `classNames` / `styles` slots or a documented `data-*` attribute. Inspect the v6 DOM before choosing; Select supports `classNames`, not `styles`.
+- `var(--ant-*)` in CSS: use a verified `--lobe-*` variable (e.g. `--ant-color-text` → `--lobe-color-text`) or `cssVar` in JS. Unknown names require a supported token from https://ui.lobehub.com/design-tokens; do not blindly replace prefixes. Recheck the app's own neutral palettes, dividers and container backgrounds in light/dark mode.
 - `.ant-app` as a portal container: `document.getElementById(LOBE_THEME_APP_ID)`.
+
+Only the selected paths and supported file types are scanned. Search Vue / Svelte / MDX, dynamically constructed selectors and ignored consumed sources manually; the scan does not expand preprocessors.
 
 ## CSS cascade
 

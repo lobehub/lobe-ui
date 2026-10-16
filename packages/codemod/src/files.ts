@@ -5,6 +5,7 @@ import path from 'node:path';
 import { convertPathToPattern, glob } from 'tinyglobby';
 
 const SOURCE_FILE = /\.(?:[cm]?[jt]sx?)$/;
+export const STYLESHEET_FILE = /\.(?:css|less|s[ac]ss)$/;
 const MINIFIED = /\.min\.[cm]?js$/;
 const OUTPUT_DIRS = [
   'node_modules',
@@ -19,7 +20,8 @@ const OUTPUT_DIRS = [
 ];
 const ROOT_OUTPUT_DIRS = ['es', 'build', 'public'];
 
-const isSource = (file: string) => SOURCE_FILE.test(file) && !MINIFIED.test(file);
+const isSource = (file: string) =>
+  (SOURCE_FILE.test(file) && !MINIFIED.test(file)) || STYLESHEET_FILE.test(file);
 
 const gitFiles = (cwd: string, paths: string[]) => {
   try {

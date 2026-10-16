@@ -8,6 +8,7 @@ import { removedSubpathStrings } from './removedSubpathStrings';
 import { staticCss } from './staticCss';
 import { styleProvider } from './styleProvider';
 import { tableProps } from './tableProps';
+import { testMocks } from './testMocks';
 import { themeMode } from './themeMode';
 import { themeProvider } from './themeProvider';
 import { videoProps } from './videoProps';
@@ -25,4 +26,5 @@ export const v6Rules: Rule[] = [
   videoProps,
   tableProps,
   datePickerProps,
+  testMocks,
 ];

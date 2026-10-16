@@ -13,18 +13,25 @@ Requirements: React 19, `motion` 13 or 14, `@lobehub/icons` 6 and `@lobehub/flue
 1. Update the dependencies and remove antd:
 
    ```bash
-   pnpm add @lobehub/ui@beta @lobehub/icons@beta @lobehub/fluent-emoji@beta motion@^14
-   pnpm remove antd antd-style # plus any @ant-design/* packages you have
+   pnpm add @lobehub/ui@^6.0.1 @lobehub/icons@beta @lobehub/fluent-emoji@beta motion@^14 --registry=https://registry.npmjs.org
+   pnpm remove antd antd-style     # plus any @ant-design/* packages you have
+   pnpm list @lobehub/ui --depth 0 # check the resolved version; use pnpm -r list in a workspace
    ```
 
 2. Run the codemod from the repository root. `.` also covers build config (Vite aliases, test mocks); `node_modules`, `dist`, `es`, `build` and `.next` are skipped. Run it without `--dry` once the diff looks right, then run your formatter:
 
    ```bash
-   npx @lobehub/ui-codemod@beta v6 . --dry
-   npx @lobehub/ui-codemod@beta v6 . --report lobe-ui-v6.md
+   npx --registry=https://registry.npmjs.org @lobehub/ui-codemod@latest v6 . --dry
+   npx --registry=https://registry.npmjs.org @lobehub/ui-codemod@latest v6 .
    ```
 
    It rewrites `@lobehub/ui/base-ui` imports, moves the `antd-style` helpers to `@lobehub/ui`, renames the `Theme` type, and lists everything else it found with a file, a line and a link into this page.
+
+   Each run saves Markdown and JSON reports in a fresh `.lobe-ui-codemod/v6-*/` directory and prints their absolute paths with a short summary and the next action. Dry-runs also save a patch; review it before running without `--dry`. `--report migration.md` chooses a custom path with matching JSON / patch files; existing outputs are preserved, so use a new path on rerun. `--json` keeps stdout machine-readable and still saves the reports.
+
+   Coding agents should read the JSON `summary` and `nextAction`, then work through `tasks`. Tasks merge repeated hints while retaining every location and a stable ID; `manual-fix` and `review` distinguish reported issues from checks. The JSON includes `schemaVersion`, `codemodVersion`, `mode`, scan scope and artifact paths. Raw `items` remain available for compatibility. Locations refer to the transformed source even during preview. Exit code 0 means no parse errors; the reports still require verification.
+
+   CSS / Less / Sass files are scanned for `.ant-*` selectors and `--ant-*` variables without rewriting them. Known matches include specific slot / token hints; unknown matches require a manual choice. Only the selected paths and supported file types are scanned. Search Vue / Svelte / MDX, dynamically built selectors and any ignored sources the app consumes separately. Reports always include **Next steps**, including when there are no static findings; JSON exposes the same checklist as `nextSteps`.
 
 3. Work through the report. Each rule matches a section below. A coding agent can do this with the `lobe-ui-v6-migration` skill:
 
@@ -32,7 +39,7 @@ Requirements: React 19, `motion` 13 or 14, `@lobehub/icons` 6 and `@lobehub/flue
    npx skills add lobehub/lobe-ui
    ```
 
-4. Type-check, lint (the `@lobehub/ui/eslint` preset bans antd imports) and open the app in light and dark mode.
+4. Complete [test migration](#test-migration), then [verification](#verification). If installation or startup fails, check [installation troubleshooting](#installation-troubleshooting) first.
 
 ## Theming
 
@@ -245,7 +252,58 @@ If you used the hand-written picker from the v6 betas, values stay native `Date`
 - **`CodeDiff` options type.** `diffOptions` follows `@pierre/diffs` 1.5, whose `FileDiffOptions` takes a second type argument: annotate it as `FileDiffOptions<string, undefined>`.
 - **Resets.** antd's `reset.css` (box-sizing, margins, list styles) is now part of `global.css`. Apps that relied on it without importing antd's stylesheet need `global.css`.
 
+## Test migration
+
+Save the relevant test results before upgrading, using the same environment and commands. After migration, compare failures against that baseline; record old failures separately from new regressions.
+
+Tests that render `Button`, `Drawer` or other motion consumers need the same motion context as the app. A local React Testing Library wrapper is enough:
+
+```tsx | pure
+import { render } from '@testing-library/react';
+import { MotionProvider } from '@lobehub/ui';
+import { motion } from 'motion/react';
+import type { ReactNode } from 'react';
+
+const Wrapper = ({ children }: { children: ReactNode }) => (
+  <MotionProvider motion={motion}>{children}</MotionProvider>
+);
+
+export const renderWithUI = (ui: ReactNode) => render(ui, { wrapper: Wrapper });
+```
+
+Use your app's `ConfigProvider motion={motion}` instead when the test also relies on locale, direction or popup containers. This example is a local test helper, not a new package export.
+
+Whole-package mocks often lose exports needed by real components. Preserve the actual module and override only the member under test:
+
+```ts | pure
+vi.mock('@lobehub/ui', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@lobehub/ui')>();
+  return { ...actual, toast: vi.fn() };
+});
+```
+
+For Jest, use `jest.requireActual` where supported, or the project's ESM mocking setup. Keep `createStaticStyles`, `Text` and other consumed exports available. R13 flags mocks without a recognizable actual-module import; inspect custom mock helpers manually.
+
+`InputNumber` renders a visible text input plus a hidden form input. Query the visible control with `screen.getByRole('textbox')` (scope with `within` when necessary), then assert its value or exercise `onChange`. Avoid `querySelector('input')`, `querySelectorAll('input')[0]` and old DOM snapshots. Check accessible names independently: v6.0.1's `Switch` convenience component does not forward `aria-*`; use a visible label linked with `htmlFor` / `id` and verify it by role and name.
+
+## Verification
+
+Work through each report item and parse error, including informational items and prop spreads. The codemod cannot infer callback semantics, dynamically assembled props, preprocessor expansion or the meaning of an app's custom palette. A report with no findings still requires these checks:
+
+- Run type-check, lint and the relevant tests; compare with the pre-upgrade baseline.
+- Compare key pages in light and dark mode on desktop and mobile. Inspect dividers, container backgrounds and app-owned neutral scales; swapping a variable prefix alone does not preserve the intended appearance.
+- Open and close a popup / drawer, submit a form, check focus and accessible names, and exercise changed callbacks such as `Tag.onClose`, `Drawer.onClose` and Select values.
+- Use the documented `classNames` / `styles` slots for [Segmented](/components/segmented#custom-semantic-dom-styling) and [DatePicker / RangePicker](/components/date-picker#custom-semantic-dom-styling). RangePicker's `styles.input` targets both inputs; `styles.root` controls the overall width.
+- Re-run the codemod to check mechanical leftovers. Delete temporary overrides or library patches only after their replacements pass the relevant checks.
+
+## Installation troubleshooting
+
+- **New release returns 404:** check that the exact version is available from `https://registry.npmjs.org`; check any scope-specific registry override in the project. A mirror may not have synchronized yet. After installing, verify the resolved version with `pnpm list @lobehub/ui --depth 0`, or `pnpm -r list @lobehub/ui --depth 0` for consuming workspaces. Record the resolved codemod version when reproducing a report.
+- **pnpm blocks a fresh version:** inspect `minimumReleaseAge`. Wait for the configured age or use the project's package-scoped exception for the required package; avoid globally disabling the safeguard.
+- **Vite white screen after upgrading:** stop the old server and restart Vite with `--force` to rebuild dependency optimization. Recheck the browser console and resolved versions before attributing the failure to component code.
+
 ## Known issues
 
 - Use `@lobehub/ui@6.0.0-beta.2` or later: `6.0.0-beta.1` declared `@lobehub/icons@^5` and `@lobehub/fluent-emoji@^4` as peers.
-- `@lobehub/docs-kit` still depends on `@lobehub/ui` 5.
+- Use **6.0.1 or later** for custom neutral hex / registered scales and the library's React 19 `element.ref` warning fix. After checking light/dark colors and child refs, remove only the temporary CSS injection, library patch or warning suppression that compensated for these issues.
+- In 6.0.1, `Switch` does not forward `aria-*` through its convenience component, and `InputPassword` uses fixed English visibility-toggle labels. For Switch, use a visible label linked with `htmlFor` / `id`; for localized password toggles, use `visibilityToggle={false}` and an accessible custom `suffix`. Check the installed version before removing these workarounds.

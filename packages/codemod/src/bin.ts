@@ -5,9 +5,11 @@ main(process.argv.slice(2), {
   cwd: process.cwd(),
   log: (line) => process.stdout.write(`${line}\n`),
 }).then(
-  (code) => process.exit(code),
+  (code) => {
+    process.exitCode = code;
+  },
   (error) => {
     console.error(error);
-    process.exit(1);
+    process.exitCode = 1;
   },
 );

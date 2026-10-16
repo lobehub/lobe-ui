@@ -13,6 +13,8 @@ Downstream apps move from `@lobehub/ui` 5.x to 6.x with three tools, used in thi
 
 Success: running the three on a fresh `origin/canary` checkout of lobe-chat (not the already-migrated `lobe-chat-next` worktree) leaves no `antd-style` or `@lobehub/ui/base-ui` import, and the report lists every remaining break that the trial in #20503 had to fix by hand.
 
+Downstream follow-up: [2026-10-16 v6 migration retrospective](./2026-10-16-v6-migration-retrospective.md) records feedback from foundry and four admin upgrades, the gaps beyond a clean type-check, and priorities for the next iteration.
+
 ## 1. `@lobehub/ui-codemod` (`packages/codemod`)
 
 ### Package
@@ -38,12 +40,12 @@ npx @lobehub/ui-codemod v6 [paths...] [--dry] [--report <file>] [--json]
 
 Each is one module `src/transforms/v6/<name>.ts` exporting `(file: SourceFile) => void`, applied in this order:
 
-| ID  | Transform | Example |
-| --- | --- | --- |
-| T1 | `base-ui-subpath`: `@lobehub/ui/base-ui` → `@lobehub/ui`; `@lobehub/ui/base-ui/form` → `@lobehub/ui/form` (imports, re-exports, dynamic `import()`, `vi.mock` / `jest.mock` string args) | same mapping as `src/eslint/noBaseUiSubpath.ts` |
-| T2 | `antd-style`: named imports in the supported set move to `@lobehub/ui`: `createStaticStyles`, `cssVar`, `cx`, `css`, `keyframes`, `injectGlobal`, `responsive`, `createGlobalStyle`, `useTheme`, `useThemeMode`, `useResponsive`, `extractStaticStyle` | `import { cx, useTheme } from 'antd-style'` → `from '@lobehub/ui'` |
-| T3 | `theme-type`: `Theme` imported from `antd-style` becomes `LobeTheme` from `@lobehub/ui`, references renamed | `(t: Theme)` → `(t: LobeTheme)` |
-| T4 | `merge-imports`: after T1–T3, merge value imports from the same source into one declaration, and type-only imports into one `import type`; keep the first declaration's position | two `from '@lobehub/ui'` lines → one |
+| ID  | Transform                                                                                                                                                                                                                                              | Example                                                            |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------ |
+| T1  | `base-ui-subpath`: `@lobehub/ui/base-ui` → `@lobehub/ui`; `@lobehub/ui/base-ui/form` → `@lobehub/ui/form` (imports, re-exports, dynamic `import()`, `vi.mock` / `jest.mock` string args)                                                               | same mapping as `src/eslint/noBaseUiSubpath.ts`                    |
+| T2  | `antd-style`: named imports in the supported set move to `@lobehub/ui`: `createStaticStyles`, `cssVar`, `cx`, `css`, `keyframes`, `injectGlobal`, `responsive`, `createGlobalStyle`, `useTheme`, `useThemeMode`, `useResponsive`, `extractStaticStyle` | `import { cx, useTheme } from 'antd-style'` → `from '@lobehub/ui'` |
+| T3  | `theme-type`: `Theme` imported from `antd-style` becomes `LobeTheme` from `@lobehub/ui`, references renamed                                                                                                                                            | `(t: Theme)` → `(t: LobeTheme)`                                    |
+| T4  | `merge-imports`: after T1–T3, merge value imports from the same source into one declaration, and type-only imports into one `import type`; keep the first declaration's position                                                                       | two `from '@lobehub/ui'` lines → one                               |
 
 Rules that keep the output safe:
 
@@ -57,17 +59,17 @@ Rules that keep the output safe:
 
 Each item: rule ID, file:line:col, the matched code, one-line fix, docs anchor (`https://ui.lobehub.com/migration-v6#<anchor>`).
 
-| ID  | Matches | Fix text |
-| --- | --- | --- |
-| R1 | `ThemeProvider` imported from `@lobehub/ui` or `antd-style` | import `@lobehub/ui/theme.css` (+ `global.css`, `style.css`), drive `data-theme` via `setLobeTheme` / `LobeThemeScript`, `ThemeScope` for islands; fonts and portal host move to `ConfigProvider` |
-| R2 | `StyleProvider` (antd-style / `@ant-design/cssinjs`) | delete; it only carried the antd SSR cache |
-| R3 | `@lobehub/ui/static-css*` imports; `lobeCustomToken`, `lobeCustomStylish`, `lobeStaticStylish`, `createLobeAntdTheme` | `theme.css` replaces static-css; stylish helpers become plain `css` on `cssVar` |
-| R4 | Names imported from `@lobehub/ui` (any subpath) that v6 no longer exports | from the removed-export table (below): replacement or "removed, no successor" |
-| R5 | Names from `@lobehub/ui` whose implementation changed in v6 (antd wrapper → base-ui) | info level: "props changed, see component page `#migrating-from-antd-*`" |
-| R6 | Any `antd`, `antd/*`, `@ant-design/*`, `rc-*`, `@rc-component/*` import | per-name hint from the antd map (below); otherwise "remove antd: find the @lobehub/ui equivalent" |
-| R7 | `package.json`: `motion` range below 13; `antd`, `antd-style`, `@ant-design/*` still listed; `@lobehub/icons` < 6, `@lobehub/fluent-emoji` < 5 | bump / remove |
-| R8 | `useThemeMode()` results destructuring `themeMode` or `setThemeMode`; `useTheme()` reading `stylish` / `prefixCls` | use `setLobeTheme` / next-themes; drop |
-| R9 | String literals containing `.ant-` or `--ant-` (selectors, `getPopupContainer` lookups, CSS vars) | `.ant-app` → `#LOBE_THEME_APP_ID`; `--ant-*` → `cssVar` / `--lobe-*` |
+| ID  | Matches                                                                                                                                        | Fix text                                                                                                                                                                                          |
+| --- | ---------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| R1  | `ThemeProvider` imported from `@lobehub/ui` or `antd-style`                                                                                    | import `@lobehub/ui/theme.css` (+ `global.css`, `style.css`), drive `data-theme` via `setLobeTheme` / `LobeThemeScript`, `ThemeScope` for islands; fonts and portal host move to `ConfigProvider` |
+| R2  | `StyleProvider` (antd-style / `@ant-design/cssinjs`)                                                                                           | delete; it only carried the antd SSR cache                                                                                                                                                        |
+| R3  | `@lobehub/ui/static-css*` imports; `lobeCustomToken`, `lobeCustomStylish`, `lobeStaticStylish`, `createLobeAntdTheme`                          | `theme.css` replaces static-css; stylish helpers become plain `css` on `cssVar`                                                                                                                   |
+| R4  | Names imported from `@lobehub/ui` (any subpath) that v6 no longer exports                                                                      | from the removed-export table (below): replacement or "removed, no successor"                                                                                                                     |
+| R5  | Names from `@lobehub/ui` whose implementation changed in v6 (antd wrapper → base-ui)                                                           | info level: "props changed, see component page `#migrating-from-antd-*`"                                                                                                                          |
+| R6  | Any `antd`, `antd/*`, `@ant-design/*`, `rc-*`, `@rc-component/*` import                                                                        | per-name hint from the antd map (below); otherwise "remove antd: find the @lobehub/ui equivalent"                                                                                                 |
+| R7  | `package.json`: `motion` range below 13; `antd`, `antd-style`, `@ant-design/*` still listed; `@lobehub/icons` < 6, `@lobehub/fluent-emoji` < 5 | bump / remove                                                                                                                                                                                     |
+| R8  | `useThemeMode()` results destructuring `themeMode` or `setThemeMode`; `useTheme()` reading `stylish` / `prefixCls`                             | use `setLobeTheme` / next-themes; drop                                                                                                                                                            |
+| R9  | String literals containing `.ant-` or `--ant-` (selectors, `getPopupContainer` lookups, CSS vars)                                              | `.ant-app` → `#LOBE_THEME_APP_ID`; `--ant-*` → `cssVar` / `--lobe-*`                                                                                                                              |
 
 ### Data tables (`src/transforms/v6/data/`)
 
@@ -123,7 +125,7 @@ English (downstream users are not all Chinese readers). Picked up by `npx skills
   6. Grep form submit paths for whole-store leaks.
   7. Type-check and lint to zero; re-run the codemod to confirm an empty auto-transform diff.
   8. Smoke-check light/dark and one page per changed component in the browser.
-  Rules: never re-add antd to silence errors; never target generated class names; keep the app's own layout CSS unlayered-aware.
+     Rules: never re-add antd to silence errors; never target generated class names; keep the app's own layout CSS unlayered-aware.
 - `references/theming.md`: concrete before/after for Vite SPA, Next.js app router (with next-themes), SSR shells; portal host; fonts.
 - `references/components.md`: per-component prop mapping for the R5 set (Button `type` → `variant`, Modal, Select options, Tabs items, Dropdown `menu.items` → `items`, Input family, Tag, Avatar, Alert, Segmented, Collapse → Accordion, Drawer, Form antd → `@lobehub/ui/form`), each linking the component page; lobe-chat trial pitfalls.
 - `references/styling.md`: antd-style compat table, StyleProvider/SSR, `createGlobalStyle`, cascade and resets, `--ant-*` → `--lobe-*`.
