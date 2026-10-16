@@ -2,183 +2,196 @@ import type { LobeCustomStylish } from '@/types/customStylish';
 
 import { createStaticStyles, keyframes } from '../css';
 
-const gradient = keyframes`
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-`;
-
-export const staticStylish = createStaticStyles(({ css, cssVar }) => ({
-  active: css`
-    color: ${cssVar.colorText};
-    background: ${cssVar.colorFillSecondary};
-
-    &:hover {
-      color: ${cssVar.colorText};
-      background: ${cssVar.colorFill};
+const createStylish = (): LobeCustomStylish => {
+  const gradient = keyframes`
+    0% {
+      background-position: 0% 50%;
     }
-  `,
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  `;
 
-  blur: css`
-    backdrop-filter: saturate(150%) blur(10px);
-  `,
+  return createStaticStyles(({ css, cssVar }) => ({
+    active: css`
+      color: ${cssVar.colorText};
+      background: ${cssVar.colorFillSecondary};
 
-  blurStrong: css`
-    backdrop-filter: saturate(150%) blur(36px);
-  `,
-
-  bottomScrollbar: css`
-    ::-webkit-scrollbar {
-      width: 0;
-      height: 4px;
-      background-color: transparent;
-
-      &-thumb {
-        border-radius: 4px;
-        background-color: ${cssVar.colorFill};
-        transition: background-color 500ms ${cssVar.motionEaseOut};
+      &:hover {
+        color: ${cssVar.colorText};
+        background: ${cssVar.colorFill};
       }
+    `,
 
-      &-corner {
+    blur: css`
+      backdrop-filter: saturate(150%) blur(10px);
+    `,
+
+    blurStrong: css`
+      backdrop-filter: saturate(150%) blur(36px);
+    `,
+
+    bottomScrollbar: css`
+      ::-webkit-scrollbar {
+        width: 0;
+        height: 4px;
+        background-color: transparent;
+
+        &-thumb {
+          border-radius: 4px;
+          background-color: ${cssVar.colorFill};
+          transition: background-color 500ms ${cssVar.motionEaseOut};
+        }
+
+        &-corner {
+          display: none;
+          width: 0;
+          height: 0;
+        }
+      }
+    `,
+
+    disabled: css`
+      cursor: not-allowed;
+      opacity: 0.5;
+    `,
+
+    gradientAnimation: css`
+      border-radius: inherit;
+      background-image: linear-gradient(
+        -45deg,
+        ${cssVar.gold},
+        ${cssVar.magenta},
+        ${cssVar.geekblue},
+        ${cssVar.cyan}
+      );
+      background-size: 400% 400%;
+      animation: 5s ${gradient} 5s ease infinite;
+    `,
+
+    noScrollbar: css`
+      ::-webkit-scrollbar {
         display: none;
         width: 0;
         height: 0;
+        background-color: transparent;
       }
-    }
-  `,
+    `,
 
-  disabled: css`
-    cursor: not-allowed;
-    opacity: 0.5;
-  `,
+    resetLinkColor: css`
+      cursor: pointer;
+      color: ${cssVar.colorTextSecondary};
 
-  gradientAnimation: css`
-    border-radius: inherit;
-    background-image: linear-gradient(
-      -45deg,
-      ${cssVar.gold},
-      ${cssVar.magenta},
-      ${cssVar.geekblue},
-      ${cssVar.cyan}
-    );
-    background-size: 400% 400%;
-    animation: 5s ${gradient} 5s ease infinite;
-  `,
+      &:hover {
+        color: ${cssVar.colorText};
+      }
+    `,
 
-  noScrollbar: css`
-    ::-webkit-scrollbar {
-      display: none;
-      width: 0;
-      height: 0;
-      background-color: transparent;
-    }
-  `,
+    /**
+     * Shadow style using CSS variables.
+     * Note: This uses CSS variables which automatically adapt to light/dark mode.
+     * For more control, use the dynamic version from customStylish.
+     */
+    shadow: css`
+      box-shadow:
+        0 1px 0 -1px ${cssVar.colorBorder},
+        0 1px 2px -0.5px ${cssVar.colorBorder},
+        0 2px 2px -1px ${cssVar.colorBorderSecondary},
+        0 3px 6px -4px ${cssVar.colorBorderSecondary};
+    `,
 
-  resetLinkColor: css`
-    cursor: pointer;
-    color: ${cssVar.colorTextSecondary};
+    variantBorderless: css`
+      border: none;
+      background: none;
+      box-shadow: none;
 
-    &:hover {
-      color: ${cssVar.colorText};
-    }
-  `,
+      &:hover {
+        background: ${cssVar.colorFillTertiary};
+      }
+    `,
 
-  /**
-   * Shadow style using CSS variables.
-   * Note: This uses CSS variables which automatically adapt to light/dark mode.
-   * For more control, use the dynamic version from customStylish.
-   */
-  shadow: css`
-    box-shadow:
-      0 1px 0 -1px ${cssVar.colorBorder},
-      0 1px 2px -0.5px ${cssVar.colorBorder},
-      0 2px 2px -1px ${cssVar.colorBorderSecondary},
-      0 3px 6px -4px ${cssVar.colorBorderSecondary};
-  `,
+    /**
+     * Variant borderless danger style.
+     * Note: Uses colorErrorBg as fallback since colorErrorFillTertiary is not in cssVar.
+     * For exact match, use the dynamic version from customStylish.
+     */
+    variantBorderlessDanger: css`
+      border: none;
+      background: none;
+      box-shadow: none;
 
-  variantBorderless: css`
-    border: none;
-    background: none;
-    box-shadow: none;
+      &:hover {
+        background: ${cssVar.colorErrorBg};
+        box-shadow: inset 0 0 0 1px ${cssVar.colorErrorBg};
+      }
+    `,
 
-    &:hover {
+    variantBorderlessWithoutHover: css`
+      border: none;
+      background: none;
+      box-shadow: none;
+    `,
+
+    variantFilled: css`
       background: ${cssVar.colorFillTertiary};
-    }
-  `,
 
-  /**
-   * Variant borderless danger style.
-   * Note: Uses colorErrorBg as fallback since colorErrorFillTertiary is not in cssVar.
-   * For exact match, use the dynamic version from customStylish.
-   */
-  variantBorderlessDanger: css`
-    border: none;
-    background: none;
-    box-shadow: none;
+      &:hover {
+        background: ${cssVar.colorFillSecondary};
+      }
+    `,
 
-    &:hover {
+    /**
+     * Variant filled danger style.
+     * Note: Uses colorErrorBg as fallback since colorErrorFillTertiary/Secondary are not in cssVar.
+     * For exact match, use the dynamic version from customStylish.
+     */
+    variantFilledDanger: css`
       background: ${cssVar.colorErrorBg};
-      box-shadow: inset 0 0 0 1px ${cssVar.colorErrorBg};
-    }
-  `,
 
-  variantBorderlessWithoutHover: css`
-    border: none;
-    background: none;
-    box-shadow: none;
-  `,
+      &:hover {
+        background: ${cssVar.colorErrorBgHover};
+      }
+    `,
 
-  variantFilled: css`
-    background: ${cssVar.colorFillTertiary};
+    variantFilledWithoutHover: css`
+      background: ${cssVar.colorFillTertiary};
+    `,
 
-    &:hover {
-      background: ${cssVar.colorFillSecondary};
-    }
-  `,
-
-  /**
-   * Variant filled danger style.
-   * Note: Uses colorErrorBg as fallback since colorErrorFillTertiary/Secondary are not in cssVar.
-   * For exact match, use the dynamic version from customStylish.
-   */
-  variantFilledDanger: css`
-    background: ${cssVar.colorErrorBg};
-
-    &:hover {
-      background: ${cssVar.colorErrorBgHover};
-    }
-  `,
-
-  variantFilledWithoutHover: css`
-    background: ${cssVar.colorFillTertiary};
-  `,
-
-  variantOutlined: css`
-    border: 1px solid ${cssVar.colorBorderSecondary};
-    background: ${cssVar.colorBgContainer};
-
-    &:hover {
-      border: 1px solid ${cssVar.colorBorder};
+    variantOutlined: css`
+      border: 1px solid ${cssVar.colorBorderSecondary};
       background: ${cssVar.colorBgContainer};
-    }
-  `,
 
-  variantOutlinedDanger: css`
-    border: 1px solid ${cssVar.colorErrorBorder};
+      &:hover {
+        border: 1px solid ${cssVar.colorBorder};
+        background: ${cssVar.colorBgContainer};
+      }
+    `,
 
-    &:hover {
+    variantOutlinedDanger: css`
       border: 1px solid ${cssVar.colorErrorBorder};
-    }
-  `,
 
-  variantOutlinedWithoutHover: css`
-    border: 1px solid ${cssVar.colorBorderSecondary};
-    background: ${cssVar.colorBgContainer};
-  `,
-})) as LobeCustomStylish;
+      &:hover {
+        border: 1px solid ${cssVar.colorErrorBorder};
+      }
+    `,
+
+    variantOutlinedWithoutHover: css`
+      border: 1px solid ${cssVar.colorBorderSecondary};
+      background: ${cssVar.colorBgContainer};
+    `,
+  })) as LobeCustomStylish;
+};
+
+let created: LobeCustomStylish | undefined;
+const resolve = () => (created ??= createStylish());
+
+// emotion inserts rules the moment css() runs; building these at import time would put them on every page that imports @lobehub/ui.
+export const staticStylish = new Proxy({} as LobeCustomStylish, {
+  get: (_, key) => Reflect.get(resolve(), key),
+  getOwnPropertyDescriptor: (_, key) => Reflect.getOwnPropertyDescriptor(resolve(), key),
+  has: (_, key) => Reflect.has(resolve(), key),
+  ownKeys: () => Reflect.ownKeys(resolve()),
+});
