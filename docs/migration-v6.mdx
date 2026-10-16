@@ -51,6 +51,21 @@ Requirements: React 19, `motion` 13 or 14, `@lobehub/icons` 6 and `@lobehub/flue
 | `@lobehub/ui/style.css` | compiled component styles | yes |
 | `@lobehub/ui/global.css` | document resets (body font and background, scrollbars, antd's old `reset.css`) | optional |
 
+Apps that compile their own StyleX styles can reuse the same tokens. `@lobehub/ui/stylex/cssVar.stylex` and `@lobehub/ui/stylex/media.stylex` are uncompiled `stylex.defineConsts` modules. The app's StyleX compiler has to transform those files in the same build; prebundling them first leaves the values as hashed `var(--…)` references. `cssVar.colorText` is `var(--lobe-color-text)`. `media.sm` is `@media (max-width: 575.98px)`.
+
+```tsx | pure
+import * as stylex from '@stylexjs/stylex';
+import { cssVar } from '@lobehub/ui/stylex/cssVar.stylex';
+import { media } from '@lobehub/ui/stylex/media.stylex';
+
+const styles = stylex.create({
+  title: {
+    color: cssVar.colorText,
+    fontSize: { default: 16, [media.sm]: 14 },
+  },
+});
+```
+
 Before:
 
 ```tsx | pure

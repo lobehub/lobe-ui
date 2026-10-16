@@ -53,6 +53,7 @@ Tests are colocated as `*.test.ts(x)` next to source.
 
 - Component styles are StyleX (`style.ts`), compiled at build time into `style.css` inside the `lobe-base` / `lobe-popup` / `lobe-ui` layers; tokens are `--lobe-*` variables from `theme.css`, switched by `data-theme` / `data-primary-color` / `data-neutral-color` (`setLobeTheme`, `ThemeScope`). See `docs/superpowers/specs/2026-10-07-stylex-core-design.md`.
 - `src/styles/` also exports the emotion-backed `createStaticStyles` / `cssVar` / `cx` API for downstream apps (the antd-style replacement).
+- Apps that compile StyleX themselves import `@lobehub/ui/stylex/cssVar.stylex` and `@lobehub/ui/stylex/media.stylex`. `scripts/publishStylexTokens.ts` copies those `defineConsts` sources into `es/stylex/` after tsdown. The compiled `es/styles/stylex/*.mjs` objects are not that API.
 - Motion via the `motion` package, gated through `MotionProvider`.
 
 ### Docs site (`packages/docs-kit`)
