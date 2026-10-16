@@ -1,5 +1,6 @@
 import { type Switch } from '@base-ui/react/switch';
 import {
+  type AriaAttributes,
   type ComponentProps,
   type CSSProperties,
   type KeyboardEvent,
@@ -53,7 +54,11 @@ export type SwitchIconProps = ComponentProps<'span'> & {
   size?: SwitchSize;
 };
 
-export interface SwitchProps {
+export interface SwitchProps extends AriaAttributes {
+  /**
+   * `data-*` attributes are forwarded to the switch element
+   */
+  [key: `data-${string}`]: string | number | boolean | undefined;
   /**
    * Whether to set focus automatically when mounted
    */

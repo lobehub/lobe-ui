@@ -9,6 +9,7 @@ export type {
   InputNumberProps,
   InputOTPProps,
   InputPasswordProps,
+  InputPasswordVisibilityToggleLabels,
   InputProps,
   InputSize,
   InputStyles,

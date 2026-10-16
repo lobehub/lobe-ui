@@ -36,6 +36,7 @@ const Switch = memo<SwitchProps>(
     title,
     unCheckedChildren,
     value,
+    ...rest
   }) => {
     const isDisabled = disabled || loading;
     const resolvedChecked = value ?? checked;
@@ -47,6 +48,7 @@ const Switch = memo<SwitchProps>(
 
     return (
       <SwitchRoot
+        {...rest}
         autoFocus={autoFocus}
         checked={resolvedChecked}
         className={clsx(hasText && 'lobe-switch-text', className, rootClassName, classNames?.root)}
