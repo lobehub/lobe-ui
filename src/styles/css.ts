@@ -75,7 +75,7 @@ export interface StaticStyleUtils {
   responsive: typeof responsive;
 }
 
-const emotion = createEmotion({ key: 'acss', speedy: false });
+const emotion = createEmotion({ key: 'acss', speedy: true });
 
 const isSerialized = (value: unknown): value is SerializedStyles =>
   typeof value === 'object' && value !== null && 'name' in value && 'styles' in value;
