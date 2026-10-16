@@ -16,15 +16,20 @@ export interface SegmentedOption<Value extends string = string> {
 
 export type SegmentedOptions<Value extends string = string> = Array<SegmentedOption<Value> | Value>;
 
+/** Semantic DOM class names. */
 export interface SegmentedClassNames {
+  /** Sliding active-item background. */
   indicator?: string;
+  /** Each option button (set `height` / `padding` here for a compact control). */
   item?: string;
   itemIcon?: string;
   itemLabel?: string;
+  /** Alias of `root`: the toggle group that holds the items. */
   list?: string;
   root?: string;
 }
 
+/** Semantic DOM inline styles, same parts as `SegmentedClassNames`. */
 export interface SegmentedStyles {
   indicator?: CSSProperties;
   item?: CSSProperties;
@@ -44,6 +49,7 @@ export type SegmentedRootProps<Value extends string = string> = Omit<
 export interface SegmentedProps<Value extends string = string> {
   block?: boolean;
   className?: string;
+  /** Semantic DOM class names: `root` / `indicator` / `item` / `itemIcon` / `itemLabel`. */
   classNames?: SegmentedClassNames;
   defaultValue?: Value;
   disabled?: boolean;
@@ -56,6 +62,7 @@ export interface SegmentedProps<Value extends string = string> {
   shadow?: boolean;
   size?: SegmentedSize;
   style?: CSSProperties;
+  /** Semantic DOM inline styles, same parts as `classNames`. */
   styles?: SegmentedStyles;
   value?: Value;
   variant?: SegmentedVariant;
