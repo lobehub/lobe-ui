@@ -190,11 +190,29 @@ describe('Form.Field validation', () => {
       </Wrap>,
     );
     const input = screen.getByLabelText(/Name/);
+    fireEvent.change(input, { target: { value: 'x' } });
+    fireEvent.change(input, { target: { value: '' } });
     fireEvent.blur(input);
     await act(() => wait());
     const error = screen.getByText('This field is required');
     expect(input.getAttribute('aria-invalid')).toBe('true');
     expect(input.getAttribute('aria-describedby')).toBe(error.id);
+  });
+
+  it('losing focus from an untouched required field shows nothing until submit', async () => {
+    const { Wrap, form } = setup({ name: '' });
+    render(
+      <Wrap>
+        <FormField required label="Name" name="name">
+          <input autoFocus />
+        </FormField>
+      </Wrap>,
+    );
+    fireEvent.blur(screen.getByLabelText(/Name/));
+    await act(() => wait());
+    expect(screen.queryByText('This field is required')).toBeNull();
+    await act(() => form.submit());
+    expect(screen.getByText('This field is required')).toBeTruthy();
   });
 
   it('required accepts a custom message', async () => {
@@ -206,7 +224,10 @@ describe('Form.Field validation', () => {
         </FormField>
       </Wrap>,
     );
-    fireEvent.blur(screen.getByLabelText(/Name/));
+    const input = screen.getByLabelText(/Name/);
+    fireEvent.change(input, { target: { value: 'x' } });
+    fireEvent.change(input, { target: { value: '' } });
+    fireEvent.blur(input);
     await act(() => wait());
     expect(screen.getByText('Name please')).toBeTruthy();
   });
@@ -222,6 +243,7 @@ describe('Form.Field validation', () => {
       </Wrap>,
     );
     const input = screen.getByLabelText('Email');
+    fireEvent.change(input, { target: { value: 'xy' } });
     fireEvent.blur(input);
     await act(() => wait());
     expect(screen.getByText('bad email')).toBeTruthy();
@@ -249,6 +271,8 @@ describe('Form.Field validation', () => {
     act(() => bump());
     act(() => bump());
     expect(register).toHaveBeenCalledTimes(1);
+    fireEvent.change(screen.getByLabelText('A'), { target: { value: 'x' } });
+    fireEvent.change(screen.getByLabelText('A'), { target: { value: '' } });
     fireEvent.blur(screen.getByLabelText('A'));
     await act(() => wait());
     expect(screen.getByText('empty 2')).toBeTruthy();

@@ -36,6 +36,7 @@ export const createTanstackEngine: CreateEngine = (initialValues) => {
   const serverErrors = new Map<string, string>();
   const validating = new Set<string>();
   const touched = new Set<string>();
+  const edited = new Set<string>();
   const listeners = new Set<() => void>();
   const valueListeners = new Set<(change: ValueChange) => void>();
   const snapshots = new Map<string, FieldSnapshot>();
@@ -57,6 +58,10 @@ export const createTanstackEngine: CreateEngine = (initialValues) => {
   const getValues = () => form.state.values as Record<string, unknown>;
   const isTouched = (path: string) => {
     for (const entry of touched) if (isSameOrNested(entry, path)) return true;
+    return false;
+  };
+  const isEdited = (path: string) => {
+    for (const entry of edited) if (isSameOrNested(entry, path)) return true;
     return false;
   };
   const errorOf = (path: string) =>
@@ -102,7 +107,8 @@ export const createTanstackEngine: CreateEngine = (initialValues) => {
     if (mode === 'change') return true;
     if (mode === 'blur') return trigger === 'blur';
     if (mode === 'submit') return false;
-    return trigger === 'blur' || errorOf(path) !== undefined;
+    if (errorOf(path) !== undefined) return true;
+    return trigger === 'blur' && (isEdited(path) || submitCount > 0);
   };
 
   const setOrDelete = (map: Map<string, string>, path: string, error: string | undefined) => {
@@ -166,6 +172,7 @@ export const createTanstackEngine: CreateEngine = (initialValues) => {
 
   const afterUserChange = (path: string) => {
     touched.add(path);
+    edited.add(path);
     serverErrors.delete(path);
     schedule(path, 'change');
     for (const [other, runtime] of fields) {
@@ -200,6 +207,7 @@ export const createTanstackEngine: CreateEngine = (initialValues) => {
     serverErrors.clear();
     validating.clear();
     touched.clear();
+    edited.clear();
   };
 
   const runSubmit = async (onSubmit?: (values: Record<string, unknown>) => unknown) => {
@@ -250,6 +258,7 @@ export const createTanstackEngine: CreateEngine = (initialValues) => {
     moveItem: (path, from, to) => {
       form.moveFieldValues(toEnginePath(path) as never, from, to);
       touched.add(path);
+      edited.add(path);
       clearErrorsUnder(path);
       emitValueChange(path, 'user');
       notify();
@@ -261,6 +270,7 @@ export const createTanstackEngine: CreateEngine = (initialValues) => {
     pushItem: (path, item) => {
       form.pushFieldValue(toEnginePath(path) as never, item as never);
       touched.add(path);
+      edited.add(path);
       emitValueChange(path, 'user');
       notify();
     },
@@ -280,6 +290,7 @@ export const createTanstackEngine: CreateEngine = (initialValues) => {
     removeItem: (path, index) => {
       void form.removeFieldValue(toEnginePath(path) as never, index);
       touched.add(path);
+      edited.add(path);
       clearErrorsUnder(path);
       emitValueChange(path, 'user');
       notify();
@@ -293,6 +304,7 @@ export const createTanstackEngine: CreateEngine = (initialValues) => {
         validating.delete(key);
       }
       for (const entry of touched) if (isUnder(entry, path)) touched.delete(entry);
+      for (const entry of edited) if (isUnder(entry, path)) edited.delete(entry);
       clearErrorsUnder(path, true);
       form.setFieldValue(toEnginePath(path) as never, getBy(baseline, toEnginePath(path)), {
         dontUpdateMeta: true,

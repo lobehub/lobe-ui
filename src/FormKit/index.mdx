@@ -53,7 +53,7 @@ import { Form, useForm, useWatch } from '@lobehub/ui/form';
 | valuesChangeDebounce | Merge `onValuesChange` calls inside this window (ms) | `number` | `0` |
 | validateOn | Default validation timing for fields | `'auto' \| 'change' \| 'blur' \| 'submit'` | `'auto'` |
 
-`'auto'` validates a field on its first blur, then on every change while it has an error. Submit validates everything.
+`'auto'` validates a field when it loses focus after the user edited it (or after a submit attempt), then on every change while it has an error. Blurring a field nobody touched, such as an autofocused input when a modal closes, shows nothing. Submit validates everything. Use `'blur'` to validate on every blur.
 
 ### FormInstance
 

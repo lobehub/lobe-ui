@@ -111,9 +111,38 @@ describe.each(engines)('FormEngine contract: %s', (_name, create) => {
       expect(e.getField('a').error).toBe('required');
     });
 
+    it('auto mode: blurring a field the user never edited does not validate it', async () => {
+      const e = make({ a: '' });
+      e.registerField('a', { validate: required });
+      e.blurField('a');
+      await wait();
+      expect(e.getField('a').error).toBeUndefined();
+      expect(e.getField('a').touched).toBe(true);
+    });
+
+    it('auto mode: an unedited field validates on blur after a submit attempt', async () => {
+      const e = make({ a: 'x' });
+      e.registerField('a', { validate: required });
+      await e.submit();
+      e.setValue('a', '', 'api');
+      e.blurField('a');
+      await wait();
+      expect(e.getField('a').error).toBe('required');
+    });
+
+    it('blur mode validates on blur even when the field was never edited', async () => {
+      const e = make({ a: '' });
+      e.registerField('a', { validate: required, validateOn: 'blur' });
+      e.blurField('a');
+      await wait();
+      expect(e.getField('a').error).toBe('required');
+    });
+
     it('auto mode: once in error, every change re-validates', async () => {
       const e = make({ a: '' });
       e.registerField('a', { validate: required });
+      e.setValue('a', 'x', 'user');
+      e.setValue('a', '', 'user');
       e.blurField('a');
       await wait();
       expect(e.getField('a').error).toBe('required');
@@ -230,7 +259,7 @@ describe.each(engines)('FormEngine contract: %s', (_name, create) => {
 
     it('drops errors recorded under a list when its items shift', async () => {
       const e = make({ list: ['', 'x'] });
-      e.registerField('list.0', { validate: required });
+      e.registerField('list.0', { validate: required, validateOn: 'blur' });
       e.blurField('list.0');
       await wait();
       expect(e.getField('list.0').error).toBe('required');
