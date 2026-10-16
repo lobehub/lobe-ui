@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [6.0.4](https://github.com/lobehub/lobe-ui/compare/v6.0.3...v6.0.4) (2026-10-16)
+
+### 🐛 Bug Fixes
+
+- Skip auto blur validation for fields the user never edited, closes [#735](https://github.com/lobehub/lobe-ui/issues/735) ([850bc73](https://github.com/lobehub/lobe-ui/commit/850bc73))
+
 ## [6.0.3](https://github.com/lobehub/lobe-ui/compare/v6.0.2...v6.0.3) (2026-10-16)
 
 ### ⚡ Performance Improvements
