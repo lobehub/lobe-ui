@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [6.0.2](https://github.com/lobehub/lobe-ui/compare/docs-kit@6.0.1...docs-kit@6.0.2) (2026-10-16)
+
+### ♻ Code Refactoring
+
+- **docs-kit**: Move site styles from createStaticStyles to StyleX ([ef25cba](https://github.com/lobehub/lobe-ui/commit/ef25cba))
+
 ## [6.0.1](https://github.com/lobehub/lobe-ui/compare/docs-kit@6.0.0...docs-kit@6.0.1) (2026-10-16)
 
 ### 🐛 Bug Fixes
