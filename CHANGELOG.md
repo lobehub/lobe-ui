@@ -2,6 +2,18 @@
 
 # Changelog
 
+## [6.0.1](https://github.com/lobehub/lobe-ui/compare/v6.0.0...v6.0.1) (2026-10-16)
+
+### 🎫 Chores
+
+- **release**: Codemod@1.0.0 [skip ci] ([20b0566](https://github.com/lobehub/lobe-ui/commit/20b0566))
+- **release**: Docs-kit@5.28.0 [skip ci] ([67a5fe8](https://github.com/lobehub/lobe-ui/commit/67a5fe8))
+- **release**: Docs-kit@6.0.0 [skip ci] ([0d23d83](https://github.com/lobehub/lobe-ui/commit/0d23d83))
+
+### 🐛 Bug Fixes
+
+- V6 foundry feedback (custom neutral, React 19 ref / nativeButton warnings, segmented slots), closes [#731](https://github.com/lobehub/lobe-ui/issues/731) ([c232df5](https://github.com/lobehub/lobe-ui/commit/c232df5))
+
 # [6.0.0](https://github.com/lobehub/lobe-ui/compare/v5.64.4...v6.0.0) (2026-10-15)
 
 ### ♻ Code Refactoring
