@@ -1,341 +1,170 @@
-import { createStaticStyles } from '@lobehub/ui';
-
-export const styles = createStaticStyles(({ css, cssVar }) => {
-  const paginationArrow = css`
-    flex: none;
-    color: var(--docs-text-subtle);
-    transition: color 140ms ease;
-  `;
-
-  const paginationText = css`
-    display: grid;
-    gap: 0.125rem;
-    min-width: 0;
-
-    > span {
-      font-size: 0.7188rem;
-      color: var(--docs-text-subtle);
-    }
-
-    > strong {
-      overflow: hidden;
-
-      font-size: 0.875rem;
-      font-weight: 560;
-      color: var(--docs-text-secondary);
-      text-overflow: ellipsis;
-      white-space: nowrap;
-
-      transition: color 140ms ease;
-    }
-  `;
-
-  const paginationLink = css`
-    display: inline-flex;
-    gap: 0.625rem;
-    align-items: center;
-
-    min-width: 0;
-
-    text-decoration: none;
-
-    &:hover {
-      strong {
-        color: var(--docs-text-primary);
-      }
-
-      svg {
-        color: var(--docs-text-primary);
-      }
-    }
-  `;
-
-  const paginationLinkNext = css`
-    text-align: end;
-  `;
-
-  return {
-    content: css`
-      font-size: 0.9688rem;
-      line-height: 1.8;
-      color: var(--docs-text-secondary);
-
-      > :first-child {
-        margin-block-start: 0;
-      }
-
-      h2:not(:where([data-demo-layout] *)),
-      h3:not(:where([data-demo-layout] *)) {
-        scroll-margin-top: 1.5rem;
-        color: var(--docs-text-primary);
-        text-wrap: balance;
-        letter-spacing: -0.025em;
-      }
-
-      h2:not(:where([data-demo-layout] *)) {
-        margin-block: 3.5rem 1rem;
-        margin-inline: 0;
-        padding-block-start: 1rem;
-
-        font-size: 1.625rem;
-        font-weight: 640;
-        line-height: 1.25;
-      }
-
-      h3:not(:where([data-demo-layout] *)) {
-        margin-block: 2.25rem 0.75rem;
-        margin-inline: 0;
-
-        font-size: 1.125rem;
-        font-weight: 620;
-        line-height: 1.35;
-      }
-
-      p:not(:where([data-demo-layout] *)) {
-        max-width: 68ch;
-        margin-block: 1rem;
-        margin-inline: 0;
-        text-wrap: pretty;
-      }
-
-      pre:not(
-        :where(
-          [data-code-type='highlighter'] *,
-          [data-code-type='live-demo'] *,
-          [data-demo-layout] *
-        )
-      ) {
-        overflow-x: auto;
-
-        max-width: 100%;
-        margin-block: 1.5rem;
-        margin-inline: 0;
-        padding: 1.25rem;
-        border: 1px solid ${cssVar.colorBorderSecondary};
-        border-radius: ${cssVar.borderRadiusLG};
-
-        font-size: 0.8125rem;
-        line-height: 1.7;
-        color: ${cssVar.colorText};
-
-        background: ${cssVar.colorFillQuaternary};
-      }
-
-      :where(:not(pre)) > code:not(:where([data-demo-layout] *)) {
-        padding-block: 0.15em;
-        padding-inline: 0.4em;
-        border: 1px solid var(--docs-border-subtle);
-        border-radius: 0.35rem;
-
-        font-size: 0.85em;
-        color: var(--docs-text-primary);
-
-        background: var(--docs-surface-muted);
-      }
-
-      table:not(:where([data-demo-layout] *)) {
-        overflow-x: auto;
-        display: block;
-        border-spacing: 0;
-        border-collapse: collapse;
-
-        width: max-content;
-        max-width: 100%;
-        margin-block: 1.5rem;
-        margin-inline: 0;
-        border: 1px solid var(--docs-border-default);
-        border-radius: var(--docs-radius-lg);
-
-        text-align: start;
-
-        background: var(--docs-surface-raised);
-        box-shadow: var(--docs-shadow-inset);
-      }
-
-      thead:not(:where([data-demo-layout] *)) {
-        background: var(--docs-surface-muted);
-      }
-
-      tr + tr:not(:where([data-demo-layout] *)) {
-        border-block-start: 1px solid var(--docs-border-subtle);
-      }
-
-      th:not(:where([data-demo-layout] *)),
-      td:not(:where([data-demo-layout] *)) {
-        min-width: 7.5rem;
-        padding-block: 0.75rem;
-        padding-inline: 1rem;
-
-        font-size: 0.875rem;
-        line-height: 1.55;
-        text-align: start;
-        overflow-wrap: break-word;
-        vertical-align: top;
-      }
-
-      th:not(:where([data-demo-layout] *)) {
-        font-weight: 620;
-        color: var(--docs-text-primary);
-        white-space: nowrap;
-      }
-
-      td:not(:where([data-demo-layout] *)) {
-        color: var(--docs-text-secondary);
-      }
-
-      td code:not(:where([data-demo-layout] *)) {
-        font-size: 0.8125em;
-        overflow-wrap: anywhere;
-      }
-    `,
-
-    document: css`
-      grid-column: 2;
-      width: 100%;
-      min-width: 0;
-      padding-block-start: clamp(2.75rem, 6vw, 5rem);
-    `,
-
-    header: css`
-      margin-block-end: 2.5rem;
-      padding-block-end: 2rem;
-      border-block-end: 1px solid var(--docs-border-subtle);
-
-      h1 {
-        max-width: 20ch;
-        margin: 0;
-
-        font-size: clamp(1.875rem, 3.5vw, 2.5rem);
-        font-weight: 660;
-        line-height: 1.08;
-        color: var(--docs-text-primary);
-        text-wrap: balance;
-        letter-spacing: -0.045em;
-      }
-
-      p {
-        max-width: 42rem;
-        margin-block: 0.75rem 0;
-        margin-inline: 0;
-
-        font-size: 1rem;
-        line-height: 1.7;
-        color: var(--docs-text-secondary);
-        text-wrap: pretty;
-      }
-
-      @media (width <= 47.5rem) {
-        margin-block-end: 2rem;
-        padding-block-end: 1.5rem;
-
-        h1 {
-          max-width: 18ch;
-        }
-      }
-    `,
-
-    headingAnchor: css`
-      display: inline-flex;
-      align-items: center;
-
-      margin-inline-start: 0.375rem;
-
-      color: var(--docs-text-subtle);
-      text-decoration: none;
-      vertical-align: middle;
-
-      opacity: 0;
-
-      transition: opacity 140ms ease;
-
-      &:hover {
-        color: var(--docs-accent);
-      }
-
-      :where(h1, h2, h3, h4):hover > &,
-      &:focus-visible {
-        opacity: 1;
-      }
-    `,
-
-    importBlock: css`
-      width: fit-content;
-      max-width: 100%;
-      margin-block-start: 1.25rem;
-    `,
-
-    linkIcon: css`
-      flex: none;
-      margin-inline-end: 0.25rem;
-    `,
-
-    links: css`
-      display: flex;
-      gap: 1.25rem;
-      align-items: center;
-      margin-block-start: 1rem;
-
-      a {
-        display: inline-flex;
-        gap: 0.125rem;
-        align-items: center;
-
-        font-size: 0.8125rem;
-        font-weight: 500;
-        color: var(--docs-text-subtle);
-        text-decoration: none;
-
-        transition: color 140ms ease;
-
-        &:hover {
-          color: var(--docs-text-primary);
-        }
-      }
-    `,
-
-    pagination: css`
-      display: flex;
-      gap: 1rem;
-      justify-content: space-between;
-      margin-block-start: 3rem;
-    `,
-
-    paginationArrow,
-
-    paginationLink,
-
-    paginationLinkNext,
-
-    paginationText,
-
-    root: css`
-      container: docs / inline-size;
-      display: grid;
-      grid-template-columns: 1fr min(64rem, 100% - 3rem) 1fr;
-      align-items: start;
-
-      width: 100%;
-      margin-block: 0;
-      padding-block: 0 7rem;
-      padding-inline: 0;
-
-      @media (width <= 47.5rem) {
-        grid-template-columns: 1fr min(64rem, 100% - 2rem) 1fr;
-        padding-block-end: 5rem;
-      }
-    `,
-
-    searchMetadata: css`
-      position: absolute;
-
-      overflow: hidden;
-
-      width: 1px;
-      height: 1px;
-
-      white-space: nowrap;
-
-      clip-path: inset(50%);
-    `,
-  };
+import * as stylex from '@stylexjs/stylex';
+
+import { headingMarker, paginationMarker } from './markers.stylex';
+
+const mobile = '@media (width <= 47.5rem)';
+
+export const styles = stylex.create({
+  description: {
+    marginInline: 0,
+    color: 'var(--docs-text-secondary)',
+    fontSize: '1rem',
+    lineHeight: 1.7,
+    marginBlockEnd: 0,
+    marginBlockStart: '0.75rem',
+    textWrap: 'pretty',
+    maxWidth: '42rem',
+  },
+  document: {
+    gridColumn: 2,
+    paddingBlockStart: 'clamp(2.75rem, 6vw, 5rem)',
+    minWidth: 0,
+    width: '100%',
+  },
+  header: {
+    borderBlockEndColor: 'var(--docs-border-subtle)',
+    borderBlockEndStyle: 'solid',
+    borderBlockEndWidth: 1,
+    marginBlockEnd: {
+      default: '2.5rem',
+      [mobile]: '2rem',
+    },
+    paddingBlockEnd: {
+      default: '2rem',
+      [mobile]: '1.5rem',
+    },
+  },
+  headingAnchor: {
+    textDecoration: 'none',
+    transition: 'opacity 140ms ease',
+    alignItems: 'center',
+    color: {
+      'default': 'var(--docs-text-subtle)',
+      ':hover': 'var(--docs-accent)',
+    },
+    display: 'inline-flex',
+    marginInlineStart: '0.375rem',
+    opacity: {
+      'default': 0,
+      [stylex.when.ancestor(':hover', headingMarker)]: 1,
+      ':focus-visible': 1,
+    },
+    verticalAlign: 'middle',
+  },
+  importBlock: {
+    marginBlockStart: '1.25rem',
+    maxWidth: '100%',
+    width: 'fit-content',
+  },
+  link: {
+    gap: '0.125rem',
+    textDecoration: 'none',
+    transition: 'color 140ms ease',
+    alignItems: 'center',
+    color: {
+      'default': 'var(--docs-text-subtle)',
+      ':hover': 'var(--docs-text-primary)',
+    },
+    display: 'inline-flex',
+    fontSize: '0.8125rem',
+    fontWeight: 500,
+  },
+  linkIcon: {
+    flexBasis: 'auto',
+    flexGrow: 0,
+    flexShrink: 0,
+    marginInlineEnd: '0.25rem',
+  },
+  links: {
+    gap: '1.25rem',
+    alignItems: 'center',
+    display: 'flex',
+    marginBlockStart: '1rem',
+  },
+  pagination: {
+    gap: '1rem',
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginBlockStart: '3rem',
+  },
+  paginationArrow: {
+    transition: 'color 140ms ease',
+    color: {
+      default: 'var(--docs-text-subtle)',
+      [stylex.when.ancestor(':hover', paginationMarker)]: 'var(--docs-text-primary)',
+    },
+    flexBasis: 'auto',
+    flexGrow: 0,
+    flexShrink: 0,
+  },
+  paginationLabel: {
+    color: 'var(--docs-text-subtle)',
+    fontSize: '0.7188rem',
+  },
+  paginationLink: {
+    gap: '0.625rem',
+    textDecoration: 'none',
+    alignItems: 'center',
+    display: 'inline-flex',
+    minWidth: 0,
+  },
+  paginationLinkNext: {
+    textAlign: 'end',
+  },
+  paginationText: {
+    gap: '0.125rem',
+    display: 'grid',
+    minWidth: 0,
+  },
+  paginationTitle: {
+    overflow: 'hidden',
+    transition: 'color 140ms ease',
+    color: {
+      default: 'var(--docs-text-secondary)',
+      [stylex.when.ancestor(':hover', paginationMarker)]: 'var(--docs-text-primary)',
+    },
+    fontSize: '0.875rem',
+    fontWeight: 560,
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+  },
+  root: {
+    marginBlock: 0,
+    paddingInline: 0,
+    alignItems: 'start',
+    containerName: 'docs',
+    containerType: 'inline-size',
+    display: 'grid',
+    gridTemplateColumns: {
+      default: '1fr min(64rem, 100% - 3rem) 1fr',
+      [mobile]: '1fr min(64rem, 100% - 2rem) 1fr',
+    },
+    paddingBlockEnd: {
+      default: '7rem',
+      [mobile]: '5rem',
+    },
+    paddingBlockStart: 0,
+    width: '100%',
+  },
+  searchMetadata: {
+    overflow: 'hidden',
+    clipPath: 'inset(50%)',
+    position: 'absolute',
+    whiteSpace: 'nowrap',
+    height: 1,
+    width: 1,
+  },
+  title: {
+    margin: 0,
+    color: 'var(--docs-text-primary)',
+    fontSize: 'clamp(1.875rem, 3.5vw, 2.5rem)',
+    fontWeight: 660,
+    letterSpacing: '-0.045em',
+    lineHeight: 1.08,
+    textWrap: 'balance',
+    maxWidth: {
+      default: '20ch',
+      [mobile]: '18ch',
+    },
+  },
 });

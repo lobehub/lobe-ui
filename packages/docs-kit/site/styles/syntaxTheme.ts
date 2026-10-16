@@ -1,4 +1,3 @@
-import { cssVar } from '@lobehub/ui';
 import type { CSSProperties } from 'react';
 
 /**
@@ -6,21 +5,21 @@ import type { CSSProperties } from 'react';
  * any hand-painted span). They follow `src/Highlighter/theme/lobe-theme.ts`.
  */
 export const lobeSyntax = {
-  boolean: cssVar.purple10,
-  comment: cssVar.colorTextQuaternary,
-  function: cssVar.geekblue10,
-  keyword: cssVar.colorInfo,
-  number: cssVar.volcano10,
-  plain: cssVar.colorText,
-  property: cssVar.volcano10,
-  punctuation: cssVar.colorInfo,
-  storage: cssVar.purple10,
-  string: cssVar.colorSuccess,
-  type: cssVar.colorWarning,
+  boolean: 'var(--lobe-purple-10)',
+  comment: 'var(--lobe-color-text-quaternary)',
+  function: 'var(--lobe-geekblue-10)',
+  keyword: 'var(--lobe-color-info)',
+  number: 'var(--lobe-volcano-10)',
+  plain: 'var(--lobe-color-text)',
+  property: 'var(--lobe-volcano-10)',
+  punctuation: 'var(--lobe-color-info)',
+  storage: 'var(--lobe-purple-10)',
+  string: 'var(--lobe-color-success)',
+  type: 'var(--lobe-color-warning)',
 } as const;
 
 /** Same fill as `Highlighter` `variant="filled"`. */
-export const lobeCodeSurface = cssVar.colorFillQuaternary;
+export const lobeCodeSurface = 'var(--lobe-color-fill-quaternary)';
 
 interface PrismTokenStyle {
   style: CSSProperties;

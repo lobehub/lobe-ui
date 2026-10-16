@@ -1,5 +1,8 @@
+import './DocsLayout.css';
+
 import { Snippet } from '@lobehub/ui';
 import { GithubIcon } from '@lobehub/ui/icons';
+import * as stylex from '@stylexjs/stylex';
 import { ArrowLeft, ArrowRight, ArrowUpRight, PencilLine } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { Link } from 'react-router';
@@ -9,6 +12,7 @@ import { createDocumentLinks, findAdjacentDocuments } from '../../content/pageCh
 import type { DocumentManifestEntry, NavigationSection } from '../../types/content';
 import { PageEndActions } from '../Feedback/PageEndActions';
 import { TableOfContents } from '../TableOfContents/TableOfContents';
+import { paginationMarker } from './markers.stylex';
 import { NpmIcon } from './NpmIcon';
 import { styles } from './style';
 
@@ -25,62 +29,80 @@ export function DocsLayout({ children, document, navigation }: DocsLayoutProps) 
   const { next, previous } = findAdjacentDocuments(navigation, document.pathname);
 
   return (
-    <div className={styles.root} id="docs-content">
-      <article data-pagefind-body className={styles.document}>
-        <header className={styles.header}>
-          <h1 data-pagefind-meta="title">{document.title}</h1>
-          <p data-pagefind-meta="description">{document.description}</p>
+    <div {...stylex.props(styles.root)} id="docs-content">
+      <article data-pagefind-body {...stylex.props(styles.document)}>
+        <header {...stylex.props(styles.header)}>
+          <h1 data-pagefind-meta="title" {...stylex.props(styles.title)}>
+            {document.title}
+          </h1>
+          <p data-pagefind-meta="description" {...stylex.props(styles.description)}>
+            {document.description}
+          </p>
           {links?.importStatement ? (
-            <Snippet className={styles.importBlock} language="tsx">
+            <Snippet {...stylex.props(styles.importBlock)} language="tsx">
               {links.importStatement}
             </Snippet>
           ) : null}
           {links ? (
-            <div className={styles.links} data-pagefind-ignore="all">
-              <a href={links.npmUrl} {...externalLinkProps}>
-                <NpmIcon aria-hidden className={styles.linkIcon} />
+            <div {...stylex.props(styles.links)} data-pagefind-ignore="all">
+              <a href={links.npmUrl} {...externalLinkProps} {...stylex.props(styles.link)}>
+                <NpmIcon aria-hidden {...stylex.props(styles.linkIcon)} />
                 NPM
                 <ArrowUpRight aria-hidden size={13} strokeWidth={1.8} />
               </a>
               {links.sourceUrl ? (
-                <a href={links.sourceUrl} {...externalLinkProps}>
-                  <GithubIcon aria-hidden className={styles.linkIcon} size={13} strokeWidth={1.8} />
+                <a href={links.sourceUrl} {...externalLinkProps} {...stylex.props(styles.link)}>
+                  <GithubIcon
+                    aria-hidden
+                    {...stylex.props(styles.linkIcon)}
+                    size={13}
+                    strokeWidth={1.8}
+                  />
                   Source
                   <ArrowUpRight aria-hidden size={13} strokeWidth={1.8} />
                 </a>
               ) : null}
               {links.editUrl ? (
-                <a href={links.editUrl} {...externalLinkProps}>
-                  <PencilLine aria-hidden className={styles.linkIcon} size={13} strokeWidth={1.8} />
+                <a href={links.editUrl} {...externalLinkProps} {...stylex.props(styles.link)}>
+                  <PencilLine
+                    aria-hidden
+                    {...stylex.props(styles.linkIcon)}
+                    size={13}
+                    strokeWidth={1.8}
+                  />
                   Edit
                   <ArrowUpRight aria-hidden size={13} strokeWidth={1.8} />
                 </a>
               ) : null}
             </div>
           ) : null}
-          <div className={styles.searchMetadata}>
+          <div {...stylex.props(styles.searchMetadata)}>
             {document.category ? (
               <span data-pagefind-meta="category">{document.category}</span>
             ) : null}
             {document.status ? <span data-pagefind-meta="status">{document.status}</span> : null}
           </div>
         </header>
-        <div className={styles.content} id="docs-page-content">
+        <div className="docs-content" id="docs-page-content">
           {children}
         </div>
         {previous || next ? (
-          <nav aria-label="Adjacent documents" className={styles.pagination}>
+          <nav aria-label="Adjacent documents" {...stylex.props(styles.pagination)}>
             {previous ? (
-              <Link className={styles.paginationLink} rel="prev" to={previous.pathname}>
+              <Link
+                {...stylex.props(styles.paginationLink, paginationMarker)}
+                rel="prev"
+                to={previous.pathname}
+              >
                 <ArrowLeft
                   aria-hidden
-                  className={styles.paginationArrow}
+                  {...stylex.props(styles.paginationArrow)}
                   size={16}
                   strokeWidth={1.8}
                 />
-                <span className={styles.paginationText}>
-                  <span>Previous</span>
-                  <strong>{previous.title}</strong>
+                <span {...stylex.props(styles.paginationText)}>
+                  <span {...stylex.props(styles.paginationLabel)}>Previous</span>
+                  <strong {...stylex.props(styles.paginationTitle)}>{previous.title}</strong>
                 </span>
               </Link>
             ) : (
@@ -88,17 +110,21 @@ export function DocsLayout({ children, document, navigation }: DocsLayoutProps) 
             )}
             {next ? (
               <Link
-                className={`${styles.paginationLink} ${styles.paginationLinkNext}`}
+                {...stylex.props(
+                  styles.paginationLink,
+                  styles.paginationLinkNext,
+                  paginationMarker,
+                )}
                 rel="next"
                 to={next.pathname}
               >
-                <span className={styles.paginationText}>
-                  <span>Next</span>
-                  <strong>{next.title}</strong>
+                <span {...stylex.props(styles.paginationText)}>
+                  <span {...stylex.props(styles.paginationLabel)}>Next</span>
+                  <strong {...stylex.props(styles.paginationTitle)}>{next.title}</strong>
                 </span>
                 <ArrowRight
                   aria-hidden
-                  className={styles.paginationArrow}
+                  {...stylex.props(styles.paginationArrow)}
                   size={16}
                   strokeWidth={1.8}
                 />

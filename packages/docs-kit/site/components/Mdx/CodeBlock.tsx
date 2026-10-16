@@ -1,4 +1,5 @@
 import { Highlighter } from '@lobehub/ui';
+import * as stylex from '@stylexjs/stylex';
 import { Children, isValidElement, type ReactElement, type ReactNode } from 'react';
 
 import { styles } from './codeBlockStyle';
@@ -41,7 +42,12 @@ export function CodeBlock({ children }: { children?: ReactNode }) {
   if (!content) return null;
 
   return (
-    <Highlighter className={styles.root} language={language} theme="lobe-theme" variant="filled">
+    <Highlighter
+      {...stylex.props(styles.root)}
+      language={language}
+      theme="lobe-theme"
+      variant="filled"
+    >
       {content}
     </Highlighter>
   );

@@ -1,5 +1,6 @@
 import { ActionIcon } from '@lobehub/ui';
 import { GithubIcon } from '@lobehub/ui/icons';
+import * as stylex from '@stylexjs/stylex';
 import { MessageCircle, ThumbsDown, ThumbsUp } from 'lucide-react';
 import type { ComponentType } from 'react';
 import { useCallback, useEffect, useId, useRef, useState } from 'react';
@@ -109,14 +110,14 @@ export function PageEndActions({ loadGiscus = defaultLoadGiscus, pathname }: Pag
   };
 
   return (
-    <section aria-label="Page feedback" className={styles.root} data-pagefind-ignore="all">
-      <div aria-label="Page feedback" className={styles.toolbar} role="toolbar">
+    <section aria-label="Page feedback" {...stylex.props(styles.root)} data-pagefind-ignore="all">
+      <div aria-label="Page feedback" {...stylex.props(styles.toolbar)} role="toolbar">
         {response ? (
-          <span className={styles.status} role="status">
+          <span {...stylex.props(styles.status)} role="status">
             Thanks
           </span>
         ) : (
-          <span className={styles.hint}>Helpful?</span>
+          <span {...stylex.props(styles.hint)}>Helpful?</span>
         )}
         <ActionIcon
           active={response === 'yes'}
@@ -134,7 +135,7 @@ export function PageEndActions({ loadGiscus = defaultLoadGiscus, pathname }: Pag
           title="No, this page was not helpful"
           onClick={() => setSelection({ response: 'no', routeGeneration })}
         />
-        <span aria-hidden className={styles.divider} />
+        <span aria-hidden {...stylex.props(styles.divider)} />
         <ActionIcon
           active={discussionOpen}
           aria-controls={discussionPanelId}
@@ -157,7 +158,7 @@ export function PageEndActions({ loadGiscus = defaultLoadGiscus, pathname }: Pag
       </div>
 
       {discussionOpen ? (
-        <div className={styles.panel} id={discussionPanelId}>
+        <div {...stylex.props(styles.panel)} id={discussionPanelId}>
           {loadState === 'ready' && Giscus && giscusConfig ? (
             <Giscus
               category={giscusConfig.category}
@@ -176,14 +177,14 @@ export function PageEndActions({ loadGiscus = defaultLoadGiscus, pathname }: Pag
             />
           ) : null}
           {loadState === 'loading' ? (
-            <p className={styles.statusLine} role="status">
+            <p {...stylex.props(styles.statusLine)} role="status">
               Loading discussion…
             </p>
           ) : null}
           {loadState === 'error' ? (
-            <div className={styles.error} role="alert">
+            <div {...stylex.props(styles.error)} role="alert">
               <span>Discussion could not be loaded.</span>
-              <button type="button" onClick={() => void load()}>
+              <button {...stylex.props(styles.retry)} type="button" onClick={() => void load()}>
                 Retry
               </button>
             </div>

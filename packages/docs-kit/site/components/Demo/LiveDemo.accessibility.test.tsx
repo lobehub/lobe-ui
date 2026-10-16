@@ -2,7 +2,7 @@ import { cleanup, render, screen, waitFor } from '@testing-library/react';
 
 import type { DemoAppearance, DemoModule } from '../../types/demo';
 import { LiveDemo } from './LiveDemo';
-import { styles } from './style';
+import { demoClassNames } from './style';
 
 interface HarnessProps {
   appearance: DemoAppearance;
@@ -51,6 +51,8 @@ it('puts textbox semantics on the real react-live contenteditable control', asyn
   await waitFor(() => expect(editor.hasAttribute('contenteditable')).toBe(true));
   expect(editor.getAttribute('aria-multiline')).toBe('true');
   expect(editor.tabIndex).toBe(0);
-  expect(container.querySelector(`.${styles.liveInput}`)?.hasAttribute('role')).toBe(false);
-  expect(container.querySelector(`.${styles.liveInput}`)?.hasAttribute('aria-label')).toBe(false);
+  expect(container.querySelector(`.${demoClassNames.liveInput}`)?.hasAttribute('role')).toBe(false);
+  expect(container.querySelector(`.${demoClassNames.liveInput}`)?.hasAttribute('aria-label')).toBe(
+    false,
+  );
 });

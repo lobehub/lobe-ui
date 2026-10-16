@@ -1,4 +1,5 @@
 import { ActionIcon, type DropdownItem, DropdownMenu, SyntaxHighlighter } from '@lobehub/ui';
+import * as stylex from '@stylexjs/stylex';
 import {
   Code,
   Copy,
@@ -23,7 +24,7 @@ import type {
 } from '../../types/demo';
 import { CanonicalPreview } from './CanonicalPreview';
 import type { DemoFrameStyle, DemoViewport } from './LiveDemo';
-import { styles } from './style';
+import { demoClassNames, styles } from './style';
 
 const viewportOptions = [
   { icon: MonitorSmartphone, label: 'Responsive', value: 'responsive' },
@@ -71,12 +72,12 @@ interface PreviewProps {
 function EmbeddedPreview({ appearance, demo, style, viewport }: PreviewProps) {
   return (
     <div
-      className={styles.viewport}
+      className={demoClassNames.viewport}
       data-demo-appearance={appearance}
       data-demo-viewport={viewport}
       data-pagefind-ignore="all"
     >
-      <div className={styles.preview} style={style}>
+      <div className={demoClassNames.preview} style={style}>
         <CanonicalPreview appearance={appearance} demo={demo} />
       </div>
     </div>
@@ -86,13 +87,13 @@ function EmbeddedPreview({ appearance, demo, style, viewport }: PreviewProps) {
 function IsolatedPreview({ appearance, demo, standaloneHref, style, viewport }: PreviewProps) {
   return (
     <div
-      className={styles.viewport}
+      className={demoClassNames.viewport}
       data-demo-appearance={appearance}
       data-demo-viewport={viewport}
       data-pagefind-ignore="all"
     >
       <iframe
-        className={styles.iframe}
+        {...stylex.props(styles.iframe)}
         loading="lazy"
         src={standaloneHref}
         style={style}
@@ -107,7 +108,7 @@ function ReadOnlySource({ source, sourcePath }: Pick<DemoModule, 'source' | 'sou
 
   return (
     <SyntaxHighlighter
-      className={styles.source}
+      className={demoClassNames.source}
       data-pagefind-ignore="all"
       language={language}
       tabIndex={0}
@@ -229,22 +230,26 @@ export function Demo({
     <section
       aria-label={title ? undefined : `Demo: ${of.sourcePath}`}
       aria-labelledby={title ? headingId : undefined}
-      className={styles.frame}
+      {...stylex.props(styles.frame)}
       data-demo-editable={resolvedEditable}
       data-demo-isolated={isolated}
       data-demo-layout={layout}
       data-toc-ignore=""
     >
-      <header className={styles.caption}>
-        {title ? <h3 id={headingId}>{title}</h3> : null}
-        {description ? <p>{description}</p> : null}
+      <header {...stylex.props(styles.caption)}>
+        {title ? (
+          <h3 id={headingId} {...stylex.props(styles.captionTitle)}>
+            {title}
+          </h3>
+        ) : null}
+        {description ? <p {...stylex.props(styles.captionDescription)}>{description}</p> : null}
         <div
           aria-label="Demo controls"
-          className={styles.actions}
+          {...stylex.props(styles.actions)}
           data-pagefind-ignore="all"
           role="toolbar"
         >
-          <div aria-label="Preview settings" className={styles.actionGroup} role="group">
+          <div aria-label="Preview settings" {...stylex.props(styles.actionGroup)} role="group">
             <DropdownMenu items={viewportItems} placement="bottomRight">
               <ActionIcon
                 aria-label="Preview viewport"
@@ -262,7 +267,7 @@ export function Demo({
               />
             </DropdownMenu>
           </div>
-          <div aria-label="Source actions" className={styles.actionGroup} role="group">
+          <div aria-label="Source actions" {...stylex.props(styles.actionGroup)} role="group">
             <ActionIcon
               active={expanded}
               aria-controls={sourcePanelId}
@@ -290,7 +295,7 @@ export function Demo({
               />
             ) : null}
           </div>
-          <div aria-label="Preview actions" className={styles.actionGroup} role="group">
+          <div aria-label="Preview actions" {...stylex.props(styles.actionGroup)} role="group">
             <ActionIcon
               aria-label="Open standalone preview"
               as="a"
@@ -300,7 +305,7 @@ export function Demo({
               {...standaloneLinkProps(standaloneHref)}
             />
           </div>
-          <span aria-live="polite" className={styles.status}>
+          <span aria-live="polite" {...stylex.props(styles.status)}>
             {copyStatus}
           </span>
         </div>
@@ -314,7 +319,7 @@ export function Demo({
               ) : (
                 <EmbeddedPreview {...previewProps} />
               )}
-              <div className={styles.liveStatus} role="status">
+              <div {...stylex.props(styles.liveStatus)} role="status">
                 Loading source editor…
               </div>
             </>
@@ -334,7 +339,11 @@ export function Demo({
         <>
           {isolated ? <IsolatedPreview {...previewProps} /> : <EmbeddedPreview {...previewProps} />}
           {expanded ? (
-            <div className={styles.sourcePanel} data-pagefind-ignore="all" id={sourcePanelId}>
+            <div
+              className={demoClassNames.sourcePanel}
+              data-pagefind-ignore="all"
+              id={sourcePanelId}
+            >
               <ReadOnlySource source={of.source} sourcePath={of.sourcePath} />
             </div>
           ) : null}

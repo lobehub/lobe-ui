@@ -1,231 +1,216 @@
-import { createStaticStyles } from '@lobehub/ui';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css }) => ({
-  caption: css`
-    padding-block: 0.5rem;
-    padding-inline: 0.875rem;
-    border-block-end: 1px solid var(--docs-border-subtle);
+const mobile = '@media (width <= 47.5rem)';
 
-    font-size: 0.8125rem;
-    font-weight: 640;
-    color: var(--docs-text-primary);
-    letter-spacing: -0.015em;
+const prose = {
+  margin: 0,
+  color: 'var(--docs-text-secondary)',
+  fontSize: '0.8125rem',
+  lineHeight: 1.5,
+  maxWidth: 'none',
+} as const;
 
-    @media (width <= 47.5rem) {
-      padding-inline: 0.75rem;
-    }
-  `,
-
-  card: css`
-    overflow: hidden;
-
-    border: 1px solid var(--docs-border-default);
-    border-radius: var(--docs-radius-lg);
-
-    background: var(--docs-surface-raised);
-    box-shadow: var(--docs-shadow-inset);
-
-    && p {
-      max-width: none;
-      margin-block: 0;
-      margin-inline: 0;
-    }
-  `,
-
-  componentDetails: css`
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem 1rem;
-    align-items: baseline;
-
-    margin-block: -0.25rem 1rem;
-    margin-inline: 0;
-  `,
-
-  definition: css`
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
-
-    min-width: 0;
-    margin: 0;
-  `,
-
-  description: css`
-    && {
-      max-width: 68ch;
-      margin-block: 0 1rem;
-      margin-inline: 0;
-
-      line-height: 1.7;
-      color: var(--docs-text-secondary);
-      text-wrap: pretty;
-    }
-  `,
-
-  detailDeprecated: css`
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.375rem 0.5rem;
-    align-items: baseline;
-
-    font-size: 0.8125rem;
-    color: var(--docs-text-secondary);
-  `,
-
-  empty: css`
-    margin: 0;
-    padding-block: 0.75rem;
-    padding-inline: 0.875rem;
-
-    font-size: 0.8125rem;
-    color: var(--docs-text-subtle);
-    text-align: center;
-
-    @media (width <= 47.5rem) {
-      padding-inline: 0.75rem;
-    }
-  `,
-
-  flag: css`
-    font-size: 0.625rem;
-    font-weight: 650;
-    color: var(--docs-accent);
-    text-transform: uppercase;
-    letter-spacing: 0.045em;
-  `,
-
-  flagDeprecated: css`
-    font-size: 0.625rem;
-    font-weight: 650;
-    color: var(--docs-danger-text, #b42318);
-    text-transform: uppercase;
-    letter-spacing: 0.045em;
-  `,
-
-  footnote: css`
-    max-width: none;
-    margin: 0;
-    padding-block: 0.375rem;
-    padding-inline: 0.875rem;
-    border-block-start: 1px solid var(--docs-border-subtle);
-
-    font-size: 0.75rem;
-    color: var(--docs-text-subtle);
-
-    background: color-mix(in srgb, var(--docs-surface-muted) 55%, transparent);
-
-    @media (width <= 47.5rem) {
-      padding-inline: 0.75rem;
-    }
-  `,
-
-  list: css`
-    margin: 0;
-  `,
-
-  origin: css`
-    font-size: 0.7188rem;
-    color: var(--docs-text-subtle);
-  `,
-
-  propertyName: css`
-    padding-block: 0.125rem;
-    padding-inline: 0.375rem;
-    border: 1px solid var(--docs-border-subtle);
-    border-radius: var(--docs-radius-sm);
-
-    font-family: var(--docs-font-mono);
-    font-size: 0.75rem;
-    color: var(--docs-text-primary);
-    overflow-wrap: anywhere;
-
-    background: var(--docs-surface-muted);
-  `,
-
-  prose: css`
-    font-size: 0.8125rem;
-    line-height: 1.5;
-    color: var(--docs-text-secondary);
-
-    code {
-      font-family: var(--docs-font-mono);
-      font-size: 0.75rem;
-      color: var(--docs-text-primary);
-    }
-  `,
-
-  proseDefault: css`
-    font-size: 0.8125rem;
-    line-height: 1.5;
-    color: var(--docs-text-subtle);
-
-    code {
-      font-family: var(--docs-font-mono);
-      font-size: 0.75rem;
-      color: var(--docs-text-primary);
-    }
-  `,
-
-  root: css`
-    margin-block: 0.75rem 2rem;
-    color: var(--docs-text-secondary);
-
-    @media (width <= 47.5rem) {
-      margin-block: 0.5rem 1.5rem;
-    }
-  `,
-
-  row: css`
-    display: grid;
-    grid-template-columns: minmax(8rem, 10rem) minmax(0, 1fr);
-    gap: 0.75rem 1rem;
-
-    padding-block: 0.5rem;
-    padding-inline: 0.875rem;
-
-    & + & {
-      border-block-start: 1px solid var(--docs-border-subtle);
-    }
-
-    &:hover {
-      background: var(--docs-surface-hover);
-    }
-
-    @media (width <= 47.5rem) {
-      grid-template-columns: 1fr;
-      gap: 0.375rem;
-      padding-inline: 0.75rem;
-    }
-  `,
-
-  term: css`
-    display: flex;
-    flex-direction: column;
-    gap: 0.1875rem;
-    align-items: flex-start;
-
-    min-width: 0;
-
-    @media (width <= 47.5rem) {
-      flex-flow: row wrap;
-      gap: 0.25rem 0.5rem;
-      align-items: baseline;
-    }
-  `,
-
-  type: css`
-    align-self: flex-start;
-
-    padding: 0;
-    border: 0;
-
-    font-family: var(--docs-font-mono);
-    font-size: 0.75rem;
-    line-height: 1.5;
-    color: var(--docs-accent);
-    overflow-wrap: break-word;
-
-    background: transparent;
-  `,
-}));
+export const styles = stylex.create({
+  caption: {
+    paddingBlock: '0.5rem',
+    paddingInline: {
+      default: '0.875rem',
+      [mobile]: '0.75rem',
+    },
+    borderBlockEndColor: 'var(--docs-border-subtle)',
+    borderBlockEndStyle: 'solid',
+    borderBlockEndWidth: 1,
+    color: 'var(--docs-text-primary)',
+    fontSize: '0.8125rem',
+    fontWeight: 640,
+    letterSpacing: '-0.015em',
+  },
+  card: {
+    borderColor: 'var(--docs-border-default)',
+    borderRadius: 'var(--docs-radius-lg)',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    overflow: 'hidden',
+    backgroundColor: 'var(--docs-surface-raised)',
+    boxShadow: 'var(--docs-shadow-inset)',
+  },
+  code: {
+    color: 'var(--docs-text-primary)',
+    fontFamily: 'var(--docs-font-mono)',
+    fontSize: '0.75rem',
+  },
+  componentDetails: {
+    marginInline: 0,
+    alignItems: 'baseline',
+    columnGap: '1rem',
+    display: 'flex',
+    flexWrap: 'wrap',
+    marginBlockEnd: '1rem',
+    marginBlockStart: '-0.25rem',
+    rowGap: '0.5rem',
+  },
+  definition: {
+    margin: 0,
+    gap: '0.25rem',
+    display: 'flex',
+    flexDirection: 'column',
+    minWidth: 0,
+  },
+  description: {
+    marginInline: 0,
+    color: 'var(--docs-text-secondary)',
+    lineHeight: 1.7,
+    marginBlockEnd: '1rem',
+    marginBlockStart: 0,
+    textWrap: 'pretty',
+    maxWidth: '68ch',
+  },
+  detailDeprecated: {
+    alignItems: 'baseline',
+    color: 'var(--docs-text-secondary)',
+    columnGap: '0.5rem',
+    display: 'flex',
+    flexWrap: 'wrap',
+    fontSize: '0.8125rem',
+    rowGap: '0.375rem',
+  },
+  empty: {
+    margin: 0,
+    paddingBlock: '0.75rem',
+    paddingInline: {
+      default: '0.875rem',
+      [mobile]: '0.75rem',
+    },
+    color: 'var(--docs-text-subtle)',
+    fontSize: '0.8125rem',
+    textAlign: 'center',
+    maxWidth: 'none',
+  },
+  flag: {
+    color: 'var(--docs-accent)',
+    fontSize: '0.625rem',
+    fontWeight: 650,
+    letterSpacing: '0.045em',
+    textTransform: 'uppercase',
+  },
+  flagDeprecated: {
+    color: 'var(--docs-danger-text, #b42318)',
+    fontSize: '0.625rem',
+    fontWeight: 650,
+    letterSpacing: '0.045em',
+    textTransform: 'uppercase',
+  },
+  footnote: {
+    margin: 0,
+    paddingBlock: '0.375rem',
+    paddingInline: {
+      default: '0.875rem',
+      [mobile]: '0.75rem',
+    },
+    backgroundColor: 'color-mix(in srgb, var(--docs-surface-muted) 55%, transparent)',
+    borderBlockStartColor: 'var(--docs-border-subtle)',
+    borderBlockStartStyle: 'solid',
+    borderBlockStartWidth: 1,
+    color: 'var(--docs-text-subtle)',
+    fontSize: '0.75rem',
+    maxWidth: 'none',
+  },
+  list: {
+    margin: 0,
+  },
+  origin: {
+    color: 'var(--docs-text-subtle)',
+    fontSize: '0.7188rem',
+  },
+  propertyName: {
+    borderColor: 'var(--docs-border-subtle)',
+    borderRadius: 'var(--docs-radius-sm)',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    paddingBlock: '0.125rem',
+    paddingInline: '0.375rem',
+    backgroundColor: 'var(--docs-surface-muted)',
+    color: 'var(--docs-text-primary)',
+    fontFamily: 'var(--docs-font-mono)',
+    fontSize: '0.75rem',
+    overflowWrap: 'anywhere',
+  },
+  prose,
+  proseDefault: {
+    ...prose,
+    color: 'var(--docs-text-subtle)',
+  },
+  root: {
+    color: 'var(--docs-text-secondary)',
+    marginBlockEnd: {
+      default: '2rem',
+      [mobile]: '1.5rem',
+    },
+    marginBlockStart: {
+      default: '0.75rem',
+      [mobile]: '0.5rem',
+    },
+  },
+  row: {
+    paddingBlock: '0.5rem',
+    paddingInline: {
+      default: '0.875rem',
+      [mobile]: '0.75rem',
+    },
+    backgroundColor: {
+      'default': null,
+      ':hover': 'var(--docs-surface-hover)',
+    },
+    borderBlockStartColor: 'var(--docs-border-subtle)',
+    borderBlockStartStyle: 'solid',
+    borderBlockStartWidth: {
+      'default': 0,
+      ':not(:first-child)': 1,
+    },
+    columnGap: '1rem',
+    display: 'grid',
+    gridTemplateColumns: {
+      default: 'minmax(8rem, 10rem) minmax(0, 1fr)',
+      [mobile]: '1fr',
+    },
+    rowGap: {
+      default: '0.75rem',
+      [mobile]: '0.375rem',
+    },
+  },
+  term: {
+    alignItems: {
+      default: 'flex-start',
+      [mobile]: 'baseline',
+    },
+    columnGap: {
+      default: '0.1875rem',
+      [mobile]: '0.5rem',
+    },
+    display: 'flex',
+    flexDirection: {
+      default: 'column',
+      [mobile]: 'row',
+    },
+    flexWrap: {
+      default: null,
+      [mobile]: 'wrap',
+    },
+    rowGap: {
+      default: '0.1875rem',
+      [mobile]: '0.25rem',
+    },
+    minWidth: 0,
+  },
+  type: {
+    padding: 0,
+    borderWidth: 0,
+    alignSelf: 'flex-start',
+    backgroundColor: 'transparent',
+    color: 'var(--docs-accent)',
+    fontFamily: 'var(--docs-font-mono)',
+    fontSize: '0.75rem',
+    lineHeight: 1.5,
+    overflowWrap: 'break-word',
+  },
+});

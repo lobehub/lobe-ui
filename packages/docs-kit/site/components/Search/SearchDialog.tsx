@@ -1,4 +1,5 @@
 import { Hotkey } from '@lobehub/ui';
+import * as stylex from '@stylexjs/stylex';
 import { Search } from 'lucide-react';
 import type { ChangeEvent, KeyboardEvent, RefObject } from 'react';
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
@@ -181,10 +182,10 @@ export function SearchDialog({
       : '';
 
   return (
-    <div className={styles.layer} data-pagefind-ignore="all">
+    <div {...stylex.props(styles.layer)} data-pagefind-ignore="all">
       <button
         aria-label="Dismiss search overlay"
-        className={styles.backdrop}
+        {...stylex.props(styles.backdrop)}
         tabIndex={-1}
         type="button"
         onClick={close}
@@ -192,14 +193,15 @@ export function SearchDialog({
       <div
         aria-label="Search documentation"
         aria-modal="true"
-        className={styles.dialog}
+        {...stylex.props(styles.dialog)}
         ref={dialogRef}
         role="dialog"
         onKeyDown={handleKeyDown}
       >
-        <div className={styles.inputRow}>
+        <div {...stylex.props(styles.inputRow)}>
           <Search aria-hidden size={18} strokeWidth={1.8} />
           <input
+            {...stylex.props(styles.input)}
             aria-activedescendant={activeDescendant}
             aria-controls={listId}
             aria-label="Search documentation"
@@ -213,7 +215,7 @@ export function SearchDialog({
           <Hotkey keys="esc" variant="outlined" />
         </div>
 
-        <div className={styles.body}>
+        <div {...stylex.props(styles.body)}>
           <SearchResultList
             activeIndex={boundedIndex}
             groups={groups}
@@ -238,17 +240,17 @@ export function SearchDialog({
           />
         </div>
 
-        <footer className={styles.footer}>
-          <span>
+        <footer {...stylex.props(styles.footer)}>
+          <span {...stylex.props(styles.footerItem)}>
             <Hotkey keys="up+down" variant="outlined" /> navigate
           </span>
-          <span>
+          <span {...stylex.props(styles.footerItem)}>
             <Hotkey keys="enter" variant="outlined" /> open
           </span>
-          <span>
+          <span {...stylex.props(styles.footerItem)}>
             <Hotkey keys="right" variant="outlined" /> jump to section
           </span>
-          <span>
+          <span {...stylex.props(styles.footerItem)}>
             <Hotkey keys="esc" variant="outlined" /> close
           </span>
         </footer>

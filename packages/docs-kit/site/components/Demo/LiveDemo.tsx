@@ -1,3 +1,4 @@
+import * as stylex from '@stylexjs/stylex';
 import type { CSSProperties } from 'react';
 import { Activity, useEffect, useLayoutEffect, useRef } from 'react';
 import { Editor } from 'react-live';
@@ -7,7 +8,7 @@ import { lobePrismTheme } from '../../styles/syntaxTheme';
 import type { DemoAppearance, DemoModule } from '../../types/demo';
 import { CanonicalPreview } from './CanonicalPreview';
 import { DemoEnvironment } from './DemoEnvironment';
-import { styles } from './style';
+import { demoClassNames, styles } from './style';
 import type { PreviewCandidate } from './useLiveDemo';
 import { useLiveDemo } from './useLiveDemo';
 
@@ -93,7 +94,7 @@ function CandidateSlot({ appearance, candidate, demoId, onCommit, state }: Candi
   return (
     <div
       aria-hidden={state === 'active' ? undefined : true}
-      className={styles.liveCandidate}
+      className={demoClassNames.liveCandidate}
       data-live-generation={candidate.generation}
       data-live-state={state}
       inert={state !== 'active'}
@@ -118,15 +119,19 @@ export function LiveDemo({
   return (
     <>
       <div
-        className={styles.viewport}
+        className={demoClassNames.viewport}
         data-demo-appearance={appearance}
         data-demo-viewport={viewport}
         data-pagefind-ignore="all"
       >
-        <div className={styles.preview} style={style}>
+        <div className={demoClassNames.preview} style={style}>
           {showLive ? null : <CanonicalPreview appearance={appearance} demo={demo} />}
           <Activity mode={expanded ? 'visible' : 'hidden'}>
-            <div aria-label="Edited demo preview" className={styles.liveStage} hidden={!showLive}>
+            <div
+              aria-label="Edited demo preview"
+              className={demoClassNames.liveStage}
+              hidden={!showLive}
+            >
               {live.candidates.map((candidate) => (
                 <CandidateSlot
                   appearance={appearance}
@@ -146,11 +151,11 @@ export function LiveDemo({
             </div>
           </Activity>
         </div>
-        {showLive ? <span className={styles.liveBadge}>Live</span> : null}
+        {showLive ? <span {...stylex.props(styles.liveBadge)}>Live</span> : null}
       </div>
       <div
         aria-hidden={expanded ? undefined : true}
-        className={styles.sourcePanel}
+        className={demoClassNames.sourcePanel}
         data-code-type="live-demo"
         data-pagefind-ignore="all"
         hidden={!expanded}
@@ -159,30 +164,31 @@ export function LiveDemo({
       >
         <Activity mode={expanded ? 'visible' : 'hidden'}>
           <section data-pagefind-ignore="all">
-            <div className={styles.liveSource}>
+            <div {...stylex.props(styles.liveSource)}>
               {live.sourceParts.immutableSource ? (
                 <pre
                   aria-label="Read-only imports"
-                  className={styles.liveImports}
+                  {...stylex.props(styles.liveImports)}
                   data-demo-live-imports=""
                   tabIndex={0}
                 >
                   <code>{live.sourceParts.immutableSource}</code>
                 </pre>
               ) : null}
-              <div className={styles.liveInput}>
+              <div className={demoClassNames.liveInput}>
                 <SourceEditor code={live.editableSource} onChange={live.setEditableSource} />
               </div>
             </div>
             {live.scopeStatus === 'loading' ? (
-              <div className={styles.liveStatus} role="status">
+              <div {...stylex.props(styles.liveStatus)} role="status">
                 Loading editable dependencies…
               </div>
             ) : null}
             {live.diagnostics.length > 0 ? (
-              <div aria-live="polite" className={styles.liveDiagnostics} role="alert">
+              <div aria-live="polite" {...stylex.props(styles.liveDiagnostics)} role="alert">
                 {live.diagnostics.map((diagnostic) => (
                   <p
+                    {...stylex.props(styles.liveDiagnostic)}
                     key={`${diagnostic.line ?? 0}:${diagnostic.column ?? 0}:${diagnostic.message}`}
                   >
                     {formatDiagnostic(diagnostic)}

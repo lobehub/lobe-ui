@@ -1,3 +1,4 @@
+import * as stylex from '@stylexjs/stylex';
 import { Component, type ReactNode } from 'react';
 
 import { styles } from './style';
@@ -33,10 +34,10 @@ export class DemoErrorBoundary extends Component<DemoErrorBoundaryProps, DemoErr
     if (!error) return this.props.children;
 
     return (
-      <div className={styles.error} role="alert">
-        <strong>Unable to render this demo.</strong>
-        <code>{error.message}</code>
-        <button type="button" onClick={this.retry}>
+      <div {...stylex.props(styles.error)} role="alert">
+        <strong {...stylex.props(styles.errorTitle)}>Unable to render this demo.</strong>
+        <code {...stylex.props(styles.errorMessage)}>{error.message}</code>
+        <button {...stylex.props(styles.errorRetry)} type="button" onClick={this.retry}>
           Retry demo
         </button>
       </div>

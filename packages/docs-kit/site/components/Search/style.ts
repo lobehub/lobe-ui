@@ -1,386 +1,361 @@
-import { createStaticStyles } from '@lobehub/ui';
-
-export const styles = createStaticStyles(({ css }) => {
-  const markReset = css`
-    mark {
-      font-weight: 680;
-      color: inherit;
-      background: transparent;
-    }
-  `;
-
-  const dialog = css`
-    position: relative;
-
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-
-    width: min(100%, 52rem);
-    height: min(40rem, calc(100dvh - 2rem));
-    max-height: min(40rem, calc(100dvh - 2rem));
-    border: 1px solid var(--docs-border-default);
-    border-radius: var(--docs-radius-lg);
-
-    color: var(--docs-text-primary);
-
-    background: color-mix(in srgb, var(--docs-surface-raised) 92%, transparent);
-    backdrop-filter: blur(20px);
-    box-shadow:
-      0 24px 80px rgb(0 0 0 / 24%),
-      var(--docs-shadow-control);
-
-    @media (width <= 32rem) {
-      width: 100%;
-      height: 100dvh;
-      min-height: 100dvh;
-      max-height: 100dvh;
-      border: 0;
-      border-radius: 0;
-    }
-  `;
-
-  const footer = css`
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-
-    min-height: 2.5rem;
-    padding-inline: 1rem;
-    border-block-start: 1px solid var(--docs-border-subtle);
-
-    font-size: 0.6875rem;
-    color: var(--docs-text-subtle);
-
-    background: var(--docs-surface-muted);
-
-    span {
-      display: inline-flex;
-      gap: 0.35rem;
-      align-items: center;
-    }
-
-    @media (width <= 32rem) {
-      margin-block-start: auto;
-    }
-  `;
-
-  return {
-    backdrop: css`
-      position: absolute;
-      inset: 0;
-
-      width: 100%;
-      height: 100%;
-      padding: 0;
-      border: 0;
-
-      background: var(--docs-overlay);
-    `,
-
-    body: css`
-      display: flex;
-      flex: 1;
-      min-height: 0;
-    `,
-
-    dialog,
-
-    footer,
-
-    group: css`
-      &:not(:first-of-type) {
-        margin-block-start: 0.5rem;
-      }
-    `,
-
-    groupLabel: css`
-      padding-block: 0.5rem 0.25rem;
-      padding-inline: 0.6rem;
-
-      font-size: 0.625rem;
-      font-weight: 600;
-      color: var(--docs-text-subtle);
-      text-transform: uppercase;
-      letter-spacing: 0.09em;
-    `,
-
-    inputRow: css`
-      display: flex;
-      gap: 0.75rem;
-      align-items: center;
-
-      min-height: 3.5rem;
-      padding-inline: 1rem 0.9rem;
-      border-block-end: 1px solid var(--docs-border-subtle);
-
-      color: var(--docs-text-subtle);
-
-      input {
-        flex: 1;
-
-        min-width: 0;
-        height: 3.25rem;
-        border: 0;
-
-        font: inherit;
-        font-size: 0.9375rem;
-        color: var(--docs-text-primary);
-
-        background: transparent;
-        outline: 0;
-
-        &::placeholder {
-          color: var(--docs-text-subtle);
-        }
-
-        &::-webkit-search-cancel-button,
-        &::-webkit-search-decoration {
-          display: none;
-          appearance: none;
-        }
-      }
-    `,
-
-    layer: css`
-      position: fixed;
-      z-index: 140;
-      inset: 0;
-
-      display: grid;
-      place-items: start center;
-
-      padding-block: min(14vh, 8rem) 1rem;
-      padding-inline: 1rem;
-
-      @media (width <= 32rem) {
-        padding: 0;
-      }
-    `,
-
-    listPane: css`
-      display: flex;
-      flex-basis: 55%;
-      flex-direction: column;
-
-      min-width: 0;
-      min-height: 0;
-      border-inline-end: 1px solid var(--docs-border-subtle);
-
-      @media (width <= 48rem) {
-        flex-basis: auto;
-        flex-grow: 1;
-        border-inline-end: 0;
-      }
-    `,
-
-    preview: css`
-      ${markReset}
-      overflow: auto;
-      flex: 1;
-
-      min-width: 0;
-      padding-block: 1.1rem;
-      padding-inline: 1.25rem;
-
-      background: var(--docs-surface-muted);
-
-      @media (width <= 48rem) {
-        display: none;
-      }
-    `,
-
-    previewAnchor: css`
-      cursor: pointer;
-
-      display: flex;
-      gap: 0.35rem;
-      align-items: center;
-
-      width: 100%;
-      padding-block: 0.35rem;
-      padding-inline: 0.4rem;
-      border: 0;
-      border-radius: var(--docs-radius-sm);
-
-      font: inherit;
-      font-size: 0.8125rem;
-      color: var(--docs-text-secondary);
-      text-align: start;
-
-      background: transparent;
-
-      svg {
-        flex: none;
-        color: var(--docs-text-subtle);
-      }
-
-      &[data-active='true'] {
-        color: var(--docs-text-primary);
-        background: var(--docs-surface-hover);
-      }
-    `,
-
-    previewAnchors: css`
-      display: flex;
-      flex-direction: column;
-      gap: 0.1rem;
-
-      margin-block-start: 1.1rem;
-      padding-block-start: 0.9rem;
-      border-block-start: 1px solid var(--docs-border-subtle);
-    `,
-
-    previewAnchorsLabel: css`
-      padding-block-end: 0.35rem;
-      padding-inline: 0.4rem;
-
-      font-size: 0.625rem;
-      font-weight: 600;
-      color: var(--docs-text-subtle);
-      text-transform: uppercase;
-      letter-spacing: 0.09em;
-    `,
-
-    previewCategory: css`
-      font-size: 0.625rem;
-      font-weight: 600;
-      color: var(--docs-text-subtle);
-      text-transform: uppercase;
-      letter-spacing: 0.09em;
-    `,
-
-    previewExcerpt: css`
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-box-orient: vertical;
-      -webkit-line-clamp: 6;
-
-      margin-block-start: 0.5rem;
-
-      font-size: 0.8125rem;
-      line-height: 1.55;
-      color: var(--docs-text-secondary);
-    `,
-
-    previewTitle: css`
-      margin-block: 0.4rem 0;
-      font-size: 0.9375rem;
-      font-weight: 650;
-      color: var(--docs-text-primary);
-    `,
-
-    result: css`
-      cursor: pointer;
-
-      display: flex;
-      gap: 0.6rem;
-      align-items: center;
-
-      min-height: 2.25rem;
-      padding-block: 0.3rem;
-      padding-inline: 0.5rem 0.6rem;
-      border: 1px solid transparent;
-      border-radius: var(--docs-radius-md);
-
-      color: var(--docs-text-secondary);
-
-      ${markReset}
-
-      &[aria-selected='true'] {
-        border-color: var(--docs-border-subtle);
-        color: var(--docs-text-primary);
-        background: var(--docs-surface-hover);
-      }
-
-      [data-remove] {
-        opacity: 0;
-        transition: opacity 0.12s ease;
-      }
-
-      &:hover [data-remove],
-      &[aria-selected='true'] [data-remove],
-      [data-remove]:focus-visible {
-        opacity: 1;
-      }
-    `,
-
-    resultEnter: css`
-      flex: none;
-      color: var(--docs-text-subtle);
-    `,
-
-    resultExcerpt: css`
-      color: var(--docs-text-subtle);
-    `,
-
-    resultIcon: css`
-      display: grid;
-      flex: none;
-      place-items: center;
-
-      width: 1.5rem;
-      height: 1.5rem;
-      border-radius: var(--docs-radius-sm);
-
-      color: var(--docs-text-subtle);
-
-      background: var(--docs-surface-muted);
-    `,
-
-    resultRemove: css`
-      cursor: pointer;
-
-      display: inline-grid;
-      flex: none;
-      place-items: center;
-
-      width: 1.25rem;
-      height: 1.25rem;
-      padding: 0;
-      border: 0;
-      border-radius: var(--docs-radius-sm);
-
-      color: var(--docs-text-subtle);
-
-      background: transparent;
-
-      &:hover {
-        color: var(--docs-text-primary);
-        background: var(--docs-surface-active);
-      }
-    `,
-
-    resultTitle: css`
-      overflow: hidden;
-      flex: 1;
-
-      min-width: 0;
-
-      font-size: 0.8125rem;
-      font-weight: 560;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    `,
-
-    results: css`
-      overflow: auto;
-      flex: 1;
-
-      min-width: 0;
-      min-height: 0;
-      padding-block: 0.4rem 0.75rem;
-      padding-inline: 0.5rem;
-    `,
-
-    resultsStatus: css`
-      font-size: 0.75rem;
-      color: var(--docs-text-subtle);
-
-      &:not(:empty) {
-        padding-block: 0.6rem 0.2rem;
-        padding-inline: 1rem;
-      }
-    `,
-  };
+import * as stylex from '@stylexjs/stylex';
+
+import { resultMarker } from './markers.stylex';
+
+const fullscreen = '@media (width <= 32rem)';
+const singlePane = '@media (width <= 48rem)';
+
+const eyebrow = {
+  textTransform: 'uppercase',
+  color: 'var(--docs-text-subtle)',
+  fontSize: '0.625rem',
+  fontWeight: 600,
+  letterSpacing: '0.09em',
+} as const;
+
+export const styles = stylex.create({
+  backdrop: {
+    inset: 0,
+    padding: 0,
+    borderWidth: 0,
+    backgroundColor: 'var(--docs-overlay)',
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+  },
+  body: {
+    display: 'flex',
+    flexBasis: '0%',
+    flexGrow: 1,
+    flexShrink: 1,
+    minHeight: 0,
+  },
+  dialog: {
+    borderColor: 'var(--docs-border-default)',
+    borderRadius: {
+      default: 'var(--docs-radius-lg)',
+      [fullscreen]: 0,
+    },
+    borderStyle: 'solid',
+    borderWidth: {
+      default: 1,
+      [fullscreen]: 0,
+    },
+    overflow: 'hidden',
+    backdropFilter: 'blur(20px)',
+    backgroundColor: 'color-mix(in srgb, var(--docs-surface-raised) 92%, transparent)',
+    boxShadow: '0 24px 80px rgb(0 0 0 / 24%), var(--docs-shadow-control)',
+    color: 'var(--docs-text-primary)',
+    display: 'flex',
+    flexDirection: 'column',
+    position: 'relative',
+    height: {
+      default: 'min(40rem, calc(100dvh - 2rem))',
+      [fullscreen]: '100dvh',
+    },
+    maxHeight: {
+      default: 'min(40rem, calc(100dvh - 2rem))',
+      [fullscreen]: '100dvh',
+    },
+    minHeight: {
+      default: null,
+      [fullscreen]: '100dvh',
+    },
+    width: {
+      default: 'min(100%, 52rem)',
+      [fullscreen]: '100%',
+    },
+  },
+  footer: {
+    gap: '1rem',
+    paddingInline: '1rem',
+    alignItems: 'center',
+    backgroundColor: 'var(--docs-surface-muted)',
+    borderBlockStartColor: 'var(--docs-border-subtle)',
+    borderBlockStartStyle: 'solid',
+    borderBlockStartWidth: 1,
+    color: 'var(--docs-text-subtle)',
+    display: 'flex',
+    fontSize: '0.6875rem',
+    marginBlockStart: {
+      default: null,
+      [fullscreen]: 'auto',
+    },
+    minHeight: '2.5rem',
+  },
+  footerItem: {
+    gap: '0.35rem',
+    alignItems: 'center',
+    display: 'inline-flex',
+  },
+  group: {
+    marginBlockStart: {
+      'default': null,
+      ':not(:first-of-type)': '0.5rem',
+    },
+  },
+  groupLabel: {
+    ...eyebrow,
+    paddingInline: '0.6rem',
+    paddingBlockEnd: '0.25rem',
+    paddingBlockStart: '0.5rem',
+  },
+  input: {
+    'font': 'inherit',
+    'borderWidth': 0,
+    'outline': 'none',
+    'backgroundColor': 'transparent',
+    'color': 'var(--docs-text-primary)',
+    'flexBasis': '0%',
+    'flexGrow': 1,
+    'flexShrink': 1,
+    'fontSize': '0.9375rem',
+    'height': '3.25rem',
+    'minWidth': 0,
+    '::-webkit-search-cancel-button': {
+      appearance: 'none',
+      display: 'none',
+    },
+    '::-webkit-search-decoration': {
+      appearance: 'none',
+      display: 'none',
+    },
+    '::placeholder': {
+      color: 'var(--docs-text-subtle)',
+    },
+  },
+  inputRow: {
+    gap: '0.75rem',
+    alignItems: 'center',
+    borderBlockEndColor: 'var(--docs-border-subtle)',
+    borderBlockEndStyle: 'solid',
+    borderBlockEndWidth: 1,
+    color: 'var(--docs-text-subtle)',
+    display: 'flex',
+    paddingInlineEnd: '0.9rem',
+    paddingInlineStart: '1rem',
+    minHeight: '3.5rem',
+  },
+  layer: {
+    inset: 0,
+    paddingBlock: {
+      default: 'min(14vh, 8rem) 1rem',
+      [fullscreen]: 0,
+    },
+    paddingInline: {
+      default: '1rem',
+      [fullscreen]: 0,
+    },
+    placeItems: 'start center',
+    display: 'grid',
+    position: 'fixed',
+    zIndex: 140,
+  },
+  listPane: {
+    borderInlineEndColor: 'var(--docs-border-subtle)',
+    borderInlineEndStyle: 'solid',
+    borderInlineEndWidth: {
+      default: 1,
+      [singlePane]: 0,
+    },
+    display: 'flex',
+    flexBasis: {
+      default: '55%',
+      [singlePane]: 'auto',
+    },
+    flexDirection: 'column',
+    flexGrow: {
+      default: null,
+      [singlePane]: 1,
+    },
+    minHeight: 0,
+    minWidth: 0,
+  },
+  mark: {
+    backgroundColor: 'transparent',
+    color: 'inherit',
+    fontWeight: 680,
+  },
+  preview: {
+    overflow: 'auto',
+    paddingBlock: '1.1rem',
+    paddingInline: '1.25rem',
+    backgroundColor: 'var(--docs-surface-muted)',
+    display: {
+      default: null,
+      [singlePane]: 'none',
+    },
+    flexBasis: '0%',
+    flexGrow: 1,
+    flexShrink: 1,
+    minWidth: 0,
+  },
+  previewAnchor: {
+    font: 'inherit',
+    borderRadius: 'var(--docs-radius-sm)',
+    borderWidth: 0,
+    gap: '0.35rem',
+    paddingBlock: '0.35rem',
+    paddingInline: '0.4rem',
+    alignItems: 'center',
+    backgroundColor: 'transparent',
+    color: 'var(--docs-text-secondary)',
+    cursor: 'pointer',
+    display: 'flex',
+    fontSize: '0.8125rem',
+    textAlign: 'start',
+    width: '100%',
+  },
+  previewAnchorActive: {
+    backgroundColor: 'var(--docs-surface-hover)',
+    color: 'var(--docs-text-primary)',
+  },
+  previewAnchorIcon: {
+    color: 'var(--docs-text-subtle)',
+    flexBasis: 'auto',
+    flexGrow: 0,
+    flexShrink: 0,
+  },
+  previewAnchors: {
+    gap: '0.1rem',
+    borderBlockStartColor: 'var(--docs-border-subtle)',
+    borderBlockStartStyle: 'solid',
+    borderBlockStartWidth: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    marginBlockStart: '1.1rem',
+    paddingBlockStart: '0.9rem',
+  },
+  previewAnchorsLabel: {
+    ...eyebrow,
+    paddingInline: '0.4rem',
+    paddingBlockEnd: '0.35rem',
+  },
+  previewCategory: eyebrow,
+  previewExcerpt: {
+    overflow: 'hidden',
+    WebkitBoxOrient: 'vertical',
+    WebkitLineClamp: 6,
+    color: 'var(--docs-text-secondary)',
+    display: '-webkit-box',
+    fontSize: '0.8125rem',
+    lineHeight: 1.55,
+    marginBlockStart: '0.5rem',
+  },
+  previewTitle: {
+    color: 'var(--docs-text-primary)',
+    fontSize: '0.9375rem',
+    fontWeight: 650,
+    marginBlockEnd: 0,
+    marginBlockStart: '0.4rem',
+  },
+  result: {
+    borderColor: 'transparent',
+    borderRadius: 'var(--docs-radius-md)',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    gap: '0.6rem',
+    paddingBlock: '0.3rem',
+    alignItems: 'center',
+    color: 'var(--docs-text-secondary)',
+    cursor: 'pointer',
+    display: 'flex',
+    paddingInlineEnd: '0.6rem',
+    paddingInlineStart: '0.5rem',
+    minHeight: '2.25rem',
+  },
+  resultEnter: {
+    color: 'var(--docs-text-subtle)',
+    flexBasis: 'auto',
+    flexGrow: 0,
+    flexShrink: 0,
+  },
+  resultExcerpt: {
+    color: 'var(--docs-text-subtle)',
+  },
+  resultIcon: {
+    borderRadius: 'var(--docs-radius-sm)',
+    placeItems: 'center',
+    backgroundColor: 'var(--docs-surface-muted)',
+    color: 'var(--docs-text-subtle)',
+    display: 'grid',
+    flexBasis: 'auto',
+    flexGrow: 0,
+    flexShrink: 0,
+    height: '1.5rem',
+    width: '1.5rem',
+  },
+  resultRemove: {
+    padding: 0,
+    borderRadius: 'var(--docs-radius-sm)',
+    borderWidth: 0,
+    placeItems: 'center',
+    transition: 'opacity 0.12s ease',
+    backgroundColor: {
+      'default': 'transparent',
+      ':hover': 'var(--docs-surface-active)',
+    },
+    color: {
+      'default': 'var(--docs-text-subtle)',
+      ':hover': 'var(--docs-text-primary)',
+    },
+    cursor: 'pointer',
+    display: 'inline-grid',
+    flexBasis: 'auto',
+    flexGrow: 0,
+    flexShrink: 0,
+    opacity: {
+      'default': 0,
+      [stylex.when.ancestor(':hover', resultMarker)]: 1,
+      ':focus-visible': 1,
+    },
+    height: '1.25rem',
+    width: '1.25rem',
+  },
+  resultRemoveVisible: {
+    opacity: 1,
+  },
+  resultSelected: {
+    borderColor: 'var(--docs-border-subtle)',
+    backgroundColor: 'var(--docs-surface-hover)',
+    color: 'var(--docs-text-primary)',
+  },
+  resultTitle: {
+    overflow: 'hidden',
+    flexBasis: '0%',
+    flexGrow: 1,
+    flexShrink: 1,
+    fontSize: '0.8125rem',
+    fontWeight: 560,
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    minWidth: 0,
+  },
+  results: {
+    overflow: 'auto',
+    paddingInline: '0.5rem',
+    flexBasis: '0%',
+    flexGrow: 1,
+    flexShrink: 1,
+    paddingBlockEnd: '0.75rem',
+    paddingBlockStart: '0.4rem',
+    minHeight: 0,
+    minWidth: 0,
+  },
+  resultsStatus: {
+    paddingInline: {
+      'default': null,
+      ':not(:empty)': '1rem',
+    },
+    color: 'var(--docs-text-subtle)',
+    fontSize: '0.75rem',
+    paddingBlockEnd: {
+      'default': null,
+      ':not(:empty)': '0.2rem',
+    },
+    paddingBlockStart: {
+      'default': null,
+      ':not(:empty)': '0.6rem',
+    },
+  },
 });

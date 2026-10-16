@@ -1,4 +1,7 @@
+import * as stylex from '@stylexjs/stylex';
 import type { ReactNode } from 'react';
+
+import { styles } from './style';
 
 interface HighlightProps {
   query: string;
@@ -37,7 +40,7 @@ export const Highlight = ({ query, text }: HighlightProps) => {
 
     return (
       <span key={key}>
-        <mark>{segment.slice(0, length)}</mark>
+        <mark {...stylex.props(styles.mark)}>{segment.slice(0, length)}</mark>
         {segment.slice(length)}
       </span>
     );

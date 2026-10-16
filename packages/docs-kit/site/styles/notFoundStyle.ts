@@ -1,164 +1,141 @@
-import { createStaticStyles } from '@lobehub/ui';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css }) => ({
-  code: css`
-    margin: 0;
-
-    font-size: clamp(3.5rem, 10vw, 5.5rem);
-    font-weight: 700;
-    line-height: 1;
-    letter-spacing: -0.05em;
-
-    background: var(--docs-gradient-spectral);
-    background-clip: text;
-
-    -webkit-text-fill-color: transparent;
-  `,
-
-  actions: css`
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem;
-    justify-content: center;
-
-    margin-block-start: 2rem;
-  `,
-
-  link: css`
-    display: inline-flex;
-    gap: 0.5rem;
-    align-items: center;
-
-    min-height: 2.5rem;
-    padding-block: 0;
-    padding-inline: 1.125rem;
-    border: 1px solid var(--docs-border-default);
-    border-radius: var(--docs-radius-md);
-
-    font-size: 0.875rem;
-    font-weight: 550;
-    color: var(--docs-text-primary);
-    text-decoration: none;
-
-    background: var(--docs-surface-raised);
-
-    transition:
-      border-color 140ms ease,
-      background-color 140ms ease;
-
-    &:hover {
-      border-color: var(--docs-border-strong);
-      background: var(--docs-surface-hover);
-    }
-  `,
-
-  path: css`
-    padding-block: 0.125rem;
-    padding-inline: 0.375rem;
-    border: 1px solid var(--docs-border-default);
-    border-radius: var(--docs-radius-sm);
-
-    font-family: var(--docs-font-mono);
-    font-size: 0.8125rem;
-    color: var(--docs-text-primary);
-
-    background: var(--docs-surface-raised);
-  `,
-
-  searchButton: css`
-    cursor: pointer;
-
-    display: inline-flex;
-    gap: 0.5rem;
-    align-items: center;
-
-    min-height: 2.5rem;
-    padding-block: 0;
-    padding-inline: 1.125rem;
-    border: none;
-    border-radius: var(--docs-radius-md);
-
-    font-size: 0.875rem;
-    font-weight: 550;
-    color: var(--docs-accent-contrast);
-
-    background: var(--docs-accent);
-
-    transition: filter 140ms ease;
-
-    &:hover {
-      filter: brightness(1.08);
-    }
-  `,
-
-  suggestions: css`
-    margin-block-start: 1.75rem;
-
-    ul {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem 1.25rem;
-      justify-content: center;
-
-      margin: 0;
-      padding: 0;
-
-      list-style: none;
-    }
-
-    a {
-      border-block-end: 1px solid var(--docs-border-strong);
-
-      font-size: 0.9375rem;
-      font-weight: 500;
-      color: var(--docs-text-primary);
-      text-decoration: none;
-
-      transition:
-        color 140ms ease,
-        border-color 140ms ease;
-
-      &:hover {
-        border-block-end-color: var(--docs-accent);
-        color: var(--docs-accent);
-      }
-    }
-  `,
-
-  suggestionsTitle: css`
-    margin-block: 0 0.625rem;
-    margin-inline: 0;
-    font-size: 0.8125rem;
-    color: var(--docs-text-subtle);
-  `,
-
-  root: css`
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-    align-items: center;
-
-    width: min(100% - 2rem, 44rem);
-    margin-inline: auto;
-    padding-block: clamp(5rem, 18vh, 10rem);
-
-    text-align: center;
-
-    h1 {
-      margin-block: 1rem 0;
-      margin-inline: 0;
-
-      font-size: clamp(1.375rem, 3vw, 1.75rem);
-      font-weight: 640;
-      color: var(--docs-text-primary);
-      letter-spacing: -0.03em;
-    }
-
-    p:not(:first-of-type) {
-      margin-block: 0.75rem 0;
-      margin-inline: 0;
-      line-height: 1.7;
-      color: var(--docs-text-secondary);
-    }
-  `,
-}));
+export const styles = stylex.create({
+  actions: {
+    gap: '0.75rem',
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    marginBlockStart: '2rem',
+  },
+  code: {
+    WebkitTextFillColor: 'transparent',
+    margin: 0,
+    backgroundClip: 'text',
+    backgroundImage: 'var(--docs-gradient-spectral)',
+    fontSize: 'clamp(3.5rem, 10vw, 5.5rem)',
+    fontWeight: 700,
+    letterSpacing: '-0.05em',
+    lineHeight: 1,
+  },
+  description: {
+    marginInline: 0,
+    color: 'var(--docs-text-secondary)',
+    lineHeight: 1.7,
+    marginBlockEnd: 0,
+    marginBlockStart: '0.75rem',
+  },
+  link: {
+    borderColor: {
+      'default': 'var(--docs-border-default)',
+      ':hover': 'var(--docs-border-strong)',
+    },
+    borderRadius: 'var(--docs-radius-md)',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    gap: '0.5rem',
+    paddingBlock: 0,
+    paddingInline: '1.125rem',
+    textDecoration: 'none',
+    transition: 'border-color 140ms ease, background-color 140ms ease',
+    alignItems: 'center',
+    backgroundColor: {
+      'default': 'var(--docs-surface-raised)',
+      ':hover': 'var(--docs-surface-hover)',
+    },
+    color: 'var(--docs-text-primary)',
+    display: 'inline-flex',
+    fontSize: '0.875rem',
+    fontWeight: 550,
+    minHeight: '2.5rem',
+  },
+  path: {
+    borderColor: 'var(--docs-border-default)',
+    borderRadius: 'var(--docs-radius-sm)',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    paddingBlock: '0.125rem',
+    paddingInline: '0.375rem',
+    backgroundColor: 'var(--docs-surface-raised)',
+    color: 'var(--docs-text-primary)',
+    fontFamily: 'var(--docs-font-mono)',
+    fontSize: '0.8125rem',
+  },
+  root: {
+    marginInline: 'auto',
+    paddingBlock: 'clamp(5rem,18vh,10rem)',
+    alignItems: 'center',
+    display: 'flex',
+    flexBasis: '0%',
+    flexDirection: 'column',
+    flexGrow: 1,
+    flexShrink: 1,
+    textAlign: 'center',
+    width: 'min(100% - 2rem, 44rem)',
+  },
+  searchButton: {
+    borderRadius: 'var(--docs-radius-md)',
+    borderStyle: 'none',
+    gap: '0.5rem',
+    paddingBlock: 0,
+    paddingInline: '1.125rem',
+    transition: 'filter 140ms ease',
+    alignItems: 'center',
+    backgroundColor: 'var(--docs-accent)',
+    color: 'var(--docs-accent-contrast)',
+    cursor: 'pointer',
+    display: 'inline-flex',
+    filter: {
+      'default': null,
+      ':hover': 'brightness(1.08)',
+    },
+    fontSize: '0.875rem',
+    fontWeight: 550,
+    minHeight: '2.5rem',
+  },
+  suggestionLink: {
+    textDecoration: 'none',
+    transition: 'color 140ms ease, border-color 140ms ease',
+    borderBlockEndColor: {
+      'default': 'var(--docs-border-strong)',
+      ':hover': 'var(--docs-accent)',
+    },
+    borderBlockEndStyle: 'solid',
+    borderBlockEndWidth: 1,
+    color: {
+      'default': 'var(--docs-text-primary)',
+      ':hover': 'var(--docs-accent)',
+    },
+    fontSize: '0.9375rem',
+    fontWeight: 500,
+  },
+  suggestionList: {
+    margin: 0,
+    padding: 0,
+    listStyle: 'none',
+    columnGap: '1.25rem',
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    rowGap: '0.5rem',
+  },
+  suggestions: {
+    marginBlockStart: '1.75rem',
+  },
+  suggestionsTitle: {
+    marginInline: 0,
+    color: 'var(--docs-text-subtle)',
+    fontSize: '0.8125rem',
+    marginBlockEnd: '0.625rem',
+    marginBlockStart: 0,
+  },
+  title: {
+    marginInline: 0,
+    color: 'var(--docs-text-primary)',
+    fontSize: 'clamp(1.375rem, 3vw, 1.75rem)',
+    fontWeight: 640,
+    letterSpacing: '-0.03em',
+    marginBlockEnd: 0,
+    marginBlockStart: '1rem',
+  },
+});

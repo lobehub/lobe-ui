@@ -1,157 +1,112 @@
-import { createStaticStyles } from '@lobehub/ui';
+import * as stylex from '@stylexjs/stylex';
 
-export const styles = createStaticStyles(({ css }) => {
-  const iconButton = css`
-    cursor: pointer;
+const reducedMotion = '@media (prefers-reduced-motion: reduce)';
+const compactSearch = '@media (width <= 64rem)';
 
-    display: inline-grid;
-    place-items: center;
-
-    width: 2rem;
-    min-width: 2rem;
-    height: 2rem;
-    padding: 0;
-    border: 0;
-    border-radius: var(--docs-radius-md);
-
-    color: var(--docs-text-subtle);
-
-    background: transparent;
-
-    transition:
-      color 140ms ease,
-      background-color 140ms ease,
-      transform 90ms ease;
-
-    &:hover {
-      color: var(--docs-text-primary);
-      background: var(--docs-surface-hover);
-    }
-
-    &:active {
-      transform: scale(0.96);
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      transition-duration: 0.01ms;
-    }
-  `;
-
-  return {
-    actionLink: css`
-      display: inline-flex;
-      align-items: center;
-
-      padding-inline: 0.5rem;
-
-      font-size: 0.8438rem;
-      font-weight: 480;
-      color: var(--docs-text-subtle);
-      text-decoration: none;
-      white-space: nowrap;
-
-      transition: color 140ms ease;
-
-      &:hover {
-        color: var(--docs-text-primary);
-      }
-
-      @media (width <= 47.5rem) {
-        display: none;
-      }
-    `,
-
-    brandLogo: css`
-      > :not(:first-child) {
-        transition: opacity 120ms ease 80ms;
-
-        [data-collapsed='true'] & {
-          opacity: 0;
-          transition-delay: 0s;
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-          transition: none;
-        }
-      }
-    `,
-
-    iconButton,
-
-    search: css`
-      cursor: pointer;
-
-      display: flex;
-      gap: 0.5rem;
-      align-items: center;
-
-      width: 15rem;
-      min-height: 2rem;
-      padding-block: 0;
-      padding-inline: 0.625rem 0.5rem;
-      border: 1px solid var(--docs-border-default);
-      border-radius: var(--docs-radius-md);
-
-      font: inherit;
-      color: var(--docs-text-subtle);
-
-      background: var(--docs-surface-raised);
-
-      transition:
-        border-color 140ms ease,
-        color 140ms ease,
-        background-color 140ms ease;
-
-      &:hover {
-        border-color: var(--docs-border-strong);
-        color: var(--docs-text-primary);
-        background: var(--docs-surface-hover);
-      }
-
-      span {
-        font-size: 0.8125rem;
-      }
-
-      @media (width <= 64rem) {
-        justify-content: center;
-
-        width: 2rem;
-        min-width: 2rem;
-        padding: 0;
-        border: 0;
-
-        background: transparent;
-
-        span {
-          display: none;
-        }
-
-        &:hover {
-          background: var(--docs-surface-hover);
-        }
-      }
-
-      @media (prefers-reduced-motion: reduce) {
-        transition-duration: 0.01ms;
-      }
-    `,
-
-    searchHotkey: css`
-      margin-inline-start: auto;
-
-      @media (width <= 64rem) {
-        display: none;
-      }
-    `,
-
-    shell: css`
-      height: 100dvh;
-
-      > div > main {
-        scroll-padding-top: 1.5rem;
-        gap: 0;
-        padding: 0;
-      }
-    `,
-  };
+export const styles = stylex.create({
+  actionLink: {
+    paddingInline: '0.5rem',
+    textDecoration: 'none',
+    transition: 'color 140ms ease',
+    alignItems: 'center',
+    color: {
+      'default': 'var(--docs-text-subtle)',
+      ':hover': 'var(--docs-text-primary)',
+    },
+    display: {
+      'default': 'inline-flex',
+      '@media (width <= 47.5rem)': 'none',
+    },
+    fontSize: '0.8438rem',
+    fontWeight: 480,
+    whiteSpace: 'nowrap',
+  },
+  iconButton: {
+    padding: 0,
+    borderRadius: 'var(--docs-radius-md)',
+    borderWidth: 0,
+    placeItems: 'center',
+    transition: 'color 140ms ease, background-color 140ms ease, transform 90ms ease',
+    backgroundColor: {
+      'default': 'transparent',
+      ':hover': 'var(--docs-surface-hover)',
+    },
+    color: {
+      'default': 'var(--docs-text-subtle)',
+      ':hover': 'var(--docs-text-primary)',
+    },
+    cursor: 'pointer',
+    display: 'inline-grid',
+    transform: {
+      'default': null,
+      ':active': 'scale(0.96)',
+    },
+    transitionDuration: { default: null, [reducedMotion]: '0.01ms' },
+    height: '2rem',
+    minWidth: '2rem',
+    width: '2rem',
+  },
+  search: {
+    font: 'inherit',
+    borderColor: {
+      'default': 'var(--docs-border-default)',
+      ':hover': 'var(--docs-border-strong)',
+    },
+    borderRadius: 'var(--docs-radius-md)',
+    borderStyle: 'solid',
+    borderWidth: {
+      [compactSearch]: 0,
+      default: 1,
+    },
+    gap: '0.5rem',
+    paddingBlock: 0,
+    paddingInline: {
+      [compactSearch]: 0,
+      default: '0.625rem 0.5rem',
+    },
+    transition: 'border-color 140ms ease, color 140ms ease, background-color 140ms ease',
+    alignItems: 'center',
+    backgroundColor: {
+      [compactSearch]: {
+        'default': 'transparent',
+        ':hover': 'var(--docs-surface-hover)',
+      },
+      'default': 'var(--docs-surface-raised)',
+      ':hover': 'var(--docs-surface-hover)',
+    },
+    color: {
+      'default': 'var(--docs-text-subtle)',
+      ':hover': 'var(--docs-text-primary)',
+    },
+    cursor: 'pointer',
+    display: 'flex',
+    justifyContent: {
+      [compactSearch]: 'center',
+      default: null,
+    },
+    transitionDuration: { default: null, [reducedMotion]: '0.01ms' },
+    minHeight: '2rem',
+    minWidth: {
+      [compactSearch]: '2rem',
+      default: null,
+    },
+    width: {
+      [compactSearch]: '2rem',
+      default: '15rem',
+    },
+  },
+  searchHotkey: {
+    display: {
+      [compactSearch]: 'none',
+      default: null,
+    },
+    marginInlineStart: 'auto',
+  },
+  searchLabel: {
+    display: {
+      [compactSearch]: 'none',
+      default: null,
+    },
+    fontSize: '0.8125rem',
+  },
 });

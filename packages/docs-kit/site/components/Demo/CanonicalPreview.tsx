@@ -1,3 +1,4 @@
+import * as stylex from '@stylexjs/stylex';
 import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
 
 import type { DemoAppearance, DemoModule } from '../../types/demo';
@@ -14,7 +15,7 @@ function DemoPlaceholder() {
   return (
     <div
       aria-label="Loading demo preview"
-      className={styles.placeholder}
+      {...stylex.props(styles.placeholder)}
       data-demo-placeholder=""
       role="status"
     >

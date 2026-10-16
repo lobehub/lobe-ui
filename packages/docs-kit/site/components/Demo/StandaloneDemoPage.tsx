@@ -1,6 +1,6 @@
 import type { DemoAppearance, DemoModule } from '../../types/demo';
 import { CanonicalPreview } from './CanonicalPreview';
-import { styles } from './style';
+import { demoClassNames } from './style';
 
 interface StandaloneDemoPageProps {
   appearance?: DemoAppearance;
@@ -17,7 +17,7 @@ export function StandaloneDemoPage({
 }: StandaloneDemoPageProps) {
   return (
     <main
-      className={styles.standalonePage}
+      className={demoClassNames.standalonePage}
       data-demo-appearance={appearance}
       data-demo-route-id={metadataRouteId}
       data-requested-route-id={requestedRouteId}

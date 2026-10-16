@@ -1,7 +1,10 @@
+import './DocsShell.css';
+
 import { Hotkey } from '@lobehub/ui';
 import { LobeHub } from '@lobehub/ui/brand';
 import { Breadcrumb, ConsoleBrand, ConsoleNav, ConsoleShell } from '@lobehub/ui/dashboard';
 import { GithubIcon } from '@lobehub/ui/icons';
+import * as stylex from '@stylexjs/stylex';
 import { Search } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
@@ -77,7 +80,7 @@ export function DocsShell({ children, documents, navigation, onSearchOpen }: Doc
     <ConsoleBrand
       label={`${siteConfig.title} documentation home`}
       logo={
-        <LobeHub className={styles.brandLogo} extra={productName} size={LOGO_SIZE} type="combine" />
+        <LobeHub className="docs-brand-logo" extra={productName} size={LOGO_SIZE} type="combine" />
       }
       renderLink={({ children: content, href, ...linkProps }) => (
         <Link {...linkProps} to={href}>
@@ -125,17 +128,22 @@ export function DocsShell({ children, documents, navigation, onSearchOpen }: Doc
       <button
         aria-keyshortcuts="Meta+K Control+K"
         aria-label="Search documentation"
-        className={styles.search}
+        {...stylex.props(styles.search)}
         type="button"
         onClick={(event) => onSearchOpen(event.currentTarget)}
       >
         <Search aria-hidden size={15} strokeWidth={1.8} />
-        <span>Search</span>
-        <Hotkey compact className={styles.searchHotkey} isApple={isAppleShortcut} keys="mod+k" />
+        <span {...stylex.props(styles.searchLabel)}>Search</span>
+        <Hotkey
+          compact
+          {...stylex.props(styles.searchHotkey)}
+          isApple={isAppleShortcut}
+          keys="mod+k"
+        />
       </button>
       {actions.map((item) => (
         <a
-          className={styles.actionLink}
+          {...stylex.props(styles.actionLink)}
           href={item.href}
           key={item.label}
           rel={item.external ? 'noreferrer' : undefined}
@@ -148,7 +156,7 @@ export function DocsShell({ children, documents, navigation, onSearchOpen }: Doc
       {githubSocialLink ? (
         <a
           aria-label={`${siteConfig.title} on GitHub`}
-          className={styles.iconButton}
+          {...stylex.props(styles.iconButton)}
           href={githubSocialLink.href}
           rel="noreferrer"
           target="_blank"
@@ -163,7 +171,7 @@ export function DocsShell({ children, documents, navigation, onSearchOpen }: Doc
     <ConsoleShell
       brand={brand}
       breadcrumb={breadcrumb}
-      className={styles.shell}
+      className="docs-shell"
       navigation={nav}
       openNavigationLabel="Open documentation navigation"
       skipToContentLabel="Skip to documentation"

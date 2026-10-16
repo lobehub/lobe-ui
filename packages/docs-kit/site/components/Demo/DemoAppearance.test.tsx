@@ -1,4 +1,6 @@
-import { styles } from './style';
+import './Demo.css';
+
+import { demoClassNames } from './style';
 
 let container: HTMLDivElement;
 
@@ -30,15 +32,15 @@ it.each([
   (appearance, background, color) => {
     document.documentElement.dataset.theme = appearance === 'light' ? 'dark' : 'light';
     container.innerHTML = `
-      <div class="${styles.viewport}" data-demo-appearance="${appearance}">
-        <div class="${styles.preview}" data-preview="embedded"></div>
+      <div class="${demoClassNames.viewport}" data-demo-appearance="${appearance}">
+        <div class="${demoClassNames.preview}" data-preview="embedded"></div>
       </div>
-      <div class="${styles.viewport}" data-demo-appearance="${appearance}">
-        <div class="${styles.preview}" data-preview="live">
-          <div class="${styles.liveStage}"></div>
+      <div class="${demoClassNames.viewport}" data-demo-appearance="${appearance}">
+        <div class="${demoClassNames.preview}" data-preview="live">
+          <div class="${demoClassNames.liveStage}"></div>
         </div>
       </div>
-      <main class="${styles.standalonePage}" data-demo-appearance="${appearance}" data-preview="standalone"></main>`;
+      <main class="${demoClassNames.standalonePage}" data-demo-appearance="${appearance}" data-preview="standalone"></main>`;
 
     for (const target of container.querySelectorAll<HTMLElement>('[data-preview]')) {
       const computed = getComputedStyle(target);
@@ -51,7 +53,7 @@ it.each([
 
 it('applies the pre-hydration standalone appearance marker before page attributes exist', () => {
   document.documentElement.dataset.standaloneAppearance = 'dark';
-  container.innerHTML = `<main class="${styles.standalonePage}" data-standalone-demo=""></main>`;
+  container.innerHTML = `<main class="${demoClassNames.standalonePage}" data-standalone-demo=""></main>`;
 
   expect(getComputedStyle(container.querySelector('main')!).backgroundColor).toBe(
     serializeColor('#000'),
@@ -60,7 +62,7 @@ it('applies the pre-hydration standalone appearance marker before page attribute
 
 it('gives the provider-wrapped standalone demo a full-width grid track', () => {
   container.innerHTML = `
-    <main class="${styles.standalonePage}" data-standalone-demo="">
+    <main class="${demoClassNames.standalonePage}" data-standalone-demo="">
       <div data-lobe-demo-appearance="dark" style="display: contents">
         <div data-demo-provider="">
           <div id="lobe-demo-example"></div>
@@ -76,12 +78,12 @@ it('gives the provider-wrapped standalone demo a full-width grid track', () => {
 
 it('keeps pending live candidates measurable while making their entire subtree non-interactive', () => {
   container.innerHTML = `
-    <div class="${styles.liveStage}">
-      <div class="${styles.liveCandidate}" data-live-state="candidate" aria-hidden="true" inert>
+    <div class="${demoClassNames.liveStage}">
+      <div class="${demoClassNames.liveCandidate}" data-live-state="candidate" aria-hidden="true" inert>
         <div data-lobe-portal-host><div role="dialog">Pending overlay</div></div>
       </div>
     </div>`;
-  const stage = container.querySelector<HTMLElement>(`.${styles.liveStage}`)!;
+  const stage = container.querySelector<HTMLElement>(`.${demoClassNames.liveStage}`)!;
   const candidate = container.querySelector<HTMLElement>('[data-live-state="candidate"]')!;
   const stageStyle = getComputedStyle(stage);
   const candidateStyle = getComputedStyle(candidate);

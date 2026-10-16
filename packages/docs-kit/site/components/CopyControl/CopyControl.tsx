@@ -1,3 +1,4 @@
+import * as stylex from '@stylexjs/stylex';
 import { Check, Copy } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 
@@ -35,7 +36,7 @@ export function CopyControl({ label, value }: CopyControlProps) {
   return (
     <button
       aria-label={copied ? 'Copied' : label}
-      className={styles.root}
+      {...stylex.props(styles.root)}
       data-copied={copied || undefined}
       title={label}
       type="button"

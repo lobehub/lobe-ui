@@ -1,0 +1,25 @@
+/* Unlayered on purpose: these override @lobehub/ui internals that StyleX classes cannot reach. */
+.docs-shell {
+  height: 100dvh;
+}
+
+.docs-shell > div > main {
+  scroll-padding-top: 1.5rem;
+  gap: 0;
+  padding: 0;
+}
+
+.docs-brand-logo > :not(:first-child) {
+  transition: opacity 120ms ease 80ms;
+}
+
+[data-collapsed='true'] .docs-brand-logo > :not(:first-child) {
+  opacity: 0;
+  transition-delay: 0s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .docs-brand-logo > :not(:first-child) {
+    transition: none;
+  }
+}

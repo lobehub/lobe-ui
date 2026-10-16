@@ -1,4 +1,5 @@
 import { ScrollArea, type ScrollAreaViewportProps } from '@lobehub/ui';
+import * as stylex from '@stylexjs/stylex';
 import type { MouseEvent as ReactMouseEvent } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
@@ -40,11 +41,16 @@ function TocList({ activeId, items, onNavigate }: TocListProps) {
   );
 
   return (
-    <ol>
+    <ol {...stylex.props(styles.list)}>
       {items.map((item) => (
         <li data-level={item.level} key={item.id}>
           <a
             aria-current={item.id === activeId ? 'location' : undefined}
+            {...stylex.props(
+              styles.link,
+              item.level === 3 && styles.linkNested,
+              item.id === activeId && styles.linkActive,
+            )}
             href={`#${item.id}`}
             onClick={(event) => handleClick(event, item.id)}
           >
@@ -135,18 +141,18 @@ export function TableOfContents({ contentId, scopeKey }: TableOfContentsProps) {
   if (items.length === 0) return null;
 
   return (
-    <aside className={styles.root}>
+    <aside {...stylex.props(styles.root)}>
       <nav aria-label="On this page">
-        <h2>On this page</h2>
+        <h2 {...stylex.props(styles.heading)}>On this page</h2>
         <ScrollArea
           disableContentFit
           scrollFade
-          className={styles.scrollArea}
-          contentProps={{ className: styles.scrollContent }}
-          scrollbarProps={{ className: styles.scrollbar }}
+          {...stylex.props(styles.scrollArea)}
+          contentProps={stylex.props(styles.scrollContent)}
+          scrollbarProps={stylex.props(styles.scrollbar)}
           viewportProps={
             {
-              'className': styles.viewport,
+              ...stylex.props(styles.viewport),
               'data-toc-viewport': '',
               'ref': viewportRef,
             } as ScrollAreaViewportProps

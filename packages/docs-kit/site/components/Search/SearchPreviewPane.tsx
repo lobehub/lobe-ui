@@ -1,3 +1,4 @@
+import * as stylex from '@stylexjs/stylex';
 import { ChevronRight } from 'lucide-react';
 
 import type { SearchHit, SearchSubResult } from '../../search/types';
@@ -25,24 +26,27 @@ export function SearchPreviewPane({
   const anchors = activeHit?.subResults ?? [];
 
   return (
-    <div aria-labelledby={activeOptionId} aria-live="polite" className={styles.preview}>
+    <div aria-labelledby={activeOptionId} aria-live="polite" {...stylex.props(styles.preview)}>
       {activeHit ? (
         <>
-          <span className={styles.previewCategory}>{activeHit.category ?? 'Results'}</span>
-          <h2 className={styles.previewTitle}>
+          <span {...stylex.props(styles.previewCategory)}>{activeHit.category ?? 'Results'}</span>
+          <h2 {...stylex.props(styles.previewTitle)}>
             <Highlight query={query} text={activeHit.title} />
           </h2>
           {activeHit.excerpt ? (
-            <p className={styles.previewExcerpt}>
+            <p {...stylex.props(styles.previewExcerpt)}>
               <Highlight query={query} text={decodeEntities(activeHit.excerpt)} />
             </p>
           ) : null}
           {anchors.length > 0 ? (
-            <div className={styles.previewAnchors}>
-              <span className={styles.previewAnchorsLabel}>On this page</span>
+            <div {...stylex.props(styles.previewAnchors)}>
+              <span {...stylex.props(styles.previewAnchorsLabel)}>On this page</span>
               {anchors.map((anchor, index) => (
                 <button
-                  className={styles.previewAnchor}
+                  {...stylex.props(
+                    styles.previewAnchor,
+                    index === anchorIndex && styles.previewAnchorActive,
+                  )}
                   data-active={index === anchorIndex}
                   key={anchor.pathname}
                   tabIndex={-1}
@@ -50,7 +54,12 @@ export function SearchPreviewPane({
                   onClick={() => onActivateAnchor(anchor)}
                   onMouseMove={() => onHoverAnchor(index)}
                 >
-                  <ChevronRight aria-hidden size={13} strokeWidth={1.8} />
+                  <ChevronRight
+                    aria-hidden
+                    {...stylex.props(styles.previewAnchorIcon)}
+                    size={13}
+                    strokeWidth={1.8}
+                  />
                   <Highlight query={query} text={anchor.title} />
                 </button>
               ))}

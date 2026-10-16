@@ -1,3 +1,4 @@
+import * as stylex from '@stylexjs/stylex';
 import type { LucideIcon } from 'lucide-react';
 import { Box, CornerDownLeft, FileText, History, PenLine, Sparkles, X } from 'lucide-react';
 
@@ -5,6 +6,7 @@ import type { SearchHit } from '../../search/types';
 import type { DocumentManifestEntry } from '../../types/content';
 import { decodeEntities } from './entities';
 import { Highlight } from './highlight';
+import { resultMarker } from './markers.stylex';
 import type { RecentEntry } from './recentStore';
 import { styles } from './style';
 
@@ -169,14 +171,19 @@ export function SearchResultList({
   onRemove,
 }: SearchResultListProps) {
   return (
-    <div className={styles.listPane}>
-      <div aria-live="polite" className={styles.resultsStatus}>
+    <div {...stylex.props(styles.listPane)}>
+      <div aria-live="polite" {...stylex.props(styles.resultsStatus)}>
         {status}
       </div>
-      <div className={styles.results} id={listId} role="listbox">
+      <div {...stylex.props(styles.results)} id={listId} role="listbox">
         {groups.map((group) => (
-          <div aria-label={group.label} className={styles.group} key={group.label} role="group">
-            <div aria-hidden className={styles.groupLabel}>
+          <div
+            aria-label={group.label}
+            {...stylex.props(styles.group)}
+            key={group.label}
+            role="group"
+          >
+            <div aria-hidden {...stylex.props(styles.groupLabel)}>
               {group.label}
             </div>
             {group.rows.map((row) => {
@@ -185,20 +192,20 @@ export function SearchResultList({
               return (
                 <div
                   aria-selected={selected}
-                  className={styles.result}
+                  {...stylex.props(styles.result, selected && styles.resultSelected, resultMarker)}
                   id={optionId(row.flatIndex)}
                   key={row.hit.id}
                   role="option"
                   onClick={() => onActivate(row)}
                   onMouseMove={() => onHover(row.flatIndex)}
                 >
-                  <span className={styles.resultIcon}>
+                  <span {...stylex.props(styles.resultIcon)}>
                     <RowIcon aria-hidden size={14} strokeWidth={1.8} />
                   </span>
-                  <span className={styles.resultTitle}>
+                  <span {...stylex.props(styles.resultTitle)}>
                     <Highlight query={query} text={row.hit.title} />
                     {row.hit.excerpt && query.trim() && !hasTitleMatch(row.hit.title, query) ? (
-                      <span className={styles.resultExcerpt}>
+                      <span {...stylex.props(styles.resultExcerpt)}>
                         {' — '}
                         <Highlight query={query} text={decodeEntities(row.hit.excerpt)} />
                       </span>
@@ -208,7 +215,7 @@ export function SearchResultList({
                     <button
                       data-remove
                       aria-label={`Remove ${row.hit.title} from recents`}
-                      className={styles.resultRemove}
+                      {...stylex.props(styles.resultRemove, selected && styles.resultRemoveVisible)}
                       tabIndex={-1}
                       type="button"
                       onClick={(event) => {
@@ -221,7 +228,7 @@ export function SearchResultList({
                   ) : selected ? (
                     <CornerDownLeft
                       aria-hidden
-                      className={styles.resultEnter}
+                      {...stylex.props(styles.resultEnter)}
                       size={13}
                       strokeWidth={1.8}
                     />

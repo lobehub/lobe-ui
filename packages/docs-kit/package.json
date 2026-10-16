@@ -24,6 +24,8 @@
     "@giscus/react": "^3.1.0",
     "@lobehub/ui": "^6.0.0",
     "@mdx-js/rollup": "3.1.1",
+    "@stylexjs/stylex": "0.19.1",
+    "@stylexjs/unplugin": "0.19.1",
     "cheerio": "^1.2.0",
     "code-inspector-plugin": "^2.0.9",
     "es-toolkit": "^1.52.0",

@@ -22,6 +22,7 @@ export default defineConfig({
     ],
   },
   test: {
+    css: { include: [/packages\/docs-kit\/site\/.+\.css$/] },
     environment: 'jsdom',
     globals: true,
     hookTimeout: 30_000,

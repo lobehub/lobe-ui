@@ -1,16 +1,23 @@
+import * as stylex from '@stylexjs/stylex';
 import { Link } from 'lucide-react';
 import type { MDXComponents } from 'mdx/types';
 import type { ComponentProps, MouseEvent } from 'react';
 
 import { Api } from '../components/Api/Api';
 import { Demo } from '../components/Demo/Demo';
+import { headingMarker } from '../components/DocsLayout/markers.stylex';
 import { styles as docsLayoutStyles } from '../components/DocsLayout/style';
 import { CodeBlock } from '../components/Mdx/CodeBlock';
 import { HEADING_SCROLL_OFFSET, springScrollToElement } from '../lib/scroller';
 
 const createAnchoredHeading = (Tag: 'h2' | 'h3' | 'h4' | 'h5' | 'h6') =>
-  function AnchoredHeading({ children, id, ...rest }: ComponentProps<'h2'>) {
-    if (!id) return <Tag {...rest}>{children}</Tag>;
+  function AnchoredHeading({ children, className, id, ...rest }: ComponentProps<'h2'>) {
+    if (!id)
+      return (
+        <Tag className={className} {...rest}>
+          {children}
+        </Tag>
+      );
 
     const handleAnchorClick = (event: MouseEvent<HTMLAnchorElement>) => {
       event.preventDefault();
@@ -21,11 +28,15 @@ const createAnchoredHeading = (Tag: 'h2' | 'h3' | 'h4' | 'h5' | 'h6') =>
     };
 
     return (
-      <Tag id={id} {...rest}>
+      <Tag
+        className={[className, stylex.props(headingMarker).className].filter(Boolean).join(' ')}
+        id={id}
+        {...rest}
+      >
         {children}
         <a
           aria-label="Link to this section"
-          className={docsLayoutStyles.headingAnchor}
+          {...stylex.props(docsLayoutStyles.headingAnchor)}
           href={`#${id}`}
           onClick={handleAnchorClick}
         >

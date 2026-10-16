@@ -7,7 +7,6 @@ import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { createServer, type ViteDevServer } from 'vite';
 
-import { styles as demoStyles } from '../../components/Demo/style';
 import type { DocumentationInventory } from '../types';
 import { extractComponentApi } from './extractComponent';
 
@@ -61,5 +60,5 @@ it('renders serialized Button properties and every canonical demo frame through 
 
   expect(html).toContain('Button properties');
   expect(html).toContain('loading');
-  expect(html.match(new RegExp(`class="${demoStyles.frame}"`, 'g'))).toHaveLength(5);
+  expect(html.match(/data-demo-layout="/g)).toHaveLength(5);
 }, 120_000);

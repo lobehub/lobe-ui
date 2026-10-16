@@ -46,24 +46,48 @@ const createAliasEntries = (alias: Record<string, string> = {}): Alias[] =>
       ];
     });
 
-const stylex = async () => {
+const docsKitStylexOptions = {
+  classNamePrefix: 'ld',
+  unstable_moduleResolution: { rootDir: docsKitRoot, type: 'commonJS' as const },
+};
+
+const loadStylexOptions = async () => {
   if (!docsConfig.stylex) return;
-  const plugin = repositoryRequire(
-    '@stylexjs/unplugin/vite',
-  ) as typeof import('@stylexjs/unplugin/vite');
   // docs.config is serialized out of a subprocess, so options holding functions (lightningcss
   // visitors) are passed as a module path and loaded here instead.
-  const options =
-    typeof docsConfig.stylex === 'string'
-      ? (await import(pathToFileURL(path.resolve(repositoryRoot, docsConfig.stylex)).href)).default
-      : docsConfig.stylex;
+  return typeof docsConfig.stylex === 'string'
+    ? (await import(pathToFileURL(path.resolve(repositoryRoot, docsConfig.stylex)).href)).default
+    : docsConfig.stylex;
+};
+
+const onlyDocsKitSources = (transform: any) => {
+  const handler = typeof transform === 'function' ? transform : transform?.handler;
+  if (!handler) return transform;
+  const scoped = function (this: any, code: string, id: string, ...rest: unknown[]) {
+    if (!normalizePath(id).startsWith(`${docsKitRoot}/`)) return null;
+    return handler.call(this, code, id, ...rest);
+  };
+  return typeof transform === 'function' ? scoped : { ...transform, handler: scoped };
+};
+
+const stylex = async () => {
+  const consumerOptions = await loadStylexOptions();
+  const plugin = (consumerOptions ? repositoryRequire : createRequire(import.meta.url))(
+    '@stylexjs/unplugin/vite',
+  ) as typeof import('@stylexjs/unplugin/vite');
   // Without a target the plugin appends to the first CSS asset it finds (e.g. Tag-*.css), which
   // only the routes importing that component link; root-*.css is linked on every page.
   const stylexPlugin = plugin.default({
     cssInjectionTarget: (fileName: string) => /(^|\/)root-[\w-]+\.css$/.test(fileName),
-    ...options,
+    ...(consumerOptions ?? docsKitStylexOptions),
   });
-  const { generateBundle, writeBundle } = stylexPlugin as Record<string, any>;
+  const { generateBundle, transform, writeBundle } = stylexPlugin as Record<string, any>;
+  // Consumers that do not compile @lobehub/ui from source load its prebuilt es/ and style.css, so
+  // StyleX only compiles docs-kit itself; its config hook would otherwise pull every dependency of
+  // @stylexjs/stylex (@lobehub/ui included) out of dependency pre-bundling.
+  const scopeToDocsKit = consumerOptions
+    ? {}
+    : { config: undefined, transform: onlyDocsKitSources(transform) };
   // The SSR build has no root CSS asset, so the plugin would append a second copy to a route's CSS
   // that React Router moves into the client assets and links from that route.
   const clientOnly = (hook: any) =>
@@ -73,6 +97,7 @@ const stylex = async () => {
     };
   return {
     ...stylexPlugin,
+    ...scopeToDocsKit,
     generateBundle: clientOnly(generateBundle),
     writeBundle: clientOnly(writeBundle),
   };

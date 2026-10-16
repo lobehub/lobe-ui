@@ -118,7 +118,11 @@ export default defineConfig(
     },
   },
   {
-    files: ['src/**/style*.ts', 'src/styles/stylex/**'],
+    files: [
+      'src/**/style*.ts',
+      'src/styles/stylex/**',
+      'packages/docs-kit/site/**/*{style,Style}.ts',
+    ],
     plugins: { '@stylexjs': stylex },
     rules: {
       '@stylexjs/no-unused': 'error',
