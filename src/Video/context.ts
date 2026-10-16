@@ -8,6 +8,7 @@ import type { VideoMarker, VideoMediaProps, VideoSection } from './type';
 export interface VideoConfig {
   fps: number;
   markers: VideoMarker[];
+  maxHeight?: number;
   onMarkerClick?: (marker: VideoMarker) => void;
   onRetry?: () => Promise<unknown> | void;
   playbackRates?: number[];

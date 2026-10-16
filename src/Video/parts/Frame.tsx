@@ -5,9 +5,11 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { styleProps } from '@/styles/stylex/props';
 
 import { FrameContext, type FrameContextValue, useVideoContext } from '../context';
+import { aspectOf, frameWidthOf, MIN_PLAYER_WIDTH } from '../sizing';
 import { styles } from '../style';
 import type { VideoFrameProps } from '../type';
 import { useControlsIdle } from '../useControlsIdle';
+import { useFullscreen } from '../useFullscreen';
 import { useVideo } from '../useVideo';
 
 const isFocusVisible = (element: Element) => {
@@ -19,7 +21,8 @@ const isFocusVisible = (element: Element) => {
 };
 
 const Frame = ({ children, className, style }: VideoFrameProps) => {
-  const { media, store } = useVideoContext();
+  const { config, media, store } = useVideoContext();
+  const fullscreen = useFullscreen(store);
   const videoRef = useRef<HTMLVideoElement>(null);
   const pointerTypeRef = useRef('mouse');
   const size = useVideo((state) => state.size);
@@ -39,11 +42,27 @@ const Frame = ({ children, className, style }: VideoFrameProps) => {
   );
 
   const aspectRatio = size?.height ? `${size.width} / ${size.height}` : '16 / 9';
+  const narrow =
+    config.maxHeight !== undefined &&
+    !fullscreen &&
+    frameWidthOf(config.maxHeight, aspectOf(size)) < MIN_PLAYER_WIDTH;
+  // Overlay controls live inside the frame, so it widens and letterboxes the
+  // video; controls below leave the frame at the video's own width, keeping
+  // children positioned in video coordinates aligned.
+  const sizing = !narrow
+    ? { aspectRatio }
+    : overlay
+      ? { aspectRatio: `${MIN_PLAYER_WIDTH} / ${config.maxHeight}` }
+      : {
+          aspectRatio,
+          marginInline: 'auto',
+          maxWidth: `${frameWidthOf(config.maxHeight!, aspectOf(size))}px`,
+        };
 
   return (
     <FrameContext value={frame}>
       <div
-        {...styleProps(styles.frame, className, { aspectRatio, ...style })}
+        {...styleProps(styles.frame, className, { ...sizing, ...style })}
         onBlur={(event) => {
           if (!event.currentTarget.contains(event.relatedTarget as Node | null))
             idle.setFocused(false);

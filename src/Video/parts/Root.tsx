@@ -5,6 +5,7 @@ import { useImperativeHandle, useLayoutEffect, useMemo, useState } from 'react';
 import { styleProps } from '@/styles/stylex/props';
 
 import { VideoContext, type VideoContextValue } from '../context';
+import { aspectOf, playerWidthOf } from '../sizing';
 import { createVideoStore, type VideoStore } from '../store';
 import { styles } from '../style';
 import { sortSections } from '../time';
@@ -67,15 +68,14 @@ const Root = ({
   }, [store]);
 
   const size = useVideoState(store, (state) => state.size);
-  const aspect = size?.height ? size.width / size.height : 16 / 9;
   const sizing =
     maxHeight === undefined
       ? { height, width }
-      : { maxWidth: `${Math.round(maxHeight * aspect)}px`, width: '100%' };
+      : { maxWidth: `${playerWidthOf(maxHeight, aspectOf(size))}px`, width: '100%' };
 
   const value = useMemo<VideoContextValue>(
     () => ({
-      config: { fps, markers, onMarkerClick, onRetry, playbackRates, sections: sorted },
+      config: { fps, markers, maxHeight, onMarkerClick, onRetry, playbackRates, sections: sorted },
       media: {
         autoPlay,
         loop,
@@ -95,6 +95,7 @@ const Root = ({
       fps,
       loop,
       markers,
+      maxHeight,
       onEnded,
       onError,
       onMarkerClick,
