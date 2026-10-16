@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [6.0.1](https://github.com/lobehub/lobe-ui/compare/docs-kit@6.0.0...docs-kit@6.0.1) (2026-10-16)
+
+### 🐛 Bug Fixes
+
+- **docs-kit**: Fingerprint theme CSS to bypass stale CDN caches ([d750ed6](https://github.com/lobehub/lobe-ui/commit/d750ed6))
+
 # [6.0.0](https://github.com/lobehub/lobe-ui/compare/docs-kit@5.28.0...docs-kit@6.0.0) (2026-10-15)
 
 ### 🎫 Chores
