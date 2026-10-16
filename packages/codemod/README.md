@@ -40,6 +40,7 @@ Rewritten automatically:
 - `@lobehub/ui/base-ui` → `@lobehub/ui`, `@lobehub/ui/base-ui/form` → `@lobehub/ui/form`
 - `antd-style` helpers (`createStaticStyles`, `cssVar`, `cx`, `css`, `keyframes`, `injectGlobal`, `responsive`, `createGlobalStyle`, `useTheme`, `useThemeMode`, `useResponsive`, `extractStaticStyle`) → `@lobehub/ui`
 - `Theme` / `ThemeAppearance` types → `LobeTheme` / `LobeAppearance`
+- `Spline` (`@lobehub/ui/awesome`) and `LogoThree` / `LogoSpline` (`@lobehub/ui/brand`), plus deep `es/awesome/Spline` / `es/brand/LogoThree` paths → `@lobehub/ui/spline`
 - duplicate `@lobehub/ui` imports merged
 
 Reported with file, line and fix, linking the [migration guide](https://ui.lobehub.com/migration-v6):
