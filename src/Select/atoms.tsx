@@ -17,6 +17,7 @@ import { useNativeButton } from '@/hooks/useNativeButton';
 import { getFloatingCollisionPadding } from '@/internal/floating';
 import { styleProps } from '@/styles/stylex/props';
 import { useThemeMode } from '@/styles/theme/scope';
+import { getElementRef } from '@/utils/getElementRef';
 import { mergeRefs, useMergeRefs } from '@/utils/mergeRefs';
 
 import { useLayerZIndex } from '../internal/zIndex';
@@ -93,7 +94,7 @@ export const SelectTrigger = ({
           return cloneElement(children as any, {
             ...mergedProps,
             className: clsx(baseClassName, childClassName, extraClassName),
-            ref: mergeRefs([(children as any).ref, (props as any).ref, refProp]),
+            ref: mergeRefs([getElementRef(children), (props as any).ref, refProp]),
           });
         }}
       />

@@ -5,6 +5,7 @@ import { Tooltip as BaseTooltip } from '@base-ui/react/tooltip';
 import { cloneElement, type FC, isValidElement, use, useCallback, useMemo } from 'react';
 
 import { useNativeButton } from '@/hooks/useNativeButton';
+import { getElementRef } from '@/utils/getElementRef';
 import { mergeRefs } from '@/utils/mergeRefs';
 
 import { TooltipGroupHandleContext } from './groupContext';
@@ -144,7 +145,7 @@ export const TooltipInGroup: FC<TooltipProps> = ({
       return cloneElement(childElement as any, {
         ...mergedProps,
         id: shouldPreservePopupTriggerId ? childProps.id : mergedProps.id,
-        ref: mergeRefs([(childElement as any).ref, (renderProps as any).ref, refProp]),
+        ref: mergeRefs([getElementRef(childElement), (renderProps as any).ref, refProp]),
       });
     },
     [childElement, isNativeButtonTriggerElement, refProp, restProps],

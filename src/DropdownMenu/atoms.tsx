@@ -15,6 +15,7 @@ import { MenuVirtualList, type VirtualListProps } from '@/internal/virtual';
 import { CLASSNAMES } from '@/styles/classNames';
 import { type styleProps } from '@/styles/stylex/props';
 import Switch from '@/Switch';
+import { getElementRef } from '@/utils/getElementRef';
 import { mergeRefs, useMergeRefs } from '@/utils/mergeRefs';
 import { placementMap } from '@/utils/placement';
 
@@ -75,7 +76,7 @@ export const DropdownMenuTrigger = ({
     return cloneElement(children as any, {
       ...mergedProps,
       className: clsx(CLASSNAMES.DropdownMenuTrigger, className, mergedProps.className),
-      ref: mergeRefs([(children as any).ref, (props as any).ref, refProp]),
+      ref: mergeRefs([getElementRef(children), (props as any).ref, refProp]),
     });
   };
 

@@ -15,6 +15,7 @@ import {
 import { FloatingLayerProvider } from '@/hooks/useFloatingLayer';
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { getFloatingCollisionPadding } from '@/internal/floating';
+import { getElementRef } from '@/utils/getElementRef';
 import { mergeRefs, useMergeRefs } from '@/utils/mergeRefs';
 import { placementMap } from '@/utils/placement';
 
@@ -72,7 +73,7 @@ export const PopoverTriggerElement = ({
           return cloneElement(children as any, {
             ...mergedProps,
             className: clsx(baseClassName, extraClassName),
-            ref: mergeRefs([(children as any).ref, (props as any).ref, refProp]),
+            ref: mergeRefs([getElementRef(children), (props as any).ref, refProp]),
           });
         }}
       />

@@ -23,6 +23,7 @@ import { useNativeButton } from '@/hooks/useNativeButton';
 import { useMotionComponent } from '@/MotionProvider';
 import { focusRing } from '@/styles/stylex/focusRing';
 import { styleProps } from '@/styles/stylex/props';
+import { getElementRef } from '@/utils/getElementRef';
 import { mergeRefs, useMergeRefs } from '@/utils/mergeRefs';
 
 import { useLayerZIndex } from '../internal/zIndex';
@@ -366,7 +367,7 @@ export const ModalTrigger = ({
     const mergedProps = mergeProps((children as any).props, resolvedProps);
     return cloneElement(children as any, {
       ...mergedProps,
-      ref: mergeRefs([(children as any).ref, (props as any).ref, refProp]),
+      ref: mergeRefs([getElementRef(children), (props as any).ref, refProp]),
     });
   };
 
