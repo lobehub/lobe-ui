@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [1.2.0](https://github.com/lobehub/lobe-ui/compare/codemod@1.1.0...codemod@1.2.0) (2026-10-16)
+
+### ✨ Features
+
+- **codemod**: Move Spline imports to @lobehub/ui/spline, closes [#737](https://github.com/lobehub/lobe-ui/issues/737) ([f93f520](https://github.com/lobehub/lobe-ui/commit/f93f520))
+
 # [1.1.0](https://github.com/lobehub/lobe-ui/compare/codemod@1.0.0...codemod@1.1.0) (2026-10-16)
 
 ### ✨ Features
