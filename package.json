@@ -49,6 +49,10 @@
       "types": "./es/brand/index.d.mts",
       "import": "./es/brand/index.mjs"
     },
+    "./spline": {
+      "types": "./es/spline/index.d.mts",
+      "import": "./es/spline/index.mjs"
+    },
     "./chat": {
       "types": "./es/chat/index.d.mts",
       "import": "./es/chat/index.mjs"

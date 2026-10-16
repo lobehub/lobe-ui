@@ -1,6 +1,6 @@
 import { type CSSProperties, memo, useState } from 'react';
 
-import Spline, { type SplineProps } from '@/awesome/Spline';
+import Spline, { type SplineProps } from '@/spline/Spline';
 import { useThemeMode } from '@/styles/theme/scope';
 
 import Loading from './Loading';
