@@ -2,6 +2,13 @@
 
 # Changelog
 
+# [6.2.0](https://github.com/lobehub/lobe-ui/compare/v6.1.0...v6.2.0) (2026-10-17)
+
+### ✨ Features
+
+- **DraggablePanel**: Expose stable BEM class names, closes [#741](https://github.com/lobehub/lobe-ui/issues/741) ([957630c](https://github.com/lobehub/lobe-ui/commit/957630c))
+- **utils**: Add bem() for stable component class names, closes [#742](https://github.com/lobehub/lobe-ui/issues/742) ([73d7e76](https://github.com/lobehub/lobe-ui/commit/73d7e76))
+
 # [6.1.0](https://github.com/lobehub/lobe-ui/compare/v6.0.6...v6.1.0) (2026-10-17)
 
 ### ✨ Features
