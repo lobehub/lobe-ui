@@ -22,6 +22,7 @@ import { useControlledState } from '@/hooks/useControlledState';
 import { useMotionComponent } from '@/MotionProvider';
 import { styleProps } from '@/styles/stylex/props';
 import type { DivProps } from '@/types';
+import { bem } from '@/utils/bem';
 
 import { DraggablePanelContext, useDraggablePanelContext } from './context';
 import type { Placement } from './core/axes';
@@ -34,7 +35,7 @@ import { timing } from './core/transition';
 import { draggablePanelMarker, draggablePanelToggleMarker } from './marker.stylex';
 import { SEAM_ARROW, styles } from './style';
 
-const prefix = 'lobe-draggable-panel';
+const panel = bem('draggable-panel');
 
 const floatStyles = {
   bottom: styles.bottomFloat,
@@ -207,7 +208,7 @@ export const DraggablePanelRoot = memo<DraggablePanelRootProps>(
                 mode === 'float' ? floatStyles[placement] : styles.fixed,
                 draggablePanelMarker,
               ],
-              clsx(prefix, className),
+              clsx(panel.block, className),
             ).className
           }
           style={
@@ -258,7 +259,7 @@ export const DraggablePanelContent = memo<DraggablePanelContentProps>(
       >
         <Motion.div
           animate={{ scale: shrunk ? COLLAPSED_SCALE : 1 }}
-          className={styleProps(styles.content, clsx(`${prefix}__content`, className)).className}
+          className={styleProps(styles.content, clsx(panel('content'), className)).className}
           transition={timing()}
           style={
             {
@@ -312,7 +313,7 @@ export const DraggablePanelHandle = memo<DraggablePanelHandleProps>(
         className={
           styleProps(
             [styles.handle, axis.vertical ? styles.handleHorizontal : styles.handleVertical],
-            clsx(`${prefix}__handle`, className),
+            clsx(panel('handle'), className),
           ).className
         }
         style={
@@ -398,7 +399,7 @@ export const DraggablePanelToggle = memo<DraggablePanelToggleProps>(
         className={
           styleProps(
             [styles.toggleRoot, toggleStyles[placement]],
-            clsx(`${prefix}__toggle`, className),
+            clsx(panel('toggle'), className),
           ).className
         }
         {...rest}
