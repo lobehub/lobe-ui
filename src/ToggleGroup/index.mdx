@@ -1,17 +1,24 @@
 ---
 title: ToggleGroup
-description: Base UI-powered ToggleGroup — a frameless radio-style group of action buttons for toolbar mode switches. Single selection is enforced; the pressed item cannot be deselected.
+description: Base UI-powered ToggleGroup — a frameless group of action buttons for mode switches. Single selection by default, opt-in multiple selection via the Segmented-like detached variant.
 category: Data Entry
 ---
 
 import DemoIndex from './demos/index.tsx?demo';
 import DemoContainerQuery from './demos/containerQuery.tsx?demo';
+import DemoMultiple from './demos/multiple.tsx?demo';
 
 ## Default
 
 The default `outlined` variant renders a joined group — container border with `1px` dividers between items. The `borderless` variant renders detached action buttons for flush toolbars. Hover and pressed states follow ActionIcon: hover `colorFillSecondary`, pressed `colorFillSecondary` + `colorText`, pressed hover `colorFill`.
 
 <Demo of={DemoIndex} layout="bare" />
+
+## Multiple
+
+`multiple` turns the group into a multi-select: `value` / `defaultValue` accept an array, every item toggles on its own, and clicking a pressed item deselects it (an empty array is valid). Multi-select defaults to `variant="segmented"` — items render as detached pills with their own pressed background, because a single sliding indicator cannot represent several active items at once.
+
+<Demo of={DemoMultiple} layout="bare" />
 
 ## Responsive Labels
 
@@ -24,6 +31,11 @@ Labels are wrapped in an addressable `.toggle-group-item-label` span, so a conta
 ### ToggleGroup
 
 <Api name="ToggleGroup" from=".." migrationKey="heading:%5B%22ToggleGroup%22%5D:0" />
+
+### Selection semantics
+
+- Single (default) — `value: Value`, `onChange: (value: Value) => void`. The pressed item cannot be deselected.
+- Multiple — `multiple`, `value: Value[]`, `onChange: (value: Value[]) => void`. Any item can be pressed or released, including clearing the whole selection.
 
 ### ToggleGroupOption
 
@@ -41,3 +53,4 @@ A plain string option is shorthand for `{ value: option }`.
 
 - `outlined` (default) — joined group: container border, `1px` dividers, square inner corners.
 - `borderless` — detached action buttons with a `2px` gap, for flush toolbar scenarios.
+- `segmented` — Segmented-like filled container with detached pill items. Each item carries its own pressed background (`colorBgElevated`) instead of a sliding indicator, so multiple items can be active at once.
