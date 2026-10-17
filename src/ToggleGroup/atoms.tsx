@@ -13,13 +13,23 @@ import { toggleGroupItemMarker } from './marker.stylex';
 import { styles } from './style';
 import type { ToggleGroupSize, ToggleGroupVariant } from './type';
 
-const rootVariantStyles = { borderless: styles.rootBorderless, outlined: styles.rootOutlined };
+const rootVariantStyles = {
+  borderless: styles.rootBorderless,
+  outlined: styles.rootOutlined,
+  segmented: styles.rootSegmented,
+};
 
 const itemSizeStyles = { middle: styles.itemMiddle, small: styles.itemSmall };
 
+const itemSegmentedSizeStyles = {
+  middle: styles.itemSegmentedMiddle,
+  small: styles.itemSegmentedSmall,
+};
+
 const itemVariantStyles = {
-  borderless: null,
-  outlined: [toggleGroupItemMarker, styles.itemOutlined],
+  borderless: [styles.itemTone],
+  outlined: [toggleGroupItemMarker, styles.itemOutlined, styles.itemTone],
+  segmented: [styles.itemSegmented, styles.itemSegmentedTone],
 };
 
 export type ToggleGroupRootProps<Value extends string = string> = Omit<
@@ -38,6 +48,7 @@ export const ToggleGroupRoot = <Value extends string = string>({
   return (
     <BaseUIToggleGroup<Value>
       className={styleProps([styles.root, rootVariantStyles[variant]], className).className}
+      data-variant={variant}
       {...rest}
     />
   );
@@ -60,14 +71,14 @@ export const ToggleGroupItem = <Value extends string = string>({
   variant = 'outlined',
   ...rest
 }: ToggleGroupItemProps<Value>) => {
+  const sizeStyle = variant === 'segmented' ? itemSegmentedSizeStyles[size] : itemSizeStyles[size];
+
   return (
     <BaseUIToggle<Value>
       {...rest}
       className={
-        styleProps(
-          [styles.item, focusRing.info, itemSizeStyles[size], itemVariantStyles[variant]],
-          className,
-        ).className
+        styleProps([styles.item, focusRing.info, sizeStyle, itemVariantStyles[variant]], className)
+          .className
       }
     />
   );

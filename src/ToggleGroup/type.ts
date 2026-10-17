@@ -1,7 +1,7 @@
 import { type CSSProperties, type ReactNode, type Ref } from 'react';
 
 export type ToggleGroupSize = 'middle' | 'small';
-export type ToggleGroupVariant = 'borderless' | 'outlined';
+export type ToggleGroupVariant = 'borderless' | 'outlined' | 'segmented';
 
 export interface ToggleGroupClassNames {
   item?: string;
@@ -26,17 +26,41 @@ export interface ToggleGroupOption<Value extends string = string> {
   value: Value;
 }
 
-export interface ToggleGroupProps<Value extends string = string> {
+export interface ToggleGroupBaseProps<Value extends string = string> {
   className?: string;
   classNames?: ToggleGroupClassNames;
-  defaultValue?: Value;
   disabled?: boolean;
-  onChange?: (value: Value) => void;
   options?: (ToggleGroupOption<Value> | Value)[];
   ref?: Ref<HTMLDivElement>;
   size?: ToggleGroupSize;
   style?: CSSProperties;
   styles?: ToggleGroupStyles;
-  value?: Value;
+  /**
+   * Visual style of the group.
+   * - outlined (default) - joined group with 1px dividers
+   * - borderless - detached action buttons
+   * - segmented - Segmented-like container with detached pill items, pairs with multiple
+   */
   variant?: ToggleGroupVariant;
 }
+
+export interface ToggleGroupSingleProps<
+  Value extends string = string,
+> extends ToggleGroupBaseProps<Value> {
+  defaultValue?: Value;
+  multiple?: false;
+  onChange?: (value: Value) => void;
+  value?: Value;
+}
+
+export interface ToggleGroupMultipleProps<
+  Value extends string = string,
+> extends ToggleGroupBaseProps<Value> {
+  defaultValue?: Value[];
+  multiple: true;
+  onChange?: (value: Value[]) => void;
+  value?: Value[];
+}
+
+export type ToggleGroupProps<Value extends string = string> =
+  ToggleGroupSingleProps<Value> | ToggleGroupMultipleProps<Value>;

@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { useMemo } from 'react';
+import { type CSSProperties, type Ref, useMemo } from 'react';
 
 import { useControlledState } from '@/hooks/useControlledState';
 
@@ -11,32 +11,67 @@ import {
   ToggleGroupItemLabel,
   ToggleGroupRoot,
 } from './atoms';
-import type { ToggleGroupOption, ToggleGroupProps } from './type';
+import type {
+  ToggleGroupClassNames,
+  ToggleGroupOption,
+  ToggleGroupProps,
+  ToggleGroupSize,
+  ToggleGroupStyles,
+  ToggleGroupVariant,
+} from './type';
 
 const normalizeOption = <Value extends string>(
   option: ToggleGroupOption<Value> | Value,
 ): ToggleGroupOption<Value> => (typeof option === 'string' ? { value: option } : option);
 
-const ToggleGroup = <Value extends string = string>({
-  className,
-  classNames,
-  defaultValue,
-  disabled = false,
-  onChange,
-  options,
-  ref,
-  size = 'middle',
-  style,
-  styles: customStyles,
-  value,
-  variant = 'outlined',
-}: ToggleGroupProps<Value>) => {
-  const [innerValue, setInnerValue] = useControlledState<Value | undefined>(defaultValue, {
+const toValueArray = <Value extends string>(value?: Value | Value[]): Value[] => {
+  if (value === undefined) return [];
+  return Array.isArray(value) ? value : [value];
+};
+
+interface InternalProps<Value extends string = string> {
+  className?: string;
+  classNames?: ToggleGroupClassNames;
+  defaultValue?: Value | Value[];
+  disabled?: boolean;
+  multiple?: boolean;
+  onChange?: (value: Value | Value[]) => void;
+  options?: (ToggleGroupOption<Value> | Value)[];
+  ref?: Ref<HTMLDivElement>;
+  size?: ToggleGroupSize;
+  style?: CSSProperties;
+  styles?: ToggleGroupStyles;
+  value?: Value | Value[];
+  variant?: ToggleGroupVariant;
+}
+
+const ToggleGroup = <Value extends string = string>(props: ToggleGroupProps<Value>) => {
+  const {
+    className,
+    classNames,
     defaultValue,
-    onChange: (next) => {
-      if (next != null) onChange?.(next);
-    },
+    disabled = false,
+    multiple = false,
+    onChange,
+    options,
+    ref,
+    size = 'middle',
+    style,
+    styles: customStyles,
     value,
+    variant = multiple ? 'segmented' : 'outlined',
+  } = props as InternalProps<Value>;
+
+  const [innerValues, setInnerValues] = useControlledState<Value[]>(toValueArray(defaultValue), {
+    defaultValue: toValueArray(defaultValue),
+    onChange: (next) => {
+      if (multiple) {
+        onChange?.(next);
+        return;
+      }
+      if (next[0] !== undefined) onChange?.(next[0]);
+    },
+    value: value === undefined ? undefined : toValueArray(value),
   });
 
   const normalizedOptions = useMemo(
@@ -44,19 +79,20 @@ const ToggleGroup = <Value extends string = string>({
     [options],
   );
 
-  const groupValue = useMemo<Value[]>(() => (innerValue != null ? [innerValue] : []), [innerValue]);
-
   return (
     <ToggleGroupRoot<Value>
       className={clsx(classNames?.root, className)}
       disabled={disabled}
+      multiple={multiple}
       ref={ref}
       style={{ ...style, ...customStyles?.root }}
-      value={groupValue}
+      value={innerValues}
       variant={variant}
       onValueChange={(next) => {
-        const picked = next[0];
-        if (picked != null) setInnerValue(picked);
+        // In single mode the pressed item is locked: Base UI reports an empty
+        // array when it is clicked again, which must not clear the selection.
+        if (!multiple && next.length === 0) return;
+        setInnerValues(next);
       }}
     >
       {normalizedOptions.map((opt) => (
