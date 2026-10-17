@@ -34,7 +34,11 @@ export const getMermaidCdnUrl = () => mermaidCdnUrl;
 export const loadCdnMermaid = (): Promise<CdnMermaidApi | null> => {
   if (typeof window === 'undefined') return Promise.resolve(null);
 
-  mermaidPromise ??= import(/* @vite-ignore */ mermaidCdnUrl)
+  mermaidPromise ??= import(
+    /* @vite-ignore */
+    /* webpackIgnore: true */
+    mermaidCdnUrl
+  )
     .then((mod) => (mod.default ?? mod) as CdnMermaidApi)
     .catch(() => null);
 
