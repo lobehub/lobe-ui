@@ -34,7 +34,7 @@ import { timing } from './core/transition';
 import { draggablePanelMarker, draggablePanelToggleMarker } from './marker.stylex';
 import { SEAM_ARROW, styles } from './style';
 
-const prefix = 'base-draggable-panel';
+const prefix = 'lobe-draggable-panel';
 
 const floatStyles = {
   bottom: styles.bottomFloat,
@@ -48,13 +48,6 @@ const toggleStyles = {
   left: styles.toggleRight,
   right: styles.toggleLeft,
   top: styles.toggleBottom,
-};
-
-const togglePlacementClass = {
-  bottom: `${prefix}-toggle-top`,
-  left: `${prefix}-toggle-right`,
-  right: `${prefix}-toggle-left`,
-  top: `${prefix}-toggle-bottom`,
 };
 
 const PAN_THRESHOLD = 3;
@@ -204,6 +197,7 @@ export const DraggablePanelRoot = memo<DraggablePanelRootProps>(
         <aside
           data-expand={isExpand}
           data-expandable={expandable}
+          data-placement={placement}
           data-resizing={state.dragging}
           ref={elementRef}
           className={
@@ -264,7 +258,7 @@ export const DraggablePanelContent = memo<DraggablePanelContentProps>(
       >
         <Motion.div
           animate={{ scale: shrunk ? COLLAPSED_SCALE : 1 }}
-          className={styleProps(styles.content, clsx(`${prefix}-content`, className)).className}
+          className={styleProps(styles.content, clsx(`${prefix}__content`, className)).className}
           transition={timing()}
           style={
             {
@@ -291,7 +285,7 @@ export interface DraggablePanelHandleProps extends Omit<DivProps, 'onDrag'> {
 
 export const DraggablePanelHandle = memo<DraggablePanelHandleProps>(
   ({ className, style, wideArea = true, ...rest }) => {
-    const { axis, controller, expand, showBorder, state } = useDraggablePanelContext();
+    const { axis, controller, expand, placement, showBorder, state } = useDraggablePanelContext();
     const size = useStore(coarsePointer.subscribe, () => getHandleSize(wideArea));
     const target = useStore(controller.subscribe, () => controller.target);
     useEffect(() => () => controller.drag.cancel(), [controller]);
@@ -311,13 +305,14 @@ export const DraggablePanelHandle = memo<DraggablePanelHandleProps>(
         aria-valuenow={target}
         aria-valuetext={`${target} pixels`}
         data-border={showBorder}
+        data-placement={placement}
         data-resizing={state.dragging || undefined}
         role="separator"
         tabIndex={0}
         className={
           styleProps(
             [styles.handle, axis.vertical ? styles.handleHorizontal : styles.handleVertical],
-            clsx(`${prefix}-handle`, className),
+            clsx(`${prefix}__handle`, className),
           ).className
         }
         style={
@@ -398,11 +393,12 @@ export const DraggablePanelToggle = memo<DraggablePanelToggleProps>(
 
     return (
       <div
+        data-placement={placement}
         style={{ opacity: expand ? undefined : showHandleWhenCollapsed ? 1 : 0, ...style }}
         className={
           styleProps(
             [styles.toggleRoot, toggleStyles[placement]],
-            clsx(`${prefix}-toggle`, togglePlacementClass[placement], className),
+            clsx(`${prefix}__toggle`, className),
           ).className
         }
         {...rest}
