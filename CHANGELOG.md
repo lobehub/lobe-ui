@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [6.3.0](https://github.com/lobehub/lobe-ui/compare/v6.2.0...v6.3.0) (2026-10-17)
+
+### ✨ Features
+
+- **ToggleGroup**: Support multiple selection, closes [#743](https://github.com/lobehub/lobe-ui/issues/743) ([1631fb8](https://github.com/lobehub/lobe-ui/commit/1631fb8))
+
 # [6.2.0](https://github.com/lobehub/lobe-ui/compare/v6.1.0...v6.2.0) (2026-10-17)
 
 ### ✨ Features
