@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [6.1.0](https://github.com/lobehub/lobe-ui/compare/v6.0.6...v6.1.0) (2026-10-17)
+
+### ✨ Features
+
+- **stylex**: Export uncompiled cssVar and media defineConsts, closes [#739](https://github.com/lobehub/lobe-ui/issues/739) ([72d1429](https://github.com/lobehub/lobe-ui/commit/72d1429))
+
 ## [6.0.6](https://github.com/lobehub/lobe-ui/compare/v6.0.5...v6.0.6) (2026-10-16)
 
 ### 🐛 Bug Fixes
