@@ -25,6 +25,20 @@ import DemoComposition from './demos/Composition.tsx?demo';
 
 <Demo of={DemoComposition} layout="bare" />
 
+## Stable class names
+
+These class names are public API: overrides, integrations and e2e selectors may target them.
+They stay stable across releases; generated StyleX hashes are not stable and must never be targeted.
+
+| Class | Element |
+| --- | --- |
+| `lobe-draggable-panel` | Root `<aside>` |
+| `lobe-draggable-panel__content` | Animated content wrapper |
+| `lobe-draggable-panel__handle` | Resize handle (`role="separator"`) |
+| `lobe-draggable-panel__toggle` | Collapse / expand toggle container |
+
+Placement is exposed as `data-placement="left | right | top | bottom"` on the root, the handle and the toggle.
+
 ## APIs
 
 <Api name="DraggablePanel" />

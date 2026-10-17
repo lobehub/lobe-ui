@@ -195,7 +195,7 @@ describe('DraggablePanel', () => {
 
     pointerDrag(screen.getByRole('separator'), { x: -200 });
 
-    const box = document.querySelector('.base-draggable-panel-content')!.parentElement!;
+    const box = document.querySelector('.lobe-draggable-panel__content')!.parentElement!;
     expect(box.style.overflow).toBe('clip');
   });
 
