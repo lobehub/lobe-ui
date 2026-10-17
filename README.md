@@ -141,6 +141,7 @@ Appearance and colors are plain attributes, read by `theme.css`:
 - `setLobeTheme({ appearance, primaryColor, neutralColor })` updates them at runtime; `<LobeThemeScript appearance="system" />` sets them before first paint. With `next-themes`, use `attribute="data-theme"`.
 - `<ThemeScope appearance="dark">` themes a subtree (e.g. a dark island in a light page).
 - Style with `createStaticStyles` / `cssVar` / `cx` from `@lobehub/ui`; `useTheme()` / `useThemeMode()` return the current tokens when JS needs concrete values.
+- Apps that compile StyleX themselves can import the same tokens from `@lobehub/ui/stylex/cssVar.stylex` and `@lobehub/ui/stylex/media.stylex`. Those entries are uncompiled `stylex.defineConsts` modules, so the app compiler has to transform them in the same build.
 
 ### I18n
 

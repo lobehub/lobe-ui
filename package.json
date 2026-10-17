@@ -96,6 +96,16 @@
     "./global.css": "./es/global.css",
     "./theme.css": "./es/theme.css",
     "./style.css": "./es/style.css",
+    "./stylex/cssVar.stylex": {
+      "types": "./es/stylex/cssVar.stylex.ts",
+      "import": "./es/stylex/cssVar.stylex.js",
+      "default": "./es/stylex/cssVar.stylex.js"
+    },
+    "./stylex/media.stylex": {
+      "types": "./es/stylex/media.stylex.ts",
+      "import": "./es/stylex/media.stylex.js",
+      "default": "./es/stylex/media.stylex.js"
+    },
     "./es/*": {
       "types": "./es/*.d.mts",
       "import": "./es/*.mjs"
@@ -108,7 +118,7 @@
     "es"
   ],
   "scripts": {
-    "build": "tsdown && tsx ./scripts/buildThemeCss.ts && tsx ./scripts/checkStylexBuild.ts && npm run build:packages",
+    "build": "tsdown && tsx ./scripts/buildThemeCss.ts && tsx ./scripts/publishStylexTokens.ts && tsx ./scripts/checkStylexBuild.ts && npm run build:packages",
     "build:packages": "tsx ./scripts/build.ts",
     "build:stylex-vars": "tsx ./scripts/buildStylexVars.ts",
     "build:watch": "tsdown --watch",

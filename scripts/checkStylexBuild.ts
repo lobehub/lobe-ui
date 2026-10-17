@@ -149,6 +149,33 @@ for (const file of globSync('**/*.mjs', { cwd: es })) {
   }
 }
 
+const pkg = JSON.parse(
+  readFileSync(path.resolve(import.meta.dirname, '../package.json'), 'utf8'),
+) as {
+  exports: Record<string, { import?: string }>;
+};
+
+for (const [key, name] of [
+  ['./stylex/cssVar.stylex', 'cssVar'],
+  ['./stylex/media.stylex', 'media'],
+] as const) {
+  const rel = pkg.exports[key]?.import;
+  if (!rel) {
+    fail(`${key} import is missing`);
+    continue;
+  }
+  const file = path.resolve(import.meta.dirname, '..', rel);
+  if (!existsSync(file)) {
+    fail(`${rel} is missing`);
+    continue;
+  }
+  const source = readFileSync(file, 'utf8');
+  if (!source.includes(`export const ${name} = stylex.defineConsts(`)) {
+    fail(`${rel} is not an uncompiled defineConsts module`);
+  }
+  if (source.includes(`export { ${name} }`)) fail(`${rel} re-exports a compiled token object`);
+}
+
 if (errors.length > 0) {
   console.error(errors.join('\n'));
   process.exit(1);
