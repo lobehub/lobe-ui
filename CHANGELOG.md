@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [6.4.1](https://github.com/lobehub/lobe-ui/compare/v6.4.0...v6.4.1) (2026-10-18)
+
+### 🐛 Bug Fixes
+
+- Drop leftover ant- class names and the antd eslint bans, closes [#749](https://github.com/lobehub/lobe-ui/issues/749) ([5c48cdc](https://github.com/lobehub/lobe-ui/commit/5c48cdc))
+
 # [6.4.0](https://github.com/lobehub/lobe-ui/compare/v6.3.0...v6.4.0) (2026-10-18)
 
 ### ✨ Features
