@@ -32,7 +32,7 @@ const SyntaxMermaid = memo<SyntaxMermaidProps>(
     const padded = variant !== 'borderless' && styles.padded;
     const mermaidClassName = styleProps(
       [styles.root, padded],
-      clsx('ant-mermaid-mermaid lobe-mermaid', classes, className),
+      clsx('lobe-mermaid', classes, className),
     ).className;
     const fallback = styleProps(
       [styles.root, styles.unmermaid, padded],

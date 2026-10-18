@@ -8,10 +8,9 @@ import { stylish } from '@/styles/stylex/stylish';
 
 import type { HighlighterProps } from './type';
 
-export const actionsHoverCls = 'ant-highlighter-highlighter-hover-actions lobe-highlighter-actions';
-export const langHoverCls = 'ant-highlighter-highlighter-hover-lang lobe-highlighter-lang';
-export const expandCls = 'ant-highlighter-highlighter-body-expand';
-export const prefix = 'ant-highlighter';
+export const actionsHoverCls = 'lobe-highlighter-actions';
+export const langHoverCls = 'lobe-highlighter-lang';
+export const expandCls = 'lobe-highlighter-body-expand';
 
 export const styles = stylex.create({
   actions: {
@@ -72,12 +71,7 @@ export const rootStyles = ({
 }) => [styles.root, variantStyles[variant], shadow && styles.shadow];
 
 export const rootClassName = (wrap?: boolean, className?: string) =>
-  clsx(
-    prefix,
-    'lobe-highlighter',
-    wrap ? 'lobe-highlighter-wrap' : 'lobe-highlighter-nowrap',
-    className,
-  );
+  clsx('lobe-highlighter', wrap ? 'lobe-highlighter-wrap' : 'lobe-highlighter-nowrap', className);
 
 export const headerStyles = (variant: Variant = 'filled') => [
   styles.header,

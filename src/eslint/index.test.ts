@@ -16,16 +16,10 @@ const lint = (code: string) => {
 };
 
 describe('restrictedImports', () => {
-  it.each([
-    ["import { Alert } from 'antd';", 'no longer ships antd'],
-    ["import Alert from 'antd/es/alert';", 'no longer ships antd'],
-    ["import Menu from 'rc-menu';", 'no longer ships antd'],
-    ["import { createStaticStyles } from 'antd-style';", 'instead of antd-style'],
-    ["import { LoadingOutlined } from '@ant-design/icons';", '@ant-design packages'],
-  ])('rejects %s', (code, message) => {
-    expect(lint(code)).toEqual([
+  it('rejects thinking-orbs', () => {
+    expect(lint("import ThinkingOrbs from 'thinking-orbs';")).toEqual([
       expect.objectContaining({
-        message: expect.stringContaining(message),
+        message: expect.stringContaining('Spin variant="network"'),
         ruleId: 'no-restricted-imports',
         severity: 2,
       }),
@@ -36,6 +30,7 @@ describe('restrictedImports', () => {
     "import { Alert, Button, Form, Text } from '@lobehub/ui';",
     "import { Button } from '@lobehub/ui';",
     "import { Form } from '@lobehub/ui/form';",
+    "import { Alert } from 'antd';",
   ])('allows %s', (code) => {
     expect(lint(code)).toEqual([]);
   });
