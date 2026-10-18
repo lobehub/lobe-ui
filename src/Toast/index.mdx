@@ -9,6 +9,8 @@ import DemoActions from './demos/actions.tsx?demo';
 import DemoPromise from './demos/promise.tsx?demo';
 import DemoPosition from './demos/position.tsx?demo';
 import DemoDedupe from './demos/dedupe.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { toastClasses } from './stable';
 
 ## Default
 
@@ -174,3 +176,9 @@ type ToastPosition = 'top' | 'top-left' | 'top-right' | 'bottom' | 'bottom-left'
 ```ts | pure
 type ToastType = 'success' | 'info' | 'warning' | 'error' | 'loading' | 'default';
 ```
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={toastClasses} />

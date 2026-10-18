@@ -51,6 +51,12 @@ export const styles = stylex.create({
     insetBlockStart: 0,
   },
 
+  popupDefaultHeight: {
+    height: 378,
+  },
+  popupDefaultWidth: {
+    width: 378,
+  },
   popupBottom: {
     insetInline: 0,
     insetBlockEnd: 0,
@@ -158,6 +164,7 @@ export const styles = stylex.create({
     alignItems: 'center',
     display: 'flex',
     justifyContent: 'space-between',
+    maxWidth: 1024,
     width: '100%',
   },
 
@@ -232,6 +239,7 @@ export const styles = stylex.create({
     paddingInline: 16,
     display: 'flex',
     flexDirection: 'column',
+    maxWidth: 1024,
     minHeight: '100%',
     width: '100%',
   },
@@ -259,6 +267,7 @@ export const styles = stylex.create({
     borderInlineEndWidth: 1,
     overflowX: 'hidden',
     overflowY: 'auto',
+    width: 280,
   },
 
   sidebarContent: {

@@ -33,7 +33,8 @@ describe('Tooltip', () => {
     expect(popup.classList.contains('root-class')).toBe(true);
     expect(popup.style.color).toBe('red');
     expect((arrow as HTMLElement).style.opacity).toBe('0.5');
-    expect(positioner.style.zIndex).toBe('114514');
+    expect(positioner.style.zIndex).toBe('');
+    expect(getComputedStyle(positioner).zIndex).toBe('114514');
 
     expect(getComputedStyle(popup).backgroundColor).toBe(cssVar.colorBgElevated);
     expect(getComputedStyle(popup).transitionProperty).toMatch(/^opacity, ?transform$/);

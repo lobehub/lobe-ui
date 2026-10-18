@@ -19,14 +19,9 @@ import {
   type DrawerRootProps,
   DrawerTitle,
 } from './atoms';
-import {
-  DEFAULT_CONTAINER_MAX_WIDTH,
-  DEFAULT_DRAWER_HEIGHT,
-  DEFAULT_DRAWER_WIDTH,
-  DEFAULT_PUSH_DISTANCE,
-  DEFAULT_SIDEBAR_WIDTH,
-} from './constants';
+import { DEFAULT_DRAWER_HEIGHT, DEFAULT_DRAWER_WIDTH, DEFAULT_PUSH_DISTANCE } from './constants';
 import { DrawerPushProvider, useDrawerPush } from './DrawerPushContext';
+import { drawerClasses } from './stable';
 import { styles } from './style';
 import type { DrawerProps, DrawerPush } from './type';
 
@@ -54,8 +49,8 @@ const Drawer = memo<DrawerProps>(
     footer,
     noHeader,
     sidebar,
-    sidebarWidth = DEFAULT_SIDEBAR_WIDTH,
-    containerMaxWidth = DEFAULT_CONTAINER_MAX_WIDTH,
+    sidebarWidth,
+    containerMaxWidth,
     push = true,
     zIndex,
     getContainer,
@@ -101,15 +96,19 @@ const Drawer = memo<DrawerProps>(
     const showHeader = !noHeader && (showTitle || closable || !!extra);
     const hasSidebar = !!sidebar;
 
-    const containerStyle = useMemo<CSSProperties>(
-      () => ({ maxWidth: containerMaxWidth }),
+    const containerStyle = useMemo<CSSProperties | undefined>(
+      () => (containerMaxWidth === undefined ? undefined : { maxWidth: containerMaxWidth }),
       [containerMaxWidth],
     );
 
     const closeNode = closable && (
       <button
         aria-label="Close"
-        {...styleProps([styles.close, focusRing.info], classNames?.close, semanticStyles?.close)}
+        {...styleProps(
+          [styles.close, focusRing.info],
+          clsx(drawerClasses('close'), classNames?.close),
+          semanticStyles?.close,
+        )}
         type="button"
         onClick={onClose}
       >
@@ -121,7 +120,7 @@ const Drawer = memo<DrawerProps>(
       <div
         {...styleProps(
           [styles.extra, !showHeader && styles.extraFloating],
-          classNames?.extra,
+          clsx(drawerClasses('extra'), classNames?.extra),
           semanticStyles?.extra,
         )}
       >
@@ -133,8 +132,8 @@ const Drawer = memo<DrawerProps>(
     const bodyNode = hasSidebar ? (
       <>
         <div
-          {...styleProps(styles.sidebar, classNames?.sidebar, {
-            width: sidebarWidth,
+          {...styleProps(styles.sidebar, clsx(drawerClasses('sidebar'), classNames?.sidebar), {
+            ...(sidebarWidth === undefined ? undefined : { width: sidebarWidth }),
             ...semanticStyles?.sidebar,
           })}
         >
@@ -143,7 +142,7 @@ const Drawer = memo<DrawerProps>(
         <div
           {...styleProps(
             styles.sidebarContent,
-            classNames?.sidebarContent,
+            clsx(drawerClasses('sidebar-content'), classNames?.sidebarContent),
             semanticStyles?.sidebarContent,
           )}
         >
@@ -166,12 +165,17 @@ const Drawer = memo<DrawerProps>(
       >
         <DrawerPortal container={container}>
           {mask && (
-            <DrawerBackdrop className={classNames?.backdrop} style={semanticStyles?.backdrop} />
+            <DrawerBackdrop
+              className={classNames?.backdrop}
+              data-placement={placement}
+              style={semanticStyles?.backdrop}
+            />
           )}
           <DrawerPopupImpl
+            defaultSize
             className={classNames?.popup}
             flush={isFlush}
-            height={resolvedHeight}
+            height={height}
             motionProps={{ onAnimationComplete: handleAnimationComplete }}
             panelClassName={clsx(className, classNames?.panel)}
             panelStyle={{ ...style, ...semanticStyles?.panel }}
@@ -179,12 +183,18 @@ const Drawer = memo<DrawerProps>(
             placement={placement}
             popupStyle={semanticStyles?.popup}
             pushOffset={pushOffset}
-            width={resolvedWidth}
+            width={width}
           >
             <DrawerPushProvider value={childValue}>
               {showHeader ? (
                 <DrawerHeader className={classNames?.header} style={semanticStyles?.header}>
-                  <div {...styleProps(styles.containerInner, undefined, containerStyle)}>
+                  <div
+                    {...styleProps(
+                      styles.containerInner,
+                      drawerClasses('container'),
+                      containerStyle,
+                    )}
+                  >
                     {showTitle ? (
                       <DrawerTitle className={classNames?.title} style={semanticStyles?.title}>
                         {title}
@@ -206,7 +216,7 @@ const Drawer = memo<DrawerProps>(
                 <div
                   {...styleProps(
                     [styles.bodyContent, hasSidebar && styles.bodyContentSidebar],
-                    classNames?.bodyContent,
+                    clsx(drawerClasses('body-content'), classNames?.bodyContent),
                     { ...containerStyle, ...semanticStyles?.bodyContent },
                   )}
                 >
@@ -218,7 +228,7 @@ const Drawer = memo<DrawerProps>(
                   <div
                     {...styleProps(
                       [styles.containerInner, styles.containerInnerFooter],
-                      undefined,
+                      drawerClasses('container'),
                       containerStyle,
                     )}
                   >

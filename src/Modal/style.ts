@@ -23,11 +23,11 @@ const iconButton = (size: number) => ({
   borderRadius: 12,
   borderStyle: 'none',
   borderWidth: 'medium',
-  backgroundColor: { default: 'transparent', ':hover': cssVar.colorFillSecondary },
-  color: { default: cssVar.colorTextTertiary, ':hover': cssVar.colorText },
+  backgroundColor: { 'default': 'transparent', ':hover': cssVar.colorFillSecondary },
+  color: { 'default': cssVar.colorTextTertiary, ':hover': cssVar.colorText },
   transition: `all 160ms ${softEase}`,
   cursor: 'pointer',
-  transform: { default: null, ':hover': 'scale(1.04)' },
+  transform: { 'default': null, ':hover': 'scale(1.04)' },
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -111,6 +111,12 @@ export const styles = stylex.create({
     userSelect: 'none',
   },
 
+  loading: {
+    paddingBlock: 32,
+    paddingInline: 0,
+    display: 'flex',
+    justifyContent: 'center',
+  },
   loadingSpinner: {
     borderColor: 'currentcolor',
     borderRadius: '50%',
@@ -126,6 +132,10 @@ export const styles = stylex.create({
     width: 14,
   },
 
+  loadingSpinnerLarge: {
+    height: 24,
+    width: 24,
+  },
   popup: {
     inset: 0,
     alignItems: 'center',
@@ -148,7 +158,7 @@ export const styles = stylex.create({
     pointerEvents: 'auto',
     position: 'relative',
     transform: {
-      default: null,
+      'default': null,
       [ending]: 'scale(0.98)',
       ':is([data-starting-style]):not([data-ending-style])': 'scale(0.97)',
     },

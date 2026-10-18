@@ -1,6 +1,7 @@
 'use client';
 
 import { mergeProps } from '@base-ui/react/merge-props';
+import * as stylex from '@stylexjs/stylex';
 import clsx from 'clsx';
 import React, {
   cloneElement,
@@ -17,6 +18,7 @@ import React, {
 import type { VirtualListProps } from '@/internal/virtual';
 import { CLASSNAMES } from '@/styles/classNames';
 
+import { contextMenuClasses } from './stable';
 import { getServerSnapshot, getSnapshot, showContextMenu, subscribe } from './store';
 import { type ContextMenuItem } from './type';
 
@@ -41,11 +43,13 @@ export type ContextMenuTriggerProps = Pick<VirtualListProps, 'virtual' | 'listIt
   onContextMenu?: (event: MouseEvent<HTMLElement>) => void;
 } & Omit<HTMLAttributes<HTMLElement>, 'onContextMenu' | 'children'>;
 
-const styles = {
-  trigger: {
+const triggerStyles = stylex.create({
+  wrapper: {
     display: 'contents',
   },
-};
+});
+
+const triggerStyleClassName = stylex.props(triggerStyles.wrapper).className;
 
 export const ContextMenuTrigger = memo<ContextMenuTriggerProps>(
   ({ children, footer, header, items, listItemHeight, onContextMenu, virtual, ...rest }) => {
@@ -68,7 +72,7 @@ export const ContextMenuTrigger = memo<ContextMenuTriggerProps>(
     const triggerProps = {
       ...rest,
       'aria-expanded': open || undefined,
-      'className': clsx(CLASSNAMES.ContextTrigger, rest.className),
+      'className': clsx(CLASSNAMES.ContextTrigger, contextMenuClasses('trigger'), rest.className),
       'data-contextmenu-trigger': triggerId,
       'data-popup-open': open ? '' : undefined,
       'data-state': open ? 'open' : undefined,
@@ -80,7 +84,7 @@ export const ContextMenuTrigger = memo<ContextMenuTriggerProps>(
     }
 
     return (
-      <span style={styles.trigger} {...triggerProps}>
+      <span {...triggerProps} className={clsx(triggerStyleClassName, triggerProps.className)}>
         {children}
       </span>
     );

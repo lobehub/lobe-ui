@@ -8,8 +8,6 @@ const softEase: CubicBezier = [0.32, 0.72, 0, 1];
 const exitEase: CubicBezier = [0.4, 0, 1, 1];
 
 export const DEFAULT_PUSH_DISTANCE = 180;
-export const DEFAULT_SIDEBAR_WIDTH = 280;
-export const DEFAULT_CONTAINER_MAX_WIDTH = 1024;
 export const DEFAULT_DRAWER_WIDTH = 378;
 export const DEFAULT_DRAWER_HEIGHT = 378;
 

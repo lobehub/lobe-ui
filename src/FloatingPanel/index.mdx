@@ -6,6 +6,8 @@ category: Feedback
 
 import DemoIndex from './demos/index.tsx?demo';
 import DemoToastDodge from './demos/toastDodge.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { floatingPanelClasses } from './stable';
 
 ## Basic
 
@@ -21,3 +23,9 @@ import DemoToastDodge from './demos/toastDodge.tsx?demo';
 - Use `minWidth`, `maxWidth`, `minHeight`, and `maxHeight` to constrain resize bounds.
 - Use `resizable={false}` for fixed auxiliary panels.
 - A `bottomRight` panel moves the bottom-right toast viewport out of its way while it is open, and restores it on close. The verdict is left shift, then up shift, then a narrowed toast, and finally the panel lifting its own bottom edge — so a toast never renders inside the panel.
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={floatingPanelClasses} />

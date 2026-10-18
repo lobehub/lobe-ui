@@ -86,6 +86,7 @@ export const styles = stylex.create({
     backgroundColor: cssVar.colorBgContainer,
     display: 'flex',
     flexDirection: 'column',
+    width: '100%',
   },
   transition: {
     transition: `height ${transitionDuration} ${transitionEasing}, margin-block-start ${transitionDuration} ${transitionEasing}`,

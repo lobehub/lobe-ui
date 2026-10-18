@@ -1,6 +1,5 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
 import { Maximize2, Minimize2, X } from 'lucide-react';
 import { useDragControls } from 'motion/react';
 import type { MouseEvent, PointerEvent } from 'react';
@@ -9,6 +8,7 @@ import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { focusRing } from '@/styles/stylex/focusRing';
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 import { stopPropagation } from '@/utils/dom';
 
 import { Button } from '../Button';
@@ -22,6 +22,7 @@ import {
   ModalRoot,
   ModalTitle,
 } from './atoms';
+import { modalClasses } from './stable';
 import { styles } from './style';
 import type { ModalComponentProps } from './type';
 
@@ -228,6 +229,7 @@ const Modal = memo<ModalComponentProps>(
     const showHeader = showTitle || closable || allowFullscreen;
 
     const hasHeight = height !== undefined;
+    const dataAttributes = toDataAttributes({ draggable: shouldDrag, fullscreen: isFullscreen });
     const panelStyle: React.CSSProperties = {
       ...(hasHeight && !isFullscreen ? { height } : {}),
       ...style,
@@ -241,10 +243,18 @@ const Modal = memo<ModalComponentProps>(
         onOpenChange={handleOpenChange}
       >
         <ModalPortal container={container}>
-          {mask && <ModalBackdrop className={classNames?.mask} style={semanticStyles?.mask} />}
+          {mask && (
+            <ModalBackdrop
+              className={classNames?.mask}
+              style={semanticStyles?.mask}
+              {...dataAttributes}
+            />
+          )}
           <ModalPopupImpl
             className={classNames?.wrapper}
             panelClassName={className}
+            panelData={dataAttributes}
+            {...dataAttributes}
             popupStyle={semanticStyles?.wrapper}
             ref={constraintsRef}
             style={panelStyle}
@@ -277,11 +287,17 @@ const Modal = memo<ModalComponentProps>(
                 ) : (
                   <span />
                 )}
-                <div {...stylex.props(styles.headerActions)} onPointerDown={stopPropagation}>
+                <div
+                  {...styleProps(styles.headerActions, modalClasses('header-actions'))}
+                  onPointerDown={stopPropagation}
+                >
                   {allowFullscreen && (
                     <button
                       aria-label={isFullscreen ? 'Exit fullscreen' : 'Fullscreen'}
-                      {...stylex.props(styles.fullscreenToggle, focusRing.info)}
+                      {...styleProps(
+                        [styles.fullscreenToggle, focusRing.info],
+                        modalClasses('fullscreen-toggle'),
+                      )}
                       type="button"
                       onClick={() => setIsFullscreen((prev) => !prev)}
                     >
@@ -291,7 +307,7 @@ const Modal = memo<ModalComponentProps>(
                   {closable && (
                     <button
                       aria-label="Close"
-                      {...stylex.props(styles.closeInline, focusRing.info)}
+                      {...styleProps([styles.closeInline, focusRing.info], modalClasses('close'))}
                       type="button"
                       onClick={handleCancel}
                     >
@@ -310,14 +326,8 @@ const Modal = memo<ModalComponentProps>(
               }}
             >
               {loading ? (
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    padding: '32px 0',
-                  }}
-                >
-                  <span {...styleProps(styles.loadingSpinner, undefined, { height: 24, width: 24 })} />
+                <div {...styleProps(styles.loading, modalClasses('loading'))}>
+                  <span {...styleProps([styles.loadingSpinner, styles.loadingSpinnerLarge])} />
                 </div>
               ) : (
                 children

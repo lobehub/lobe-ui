@@ -80,6 +80,7 @@ import { uploadClasses, uploadDraggerClasses } from '@/Upload/stable';
 import type { AnyStableClasses } from '@/utils/bem';
 
 import { DISPLAY_FIXTURES } from './stableClasses.fixtures.display';
+import { OVERLAY_FIXTURES } from './stableClasses.fixtures.overlay';
 
 export interface StableFixture {
   classes: AnyStableClasses;
@@ -91,6 +92,7 @@ export interface StableFixture {
 
 export const FIXTURES: Record<string, StableFixture> = {
   ...DISPLAY_FIXTURES,
+  ...OVERLAY_FIXTURES,
   Checkbox: {
     classes: checkboxClasses,
     render: ({ className }) => (
@@ -538,13 +540,6 @@ export const EXEMPT: Record<string, string> = {
 export const PENDING: readonly string[] = [
   'CodeDiff',
   'CodeEditor',
-  'ContextMenuTrigger',
-  'Drawer',
-  'DropdownMenu',
-  'EditorSlashMenu',
-  'EmojiPicker',
-  'FloatingPanel',
-  'FloatingSheet',
   'Form',
   'FormDivider',
   'FormField',
@@ -558,7 +553,6 @@ export const PENDING: readonly string[] = [
   'HtmlPreviewIframe',
   'Markdown',
   'Mermaid',
-  'Modal',
   'PatchDiff',
   'SearchResultCards',
   'Snippet',
@@ -566,7 +560,6 @@ export const PENDING: readonly string[] = [
   'SyntaxMermaid',
   'Table',
   'ThemeScope',
-  'Tooltip',
   'Typography',
   'awesome/AgentSkillCard',
   'awesome/AuroraBackground',

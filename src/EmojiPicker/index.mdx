@@ -10,6 +10,8 @@ import DemoCustomEmoji from './demos/CustomEmoji.tsx?demo';
 import DemoCustomTabs from './demos/CustomTabs.tsx?demo';
 import DemoModelAvatar from './demos/ModelAvatar.tsx?demo';
 import DemoControl from './demos/Control.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { emojiPickerClasses } from './stable';
 
 ## Default
 
@@ -54,3 +56,9 @@ import DemoControl from './demos/Control.tsx?demo';
 | value | Unique identifier for the tab | `string` | - |
 | label | Label to display for the tab | `ReactNode` | - |
 | render | Render function for the tab content | `(handleAvatarChange: (avatar: string) => void) => ReactNode` | - |
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={emojiPickerClasses} />

@@ -26,6 +26,8 @@ import DemoCustomTrigger from './demos/custom-trigger.tsx?demo';
 import DemoLinkLabel from './demos/link-label.tsx?demo';
 import DemoUploader from './demos/uploader.tsx?demo';
 import DemoTooltipHoverStay from './demos/tooltip-hover-stay.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { dropdownMenuClasses } from './stable';
 
 ## Default
 
@@ -167,3 +169,9 @@ Items support the base item types plus `type: 'checkbox'` and `type: 'switch'`.
 | defaultChecked  | Uncontrolled initial state | `boolean`                    | `false` |
 | onCheckedChange | Checked change handler     | `(checked: boolean) => void` | -       |
 | closeOnClick    | Close menu on toggle       | `boolean`                    | `false` |
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={dropdownMenuClasses} />

@@ -29,6 +29,7 @@ import { mergeRefs, useMergeRefs } from '@/utils/mergeRefs';
 import { useLayerZIndex } from '../internal/zIndex';
 import { backdropTransition, modalMotionConfig } from './constants';
 import { ModalLayerProvider, useModalLayer } from './ModalLayerContext';
+import { modalClasses } from './stable';
 import { styles } from './style';
 
 type XStyle = Parameters<typeof styleProps>[0];
@@ -36,8 +37,9 @@ type XStyle = Parameters<typeof styleProps>[0];
 const mergeStateClassName = <TState,>(
   xstyle: XStyle,
   className: string | ((state: TState) => string | undefined) | undefined,
+  stableClassName?: string,
 ) => {
-  const base = stylex.props(xstyle).className;
+  const base = clsx(stylex.props(xstyle).className, stableClassName);
   if (typeof className === 'function') return (state: TState) => clsx(base, className(state));
   return clsx(base, className);
 };
@@ -139,7 +141,9 @@ export type ModalViewportProps = React.ComponentProps<typeof Dialog.Viewport>;
 export const ModalViewport = ({ className, ...rest }: ModalViewportProps) => (
   <Dialog.Viewport
     {...rest}
-    className={mergeStateClassName(styles.viewport, className as any) as any}
+    className={
+      mergeStateClassName(styles.viewport, className as any, modalClasses('viewport')) as any
+    }
   />
 );
 
@@ -155,8 +159,12 @@ export const ModalBackdrop = ({ className, style, ...rest }: ModalBackdropProps)
     return (
       <Dialog.Backdrop
         {...rest}
-        className={clsx(stylex.props(styles.backdrop).className, className as string)}
         style={{ ...layerStyle, ...style, transition: 'none' }}
+        className={clsx(
+          stylex.props(styles.backdrop).className,
+          modalClasses('backdrop'),
+          className as string,
+        )}
         render={
           <Motion.div
             animate={{ opacity: open ? 1 : 0 }}
@@ -171,8 +179,10 @@ export const ModalBackdrop = ({ className, style, ...rest }: ModalBackdropProps)
   return (
     <Dialog.Backdrop
       {...rest}
-      className={mergeStateClassName(styles.backdrop, className as any) as any}
       style={{ ...layerStyle, ...style }}
+      className={
+        mergeStateClassName(styles.backdrop, className as any, modalClasses('backdrop')) as any
+      }
     />
   );
 };
@@ -181,6 +191,7 @@ export const ModalBackdrop = ({ className, style, ...rest }: ModalBackdropProps)
 export type ModalPopupProps = React.ComponentProps<typeof Dialog.Popup> & {
   motionProps?: Record<string, any>;
   panelClassName?: string;
+  panelData?: Record<`data-${string}`, string>;
   popupStyle?: React.CSSProperties;
   width?: number | string;
 };
@@ -191,6 +202,7 @@ export const ModalPopupImpl = ({
   style,
   motionProps,
   panelClassName,
+  panelData,
   panelXstyle,
   popupStyle,
   ref: forwardedRef,
@@ -208,9 +220,13 @@ export const ModalPopupImpl = ({
     return (
       <Dialog.Popup
         {...rest}
-        className={clsx(stylex.props(styles.popup, xstyle).className, className as string)}
         ref={composedRef as any}
         style={{ ...popupZIndexStyle, ...popupStyle }}
+        className={clsx(
+          stylex.props(styles.popup, xstyle).className,
+          modalClasses('wrapper'),
+          className as string,
+        )}
       >
         <AnimatePresence onExitComplete={actions.onExitComplete}>
           {open ? (
@@ -218,9 +234,11 @@ export const ModalPopupImpl = ({
               {...modalMotionConfig}
               {...motionProps}
               key="modal-popup-panel"
+              {...panelData}
               style={{ maxWidth: width ?? undefined, transition: 'none', ...style }}
               className={clsx(
                 stylex.props(styles.popupInner, panelXstyle).className,
+                modalClasses(),
                 panelClassName,
               )}
             >
@@ -235,12 +253,19 @@ export const ModalPopupImpl = ({
   return (
     <Dialog.Popup
       {...rest}
-      className={mergeStateClassName([styles.popup, xstyle], className as any) as any}
       ref={composedRef as any}
       style={{ ...popupZIndexStyle, ...popupStyle }}
+      className={
+        mergeStateClassName(
+          [styles.popup, xstyle],
+          className as any,
+          modalClasses('wrapper'),
+        ) as any
+      }
     >
       <div
-        {...styleProps([styles.popupInner, panelXstyle], panelClassName, {
+        {...panelData}
+        {...styleProps([styles.popupInner, panelXstyle], clsx(modalClasses(), panelClassName), {
           maxWidth: width ?? undefined,
           ...style,
         })}
@@ -263,7 +288,10 @@ export const ModalHeaderImpl = ({
   xstyle,
   ...rest
 }: ModalHeaderProps & { xstyle?: XStyle }) => (
-  <div {...rest} {...styleProps([styles.header, xstyle], className, style)} />
+  <div
+    {...rest}
+    {...styleProps([styles.header, xstyle], clsx(modalClasses('header'), className), style)}
+  />
 );
 export const ModalHeader: React.FC<ModalHeaderProps> = ModalHeaderImpl;
 
@@ -276,14 +304,21 @@ export const ModalTitleImpl = ({
 }: ModalTitleProps & { xstyle?: XStyle }) => (
   <Dialog.Title
     {...rest}
-    className={mergeStateClassName([styles.title, xstyle], className as any) as any}
+    className={
+      mergeStateClassName([styles.title, xstyle], className as any, modalClasses('title')) as any
+    }
   />
 );
 export const ModalTitle: React.FC<ModalTitleProps> = ModalTitleImpl;
 
 // --- Description ---
 export type ModalDescriptionProps = React.ComponentProps<typeof Dialog.Description>;
-export const ModalDescription: React.FC<ModalDescriptionProps> = Dialog.Description;
+export const ModalDescription: React.FC<ModalDescriptionProps> = ({ className, ...rest }) => (
+  <Dialog.Description
+    {...rest}
+    className={mergeStateClassName(undefined, className as any, modalClasses('description')) as any}
+  />
+);
 
 // --- Content ---
 export type ModalContentProps = React.HTMLAttributes<HTMLDivElement> & {
@@ -295,7 +330,10 @@ export const ModalContentImpl = ({
   xstyle,
   ...rest
 }: ModalContentProps & { xstyle?: XStyle }) => (
-  <div {...rest} {...styleProps([styles.content, xstyle], className, style)} />
+  <div
+    {...rest}
+    {...styleProps([styles.content, xstyle], clsx(modalClasses('content'), className), style)}
+  />
 );
 export const ModalContent: React.FC<ModalContentProps> = ModalContentImpl;
 
@@ -309,7 +347,10 @@ export const ModalFooterImpl = ({
   xstyle,
   ...rest
 }: ModalFooterProps & { xstyle?: XStyle }) => (
-  <div {...rest} {...styleProps([styles.footer, xstyle], className, style)} />
+  <div
+    {...rest}
+    {...styleProps([styles.footer, xstyle], clsx(modalClasses('footer'), className), style)}
+  />
 );
 export const ModalFooter: React.FC<ModalFooterProps> = ModalFooterImpl;
 
@@ -327,6 +368,7 @@ export const ModalCloseImpl = ({
       mergeStateClassName(
         [styles.closeInline, styles.close, focusRing.info, xstyle],
         className as any,
+        modalClasses('close'),
       ) as any
     }
   >
@@ -375,7 +417,7 @@ export const ModalTrigger = ({
     return (
       <Dialog.Trigger
         {...rest}
-        className={className}
+        className={mergeStateClassName(undefined, className as any, modalClasses('trigger')) as any}
         nativeButton={resolvedNativeButton}
         render={renderer as any}
       />
@@ -385,7 +427,7 @@ export const ModalTrigger = ({
   return (
     <Dialog.Trigger
       {...rest}
-      className={className}
+      className={mergeStateClassName(undefined, className as any, modalClasses('trigger')) as any}
       nativeButton={resolvedNativeButton}
       ref={refProp as any}
     >

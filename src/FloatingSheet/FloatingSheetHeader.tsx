@@ -1,6 +1,8 @@
-import * as stylex from '@stylexjs/stylex';
 import { type ReactNode } from 'react';
 
+import { styleProps } from '@/styles/stylex/props';
+
+import { floatingSheetClasses } from './stable';
 import { styles } from './style';
 
 interface FloatingSheetHeaderProps {
@@ -21,12 +23,18 @@ export function FloatingSheetHeader({
   const s = styles;
 
   return (
-    <div {...stylex.props(s.header, isDragging && s.headerDragging)} {...handleProps}>
-      <div {...stylex.props(s.handle)} />
-      <div {...stylex.props(s.headerContent)}>
-        {title && <div {...stylex.props(s.headerTitle)}>{title}</div>}
+    <div
+      {...styleProps([s.header, isDragging && s.headerDragging], floatingSheetClasses('header'))}
+      {...handleProps}
+    >
+      <div {...styleProps(s.handle, floatingSheetClasses('handle'))} />
+      <div {...styleProps(s.headerContent, floatingSheetClasses('header-content'))}>
+        {title && <div {...styleProps(s.headerTitle, floatingSheetClasses('title'))}>{title}</div>}
         {headerActions && (
-          <div {...stylex.props(s.headerActions)} data-no-drag="">
+          <div
+            {...styleProps(s.headerActions, floatingSheetClasses('header-actions'))}
+            data-no-drag=""
+          >
             {headerActions}
           </div>
         )}

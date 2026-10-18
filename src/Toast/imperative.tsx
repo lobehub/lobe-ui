@@ -1,6 +1,7 @@
 'use client';
 
 import { Toast as BaseToast } from '@base-ui/react/toast';
+import clsx from 'clsx';
 import { memo, useEffect, useId, useState, useSyncExternalStore } from 'react';
 
 import { useAppElement } from '@/ConfigProvider/AppElementContext';
@@ -16,6 +17,7 @@ import {
   markToastHostReady,
   runWhenToastHostReady,
 } from './pendingQueue';
+import { toastClasses } from './stable';
 import { styles, viewportPositionStyles } from './style';
 import ToastItem from './Toast';
 import {
@@ -379,9 +381,12 @@ export const ToastHost = memo(
         <BaseToast.Provider limit={limit} timeout={duration} toastManager={getManager(pos)}>
           <BaseToast.Portal container={container}>
             <BaseToast.Viewport
-              {...styleProps([styles.viewport, viewportPositionStyles[pos]], className, {
-                zIndex: viewportZIndex,
-              })}
+              data-position={pos}
+              {...styleProps(
+                [styles.viewport, viewportPositionStyles[pos]],
+                clsx(toastClasses('viewport'), className),
+                viewportZIndex === undefined ? undefined : { zIndex: viewportZIndex },
+              )}
             >
               <ToastList />
             </BaseToast.Viewport>

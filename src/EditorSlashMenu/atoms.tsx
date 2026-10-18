@@ -9,6 +9,7 @@ import { useAppElement } from '@/ConfigProvider';
 import { menuClassNames, menuStyles } from '@/DropdownMenu/sharedStyle';
 import { type styleProps } from '@/styles/stylex/props';
 
+import { editorSlashMenuClasses } from './stable';
 import { styles } from './style';
 
 const mergeStateClassName = <TState,>(
@@ -32,8 +33,13 @@ export const EditorSlashMenuList = ({
   return (
     <Autocomplete.List
       {...rest}
-      className={mergeStateClassName(sx(styles.list), className as any) as any}
       ref={ref}
+      className={
+        mergeStateClassName(
+          clsx(sx(styles.list), editorSlashMenuClasses('list')),
+          className as any,
+        ) as any
+      }
     />
   );
 };
@@ -71,7 +77,11 @@ export const EditorSlashMenuPositioner = ({
       sideOffset={sideOffset ?? 6}
       className={
         mergeStateClassName(
-          clsx(sx(menuStyles.positioner), menuClassNames.positioner),
+          clsx(
+            sx(menuStyles.positioner),
+            menuClassNames.positioner,
+            editorSlashMenuClasses('positioner'),
+          ),
           className as any,
         ) as any
       }
@@ -93,7 +103,7 @@ export const EditorSlashMenuPopup = ({
       initialFocus={initialFocus}
       className={
         mergeStateClassName(
-          clsx(sx(menuStyles.popup), menuClassNames.popup),
+          clsx(sx(menuStyles.popup), menuClassNames.popup, editorSlashMenuClasses()),
           className as any,
         ) as any
       }
@@ -113,6 +123,7 @@ export const EditorSlashMenuItem = ({ className, danger, ...rest }: EditorSlashM
       className={(state) =>
         clsx(
           sx([menuStyles.item, danger && menuStyles.danger]),
+          editorSlashMenuClasses('item'),
           typeof className === 'function' ? className(state) : className,
         )
       }
@@ -122,7 +133,13 @@ export const EditorSlashMenuItem = ({ className, danger, ...rest }: EditorSlashM
 EditorSlashMenuItem.displayName = 'EditorSlashMenuItem';
 
 export type EditorSlashMenuGroupProps = React.ComponentProps<typeof Autocomplete.Group>;
-export const EditorSlashMenuGroup = Autocomplete.Group;
+export const EditorSlashMenuGroup = ({ className, ...rest }: EditorSlashMenuGroupProps) => (
+  <Autocomplete.Group
+    {...rest}
+    className={mergeStateClassName(editorSlashMenuClasses('group'), className as any) as any}
+  />
+);
+EditorSlashMenuGroup.displayName = 'EditorSlashMenuGroup';
 
 export type EditorSlashMenuGroupLabelProps = React.ComponentProps<typeof Autocomplete.GroupLabel>;
 
@@ -136,6 +153,7 @@ export const EditorSlashMenuGroupLabel = ({
       className={(state) =>
         clsx(
           sx(menuStyles.groupLabel),
+          editorSlashMenuClasses('group-label'),
           typeof className === 'function' ? className(state) : className,
         )
       }
@@ -153,6 +171,7 @@ export const EditorSlashMenuEmpty = ({ className, ...rest }: EditorSlashMenuEmpt
       className={(state) =>
         clsx(
           sx([menuStyles.item, menuStyles.empty]),
+          editorSlashMenuClasses('empty'),
           typeof className === 'function' ? className(state) : className,
         )
       }
@@ -166,25 +185,59 @@ export const EditorSlashMenuItemContent = ({
   className,
   ...rest
 }: EditorSlashMenuItemContentProps) => {
-  return <div {...rest} className={clsx(sx(menuStyles.itemContent), className)} />;
+  return (
+    <div
+      {...rest}
+      className={clsx(
+        sx(menuStyles.itemContent),
+        editorSlashMenuClasses('item-content'),
+        className,
+      )}
+    />
+  );
 };
 EditorSlashMenuItemContent.displayName = 'EditorSlashMenuItemContent';
 
 export type EditorSlashMenuItemIconProps = React.HTMLAttributes<HTMLSpanElement>;
 export const EditorSlashMenuItemIcon = ({ className, ...rest }: EditorSlashMenuItemIconProps) => {
-  return <span {...rest} className={clsx(sx(menuStyles.icon), menuClassNames.icon, className)} />;
+  return (
+    <span
+      {...rest}
+      className={clsx(
+        sx(menuStyles.icon),
+        menuClassNames.icon,
+        editorSlashMenuClasses('icon'),
+        className,
+      )}
+    />
+  );
 };
 EditorSlashMenuItemIcon.displayName = 'EditorSlashMenuItemIcon';
 
 export type EditorSlashMenuItemLabelProps = React.HTMLAttributes<HTMLSpanElement>;
 export const EditorSlashMenuItemLabel = ({ className, ...rest }: EditorSlashMenuItemLabelProps) => {
-  return <span {...rest} className={clsx(sx(menuStyles.label), menuClassNames.label, className)} />;
+  return (
+    <span
+      {...rest}
+      className={clsx(
+        sx(menuStyles.label),
+        menuClassNames.label,
+        editorSlashMenuClasses('label'),
+        className,
+      )}
+    />
+  );
 };
 EditorSlashMenuItemLabel.displayName = 'EditorSlashMenuItemLabel';
 
 export type EditorSlashMenuItemExtraProps = React.HTMLAttributes<HTMLSpanElement>;
 export const EditorSlashMenuItemExtra = ({ className, ...rest }: EditorSlashMenuItemExtraProps) => {
-  return <span {...rest} className={clsx(sx(menuStyles.extra), className)} />;
+  return (
+    <span
+      {...rest}
+      className={clsx(sx(menuStyles.extra), editorSlashMenuClasses('extra'), className)}
+    />
+  );
 };
 EditorSlashMenuItemExtra.displayName = 'EditorSlashMenuItemExtra';
 
@@ -196,7 +249,12 @@ export const EditorSlashMenuHiddenInput = ({
   return (
     <Autocomplete.Input
       {...rest}
-      className={mergeStateClassName(sx(styles.hiddenInput), className as any) as any}
+      className={
+        mergeStateClassName(
+          clsx(sx(styles.hiddenInput), editorSlashMenuClasses('input')),
+          className as any,
+        ) as any
+      }
     />
   );
 };

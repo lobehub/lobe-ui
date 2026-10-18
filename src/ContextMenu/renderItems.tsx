@@ -31,6 +31,7 @@ import Switch from '@/Switch';
 import { preventDefaultAndStopPropagation } from '@/utils/dom';
 
 import { useLayerZIndex } from '../internal/zIndex';
+import { contextMenuClasses } from './stable';
 import {
   type ContextMenuCheckboxItem,
   type ContextMenuItem,
@@ -60,6 +61,7 @@ const ContextMenuSubmenuPositioner = memo(
     return (
       <ContextMenu.Positioner
         {...rest}
+        className={clsx(styles.positioner, contextMenuClasses('positioner'))}
         collisionPadding={collisionPadding ?? getFloatingCollisionPadding()}
         ref={zRef as any}
         style={resolvedStyle}
@@ -77,10 +79,13 @@ const EmptyMenuItem = memo(() => {
   return (
     <ContextMenu.Item
       disabled
-      className={stylex.props(menuStyles.item, menuStyles.empty).className}
+      className={clsx(
+        stylex.props(menuStyles.item, menuStyles.empty).className,
+        contextMenuClasses('item'),
+      )}
     >
-      <div className={styles.itemContent}>
-        <span className={styles.label}>{t('common.empty')}</span>
+      <div className={clsx(styles.itemContent, contextMenuClasses('item-content'))}>
+        <span className={clsx(styles.label, contextMenuClasses('label'))}>{t('common.empty')}</span>
       </div>
     </ContextMenu.Item>
   );
@@ -125,10 +130,13 @@ const ContextMenuSwitchItemInternal = ({
 
   return (
     <ContextMenu.Item
-      className={stylex.props(menuStyles.item, danger && menuStyles.danger).className}
       closeOnClick={closeOnClick}
       disabled={disabled}
       label={label}
+      className={clsx(
+        stylex.props(menuStyles.item, danger && menuStyles.danger).className,
+        contextMenuClasses('item'),
+      )}
       onClick={(e) => {
         e.preventDefault();
         if (!disabled) {
@@ -138,7 +146,7 @@ const ContextMenuSwitchItemInternal = ({
     >
       {children}
       <span
-        style={{ display: 'inline-flex', marginInlineStart: 16 }}
+        className={clsx(styles.switchWrap, contextMenuClasses('switch'))}
         onFocus={(e) => e.stopPropagation()}
       >
         <Switch
@@ -171,20 +179,21 @@ const renderItemContent = (
     : Boolean(hasIcon || options?.reserveIconSpace);
 
   const labelNode = desc ? (
-    <div className={styles.labelGroup}>
-      <span className={styles.label}>{label}</span>
-      <span className={styles.desc}>{desc}</span>
+    <div className={clsx(styles.labelGroup, contextMenuClasses('label-group'))}>
+      <span className={clsx(styles.label, contextMenuClasses('label'))}>{label}</span>
+      <span className={clsx(styles.desc, contextMenuClasses('desc'))}>{desc}</span>
     </div>
   ) : (
-    <span className={styles.label}>{label}</span>
+    <span className={clsx(styles.label, contextMenuClasses('label'))}>{label}</span>
   );
 
   return (
     <div
-      className={
+      className={clsx(
         stylex.props(menuStyles.itemContent, alignStart && menuStyles.itemContentAlignStart)
-          .className
-      }
+          .className,
+        contextMenuClasses('item-content'),
+      )}
     >
       {shouldRenderIcon ? (
         <span
@@ -192,16 +201,19 @@ const renderItemContent = (
           className={clsx(
             stylex.props(menuStyles.icon, alignStart && menuStyles.iconAlignStart).className,
             menuClassNames.icon,
+            contextMenuClasses('icon'),
           )}
         >
           {hasCustomIcon ? iconNode : hasIcon ? renderIcon(item.icon, 'small') : null}
         </span>
       ) : null}
       {labelNode}
-      {extra ? <span className={styles.extra}>{extra}</span> : null}
+      {extra ? (
+        <span className={clsx(styles.extra, contextMenuClasses('extra'))}>{extra}</span>
+      ) : null}
       {indicatorOnRight && iconNode ? iconNode : null}
       {options?.submenu ? (
-        <span className={styles.submenuArrow}>
+        <span className={clsx(styles.submenuArrow, contextMenuClasses('submenu-arrow'))}>
           <SubmenuArrowIcon />
         </span>
       ) : null}
@@ -249,7 +261,7 @@ export const renderContextMenuItems = (
       const labelText = typeof label === 'string' ? label : undefined;
       const isDanger = Boolean(checkboxItem.danger);
       const indicator = (
-        <ContextMenu.CheckboxItemIndicator>
+        <ContextMenu.CheckboxItemIndicator className={contextMenuClasses('checkbox-indicator')}>
           <Icon icon={Check} size={'small'} />
         </ContextMenu.CheckboxItemIndicator>
       );
@@ -257,12 +269,15 @@ export const renderContextMenuItems = (
       return (
         <ContextMenu.CheckboxItem
           checked={checkboxItem.checked}
-          className={stylex.props(menuStyles.item, isDanger && menuStyles.danger).className}
           closeOnClick={checkboxItem.closeOnClick}
           defaultChecked={checkboxItem.defaultChecked}
           disabled={checkboxItem.disabled}
           key={itemKey}
           label={labelText}
+          className={clsx(
+            stylex.props(menuStyles.item, isDanger && menuStyles.danger).className,
+            contextMenuClasses('item'),
+          )}
           onCheckedChange={(checked) => checkboxItem.onCheckedChange?.(checked)}
         >
           {renderItemContent(
@@ -297,7 +312,12 @@ export const renderContextMenuItems = (
     }
 
     if ((item as MenuDividerType).type === 'divider') {
-      return <ContextMenu.Separator className={styles.separator} key={itemKey} />;
+      return (
+        <ContextMenu.Separator
+          className={clsx(styles.separator, contextMenuClasses('separator'))}
+          key={itemKey}
+        />
+      );
     }
 
     if ((item as BaseMenuItemGroupType).type === 'group') {
@@ -310,9 +330,11 @@ export const renderContextMenuItems = (
           : reserveIconSpace;
       const groupIndicatorOnRight = group.children ? hasCheckboxAndIcon(group.children) : false;
       return (
-        <ContextMenu.Group key={itemKey}>
+        <ContextMenu.Group className={contextMenuClasses('group')} key={itemKey}>
           {group.label ? (
-            <ContextMenu.GroupLabel className={styles.groupLabel}>
+            <ContextMenu.GroupLabel
+              className={clsx(styles.groupLabel, contextMenuClasses('group-label'))}
+            >
               {group.label}
             </ContextMenu.GroupLabel>
           ) : null}
@@ -356,12 +378,15 @@ export const renderContextMenuItems = (
         >
           <ContextMenu.SubmenuTrigger
             {...submenu.triggerProps}
-            className={stylex.props(menuStyles.item, isDanger && menuStyles.danger).className}
             closeDelay={submenu.closeDelay}
             delay={submenu.delay}
             disabled={submenu.disabled}
             label={labelText}
             openOnHover={submenu.openOnHover}
+            className={clsx(
+              stylex.props(menuStyles.item, isDanger && menuStyles.danger).className,
+              contextMenuClasses('item'),
+            )}
             onClick={submenu.onClick}
           >
             {renderItemContent(submenu, {
@@ -373,7 +398,6 @@ export const renderContextMenuItems = (
           <ContextMenu.Portal>
             <ContextMenuSubmenuPositioner
               alignOffset={-4}
-              className={styles.positioner}
               data-submenu=""
               sideOffset={-1}
               onContextMenu={preventDefaultAndStopPropagation}
@@ -383,18 +407,25 @@ export const renderContextMenuItems = (
                   stylex.props(menuStyles.popup, submenuHasSlots && menuStyles.popupWithSlots)
                     .className,
                   menuClassNames.popup,
+                  contextMenuClasses(),
                 )}
               >
                 {submenu.header == null ? null : (
-                  <div className={styles.header}>{submenu.header}</div>
+                  <div className={clsx(styles.header, contextMenuClasses('header'))}>
+                    {submenu.header}
+                  </div>
                 )}
                 {submenuHasSlots ? (
-                  <div className={styles.slotViewport}>{submenuBody}</div>
+                  <div className={clsx(styles.slotViewport, contextMenuClasses('viewport'))}>
+                    {submenuBody}
+                  </div>
                 ) : (
                   submenuBody
                 )}
                 {submenu.footer == null ? null : (
-                  <div className={styles.footer}>{submenu.footer}</div>
+                  <div className={clsx(styles.footer, contextMenuClasses('footer'))}>
+                    {submenu.footer}
+                  </div>
                 )}
               </ContextMenu.Popup>
             </ContextMenuSubmenuPositioner>
@@ -410,11 +441,14 @@ export const renderContextMenuItems = (
 
     return (
       <ContextMenu.Item
-        className={stylex.props(menuStyles.item, isDanger && menuStyles.danger).className}
         closeOnClick={menuItem.closeOnClick}
         disabled={menuItem.disabled}
         key={itemKey}
         label={labelText}
+        className={clsx(
+          stylex.props(menuStyles.item, isDanger && menuStyles.danger).className,
+          contextMenuClasses('item'),
+        )}
         onClick={(event) => invokeItemClick(menuItem, nextKeyPath, event)}
       >
         {renderItemContent(menuItem, { iconAlign, reserveIconSpace })}

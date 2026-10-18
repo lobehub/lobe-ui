@@ -22,6 +22,7 @@ import {
   type TooltipGroupItem,
   TooltipGroupPropsContext,
 } from './groupContext';
+import { tooltipClasses } from './stable';
 import { styles } from './style';
 import TooltipContent from './TooltipContent';
 import { type TooltipGroupProps } from './type';
@@ -85,18 +86,29 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
 
             const customStyles = typeof item.styles === 'function' ? undefined : item.styles;
             const slots = {
-              arrow: styleProps(styles.arrow, item.classNames?.arrow, customStyles?.arrow),
+              arrow: styleProps(
+                styles.arrow,
+                clsx(tooltipClasses('arrow'), item.classNames?.arrow),
+                customStyles?.arrow,
+              ),
               popup: styleProps(
                 styles.popup,
-                clsx(item.className, item.classNames?.root, item.classNames?.container),
+                clsx(
+                  tooltipClasses(),
+                  item.className,
+                  item.classNames?.root,
+                  item.classNames?.container,
+                ),
                 { ...customStyles?.root, ...customStyles?.container },
               ),
-              positioner: styleProps(styles.positioner, undefined, {
-                zIndex: item.zIndex ?? 114_514,
-              }),
+              positioner: styleProps(
+                styles.positioner,
+                tooltipClasses('positioner'),
+                item.zIndex === undefined ? undefined : { zIndex: item.zIndex },
+              ),
               viewport: styleProps(
                 styles.viewport,
-                clsx('lobe-tooltip-viewport', item.classNames?.content),
+                clsx('lobe-tooltip-viewport', tooltipClasses('viewport'), item.classNames?.content),
                 customStyles?.content,
               ),
             };
@@ -127,6 +139,7 @@ const TooltipGroup: FC<TooltipGroupProps> = ({
               >
                 <BaseTooltip.Popup
                   data-layout-animation={layoutAnimation || undefined}
+                  data-placement={placement}
                   data-repop={repop || undefined}
                   {...slots.popup}
                   {...item.popupProps}
