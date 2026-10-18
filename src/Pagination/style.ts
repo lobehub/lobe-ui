@@ -118,6 +118,10 @@ export const styles = stylex.create({
   simpleSlash: {
     color: cssVar.colorTextQuaternary,
   },
+  sizeChanger: {
+    flex: 'none',
+    marginInlineStart: 8,
+  },
   small: {
     fontSize: 12,
     height: 24,

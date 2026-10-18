@@ -1,5 +1,6 @@
 'use client';
 
+import clsx from 'clsx';
 import {
   Captions,
   ChevronLeft,
@@ -16,6 +17,7 @@ import { useTranslation } from '@/i18n/useTranslation';
 import { styleProps } from '@/styles/stylex/props';
 
 import { FrameContext, useVideoContext } from '../context';
+import { videoClasses } from '../stable';
 import { styles } from '../style';
 import { formatTime, frameOf } from '../time';
 import type { VideoControlsProps } from '../type';
@@ -58,7 +60,7 @@ const TimeReadout = () => {
   const seconds = useVideo((state) => Math.floor(state.time));
   const duration = useVideo((state) => state.duration);
   return (
-    <span {...styleProps(styles.time, undefined, { marginInline: 6 })}>
+    <span {...styleProps(styles.time, videoClasses('time'))}>
       {`${formatTime(seconds)} / ${formatTime(duration)}`}
     </span>
   );
@@ -69,7 +71,7 @@ const FrameReadout = () => {
   const { t } = useTranslation(videoMessages);
   const frame = useVideo((state) => frameOf(state.time, config.fps));
   return (
-    <span {...styleProps(styles.frameNo, undefined, { marginInlineEnd: 6 })}>
+    <span {...styleProps(styles.frameNo, videoClasses('frame-number'))}>
       {`${t('video.frame')} ${frame}`}
     </span>
   );
@@ -106,7 +108,7 @@ const Controls = ({ children, className, extra, frameStep, style }: VideoControl
           overlay ? styles.controlsOverlay : styles.controlsBelow,
           overlay && !visible && styles.controlsHidden,
         ],
-        className,
+        clsx(videoClasses('controls'), className),
         style,
       )}
       onClick={(event) => event.stopPropagation()}

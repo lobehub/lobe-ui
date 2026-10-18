@@ -3,6 +3,29 @@ import * as stylex from '@stylexjs/stylex';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
 export const styles = stylex.create({
+  colorDashed: {
+    color: cssVar.colorTextTertiary,
+  },
+  colorDefault: {
+    color: cssVar.colorTextQuaternary,
+  },
+  description: {
+    maxWidth: '34ch',
+  },
+  descriptionPage: {
+    maxWidth: '52ch',
+  },
+  title: {
+    marginBottom: 0,
+    marginTop: 8,
+  },
+  titleDashed: {
+    marginTop: 6,
+  },
+  titlePage: {
+    marginBottom: 4,
+    marginTop: 0,
+  },
   action: {
     marginBlockStart: 8,
   },

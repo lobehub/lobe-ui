@@ -1,11 +1,13 @@
 'use client';
 
+import clsx from 'clsx';
 import { useEffect, useMemo, useRef, useState } from 'react';
 
 import { styleProps } from '@/styles/stylex/props';
 
 import { FrameContext, type FrameContextValue, useVideoContext } from '../context';
 import { aspectOf, frameWidthOf, MIN_PLAYER_WIDTH } from '../sizing';
+import { videoClasses } from '../stable';
 import { styles } from '../style';
 import type { VideoFrameProps } from '../type';
 import { useControlsIdle } from '../useControlsIdle';
@@ -62,7 +64,10 @@ const Frame = ({ children, className, style }: VideoFrameProps) => {
   return (
     <FrameContext value={frame}>
       <div
-        {...styleProps(styles.frame, className, { ...sizing, ...style })}
+        {...styleProps(styles.frame, clsx(videoClasses('frame'), className), {
+          ...sizing,
+          ...style,
+        })}
         onBlur={(event) => {
           if (!event.currentTarget.contains(event.relatedTarget as Node | null))
             idle.setFocused(false);
@@ -93,11 +98,11 @@ const Frame = ({ children, className, style }: VideoFrameProps) => {
           onPause={media.onPause}
           onPlay={media.onPlay}
           onTimeUpdate={media.onTimeUpdate}
-          {...styleProps(styles.video)}
+          {...styleProps(styles.video, videoClasses('video'))}
         />
         <div
           data-video-surface=""
-          {...styleProps(styles.surface)}
+          {...styleProps(styles.surface, videoClasses('surface'))}
           onDoubleClick={() => store.toggleFullscreen()}
           onClick={() => {
             if (pointerTypeRef.current === 'touch' && !idle.visible) {

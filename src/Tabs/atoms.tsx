@@ -7,7 +7,9 @@ import clsx from 'clsx';
 import { createContext, type FC, use, useMemo } from 'react';
 
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
+import { tabsClasses } from './stable';
 import { indicatorStyles, listStyles, panelStyles, tabStyles } from './style';
 import type {
   TabsIndicatorProps,
@@ -35,6 +37,7 @@ type TabsRootInternalProps = TabsRootProps & {
 
 export const TabsRoot: FC<TabsRootInternalProps> = ({
   children,
+  className,
   size = 'middle',
   variant = 'rounded',
   ...rest
@@ -43,7 +46,13 @@ export const TabsRoot: FC<TabsRootInternalProps> = ({
 
   return (
     <TabsContext value={contextValue}>
-      <BaseUITabs.Root {...rest}>{children}</BaseUITabs.Root>
+      <BaseUITabs.Root
+        className={clsx(tabsClasses(), className)}
+        {...toDataAttributes({ size, variant })}
+        {...rest}
+      >
+        {children}
+      </BaseUITabs.Root>
     </TabsContext>
   );
 };
@@ -55,7 +64,10 @@ export const TabsList: FC<TabsListProps> = ({ className, variant: variantProp, .
   const variant = variantProp ?? ctx.variant;
 
   return (
-    <BaseUITabs.List className={styleProps(listStyles(variant), className).className} {...rest} />
+    <BaseUITabs.List
+      className={styleProps(listStyles(variant), clsx(tabsClasses('list'), className)).className}
+      {...rest}
+    />
   );
 };
 
@@ -73,7 +85,9 @@ export const TabsTab: FC<TabsTabProps> = ({
 
   return (
     <BaseUITabs.Tab
-      className={styleProps(tabStyles(size, variant), className).className}
+      className={
+        styleProps(tabStyles(size, variant), clsx(tabsClasses('tab'), className)).className
+      }
       {...rest}
     />
   );
@@ -82,7 +96,12 @@ export const TabsTab: FC<TabsTabProps> = ({
 TabsTab.displayName = 'TabsTab';
 
 export const TabsPanel: FC<TabsPanelProps> = ({ className, ...rest }) => {
-  return <BaseUITabs.Panel className={styleProps(panelStyles, className).className} {...rest} />;
+  return (
+    <BaseUITabs.Panel
+      className={styleProps(panelStyles, clsx(tabsClasses('panel'), className)).className}
+      {...rest}
+    />
+  );
 };
 
 TabsPanel.displayName = 'TabsPanel';
@@ -99,7 +118,10 @@ export const TabsIndicator: FC<TabsIndicatorProps> = ({
     <BaseUITabs.Indicator
       renderBeforeHydration
       className={
-        styleProps(indicatorStyles(variant), clsx('lobe-tabs-indicator', className)).className
+        styleProps(
+          indicatorStyles(variant),
+          clsx('lobe-tabs-indicator', tabsClasses('indicator'), className),
+        ).className
       }
       {...rest}
     />

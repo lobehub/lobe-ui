@@ -7,6 +7,7 @@ import { useTranslation } from '@/i18n/useTranslation';
 import { styleProps } from '@/styles/stylex/props';
 
 import { useVideoContext } from '../context';
+import { videoClasses } from '../stable';
 import { styles } from '../style';
 import { useVideo } from '../useVideo';
 
@@ -17,7 +18,11 @@ const LoadError = () => {
   if (!failed) return null;
 
   return (
-    <div role="alert" {...styleProps(styles.error)} onClick={(event) => event.stopPropagation()}>
+    <div
+      role="alert"
+      {...styleProps(styles.error, videoClasses('load-error'))}
+      onClick={(event) => event.stopPropagation()}
+    >
       <AlertTriangle size={22} />
       <span>{t('video.loadFailed')}</span>
       <div {...styleProps(styles.errorActions)}>

@@ -1,28 +1,29 @@
 'use client';
 
+import clsx from 'clsx';
 import { type FC } from 'react';
 
-import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
-import Skeleton from './Skeleton';
+import { SkeletonImpl } from './Skeleton';
+import { skeletonAvatarClasses } from './stable';
 import { styles } from './style';
 import type { SkeletonAvatarProps } from './type';
 
-const DEFAULT_SIZE = 40;
-
 const SkeletonAvatar: FC<SkeletonAvatarProps> = ({
   shape = 'square',
-  size = DEFAULT_SIZE,
+  size,
   width,
   height,
   className,
   ...rest
 }) => (
-  <Skeleton
-    className={styleProps(styles.avatar, className).className}
+  <SkeletonImpl
+    className={clsx(skeletonAvatarClasses(), className)}
     height={height ?? size}
-    radius={shape === 'circle' ? '50%' : undefined}
     width={width ?? size}
+    xstyle={[styles.avatar, shape === 'circle' && styles.avatarCircle]}
+    {...toDataAttributes({ shape })}
     {...rest}
   />
 );

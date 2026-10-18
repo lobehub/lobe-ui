@@ -1,9 +1,12 @@
 'use client';
 
+import clsx from 'clsx';
 import { createElement, type ElementType, type FC, memo, type Ref, use, useMemo } from 'react';
 
 import { ConfigContext } from '@/ConfigProvider';
 import { type ImgProps as HtmlImgeProps } from '@/types';
+
+import { imgClasses } from './stable';
 
 const createContainer = (as: ElementType) => memo((props: any) => createElement(as, props));
 
@@ -19,6 +22,7 @@ const Img: FC<ImgProps> = ({ unoptimized, ...rest }) => {
     <ImgContainer
       unoptimized={unoptimized === undefined ? config?.imgUnoptimized : unoptimized}
       {...rest}
+      className={clsx(imgClasses(), rest.className)}
     />
   );
 };

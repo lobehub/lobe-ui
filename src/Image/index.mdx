@@ -12,6 +12,8 @@ import DemoDualSource from './demos/DualSource.tsx?demo';
 import DemoDeepZoom from './demos/DeepZoom.tsx?demo';
 import DemoDefaultZoom from './demos/DefaultZoom.tsx?demo';
 import DemoToolbarAddon from './demos/ToolbarAddon.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { imageClasses } from './stable';
 
 ## Default
 
@@ -148,3 +150,9 @@ return (
 | options | Same as `ImagePreviewOptions` | `ImagePreviewOptions` |
 | open | Opens the viewer; does nothing until `elementRef` has an element | `() => void` |
 | outlet | Render it once next to the image; the viewer mounts there while open | `ReactNode` |
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={imageClasses} />

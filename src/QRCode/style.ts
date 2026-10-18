@@ -18,6 +18,10 @@ export const styles = stylex.create({
     position: 'absolute',
     transform: 'translate(-50%, -50%)',
   },
+  iconDefaultSize: {
+    height: 35.2,
+    width: 35.2,
+  },
   overlay: {
     inset: 0,
     borderRadius: 16,
@@ -42,8 +46,8 @@ export const styles = stylex.create({
     gap: 6,
     paddingInline: 14,
     alignItems: 'center',
-    backgroundColor: cssVar.colorText,
-    color: cssVar.colorBgContainer,
+    backgroundColor: '#080808',
+    color: '#fff',
     cursor: 'pointer',
     display: 'inline-flex',
     fontFamily: 'inherit',
@@ -58,7 +62,11 @@ export const styles = stylex.create({
   root: {
     padding: 16,
     borderRadius: 16,
+    backgroundColor: '#fff',
     display: 'inline-flex',
     position: 'relative',
+  },
+  spin: {
+    color: '#666',
   },
 });

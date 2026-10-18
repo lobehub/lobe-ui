@@ -1,5 +1,6 @@
 'use client';
 
+import clsx from 'clsx';
 import {
   memo,
   type MouseEvent,
@@ -18,9 +19,11 @@ import Skeleton from '@/Skeleton';
 import { styleProps } from '@/styles/stylex/props';
 import { stylish } from '@/styles/stylex/stylish';
 import { useThemeMode } from '@/styles/theme/scope';
+import { toDataAttributes } from '@/utils/bem';
 
 import { imageMarker } from './marker.stylex';
 import { usePreviewGroupContext } from './PreviewGroup';
+import { imageClasses } from './stable';
 import { FALLBACK_DARK, FALLBACK_LIGHT, styles } from './style';
 import type { ImagePreviewOptions, ImageProps } from './type';
 import { DEFAULT_AUTO_ZOOM_THRESHOLD, DEFAULT_MAX_SCALE } from './viewer/geometry';
@@ -60,7 +63,7 @@ const Image = memo<ImageProps>(
     className,
     alwaysShowActions,
     variant = 'filled',
-    objectFit = 'cover',
+    objectFit,
     classNames,
     styles: customStyles,
     onClick,
@@ -193,19 +196,30 @@ const Image = memo<ImageProps>(
     return (
       <Flexbox
         ref={ref}
-        {...styleProps([styles.root, variantStyles[variant], imageMarker], className, style)}
+        {...toDataAttributes({ variant })}
+        {...styleProps(
+          [styles.root, variantStyles[variant], imageMarker],
+          clsx(imageClasses(), className),
+          style,
+        )}
       >
         {actions && (
           <div
             {...styleProps(
               [styles.actions, !alwaysShowActions && styles.actionsHidden],
-              alwaysShowActions ? undefined : 'actions-hidden',
+              clsx(imageClasses('actions'), !alwaysShowActions && 'actions-hidden'),
             )}
           >
             {actions}
           </div>
         )}
-        <div {...styleProps(styles.wrapper, classNames?.wrapper, customStyles?.wrapper)}>
+        <div
+          {...styleProps(
+            styles.wrapper,
+            clsx(imageClasses('wrapper'), classNames?.wrapper),
+            customStyles?.wrapper,
+          )}
+        >
           <img
             alt={alt}
             height={resolvedHeight}
@@ -214,8 +228,10 @@ const Image = memo<ImageProps>(
             src={hasError ? (isDarkMode ? FALLBACK_DARK : FALLBACK_LIGHT) : src}
             width={resolvedWidth}
             className={
-              styleProps([styles.image, previewEnabled && styles.previewable], classNames?.image)
-                .className
+              styleProps(
+                [styles.image, previewEnabled && styles.previewable],
+                clsx(imageClasses('image'), classNames?.image),
+              ).className
             }
             style={{
               height: resolvedHeight,

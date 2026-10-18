@@ -5,6 +5,8 @@ category: Navigation
 ---
 
 import DemoIndex from './demos/index.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { breadcrumbClasses } from './stable';
 
 ## Basic
 
@@ -21,3 +23,9 @@ Renders `nav[aria-label="breadcrumb"] > ol > li`. The last item gets `aria-curre
 - The default `separator` is a chevron icon; drop explicit `separator={<Icon icon={ChevronRight} />}`.
 - Items are vertically centered by default; delete `.ant-breadcrumb-*` overrides.
 - Dropdown `menu` items, `itemRender`, `params` and route-path concatenation are not supported.
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={breadcrumbClasses} />

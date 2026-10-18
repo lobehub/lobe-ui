@@ -5,9 +5,11 @@ import type { LucideIcon } from 'lucide-react';
 import { isValidElement, memo, useMemo } from 'react';
 
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
 import { useIconContext } from './components/IconProvider';
 import { calcSize } from './components/utils';
+import { iconClasses } from './stable';
 import { styles } from './style';
 import type { IconProps } from './type';
 
@@ -46,10 +48,11 @@ const Icon = memo<IconProps>(
     return (
       <span
         role="img"
+        {...toDataAttributes({ spin })}
         className={
           styleProps(
             [styles.root, spin && styles.spin],
-            clsx('anticon', classNameConfig, className),
+            clsx(iconClasses(), 'anticon', classNameConfig, className),
           ).className
         }
         {...restConfig}

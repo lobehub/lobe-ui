@@ -147,6 +147,7 @@ export const styles = stylex.create({
   },
   toggleRoot: {
     transition: `opacity 0.25s ${handleEase}`,
+    display: 'flex',
     pointerEvents: { 'default': 'none', ':has(> div)': 'all' },
     position: 'absolute',
     zIndex: 50,

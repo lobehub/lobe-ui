@@ -11,6 +11,7 @@ import { focusRing } from '@/styles/stylex/focusRing';
 import { styleProps } from '@/styles/stylex/props';
 
 import { alertSummaryMarker } from './marker.stylex';
+import { alertClasses } from './stable';
 import { styles } from './style';
 import type { AlertCloseConfig, AlertProps, AlertType, AlertVariant } from './type';
 
@@ -128,7 +129,7 @@ const Alert = memo<AlertProps>(
             rootVariantStyles[variant],
             integratedExtra && styles.unifiedRoot,
           ],
-          clsx(classNames?.root, classNames?.alert, rootClassName, className),
+          clsx(alertClasses(), classNames?.root, classNames?.alert, rootClassName, className),
           {
             ...style,
             ...customStyles?.root,
@@ -139,22 +140,30 @@ const Alert = memo<AlertProps>(
         {showIcon && (
           <span
             aria-hidden="true"
-            {...styleProps([styles.icon], classNames?.icon, customStyles?.icon)}
+            {...styleProps(
+              [styles.icon],
+              clsx(alertClasses('icon'), classNames?.icon),
+              customStyles?.icon,
+            )}
           >
             <Icon icon={icon ?? typeIcons[type]} size={hasDescription ? 18 : 16} {...iconProps} />
           </span>
         )}
         <div
-          {...styleProps([styles.content], clsx(classNames?.section, classNames?.content), {
-            ...customStyles?.section,
-            ...customStyles?.content,
-          })}
+          {...styleProps(
+            [styles.content],
+            clsx(alertClasses('content'), classNames?.section, classNames?.content),
+            {
+              ...customStyles?.section,
+              ...customStyles?.content,
+            },
+          )}
         >
           {resolvedTitle !== undefined && resolvedTitle !== null && (
             <div
               {...styleProps(
                 [styles.title, hasDescription && styles.titleDetailed],
-                classNames?.title,
+                clsx(alertClasses('title'), classNames?.title),
                 customStyles?.title,
               )}
             >
@@ -165,7 +174,7 @@ const Alert = memo<AlertProps>(
             <div
               {...styleProps(
                 [styles.description],
-                classNames?.description,
+                clsx(alertClasses('description'), classNames?.description),
                 customStyles?.description,
               )}
             >
@@ -177,7 +186,7 @@ const Alert = memo<AlertProps>(
           <div
             {...styleProps(
               [styles.action, styles.wrappedAction],
-              classNames?.action,
+              clsx(alertClasses('action'), classNames?.action),
               customStyles?.action,
             )}
           >
@@ -191,7 +200,7 @@ const Alert = memo<AlertProps>(
             disabled={closeDisabled}
             {...styleProps(
               [focusRing.info, styles.close],
-              clsx(classNames?.close, closeClassName),
+              clsx(alertClasses('close'), classNames?.close, closeClassName),
               { ...customStyles?.close, ...closeStyle },
             )}
             type="button"
@@ -208,10 +217,14 @@ const Alert = memo<AlertProps>(
     if (extraIsolate) {
       return (
         <div
-          {...styleProps([styles.container, toneStyles[type]], classNames?.container, {
-            gap: 8,
-            ...customStyles?.container,
-          })}
+          {...styleProps(
+            [styles.container, toneStyles[type]],
+            clsx(alertClasses('container'), classNames?.container),
+            {
+              gap: 8,
+              ...customStyles?.container,
+            },
+          )}
         >
           {root}
           {extra}
@@ -230,7 +243,7 @@ const Alert = memo<AlertProps>(
             glass && styles.glass,
             integratedVariantStyles[variant],
           ],
-          classNames?.container,
+          clsx(alertClasses('container'), classNames?.container),
           customStyles?.container,
         )}
       >
@@ -242,7 +255,7 @@ const Alert = memo<AlertProps>(
               banner && styles.extraBanner,
               isPlainVariant(variant) && styles.extraPlain,
             ],
-            classNames?.extra,
+            clsx(alertClasses('extra'), classNames?.extra),
             customStyles?.extra,
           )}
         >
@@ -258,7 +271,11 @@ const Alert = memo<AlertProps>(
                   styles.extraHeader,
                   isPlainVariant(variant) && styles.extraHeaderPlain,
                 ],
-                clsx('lobe-alert-extra-header', classNames?.extraHeader),
+                clsx(
+                  'lobe-alert-extra-header',
+                  alertClasses('extra-header'),
+                  classNames?.extraHeader,
+                ),
                 customStyles?.extraHeader,
               )}
             >
@@ -267,7 +284,7 @@ const Alert = memo<AlertProps>(
                 size={14}
                 {...styleProps(
                   [styles.extraIndicator],
-                  classNames?.extraIndicator,
+                  clsx(alertClasses('extra-indicator'), classNames?.extraIndicator),
                   customStyles?.extraIndicator,
                 )}
               />
@@ -276,7 +293,7 @@ const Alert = memo<AlertProps>(
             <div
               {...styleProps(
                 [styles.extraContent],
-                classNames?.extraContent,
+                clsx(alertClasses('extra-content'), classNames?.extraContent),
                 customStyles?.extraContent,
               )}
             >

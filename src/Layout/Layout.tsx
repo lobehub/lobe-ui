@@ -1,9 +1,10 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
-import { memo, useEffect, useMemo, useState } from 'react';
+import clsx from 'clsx';
+import { type CSSProperties, memo, useEffect, useMemo, useState } from 'react';
 
 import { DraggablePanel } from '@/DraggablePanel';
+import { styleProps } from '@/styles/stylex/props';
 import { useResponsive } from '@/styles/theme/scope';
 
 import LayoutFooter from './components/LayoutFooter';
@@ -12,17 +13,30 @@ import LayoutMain from './components/LayoutMain';
 import LayoutSidebar from './components/LayoutSidebar';
 import LayoutSidebarInner from './components/LayoutSidebarInner';
 import LayoutToc from './components/LayoutToc';
+import { layoutClasses } from './stable';
 import { styles } from './style';
 import type { LayoutProps } from './type';
 
 const Layout = memo<LayoutProps>(
-  ({ helmet, headerHeight = 64, header, footer, sidebar, asideWidth, toc, children, tocWidth }) => {
-    // Convert headerHeight prop to CSS variable
-    const cssVariables = useMemo<Record<string, string>>(
-      () => ({
-        '--layout-header-height': `${headerHeight}px`,
-      }),
-      [headerHeight],
+  ({
+    helmet,
+    headerHeight,
+    header,
+    footer,
+    sidebar,
+    asideWidth,
+    toc,
+    children,
+    tocWidth,
+    className,
+    style,
+  }) => {
+    const rootStyle = useMemo(
+      () =>
+        headerHeight === undefined
+          ? style
+          : ({ '--layout-header-height': `${headerHeight}px`, ...style } as CSSProperties),
+      [headerHeight, style],
     );
     const { mobile, laptop } = useResponsive();
     const [expand, setExpand] = useState(true);
@@ -31,10 +45,13 @@ const Layout = memo<LayoutProps>(
     }, [laptop]);
 
     return (
-      <div style={cssVariables}>
+      <div className={clsx(layoutClasses(), className)} style={rootStyle}>
         {helmet}
         {header && (
-          <LayoutHeader headerHeight={headerHeight}>
+          <LayoutHeader
+            className={styleProps(styles.headerDefault).className}
+            headerHeight={headerHeight}
+          >
             {header}
             {mobile && toc && <LayoutToc>{toc}</LayoutToc>}
           </LayoutHeader>
@@ -42,18 +59,18 @@ const Layout = memo<LayoutProps>(
         <LayoutMain>
           {!mobile && !sidebar && <nav style={{ width: tocWidth }} />}
           {!mobile && sidebar && (
-            <LayoutSidebar headerHeight={headerHeight}>
+            <LayoutSidebar headerHeight={headerHeight ?? 64}>
               <DraggablePanel
                 expand={expand}
                 maxWidth={asideWidth}
                 placement="left"
                 onExpandChange={setExpand}
               >
-                <LayoutSidebarInner headerHeight={headerHeight}>{sidebar}</LayoutSidebarInner>
+                <LayoutSidebarInner>{sidebar}</LayoutSidebarInner>
               </DraggablePanel>
             </LayoutSidebar>
           )}
-          <section {...stylex.props(styles.content)}>{children}</section>
+          <section {...styleProps(styles.content, layoutClasses('content'))}>{children}</section>
           {!mobile && toc && <LayoutToc tocWidth={tocWidth}>{toc}</LayoutToc>}
         </LayoutMain>
         {footer && <LayoutFooter>{footer}</LayoutFooter>}

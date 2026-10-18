@@ -2,7 +2,6 @@
 
 import './style.css';
 
-import * as stylex from '@stylexjs/stylex';
 import clsx from 'clsx';
 import { memo, type MouseEvent } from 'react';
 
@@ -10,8 +9,10 @@ import A from '@/A';
 import Icon from '@/Icon';
 import { focusRing } from '@/styles/stylex/focusRing';
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
 import { listItemMarker } from './marker.stylex';
+import { listClasses } from './stable';
 import { styles } from './style';
 import type { ListItemType, ListProps } from './type';
 
@@ -53,18 +54,19 @@ const ListRow = memo<ListRowProps>(
         disabled && styles.disabled,
         xstyle?.(item, active),
       ],
-      clsx(classNames?.item, item.className),
+      clsx(listClasses('item'), classNames?.item, item.className),
     ).className;
     const rowStyle = { ...customStyles?.item, ...item.style };
+    const rowData = toDataAttributes({ active, danger, disabled });
 
     const content = (
       <>
         {avatar ?? (icon ? <Icon icon={icon} size={16} /> : null)}
-        <span {...stylex.props(styles.body)}>
+        <span {...styleProps(styles.body, listClasses('body'))}>
           <span
             {...styleProps(
               styles.label,
-              clsx('lobe-list-label', classNames?.label),
+              clsx('lobe-list-label', listClasses('label'), classNames?.label),
               customStyles?.label,
             )}
           >
@@ -74,7 +76,7 @@ const ListRow = memo<ListRowProps>(
             <span
               {...styleProps(
                 styles.description,
-                classNames?.description,
+                clsx(listClasses('description'), classNames?.description),
                 customStyles?.description,
               )}
             >
@@ -83,17 +85,26 @@ const ListRow = memo<ListRowProps>(
           )}
         </span>
         {extra != null && (
-          <span {...styleProps(styles.extra, classNames?.extra, customStyles?.extra)}>{extra}</span>
+          <span
+            {...styleProps(
+              styles.extra,
+              clsx(listClasses('extra'), classNames?.extra),
+              customStyles?.extra,
+            )}
+          >
+            {extra}
+          </span>
         )}
       </>
     );
 
     return (
-      <li {...stylex.props(styles.item, listItemMarker)}>
+      <li {...styleProps([styles.item, listItemMarker], listClasses('row'))}>
         {href && !disabled ? (
           <A
             aria-current={active ? 'page' : undefined}
             className={rowClassName}
+            {...rowData}
             href={href}
             style={rowStyle}
             onClick={handleClick}
@@ -105,6 +116,7 @@ const ListRow = memo<ListRowProps>(
             aria-current={active ? 'true' : undefined}
             aria-disabled={disabled || undefined}
             className={rowClassName}
+            {...rowData}
             style={rowStyle}
             type="button"
             onClick={handleClick}
@@ -116,7 +128,7 @@ const ListRow = memo<ListRowProps>(
           <span
             {...styleProps(
               [styles.actions, showAction && styles.showAction],
-              classNames?.actions,
+              clsx(listClasses('actions'), classNames?.actions),
               customStyles?.actions,
             )}
           >

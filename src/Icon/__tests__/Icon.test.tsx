@@ -12,4 +12,13 @@ describe('Icon', () => {
     expect(root.alignItems).toBe('center');
     expect(root.lineHeight).toBe('0');
   });
+
+  test('keeps the legacy anticon class next to the stable block', () => {
+    render(<Icon className="user-x" icon={Folder} />);
+
+    const root = screen.getByRole('img');
+    expect(root.classList.contains('lobe-icon')).toBe(true);
+    expect(root.classList.contains('anticon')).toBe(true);
+    expect(root.classList.contains('user-x')).toBe(true);
+  });
 });

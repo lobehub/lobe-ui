@@ -79,14 +79,18 @@ import { treeClasses } from '@/Tree/stable';
 import { uploadClasses, uploadDraggerClasses } from '@/Upload/stable';
 import type { AnyStableClasses } from '@/utils/bem';
 
+import { DISPLAY_FIXTURES } from './stableClasses.fixtures.display';
+
 export interface StableFixture {
   classes: AnyStableClasses;
+  classNameTarget?: string;
   conditional?: readonly string[];
   portal?: boolean;
   render: (props: { className?: string }) => ReactElement;
 }
 
 export const FIXTURES: Record<string, StableFixture> = {
+  ...DISPLAY_FIXTURES,
   Checkbox: {
     classes: checkboxClasses,
     render: ({ className }) => (
@@ -372,6 +376,8 @@ export const EXEMPT: Record<string, string> = {
   'AccordionRoot': 'atom of Accordion',
   'AccordionTrigger': 'atom of Accordion',
   'ConfigProvider': 'no DOM',
+  'I18nProvider': 'no DOM',
+  'PreviewGroup': 'no DOM',
   'ContextMenuHost': 'no DOM',
   'DraggablePanelBody': 'atom of DraggablePanel',
   'DraggablePanelContainer': 'atom of DraggablePanel',
@@ -530,33 +536,15 @@ export const EXEMPT: Record<string, string> = {
 };
 
 export const PENDING: readonly string[] = [
-  'Accordion',
-  'Alert',
-  'Anchor',
-  'Avatar',
-  'AvatarGroup',
-  'Badge',
-  'Block',
-  'Breadcrumb',
-  'Carousel',
-  'Center',
   'CodeDiff',
   'CodeEditor',
-  'Collapsible',
   'ContextMenuTrigger',
-  'Descriptions',
-  'Divider',
-  'DraggableSideNav',
   'Drawer',
   'DropdownMenu',
   'EditorSlashMenu',
   'EmojiPicker',
-  'Empty',
-  'FileTypeIcon',
-  'Flexbox',
   'FloatingPanel',
   'FloatingSheet',
-  'FluentEmoji',
   'Form',
   'FormDivider',
   'FormField',
@@ -565,49 +553,21 @@ export const PENDING: readonly string[] = [
   'FormGroup',
   'FormSubmitFooter',
   'FormTitle',
-  'Grid',
-  'GroupAvatar',
-  'GuideCard',
-  'Header',
   'Highlighter',
   'HtmlPreview',
   'HtmlPreviewIframe',
-  'Icon',
-  'Image',
-  'Layout',
-  'List',
   'Markdown',
-  'MaskShadow',
-  'MaterialFileTypeIcon',
   'Mermaid',
   'Modal',
-  'Pagination',
   'PatchDiff',
-  'PreviewGroup',
-  'Progress',
-  'Result',
-  'ScrollArea',
-  'ScrollShadow',
   'SearchResultCards',
-  'SideNav',
-  'Skeleton',
-  'SkeletonAvatar',
-  'SkeletonText',
   'Snippet',
-  'SortableList',
-  'Spin',
-  'Statistic',
-  'Steps',
   'SyntaxHighlighter',
   'SyntaxMermaid',
   'Table',
-  'Tabs',
-  'Tag',
-  'Text',
   'ThemeScope',
   'Tooltip',
   'Typography',
-  'Video',
   'awesome/AgentSkillCard',
   'awesome/AuroraBackground',
   'awesome/BentoCard',

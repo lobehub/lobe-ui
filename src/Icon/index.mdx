@@ -6,6 +6,8 @@ category: General
 
 import DemoIconProvider from './demos/icon-provider.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { iconClasses } from './stable';
 
 ## Introduction
 
@@ -50,3 +52,9 @@ For more fine-grained control, you can provide a configuration object:
 The Icon component can be wrapped with IconProvider to set default properties for all icons within its scope:
 
 <Demo of={DemoIconProvider} />
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={iconClasses} />

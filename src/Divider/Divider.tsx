@@ -1,11 +1,13 @@
 'use client';
 
 import { Separator } from '@base-ui/react/separator';
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { memo } from 'react';
 
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
+import { dividerClasses } from './stable';
 import { styles } from './style';
 import type { DividerProps } from './type';
 
@@ -16,10 +18,15 @@ const Divider = memo<DividerProps>(
         <Separator
           orientation="horizontal"
           ref={ref}
-          {...styleProps([styles.withText, dashed && styles.dashed], className, style)}
+          {...toDataAttributes({ dashed })}
+          {...styleProps(
+            [styles.withText, dashed && styles.dashed],
+            clsx(dividerClasses(), className),
+            style,
+          )}
           {...rest}
         >
-          <span {...stylex.props(styles.text)}>{children}</span>
+          <span {...styleProps(styles.text, dividerClasses('text'))}>{children}</span>
         </Separator>
       );
     }
@@ -33,9 +40,10 @@ const Divider = memo<DividerProps>(
             orientation === 'vertical' ? styles.vertical : styles.horizontal,
             dashed && styles.dashed,
           ],
-          className,
+          clsx(dividerClasses(), className),
           style,
         )}
+        {...toDataAttributes({ dashed })}
         {...rest}
       />
     );

@@ -2,7 +2,6 @@
 
 import './style.css';
 
-import * as stylex from '@stylexjs/stylex';
 import clsx from 'clsx';
 import { ChevronRight } from 'lucide-react';
 import { memo, type ReactNode } from 'react';
@@ -11,13 +10,18 @@ import A from '@/A';
 import Icon from '@/Icon';
 import { styleProps } from '@/styles/stylex/props';
 
+import { breadcrumbClasses } from './stable';
 import { styles } from './style';
 import type { BreadcrumbItem, BreadcrumbProps } from './type';
 
 const renderTitle = (item: BreadcrumbItem): ReactNode => {
   if (item.href) {
     return (
-      <A {...stylex.props(styles.link)} href={item.href} onClick={item.onClick}>
+      <A
+        {...styleProps(styles.link, breadcrumbClasses('link'))}
+        href={item.href}
+        onClick={item.onClick}
+      >
         {item.title}
       </A>
     );
@@ -25,7 +29,11 @@ const renderTitle = (item: BreadcrumbItem): ReactNode => {
 
   if (item.onClick) {
     return (
-      <button {...stylex.props(styles.button)} type="button" onClick={item.onClick}>
+      <button
+        {...styleProps(styles.button, breadcrumbClasses('link'))}
+        type="button"
+        onClick={item.onClick}
+      >
         {item.title}
       </button>
     );
@@ -45,7 +53,7 @@ const Breadcrumb = memo<BreadcrumbProps>(
         {...rest}
         {...styleProps(styles.root, clsx('lobe-breadcrumb', className), style)}
       >
-        <ol {...stylex.props(styles.list)}>
+        <ol {...styleProps(styles.list, breadcrumbClasses('list'))}>
           {items.map((item, index) => {
             const isLast = index === items.length - 1;
 
@@ -53,7 +61,11 @@ const Breadcrumb = memo<BreadcrumbProps>(
               <li
                 aria-current={isLast ? 'page' : undefined}
                 key={item.key ?? index}
-                {...styleProps(styles.item, classNames?.item, customStyles?.item)}
+                {...styleProps(
+                  styles.item,
+                  clsx(breadcrumbClasses('item'), classNames?.item),
+                  customStyles?.item,
+                )}
               >
                 {renderTitle(item)}
                 {!isLast && (
@@ -61,7 +73,7 @@ const Breadcrumb = memo<BreadcrumbProps>(
                     aria-hidden="true"
                     {...styleProps(
                       styles.separator,
-                      classNames?.separator,
+                      clsx(breadcrumbClasses('separator'), classNames?.separator),
                       customStyles?.separator,
                     )}
                   >

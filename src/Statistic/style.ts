@@ -13,6 +13,10 @@ export const styles = stylex.create({
     display: 'flex',
     flexDirection: 'column',
   },
+  skeleton: {
+    height: 30,
+    width: 96,
+  },
   title: {
     color: cssVar.colorTextDescription,
     fontSize: 14,

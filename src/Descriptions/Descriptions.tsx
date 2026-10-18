@@ -1,10 +1,12 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { Fragment, memo } from 'react';
 
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
+import { descriptionsClasses } from './stable';
 import { styles } from './style';
 import type { DescriptionsProps } from './type';
 
@@ -35,16 +37,24 @@ const Descriptions = memo<DescriptionsProps>(
     });
 
     return (
-      <div ref={ref} {...rest} {...styleProps(styles.root, className, style)}>
+      <div
+        ref={ref}
+        {...toDataAttributes({ bordered })}
+        {...rest}
+        {...styleProps(styles.root, clsx(descriptionsClasses(), className), style)}
+      >
         {(title != null || extra != null) && (
-          <div {...stylex.props(styles.header)}>
-            <div {...stylex.props(styles.title)}>{title}</div>
-            {extra != null && <div {...stylex.props(styles.extra)}>{extra}</div>}
+          <div {...styleProps(styles.header, descriptionsClasses('header'))}>
+            <div {...styleProps(styles.title, descriptionsClasses('title'))}>{title}</div>
+            {extra != null && (
+              <div {...styleProps(styles.extra, descriptionsClasses('extra'))}>{extra}</div>
+            )}
           </div>
         )}
         <dl
-          {...stylex.props(styles.list, bordered && styles.bordered)}
-          style={{ gridTemplateColumns: `repeat(${columnCount}, auto minmax(0, 1fr))` }}
+          {...styleProps([styles.list, bordered && styles.bordered], descriptionsClasses('list'), {
+            gridTemplateColumns: `repeat(${columnCount}, auto minmax(0, 1fr))`,
+          })}
         >
           {items.map((item, index) => {
             const { span, start } = placements[index];
@@ -55,7 +65,7 @@ const Descriptions = memo<DescriptionsProps>(
                 <dt
                   {...styleProps(
                     [styles.label, bordered && [styles.borderedCell, styles.borderedLabel]],
-                    classNames?.label,
+                    clsx(descriptionsClasses('label'), classNames?.label),
                     { gridColumn: String(start * 2 + 1), ...customStyles?.label },
                   )}
                 >
@@ -65,7 +75,7 @@ const Descriptions = memo<DescriptionsProps>(
                 <dd
                   {...styleProps(
                     [styles.content, bordered && styles.borderedCell],
-                    classNames?.content,
+                    clsx(descriptionsClasses('content'), classNames?.content),
                     {
                       gridColumn:
                         span > 1 ? `${contentStart} / span ${span * 2 - 1}` : contentStart,

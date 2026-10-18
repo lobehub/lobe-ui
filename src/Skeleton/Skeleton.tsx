@@ -1,33 +1,40 @@
 'use client';
 
+import clsx from 'clsx';
 import { type FC } from 'react';
 
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
+import { skeletonClasses } from './stable';
 import { styles } from './style';
 import type { SkeletonProps } from './type';
 
-const Skeleton: FC<SkeletonProps> = ({
+export const SkeletonImpl: FC<SkeletonProps & { xstyle?: Parameters<typeof styleProps>[0] }> = ({
   animated = true,
-  width = '100%',
-  height = '1em',
+  width,
+  height,
   radius,
   className,
   style,
+  xstyle,
   ...rest
 }) => (
   <div
     style={{ borderRadius: radius, height, width, ...style }}
     className={
       styleProps(
-        [styles.base, animated && styles[animated === true ? 'fade' : animated]],
-        className,
+        [styles.base, animated && styles[animated === true ? 'fade' : animated], xstyle],
+        clsx(skeletonClasses(), className),
       ).className
     }
+    {...toDataAttributes({ animated: animated === true ? 'fade' : animated })}
     {...rest}
   />
 );
 
-Skeleton.displayName = 'Skeleton';
+SkeletonImpl.displayName = 'Skeleton';
+
+const Skeleton = SkeletonImpl as FC<SkeletonProps>;
 
 export default Skeleton;

@@ -5,6 +5,8 @@ category: Data Display
 ---
 
 import DemoIndex from './demos/index.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { qrCodeClasses } from './stable';
 
 ## Basic
 
@@ -20,3 +22,9 @@ The code stays dark on white in dark mode so phones can scan it; `color` and `bg
 
 - Drop `color="#000"`, `bgColor="#fff"` and `bordered={false}` where they only restated the old workaround; keep `bordered={false}` if you want no outline.
 - `type="canvas"` is not supported; output is always SVG.
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={qrCodeClasses} />

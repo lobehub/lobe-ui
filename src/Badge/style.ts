@@ -47,7 +47,8 @@ export const styles = stylex.create({
   },
   statusDot: {
     borderRadius: '50%',
-    backgroundColor: cssVar.colorTextQuaternary,
+    backgroundColor: 'var(--lobe-badge-color)',
+    color: 'var(--lobe-badge-color)',
     flexShrink: 0,
     position: 'relative',
     height: 6,

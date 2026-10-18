@@ -17,7 +17,7 @@ describe('Avatar', () => {
     const { container } = renderWithProvider(<Avatar avatar="lobehub" />);
 
     expect(screen.getByText('LO')).toBeTruthy();
-    expect((container.firstChild as HTMLElement).style.fontSize).toBe('24px');
+    expect(getComputedStyle(container.firstChild as HTMLElement).fontSize).toBe('24px');
   });
 
   test('renders empty text when avatar and title are missing', () => {
@@ -74,7 +74,7 @@ describe('Avatar', () => {
     const { container } = renderWithProvider(<Avatar bordered avatar="A" shape="circle" />);
     const root = container.firstChild as HTMLElement;
 
-    expect(root.style.borderRadius).toBe('50%');
+    expect(getComputedStyle(root).borderRadius).toBe('50%');
     expect(root.style.boxShadow).toContain('0 0 0 2px');
     expect(root.style.boxShadow).toContain('0 0 0 4px');
   });
@@ -90,7 +90,7 @@ describe('Avatar', () => {
     const { container } = renderWithProvider(<Avatar avatar="A" onClick={onClick} />);
     const root = container.firstChild as HTMLElement;
 
-    expect(root.style.cursor).toBe('pointer');
+    expect(getComputedStyle(root).cursor).toBe('pointer');
 
     fireEvent.click(root);
 

@@ -18,9 +18,11 @@ import { useEventCallback } from '@/hooks/useEventCallback';
 import { Input } from '@/Input';
 import Select from '@/Select';
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
 import { clampPage, getPageCount, getPaginationItems } from './helpers';
 import { paginationJumpMarker } from './marker.stylex';
+import { paginationClasses } from './stable';
 import { styles } from './style';
 import type { PaginationItemType, PaginationProps } from './type';
 
@@ -166,13 +168,16 @@ const Pagination = memo<PaginationProps>(
       itemRender ? itemRender(page, type, element) : element;
     const title = (text: string) => (showTitle ? text : undefined);
     const iconSize = size === 'small' ? 14 : 16;
-    const buttonProps = stylex.props(styles.button, size === 'small' && styles.small);
-    const jumperInputClassName = stylex.props(styles.jumperInput).className;
+    const buttonStyles = [styles.button, size === 'small' && styles.small];
+    const jumperInputClassName = styleProps(
+      styles.jumperInput,
+      paginationClasses('jumper-input'),
+    ).className;
 
     const prevButton = (
       <button
         aria-label="Previous page"
-        {...buttonProps}
+        {...styleProps(buttonStyles, paginationClasses('prev'))}
         disabled={disabled || displayCurrent <= 1}
         title={title('Previous Page')}
         type="button"
@@ -184,7 +189,7 @@ const Pagination = memo<PaginationProps>(
     const nextButton = (
       <button
         aria-label="Next page"
-        {...buttonProps}
+        {...styleProps(buttonStyles, paginationClasses('next'))}
         disabled={disabled || displayCurrent >= pageCount}
         title={title('Next Page')}
         type="button"
@@ -213,19 +218,22 @@ const Pagination = memo<PaginationProps>(
         role="navigation"
         {...styleProps(
           [styles.root, align && styles.aligned, align && styles[align]],
-          clsx(classNames?.root, className),
+          clsx(paginationClasses(), classNames?.root, className),
           { ...customStyles?.root, ...style },
         )}
+        {...toDataAttributes({ disabled, simple: !!simpleConfig, size })}
         {...rest}
       >
         {showTotal && (
-          <span {...stylex.props(styles.total)}>{showTotal(total, [rangeStart, rangeEnd])}</span>
+          <span {...styleProps(styles.total, paginationClasses('total'))}>
+            {showTotal(total, [rangeStart, rangeEnd])}
+          </span>
         )}
         {simpleConfig ? (
           <>
             {prevButton}
             <span
-              {...stylex.props(styles.simplePager)}
+              {...styleProps(styles.simplePager, paginationClasses('simple-pager'))}
               title={title(`${displayCurrent}/${pageCount}`)}
             >
               {simpleConfig.readOnly ? (
@@ -259,8 +267,8 @@ const Pagination = memo<PaginationProps>(
                   disabled={disabled}
                   key={item}
                   {...styleProps(
-                    [styles.button, size === 'small' && styles.small],
-                    classNames?.item,
+                    buttonStyles,
+                    clsx(paginationClasses('item'), classNames?.item),
                     customStyles?.item,
                   )}
                   title={title(String(item))}
@@ -271,10 +279,13 @@ const Pagination = memo<PaginationProps>(
                 </button>
               ) : (
                 <button
-                  {...stylex.props(
-                    paginationJumpMarker,
-                    styles.ellipsis,
-                    size === 'small' && styles.smallEllipsis,
+                  {...styleProps(
+                    [
+                      paginationJumpMarker,
+                      styles.ellipsis,
+                      size === 'small' && styles.smallEllipsis,
+                    ],
+                    paginationClasses('jump'),
                   )}
                   data-pagination-jump={item === 'ellipsis-prev' ? 'prev' : 'next'}
                   disabled={disabled}
@@ -315,17 +326,18 @@ const Pagination = memo<PaginationProps>(
             disabled={disabled}
             size={size === 'small' ? 'small' : 'middle'}
             {...sizeChangerProps}
+            style={{ width: 'auto', ...sizeChangerProps?.style }}
             value={String(mergedPageSize)}
+            className={
+              styleProps(
+                styles.sizeChanger,
+                clsx(paginationClasses('size-changer'), sizeChangerProps?.className),
+              ).className
+            }
             options={pageSizeOptions.map((option) => ({
               label: `${option} / page`,
               value: String(option),
             }))}
-            style={{
-              flex: 'none',
-              marginInlineStart: 8,
-              width: 'auto',
-              ...sizeChangerProps?.style,
-            }}
             onChange={(value: string) => {
               handlePageSizeChange(value);
               sizeChangerProps?.onChange?.(value);
@@ -333,7 +345,7 @@ const Pagination = memo<PaginationProps>(
           />
         )}
         {!simpleConfig && showQuickJumper && (
-          <span {...stylex.props(styles.jumper)}>
+          <span {...styleProps(styles.jumper, paginationClasses('jumper'))}>
             Go to
             <Input
               aria-label="Go to page"
@@ -350,11 +362,18 @@ const Pagination = memo<PaginationProps>(
               }}
             />
             {goButton === true || typeof goButton === 'string' ? (
-              <button {...buttonProps} disabled={disabled} type="button" onClick={jump}>
+              <button
+                {...styleProps(buttonStyles, paginationClasses('go'))}
+                disabled={disabled}
+                type="button"
+                onClick={jump}
+              >
                 {goButton === true ? 'Go' : goButton}
               </button>
             ) : goButton ? (
-              <span onClick={jump}>{goButton}</span>
+              <span className={paginationClasses('go')} onClick={jump}>
+                {goButton}
+              </span>
             ) : (
               'Page'
             )}

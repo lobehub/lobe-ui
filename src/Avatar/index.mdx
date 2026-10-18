@@ -9,6 +9,8 @@ import DemoEmoji from './demos/Emoji.tsx?demo';
 import DemoGroup from './demos/Group.tsx?demo';
 import DemoImageFallback from './demos/ImageFallback.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { avatarClasses, avatarGroupClasses } from './stable';
 
 ## Default
 
@@ -76,3 +78,15 @@ Also accepts all shared visual props of `Avatar` (`variant`, `bordered`, `shadow
 | ref | Reference to the container element | `Ref<HTMLDivElement>` | - |
 
 `Avatar.Group` is also attached as a static property of the default export, so `<Avatar.Group />` and `<AvatarGroup />` are interchangeable.
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+### Avatar
+
+<StableClassTable of={avatarClasses} />
+
+### AvatarGroup
+
+<StableClassTable of={avatarGroupClasses} />

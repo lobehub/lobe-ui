@@ -1,10 +1,12 @@
 'use client';
 
+import clsx from 'clsx';
 import { use } from 'react';
 
 import { styleProps } from '@/styles/stylex/props';
 
 import { FrameContext } from '../context';
+import { videoClasses } from '../stable';
 import { markerColor, styles } from '../style';
 import type { VideoCaptionProps } from '../type';
 import { useVideo } from '../useVideo';
@@ -19,7 +21,11 @@ const Caption = ({ action, className, style }: VideoCaptionProps) => {
     <div
       data-raised={String(raised)}
       data-video-caption=""
-      {...styleProps([styles.caption, raised && styles.captionRaised], className, style)}
+      {...styleProps(
+        [styles.caption, raised && styles.captionRaised],
+        clsx(videoClasses('caption'), className),
+        style,
+      )}
       onClick={(event) => event.stopPropagation()}
       onPointerDown={(event) => event.stopPropagation()}
     >

@@ -21,7 +21,9 @@ import { useControlledState } from '@/hooks/useControlledState';
 import { useHover } from '@/hooks/useHover';
 import Icon from '@/Icon';
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
+import { draggableSideNavClasses } from './stable';
 import { styles } from './style';
 import type { DraggableSideNavProps } from './type';
 
@@ -356,19 +358,10 @@ const DraggableSideNav = memo<DraggableSideNavProps>(
     // Memoize handle styles to prevent recreation
     const handleRootStyle = useMemo<CSSProperties>(
       () => ({
-        display: 'flex',
         opacity: !isExpand && showHandleWhenCollapsed ? 1 : isHovering ? 1 : 0,
         transition: 'opacity 0.25s ease',
       }),
       [isExpand, showHandleWhenCollapsed, isHovering],
-    );
-
-    const handleCenterStyle = useMemo<CSSProperties>(
-      () => ({
-        ...customStyles?.handle,
-        cursor: 'pointer',
-      }),
-      [customStyles?.handle],
     );
 
     const handleIconWrapperStyle = useMemo<CSSProperties>(
@@ -387,21 +380,24 @@ const DraggableSideNav = memo<DraggableSideNavProps>(
         showHandle &&
         expandable && (
           <div
-            {...stylex.props(
-              styles.toggleRoot,
-              placement === 'left' ? styles.toggleLeft : styles.toggleRight,
+            {...styleProps(
+              [styles.toggleRoot, placement === 'left' ? styles.toggleLeft : styles.toggleRight],
+              draggableSideNavClasses('toggle'),
             )}
             style={handleRootStyle}
           >
             <Center
               {...styleProps(
                 [styles.handle, placement === 'left' ? styles.handleLeft : styles.handleRight],
-                classNames?.handle,
-                handleCenterStyle,
+                clsx(draggableSideNavClasses('handle'), classNames?.handle),
+                customStyles?.handle,
               )}
               onClick={toggleExpand}
             >
-              <div style={handleIconWrapperStyle}>
+              <div
+                className={draggableSideNavClasses('handle-icon')}
+                style={handleIconWrapperStyle}
+              >
                 <Icon
                   className={stylex.props(styles.handlerIcon).className}
                   icon={ArrowIcon}
@@ -418,7 +414,7 @@ const DraggableSideNav = memo<DraggableSideNavProps>(
         handleRootStyle,
         classNames?.handle,
         toggleExpand,
-        handleCenterStyle,
+        customStyles?.handle,
         handleIconWrapperStyle,
         ArrowIcon,
       ],
@@ -453,10 +449,13 @@ const DraggableSideNav = memo<DraggableSideNavProps>(
     // Memoize handle classes to prevent recreation
     const handleClasses = useMemo(
       () => ({
-        [placement === 'left' ? 'right' : 'left']: stylex.props(
-          styles.resizeHandle,
-          showHandleHighlight && styles.resizeHandleHighlight,
-          placement === 'left' ? styles.resizeHandleLeft : styles.resizeHandleRight,
+        [placement === 'left' ? 'right' : 'left']: styleProps(
+          [
+            styles.resizeHandle,
+            showHandleHighlight && styles.resizeHandleHighlight,
+            placement === 'left' ? styles.resizeHandleLeft : styles.resizeHandleRight,
+          ],
+          draggableSideNavClasses('resize-handle'),
         ).className,
       }),
       [placement, showHandleHighlight],
@@ -480,22 +479,28 @@ const DraggableSideNav = memo<DraggableSideNavProps>(
     // Memoize class names
     const containerClassName = styleProps(
       styles.container,
-      clsx(classNames?.container, className),
+      clsx(draggableSideNavClasses('container'), classNames?.container, className),
     ).className;
 
     const contentClassName = styleProps(
       [styles.contentContainer, !showBorder && styles.contentContainerNoBorder],
-      classNames?.content,
+      clsx(draggableSideNavClasses('content'), classNames?.content),
     ).className;
 
-    const headerClassName = styleProps(styles.header, classNames?.header).className;
+    const headerClassName = styleProps(
+      styles.header,
+      clsx(draggableSideNavClasses('header'), classNames?.header),
+    ).className;
 
     const bodyClassName = styleProps(
       styles.body,
-      clsx('lobe-draggable-side-nav-body', classNames?.body),
+      clsx('lobe-draggable-side-nav-body', draggableSideNavClasses('body'), classNames?.body),
     ).className;
 
-    const footerClassName = styleProps(styles.footer, classNames?.footer).className;
+    const footerClassName = styleProps(
+      styles.footer,
+      clsx(draggableSideNavClasses('footer'), classNames?.footer),
+    ).className;
 
     // Cleanup timeouts on unmount
     useEffect(() => {
@@ -510,7 +515,11 @@ const DraggableSideNav = memo<DraggableSideNavProps>(
     }, []);
 
     return (
-      <aside ref={ref}>
+      <aside
+        className={draggableSideNavClasses()}
+        ref={ref}
+        {...toDataAttributes({ expanded: isExpand, placement })}
+      >
         <Resizable
           {...sizeConfig}
           className={containerClassName}

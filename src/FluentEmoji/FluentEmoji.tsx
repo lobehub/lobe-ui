@@ -1,5 +1,6 @@
 'use client';
 
+import clsx from 'clsx';
 import { type FC, useMemo, useState } from 'react';
 
 import { useCdnFn } from '@/ConfigProvider';
@@ -7,6 +8,7 @@ import { Center } from '@/Flex';
 import Img from '@/Img';
 import { styleProps } from '@/styles/stylex/props';
 
+import { fluentEmojiClasses } from './stable';
 import { styles } from './style';
 import type { FluentEmojiProps } from './type';
 import { genEmojiUrl } from './utils';
@@ -35,7 +37,10 @@ const FluentEmoji: FC<FluentEmojiProps> = ({
         role={'img'}
         width={size}
         {...rest}
-        {...styleProps(styles.container, className, { fontSize: size * 0.9, ...style })}
+        {...styleProps(styles.container, clsx(fluentEmojiClasses(), className), {
+          fontSize: size * 0.9,
+          ...style,
+        })}
       >
         {emoji}
       </Center>
@@ -44,7 +49,7 @@ const FluentEmoji: FC<FluentEmojiProps> = ({
   return (
     <Img
       alt={emoji}
-      className={className}
+      className={clsx(fluentEmojiClasses(), className)}
       height={size}
       loading={'lazy'}
       ref={ref}

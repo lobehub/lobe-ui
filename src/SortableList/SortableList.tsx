@@ -17,14 +17,16 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { Fragment, memo, type ReactNode, useMemo, useState } from 'react';
 
 import { Flexbox } from '@/Flex';
+import { styleProps } from '@/styles/stylex/props';
 
 import DragHandle from './components/DragHandle';
 import SortableItem from './components/SortableItem';
 import SortableOverlay from './components/SortableOverlay';
+import { sortableListClasses } from './stable';
 import { styles } from './style';
 import { type SortableListItem, type SortableListProps } from './type';
 
@@ -35,7 +37,7 @@ const measuringConfig = {
 };
 
 const SortableListParent = memo<SortableListProps>(
-  ({ ref, items, onChange, renderItem, renderOverlay, gap = 8, ...rest }) => {
+  ({ ref, items, onChange, renderItem, renderOverlay, gap = 8, className, ...rest }) => {
     const [active, setActive] = useState<Active | null>(null);
     const activeItem = useMemo(() => items.find((item) => item.id === active?.id), [active, items]);
     const sensors = useSensors(
@@ -70,7 +72,15 @@ const SortableListParent = memo<SortableListProps>(
         }}
       >
         <SortableContext items={items} strategy={verticalListSortingStrategy}>
-          <Flexbox as={'ul'} {...stylex.props(styles.container)} gap={gap} ref={ref} {...rest}>
+          <Flexbox
+            as={'ul'}
+            gap={gap}
+            ref={ref}
+            className={
+              styleProps(styles.container, clsx(sortableListClasses(), className)).className
+            }
+            {...rest}
+          >
             {items.map((item) => (
               <Fragment key={item.id}>{renderItem(item)}</Fragment>
             ))}

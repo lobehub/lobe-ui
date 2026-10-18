@@ -11,8 +11,10 @@ import Icon from '@/Icon';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import { styleProps } from '@/styles/stylex/props';
 import { stylish } from '@/styles/stylex/stylish';
+import { toDataAttributes } from '@/utils/bem';
 import { safeReadableColor } from '@/utils/safeReadableColor';
 
+import { avatarClasses } from './stable';
 import { styles } from './style';
 import { type AvatarProps } from './type';
 import {
@@ -50,7 +52,7 @@ export const AvatarImpl = memo<AvatarImplProps>(
     ref,
     shadow,
     shape = 'square',
-    size = 48,
+    size: sizeProp,
     sliceText = true,
     style,
     styles: customStyles,
@@ -62,6 +64,7 @@ export const AvatarImpl = memo<AvatarImplProps>(
     contentXstyle,
     ...rest
   }) => {
+    const size = sizeProp ?? 48;
     const isStringAvatar = typeof avatar === 'string';
 
     const [isImgError, setIsImgError] = useState(false);
@@ -106,30 +109,42 @@ export const AvatarImpl = memo<AvatarImplProps>(
       ],
     );
 
+    const customSize = sizeProp !== undefined;
+    const showDefaultBackground = !background && !((isUrlOrElement && !isImgError) || emoji);
+
     return (
       <div
+        {...toDataAttributes({ shadow, shape, variant })}
         {...rest}
         ref={ref}
         className={
           styleProps(
-            [styles.root, variantStyles[variant], shadow && styles.shadow, xstyle],
-            clsx(className, classNames?.root),
+            [
+              styles.root,
+              variantStyles[variant],
+              shadow && styles.shadow,
+              !customSize && styles.defaultSize,
+              !customSize && !!emoji && styles.defaultEmojiFont,
+              shape === 'circle' ? styles.circle : !customSize && styles.defaultSquare,
+              showDefaultBackground && styles.defaultBackground,
+              !background && styles.defaultColor,
+              !!rest?.onClick && styles.clickable,
+              xstyle,
+            ],
+            clsx(avatarClasses(), className, classNames?.root),
           ).className
         }
         style={{
-          backgroundColor:
-            (isUrlOrElement && !isImgError) || emoji
-              ? background
-              : background || cssVar.colorBorder,
-          borderRadius: shape === 'circle' ? '50%' : size < 24 ? '33%' : Math.max(size / 6, 2),
-          boxShadow: bordered
-            ? `${cssVar.colorBgLayout} 0 0 0 2px, ${borderedColor || cssVar.colorTextTertiary} 0 0 0 4px`
-            : undefined,
-          color: safeReadableColor(background || cssVar.colorBorder),
-          cursor: rest?.onClick ? 'pointer' : undefined,
-          fontSize: size * (emoji ? 0.7 : 0.5),
-          height: size,
-          width: size,
+          ...(background && { backgroundColor: background, color: safeReadableColor(background) }),
+          ...(customSize && {
+            fontSize: size * (emoji ? 0.7 : 0.5),
+            height: size,
+            width: size,
+            ...(shape !== 'circle' && { borderRadius: size < 24 ? '33%' : Math.max(size / 6, 2) }),
+          }),
+          ...(bordered && {
+            boxShadow: `${cssVar.colorBgLayout} 0 0 0 2px, ${borderedColor || cssVar.colorTextTertiary} 0 0 0 4px`,
+          }),
           ...style,
           ...customStyles?.root,
         }}
@@ -139,7 +154,11 @@ export const AvatarImpl = memo<AvatarImplProps>(
             flex={'none'}
             height={'100%'}
             width={'100%'}
-            {...styleProps(styles.loading, classNames?.loading, customStyles?.loading)}
+            {...styleProps(
+              styles.loading,
+              clsx(avatarClasses('loading'), classNames?.loading),
+              customStyles?.loading,
+            )}
           >
             <Icon spin icon={Loader2} />
           </Center>
@@ -153,7 +172,11 @@ export const AvatarImpl = memo<AvatarImplProps>(
             loading={'lazy'}
             src={avatar}
             width={size}
-            {...styleProps(styles.img, classNames?.img, customStyles?.img)}
+            {...styleProps(
+              styles.img,
+              clsx(avatarClasses('img'), classNames?.img),
+              customStyles?.img,
+            )}
             onError={() => setIsImgError(true)}
           />
         )}
@@ -161,7 +184,7 @@ export const AvatarImpl = memo<AvatarImplProps>(
           <span
             {...styleProps(
               [styles.content, contentXstyle],
-              classNames?.content,
+              clsx(avatarClasses('content'), classNames?.content),
               customStyles?.content,
             )}
           >

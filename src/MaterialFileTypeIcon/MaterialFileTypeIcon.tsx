@@ -1,5 +1,6 @@
 'use client';
 
+import clsx from 'clsx';
 import { type FC, useMemo } from 'react';
 
 import { useCdnFn } from '@/ConfigProvider';
@@ -7,6 +8,7 @@ import FileTypeIcon from '@/FileTypeIcon';
 import { Center } from '@/Flex';
 import Img from '@/Img';
 
+import { materialFileTypeIconClasses } from './stable';
 import type { MaterialFileTypeIconProps } from './type';
 import { getIconUrlForDirectoryPath, getIconUrlForFilePath } from './utils';
 
@@ -41,7 +43,7 @@ const MaterialFileTypeIcon: FC<MaterialFileTypeIconProps> = ({
   if (!iconUrl)
     return (
       <FileTypeIcon
-        className={rest.className}
+        className={clsx(materialFileTypeIconClasses(), rest.className)}
         filetype={filename.split('.')[1]}
         size={size}
         type={type}
@@ -50,7 +52,17 @@ const MaterialFileTypeIcon: FC<MaterialFileTypeIconProps> = ({
     );
 
   if (variant === 'raw')
-    return <Img alt={filename} height={size} src={iconUrl} style={style} width={size} {...rest} />;
+    return (
+      <Img
+        alt={filename}
+        height={size}
+        src={iconUrl}
+        style={style}
+        width={size}
+        {...rest}
+        className={clsx(materialFileTypeIconClasses(), rest.className)}
+      />
+    );
 
   return (
     <Center
@@ -59,6 +71,7 @@ const MaterialFileTypeIcon: FC<MaterialFileTypeIconProps> = ({
       style={{ position: 'relative', ...style }}
       width={size}
       {...rest}
+      className={clsx(materialFileTypeIconClasses(), rest.className)}
     >
       <FileTypeIcon size={size} type={variant} variant={'mono'} />
       <Img
@@ -68,6 +81,7 @@ const MaterialFileTypeIcon: FC<MaterialFileTypeIconProps> = ({
         style={{ position: 'absolute', top: size / 3 }}
         width={size / 2}
         {...rest}
+        className={clsx(materialFileTypeIconClasses('img'), rest.className)}
       />
     </Center>
   );

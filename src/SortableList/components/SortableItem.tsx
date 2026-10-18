@@ -3,13 +3,16 @@
 import type { DraggableSyntheticListeners } from '@dnd-kit/core';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import clsx from 'clsx';
 import { createContext, memo, useMemo } from 'react';
 
 import { type FlexboxProps } from '@/Flex';
 import { Flexbox } from '@/Flex';
 import { styleProps } from '@/styles/stylex/props';
 import { stylish } from '@/styles/stylex/stylish';
+import { toDataAttributes } from '@/utils/bem';
 
+import { sortableListClasses } from '../stable';
 import { styles } from '../style';
 
 interface Context {
@@ -66,7 +69,7 @@ const SortableItem = memo<SortableItemProps>(
           className={
             styleProps(
               [styles.item, variantStyles[variant], variant !== 'borderless' && styles.itemVariant],
-              className,
+              clsx(sortableListClasses('item'), className),
             ).className
           }
           style={{
@@ -75,6 +78,7 @@ const SortableItem = memo<SortableItemProps>(
             transition,
             ...style,
           }}
+          {...toDataAttributes({ dragging: isDragging, variant })}
           {...rest}
         >
           {children}

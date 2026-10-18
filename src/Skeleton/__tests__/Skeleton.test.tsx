@@ -16,6 +16,20 @@ describe('Skeleton', () => {
     expect(block.className).not.toBe('');
   });
 
+  test('keeps the default size in the stylesheet so global CSS can override it', () => {
+    const { container, rerender } = render(<Skeleton />);
+    const block = () => container.firstElementChild as HTMLElement;
+
+    expect(block().classList.contains('lobe-skeleton')).toBe(true);
+    expect(block().style.height).toBe('');
+    expect(block().style.width).toBe('');
+    expect(getComputedStyle(block()).height).toBe('1em');
+    expect(getComputedStyle(block()).width).toBe('100%');
+
+    rerender(<Skeleton height={20} />);
+    expect(block().style.height).toBe('20px');
+  });
+
   test('animated picks fade by default, sweep on request and nothing when false', () => {
     const cls = (node: HTMLElement) => node.className;
     const { container, rerender } = render(<Skeleton animated={false} />);
@@ -39,7 +53,9 @@ describe('Skeleton', () => {
 
     rerender(<Skeleton.Text rows={3} />);
     const rows = [...container.firstElementChild!.children] as HTMLElement[];
-    expect(rows.map((r) => r.style.width)).toEqual(['100%', '100%', '66%']);
+    expect(rows.map((r) => r.style.width)).toEqual(['', '', '']);
+    expect(rows.map((r) => getComputedStyle(r).width)).toEqual(['100%', '100%', '66%']);
+    expect(rows.every((r) => r.classList.contains('lobe-skeleton-text__row'))).toBe(true);
   });
 
   test('Text honours per-row widths and falls back to the last one', () => {
@@ -56,6 +72,14 @@ describe('Skeleton', () => {
     expect(avatar.style.borderRadius).toBe('');
 
     rerender(<Skeleton.Avatar shape="circle" size={32} />);
-    expect((container.firstElementChild as HTMLElement).style.borderRadius).toBe('50%');
+    const circle = container.firstElementChild as HTMLElement;
+    expect(circle.style.borderRadius).toBe('');
+    expect(getComputedStyle(circle).borderRadius).toBe('50%');
+    expect(circle.getAttribute('data-shape')).toBe('circle');
+
+    rerender(<Skeleton.Avatar />);
+    const fallback = container.firstElementChild as HTMLElement;
+    expect(fallback.style.width).toBe('');
+    expect(getComputedStyle(fallback).width).toBe('40px');
   });
 });

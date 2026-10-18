@@ -30,6 +30,9 @@ export const styles = stylex.create({
     zIndex: 999,
     maxWidth: '100%',
   },
+  headerDefault: {
+    height: 'var(--layout-header-height, 64px)',
+  },
   main: {
     alignItems: 'stretch',
     display: 'flex',

@@ -28,6 +28,22 @@ export const styles = stylex.create({
     height: 72,
     width: 72,
   },
+  iconError: {
+    backgroundColor: `color-mix(in srgb, ${cssVar.colorError} 12%, transparent)`,
+    color: cssVar.colorError,
+  },
+  iconInfo: {
+    backgroundColor: cssVar.colorFillTertiary,
+    color: cssVar.colorTextSecondary,
+  },
+  iconSuccess: {
+    backgroundColor: `color-mix(in srgb, ${cssVar.colorSuccess} 12%, transparent)`,
+    color: cssVar.colorSuccess,
+  },
+  iconWarning: {
+    backgroundColor: `color-mix(in srgb, ${cssVar.colorWarning} 12%, transparent)`,
+    color: cssVar.colorWarning,
+  },
   root: {
     gap: 6,
     paddingBlock: 16,
@@ -50,9 +66,3 @@ export const styles = stylex.create({
     textWrap: 'balance',
   },
 });
-
-export const statusColor: Record<'success' | 'error' | 'warning', string> = {
-  error: cssVar.colorError,
-  success: cssVar.colorSuccess,
-  warning: cssVar.colorWarning,
-};

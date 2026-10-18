@@ -3,6 +3,9 @@ import * as stylex from '@stylexjs/stylex';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
 export const styles = stylex.create({
+  clickable: {
+    cursor: 'pointer',
+  },
   close: {
     margin: 0,
     padding: 0,
@@ -19,6 +22,9 @@ export const styles = stylex.create({
     cursor: 'pointer',
     display: 'inline-flex',
     justifyContent: 'center',
+  },
+  defaultColor: {
+    color: cssVar.colorTextSecondary,
   },
   large: {
     borderRadius: 6,

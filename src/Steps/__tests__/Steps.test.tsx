@@ -69,8 +69,9 @@ describe('Steps', () => {
   test('dot variant moves the vertical connector under the 7px dot', () => {
     const { container } = render(<Steps items={items} orientation="vertical" variant="dot" />);
 
-    const connector = container.querySelector('li > span[aria-hidden="true"]')!;
-    expect(connector.getAttribute('style')).toContain('inset-inline-start: 3px');
+    const connector = container.querySelector('.lobe-steps__connector')!;
+    expect(connector.getAttribute('style')).toBeNull();
+    expect(getComputedStyle(connector).insetInlineStart).toBe('3px');
   });
 
   test('renders descriptions', () => {

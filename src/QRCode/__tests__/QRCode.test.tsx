@@ -61,7 +61,7 @@ describe('QRCode', () => {
 
     const spinner = screen.getByRole('status', { name: 'Loading' })
       .firstElementChild as HTMLElement;
-    expect(spinner.style.color).toBe('rgb(102, 102, 102)');
+    expect(getComputedStyle(spinner).color).toBe('rgb(102, 102, 102)');
   });
 
   test('the image role sits on the svg so overlay controls stay reachable', () => {

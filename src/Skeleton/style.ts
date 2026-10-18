@@ -17,6 +17,11 @@ const fade = stylex.keyframes({
 export const styles = stylex.create({
   avatar: {
     flex: 'none',
+    height: 40,
+    width: 40,
+  },
+  avatarCircle: {
+    borderRadius: '50%',
   },
   base: {
     borderRadius: cssVar.borderRadius,
@@ -24,6 +29,8 @@ export const styles = stylex.create({
     backgroundColor: cssVar.colorFillContent,
     position: 'relative',
     userSelect: 'none',
+    height: '1em',
+    width: '100%',
   },
   fade: {
     animationDuration: '1.6s',
@@ -46,6 +53,16 @@ export const styles = stylex.create({
       position: 'absolute',
       willChange: 'transform',
     },
+  },
+  row: {
+    marginBlock: `round(calc(${cssVar.fontSize} * 0.15), 1px)`,
+    height: `round(calc(${cssVar.fontSize} * 1.3), 1px)`,
+  },
+  rowFlush: {
+    marginBlock: 0,
+  },
+  rowShort: {
+    width: '66%',
   },
   text: {
     display: 'flex',

@@ -5,6 +5,8 @@ category: General
 ---
 
 import DemoIndex from './demos/index.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { blockClasses } from './stable';
 
 Block is a flexible container component that extends Flexbox with various styling options like variants, shadows, and glass effects.
 
@@ -17,3 +19,9 @@ Block is a flexible container component that extends Flexbox with various stylin
 <Api name="Block" migrationKey="unheaded:0" />
 
 > Block component inherits all properties from [Flexbox](https://github.com/ant-design/react-layout-kit)
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={blockClasses} />

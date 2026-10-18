@@ -24,7 +24,7 @@ const collectExportKeys = async () => {
   for (const [namespace, load] of Object.entries(ENTRIES)) {
     const mod = await load();
     for (const name of Object.keys(mod)) {
-      if (!/^[A-Z][a-z]/.test(name)) continue;
+      if (!/^[A-Z]/.test(name) || (name.length > 1 && /^[\dA-Z_]+$/.test(name))) continue;
       keys.push(namespace ? `${namespace}/${name}` : name);
     }
   }
@@ -41,6 +41,22 @@ const findBlock = (fixture: StableFixture, container: HTMLElement) =>
   fixture.portal
     ? document.body.querySelector<HTMLElement>(`.${fixture.classes.block}`)
     : (container.firstElementChild as HTMLElement | null);
+
+beforeAll(() => {
+  window.matchMedia ??= ((query: string) => ({
+    addEventListener: () => {},
+    addListener: () => {},
+    matches: false,
+    media: query,
+    removeEventListener: () => {},
+    removeListener: () => {},
+  })) as unknown as typeof window.matchMedia;
+  globalThis.ResizeObserver ??= class {
+    disconnect() {}
+    observe() {}
+    unobserve() {}
+  } as unknown as typeof ResizeObserver;
+});
 
 afterEach(cleanup);
 
@@ -73,7 +89,10 @@ describe('stable class names', () => {
       const { container } = render(fixture.render({ className: 'user-x' }));
       const block = findBlock(fixture, container);
       expect(block?.classList.contains(fixture.classes.block)).toBe(true);
-      expect(block?.classList.contains('user-x')).toBe(true);
+      const target = fixture.classNameTarget
+        ? document.body.querySelector(`.${fixture.classes(fixture.classNameTarget)}`)
+        : block;
+      expect(target?.classList.contains('user-x')).toBe(true);
     });
   });
 });

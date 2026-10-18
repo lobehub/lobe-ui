@@ -5,6 +5,8 @@ category: Feedback
 ---
 
 import DemoIndex from './demos/index.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { badgeClasses } from './stable';
 
 ## Basic
 
@@ -35,3 +37,9 @@ import { Badge } from '@lobehub/ui';
 ```
 
 `Badge.Ribbon`, `title`, and gradient `color` presets are not supported.
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={badgeClasses} />

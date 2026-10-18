@@ -3,19 +3,20 @@
 import './style.css';
 
 import { Accordion as BaseUIAccordion } from '@base-ui/react/accordion';
-import * as stylex from '@stylexjs/stylex';
 import clsx from 'clsx';
 import { ChevronDown, ChevronRight, Play } from 'lucide-react';
 import { createContext, type FC, use, useMemo } from 'react';
 
 import { focusRing } from '@/styles/stylex/focusRing';
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
 import {
   accordionHeaderMarker,
   accordionPanelMarker,
   accordionTriggerMarker,
 } from './marker.stylex';
+import { accordionClasses } from './stable';
 import { styles } from './style';
 import type {
   AccordionHeaderProps,
@@ -77,9 +78,12 @@ export const AccordionRoot: FC<AccordionRootProps> = ({
     <AccordionContext value={contextValue}>
       <BaseUIAccordion.Root
         multiple={multiple}
+        {...toDataAttributes({ indicatorPlacement, variant })}
         className={
-          styleProps([styles.root, variant === 'outlined' && styles.rootOutlined], className)
-            .className
+          styleProps(
+            [styles.root, variant === 'outlined' && styles.rootOutlined],
+            clsx(accordionClasses(), className),
+          ).className
         }
         {...rest}
       >
@@ -102,8 +106,10 @@ export const AccordionItem: FC<AccordionItemProps> = ({
   return (
     <BaseUIAccordion.Item
       className={
-        styleProps([styles.item, variant === 'outlined' && styles.itemOutlined], className)
-          .className
+        styleProps(
+          [styles.item, variant === 'outlined' && styles.itemOutlined],
+          clsx(accordionClasses('item'), className),
+        ).className
       }
       {...rest}
     />
@@ -133,7 +139,7 @@ export const AccordionHeader: FC<AccordionHeaderProps> = ({
             variant === 'filled' && styles.headerFilled,
             inline && styles.headerInline,
           ],
-          clsx(inline && 'lobe-accordion-header-inline', className),
+          clsx(inline && 'lobe-accordion-header-inline', accordionClasses('header'), className),
         ).className
       }
       {...rest}
@@ -157,7 +163,12 @@ export const AccordionTrigger: FC<AccordionTriggerProps> = ({
   const placement = placementProp ?? ctx.indicatorPlacement;
 
   const indicator = !hideIndicator && (
-    <span {...stylex.props(styles.indicator, indicatorPlacementStyles[placement])}>
+    <span
+      {...styleProps(
+        [styles.indicator, indicatorPlacementStyles[placement]],
+        accordionClasses('indicator'),
+      )}
+    >
       {placement === 'start' && <ChevronRight size={16} />}
       {placement === 'inline' && <Play fill="currentColor" size={7} strokeWidth={1} />}
       {placement === 'end' && <ChevronDown size={16} />}
@@ -169,7 +180,7 @@ export const AccordionTrigger: FC<AccordionTriggerProps> = ({
       className={
         styleProps(
           [accordionTriggerMarker, focusRing.info, styles.trigger, triggerVariantStyles[variant]],
-          className,
+          clsx(accordionClasses('trigger'), className),
         ).className
       }
       {...rest}
@@ -202,7 +213,10 @@ export const AccordionPanel: FC<AccordionPanelProps> = ({
 
   return (
     <BaseUIAccordion.Panel
-      className={styleProps([accordionPanelMarker, styles.panel], className).className}
+      className={
+        styleProps([accordionPanelMarker, styles.panel], clsx(accordionClasses('panel'), className))
+          .className
+      }
       {...rest}
     >
       <div
@@ -214,7 +228,7 @@ export const AccordionPanel: FC<AccordionPanelProps> = ({
             indent && variant !== 'outlined' && styles.contentIndent,
             indent && variant === 'outlined' && styles.contentIndentOutlined,
           ],
-          contentClassName,
+          clsx(accordionClasses('content'), contentClassName),
           contentStyle,
         )}
       >
