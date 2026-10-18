@@ -68,7 +68,10 @@ const SyntaxMermaid = memo<SyntaxMermaidProps>(
     );
   },
   (prevProps, nextProps) =>
-    prevProps.children === nextProps.children && prevProps.animated === nextProps.animated,
+    prevProps.children === nextProps.children &&
+    prevProps.animated === nextProps.animated &&
+    prevProps.theme === nextProps.theme &&
+    prevProps.variant === nextProps.variant,
 );
 
 SyntaxMermaid.displayName = 'SyntaxMermaid';

@@ -1,48 +1,44 @@
 'use client';
 
-import { useEffect, useId, useMemo, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
-import {
-  type MermaidRenderResult,
-  type MermaidThemeName,
-  renderMermaid,
-  useCdnMermaidFallback,
-} from './useMermaid';
+import { type MermaidRenderResult, renderMermaid, useMermaidScopeId } from './useMermaid';
 
 const EMPTY: MermaidRenderResult = { svg: '' };
+const PENDING: MermaidRenderResult = { loading: true, svg: '' };
+const THROTTLE = 150;
 
+// Most prefixes of a diagram are not valid syntax yet, so a failed render keeps
+// the last good SVG instead of flashing an error; the static renderer that takes
+// over once streaming ends is the one that reports real errors.
 export const useStreamMermaid = (
   content: string,
-  {
-    enabled = true,
-    theme: customTheme,
-  }: {
-    enabled?: boolean;
-    theme?: MermaidThemeName;
-  },
+  { enabled = true }: { enabled?: boolean } = {},
 ): MermaidRenderResult => {
-  const reactId = useId();
-  const scopeId = useMemo(() => `mermaid-${reactId.replaceAll(':', '')}`, [reactId]);
-  const [primary, setPrimary] = useState<MermaidRenderResult>(EMPTY);
+  const scopeId = useMermaidScopeId();
+  const [result, setResult] = useState<MermaidRenderResult>(EMPTY);
+  const lastRenderRef = useRef(0);
 
   useEffect(() => {
     if (!enabled || !content) {
-      setPrimary(EMPTY);
+      setResult(EMPTY);
       return;
     }
 
-    // Debounce rendering so streaming content only re-renders after it settles
+    // Throttle rather than debounce: chunks arrive faster than any debounce
+    // window, which would hold the diagram back until the stream pauses.
+    const wait = Math.max(0, THROTTLE - (Date.now() - lastRenderRef.current));
     const timer = setTimeout(() => {
-      setPrimary(renderMermaid(content, scopeId, customTheme));
-    }, 300);
+      lastRenderRef.current = Date.now();
+      const next = renderMermaid(content, scopeId);
+      setResult((previous) => {
+        if (!next.error) return next;
+        return previous.svg ? previous : PENDING;
+      });
+    }, wait);
 
     return () => clearTimeout(timer);
-  }, [enabled, content, scopeId, customTheme]);
+  }, [enabled, content, scopeId]);
 
-  const fallback = useCdnMermaidFallback(content, {
-    enabled: enabled && Boolean(primary.error),
-    theme: customTheme,
-  });
-
-  return primary.error ? fallback : primary;
+  return result;
 };

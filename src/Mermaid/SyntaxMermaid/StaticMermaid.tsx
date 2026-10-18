@@ -6,6 +6,7 @@ import { memo, useMemo } from 'react';
 import { useMermaid } from '@/hooks/useMermaid';
 
 import { mermaidThemes } from '../const';
+import { getMermaidThemeVars } from '../themes';
 import { type SyntaxMermaidProps } from '../type';
 import MermaidFallback from './MermaidFallback';
 import MermaidSvg from './MermaidSvg';
@@ -30,11 +31,10 @@ const StaticMermaid = memo<StaticMermaidProps>(
       return mermaidThemes.find((item) => item.id === customTheme)?.background;
     }, [isDefaultTheme, customTheme]);
 
-    const { svg, error, loading } = useMermaid(safeChildren, {
-      theme: isDefaultTheme ? undefined : customTheme,
-    });
+    const { svg, error, loading } = useMermaid(safeChildren);
 
     const containerStyle = {
+      ...getMermaidThemeVars(customTheme),
       background: variant === 'filled' ? background : undefined,
       margin: 0,
       minWidth: 300,

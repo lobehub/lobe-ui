@@ -6,7 +6,7 @@ const openPreview = vi.hoisted(() => vi.fn());
 
 vi.mock('@/Image/viewer/registry', () => ({ openPreview, usePreviewSession: () => null }));
 
-const SVG = '<svg id="scope-1" viewBox="0 0 10 10" style="--bg: rgb(1, 2, 3)"></svg>';
+const SVG = '<svg viewBox="0 0 10 10" style="--pele-bg: rgb(1, 2, 3)"></svg>';
 
 beforeEach(() => {
   openPreview.mockClear();
