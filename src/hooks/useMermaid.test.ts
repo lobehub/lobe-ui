@@ -1,7 +1,6 @@
-import { THEMES } from 'beautiful-mermaid';
 import { describe, expect, it } from 'vitest';
 
-import { createMermaidOptions, renderMermaid } from './useMermaid';
+import { renderMermaid } from './useMermaid';
 
 describe('renderMermaid', () => {
   it.each([
@@ -10,16 +9,22 @@ describe('renderMermaid', () => {
     ['classDiagram\n  Animal <|-- Duck', 'class'],
     ['stateDiagram-v2\n  [*] --> Still', 'state'],
     ['erDiagram\n  CUSTOMER ||--o{ ORDER : places', 'er'],
-  ])('renders %s natively', (source) => {
-    const { error, svg } = renderMermaid(source, 'scope');
+    ['pie title Pets\n  "Dogs": 3', 'pie'],
+    ['gantt\n  dateFormat YYYY-MM-DD\n  section A\n  Task :a1, 2024-01-01, 3d', 'gantt'],
+    ['mindmap\n  root((x))\n    a', 'mindmap'],
+    ['timeline\n  2020 : a', 'timeline'],
+    ['journey\n  title A\n  section S\n    Task: 5: Me', 'journey'],
+    ['gitGraph\n  commit\n  branch dev\n  commit', 'gitGraph'],
+  ])('renders %s locally', (source, type) => {
+    const { error, svg } = renderMermaid(source, 'scope-');
 
     expect(error).toBeUndefined();
     expect(svg).toContain('<svg');
-    expect(svg).toContain('viewBox');
+    expect(svg).toContain(`pele-${type}`);
   });
 
-  it('renders HTML <br> labels without foreignObject (no XML-strictness failure)', () => {
-    const { error, svg } = renderMermaid('flowchart LR\n  A["line1<br>line2"] --> B', 'scope');
+  it('produces strict-XML output for <br> labels', () => {
+    const { error, svg } = renderMermaid('flowchart LR\n  A["line1<br>line2"] --> B', 'scope-');
 
     expect(error).toBeUndefined();
     expect(svg).not.toContain('foreignObject');
@@ -28,44 +33,31 @@ describe('renderMermaid', () => {
     );
   });
 
-  it.each([
-    'pie title Pets\n  "Dogs": 3',
-    'gantt\n  title A',
-    'mindmap\n  root((x))',
-    'timeline\n  title A',
-    'journey\n  title A',
-  ])('defers unsupported diagram types to the CDN fallback', (source) => {
-    const { error, svg } = renderMermaid(source, 'scope');
+  it('colors through theme variables only', () => {
+    const { svg } = renderMermaid('pie\n  "a": 1\n  "b": 2', 'scope-');
 
-    expect(error).toBe('unsupported');
+    expect(svg).toContain('var(--pele-bg');
+    expect(svg).not.toMatch(/fill="#[\da-f]+"/i);
+  });
+
+  it('strips script vectors from labels and links', () => {
+    const { svg } = renderMermaid(
+      'flowchart LR\n  A["<img src=x onerror=alert(1)>"] --> B\n  click A "javascript:alert(1)"',
+      'scope-',
+    );
+
+    expect(svg).not.toContain('onerror');
+    expect(svg).not.toContain('javascript:');
+  });
+
+  it('reports a syntax error instead of throwing', () => {
+    const { error, svg } = renderMermaid('flowchart TD\n  A[Start] --> B{Is i', 'scope-');
+
+    expect(error).toBeTruthy();
     expect(svg).toBe('');
   });
 
   it('returns empty output for empty content', () => {
-    expect(renderMermaid('', 'scope')).toEqual({ svg: '' });
-  });
-});
-
-describe('createMermaidOptions', () => {
-  it('points the default theme at antd CSS variables so no token is read in JS', () => {
-    const result = createMermaidOptions('lobe-theme');
-
-    expect(result).toMatchObject({
-      accent: 'var(--lobe-color-primary)',
-      bg: 'var(--lobe-color-bg-container)',
-      fg: 'var(--lobe-color-text)',
-      transparent: true,
-    });
-  });
-
-  it('returns a stable reference for the default theme', () => {
-    expect(createMermaidOptions('lobe-theme')).toBe(createMermaidOptions());
-  });
-
-  it('uses the named beautiful-mermaid palette for a known theme', () => {
-    const result = createMermaidOptions('dracula');
-
-    expect(result.bg).toBe(THEMES.dracula.bg);
-    expect(result.fg).toBe(THEMES.dracula.fg);
+    expect(renderMermaid('', 'scope-')).toEqual({ svg: '' });
   });
 });

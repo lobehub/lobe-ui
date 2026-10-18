@@ -44,3 +44,4 @@ minimumReleaseAgeExclude:
   - virtua@0.53.5
   - '@tanstack/react-virtual@3.14.18'
   - '@tanstack/virtual-core@3.19.3'
+  - pele@1.6.0

@@ -17,13 +17,10 @@
 
   .lobe-mermaid svg {
     display: block;
-    width: 100%;
+    max-width: 100%;
     height: auto;
     max-height: 480px;
-  }
-
-  .lobe-mermaid svg text {
-    font-family: var(--lobe-font-family);
+    margin-inline: auto;
   }
 
   .lobe-mermaid-transparent img {

@@ -1,4 +1,4 @@
-import { THEMES } from 'beautiful-mermaid';
+import { MERMAID_PRESETS } from './themes';
 
 interface MermaidThemeItem {
   background?: string;
@@ -17,7 +17,7 @@ export const mermaidThemes: MermaidThemeItem[] = [
     displayName: 'Lobe Theme',
     id: 'lobe-theme',
   },
-  ...Object.entries(THEMES).map(([id, colors]) => ({
+  ...Object.entries(MERMAID_PRESETS).map(([id, colors]) => ({
     background: colors.bg,
     displayName: toDisplayName(id),
     id,

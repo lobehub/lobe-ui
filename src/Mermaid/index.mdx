@@ -25,6 +25,7 @@ import DemoMermaid18 from './demos/mermaid-18.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 import DemoFullFeatured from './demos/FullFeatured.tsx?demo';
 import DemoActionsRender from './demos/ActionsRender.tsx?demo';
+import DemoStreaming from './demos/Streaming.tsx?demo';
 
 ## Default
 
@@ -37,6 +38,12 @@ import DemoActionsRender from './demos/ActionsRender.tsx?demo';
 ## Actions Render
 
 <Demo of={DemoActionsRender} />
+
+## Streaming
+
+While a diagram is still streaming, chunks that are not valid syntax yet keep the last rendered diagram on screen; errors are only reported once streaming ends.
+
+<Demo of={DemoStreaming} />
 
 ## Diagram Syntax
 

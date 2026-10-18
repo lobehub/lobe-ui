@@ -1,14 +1,9 @@
 'use client';
 
-import { renderMermaidSVG, type RenderOptions, type ThemeName, THEMES } from 'beautiful-mermaid';
-import { useEffect, useId, useMemo, useState } from 'react';
+import { render } from 'pele';
+import { useId, useMemo } from 'react';
 
-import { prepareInlineMermaidSvg } from '@/Mermaid/SyntaxMermaid/prepareInlineSvg';
-import { useThemeMode } from '@/styles';
-
-import { createCdnMermaidConfig, renderWithCdnMermaid } from './useMermaidCdn';
-
-export type MermaidThemeName = 'lobe-theme' | ThemeName;
+export type { MermaidThemeName } from '@/Mermaid/themes';
 
 export interface MermaidRenderResult {
   error?: string;
@@ -16,102 +11,39 @@ export interface MermaidRenderResult {
   svg: string;
 }
 
-/**
- * beautiful-mermaid emits these as CSS custom properties on the SVG root and
- * derives the rest with color-mix(), so pointing them at antd's variables lets
- * the diagram follow the theme through CSS alone — no token subscription, and
- * no re-render (or re-layout) when the appearance changes.
- */
-const LOBE_THEME_OPTIONS: RenderOptions = {
-  accent: 'var(--lobe-color-primary)',
-  bg: 'var(--lobe-color-bg-container)',
-  border: 'var(--lobe-color-border)',
-  fg: 'var(--lobe-color-text)',
-  line: 'var(--lobe-color-text-secondary)',
-  muted: 'var(--lobe-color-text-description)',
-  surface: 'var(--lobe-color-fill-tertiary)',
-  transparent: true,
+const FALLBACK_FONT = 'sans-serif';
+
+// pele sizes nodes by measuring labels on a canvas, which cannot resolve var(),
+// so the theme font has to be read as a literal before rendering.
+const resolveFontFamily = (): string => {
+  if (typeof document === 'undefined') return FALLBACK_FONT;
+  const value = globalThis
+    .getComputedStyle(document.documentElement)
+    .getPropertyValue('--lobe-font-family')
+    .trim();
+  return value || FALLBACK_FONT;
 };
 
-const isNamedTheme = (theme?: MermaidThemeName): theme is ThemeName =>
-  !!theme && theme !== 'lobe-theme' && theme in THEMES;
-
-export const createMermaidOptions = (customTheme?: MermaidThemeName): RenderOptions =>
-  isNamedTheme(customTheme) ? THEMES[customTheme]! : LOBE_THEME_OPTIONS;
-
-/**
- * beautiful-mermaid covers six diagram types; anything else throws here and is
- * handed to the CDN-loaded upstream mermaid instead.
- */
-export const renderMermaid = (
-  content: string,
-  scopeId: string,
-  customTheme?: MermaidThemeName,
-): MermaidRenderResult => {
+export const renderMermaid = (content: string, scopeId: string): MermaidRenderResult => {
   if (!content) return { svg: '' };
   try {
-    const svg = renderMermaidSVG(content, createMermaidOptions(customTheme));
-    return { svg: prepareInlineMermaidSvg(svg, scopeId) };
-  } catch {
-    return { error: 'unsupported', svg: '' };
+    const { svg } = render(content, {
+      fontFamily: resolveFontFamily(),
+      fontSize: 14,
+      idPrefix: scopeId,
+    });
+    return { svg };
+  } catch (error) {
+    return { error: (error as Error).message || 'Failed to render diagram', svg: '' };
   }
 };
 
-export const useCdnMermaidFallback = (
-  content: string,
-  { enabled, theme: customTheme }: { enabled: boolean; theme?: MermaidThemeName },
-): MermaidRenderResult => {
-  const { isDarkMode } = useThemeMode();
+export const useMermaidScopeId = () => {
   const reactId = useId();
-  const [result, setResult] = useState<MermaidRenderResult>({ svg: '' });
-
-  useEffect(() => {
-    if (!enabled || !content) {
-      setResult({ svg: '' });
-      return;
-    }
-
-    let active = true;
-    setResult({ loading: true, svg: '' });
-
-    const config = createCdnMermaidConfig(
-      isDarkMode,
-      isNamedTheme(customTheme) ? customTheme : undefined,
-    );
-
-    renderWithCdnMermaid(content, `mermaid-cdn-${reactId.replaceAll(':', '')}`, config)
-      .then((svg) => {
-        if (!active) return;
-        setResult(svg ? { svg } : { error: 'Failed to render diagram', svg: '' });
-      })
-      .catch(() => {
-        if (active) setResult({ error: 'Failed to render diagram', svg: '' });
-      });
-
-    return () => {
-      active = false;
-    };
-  }, [enabled, content, isDarkMode, customTheme, reactId]);
-
-  return result;
+  return useMemo(() => `mermaid-${reactId.replaceAll(':', '')}-`, [reactId]);
 };
 
-export const useMermaid = (
-  content: string,
-  { theme: customTheme }: { theme?: MermaidThemeName } = {},
-): MermaidRenderResult => {
-  const reactId = useId();
-  const scopeId = useMemo(() => `mermaid-${reactId.replaceAll(':', '')}`, [reactId]);
-
-  const primary = useMemo(
-    () => renderMermaid(content, scopeId, customTheme),
-    [content, scopeId, customTheme],
-  );
-
-  const fallback = useCdnMermaidFallback(content, {
-    enabled: Boolean(primary.error),
-    theme: customTheme,
-  });
-
-  return primary.error ? fallback : primary;
+export const useMermaid = (content: string): MermaidRenderResult => {
+  const scopeId = useMermaidScopeId();
+  return useMemo(() => renderMermaid(content, scopeId), [content, scopeId]);
 };

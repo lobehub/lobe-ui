@@ -6,8 +6,7 @@ import { DEFAULT_AUTO_ZOOM_THRESHOLD, DEFAULT_MAX_SCALE } from '@/Image/viewer/g
 import PreviewOutlet from '@/Image/viewer/PreviewOutlet';
 import { openPreview } from '@/Image/viewer/registry';
 
-import { toStandaloneSvgString } from './prepareInlineSvg';
-import { prepareMermaidSvgString } from './prepareMermaidSvg';
+import { toStandaloneSvgString } from './standaloneSvg';
 
 interface MermaidSvgProps {
   className?: string;
@@ -41,13 +40,13 @@ const MermaidSvg = memo<MermaidSvgProps>(({ className, ref, style, svg }) => {
   }, [previewUrl]);
 
   // The preview copy is only built on demand: it has to bake in the resolved
-  // CSS variables and be XML-well-formed, neither of which the inline copy needs.
+  // CSS variables, which the inline copy does not need.
   const handleOpen = useCallback(() => {
     const element = containerRef.current?.querySelector('svg');
     const anchor = anchorRef.current;
     if (!element || !anchor) return;
 
-    const standalone = prepareMermaidSvgString(toStandaloneSvgString(element));
+    const standalone = toStandaloneSvgString(element);
     const url = URL.createObjectURL(new Blob([standalone], { type: 'image/svg+xml' }));
     setPreviewUrl((previous) => {
       if (previous) URL.revokeObjectURL(previous);
