@@ -5,6 +5,8 @@ import clsx from 'clsx';
 
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
+import { proTableClasses } from './stable';
+
 export const PRO_PREFIX_CLS = 'lobe-pro-table';
 
 const raw = stylex.create({
@@ -266,4 +268,5 @@ export const partClass = (
     styles.part,
     (typeof cardBordered === 'object' ? cardBordered[part] : cardBordered) && styles.partBordered,
     `${PRO_PREFIX_CLS}-${part}`,
+    proTableClasses(part === 'search' ? 'search' : 'card'),
   );

@@ -73,8 +73,12 @@ export const dividerStyles = stylex.create({
     borderStyle: 'none',
     borderWidth: 'medium',
     backgroundColor: cssVar.colorBorderSecondary,
+    opacity: 0.66,
     height: 1,
     width: '100%',
+  },
+  hidden: {
+    opacity: 0,
   },
 });
 
@@ -219,6 +223,18 @@ export const footerStyles = stylex.create({
 });
 
 export const submitFooterStyles = stylex.create({
+  unsavedIcon: {
+    marginLeft: 8,
+  },
+  unsavedText: {
+    flex: 'none',
+    color: cssVar.colorTextDescription,
+    fontSize: 12,
+    marginRight: 4,
+  },
+  unsavedTextFloat: {
+    marginRight: 16,
+  },
   floatFooter: {
     padding: 8,
     borderColor: cssVar.colorBorderSecondary,

@@ -1,5 +1,6 @@
 'use client';
 
+import clsx from 'clsx';
 import { memo, useCallback, useEffect, useMemo, useRef } from 'react';
 
 import CopyButton from '@/CopyButton';
@@ -13,8 +14,10 @@ import {
 } from '@/Highlighter/style';
 import { styleProps } from '@/styles/stylex/props';
 import Tag from '@/Tag';
+import { toDataAttributes } from '@/utils/bem';
 
 import FullFeatured from './FullFeatured';
+import { mermaidClasses } from './stable';
 import SyntaxMermaid from './SyntaxMermaid';
 import type { MermaidProps } from './type';
 
@@ -70,7 +73,8 @@ const Mermaid = memo<MermaidProps>(
       () => (
         <SyntaxMermaid
           animated={animated}
-          className={classNames?.content}
+          className={clsx(mermaidClasses(), classNames?.content)}
+          fallbackClassName={mermaidClasses()}
           style={customStyles?.content}
           theme={theme}
           variant={variant}
@@ -111,19 +115,28 @@ const Mermaid = memo<MermaidProps>(
     return (
       <div
         data-code-type="mermaid"
+        {...toDataAttributes({ shadow, variant })}
         {...rest}
-        {...styleProps(rootStyles({ shadow, variant }), rootClassName(false, className), style)}
+        {...styleProps(
+          rootStyles({ shadow, variant }),
+          rootClassName(false, clsx(mermaidClasses('wrapper'), className)),
+          style,
+        )}
       >
         <Flexbox
           horizontal
           align={'center'}
           flex={'none'}
           gap={4}
-          {...styleProps(styles.actions, actionsHoverCls)}
+          {...styleProps(styles.actions, clsx(actionsHoverCls, mermaidClasses('actions')))}
         >
           {actions}
         </Flexbox>
-        {showLanguage && <Tag className={langHoverCls}>{language.toLowerCase()}</Tag>}
+        {showLanguage && (
+          <Tag className={clsx(langHoverCls, mermaidClasses('language'))}>
+            {language.toLowerCase()}
+          </Tag>
+        )}
         {body}
       </div>
     );

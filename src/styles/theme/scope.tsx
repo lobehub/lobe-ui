@@ -1,5 +1,6 @@
 'use client';
 
+import clsx from 'clsx';
 import {
   createContext,
   type CSSProperties,
@@ -17,6 +18,7 @@ import {
   isCustomPrimaryColor,
   type LobePrimaryColor,
 } from './customPrimary';
+import { themeScopeClasses } from './stable';
 import {
   getCustomNeutralCss,
   getCustomPaletteCss,
@@ -220,7 +222,7 @@ export const ThemeScope = ({
           {getPaletteNeutralCss(customPalette, state.neutralColor)}
         </style>
       )}
-      <div className={className} style={style} {...toAttributes(state)}>
+      <div className={clsx(themeScopeClasses(), className)} style={style} {...toAttributes(state)}>
         {children}
       </div>
     </ThemeScopeContext>

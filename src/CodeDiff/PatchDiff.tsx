@@ -7,6 +7,7 @@ import { memo, useMemo } from 'react';
 import { useThemeMode } from '@/styles/theme/scope';
 
 import { DiffPanel } from './DiffPanel';
+import { patchDiffClasses } from './stable';
 import { getLobeDiffOptions, registerLobeDiffThemes } from './theme';
 import type { PatchDiffProps } from './type';
 
@@ -85,6 +86,7 @@ export const PatchDiff = memo<PatchDiffProps>(
         fileName={fileName}
         fullFeatured={fullFeatured}
         showHeader={showHeader}
+        stableClasses={patchDiffClasses}
         styles={customStyles}
         variant={variant}
         {...rest}

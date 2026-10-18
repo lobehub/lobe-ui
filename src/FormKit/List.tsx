@@ -10,11 +10,13 @@ import { cloneElement, memo, type ReactElement, type ReactNode, useCallback, use
 import ActionIcon from '@/ActionIcon';
 import formMessages from '@/i18n/resources/en/form';
 import { useTranslation } from '@/i18n/useTranslation';
+import { styleProps } from '@/styles/stylex/props';
 
 import { useFormKitContext } from './context';
 import FormField from './Field';
 import { getInternals } from './instance';
 import type { FieldValidate } from './schema';
+import { formKitClasses } from './stable';
 import { listStyles } from './style';
 import { useStoreSelector } from './useStoreSelector';
 
@@ -107,7 +109,7 @@ const FormList = memo<FormListProps>(({ addText, children, columns, emptyText, n
   const gridTemplateColumns = `${columns.map((c) => `minmax(0, ${c.flex ?? 1}fr)`).join(' ')} 36px`;
   const addButton = (
     <button
-      {...stylex.props(listStyles.add)}
+      {...styleProps(listStyles.add, formKitClasses('list-add'))}
       type="button"
       onClick={() => add(createItem(newItem))}
     >
@@ -117,27 +119,38 @@ const FormList = memo<FormListProps>(({ addText, children, columns, emptyText, n
   );
 
   return (
-    <div {...stylex.props(listStyles.table)}>
-      <div {...stylex.props(listStyles.head)} style={{ gridTemplateColumns }}>
+    <div {...styleProps(listStyles.table, formKitClasses('list'))}>
+      <div
+        {...styleProps(listStyles.head, formKitClasses('list-head'))}
+        style={{ gridTemplateColumns }}
+      >
         {columns.map((column) => (
-          <div {...stylex.props(listStyles.title)} key={column.name}>
+          <div {...styleProps(listStyles.title, formKitClasses('list-title'))} key={column.name}>
             {column.title}
           </div>
         ))}
       </div>
       {fields.length === 0 ? (
-        <div {...stylex.props(listStyles.empty)}>
+        <div {...styleProps(listStyles.empty, formKitClasses('list-empty'))}>
           <span>{emptyText ?? t('form.list.empty')}</span>
           {addButton}
         </div>
       ) : (
         <>
           {fields.map((field) => (
-            <div {...stylex.props(listStyles.row)} key={field.key} style={{ gridTemplateColumns }}>
+            <div
+              {...styleProps(listStyles.row, formKitClasses('list-row'))}
+              key={field.key}
+              style={{ gridTemplateColumns }}
+            >
               {columns.map((column) => (
                 <div
-                  className={clsx('lobe-form-list-cell', stylex.props(listStyles.cell).className)}
                   key={column.name}
+                  className={clsx(
+                    'lobe-form-list-cell',
+                    formKitClasses('list-cell'),
+                    stylex.props(listStyles.cell).className,
+                  )}
                 >
                   <FormField
                     bare
@@ -152,7 +165,7 @@ const FormList = memo<FormListProps>(({ addText, children, columns, emptyText, n
                 </div>
               ))}
               <ActionIcon
-                {...stylex.props(listStyles.remove)}
+                {...styleProps(listStyles.remove, formKitClasses('list-remove'))}
                 aria-label={t('form.list.remove')}
                 icon={XIcon}
                 size={'small'}
@@ -161,7 +174,7 @@ const FormList = memo<FormListProps>(({ addText, children, columns, emptyText, n
               />
             </div>
           ))}
-          <div {...stylex.props(listStyles.foot)}>{addButton}</div>
+          <div {...styleProps(listStyles.foot, formKitClasses('list-foot'))}>{addButton}</div>
         </>
       )}
     </div>

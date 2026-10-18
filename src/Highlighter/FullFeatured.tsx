@@ -11,9 +11,11 @@ import { getCodeLanguageDisplayName, getCodeLanguageFilename } from '@/Highlight
 import MaterialFileTypeIcon from '@/MaterialFileTypeIcon';
 import { styleProps } from '@/styles/stylex/props';
 import Text from '@/Text';
+import { toDataAttributes } from '@/utils/bem';
 import { stopPropagation } from '@/utils/dom';
 
 import LangSelect from './LangSelect';
+import { highlighterClasses } from './stable';
 import {
   bodyStyles,
   expandCls,
@@ -55,7 +57,7 @@ const HeaderLanguage = memo<HeaderLanguageProps>(
       <Flexbox
         horizontal
         align={'center'}
-        className={'language-title'}
+        className={clsx('language-title', highlighterClasses('title'))}
         flex={1}
         gap={4}
         justify={'flex-start'}
@@ -160,6 +162,7 @@ export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps & { chi
       <Flexbox
         data-code-type="highlighter"
         width={'100%'}
+        {...toDataAttributes({ expanded: expand, shadow, variant, wrap })}
         {...rest}
         {...styleProps(rootStyles({ shadow, variant }), rootClassName(wrap, className), style)}
       >
@@ -169,7 +172,11 @@ export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps & { chi
           justify={'space-between'}
           onClick={handleToggleExpand}
           {...headerFlexProps(variant)}
-          {...styleProps(headerStyles(variant), classNames?.header, customStyles?.header)}
+          {...styleProps(
+            headerStyles(variant),
+            clsx(highlighterClasses('header'), classNames?.header),
+            customStyles?.header,
+          )}
         >
           <HeaderLanguage
             allowChangeLanguage={allowChangeLanguage}
@@ -182,10 +189,17 @@ export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps & { chi
             showLanguage={showLanguage}
           />
           <Flexbox horizontal align={'center'} flex={'none'} gap={4} onClick={stopPropagation}>
-            <Flexbox horizontal align={'center'} className={'panel-actions'} flex={'none'} gap={4}>
+            <Flexbox
+              horizontal
+              align={'center'}
+              className={clsx('panel-actions', highlighterClasses('panel-actions'))}
+              flex={'none'}
+              gap={4}
+            >
               {actions}
             </Flexbox>
             <ActionIcon
+              className={highlighterClasses('expand-toggle')}
               icon={expand ? ChevronDown : ChevronRight}
               size={'small'}
               onClick={handleToggleExpand}
@@ -196,7 +210,7 @@ export const HighlighterFullFeatured = memo<HighlighterFullFeaturedProps & { chi
           height={expand ? undefined : 0}
           {...styleProps(
             bodyStyles(expand, variant),
-            clsx(expand && expandCls, classNames?.body),
+            clsx(highlighterClasses('body'), expand && expandCls, classNames?.body),
             customStyles?.body,
           )}
         >

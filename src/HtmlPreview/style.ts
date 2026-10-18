@@ -54,6 +54,12 @@ export const styles = stylex.create({
     position: 'absolute',
     zIndex: 2,
   },
+  content: {
+    height: '100%',
+  },
+  loadingRootDefaultHeight: {
+    height: 400,
+  },
   loadingRoot: {
     overflow: 'hidden',
     backgroundColor: `color-mix(in srgb, ${cssVar.colorText} 3%, ${cssVar.colorBgContainer})`,

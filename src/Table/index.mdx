@@ -28,6 +28,8 @@ import DemoStyleClass from './demos/style-class.tsx?demo';
 import DemoLocale from './demos/locale.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 import DemoAtoms from './demos/atoms.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { tableClasses } from './stable';
 
 ## When to use
 
@@ -522,3 +524,9 @@ Swap the import from `antd` to `@lobehub/ui`; `columns`, `dataSource`, `rowKey` 
 **Demos**
 
 antd's Table page has about 50 demos; here they are condensed to 20, plus the atoms demo. Variants that only flip props live in StoryBook demos with a control panel (Playground, Row selection, Filter and sorter, Expandable row, Fixed columns, Ellipsis column); antd's debug demos and a few small ones (JSX columns, colSpan / rowSpan, responsive columns, auto height, row drag without a handle, editable cells) are covered by the prose and API tables instead. `component-token` (debug) is omitted because there are no component tokens (see above). antd's "Ajax" demo is `server.tsx` here, and Locale is an extra lobe demo.
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={tableClasses} />

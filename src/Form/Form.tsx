@@ -1,17 +1,20 @@
 'use client';
 
 import { Form as BaseForm } from '@base-ui/react/form';
+import clsx from 'clsx';
 import { isUndefined } from 'es-toolkit/compat';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { styleProps } from '@/styles/stylex/props';
 import { useResponsive } from '@/styles/theme/scope';
+import { toDataAttributes } from '@/utils/bem';
 
 import FormField from './components/FormField';
 import FormFlatGroup from './components/FormFlatGroup';
 import FormGroup from './components/FormGroup';
 import { FormContext } from './context';
 import { formMarker } from './marker.stylex';
+import { formClasses } from './stable';
 import { rootStyles } from './style';
 import type { FormFieldProps, FormGroupItemType, FormProps } from './type';
 
@@ -181,7 +184,7 @@ const Form = memo<FormProps>(
           ref={mergedRef}
           {...styleProps(
             [formMarker, rootStyles.root, variant === 'borderless' && rootStyles.borderless],
-            className,
+            clsx(formClasses(), className),
             {
               gap: resolvedGap,
               ...(resolvedGap === undefined
@@ -213,6 +216,7 @@ const Form = memo<FormProps>(
               setSubmitLoading(false);
             }
           }}
+          {...toDataAttributes({ variant })}
           {...rest}
         >
           {items && items.length > 0 ? (

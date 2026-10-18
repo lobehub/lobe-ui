@@ -38,7 +38,7 @@ const Wrapper = ({ children }: { children: ReactNode }) => (
 const render = (node: ReactElement) => rtlRender(node, { wrapper: Wrapper });
 
 const findBlock = (fixture: StableFixture, container: HTMLElement) =>
-  fixture.portal
+  fixture.portal || fixture.blockQuery
     ? document.body.querySelector<HTMLElement>(`.${fixture.classes.block}`)
     : (container.firstElementChild as HTMLElement | null);
 

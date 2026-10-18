@@ -6,6 +6,9 @@ import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import { stylish } from '@/styles/stylex/stylish';
 
 export const styles = stylex.create({
+  placeholder: {
+    color: cssVar.colorTextDescription,
+  },
   borderless: {
     borderRadius: 0,
   },

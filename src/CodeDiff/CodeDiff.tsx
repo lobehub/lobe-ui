@@ -7,6 +7,7 @@ import { memo, useMemo } from 'react';
 import { useThemeMode } from '@/styles/theme/scope';
 
 import { DiffPanel } from './DiffPanel';
+import { codeDiffClasses } from './stable';
 import { getLobeDiffOptions, registerLobeDiffThemes } from './theme';
 import type { CodeDiffProps } from './type';
 
@@ -117,6 +118,7 @@ export const CodeDiff = memo<CodeDiffProps>(
         fileName={fileName}
         fullFeatured={fullFeatured}
         showHeader={showHeader}
+        stableClasses={codeDiffClasses}
         styles={customStyles}
         variant={variant}
         {...rest}

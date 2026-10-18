@@ -1,13 +1,14 @@
 'use client';
 
 import { Field } from '@base-ui/react/field';
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { cloneElement, isValidElement, memo, useMemo } from 'react';
 
 import { styleProps } from '@/styles/stylex/props';
 import { useResponsive } from '@/styles/theme/scope';
 
 import { useFormContext } from '../context';
+import { useFormClasses } from '../stableContext';
 import { fieldLayoutStyles, fieldStyles } from '../style';
 import type { FormFieldProps } from '../type';
 import FormDivider from './FormDivider';
@@ -31,6 +32,7 @@ const FormField = memo<FormFieldProps>(
     variant,
     ...rest
   }) => {
+    const formClasses = useFormClasses();
     const { mobile } = useResponsive();
     const config = useFormContext();
 
@@ -63,16 +65,20 @@ const FormField = memo<FormFieldProps>(
         {divider && <FormDivider visible={mergedVariant !== 'borderless'} />}
         <Field.Root
           name={name}
-          {...styleProps([fieldStyles.root, fieldLayoutStyles[mergedLayout]], className, style)}
+          {...styleProps(
+            [fieldStyles.root, fieldLayoutStyles[mergedLayout]],
+            clsx(formClasses('field'), className),
+            style,
+          )}
           {...rest}
         >
-          <Field.Label {...stylex.props(fieldStyles.label)}>
+          <Field.Label {...styleProps(fieldStyles.label, formClasses('field-label'))}>
             <FormTitle avatar={avatar} desc={desc} tag={tag} title={label} />
           </Field.Label>
           <div
-            {...stylex.props(
-              fieldStyles.control,
-              mergedLayout === 'vertical' && fieldStyles.controlVertical,
+            {...styleProps(
+              [fieldStyles.control, mergedLayout === 'vertical' && fieldStyles.controlVertical],
+              formClasses('field-control'),
             )}
             style={
               mergedMinWidth === undefined || mergedMinWidth === null || mergedMinWidth === ''
@@ -84,7 +90,7 @@ const FormField = memo<FormFieldProps>(
             }
           >
             {control}
-            <Field.Error {...stylex.props(fieldStyles.error)} />
+            <Field.Error {...styleProps(fieldStyles.error, formClasses('field-error'))} />
           </div>
         </Field.Root>
       </>

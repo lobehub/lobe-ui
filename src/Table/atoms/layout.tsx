@@ -12,6 +12,8 @@ import {
   type TableHTMLAttributes,
 } from 'react';
 
+import { toDataAttributes } from '@/utils/bem';
+
 import { PREFIX_CLS, SIZE_CLASS } from '../constants';
 import type { TableCustomizeComponent, TableSize, TableVariant } from '../type';
 
@@ -32,6 +34,7 @@ export const TableRoot = ({
   ...rest
 }: TableRootProps) => (
   <div
+    {...toDataAttributes({ size, variant })}
     {...rest}
     className={clsx(
       PREFIX_CLS,

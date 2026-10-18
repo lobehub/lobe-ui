@@ -7,17 +7,18 @@ import { type CSSProperties, memo } from 'react';
 
 import { styleProps } from '@/styles/stylex/props';
 
+import { typographyClasses } from './stable';
 import type { TypographyProps } from './type';
 
 export const TypographyImpl = ({
   ref,
   children,
   className,
-  fontSize = 16,
-  headerMultiple = 1,
-  marginMultiple = 2,
-  lineHeight = 1.8,
-  borderRadius = 8,
+  fontSize,
+  headerMultiple,
+  marginMultiple,
+  lineHeight,
+  borderRadius,
   style,
   xstyle,
   ...rest
@@ -25,12 +26,18 @@ export const TypographyImpl = ({
   return (
     <article
       ref={ref}
-      {...styleProps(xstyle, clsx('lobe-markdown', className), {
-        '--lobe-markdown-border-radius': borderRadius,
-        '--lobe-markdown-font-size': `${fontSize}px`,
-        '--lobe-markdown-header-multiple': headerMultiple,
-        '--lobe-markdown-line-height': lineHeight,
-        '--lobe-markdown-margin-multiple': marginMultiple,
+      {...styleProps(xstyle, clsx('lobe-markdown', typographyClasses(), className), {
+        ...(borderRadius === undefined
+          ? undefined
+          : { '--lobe-markdown-border-radius': borderRadius }),
+        ...(fontSize === undefined ? undefined : { '--lobe-markdown-font-size': `${fontSize}px` }),
+        ...(headerMultiple === undefined
+          ? undefined
+          : { '--lobe-markdown-header-multiple': headerMultiple }),
+        ...(lineHeight === undefined ? undefined : { '--lobe-markdown-line-height': lineHeight }),
+        ...(marginMultiple === undefined
+          ? undefined
+          : { '--lobe-markdown-margin-multiple': marginMultiple }),
         ...style,
       } as CSSProperties)}
       {...rest}

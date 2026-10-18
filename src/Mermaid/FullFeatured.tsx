@@ -18,8 +18,10 @@ import {
 import MaterialFileTypeIcon from '@/MaterialFileTypeIcon';
 import { styleProps } from '@/styles/stylex/props';
 import Text from '@/Text';
+import { toDataAttributes } from '@/utils/bem';
 import { stopPropagation } from '@/utils/dom';
 
+import { mermaidClasses } from './stable';
 import { type MermaidProps } from './type';
 
 const MermaidHeaderLanguage = memo(
@@ -38,7 +40,7 @@ const MermaidHeaderLanguage = memo(
       <Flexbox
         horizontal
         align={'center'}
-        className={'language-title'}
+        className={clsx('language-title', mermaidClasses('title'))}
         flex={1}
         gap={4}
         justify={'flex-start'}
@@ -119,8 +121,13 @@ export const MermaidFullFeatured = memo<MermaidFullFeaturedProps>(
       <Flexbox
         data-code-type="mermaid"
         width={'100%'}
+        {...toDataAttributes({ expanded: expand, shadow, variant })}
         {...rest}
-        {...styleProps(rootStyles({ shadow, variant }), rootClassName(false, className), style)}
+        {...styleProps(
+          rootStyles({ shadow, variant }),
+          rootClassName(false, clsx(mermaidClasses('wrapper'), className)),
+          style,
+        )}
       >
         <Flexbox
           horizontal
@@ -128,7 +135,11 @@ export const MermaidFullFeatured = memo<MermaidFullFeaturedProps>(
           justify={'space-between'}
           onClick={handleToggleExpand}
           {...headerFlexProps(variant)}
-          {...styleProps(headerStyles(variant), classNames?.header, customStyles?.header)}
+          {...styleProps(
+            headerStyles(variant),
+            clsx(mermaidClasses('header'), classNames?.header),
+            customStyles?.header,
+          )}
         >
           <MermaidHeaderLanguage
             fileName={fileName}
@@ -136,10 +147,17 @@ export const MermaidFullFeatured = memo<MermaidFullFeaturedProps>(
             showLanguage={showLanguage}
           />
           <Flexbox horizontal align={'center'} flex={'none'} gap={4} onClick={stopPropagation}>
-            <Flexbox horizontal align={'center'} className={'panel-actions'} flex={'none'} gap={4}>
+            <Flexbox
+              horizontal
+              align={'center'}
+              className={clsx('panel-actions', mermaidClasses('panel-actions'))}
+              flex={'none'}
+              gap={4}
+            >
               {actions}
             </Flexbox>
             <ActionIcon
+              className={mermaidClasses('expand-toggle')}
               icon={expand ? ChevronDown : ChevronRight}
               size={'small'}
               onClick={handleToggleExpand}
@@ -150,7 +168,7 @@ export const MermaidFullFeatured = memo<MermaidFullFeaturedProps>(
           height={expand ? undefined : 0}
           {...styleProps(
             bodyStyles(expand, variant),
-            clsx(expand && expandCls, classNames?.body),
+            clsx(mermaidClasses('body'), expand && expandCls, classNames?.body),
             customStyles?.body,
           )}
         >

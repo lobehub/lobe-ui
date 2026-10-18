@@ -4,7 +4,9 @@ import clsx from 'clsx';
 import { memo } from 'react';
 
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
+import { syntaxMermaidClasses } from '../stable';
 import type { SyntaxMermaidProps } from '../type';
 import StaticMermaid from './StaticMermaid';
 import StreamMermaid from './StreamMermaid';
@@ -31,18 +33,26 @@ const SyntaxMermaid = memo<SyntaxMermaidProps>(
     );
     const padded = variant !== 'borderless' && styles.padded;
     const mermaidClassName = styleProps(
-      [styles.root, padded],
-      clsx('lobe-mermaid', classes, className),
+      [styles.root, styles.diagram, padded],
+      clsx(
+        'lobe-mermaid',
+        syntaxMermaidClasses(),
+        syntaxMermaidClasses('diagram'),
+        classes,
+        className,
+      ),
     ).className;
     const fallback = styleProps(
       [styles.root, styles.unmermaid, padded],
-      clsx(classes, fallbackClassName),
+      clsx(syntaxMermaidClasses(), syntaxMermaidClasses('fallback'), classes, fallbackClassName),
     ).className;
+    const dataAttributes = toDataAttributes({ animated, variant });
 
     if (animated) {
       return (
         <StreamMermaid
           className={mermaidClassName}
+          dataAttributes={dataAttributes}
           fallbackClassName={fallback}
           ref={ref}
           style={style}
@@ -57,6 +67,7 @@ const SyntaxMermaid = memo<SyntaxMermaidProps>(
     return (
       <StaticMermaid
         className={mermaidClassName}
+        dataAttributes={dataAttributes}
         fallbackClassName={fallback}
         ref={ref}
         style={style}

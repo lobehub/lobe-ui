@@ -8,6 +8,7 @@ import { useHighlight } from '@/hooks/useHighlight';
 interface StaticRendererProps {
   children: string;
   className?: string;
+  dataAttributes?: Record<`data-${string}`, string>;
   enableTransformer?: boolean;
   fallbackClassName?: string;
   language: string;
@@ -29,7 +30,16 @@ const escapeHtml = (str: string) =>
  * Uses useHighlight hook to generate HTML and renders it directly
  */
 const StaticRenderer = memo<StaticRendererProps>(
-  ({ children, className, enableTransformer, fallbackClassName, language, style, theme }) => {
+  ({
+    children,
+    className,
+    dataAttributes,
+    enableTransformer,
+    fallbackClassName,
+    language,
+    style,
+    theme,
+  }) => {
     // Safely handle empty or invalid children
     const safeChildren = children ?? '';
 
@@ -44,6 +54,7 @@ const StaticRenderer = memo<StaticRendererProps>(
 
     return (
       <div
+        {...dataAttributes}
         className={containerClassName}
         dir="ltr"
         style={style}

@@ -18,6 +18,7 @@ import {
 interface StreamRendererProps {
   children: string;
   className?: string;
+  dataAttributes?: Record<`data-${string}`, string>;
   enableTransformer?: boolean;
   fallbackClassName?: string;
   language: string;
@@ -95,7 +96,16 @@ const TokenLine = memo(
 );
 
 const StreamRenderer = memo<StreamRendererProps>(
-  ({ children, className, enableTransformer, fallbackClassName, language, style, theme }) => {
+  ({
+    children,
+    className,
+    dataAttributes,
+    enableTransformer,
+    fallbackClassName,
+    language,
+    style,
+    theme,
+  }) => {
     // Safely handle empty or invalid children
     const safeChildren = children ?? '';
 
@@ -120,7 +130,7 @@ const StreamRenderer = memo<StreamRendererProps>(
 
     if (!lines || lines.length === 0) {
       return (
-        <div className={fallbackClassName} dir="ltr" style={style}>
+        <div {...dataAttributes} className={fallbackClassName} dir="ltr" style={style}>
           <pre>
             <code>{safeChildren}</code>
           </pre>
@@ -129,7 +139,7 @@ const StreamRenderer = memo<StreamRendererProps>(
     }
 
     return (
-      <div className={className} dir="ltr" style={style}>
+      <div {...dataAttributes} className={className} dir="ltr" style={style}>
         <pre className={clsx('shiki', theme)} style={preStyle} tabIndex={0}>
           <code style={{ display: 'flex', flexDirection: 'column', whiteSpace: 'pre' }}>
             {lines.map((line, index) => (

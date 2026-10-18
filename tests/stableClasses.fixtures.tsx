@@ -79,10 +79,12 @@ import { treeClasses } from '@/Tree/stable';
 import { uploadClasses, uploadDraggerClasses } from '@/Upload/stable';
 import type { AnyStableClasses } from '@/utils/bem';
 
+import { CONTENT_FIXTURES } from './stableClasses.fixtures.content';
 import { DISPLAY_FIXTURES } from './stableClasses.fixtures.display';
 import { OVERLAY_FIXTURES } from './stableClasses.fixtures.overlay';
 
 export interface StableFixture {
+  blockQuery?: boolean;
   classes: AnyStableClasses;
   classNameTarget?: string;
   conditional?: readonly string[];
@@ -91,6 +93,7 @@ export interface StableFixture {
 }
 
 export const FIXTURES: Record<string, StableFixture> = {
+  ...CONTENT_FIXTURES,
   ...DISPLAY_FIXTURES,
   ...OVERLAY_FIXTURES,
   Checkbox: {
@@ -372,6 +375,16 @@ export const FIXTURES: Record<string, StableFixture> = {
 };
 
 export const EXEMPT: Record<string, string> = {
+  'FormDivider': 'atom of Form',
+  'FormField': 'atom of Form',
+  'FormFlatGroup': 'atom of Form',
+  'FormFooter': 'atom of Form',
+  'FormGroup': 'atom of Form',
+  'FormSubmitFooter': 'atom of Form',
+  'FormTitle': 'atom of Form',
+  'form/FormField': 'atom of form/Form',
+  'form/FormList': 'atom of form/Form',
+  'form/FormSubmitFooter': 'atom of form/Form',
   'AccordionHeader': 'atom of Accordion',
   'AccordionItem': 'atom of Accordion',
   'AccordionPanel': 'atom of Accordion',
@@ -538,29 +551,6 @@ export const EXEMPT: Record<string, string> = {
 };
 
 export const PENDING: readonly string[] = [
-  'CodeDiff',
-  'CodeEditor',
-  'Form',
-  'FormDivider',
-  'FormField',
-  'FormFlatGroup',
-  'FormFooter',
-  'FormGroup',
-  'FormSubmitFooter',
-  'FormTitle',
-  'Highlighter',
-  'HtmlPreview',
-  'HtmlPreviewIframe',
-  'Markdown',
-  'Mermaid',
-  'PatchDiff',
-  'SearchResultCards',
-  'Snippet',
-  'SyntaxHighlighter',
-  'SyntaxMermaid',
-  'Table',
-  'ThemeScope',
-  'Typography',
   'awesome/AgentSkillCard',
   'awesome/AuroraBackground',
   'awesome/BentoCard',
@@ -639,10 +629,6 @@ export const PENDING: readonly string[] = [
   'dashboard/TableIconActions',
   'dashboard/TableSkeleton',
   'dashboard/TitleWithTips',
-  'form/Form',
-  'form/FormField',
-  'form/FormList',
-  'form/FormSubmitFooter',
   'mdx/Callout',
   'mdx/Cards',
   'mdx/CodeBlock',
@@ -660,5 +646,4 @@ export const PENDING: readonly string[] = [
   'mobile/ChatSendButton',
   'mobile/SafeArea',
   'mobile/TabBar',
-  'pro-table/ProTable',
 ];
