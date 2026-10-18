@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [6.4.0](https://github.com/lobehub/lobe-ui/compare/v6.3.0...v6.4.0) (2026-10-18)
+
+### ✨ Features
+
+- **mermaid**: Render all diagrams with pele, drop CDN fallback, closes [#748](https://github.com/lobehub/lobe-ui/issues/748) ([29b903f](https://github.com/lobehub/lobe-ui/commit/29b903f))
+
 # [6.3.0](https://github.com/lobehub/lobe-ui/compare/v6.2.0...v6.3.0) (2026-10-17)
 
 ### ✨ Features
