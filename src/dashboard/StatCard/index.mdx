@@ -7,6 +7,8 @@ order: 0
 
 import DemoIndex from './demos/index.tsx?demo';
 import DemoAligned from './demos/aligned.tsx?demo';
+import { StableClassTable } from '../../../docs/stable-classes/StableClassTable';
+import { dashboardStatCardClasses } from './stable';
 
 ## Default
 
@@ -25,3 +27,9 @@ The label row has a fixed height. A `Segmented` or `ActionIcon` in `action` sits
 ## APIs
 
 <Api name="StatCard" />
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={dashboardStatCardClasses} />

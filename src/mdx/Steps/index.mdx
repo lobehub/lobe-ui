@@ -5,6 +5,8 @@ category: Built-ins
 ---
 
 import DemoIndex from './demos/index.tsx?demo';
+import { StableClassTable } from '../../../docs/stable-classes/StableClassTable';
+import { mdxStepsClasses } from './stable';
 
 ## Example
 
@@ -15,3 +17,9 @@ import DemoIndex from './demos/index.tsx?demo';
 <Api name="Steps" from=".." migrationKey="unheaded:0" />
 
 _Note: Steps works best with ordered lists `<ol>` in MDX content, styling them with proper numbering and visual hierarchy._
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={mdxStepsClasses} />

@@ -1,5 +1,6 @@
 'use client';
 
+import clsx from 'clsx';
 import { ChevronLeft } from 'lucide-react';
 import { memo } from 'react';
 
@@ -7,6 +8,7 @@ import ActionIcon from '@/ActionIcon';
 import { Flexbox } from '@/Flex';
 import { styleProps } from '@/styles/stylex/props';
 
+import { chatChatHeaderClasses } from './stable';
 import { styles } from './style';
 import type { ChatHeaderProps } from './type';
 
@@ -28,7 +30,7 @@ const ChatHeader = memo<ChatHeaderProps>(
       <Flexbox
         horizontal
         align={'center'}
-        className={styleProps(styles.container, className).className}
+        className={styleProps(styles.container, clsx(chatChatHeaderClasses(), className)).className}
         distribution={'space-between'}
         gap={gap}
         height={52}
@@ -39,15 +41,18 @@ const ChatHeader = memo<ChatHeaderProps>(
         <Flexbox
           horizontal
           align={'center'}
-          className={styleProps(styles.left, classNames?.left).className}
           flex={1}
           gap={gaps?.left || 12}
           justify={'flex-start'}
           paddingInline={'8px 0'}
           style={contentStyles?.left}
+          className={
+            styleProps(styles.left, clsx(chatChatHeaderClasses('left'), classNames?.left)).className
+          }
         >
           {showBackButton && (
             <ActionIcon
+              className={chatChatHeaderClasses('back')}
               icon={ChevronLeft}
               style={{ marginRight: gaps?.left ? -gaps.left / 2 : -6 }}
               onClick={() => onBackClick?.()}
@@ -59,10 +64,13 @@ const ChatHeader = memo<ChatHeaderProps>(
           <Flexbox
             horizontal
             align={'center'}
-            className={styleProps(styles.center, classNames?.center).className}
             gap={gaps?.center || 8}
             justify={'center'}
             style={contentStyles?.center}
+            className={
+              styleProps(styles.center, clsx(chatChatHeaderClasses('center'), classNames?.center))
+                .className
+            }
           >
             {children}
           </Flexbox>
@@ -70,11 +78,14 @@ const ChatHeader = memo<ChatHeaderProps>(
         <Flexbox
           horizontal
           align={'center'}
-          className={styleProps(styles.right, classNames?.right).className}
           flex={'none'}
           gap={gaps?.right || 8}
           justify={'flex-end'}
           style={contentStyles?.right}
+          className={
+            styleProps(styles.right, clsx(chatChatHeaderClasses('right'), classNames?.right))
+              .className
+          }
         >
           {right}
         </Flexbox>

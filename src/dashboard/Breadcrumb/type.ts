@@ -17,6 +17,7 @@ export interface BreadcrumbLinkProps {
 }
 
 export interface BreadcrumbProps {
+  className?: string;
   items: BreadcrumbItem[];
   /** Accessible name for the navigation landmark. */
   label?: string;

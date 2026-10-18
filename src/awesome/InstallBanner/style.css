@@ -1,4 +1,8 @@
 @layer lobe-ui {
+  .lobe-awesome-install-banner__command {
+    border-radius: 999px;
+  }
+
   .lobe-install-banner-footnote a {
     color: var(--lobe-color-primary);
     text-decoration: none;

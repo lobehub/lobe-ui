@@ -52,9 +52,9 @@ export const styles = stylex.create({
   grid: {
     gap: 12,
     display: 'grid',
-    gridAutoRows: 'minmax(var(--bento-row-height), auto)',
+    gridAutoRows: 'minmax(var(--bento-row-height, 120px), auto)',
     gridTemplateColumns: {
-      default: 'repeat(var(--bento-columns), minmax(0, 1fr))',
+      default: 'repeat(var(--bento-columns, 4), minmax(0, 1fr))',
       [tabletOnly]: 'repeat(2, minmax(0, 1fr))',
       [media.mobile]: '1fr',
     },

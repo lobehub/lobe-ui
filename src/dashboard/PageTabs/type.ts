@@ -8,6 +8,7 @@ export interface PageTab<Value extends string> {
 }
 
 export interface PageTabsProps<Value extends string> {
+  className?: string;
   label: string;
   onChange: (value: Value) => void;
   tabs: PageTab<Value>[];

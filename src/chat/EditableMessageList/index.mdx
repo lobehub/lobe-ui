@@ -5,6 +5,8 @@ category: Data Entry
 ---
 
 import DemoIndex from './demos/index.tsx?demo';
+import { StableClassTable } from '../../../docs/stable-classes/StableClassTable';
+import { chatEditableMessageListClasses } from './stable';
 
 ## Default
 
@@ -23,3 +25,9 @@ interface LLMMessage {
   // Additional properties for chat messages
 }
 ```
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={chatEditableMessageListClasses} />

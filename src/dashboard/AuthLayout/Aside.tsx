@@ -1,9 +1,10 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 
 import { styleProps } from '@/styles/stylex/props';
 
+import { dashboardAuthLayoutClasses } from './stable';
 import { styles } from './style';
 import type { AuthLayoutAsideProps } from './type';
 
@@ -17,15 +18,30 @@ function AuthLayoutAside({
   ...rest
 }: AuthLayoutAsideProps) {
   return (
-    <div {...rest} {...styleProps(styles.asidePlate, className, style)}>
-      <div {...stylex.props(styles.asidePanel)}>
+    <div
+      {...rest}
+      {...styleProps(
+        styles.asidePlate,
+        clsx(dashboardAuthLayoutClasses('aside-plate'), className),
+        style,
+      )}
+    >
+      <div {...styleProps(styles.asidePanel, dashboardAuthLayoutClasses('aside-panel'))}>
         {background}
         {kicker || line ? (
           <>
-            <div {...stylex.props(styles.asideScrim)} />
-            <div {...stylex.props(styles.asideCopy)}>
-              {kicker ? <p {...stylex.props(styles.asideKicker)}>{kicker}</p> : null}
-              {line ? <p {...stylex.props(styles.asideLine)}>{line}</p> : null}
+            <div {...styleProps(styles.asideScrim, dashboardAuthLayoutClasses('aside-scrim'))} />
+            <div {...styleProps(styles.asideCopy, dashboardAuthLayoutClasses('aside-copy'))}>
+              {kicker ? (
+                <p {...styleProps(styles.asideKicker, dashboardAuthLayoutClasses('aside-kicker'))}>
+                  {kicker}
+                </p>
+              ) : null}
+              {line ? (
+                <p {...styleProps(styles.asideLine, dashboardAuthLayoutClasses('aside-line'))}>
+                  {line}
+                </p>
+              ) : null}
             </div>
           </>
         ) : null}

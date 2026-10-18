@@ -45,6 +45,7 @@ export interface ConsoleNavLinkProps {
 }
 
 export interface ConsoleNavProps {
+  className?: string;
   /** Show the icon rail. Defaults to the enclosing `ConsoleShell` state. */
   collapsed?: boolean;
   /**

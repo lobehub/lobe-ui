@@ -1,10 +1,11 @@
-import * as stylex from '@stylexjs/stylex';
 import type { FC } from 'react';
 
 import Alert from '@/Alert';
 import { type ChatItemProps } from '@/chat/ChatItem';
 import { Flexbox } from '@/Flex';
+import { styleProps } from '@/styles/stylex/props';
 
+import { chatChatItemClasses } from '../stable';
 import { styles } from '../style';
 
 export interface ErrorContentProps {
@@ -15,7 +16,7 @@ export interface ErrorContentProps {
 
 const ErrorContent: FC<ErrorContentProps> = ({ message, error }) => {
   return (
-    <Flexbox width={'100%'} {...stylex.props(styles.errorContainer)}>
+    <Flexbox width={'100%'} {...styleProps(styles.errorContainer, chatChatItemClasses('error'))}>
       <Alert showIcon closable={false} extra={message} type={'error'} {...error} />
     </Flexbox>
   );

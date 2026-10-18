@@ -1,11 +1,14 @@
 'use client';
 
+import clsx from 'clsx';
 import { ListEnd } from 'lucide-react';
 import { memo, type MouseEventHandler, useEffect, useRef, useState } from 'react';
 
 import { ButtonImpl } from '@/Button/Button';
 import { useScroll } from '@/hooks/useScroll';
+import { toDataAttributes } from '@/utils/bem';
 
+import { chatBackBottomClasses } from './stable';
 import { styles } from './style';
 import { type BackBottomProps } from './type';
 
@@ -31,7 +34,7 @@ const BackBottom = memo<BackBottomProps>(
 
     return (
       <ButtonImpl
-        className={className}
+        className={clsx(chatBackBottomClasses(), className)}
         icon={ListEnd}
         ref={ref}
         shape={'round'}
@@ -40,6 +43,7 @@ const BackBottom = memo<BackBottomProps>(
         type={'fill'}
         xstyle={[styles.root, visible ? styles.visible : styles.hidden]}
         onClick={scrollToBottom}
+        {...toDataAttributes({ visible })}
       >
         {text || 'Back to bottom'}
       </ButtonImpl>

@@ -102,3 +102,13 @@ export const styles = stylex.create({
     animationTimingFunction: 'ease-in-out',
   },
 });
+
+export const delays = stylex.create({
+  d0: { animationDelay: '0s' },
+  d12: { animationDelay: '0.12s' },
+  d15: { animationDelay: '0.15s' },
+  d24: { animationDelay: '0.24s' },
+  d30: { animationDelay: '0.3s' },
+  dMinus40: { animationDelay: '-0.4s' },
+  dMinus80: { animationDelay: '-0.8s' },
+});

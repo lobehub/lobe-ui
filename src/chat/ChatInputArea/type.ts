@@ -21,11 +21,13 @@ export interface ChatInputAreaProps extends Omit<ChatInputAreaInnerProps, 'class
 }
 
 export interface ChatInputActionBarProps {
+  className?: string;
   leftAddons?: ReactNode;
   mobile?: boolean;
   padding?: number | string;
   ref?: Ref<HTMLDivElement>;
   rightAddons?: ReactNode;
+  style?: CSSProperties;
 }
 
 export interface ChatInputAreaInnerProps extends Omit<TextAreaProps, 'onInput'> {

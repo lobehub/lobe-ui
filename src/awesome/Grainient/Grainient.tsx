@@ -1,11 +1,12 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { memo, useEffect, useRef } from 'react';
 
 import { styleProps } from '@/styles/stylex/props';
 import { useThemeMode } from '@/styles/theme/scope';
 
+import { awesomeGrainientClasses } from './stable';
 import { styles } from './style';
 import type { GrainientProps } from './type';
 
@@ -177,7 +178,8 @@ const Grainient = memo<GrainientProps>(
       if (!container) return;
 
       const canvas = document.createElement('canvas');
-      canvas.className = stylex.props(styles.canvas).className ?? '';
+      canvas.className =
+        styleProps(styles.canvas, awesomeGrainientClasses('canvas')).className ?? '';
       const gl = canvas.getContext('webgl2', { alpha: true, antialias: false });
       if (!gl) return;
       container.append(canvas);
@@ -341,7 +343,7 @@ const Grainient = memo<GrainientProps>(
         aria-hidden
         ref={containerRef}
         {...rest}
-        {...styleProps(styles.root, className, style)}
+        {...styleProps(styles.root, clsx(awesomeGrainientClasses(), className), style)}
       />
     );
   },

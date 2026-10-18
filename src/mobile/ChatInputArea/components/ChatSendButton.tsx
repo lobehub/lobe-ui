@@ -1,31 +1,36 @@
 'use client';
 
+import clsx from 'clsx';
 import { SendHorizontal } from 'lucide-react';
 import { memo } from 'react';
 
 import Button from '@/Button';
 
+import { mobileChatSendButtonClasses } from '../stable';
 import type { ChatSendButtonProps } from '../type';
 
-const ChatSendButton = memo<ChatSendButtonProps>(({ ref, loading, onStop, onSend, ...rest }) => {
-  return (
-    <Button
-      icon={SendHorizontal}
-      loading={loading}
-      ref={ref}
-      type={'primary'}
-      onClick={(e) => {
-        e.preventDefault();
-        if (loading) {
-          onStop?.(e);
-        } else {
-          onSend?.(e);
-        }
-      }}
-      {...rest}
-    />
-  );
-});
+const ChatSendButton = memo<ChatSendButtonProps>(
+  ({ ref, className, loading, onStop, onSend, ...rest }) => {
+    return (
+      <Button
+        className={clsx(mobileChatSendButtonClasses(), className)}
+        icon={SendHorizontal}
+        loading={loading}
+        ref={ref}
+        type={'primary'}
+        onClick={(e) => {
+          e.preventDefault();
+          if (loading) {
+            onStop?.(e);
+          } else {
+            onSend?.(e);
+          }
+        }}
+        {...rest}
+      />
+    );
+  },
+);
 
 ChatSendButton.displayName = 'ChatSendButton';
 

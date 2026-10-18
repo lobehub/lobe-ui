@@ -21,12 +21,21 @@ export const styles = stylex.create({
     insetInline: 0,
     backgroundColor: cssVar.colorBgContainer,
     insetBlockEnd: 0,
+    insetBlockStart: 0,
     position: 'absolute',
     zIndex: 10,
   },
   textareaContainer: {
     flex: '1',
     position: 'relative',
+  },
+});
+
+export const sendButtonStyles = stylex.create({
+  hint: {
+    color: cssVar.colorTextDescription,
+    fontSize: 12,
+    marginRight: 12,
   },
 });
 

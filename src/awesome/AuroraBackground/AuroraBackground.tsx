@@ -1,28 +1,43 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { memo } from 'react';
 
 import { Flexbox } from '@/Flex';
 import { styleProps } from '@/styles/stylex/props';
 import { useThemeMode } from '@/styles/theme/scope';
 
+import { awesomeAuroraBackgroundClasses } from './stable';
 import { styles } from './style';
 import type { AuroraBackgroundProps } from './type';
 
 const AuroraBackground = memo<AuroraBackgroundProps>(
-  ({ ref, classNames, styles: customStyles, children, ...rest }) => {
+  ({ ref, className, classNames, styles: customStyles, children, ...rest }) => {
     const { isDarkMode } = useThemeMode();
     return (
-      <Flexbox ref={ref} {...rest}>
-        <Flexbox {...styleProps(styles.wrapper, classNames?.wrapper, customStyles?.wrapper)}>
-          <div {...stylex.props(styles.bg, isDarkMode ? styles.bgDark : styles.bgLight)} />
+      <Flexbox className={clsx(awesomeAuroraBackgroundClasses(), className)} ref={ref} {...rest}>
+        <Flexbox
+          {...styleProps(
+            styles.wrapper,
+            clsx(awesomeAuroraBackgroundClasses('wrapper'), classNames?.wrapper),
+            customStyles?.wrapper,
+          )}
+        >
+          <div
+            {...styleProps(
+              [styles.bg, isDarkMode ? styles.bgDark : styles.bgLight],
+              awesomeAuroraBackgroundClasses('background'),
+            )}
+          />
         </Flexbox>
         <Flexbox
-          className={classNames?.content}
           flex={1}
-          style={{ zIndex: 1, ...customStyles?.content }}
           width={'100%'}
+          {...styleProps(
+            styles.content,
+            clsx(awesomeAuroraBackgroundClasses('content'), classNames?.content),
+            customStyles?.content,
+          )}
         >
           {children}
         </Flexbox>

@@ -2,13 +2,14 @@
 
 import './style.css';
 
-import * as stylex from '@stylexjs/stylex';
 import clsx from 'clsx';
 import { Monitor, Moon, Sun } from 'lucide-react';
 
 import Icon from '@/Icon';
 import Segmented from '@/Segmented';
+import { styleProps } from '@/styles/stylex/props';
 
+import { dashboardAuthThemeSwitchClasses } from './stable';
 import { styles } from './style';
 import type { AuthThemeMode, AuthThemeSwitchProps } from './type';
 
@@ -35,15 +36,16 @@ function AuthThemeSwitch({
   const names = { ...DEFAULT_LABELS, ...labels };
   return (
     <Segmented<AuthThemeMode>
-      className={clsx('lobe-auth-theme-switch', className)}
+      className={clsx(dashboardAuthThemeSwitchClasses(), 'lobe-auth-theme-switch', className)}
       size="small"
       style={style}
       value={value}
       variant="outlined"
       classNames={{
-        item: 'lobe-auth-theme-switch-item',
-        itemIcon: stylex.props(styles.themeIcon).className,
-        itemLabel: stylex.props(styles.themeLabel).className,
+        item: clsx(dashboardAuthThemeSwitchClasses('item'), 'lobe-auth-theme-switch-item'),
+        itemIcon: styleProps(styles.themeIcon, dashboardAuthThemeSwitchClasses('icon')).className,
+        itemLabel: styleProps(styles.themeLabel, dashboardAuthThemeSwitchClasses('label'))
+          .className,
       }}
       options={OPTIONS.map((option) => ({
         icon: <Icon icon={option.icon} />,

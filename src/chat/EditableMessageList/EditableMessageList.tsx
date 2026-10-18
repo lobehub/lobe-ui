@@ -1,5 +1,6 @@
 'use client';
 
+import clsx from 'clsx';
 import { isEqual } from 'es-toolkit/compat';
 import { Plus, Trash } from 'lucide-react';
 import { memo, useEffect, useReducer } from 'react';
@@ -13,10 +14,11 @@ import { useTranslation } from '@/i18n/useTranslation';
 import Select from '@/Select';
 
 import { messagesReducer } from './messageReducer';
+import { chatEditableMessageListClasses } from './stable';
 import { type EditableMessageListProps } from './type';
 
 const EditableMessageList = memo<EditableMessageListProps>(
-  ({ disabled, dataSources, onChange, texts }) => {
+  ({ className, disabled, dataSources, onChange, style, texts }) => {
     const [chatMessages, dispatch] = useReducer(messagesReducer, dataSources);
     const { t } = useTranslation(editableMessageMessages);
 
@@ -36,16 +38,18 @@ const EditableMessageList = memo<EditableMessageListProps>(
     }, [chatMessages]);
 
     return dataSources ? (
-      <Flexbox gap={12}>
+      <Flexbox className={clsx(chatEditableMessageListClasses(), className)} gap={12} style={style}>
         {chatMessages.map((item, index) => (
           <Flexbox
             horizontal
             align={'center'}
+            className={chatEditableMessageListClasses('row')}
             gap={8}
             key={`${index}-${item.content}`}
             width={'100%'}
           >
             <Select
+              className={chatEditableMessageListClasses('role')}
               disabled={disabled}
               style={{ width: 120 }}
               value={item.role}
@@ -59,6 +63,7 @@ const EditableMessageList = memo<EditableMessageListProps>(
               }}
             />
             <ControlInput
+              className={chatEditableMessageListClasses('content')}
               disabled={disabled}
               placeholder={item.role === 'user' ? inputPlaceholderText : outputPlaceholderText}
               value={item.content}
@@ -67,6 +72,7 @@ const EditableMessageList = memo<EditableMessageListProps>(
               }}
             />
             <ActionIcon
+              className={chatEditableMessageListClasses('delete')}
               icon={Trash}
               title={deleteText}
               variant={'filled'}
@@ -79,6 +85,7 @@ const EditableMessageList = memo<EditableMessageListProps>(
 
         <Button
           block
+          className={chatEditableMessageListClasses('add')}
           disabled={disabled}
           icon={Plus}
           onClick={() => {

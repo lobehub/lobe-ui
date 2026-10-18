@@ -3,7 +3,10 @@ import { type ReactNode } from 'react';
 import { type MessageInputProps } from '@/chat/MessageInput';
 import { type ModalComponentProps } from '@/Modal';
 
-export interface MessageModalProps extends Pick<ModalComponentProps, 'open' | 'footer'> {
+export interface MessageModalProps extends Pick<
+  ModalComponentProps,
+  'className' | 'open' | 'footer'
+> {
   editing?: boolean;
   extra?: ReactNode;
   height?: MessageInputProps['height'];

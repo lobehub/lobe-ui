@@ -1,12 +1,12 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
 import { memo, useMemo } from 'react';
 
 import { Flexbox } from '@/Flex';
 import { styleProps } from '@/styles/stylex/props';
 import { useThemeMode } from '@/styles/theme/scope';
 
+import { awesomeSpotlightCardClasses } from './stable';
 import { styles } from './style';
 import type { SpotlightCardItemProps } from './type';
 
@@ -32,7 +32,11 @@ const SpotlightCardItem = memo<SpotlightCardItemProps>(
         })}
         {...rest}
       >
-        <Flexbox flex={'1 1 auto'} height={'100%'} {...stylex.props(styles.content)}>
+        <Flexbox
+          flex={'1 1 auto'}
+          height={'100%'}
+          {...styleProps(styles.content, awesomeSpotlightCardClasses('content'))}
+        >
           {children}
         </Flexbox>
       </Flexbox>

@@ -1,10 +1,13 @@
 'use client';
 
+import clsx from 'clsx';
 import { memo, useMemo } from 'react';
 
 import { styleProps } from '@/styles/stylex/props';
 import { useThemeMode } from '@/styles/theme/scope';
+import { toDataAttributes } from '@/utils/bem';
 
+import { awesomeSpotlightClasses } from './stable';
 import { styles } from './style';
 import type { SpotlightProps } from './type';
 import { useMouseOffset } from './useMouseOffset';
@@ -27,9 +30,10 @@ const Spotlight = memo<SpotlightProps>(({ className, size = 64, ...properties })
     <div
       {...styleProps(
         [styles.root, isDarkMode ? styles.dark : styles.light, outside && styles.outside],
-        className,
+        clsx(awesomeSpotlightClasses(), className),
       )}
       ref={reference}
+      {...toDataAttributes({ outside })}
       style={cssVariables}
       {...properties}
     />

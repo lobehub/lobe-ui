@@ -25,6 +25,7 @@ export interface MetricItem {
 }
 
 export interface MetricStripProps {
+  className?: string;
   items: MetricItem[];
   /** First load only: values become placeholders, labels stay. */
   loading?: boolean;

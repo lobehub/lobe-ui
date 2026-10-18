@@ -1,6 +1,6 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { PanelLeft, X } from 'lucide-react';
 import { useEffect, useId, useRef, useState } from 'react';
 
@@ -9,12 +9,14 @@ import { Drawer } from '@/Drawer';
 import { Flexbox } from '@/Flex';
 import { styleProps } from '@/styles/stylex/props';
 import { useThemeMode } from '@/styles/theme/scope';
+import { toDataAttributes } from '@/utils/bem';
 
 import ConsoleNavSkeleton, { ConsoleFooterSkeleton } from '../ConsoleNav/Skeleton';
 import { useIsCompact, useLocalStorage, usePrefersReducedMotion } from '../hooks';
 import PageLoading from '../PageSkeleton';
 import { ConsoleShellContext } from './context';
 import { consoleBrandMarker } from './marker.stylex';
+import { dashboardConsoleShellClasses } from './stable';
 import { styles } from './style';
 import type { ConsoleShellProps, ConsoleShellState } from './type';
 
@@ -110,23 +112,34 @@ function ConsoleShell({
   const sidebar = (rail: boolean) => (
     <ConsoleShellContext value={stateFor(rail)}>
       {brand || isCompact ? (
-        <div data-collapsed={rail} {...stylex.props(styles.brand, consoleBrandMarker)}>
+        <div
+          data-collapsed={rail}
+          {...styleProps([styles.brand, consoleBrandMarker], dashboardConsoleShellClasses('brand'))}
+        >
           {brand}
           {isCompact ? (
             // In the drawer the close button sits in the brand row's flow, so it never
             // overlaps a brand switcher the way the drawer's floating close button did.
             <Button
               aria-label={closeNavigationLabel}
-              className={stylex.props(styles.brandClose).className}
               icon={X}
               type="text"
+              className={
+                styleProps(styles.brandClose, dashboardConsoleShellClasses('brand-close')).className
+              }
               onClick={closeNavigation}
             />
           ) : null}
         </div>
       ) : null}
-      {navigation ? <div {...stylex.props(styles.navSlot)}>{navigation}</div> : null}
-      {footer ? <div {...stylex.props(styles.sidebarBottom)}>{footer}</div> : null}
+      {navigation ? (
+        <div {...styleProps(styles.navSlot, dashboardConsoleShellClasses('nav'))}>{navigation}</div>
+      ) : null}
+      {footer ? (
+        <div {...styleProps(styles.sidebarBottom, dashboardConsoleShellClasses('footer'))}>
+          {footer}
+        </div>
+      ) : null}
     </ConsoleShellContext>
   );
 
@@ -136,7 +149,8 @@ function ConsoleShell({
     <div
       data-console-shell=""
       ref={shellRef}
-      {...styleProps(styles.shell, className, style)}
+      {...styleProps(styles.shell, clsx(dashboardConsoleShellClasses(), className), style)}
+      {...toDataAttributes({ collapsed: railed, compact: isCompact })}
       {...rest}
     >
       <a
@@ -145,17 +159,20 @@ function ConsoleShell({
           event.preventDefault();
           document.getElementById(mainId)?.focus();
         }}
-        {...stylex.props(styles.skipLink)}
+        {...styleProps(styles.skipLink, dashboardConsoleShellClasses('skip-link'))}
       >
         {skipToContentLabel}
       </a>
       <aside
         data-collapsed={railed}
         data-instant={reducedMotion}
-        {...stylex.props(
-          styles.sidebar,
-          railed && styles.sidebarCollapsed,
-          reducedMotion && styles.sidebarInstant,
+        {...styleProps(
+          [
+            styles.sidebar,
+            railed && styles.sidebarCollapsed,
+            reducedMotion && styles.sidebarInstant,
+          ],
+          dashboardConsoleShellClasses('sidebar'),
         )}
       >
         {!isCompact && sidebar(railed)}
@@ -173,23 +190,36 @@ function ConsoleShell({
           <Flexbox height="100%">{sidebar(false)}</Flexbox>
         </Drawer>
       ) : null}
-      <div {...stylex.props(styles.workspace, !isDarkMode && styles.workspaceLight)}>
-        <header {...stylex.props(styles.topbar)}>
+      <div
+        {...styleProps(
+          [styles.workspace, !isDarkMode && styles.workspaceLight],
+          dashboardConsoleShellClasses('workspace'),
+        )}
+      >
+        <header {...styleProps(styles.topbar, dashboardConsoleShellClasses('topbar'))}>
           <Button
             aria-label={toggleLabel}
+            className={dashboardConsoleShellClasses('toggle')}
             icon={PanelLeft}
             type="text"
             onClick={toggleNavigation}
           />
-          <span aria-hidden {...stylex.props(styles.topbarDivider)} />
-          <div {...stylex.props(styles.topbarMain)}>{breadcrumb}</div>
-          {tools ? <div {...stylex.props(styles.tools)}>{tools}</div> : null}
+          <span
+            aria-hidden
+            {...styleProps(styles.topbarDivider, dashboardConsoleShellClasses('topbar-divider'))}
+          />
+          <div {...styleProps(styles.topbarMain, dashboardConsoleShellClasses('topbar-main'))}>
+            {breadcrumb}
+          </div>
+          {tools ? (
+            <div {...styleProps(styles.tools, dashboardConsoleShellClasses('tools'))}>{tools}</div>
+          ) : null}
         </header>
         <main
           aria-busy={loading || undefined}
           id={mainId}
           tabIndex={-1}
-          {...stylex.props(styles.main)}
+          {...styleProps(styles.main, dashboardConsoleShellClasses('main'))}
         >
           {body}
         </main>

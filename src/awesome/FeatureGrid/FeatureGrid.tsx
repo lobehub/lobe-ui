@@ -1,20 +1,21 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { type CSSProperties, Fragment, memo } from 'react';
 
 import { renderLandingLink } from '@/awesome/landingLink';
 import Icon from '@/Icon';
 import { styleProps } from '@/styles/stylex/props';
 
+import { awesomeFeatureGridClasses } from './stable';
 import { styles } from './style';
 import type { FeatureGridProps } from './type';
 
 const FeatureGrid = memo<FeatureGridProps>(
-  ({ className, columns = 3, items, renderLink, style, ...rest }) => (
+  ({ className, columns, items, renderLink, style, ...rest }) => (
     <div
-      {...styleProps(styles.grid, className, {
-        '--feature-grid-columns': columns,
+      {...styleProps(styles.grid, clsx(awesomeFeatureGridClasses(), className), {
+        ...(columns === undefined ? undefined : { '--feature-grid-columns': columns }),
         ...style,
       } as CSSProperties)}
       {...rest}
@@ -23,12 +24,14 @@ const FeatureGrid = memo<FeatureGridProps>(
         const content = (
           <>
             {icon && (
-              <span {...stylex.props(styles.icon)}>
+              <span {...styleProps(styles.icon, awesomeFeatureGridClasses('icon'))}>
                 <Icon icon={icon} size={16} />
               </span>
             )}
-            <h3 {...stylex.props(styles.title)}>{title}</h3>
-            <p {...stylex.props(styles.description)}>{description}</p>
+            <h3 {...styleProps(styles.title, awesomeFeatureGridClasses('title'))}>{title}</h3>
+            <p {...styleProps(styles.description, awesomeFeatureGridClasses('description'))}>
+              {description}
+            </p>
           </>
         );
 
@@ -37,11 +40,11 @@ const FeatureGrid = memo<FeatureGridProps>(
             {href ? (
               renderLandingLink(renderLink, {
                 children: content,
-                className: stylex.props(styles.item).className,
+                className: styleProps(styles.item, awesomeFeatureGridClasses('item')).className,
                 href,
               })
             ) : (
-              <div {...stylex.props(styles.item)}>{content}</div>
+              <div {...styleProps(styles.item, awesomeFeatureGridClasses('item'))}>{content}</div>
             )}
           </Fragment>
         );

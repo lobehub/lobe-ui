@@ -1,5 +1,4 @@
 import * as stylex from '@stylexjs/stylex';
-import type { CSSProperties } from 'react';
 
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
@@ -61,10 +60,3 @@ export const styles = stylex.create({
     paddingBlockStart: '12px',
   },
 });
-
-export const childStyles = {
-  code: {
-    inlineSize: '100%',
-    textAlign: 'start',
-  },
-} satisfies Record<string, CSSProperties>;

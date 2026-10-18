@@ -1,0 +1,14 @@
+@layer lobe-ui {
+  .lobe-dashboard-page-tabs__list {
+    gap: var(--lobe-padding-xxs);
+    padding: var(--lobe-padding-xxs);
+  }
+
+  .lobe-dashboard-page-tabs__tab {
+    gap: var(--lobe-padding-xs);
+  }
+
+  .lobe-dashboard-page-tabs__panel {
+    padding-block-start: 16px;
+  }
+}

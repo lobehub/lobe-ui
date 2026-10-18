@@ -11,6 +11,8 @@ import HtmlPreview, { type HtmlPreviewProps } from '@/HtmlPreview';
 import Mermaid, { type MermaidProps } from '@/Mermaid';
 import Snippet, { type SnippetProps } from '@/Snippet';
 
+import { mdxPreClasses, mdxPreSingleLineClasses } from './stable';
+
 export type PreProps = HighlighterProps;
 
 export const Pre: FC<PreProps> = ({
@@ -29,7 +31,7 @@ export const Pre: FC<PreProps> = ({
   return (
     <Highlighter
       allowChangeLanguage={allowChangeLanguage}
-      className={clsx('lobe-mdx-pre', className)}
+      className={clsx(mdxPreClasses(), className)}
       fileName={fileName}
       fullFeatured={fullFeatured}
       icon={icon}
@@ -54,7 +56,7 @@ export const PreSingleLine: FC<SnippetProps> = ({
 }) => {
   return (
     <Snippet
-      className={clsx('lobe-mdx-pre', className)}
+      className={clsx(mdxPreClasses(), mdxPreSingleLineClasses(), className)}
       data-code-type="highlighter"
       language={language}
       style={style}
@@ -79,7 +81,7 @@ export const PreMermaid: FC<MermaidProps> = ({
   return (
     <Mermaid
       animated={animated}
-      className={clsx('lobe-mdx-pre', className)}
+      className={clsx(mdxPreClasses(), className)}
       fullFeatured={fullFeatured}
       style={style}
       theme={theme}
@@ -104,7 +106,7 @@ export const PreHtmlPreview: FC<HtmlPreviewProps> = ({
   return (
     <HtmlPreview
       animated={animated}
-      className={clsx('lobe-mdx-pre', className)}
+      className={clsx(mdxPreClasses(), className)}
       fullFeatured={fullFeatured}
       style={style}
       theme={theme}

@@ -6,6 +6,8 @@ category: Landing
 
 import DemoIndex from './demos/index.tsx?demo';
 import DemoAgents from './demos/agents.tsx?demo';
+import { StableClassTable } from '../../../docs/stable-classes/StableClassTable';
+import { awesomeAgentSkillCardClasses } from './stable';
 
 ## Default
 
@@ -22,3 +24,9 @@ Pass `agents` to change the logo row, or an empty array to hide it. Omit `human`
 ## APIs
 
 <Api name="AgentSkillCard" from=".." />
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={awesomeAgentSkillCardClasses} />

@@ -1,5 +1,6 @@
 'use client';
 
+import clsx from 'clsx';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import {
   type FC,
@@ -18,7 +19,9 @@ import { Flexbox } from '@/Flex';
 import { useSize } from '@/hooks/useSize';
 import SafeArea from '@/mobile/SafeArea';
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
+import { mobileChatInputAreaClasses } from './stable';
 import { styles } from './style';
 import { type ChatInputAreaProps } from './type';
 
@@ -59,8 +62,18 @@ const ChatInputArea = memo<ChatInputAreaProps>(
     > = useCallback(
       ({ children, ...r }) =>
         expand ? (
-          <Flexbox gap={8} height={'inherit'} paddingInline={8}>
-            <Flexbox horizontal gap={8} justify={'flex-end'}>
+          <Flexbox
+            className={mobileChatInputAreaClasses('inner')}
+            gap={8}
+            height={'inherit'}
+            paddingInline={8}
+          >
+            <Flexbox
+              horizontal
+              className={mobileChatInputAreaClasses('addons')}
+              gap={8}
+              justify={'flex-end'}
+            >
               {r.textAreaLeftAddons}
               {r.textAreaRightAddons}
             </Flexbox>
@@ -69,7 +82,14 @@ const ChatInputArea = memo<ChatInputAreaProps>(
             {r.bottomAddons}
           </Flexbox>
         ) : (
-          <Flexbox horizontal align={'flex-end'} gap={8} height={'inherit'} paddingInline={8}>
+          <Flexbox
+            horizontal
+            align={'flex-end'}
+            className={mobileChatInputAreaClasses('inner')}
+            gap={8}
+            height={'inherit'}
+            paddingInline={8}
+          >
             {r.textAreaLeftAddons}
             {children}
             {r.textAreaRightAddons}
@@ -87,14 +107,26 @@ const ChatInputArea = memo<ChatInputAreaProps>(
         height={expand ? '100%' : undefined}
         paddingBlock={12}
         width={expand ? '100%' : undefined}
-        {...styleProps([styles.container, expand && styles.expand], className, style)}
+        {...styleProps(
+          [styles.container, expand && styles.expand],
+          clsx(mobileChatInputAreaClasses(), className),
+          style,
+        )}
+        {...toDataAttributes({ expand, focused: isFocused })}
       >
-        {topAddons && <Flexbox style={showAddons ? {} : { display: 'none' }}>{topAddons}</Flexbox>}
+        {topAddons && (
+          <Flexbox
+            className={mobileChatInputAreaClasses('top-addons')}
+            style={showAddons ? {} : { display: 'none' }}
+          >
+            {topAddons}
+          </Flexbox>
+        )}
         <Flexbox
           height={expand ? '100%' : undefined}
           ref={containerRef}
-          style={{ position: 'relative' }}
           width={expand ? '100%' : undefined}
+          {...styleProps(styles.body, mobileChatInputAreaClasses('body'))}
         >
           {showFullscreen && (
             <ActionIcon
@@ -102,7 +134,10 @@ const ChatInputArea = memo<ChatInputAreaProps>(
               icon={expand ? ChevronDown : ChevronUp}
               id={'sssssss'}
               size={{ blockSize: 24, borderRadius: '50%', size: 14 }}
-              style={{ insetInlineEnd: 14, position: 'absolute', ...(expand ? { top: 6 } : {}) }}
+              {...styleProps(
+                [styles.toggle, expand && styles.toggleExpand],
+                mobileChatInputAreaClasses('expand-toggle'),
+              )}
               onClick={() => setExpand?.(!expand)}
             />
           )}
@@ -114,6 +149,7 @@ const ChatInputArea = memo<ChatInputAreaProps>(
           >
             <ChatInputAreaInner
               autoSize={expand ? false : { maxRows: 6, minRows: 1 }}
+              className={mobileChatInputAreaClasses('textarea')}
               loading={loading}
               ref={ref}
               style={{ flex: 1, minHeight: 36, paddingBlock: 6 }}
@@ -127,7 +163,12 @@ const ChatInputArea = memo<ChatInputAreaProps>(
           </InnerContainer>
         </Flexbox>
         {bottomAddons && (
-          <Flexbox style={showAddons ? {} : { display: 'none' }}>{bottomAddons}</Flexbox>
+          <Flexbox
+            className={mobileChatInputAreaClasses('bottom-addons')}
+            style={showAddons ? {} : { display: 'none' }}
+          >
+            {bottomAddons}
+          </Flexbox>
         )}
         {safeArea && !isFocused && <SafeArea position={'bottom'} />}
       </Flexbox>

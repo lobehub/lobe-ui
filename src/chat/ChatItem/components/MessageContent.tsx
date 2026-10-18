@@ -5,8 +5,10 @@ import { type ChatItemProps } from '@/chat/ChatItem';
 import EditableMessage from '@/chat/EditableMessage';
 import { Flexbox } from '@/Flex';
 import { type MarkdownProps } from '@/Markdown';
+import { styleProps } from '@/styles/stylex/props';
 import { useResponsive } from '@/styles/theme/scope';
 
+import { chatChatItemClasses } from '../stable';
 import { styles } from '../style';
 
 export interface MessageContentProps {
@@ -70,15 +72,20 @@ const MessageContent = memo<MessageContentProps>(
         paddingInline={editing || isBubble ? 12 : 0}
         width={editing ? '100%' : undefined}
         onDoubleClick={onDoubleClick}
-        {...stylex.props(
-          isBubble && styles.messageBubble,
-          styles.messageBox,
-          styles.narrowFullWidth,
-          editing && [styles.editingContainer, !isBubble && styles.editingContainerDocs],
+        {...styleProps(
+          [
+            isBubble && styles.messageBubble,
+            styles.messageBox,
+            styles.narrowFullWidth,
+            editing && [styles.editingContainer, !isBubble && styles.editingContainerDocs],
+          ],
+          chatChatItemClasses('message'),
         )}
       >
         {messageContent}
-        {messageExtra && !editing ? <div>{messageExtra}</div> : null}
+        {messageExtra && !editing ? (
+          <div className={chatChatItemClasses('extra')}>{messageExtra}</div>
+        ) : null}
       </Flexbox>
     );
   },

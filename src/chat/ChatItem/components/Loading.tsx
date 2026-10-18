@@ -1,11 +1,12 @@
-import * as stylex from '@stylexjs/stylex';
 import { Loader2 } from 'lucide-react';
 import type { FC } from 'react';
 
 import { type ChatItemProps } from '@/chat/ChatItem';
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
+import { styleProps } from '@/styles/stylex/props';
 
+import { chatChatItemClasses } from '../stable';
 import { styles } from '../style';
 
 export interface LoadingProps {
@@ -22,9 +23,9 @@ const Loading: FC<LoadingProps> = ({ loading, placement = 'left' }) => {
       height={16}
       justify={'center'}
       width={16}
-      {...stylex.props(
-        styles.loading,
-        placement === 'left' ? styles.loadingLeft : styles.loadingRight,
+      {...styleProps(
+        [styles.loading, placement === 'left' ? styles.loadingLeft : styles.loadingRight],
+        chatChatItemClasses('loading'),
       )}
     >
       <Icon spin icon={Loader2} size={{ size: 12, strokeWidth: 3 }} />

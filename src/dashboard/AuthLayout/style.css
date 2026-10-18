@@ -1,4 +1,15 @@
 @layer lobe-ui {
+  .lobe-dashboard-auth-layout__title {
+    margin: 0;
+    font-size: var(--lobe-font-size-heading-3);
+    line-height: var(--lobe-line-height-heading-3);
+  }
+
+  .lobe-dashboard-auth-layout__description {
+    line-height: 1.6;
+    color: var(--lobe-color-text-secondary);
+  }
+
   .lobe-auth-layout-footer a {
     font-weight: 600;
     color: var(--lobe-color-link);

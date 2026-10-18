@@ -1,26 +1,38 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
+
+import { styleProps } from '@/styles/stylex/props';
 
 import { useConsoleShellState } from './context';
+import { dashboardConsoleBrandClasses } from './stable';
 import { styles } from './style';
 import type { ConsoleBrandProps } from './type';
 
-function ConsoleBrand({ href = '/', label, logo, renderLink, title }: ConsoleBrandProps) {
+function ConsoleBrand({
+  className,
+  href = '/',
+  label,
+  logo,
+  renderLink,
+  title,
+}: ConsoleBrandProps) {
   const shell = useConsoleShellState();
   const content =
     title == null || title === false || title === '' ? (
       logo
     ) : (
-      <span {...stylex.props(styles.brandLockup)}>
+      <span {...styleProps(styles.brandLockup, dashboardConsoleBrandClasses('lockup'))}>
         {logo}
-        <span {...stylex.props(styles.brandName)}>{title}</span>
+        <span {...styleProps(styles.brandName, dashboardConsoleBrandClasses('name'))}>{title}</span>
       </span>
     );
   const linkProps = {
     'aria-label': label ?? (typeof title === 'string' ? title : 'Home'),
     'children': content,
-    'className': stylex.props(styles.brandAnchor).className ?? '',
+    'className':
+      styleProps(styles.brandAnchor, clsx(dashboardConsoleBrandClasses(), className)).className ??
+      '',
     href,
     'onClick': () => shell?.closeNavigation(),
   };

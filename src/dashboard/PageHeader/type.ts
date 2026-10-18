@@ -4,6 +4,7 @@ export interface PageHeaderProps {
   /** Actions at the end of the header. Falls back to `children`. */
   action?: ReactNode;
   children?: ReactNode;
+  className?: string;
   description?: ReactNode;
   /** Mark beside the title, such as an avatar. */
   mark?: ReactNode;

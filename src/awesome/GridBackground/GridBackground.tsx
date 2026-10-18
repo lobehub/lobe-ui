@@ -1,7 +1,7 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
 import chroma from 'chroma-js';
+import clsx from 'clsx';
 import { shuffle } from 'es-toolkit/compat';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
@@ -9,8 +9,10 @@ import { useSize } from '@/hooks/useSize';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import { styleProps } from '@/styles/stylex/props';
 import { useTheme } from '@/styles/theme/scope';
+import { toDataAttributes } from '@/utils/bem';
 
 import Grid, { type GridProps } from './components/Grid';
+import { awesomeGridBackgroundClasses } from './stable';
 import { styles } from './style';
 import type { GridBackgroundProps } from './type';
 
@@ -56,7 +58,10 @@ const GridBackground = memo<GridBackgroundProps>(
 
     const gridProps: GridProps = useMemo(
       () => ({
-        className: stylex.props(styles.highlight, reverse && styles.highlightReverse).className,
+        className: styleProps(
+          [styles.highlight, reverse && styles.highlightReverse],
+          awesomeGridBackgroundClasses('highlight'),
+        ).className,
         color: colorFront || cssVar.colorText,
         strokeWidth,
       }),
@@ -96,28 +101,34 @@ const GridBackground = memo<GridBackgroundProps>(
     return (
       <div
         {...styleProps(
-          styles.container,
-          className,
-          flip ? { transform: 'scaleY(-1)', ...style } : style,
+          [styles.container, flip && styles.flip],
+          clsx(awesomeGridBackgroundClasses(), className),
+          style,
         )}
+        {...toDataAttributes({ flip })}
         ref={ref}
         {...rest}
       >
         <Grid
           color={colorBack || cssVar.colorBorder}
           strokeWidth={strokeWidth}
-          style={{ zIndex: 2 }}
+          {...styleProps(styles.grid, awesomeGridBackgroundClasses('grid'))}
         />
         {animation && <HighlightGrid />}
         {showBackground && (
           <div
-            {...stylex.props(styles.backgroundContainer)}
+            {...styleProps(styles.backgroundContainer, awesomeGridBackgroundClasses('background'))}
             style={{
               ...(size ? { fontSize: size.width / 80 } : {}),
               ...backgroundCssVariables,
             }}
           >
-            <div {...stylex.props(styles.backgroundShape)} />
+            <div
+              {...styleProps(
+                styles.backgroundShape,
+                awesomeGridBackgroundClasses('background-shape'),
+              )}
+            />
           </div>
         )}
       </div>

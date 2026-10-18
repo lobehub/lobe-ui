@@ -1,9 +1,15 @@
+import clsx from 'clsx';
 import type { FC } from 'react';
 
+import { styles } from '@/brand/components/style';
+import { styleProps } from '@/styles/stylex/props';
 import type { DivProps, SvgProps } from '@/types';
+
+import { brandLobeHubTextClasses } from './stable';
 
 const LobeHubText: FC<SvgProps & DivProps & { size?: number }> = ({
   size = '1em',
+  className,
   style,
   ...rest
 }) => (
@@ -11,9 +17,9 @@ const LobeHubText: FC<SvgProps & DivProps & { size?: number }> = ({
     fill="currentColor"
     fillRule="evenodd"
     height={size}
-    style={{ flex: 'none', lineHeight: 1, ...style }}
     viewBox="0 0 940 320"
     xmlns="http://www.w3.org/2000/svg"
+    {...styleProps(styles.svg, clsx(brandLobeHubTextClasses(), className), style)}
     {...rest}
   >
     <title>LobeHub</title>

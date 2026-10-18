@@ -1,4 +1,20 @@
 @layer lobe-ui {
+  .lobe-awesome-features {
+    max-width: 960px;
+  }
+
+  .lobe-awesome-features__icon {
+    width: 20px;
+    height: 20px;
+    font-size: 18.33px;
+    color: var(--lobe-color-text);
+  }
+
+  .lobe-awesome-features__description {
+    pointer-events: none;
+    color: var(--lobe-color-text-secondary);
+  }
+
   .lobe-features-item p {
     font-size: 16px;
     line-height: 1.2;

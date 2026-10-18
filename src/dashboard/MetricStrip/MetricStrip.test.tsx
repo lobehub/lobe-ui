@@ -26,6 +26,10 @@ describe('MetricStrip', () => {
     strip.unmount();
 
     const card = render(<StatCard delta="+1%" direction="up" label="Users" value="10" />);
-    expect(card.container.firstElementChild!.innerHTML).toBe(stripItem);
+    const cardItem = card.container.firstElementChild!.innerHTML;
+    expect(cardItem).toContain('lobe-dashboard-stat-card__cell');
+    expect(cardItem.replaceAll('lobe-dashboard-stat-card__', 'lobe-dashboard-metric-strip__')).toBe(
+      stripItem,
+    );
   });
 });

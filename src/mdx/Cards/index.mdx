@@ -6,6 +6,8 @@ category: Built-ins
 
 import DemoIndex from './demos/index.tsx?demo';
 import DemoRows from './demos/Rows.tsx?demo';
+import { StableClassTable } from '../../../docs/stable-classes/StableClassTable';
+import { mdxCardsClasses } from './stable';
 
 ## Example
 
@@ -24,3 +26,9 @@ import DemoRows from './demos/Rows.tsx?demo';
 ### Card
 
 <Api name="Card" from=".." migrationKey="heading:%5B%22Card%22%5D:0" />
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={mdxCardsClasses} />

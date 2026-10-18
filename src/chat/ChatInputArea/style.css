@@ -2,4 +2,15 @@
   .lobe-chat-input-area-textarea {
     height: 100% !important;
   }
+
+  .lobe-chat-chat-input-area:not([data-expand]) {
+    z-index: 10;
+  }
+
+  .lobe-chat-chat-input-area__textarea {
+    align-items: stretch;
+    padding-block: 0;
+    padding-inline: 16px;
+    line-height: 1.5;
+  }
 }

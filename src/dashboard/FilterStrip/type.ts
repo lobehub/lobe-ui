@@ -12,6 +12,7 @@ export interface FilterStripItem {
 }
 
 export interface FilterStripProps {
+  className?: string;
   /** Shown when an item has no count. Defaults to `--`. */
   emptyText?: ReactNode;
   /** Formats a count. Defaults to a grouped integer, e.g. `12,345`. */

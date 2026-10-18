@@ -1,4 +1,16 @@
 @layer lobe-ui {
+  .lobe-dashboard-page-header__title {
+    margin: 0;
+    font-size: var(--lobe-font-size-heading-3);
+    line-height: var(--lobe-line-height-heading-3);
+  }
+
+  .lobe-dashboard-page-header__description {
+    max-inline-size: 68ch;
+    line-height: 1.6;
+    color: var(--lobe-color-text-secondary);
+  }
+
   @media (width <= 479.98px) {
     .lobe-page-header-actions button,
     .lobe-page-header-actions a {

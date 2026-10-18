@@ -1,11 +1,14 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
+import type { StyleXStyles } from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { type FC, useMemo } from 'react';
 
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
-import { styles } from './style';
+import { chatLoadingDotsClasses } from './stable';
+import { delays, styles } from './style';
 import type { LoadingDotsProps } from './type';
 
 const LoadingDots: FC<LoadingDotsProps> = ({
@@ -25,71 +28,53 @@ const LoadingDots: FC<LoadingDotsProps> = ({
     return vars;
   }, [color, size]);
 
+  const dot = (variantStyle: StyleXStyles, delay: keyof typeof delays) => (
+    <div
+      {...styleProps([styles.dot, variantStyle, delays[delay]], chatLoadingDotsClasses('dot'))}
+    />
+  );
+
   const renderDots = () => {
     switch (variant) {
       case 'pulse': {
-        return (
-          <div {...stylex.props(styles.dot, styles.pulseDot)} style={{ animationDelay: '0s' }} />
-        );
+        return dot(styles.pulseDot, 'd0');
       }
-
       case 'wave': {
         return (
           <>
-            <div {...stylex.props(styles.dot, styles.waveDot)} style={{ animationDelay: '0s' }} />
-            <div
-              {...stylex.props(styles.dot, styles.waveDot)}
-              style={{ animationDelay: '0.12s' }}
-            />
-            <div
-              {...stylex.props(styles.dot, styles.waveDot)}
-              style={{ animationDelay: '0.24s' }}
-            />
+            {dot(styles.waveDot, 'd0')}
+            {dot(styles.waveDot, 'd12')}
+            {dot(styles.waveDot, 'd24')}
           </>
         );
       }
-
       case 'orbit': {
         return (
-          <div {...stylex.props(styles.orbitContainer)}>
-            <div {...stylex.props(styles.orbitDot)} style={{ animationDelay: '0s' }} />
-            <div {...stylex.props(styles.orbitDot)} style={{ animationDelay: '-0.4s' }} />
-            <div {...stylex.props(styles.orbitDot)} style={{ animationDelay: '-0.8s' }} />
+          <div {...styleProps(styles.orbitContainer, chatLoadingDotsClasses('orbit'))}>
+            {(['d0', 'dMinus40', 'dMinus80'] as const).map((delay) => (
+              <div
+                key={delay}
+                {...styleProps([styles.orbitDot, delays[delay]], chatLoadingDotsClasses('dot'))}
+              />
+            ))}
           </div>
         );
       }
-
       case 'typing': {
         return (
           <>
-            <div {...stylex.props(styles.dot, styles.typingDot)} style={{ animationDelay: '0s' }} />
-            <div
-              {...stylex.props(styles.dot, styles.typingDot)}
-              style={{ animationDelay: '0.15s' }}
-            />
-            <div
-              {...stylex.props(styles.dot, styles.typingDot)}
-              style={{ animationDelay: '0.3s' }}
-            />
+            {dot(styles.typingDot, 'd0')}
+            {dot(styles.typingDot, 'd15')}
+            {dot(styles.typingDot, 'd30')}
           </>
         );
       }
-
       default: {
         return (
           <>
-            <div
-              {...stylex.props(styles.dot, styles.defaultDot)}
-              style={{ animationDelay: '0s' }}
-            />
-            <div
-              {...stylex.props(styles.dot, styles.defaultDot)}
-              style={{ animationDelay: '0.15s' }}
-            />
-            <div
-              {...stylex.props(styles.dot, styles.defaultDot)}
-              style={{ animationDelay: '0.3s' }}
-            />
+            {dot(styles.defaultDot, 'd0')}
+            {dot(styles.defaultDot, 'd15')}
+            {dot(styles.defaultDot, 'd30')}
           </>
         );
       }
@@ -98,10 +83,12 @@ const LoadingDots: FC<LoadingDotsProps> = ({
 
   return (
     <div
-      {...styleProps(variant === 'orbit' ? styles.orbitWrapper : styles.container, className, {
-        ...cssVariables,
-        ...style,
-      })}
+      {...styleProps(
+        variant === 'orbit' ? styles.orbitWrapper : styles.container,
+        clsx(chatLoadingDotsClasses(), className),
+        { ...cssVariables, ...style },
+      )}
+      {...toDataAttributes({ variant })}
     >
       {renderDots()}
     </div>

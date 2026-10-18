@@ -2,7 +2,6 @@
 
 import './style.css';
 
-import * as stylex from '@stylexjs/stylex';
 import clsx from 'clsx';
 import { type CSSProperties, memo } from 'react';
 
@@ -10,6 +9,7 @@ import { renderLandingIcon } from '@/awesome/landingIcon';
 import { styleProps } from '@/styles/stylex/props';
 
 import { logoMarqueeMarker } from './marker.stylex';
+import { awesomeLogoMarqueeClasses } from './stable';
 import { styles } from './style';
 import type { LogoMarqueeProps } from './type';
 
@@ -19,9 +19,16 @@ const Track = ({
   iconSize,
   items,
 }: Pick<LogoMarqueeProps, 'iconOnly' | 'items'> & { hidden?: boolean; iconSize: number }) => (
-  <div aria-hidden={hidden || undefined} {...stylex.props(styles.track)}>
+  <div
+    aria-hidden={hidden || undefined}
+    {...styleProps(styles.track, awesomeLogoMarqueeClasses('track'))}
+  >
     {items.map(({ icon, label }) => (
-      <span key={label} title={iconOnly ? label : undefined} {...stylex.props(styles.item)}>
+      <span
+        key={label}
+        title={iconOnly ? label : undefined}
+        {...styleProps(styles.item, awesomeLogoMarqueeClasses('item'))}
+      >
         {renderLandingIcon(icon, iconSize)}
         {!iconOnly && label}
       </span>
@@ -33,29 +40,49 @@ const LogoMarquee = memo<LogoMarqueeProps>(
   ({
     caption,
     className,
-    duration = 28,
-    gap = 36,
+    duration,
+    gap,
     iconOnly = false,
     iconSize = 18,
     items,
-    maxWidth = 640,
+    maxWidth,
     style,
     ...rest
   }) => {
     const variables = {
-      '--logo-marquee-duration': `${duration}s`,
-      '--logo-marquee-gap': `${gap}px`,
-      '--logo-marquee-max-width': typeof maxWidth === 'number' ? `${maxWidth}px` : maxWidth,
+      ...(duration === undefined ? undefined : { '--logo-marquee-duration': `${duration}s` }),
+      ...(gap === undefined ? undefined : { '--logo-marquee-gap': `${gap}px` }),
+      ...(maxWidth === undefined
+        ? undefined
+        : {
+            '--logo-marquee-max-width': typeof maxWidth === 'number' ? `${maxWidth}px` : maxWidth,
+          }),
     } as CSSProperties;
 
     return (
-      <div {...styleProps(styles.root, className, { ...variables, ...style })} {...rest}>
-        <div {...stylex.props(logoMarqueeMarker, styles.viewport)}>
+      <div
+        {...styleProps(styles.root, clsx(awesomeLogoMarqueeClasses(), className), {
+          ...variables,
+          ...style,
+        })}
+        {...rest}
+      >
+        <div
+          {...styleProps(
+            [logoMarqueeMarker, styles.viewport],
+            awesomeLogoMarqueeClasses('viewport'),
+          )}
+        >
           <Track iconOnly={iconOnly} iconSize={iconSize} items={items} />
           <Track hidden iconOnly={iconOnly} iconSize={iconSize} items={items} />
         </div>
         {caption && (
-          <p className={clsx('lobe-logo-marquee-caption', stylex.props(styles.caption).className)}>
+          <p
+            className={clsx(
+              'lobe-logo-marquee-caption',
+              styleProps(styles.caption, awesomeLogoMarqueeClasses('caption')).className,
+            )}
+          >
             {caption}
           </p>
         )}

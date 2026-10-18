@@ -15,6 +15,9 @@ const darkBackground = `repeating-linear-gradient(100deg, rgb(0, 0, 0) 0%, rgb(0
 const lightBackground = `repeating-linear-gradient(100deg, rgb(255, 255, 255) 0%, rgb(255, 255, 255) 7%, rgba(0, 0, 0, 0%) 10%, rgba(0, 0, 0, 0%) 12%, rgb(255, 255, 255) 16%), ${stripes}`;
 
 export const styles = stylex.create({
+  content: {
+    zIndex: 1,
+  },
   bg: {
     'inset': -10,
     'backgroundPosition': '50% 50%, 50% 50%',

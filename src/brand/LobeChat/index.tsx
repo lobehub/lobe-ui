@@ -1,6 +1,6 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { memo, type ReactNode } from 'react';
 
 import Divider from '@/brand/components/Divider';
@@ -10,8 +10,11 @@ import Logo3d from '@/brand/Logo3d';
 import LogoFlat from '@/brand/LogoFlat';
 import LogoMono from '@/brand/LogoMono';
 import { Flexbox } from '@/Flex';
-import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { styleProps } from '@/styles/stylex/props';
 import { type DivProps } from '@/types';
+import { toDataAttributes } from '@/utils/bem';
+
+import { brandLobeChatClasses } from './stable';
 
 export interface LobeChatProps extends DivProps {
   extra?: ReactNode;
@@ -21,42 +24,54 @@ export interface LobeChatProps extends DivProps {
 
 const LobeChat = memo<LobeChatProps>(
   ({ type = '3d', size = 32, style, extra, className, ...rest }) => {
+    const rootClassName = clsx(brandLobeChatClasses(), className);
+    const dataAttributes = toDataAttributes({ type });
+    const logoProps = extra
+      ? { className: brandLobeChatClasses('logo') }
+      : { className: rootClassName, style, ...dataAttributes };
     let logoComponent: ReactNode;
 
     switch (type) {
       case '3d': {
-        logoComponent = <Logo3d alt={'LobeChat'} size={size} {...rest} />;
+        logoComponent = <Logo3d alt={'LobeChat'} size={size} {...logoProps} {...rest} />;
         break;
       }
       case 'flat': {
-        logoComponent = <LogoFlat size={size} style={style} />;
+        logoComponent = <LogoFlat size={size} {...logoProps} />;
         break;
       }
       case 'mono': {
-        logoComponent = <LogoMono size={size} style={style} />;
+        logoComponent = <LogoMono size={size} {...logoProps} />;
         break;
       }
       case 'text': {
-        logoComponent = (
-          <LogoText className={className} size={size} style={style} {...(rest as any)} />
-        );
+        logoComponent = <LogoText size={size} {...logoProps} {...(rest as any)} />;
         break;
       }
       case 'combine': {
         logoComponent = (
           <>
-            <Logo3d alt="LobeChat" size={size} />
-            <LogoText size={size} style={{ marginLeft: Math.round(size / 4) }} />
+            <Logo3d alt="LobeChat" className={brandLobeChatClasses('logo')} size={size} />
+            <LogoText
+              className={brandLobeChatClasses('text')}
+              size={size}
+              style={{ marginLeft: Math.round(size / 4) }}
+            />
           </>
         );
-
         if (!extra)
           logoComponent = (
-            <Flexbox horizontal align={'center'} className={className} flex={'none'} style={style}>
+            <Flexbox
+              horizontal
+              align={'center'}
+              className={rootClassName}
+              flex={'none'}
+              style={style}
+              {...dataAttributes}
+            >
               {logoComponent}
             </Flexbox>
           );
-
         break;
       }
     }
@@ -69,14 +84,20 @@ const LobeChat = memo<LobeChatProps>(
       <Flexbox
         horizontal
         align={'center'}
-        className={className}
+        className={rootClassName}
         flex={'none'}
         style={style}
+        {...dataAttributes}
         {...rest}
       >
         {logoComponent}
-        <Divider size={extraSize} style={{ color: cssVar.colorFill }} />
-        <div {...stylex.props(styles.extraTitle)} style={{ fontSize: extraSize }}>
+        <Divider
+          size={extraSize}
+          {...styleProps(styles.divider, brandLobeChatClasses('divider'))}
+        />
+        <div
+          {...styleProps(styles.extraTitle, brandLobeChatClasses('extra'), { fontSize: extraSize })}
+        >
           {extra}
         </div>
       </Flexbox>

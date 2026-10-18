@@ -4,6 +4,15 @@ description: A collection of enhanced React components for rendering MDX content
 category: Components
 ---
 
+import { StableClassTable } from '../../../docs/stable-classes/StableClassTable';
+import {
+  mdxImageClasses,
+  mdxLinkClasses,
+  mdxPreClasses,
+  mdxPreSingleLineClasses,
+  mdxVideoClasses,
+} from './stable';
+
 ## Usage
 
 ```ts | pure
@@ -35,3 +44,27 @@ export default RemoteMDX;
 | Link (a)  | Enhanced link component with styling and external link handling       |
 
 These components can be used directly in MDX content or passed to an MDX renderer's components prop to enhance the rendering of MDX content.
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+### Image
+
+<StableClassTable of={mdxImageClasses} />
+
+### Link
+
+<StableClassTable of={mdxLinkClasses} />
+
+### Pre
+
+<StableClassTable of={mdxPreClasses} />
+
+### PreSingleLine
+
+<StableClassTable of={mdxPreSingleLineClasses} />
+
+### Video
+
+<StableClassTable of={mdxVideoClasses} />

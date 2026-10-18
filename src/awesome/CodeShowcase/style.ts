@@ -1,5 +1,4 @@
 import * as stylex from '@stylexjs/stylex';
-import type { CSSProperties } from 'react';
 
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import { media } from '@/styles/stylex/media.stylex';
@@ -34,15 +33,3 @@ export const styles = stylex.create({
     flexDirection: 'column',
   },
 });
-
-export const childStyles = {
-  code: {
-    minBlockSize: 'var(--code-showcase-min-height)',
-    minInlineSize: 0,
-    overflow: 'auto',
-  },
-  tabs: {
-    alignSelf: 'center',
-    maxInlineSize: '100%',
-  },
-} satisfies Record<string, CSSProperties>;

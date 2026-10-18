@@ -1,13 +1,15 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 
 import Skeleton from '@/Skeleton';
 import Spin from '@/Spin';
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
 import { surfaceClassNames } from '../Surface/style';
 import Surface from '../Surface/Surface';
+import { dashboardPanelSurfaceClasses } from './stable';
 import { styles } from './style';
 import type { PanelSurfaceProps } from './type';
 
@@ -25,7 +27,7 @@ const PanelSurface = ({
   children,
 }: PanelSurfaceProps) => (
   <Surface
-    className={className}
+    className={clsx(dashboardPanelSurfaceClasses(), className)}
     description={description}
     extra={loading && children ? <Spin size="small" variant="network" /> : extra}
     href={href}
@@ -33,16 +35,20 @@ const PanelSurface = ({
     renderLink={renderLink}
     style={style}
     title={title}
+    {...toDataAttributes({ size })}
   >
     {loading && !children ? (
-      <div aria-busy="true" {...stylex.props(styles.loadingBody)}>
+      <div
+        aria-busy="true"
+        {...styleProps(styles.loadingBody, dashboardPanelSurfaceClasses('loading'))}
+      >
         <Skeleton height={220} radius={8} />
       </div>
     ) : (
       <div
         {...styleProps(
           size === 'small' ? styles.bodySmall : styles.body,
-          surfaceClassNames.tableBleed,
+          clsx(dashboardPanelSurfaceClasses('body'), surfaceClassNames.tableBleed),
         )}
       >
         {children}

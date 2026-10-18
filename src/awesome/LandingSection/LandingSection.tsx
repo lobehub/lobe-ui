@@ -1,12 +1,13 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { memo } from 'react';
 
 import { LandingActions } from '@/awesome/landingActions';
 import { styleProps } from '@/styles/stylex/props';
 import Tag from '@/Tag';
 
+import { awesomeLandingSectionClasses } from './stable';
 import { styles } from './style';
 import type { LandingSectionProps } from './type';
 
@@ -38,26 +39,56 @@ const LandingSection = memo<LandingSectionProps>(
         aria-labelledby={title ? headingId : undefined}
         data-divider={divider}
         id={id}
-        {...styleProps([styles.root, divider && styles.rootDivider], className)}
+        {...styleProps(
+          [styles.root, divider && styles.rootDivider],
+          clsx(awesomeLandingSectionClasses(), className),
+        )}
         {...rest}
       >
         {hasHeader && (
-          <div data-align={align} {...stylex.props(styles.header, isStart && styles.headerStart)}>
-            <div {...stylex.props(styles.heading, isStart && styles.headingStart)}>
+          <div
+            data-align={align}
+            {...styleProps(
+              [styles.header, isStart && styles.headerStart],
+              awesomeLandingSectionClasses('header'),
+            )}
+          >
+            <div
+              {...styleProps(
+                [styles.heading, isStart && styles.headingStart],
+                awesomeLandingSectionClasses('heading'),
+              )}
+            >
               {eyebrow && (
-                <Tag {...stylex.props(styles.eyebrow)} color={eyebrowColor} shape={'round'}>
+                <Tag
+                  {...styleProps(styles.eyebrow, awesomeLandingSectionClasses('eyebrow'))}
+                  color={eyebrowColor}
+                  shape={'round'}
+                >
                   {eyebrow}
                 </Tag>
               )}
               {title && (
-                <h2 id={headingId} {...stylex.props(styles.title)}>
+                <h2
+                  id={headingId}
+                  {...styleProps(styles.title, awesomeLandingSectionClasses('title'))}
+                >
                   {title}
                 </h2>
               )}
-              {description && <p {...stylex.props(styles.description)}>{description}</p>}
+              {description && (
+                <p {...styleProps(styles.description, awesomeLandingSectionClasses('description'))}>
+                  {description}
+                </p>
+              )}
             </div>
             {hasAside && (
-              <div {...stylex.props(styles.extra, isStart && styles.extraStart)}>
+              <div
+                {...styleProps(
+                  [styles.extra, isStart && styles.extraStart],
+                  awesomeLandingSectionClasses('extra'),
+                )}
+              >
                 {hasActions && (
                   <LandingActions
                     actions={actions!}
@@ -71,7 +102,11 @@ const LandingSection = memo<LandingSectionProps>(
             )}
           </div>
         )}
-        {children && <div {...stylex.props(hasHeader && styles.body)}>{children}</div>}
+        {children && (
+          <div {...styleProps(hasHeader && styles.body, awesomeLandingSectionClasses('body'))}>
+            {children}
+          </div>
+        )}
       </section>
     );
   },

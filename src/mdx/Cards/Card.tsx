@@ -2,7 +2,6 @@
 
 import './style.css';
 
-import * as stylex from '@stylexjs/stylex';
 import clsx from 'clsx';
 import type { FC } from 'react';
 
@@ -15,6 +14,7 @@ import { styleProps } from '@/styles/stylex/props';
 import Tag, { type TagProps } from '@/Tag';
 
 import { cardMarker } from './marker.stylex';
+import { mdxCardsClasses } from './stable';
 import { styles } from './style';
 
 export interface CardProps extends Omit<BlockProps, 'children'> {
@@ -42,12 +42,15 @@ const Card: FC<CardProps> = ({
   ...rest
 }) => {
   return (
-    <A href={href}>
+    <A className={mdxCardsClasses('link')} href={href}>
       <Block
         clickable
         align={'flex-start'}
         height={'100%'}
-        {...styleProps([styles.card, cardMarker], clsx('lobe-mdx-card', className))}
+        {...styleProps(
+          [styles.card, cardMarker],
+          clsx(mdxCardsClasses('card'), 'lobe-mdx-card', className),
+        )}
         variant={variant}
         {...rest}
       >
@@ -56,27 +59,18 @@ const Card: FC<CardProps> = ({
             alt={title}
             height={100}
             src={image}
-            style={{ height: 'auto', width: '100%' }}
             width={250}
+            {...styleProps(styles.image, mdxCardsClasses('image'))}
           />
         )}
         {tag && (
           <Flexbox
             align={'flex-start'}
             padding={'1.4em'}
-            style={{ paddingBottom: '0.2em', paddingTop: '1.8em' }}
             width={'100%'}
+            {...styleProps(styles.tagRow, mdxCardsClasses('tag-row'))}
           >
-            <Tag
-              color={tagColor}
-              style={{
-                borderRadius: '1em',
-                fontSize: '0.8em',
-                fontWeight: 500,
-                paddingBlock: '0.1em',
-                paddingInline: '0.6em',
-              }}
-            >
+            <Tag className={mdxCardsClasses('tag')} color={tagColor}>
               {tag}
             </Tag>
           </Flexbox>
@@ -84,21 +78,22 @@ const Card: FC<CardProps> = ({
         <Flexbox
           horizontal
           align={desc ? 'flex-start' : 'center'}
+          className={mdxCardsClasses('header')}
           gap={'0.75em'}
           padding={'1.4em'}
           width={'100%'}
         >
           {!image && icon && (
             <Icon
-              {...styleProps(styles.icon, 'mdx-card-icon')}
+              {...styleProps(styles.icon, clsx(mdxCardsClasses('icon'), 'mdx-card-icon'))}
               icon={icon}
               size={{ size: '1.5em' }}
               {...iconProps}
             />
           )}
           <Flexbox gap={'0.2em'}>
-            <h3>{title}</h3>
-            {desc && <p {...stylex.props(styles.desc)}>{desc}</p>}
+            <h3 className={mdxCardsClasses('title')}>{title}</h3>
+            {desc && <p {...styleProps(styles.desc, mdxCardsClasses('desc'))}>{desc}</p>}
           </Flexbox>
         </Flexbox>
       </Block>

@@ -4,6 +4,7 @@ export interface FilterSidebarProps {
   /** Scrolling choices. `dismiss` closes the compact drawer. */
   body: (dismiss: () => void) => ReactNode;
   children: ReactNode;
+  className?: string;
   /**
    * Fill the parent and scroll the two panes separately.
    * Leave this off when a header or tabs sit above the split.
@@ -27,11 +28,13 @@ export interface FilterSidebarProps {
 }
 
 export interface FilterRowProps {
+  className?: string;
   count?: ReactNode;
   name: ReactNode;
 }
 
 export interface FilterOptionProps {
+  className?: string;
   count?: ReactNode;
   icon?: ReactNode;
   /** Overrides the accessible name when the visible one lacks context. */

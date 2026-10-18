@@ -1,12 +1,15 @@
 'use client';
 
+import clsx from 'clsx';
 import { Fragment, memo } from 'react';
 
 import { styleProps } from '@/styles/stylex/props';
 import { ToastHost } from '@/Toast';
+import { toDataAttributes } from '@/utils/bem';
 
 import ChatListItem from './components/ChatListItem';
 import HistoryDivider from './components/HistoryDivider';
+import { chatChatListClasses } from './stable';
 import { styles } from './style';
 import type { ChatListProps } from './type';
 
@@ -32,7 +35,11 @@ const ChatList = memo<ChatListProps>(
     ...rest
   }) => {
     return (
-      <div {...styleProps(styles.container, className)} {...rest}>
+      <div
+        {...styleProps(styles.container, clsx(chatChatListClasses(), className))}
+        {...toDataAttributes({ variant })}
+        {...rest}
+      >
         {data.map((item, index) => {
           const itemProps = {
             loading: loadingId === item.id,

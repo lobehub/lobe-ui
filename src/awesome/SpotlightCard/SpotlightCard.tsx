@@ -1,5 +1,6 @@
 'use client';
 
+import clsx from 'clsx';
 import { memo, useEffect, useMemo, useRef } from 'react';
 
 import Grid from '@/Grid';
@@ -7,6 +8,7 @@ import { styleProps } from '@/styles/stylex/props';
 
 import { spotlightCardMarker } from './marker.stylex';
 import SpotlightCardItem from './SpotlightCardItem';
+import { awesomeSpotlightCardClasses } from './stable';
 import { CHILDREN_CLASSNAME, styles } from './style';
 import type { SpotlightCardProps } from './type';
 
@@ -59,17 +61,21 @@ const SpotlightCard = memo<SpotlightCardProps>(
         maxItemWidth={maxItemWidth}
         ref={ref}
         rows={columns}
-        {...styleProps([spotlightCardMarker, styles.grid], className, {
-          ...cssVariables,
-          ...style,
-        })}
+        {...styleProps(
+          [spotlightCardMarker, styles.grid],
+          clsx(awesomeSpotlightCardClasses(), className),
+          {
+            ...cssVariables,
+            ...style,
+          },
+        )}
         {...rest}
       >
         {items.map((item, index) => {
           return (
             <SpotlightCardItem
               borderRadius={borderRadius}
-              className={CHILDREN_CLASSNAME}
+              className={clsx(awesomeSpotlightCardClasses('item'), CHILDREN_CLASSNAME)}
               key={index}
               size={size}
             >

@@ -1,12 +1,14 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { memo, useMemo } from 'react';
 
 import { ButtonImpl } from '@/Button/Button';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { styleProps } from '@/styles/stylex/props';
 import { useThemeMode } from '@/styles/theme/scope';
 
+import { awesomeGradientButtonClasses } from './stable';
 import { styles } from './style';
 import type { GradientButtonProps } from './type';
 
@@ -39,7 +41,7 @@ const GradientButton = memo<GradientButtonProps>(
 
     return (
       <ButtonImpl
-        className={className}
+        className={clsx(awesomeGradientButtonClasses(), className)}
         disabled={disabled}
         size={size}
         type={disabled ? undefined : 'text'}
@@ -50,7 +52,7 @@ const GradientButton = memo<GradientButtonProps>(
         }}
         {...rest}
       >
-        {glow && <div {...stylex.props(styles.glow)} />}
+        {glow && <div {...styleProps(styles.glow, awesomeGradientButtonClasses('glow'))} />}
         {children}
       </ButtonImpl>
     );

@@ -1,8 +1,15 @@
 import { type FC } from 'react';
 
+import { styles } from '@/brand/components/style';
+import { styleProps } from '@/styles/stylex/props';
 import type { DivProps, SvgProps } from '@/types';
 
-const Divider: FC<SvgProps & DivProps & { size?: number }> = ({ size = '1em', style, ...rest }) => (
+const Divider: FC<SvgProps & DivProps & { size?: number }> = ({
+  size = '1em',
+  className,
+  style,
+  ...rest
+}) => (
   <svg
     fill="none"
     height={size}
@@ -10,9 +17,9 @@ const Divider: FC<SvgProps & DivProps & { size?: number }> = ({ size = '1em', st
     stroke="currentColor"
     strokeLinecap="round"
     strokeLinejoin="round"
-    style={{ flex: 'none', lineHeight: 1, ...style }}
     viewBox="0 0 24 24"
     width={size}
+    {...styleProps(styles.svg, className, style)}
     {...rest}
   >
     <path d="M16.88 3.549L7.12 20.451" />

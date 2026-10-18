@@ -16,11 +16,13 @@ import { PreviewGroup } from '@/Image';
 import { Typography, type TypographyProps } from '@/Markdown';
 import { rehypeKatex } from '@/Markdown/plugins/rehypeKatex';
 import { styles } from '@/Markdown/style';
+import { toDataAttributes } from '@/utils/bem';
 
 import mdxComponents from '../mdxComponents';
 import CodeBlock from '../mdxComponents/CodeBlock';
 import Image from '../mdxComponents/Image';
 import Video from '../mdxComponents/Video';
+import { mdxMdxClasses } from './stable';
 
 const runtime = process.env.NODE_ENV === 'production' ? jsxRuntime : jsxDevRuntime;
 
@@ -131,13 +133,19 @@ const Mdx = memo<MdxProps>(
 
     return (
       <Typography
-        className={clsx(enableLatex && styles.latex, isChatMode && styles.chat, className)}
         data-code-type="mdx"
         fontSize={fontSize}
         headerMultiple={headerMultiple}
         lineHeight={lineHeight}
         marginMultiple={marginMultiple}
         style={style}
+        className={clsx(
+          enableLatex && styles.latex,
+          isChatMode && styles.chat,
+          mdxMdxClasses(),
+          className,
+        )}
+        {...toDataAttributes({ variant })}
         {...rest}
       >
         <PreviewGroup enable={enableImageGallery}>

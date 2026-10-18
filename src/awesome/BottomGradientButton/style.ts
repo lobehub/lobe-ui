@@ -5,10 +5,12 @@ import { cssVar } from '@/styles/stylex/cssVar.stylex';
 export const styles = stylex.create({
   root: {
     'overflow': 'hidden',
+    'paddingInline': 16,
     'transition': 'all 0.2s ease-in-out',
     'color': { 'default': cssVar.colorTextSecondary, ':hover': cssVar.colorText },
     'cursor': 'pointer',
     'fontWeight': 'bold',
+    'width': 'unset',
     '::before': {
       transition: 'all 0.2s ease-in-out',
       backgroundImage: `linear-gradient(to right, transparent, ${cssVar.gold}, transparent)`,

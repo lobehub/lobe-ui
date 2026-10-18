@@ -7,7 +7,9 @@ import MessageInput from '@/chat/MessageInput';
 import MessageModal from '@/chat/MessageModal';
 import { useControlledState } from '@/hooks/useControlledState';
 import Markdown from '@/Markdown';
+import { toDataAttributes } from '@/utils/bem';
 
+import { chatEditableMessageClasses } from './stable';
 import { type EditableMessageProps } from './type';
 
 const EditableMessage = memo<EditableMessageProps>(
@@ -49,7 +51,7 @@ const EditableMessage = memo<EditableMessageProps>(
     const input = (
       <MessageInput
         shortcut
-        className={clsx(className, classNames?.input)}
+        className={clsx(chatEditableMessageClasses(), className, classNames?.input)}
         classNames={classNames}
         defaultValue={value}
         editButtonSize={editButtonSize}
@@ -59,6 +61,7 @@ const EditableMessage = memo<EditableMessageProps>(
         styles={customStyles}
         text={text}
         variant={variant}
+        {...toDataAttributes({ editing: true })}
         style={{
           ...style,
           ...customStyles?.input,
@@ -79,7 +82,7 @@ const EditableMessage = memo<EditableMessageProps>(
           input
         ) : (
           <Markdown
-            className={clsx(className, classNames?.markdown)}
+            className={clsx(chatEditableMessageClasses(), className, classNames?.markdown)}
             fontSize={fontSize}
             fullFeaturedCodeBlock={fullFeaturedCodeBlock}
             variant={'chat'}

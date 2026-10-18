@@ -1,5 +1,4 @@
 import * as stylex from '@stylexjs/stylex';
-import type { CSSProperties } from 'react';
 
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
@@ -37,16 +36,3 @@ export const styles = stylex.create({
     pointerEvents: 'none',
   },
 });
-
-export const childStyles = {
-  desc: {
-    color: cssVar.colorTextSecondary,
-    pointerEvents: 'none',
-  },
-  img: {
-    color: cssVar.colorText,
-    fontSize: 20 * (22 / 24),
-    height: 20,
-    width: 20,
-  },
-} satisfies Record<string, CSSProperties>;
