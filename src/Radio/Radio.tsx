@@ -1,7 +1,6 @@
 'use client';
 
 import { Radio as BaseRadio } from '@base-ui/react/radio';
-import * as stylex from '@stylexjs/stylex';
 import clsx from 'clsx';
 import { type CSSProperties, memo } from 'react';
 
@@ -9,12 +8,13 @@ import { focusRing } from '@/styles/stylex/focusRing';
 import { styleProps } from '@/styles/stylex/props';
 import Text from '@/Text';
 
+import { radioClasses } from './stable';
 import { styles } from './style';
 import type { RadioProps } from './type';
 
 const Radio = memo<RadioProps>(
   ({
-    size = 16,
+    size: sizeProp,
     backgroundColor,
     children,
     className,
@@ -25,9 +25,10 @@ const Radio = memo<RadioProps>(
     disabled,
     ...rest
   }) => {
+    const size = sizeProp ?? 16;
+    const customSize = sizeProp !== undefined;
     const dotStyle: CSSProperties = {
-      height: size,
-      width: size,
+      ...(customSize && { height: size, width: size }),
       ...(backgroundColor ? { '--lobe-radio-bg': backgroundColor } : {}),
       ...(children ? {} : style),
       ...customStyles?.radio,
@@ -38,14 +39,24 @@ const Radio = memo<RadioProps>(
         disabled={disabled}
         {...rest}
         {...styleProps(
-          [styles.root, focusRing.info],
-          clsx(children ? classNames?.radio : className, classNames?.radio),
+          [styles.root, focusRing.info, !customSize && styles.defaultSize],
+          clsx(
+            !children && radioClasses(),
+            radioClasses('radio'),
+            children ? classNames?.radio : className,
+            classNames?.radio,
+          ),
           dotStyle,
         )}
       >
         <BaseRadio.Indicator
-          {...stylex.props(styles.indicator)}
-          style={{ height: Math.round(size * 0.375), width: Math.round(size * 0.375) }}
+          {...styleProps(
+            [styles.indicator, !customSize && styles.defaultIndicator],
+            radioClasses('indicator'),
+            customSize
+              ? { height: Math.round(size * 0.375), width: Math.round(size * 0.375) }
+              : undefined,
+          )}
         />
       </BaseRadio.Root>
     );
@@ -54,8 +65,8 @@ const Radio = memo<RadioProps>(
 
     return (
       <label
-        {...styleProps(styles.label, clsx(className, classNames?.wrapper), {
-          gap: Math.floor(size / 2),
+        {...styleProps(styles.label, clsx(radioClasses(), className, classNames?.wrapper), {
+          ...(customSize && { gap: Math.floor(size / 2) }),
           ...style,
           ...customStyles?.wrapper,
         })}
@@ -63,7 +74,7 @@ const Radio = memo<RadioProps>(
         {dot}
         <Text
           as={'span'}
-          className={classNames?.text}
+          className={clsx(radioClasses('text'), classNames?.text)}
           style={customStyles?.text}
           {...textProps}
           type={disabled ? 'secondary' : textProps?.type}

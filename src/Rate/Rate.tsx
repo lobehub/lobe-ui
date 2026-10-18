@@ -1,13 +1,15 @@
 'use client';
 
 import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { Star } from 'lucide-react';
-import { type KeyboardEvent, memo, useState } from 'react';
+import { type CSSProperties, type KeyboardEvent, memo, useState } from 'react';
 
 import { useControlledState } from '@/hooks/useControlledState';
-import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
+import { rateClasses } from './stable';
 import { styles } from './style';
 import type { RateProps } from './type';
 
@@ -20,7 +22,7 @@ const Rate = memo<RateProps>(
     allowHalf = false,
     character,
     className,
-    color = cssVar.colorWarning,
+    color,
     count = 5,
     defaultValue = 0,
     disabled = false,
@@ -29,7 +31,7 @@ const Rate = memo<RateProps>(
     onKeyDown,
     onPointerLeave,
     readOnly = false,
-    size = 20,
+    size,
     style,
     value,
     ...rest
@@ -41,7 +43,7 @@ const Rate = memo<RateProps>(
     const step = allowHalf ? 0.5 : 1;
     const displayValue = clamp(hoverValue ?? mergedValue, 0, count);
     const label = `${formatValue(clamp(mergedValue, 0, count))} out of ${count}`;
-    const icon = character ?? <Star fill="currentColor" size={size} />;
+    const icon = character ?? <Star fill="currentColor" size="1em" />;
 
     const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
       onKeyDown?.(event);
@@ -82,7 +84,13 @@ const Rate = memo<RateProps>(
         }}
         {...a11yProps}
         {...rest}
-        {...styleProps(styles.root, className, { gap: gap ?? size / 2, ...style })}
+        {...toDataAttributes({ allowHalf })}
+        {...styleProps(styles.root, clsx(rateClasses(), className), {
+          ...(size !== undefined && { '--lobe-rate-size': `${size}px` }),
+          ...(color !== undefined && { '--lobe-rate-color': color }),
+          ...(gap !== undefined && { gap }),
+          ...style,
+        } as CSSProperties)}
       >
         {Array.from({ length: count }, (_, index) => {
           const fill = clamp(displayValue - index, 0, 1);
@@ -93,25 +101,22 @@ const Rate = memo<RateProps>(
               aria-hidden="true"
               data-index={index}
               key={index}
-              {...styleProps([styles.star, interactive && styles.starInteractive], undefined, {
-                fontSize: size,
-                height: size,
-              })}
+              {...styleProps(
+                [styles.star, interactive && styles.starInteractive],
+                rateClasses('star'),
+              )}
             >
-              <span {...styleProps([styles.icon, styles.empty], undefined, { minWidth: size })}>
-                {icon}
-              </span>
-              <span {...styleProps(styles.fill, undefined, { color, width: `${fill * 100}%` })}>
-                <span {...styleProps(styles.icon, undefined, { minWidth: size })}>{icon}</span>
+              <span {...styleProps([styles.icon, styles.empty], rateClasses('empty'))}>{icon}</span>
+              <span {...styleProps(styles.fill, rateClasses('fill'), { width: `${fill * 100}%` })}>
+                <span {...stylex.props(styles.icon)}>{icon}</span>
               </span>
               {interactive &&
                 targets.map((target) => (
                   <span
-                    {...stylex.props(styles.half)}
+                    {...stylex.props(styles.half, !allowHalf && styles.halfFull)}
                     data-half={target % 1 === 0 && allowHalf ? 'end' : 'start'}
                     data-value={target}
                     key={target}
-                    style={allowHalf ? undefined : { width: '100%' }}
                     onClick={() => setMergedValue(target)}
                     onPointerEnter={() => setHoverValue(target)}
                   />

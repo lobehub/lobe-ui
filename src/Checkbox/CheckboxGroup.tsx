@@ -1,13 +1,30 @@
 'use client';
 
 import { CheckboxGroup as BaseCheckboxGroup } from '@base-ui/react/checkbox-group';
+import clsx from 'clsx';
 import { memo, useMemo } from 'react';
 
+import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
+
 import Checkbox from './Checkbox';
+import { checkboxGroupClasses } from './stable';
+import { styles } from './style';
 import type { CheckboxGroupOption, CheckboxGroupProps } from './type';
 
 const CheckboxGroup = memo<CheckboxGroupProps>(
-  ({ options, onChange, gap = 12, horizontal = true, size, shape, textProps, style, ...rest }) => {
+  ({
+    className,
+    options,
+    onChange,
+    gap,
+    horizontal = true,
+    size,
+    shape,
+    textProps,
+    style,
+    ...rest
+  }) => {
     const items = useMemo<CheckboxGroupOption[]>(
       () =>
         options.map((option) =>
@@ -18,18 +35,18 @@ const CheckboxGroup = memo<CheckboxGroupProps>(
 
     return (
       <BaseCheckboxGroup
-        style={{
-          display: 'flex',
-          flexDirection: horizontal ? 'row' : 'column',
-          flexWrap: 'wrap',
-          gap,
-          ...style,
-        }}
+        {...toDataAttributes({ horizontal })}
+        {...styleProps(
+          [styles.group, !horizontal && styles.groupVertical],
+          clsx(checkboxGroupClasses(), className),
+          { ...(gap !== undefined && { gap }), ...style },
+        )}
         onValueChange={onChange}
         {...rest}
       >
         {items.map((item) => (
           <Checkbox
+            className={checkboxGroupClasses('item')}
             disabled={item.disabled}
             key={item.value}
             name={item.value}

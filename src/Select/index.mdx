@@ -14,6 +14,8 @@ import DemoSearchKeepsValue from './demos/searchKeepsValue.tsx?demo';
 import DemoReactNodeSearch from './demos/reactNodeSearch.tsx?demo';
 import DemoClosedTags from './demos/closedTags.tsx?demo';
 import DemoViewportBounds from './demos/viewportBounds.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { selectClasses } from './stable';
 
 ## Default
 
@@ -104,3 +106,9 @@ The popup is clamped to the space base-ui reports as available, so the search fi
 | suffix        | Suffix container                     |
 | trigger       | Trigger element                      |
 | value         | Value display                        |
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={selectClasses} />

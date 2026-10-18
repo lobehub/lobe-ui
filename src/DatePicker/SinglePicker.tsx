@@ -10,6 +10,7 @@ import type { GenerateConfig } from './core/generate';
 import type { PickerMode } from './core/interface';
 import { normalizeLegacyDateProps } from './legacyDate';
 import { usePickerLocale } from './locale';
+import { datePickerClasses } from './stable';
 import { PREFIX_CLS } from './style';
 import type { GeneratedDatePicker, PickerProps, SinglePickerComponent } from './type';
 import { usePanelKeyboard } from './usePanelKeyboard';
@@ -100,6 +101,7 @@ const generateSinglePicker = <DateType extends object>(
         value,
       });
       const shared = usePickerShared({
+        stable: datePickerClasses,
         allowClear,
         changeOnBlur,
         className,

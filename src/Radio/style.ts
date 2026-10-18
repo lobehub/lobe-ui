@@ -7,6 +7,23 @@ const hover = ':hover:not([data-disabled], [data-checked])';
 const disabled = ':is([data-disabled])';
 
 export const styles = stylex.create({
+  defaultIndicator: {
+    height: 6,
+    width: 6,
+  },
+  defaultSize: {
+    height: 16,
+    width: 16,
+  },
+  group: {
+    gap: 12,
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  groupVertical: {
+    flexDirection: 'column',
+  },
   indicator: {
     borderRadius: '50%',
     flex: 'none',
@@ -14,6 +31,7 @@ export const styles = stylex.create({
     display: 'block',
   },
   label: {
+    gap: 8,
     alignItems: 'center',
     cursor: { 'default': 'pointer', ':has([data-disabled])': 'not-allowed' },
     display: 'inline-flex',

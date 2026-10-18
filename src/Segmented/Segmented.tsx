@@ -11,6 +11,7 @@ import {
 } from 'react';
 
 import { useControlledState } from '@/hooks/useControlledState';
+import { toDataAttributes } from '@/utils/bem';
 
 import {
   SegmentedIndicator,
@@ -111,6 +112,7 @@ const Segmented = <Value extends string = string>({
 
   return (
     <SegmentedRoot<Value>
+      {...toDataAttributes({ size })}
       block={block}
       className={clsx(classNames?.root, classNames?.list, className)}
       disabled={disabled}

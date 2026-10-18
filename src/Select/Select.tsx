@@ -8,6 +8,7 @@ import { memo, useCallback, useEffect, useMemo, useState } from 'react';
 import { menuClassNames, menuStyles } from '@/DropdownMenu/sharedStyle';
 import { styleProps } from '@/styles/stylex/props';
 import { useThemeMode } from '@/styles/theme/scope';
+import { toDataAttributes } from '@/utils/bem';
 
 import { SelectPositioner } from './atoms';
 import { isValueEmpty, shouldIgnoreRootValueChange } from './helpers';
@@ -28,6 +29,7 @@ import {
   SelectTriggerSuffix,
 } from './parts';
 import { renderOptions } from './renderOptions';
+import { selectClasses } from './stable';
 import { styles, triggerStyles } from './style';
 import { type SelectOption, type SelectProps } from './type';
 
@@ -194,8 +196,6 @@ const Select = memo<SelectProps<any>>(
     const popupStyle = useMemo(() => {
       const maxHeight = isItemAligned ? '80vh' : `${listHeight}px`;
       const baseStyle: React.CSSProperties = {
-        maxWidth: 'var(--available-width)',
-        minWidth: 'var(--anchor-width)',
         ['--lobe-select-popup-max-height' as any]: maxHeight,
       };
 
@@ -212,9 +212,10 @@ const Select = memo<SelectProps<any>>(
       return { ...baseStyle, minWidth: 'max-content' };
     }, [isItemAligned, listHeight, popupMatchSelectWidth]);
 
+    const dataAttributes = toDataAttributes({ mode, shadow, size, variant: resolvedVariant });
     const triggerProps = styleProps(
       triggerStyles({ shadow, size, variant: resolvedVariant }),
-      clsx(className, classNames?.root, classNames?.trigger),
+      clsx(selectClasses(), className, classNames?.root, classNames?.trigger),
       style,
     );
 
@@ -254,16 +255,22 @@ const Select = memo<SelectProps<any>>(
       >
         <BaseSelect.Trigger
           autoFocus={!isTags && autoFocus}
+          {...dataAttributes}
           {...triggerProps}
           disabled={disabled}
           nativeButton={!isTags}
           render={isTags ? <div /> : undefined}
         >
           {prefixNode !== null && prefixNode !== undefined && (
-            <span {...styleProps(styles.prefix, classNames?.prefix)}>{prefixNode}</span>
+            <span {...styleProps(styles.prefix, clsx(selectClasses('prefix'), classNames?.prefix))}>
+              {prefixNode}
+            </span>
           )}
           <BaseSelect.Value
-            {...styleProps([styles.value, isTags && styles.tagsValue], classNames?.value)}
+            {...styleProps(
+              [styles.value, isTags && styles.tagsValue],
+              clsx(selectClasses('value'), classNames?.value),
+            )}
           >
             {renderValue}
           </BaseSelect.Value>
@@ -291,15 +298,23 @@ const Select = memo<SelectProps<any>>(
 
         <BaseSelect.Portal container={portalContainer}>
           <SelectPositioner
+            {...dataAttributes}
             align="start"
             alignItemWithTrigger={isItemAligned}
             side="bottom"
             sideOffset={6}
           >
             <BaseSelect.Popup
+              {...dataAttributes}
               {...styleProps(
-                [menuStyles.popup, styles.popup],
-                clsx(menuClassNames.popup, popupClassName, classNames?.popup, classNames?.dropdown),
+                [menuStyles.popup, styles.popup, styles.popupBounds],
+                clsx(
+                  menuClassNames.popup,
+                  selectClasses('popup'),
+                  popupClassName,
+                  classNames?.popup,
+                  classNames?.dropdown,
+                ),
                 popupStyle,
               )}
             >

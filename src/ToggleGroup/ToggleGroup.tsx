@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import { type CSSProperties, type Ref, useMemo } from 'react';
 
 import { useControlledState } from '@/hooks/useControlledState';
+import { toDataAttributes } from '@/utils/bem';
 
 import {
   ToggleGroupItem,
@@ -81,6 +82,7 @@ const ToggleGroup = <Value extends string = string>(props: ToggleGroupProps<Valu
 
   return (
     <ToggleGroupRoot<Value>
+      {...toDataAttributes({ size })}
       className={clsx(classNames?.root, className)}
       disabled={disabled}
       multiple={multiple}

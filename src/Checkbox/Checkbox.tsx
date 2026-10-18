@@ -9,13 +9,15 @@ import { type CSSProperties, memo } from 'react';
 import { focusRing } from '@/styles/stylex/focusRing';
 import { styleProps } from '@/styles/stylex/props';
 import Text from '@/Text';
+import { toDataAttributes } from '@/utils/bem';
 
+import { checkboxClasses } from './stable';
 import { styles } from './style';
 import type { CheckboxProps } from './type';
 
 const Checkbox = memo<CheckboxProps>(
   ({
-    size = 16,
+    size: sizeProp,
     shape = 'square',
     backgroundColor,
     children,
@@ -29,40 +31,47 @@ const Checkbox = memo<CheckboxProps>(
     indeterminate,
     ...rest
   }) => {
+    const size = sizeProp ?? 16;
+    const customSize = sizeProp !== undefined;
     const boxStyle: CSSProperties = {
-      borderRadius: shape === 'square' ? `max(4px, ${Math.round(size / 4)}px)` : '50%',
-      height: size,
-      width: size,
+      ...(customSize && { height: size, width: size }),
+      ...(customSize &&
+        shape === 'square' && { borderRadius: `max(4px, ${Math.round(size / 4)}px)` }),
       ...(backgroundColor ? { '--lobe-checkbox-bg': backgroundColor } : {}),
       ...(children ? {} : style),
       ...customStyles?.checkbox,
     };
+
+    const iconStyle = shape === 'square' ? styles.iconSquare : styles.iconCircle;
 
     const box = (
       <BaseCheckbox.Root
         disabled={disabled}
         indeterminate={indeterminate}
         onCheckedChange={onChange}
+        {...(children ? undefined : toDataAttributes({ shape }))}
         {...rest}
         {...styleProps(
-          [styles.root, focusRing.info],
-          clsx(children ? classNames?.checkbox : className, classNames?.checkbox),
+          [
+            styles.root,
+            focusRing.info,
+            !customSize && styles.defaultSize,
+            shape === 'square' ? !customSize && styles.defaultSquare : styles.circle,
+          ],
+          clsx(
+            !children && checkboxClasses(),
+            checkboxClasses('checkbox'),
+            children ? classNames?.checkbox : className,
+            classNames?.checkbox,
+          ),
           boxStyle,
         )}
       >
-        <BaseCheckbox.Indicator {...stylex.props(styles.indicator)}>
+        <BaseCheckbox.Indicator {...styleProps(styles.indicator, checkboxClasses('indicator'))}>
           {indeterminate ? (
-            <Minus
-              size={size}
-              strokeWidth={3}
-              style={{ transform: `scale(${shape === 'square' ? 0.75 : 0.66})` }}
-            />
+            <Minus size={size} strokeWidth={3} {...stylex.props(iconStyle)} />
           ) : (
-            <CheckIcon
-              size={size}
-              strokeWidth={3}
-              style={{ transform: `scale(${shape === 'square' ? 0.75 : 0.66})` }}
-            />
+            <CheckIcon size={size} strokeWidth={3} {...stylex.props(iconStyle)} />
           )}
         </BaseCheckbox.Indicator>
       </BaseCheckbox.Root>
@@ -72,8 +81,9 @@ const Checkbox = memo<CheckboxProps>(
 
     return (
       <label
-        {...styleProps(styles.label, clsx(className, classNames?.wrapper), {
-          gap: Math.floor(size / 2),
+        {...toDataAttributes({ shape })}
+        {...styleProps(styles.label, clsx(checkboxClasses(), className, classNames?.wrapper), {
+          ...(customSize && { gap: Math.floor(size / 2) }),
           ...style,
           ...customStyles?.wrapper,
         })}
@@ -81,7 +91,7 @@ const Checkbox = memo<CheckboxProps>(
         {box}
         <Text
           as={'span'}
-          className={classNames?.text}
+          className={clsx(checkboxClasses('text'), classNames?.text)}
           style={customStyles?.text}
           {...textProps}
           type={disabled ? 'secondary' : textProps?.type}

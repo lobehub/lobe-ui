@@ -1,6 +1,6 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { memo } from 'react';
 
 import { Flexbox } from '@/Flex';
@@ -8,7 +8,9 @@ import { useControlledState } from '@/hooks/useControlledState';
 import Icon from '@/Icon';
 import Img from '@/Img';
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
+import { imageSelectClasses } from './stable';
 import { styles } from './styles';
 import type { ImageSelectProps } from './type';
 
@@ -21,8 +23,8 @@ const ImageSelect = memo<ImageSelectProps>(
     defaultValue,
     onChange,
     options,
-    width = 144,
-    height = 86,
+    width,
+    height,
     styles: customStyles,
     classNames,
     unoptimized,
@@ -35,31 +37,46 @@ const ImageSelect = memo<ImageSelectProps>(
     });
 
     return (
-      <Flexbox horizontal className={className} gap={16} ref={ref} style={style} {...rest}>
+      <Flexbox
+        horizontal
+        className={clsx(imageSelectClasses(), className)}
+        gap={16}
+        ref={ref}
+        style={style}
+        {...rest}
+      >
         {options?.map((item) => {
           const isActive = item.value === currentValue;
           return (
             <Flexbox
               align={'center'}
               gap={4}
-              {...stylex.props(styles.container, isActive && styles.active)}
+              {...toDataAttributes({ active: isActive })}
+              {...styleProps(
+                [styles.container, isActive && styles.active],
+                imageSelectClasses('item'),
+              )}
               key={item.value}
               onClick={() => setCurrentValue(item.value)}
             >
               <Img
                 alt={item.alt || item.value}
-                height={height}
+                height={height ?? 86}
                 src={item.img}
                 unoptimized={unoptimized}
-                width={width}
-                {...styleProps([styles.img, isActive && styles.imgActive], classNames?.img, {
-                  ...customStyles?.img,
-                  height,
-                  width,
-                })}
+                width={width ?? 144}
+                {...styleProps(
+                  [styles.img, isActive && styles.imgActive],
+                  clsx(imageSelectClasses('img'), classNames?.img),
+                  {
+                    ...customStyles?.img,
+                    ...(height !== undefined && { height }),
+                    ...(width !== undefined && { width }),
+                  },
+                )}
               />
 
-              <Flexbox horizontal align={'center'} gap={4}>
+              <Flexbox horizontal align={'center'} className={imageSelectClasses('label')} gap={4}>
                 {item.icon && <Icon icon={item.icon} />}
                 {item.label}
               </Flexbox>

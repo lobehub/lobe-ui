@@ -8,6 +8,7 @@ import { useControlledState } from '@/hooks/useControlledState';
 import { styleProps } from '@/styles/stylex/props';
 
 import { TreeContext, type TreeContextValue } from './context';
+import { treeClasses } from './stable';
 import { styles } from './style';
 import TreeNode from './TreeNode';
 import type { TreeDataNode, TreeProps } from './type';
@@ -213,7 +214,7 @@ const Tree = memo<TreeProps>(
         <FocusScope
           id={scopeId}
           role="tree"
-          {...styleProps(styles.root, clsx(classNames.root, className), {
+          {...styleProps(styles.root, clsx(treeClasses(), classNames.root, className), {
             ...customStyles.root,
             ...style,
           })}

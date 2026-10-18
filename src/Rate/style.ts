@@ -6,6 +6,7 @@ const reducedMotion = '@media (prefers-reduced-motion: reduce)';
 const sliderFocus = ":is([role='slider']):focus-visible";
 const sliderEnabled = ":is([role='slider']):not([aria-disabled='true'])";
 const disabled = ":is([aria-disabled='true'])";
+const rateSize = 'var(--lobe-rate-size, 20px)';
 
 export const styles = stylex.create({
   empty: {
@@ -16,6 +17,7 @@ export const styles = stylex.create({
   fill: {
     insetBlock: 0,
     overflow: 'hidden',
+    color: `var(--lobe-rate-color, ${cssVar.colorWarning})`,
     display: 'flex',
     insetInlineStart: 0,
     pointerEvents: 'none',
@@ -28,14 +30,19 @@ export const styles = stylex.create({
     position: 'absolute',
     width: '50%',
   },
+  halfFull: {
+    width: '100%',
+  },
   icon: {
     flex: 'none',
     alignItems: 'center',
     display: 'inline-flex',
     justifyContent: 'center',
+    minWidth: rateSize,
   },
   root: {
     borderRadius: { default: null, [sliderFocus]: 4 },
+    gap: `calc(${rateSize} / 2)`,
     outline: { default: 'none', [sliderFocus]: `2px solid ${cssVar.colorText}` },
     alignItems: 'center',
     cursor: {
@@ -53,9 +60,11 @@ export const styles = stylex.create({
     transition: 'transform 0.15s ease',
     alignItems: 'center',
     display: 'inline-flex',
+    fontSize: rateSize,
     justifyContent: 'center',
     position: 'relative',
     transitionDuration: { default: null, [reducedMotion]: '0s' },
+    height: rateSize,
   },
   starInteractive: {
     transform: { 'default': null, ':hover': 'scale(1.1)' },

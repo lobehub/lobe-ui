@@ -6,33 +6,58 @@ import { actionIconGroupClasses } from '@/ActionIconGroup/stable';
 import { autoCompleteClasses } from '@/AutoComplete/stable';
 import { burgerClasses } from '@/Burger/stable';
 import { buttonClasses, splitButtonClasses } from '@/Button/stable';
+import { checkboxClasses, checkboxGroupClasses } from '@/Checkbox/stable';
+import { colorPickerClasses } from '@/ColorPicker/stable';
+import { colorSwatchesClasses } from '@/ColorSwatches/stable';
 import { copyButtonClasses } from '@/CopyButton/stable';
+import { datePickerClasses, dateRangePickerClasses } from '@/DatePicker/stable';
 import { downloadButtonClasses } from '@/DownloadButton/stable';
 import { draggablePanelClasses } from '@/DraggablePanel/stable';
 import { editableTextClasses } from '@/EditableText/stable';
 import { hotkeyClasses } from '@/Hotkey/stable';
 import { hotkeyInputClasses } from '@/HotkeyInput/stable';
+import { imageSelectClasses } from '@/ImageSelect/stable';
 import {
   ActionIcon,
   ActionIconGroup,
   AutoComplete,
   Burger,
   Button,
+  Checkbox,
+  CheckboxGroup,
+  ColorPicker,
+  ColorSwatches,
   CopyButton,
+  DatePicker,
+  DateRangePicker,
+  DayjsDatePicker,
+  DayjsDateRangePicker,
   DownloadButton,
   DraggablePanel,
   EditableText,
   Hotkey,
   HotkeyInput,
+  ImageSelect,
   Input,
   InputNumber,
   InputOTP,
   InputPassword,
   Popover,
+  Radio,
+  RadioGroup,
+  Rate,
   SearchBar,
+  Segmented,
+  Select,
+  Slider,
+  SliderWithInput,
   SplitButton,
   Switch,
   TextArea,
+  ToggleGroup,
+  Tree,
+  Upload,
+  UploadDragger,
 } from '@/index';
 import {
   inputClasses,
@@ -42,8 +67,16 @@ import {
   textAreaClasses,
 } from '@/Input/stable';
 import { popoverClasses } from '@/Popover/stable';
+import { radioClasses, radioGroupClasses } from '@/Radio/stable';
+import { rateClasses } from '@/Rate/stable';
 import { searchBarClasses } from '@/SearchBar/stable';
+import { segmentedClasses } from '@/Segmented/stable';
+import { selectClasses } from '@/Select/stable';
+import { sliderClasses, sliderWithInputClasses } from '@/Slider/stable';
 import { switchClasses } from '@/Switch/stable';
+import { toggleGroupClasses } from '@/ToggleGroup/stable';
+import { treeClasses } from '@/Tree/stable';
+import { uploadClasses, uploadDraggerClasses } from '@/Upload/stable';
 import type { AnyStableClasses } from '@/utils/bem';
 
 export interface StableFixture {
@@ -54,6 +87,144 @@ export interface StableFixture {
 }
 
 export const FIXTURES: Record<string, StableFixture> = {
+  Checkbox: {
+    classes: checkboxClasses,
+    render: ({ className }) => (
+      <Checkbox defaultChecked className={className}>
+        Label
+      </Checkbox>
+    ),
+  },
+  CheckboxGroup: {
+    classes: checkboxGroupClasses,
+    render: ({ className }) => <CheckboxGroup className={className} options={['a', 'b']} />,
+  },
+  ColorPicker: {
+    classes: colorPickerClasses,
+    conditional: [
+      'text',
+      'caret',
+      'popup',
+      'panel',
+      'controls',
+      'eye-dropper',
+      'sliders',
+      'compare',
+    ],
+    render: ({ className }) => <ColorPicker className={className} defaultValue="#ff0000" />,
+  },
+  ColorSwatches: {
+    classes: colorSwatchesClasses,
+    render: ({ className }) => (
+      <ColorSwatches
+        enableColorPicker
+        className={className}
+        colors={[{ color: '#f00', title: 'Red' }]}
+        defaultValue="#f00"
+      />
+    ),
+  },
+  DatePicker: {
+    classes: datePickerClasses,
+    conditional: ['prefix', 'container', 'header', 'body', 'content', 'item', 'footer', 'popup'],
+    render: ({ className }) => <DatePicker className={className} />,
+  },
+  DateRangePicker: {
+    classes: dateRangePickerClasses,
+    conditional: ['prefix', 'container', 'header', 'body', 'content', 'item', 'footer', 'popup'],
+    render: ({ className }) => <DateRangePicker className={className} />,
+  },
+  DayjsDatePicker: {
+    classes: datePickerClasses,
+    conditional: ['prefix', 'container', 'header', 'body', 'content', 'item', 'footer', 'popup'],
+    render: ({ className }) => <DayjsDatePicker className={className} />,
+  },
+  DayjsDateRangePicker: {
+    classes: dateRangePickerClasses,
+    conditional: ['prefix', 'container', 'header', 'body', 'content', 'item', 'footer', 'popup'],
+    render: ({ className }) => <DayjsDateRangePicker className={className} />,
+  },
+  ImageSelect: {
+    classes: imageSelectClasses,
+    render: ({ className }) => (
+      <ImageSelect className={className} options={[{ img: 'data:,', label: 'A', value: 'a' }]} />
+    ),
+  },
+  Radio: {
+    classes: radioClasses,
+    conditional: ['indicator'],
+    render: ({ className }) => (
+      <Radio className={className} value="a">
+        Label
+      </Radio>
+    ),
+  },
+  RadioGroup: {
+    classes: radioGroupClasses,
+    render: ({ className }) => <RadioGroup className={className} options={['a', 'b']} />,
+  },
+  Rate: {
+    classes: rateClasses,
+    render: ({ className }) => <Rate className={className} defaultValue={2.5} />,
+  },
+  Segmented: {
+    classes: segmentedClasses,
+    render: ({ className }) => (
+      <Segmented
+        className={className}
+        options={[
+          { icon: <span />, label: 'A', value: 'a' },
+          { label: 'B', value: 'b' },
+        ]}
+      />
+    ),
+  },
+  Select: {
+    classes: selectClasses,
+    conditional: [
+      'prefix',
+      'search',
+      'clear',
+      'group',
+      'group-label',
+      'empty',
+      'scroll-up-arrow',
+      'scroll-down-arrow',
+      'arrow',
+      'item-indicator',
+    ],
+    render: ({ className }) => (
+      <Select open className={className} options={[{ label: 'A', value: 'a' }]} />
+    ),
+  },
+  Slider: {
+    classes: sliderClasses,
+    render: ({ className }) => <Slider className={className} defaultValue={20} />,
+  },
+  SliderWithInput: {
+    classes: sliderWithInputClasses,
+    render: ({ className }) => <SliderWithInput className={className} defaultValue={20} />,
+  },
+  ToggleGroup: {
+    classes: toggleGroupClasses,
+    render: ({ className }) => (
+      <ToggleGroup className={className} options={[{ icon: <span />, label: 'A', value: 'a' }]} />
+    ),
+  },
+  Tree: {
+    classes: treeClasses,
+    conditional: ['guide', 'checkbox', 'icon', 'panel'],
+    render: ({ className }) => <Tree className={className} treeData={[{ key: 'a', title: 'A' }]} />,
+  },
+  Upload: {
+    classes: uploadClasses,
+    conditional: ['icon', 'title', 'description'],
+    render: ({ className }) => <Upload className={className}>Upload</Upload>,
+  },
+  UploadDragger: {
+    classes: uploadDraggerClasses,
+    render: ({ className }) => <UploadDragger className={className} />,
+  },
   AutoComplete: {
     classes: autoCompleteClasses,
     conditional: ['empty'],
@@ -369,18 +540,10 @@ export const PENDING: readonly string[] = [
   'Breadcrumb',
   'Carousel',
   'Center',
-  'Checkbox',
-  'CheckboxGroup',
   'CodeDiff',
   'CodeEditor',
   'Collapsible',
-  'ColorPicker',
-  'ColorSwatches',
   'ContextMenuTrigger',
-  'DatePicker',
-  'DateRangePicker',
-  'DayjsDatePicker',
-  'DayjsDateRangePicker',
   'Descriptions',
   'Divider',
   'DraggableSideNav',
@@ -411,7 +574,6 @@ export const PENDING: readonly string[] = [
   'HtmlPreviewIframe',
   'Icon',
   'Image',
-  'ImageSelect',
   'Layout',
   'List',
   'Markdown',
@@ -423,21 +585,14 @@ export const PENDING: readonly string[] = [
   'PatchDiff',
   'PreviewGroup',
   'Progress',
-  'Radio',
-  'RadioGroup',
-  'Rate',
   'Result',
   'ScrollArea',
   'ScrollShadow',
   'SearchResultCards',
-  'Segmented',
-  'Select',
   'SideNav',
   'Skeleton',
   'SkeletonAvatar',
   'SkeletonText',
-  'Slider',
-  'SliderWithInput',
   'Snippet',
   'SortableList',
   'Spin',
@@ -450,12 +605,8 @@ export const PENDING: readonly string[] = [
   'Tag',
   'Text',
   'ThemeScope',
-  'ToggleGroup',
   'Tooltip',
-  'Tree',
   'Typography',
-  'Upload',
-  'UploadDragger',
   'Video',
   'awesome/AgentSkillCard',
   'awesome/AuroraBackground',

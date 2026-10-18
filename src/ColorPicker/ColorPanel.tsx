@@ -7,10 +7,12 @@ import type { CSSProperties } from 'react';
 import Icon from '@/Icon';
 import { Slider } from '@/Slider';
 import { focusRing } from '@/styles/stylex/focusRing';
+import { styleProps } from '@/styles/stylex/props';
 
 import { type ColorFormat, formatColor, type Hsva, parseColor } from './color';
 import ColorInputs from './ColorInputs';
 import SaturationArea from './SaturationArea';
+import { colorPickerClasses } from './stable';
 import { styles } from './style';
 import Swatches from './Swatches';
 
@@ -66,7 +68,7 @@ const ColorPanel = ({
   });
 
   return (
-    <div {...stylex.props(styles.panel)}>
+    <div {...styleProps(styles.panel, colorPickerClasses('panel'))}>
       <SaturationArea
         color={opaque}
         hue={hsva.h}
@@ -76,12 +78,12 @@ const ColorPanel = ({
         onChange={(s, v) => onUpdate({ ...hsva, s, v })}
         onChangeComplete={(s, v) => onCommit({ ...hsva, s, v })}
       />
-      <div {...stylex.props(styles.controls)}>
+      <div {...styleProps(styles.controls, colorPickerClasses('controls'))}>
         {hasEyeDropper() && (
           <button
             aria-label={labels.eyeDropper}
             type="button"
-            {...stylex.props(focusRing.info, styles.eyeDropper)}
+            {...styleProps([focusRing.info, styles.eyeDropper], colorPickerClasses('eye-dropper'))}
             onClick={async () => {
               const dropper = new (
                 window as unknown as { EyeDropper: EyeDropperConstructor }
@@ -93,7 +95,7 @@ const ColorPanel = ({
             <Icon icon={Pipette} size={14} />
           </button>
         )}
-        <div {...stylex.props(styles.sliders)}>
+        <div {...styleProps(styles.sliders, colorPickerClasses('sliders'))}>
           <Slider
             aria-label={labels.hue}
             classNames={sliderClassNames('hueTrack')}
@@ -124,7 +126,12 @@ const ColorPanel = ({
             />
           )}
         </div>
-        <div {...stylex.props(styles.compare)} style={{ height: alpha ? 30 : 28 }}>
+        <div
+          {...styleProps(
+            [styles.compare, alpha && styles.compareAlpha],
+            colorPickerClasses('compare'),
+          )}
+        >
           <button
             aria-label={labels.original}
             title={labels.original}

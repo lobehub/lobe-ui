@@ -27,6 +27,7 @@ import {
   type FilledPickerStyles,
   mergePickerSemantic,
 } from './semantic';
+import type { datePickerClasses } from './stable';
 import { PREFIX_CLS, ROOT_CLS } from './style';
 import type { DatePickerBaseProps, PickerClassNames, PickerStyles } from './type';
 
@@ -63,6 +64,7 @@ type SharedInput = Pick<
   classNames?: PickerClassNames;
   generateConfig?: GenerateConfig<any>;
   semanticProps: object;
+  stable: typeof datePickerClasses;
   styles?: PickerStyles;
 };
 
@@ -129,6 +131,7 @@ export const usePickerShared = ({
   semanticProps,
   shadow,
   size,
+  stable,
   status,
   styles,
   suffixIcon,
@@ -171,12 +174,26 @@ export const usePickerShared = ({
     },
     classNames: {
       ...semanticClassNames,
+      input: clsx(stable('input'), semanticClassNames.input),
       popup: {
         ...semanticClassNames.popup,
-        root: clsx(isDarkMode && `${PREFIX_CLS}-dropdown-dark`, semanticClassNames.popup.root),
+        body: clsx(stable('body'), semanticClassNames.popup.body),
+        container: clsx(stable('container'), semanticClassNames.popup.container),
+        content: clsx(stable('content'), semanticClassNames.popup.content),
+        footer: clsx(stable('footer'), semanticClassNames.popup.footer),
+        header: clsx(stable('header'), semanticClassNames.popup.header),
+        item: clsx(stable('item'), semanticClassNames.popup.item),
+        root: clsx(
+          isDarkMode && `${PREFIX_CLS}-dropdown-dark`,
+          stable('popup'),
+          semanticClassNames.popup.root,
+        ),
       },
+      prefix: clsx(stable('prefix'), semanticClassNames.prefix),
+      suffix: clsx(stable('suffix'), semanticClassNames.suffix),
     },
     className: clsx(
+      stable(),
       rootVariants({
         shadow,
         size: size === 'medium' ? 'middle' : size,

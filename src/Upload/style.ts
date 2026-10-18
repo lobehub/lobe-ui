@@ -3,6 +3,9 @@ import * as stylex from '@stylexjs/stylex';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
 export const styles = stylex.create({
+  input: {
+    display: 'none',
+  },
   dragger: {
     borderColor: { 'default': cssVar.colorBorder, ':hover': cssVar.colorTextTertiary },
     borderRadius: cssVar.borderRadiusLG,
