@@ -554,5 +554,3 @@ export const EXEMPT: Record<string, string> = {
   'mdx/Tab': 'atom of mdx/Tabs',
   'mobile/ChatHeaderTitle': 'atom of mobile/ChatHeader',
 };
-
-export const PENDING: readonly string[] = [];

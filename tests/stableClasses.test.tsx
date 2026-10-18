@@ -4,7 +4,7 @@ import type { ReactElement, ReactNode } from 'react';
 
 import { MotionProvider } from '@/MotionProvider';
 
-import { EXEMPT, FIXTURES, PENDING, type StableFixture } from './stableClasses.fixtures';
+import { EXEMPT, FIXTURES, type StableFixture } from './stableClasses.fixtures';
 
 const ENTRIES: Record<string, () => Promise<Record<string, unknown>>> = {
   '': () => import('@/index'),
@@ -63,7 +63,7 @@ afterEach(cleanup);
 describe('stable class names', () => {
   it('classifies every public export exactly once', async () => {
     const exported = await collectExportKeys();
-    const listed = [...Object.keys(FIXTURES), ...Object.keys(EXEMPT), ...PENDING];
+    const listed = [...Object.keys(FIXTURES), ...Object.keys(EXEMPT)];
 
     const duplicates = listed.filter((key, index) => listed.indexOf(key) !== index);
     expect(duplicates).toEqual([]);
