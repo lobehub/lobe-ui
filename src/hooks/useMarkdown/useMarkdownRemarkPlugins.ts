@@ -9,6 +9,7 @@ import type { Pluggable } from 'unified';
 
 import { useMarkdownContext } from '@/Markdown/components/MarkdownProvider';
 import { remarkBr } from '@/Markdown/plugins/remarkBr';
+import { remarkCjkAutolink } from '@/Markdown/plugins/remarkCjkAutolink';
 import { remarkCustomFootnotes } from '@/Markdown/plugins/remarkCustomFootnotes';
 import { remarkGfmPlus } from '@/Markdown/plugins/remarkGfmPlus';
 import { remarkVideo } from '@/Markdown/plugins/remarkVideo';
@@ -32,6 +33,8 @@ export const useMarkdownRemarkPlugins = (): Pluggable[] => {
         // Parse math before GFM so that '|' inside $...$ isn't treated as a table separator
         enableLatex && remarkMath,
         [remarkGfm, { singleTilde: false }],
+        // Trim CJK punctuation that GFM's autolink literal wrongly swallows into the URL
+        remarkCjkAutolink,
         !allowHtml && remarkBr,
         !allowHtml && remarkGfmPlus,
         !allowHtml && remarkVideo,
