@@ -9,6 +9,8 @@ import DemoSizes from './demos/sizes.tsx?demo';
 import DemoIcons from './demos/icons.tsx?demo';
 import DemoOutdent from './demos/outdent.tsx?demo';
 import DemoSplit from './demos/split.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { buttonClasses, splitButtonClasses } from './stable';
 
 ## Type, danger & ghost
 
@@ -47,3 +49,15 @@ The component forwards all standard `<button>` (or `<a>` when `href` is set) HTM
 The props listed above match antd `Button`'s behaviour, so most call sites swap import only. Styling matches the rest of the library — tighter heights (`24 / 32 / 40` for `small / middle / large`) and a subtle hover micro-lift, no hover shadow.
 
 `ghost` is the one deviation. antd treats it as an on-dark-background variant, which left `ghost danger` indistinguishable from plain `danger` on a light surface. Here it strips the fill and the border instead, leaving the type's semantic color — the borderless icon button an inline delete action wants.
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+### Button
+
+<StableClassTable of={buttonClasses} />
+
+### SplitButton
+
+<StableClassTable of={splitButtonClasses} />

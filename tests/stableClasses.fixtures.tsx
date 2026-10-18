@@ -1,8 +1,48 @@
+import { Copy, Menu as MenuIcon } from 'lucide-react';
 import type { ReactElement } from 'react';
 
+import { actionIconClasses } from '@/ActionIcon/stable';
+import { actionIconGroupClasses } from '@/ActionIconGroup/stable';
+import { autoCompleteClasses } from '@/AutoComplete/stable';
+import { burgerClasses } from '@/Burger/stable';
+import { buttonClasses, splitButtonClasses } from '@/Button/stable';
+import { copyButtonClasses } from '@/CopyButton/stable';
+import { downloadButtonClasses } from '@/DownloadButton/stable';
 import { draggablePanelClasses } from '@/DraggablePanel/stable';
-import { DraggablePanel, Popover, Switch } from '@/index';
+import { editableTextClasses } from '@/EditableText/stable';
+import { hotkeyClasses } from '@/Hotkey/stable';
+import { hotkeyInputClasses } from '@/HotkeyInput/stable';
+import {
+  ActionIcon,
+  ActionIconGroup,
+  AutoComplete,
+  Burger,
+  Button,
+  CopyButton,
+  DownloadButton,
+  DraggablePanel,
+  EditableText,
+  Hotkey,
+  HotkeyInput,
+  Input,
+  InputNumber,
+  InputOTP,
+  InputPassword,
+  Popover,
+  SearchBar,
+  SplitButton,
+  Switch,
+  TextArea,
+} from '@/index';
+import {
+  inputClasses,
+  inputNumberClasses,
+  inputOTPClasses,
+  inputPasswordClasses,
+  textAreaClasses,
+} from '@/Input/stable';
 import { popoverClasses } from '@/Popover/stable';
+import { searchBarClasses } from '@/SearchBar/stable';
 import { switchClasses } from '@/Switch/stable';
 import type { AnyStableClasses } from '@/utils/bem';
 
@@ -14,6 +54,119 @@ export interface StableFixture {
 }
 
 export const FIXTURES: Record<string, StableFixture> = {
+  AutoComplete: {
+    classes: autoCompleteClasses,
+    conditional: ['empty'],
+    portal: false,
+    render: ({ className }) => (
+      <AutoComplete
+        allowClear
+        defaultOpen
+        className={className}
+        defaultValue="a"
+        options={[{ value: 'apple' }]}
+        prefix="P"
+        suffix="S"
+      />
+    ),
+  },
+  EditableText: {
+    classes: editableTextClasses,
+    conditional: ['input'],
+    render: ({ className }) => <EditableText className={className} value="Text" />,
+  },
+  Hotkey: {
+    classes: hotkeyClasses,
+    render: ({ className }) => <Hotkey className={className} keys="mod+k" />,
+  },
+  HotkeyInput: {
+    classes: hotkeyInputClasses,
+    conditional: ['placeholder', 'error'],
+    render: ({ className }) => (
+      <HotkeyInput allowClear allowReset className={className} resetValue="mod+j" value="mod+k" />
+    ),
+  },
+  Input: {
+    classes: inputClasses,
+    render: ({ className }) => (
+      <Input allowClear className={className} defaultValue="a" prefix="P" suffix="S" />
+    ),
+  },
+  InputNumber: {
+    classes: inputNumberClasses,
+    render: ({ className }) => <InputNumber className={className} prefix="P" suffix="S" />,
+  },
+  InputOTP: {
+    classes: inputOTPClasses,
+    render: ({ className }) => <InputOTP className={className} length={4} />,
+  },
+  InputPassword: {
+    classes: inputPasswordClasses,
+    render: ({ className }) => <InputPassword className={className} />,
+  },
+  SearchBar: {
+    classes: searchBarClasses,
+    render: ({ className }) => <SearchBar enableShortKey className={className} />,
+  },
+  TextArea: {
+    classes: textAreaClasses,
+    render: ({ className }) => (
+      <TextArea allowClear showCount className={className} defaultValue="a" />
+    ),
+  },
+  ActionIcon: {
+    classes: actionIconClasses,
+    render: ({ className }) => <ActionIcon className={className} icon={Copy} />,
+  },
+  ActionIconGroup: {
+    classes: actionIconGroupClasses,
+    render: ({ className }) => (
+      <ActionIconGroup
+        className={className}
+        items={[{ icon: Copy, key: 'copy', label: 'Copy' }]}
+        menu={[{ key: 'more', label: 'More' }]}
+      />
+    ),
+  },
+  Burger: {
+    classes: burgerClasses,
+    conditional: ['header', 'footer'],
+    render: ({ className }) => (
+      <Burger
+        className={className}
+        items={[{ icon: MenuIcon, key: 'a', label: 'A' }]}
+        opened={false}
+        onOpenChange={() => {}}
+      />
+    ),
+  },
+  Button: {
+    classes: buttonClasses,
+    render: ({ className }) => (
+      <Button className={className} icon={Copy}>
+        Button
+      </Button>
+    ),
+  },
+  CopyButton: {
+    classes: copyButtonClasses,
+    render: ({ className }) => <CopyButton className={className} content="text" />,
+  },
+  DownloadButton: {
+    classes: downloadButtonClasses,
+    render: ({ className }) => (
+      <DownloadButton blobUrl="data:text/plain,a" className={className} fileName="a.txt" />
+    ),
+  },
+  SplitButton: {
+    classes: splitButtonClasses,
+    render: ({ className }) => (
+      <SplitButton className={className}>
+        <SplitButton.Main>Main</SplitButton.Main>
+        <SplitButton.Menu items={[{ key: 'a', label: 'A' }]} />
+      </SplitButton>
+    ),
+  },
   DraggablePanel: {
     classes: draggablePanelClasses,
     conditional: ['container', 'header', 'body', 'footer'],
@@ -207,18 +360,13 @@ export const EXEMPT: Record<string, string> = {
 
 export const PENDING: readonly string[] = [
   'Accordion',
-  'ActionIcon',
-  'ActionIconGroup',
   'Alert',
   'Anchor',
-  'AutoComplete',
   'Avatar',
   'AvatarGroup',
   'Badge',
   'Block',
   'Breadcrumb',
-  'Burger',
-  'Button',
   'Carousel',
   'Center',
   'Checkbox',
@@ -229,18 +377,15 @@ export const PENDING: readonly string[] = [
   'ColorPicker',
   'ColorSwatches',
   'ContextMenuTrigger',
-  'CopyButton',
   'DatePicker',
   'DateRangePicker',
   'DayjsDatePicker',
   'DayjsDateRangePicker',
   'Descriptions',
   'Divider',
-  'DownloadButton',
   'DraggableSideNav',
   'Drawer',
   'DropdownMenu',
-  'EditableText',
   'EditorSlashMenu',
   'EmojiPicker',
   'Empty',
@@ -262,17 +407,11 @@ export const PENDING: readonly string[] = [
   'GuideCard',
   'Header',
   'Highlighter',
-  'Hotkey',
-  'HotkeyInput',
   'HtmlPreview',
   'HtmlPreviewIframe',
   'Icon',
   'Image',
   'ImageSelect',
-  'Input',
-  'InputNumber',
-  'InputOTP',
-  'InputPassword',
   'Layout',
   'List',
   'Markdown',
@@ -290,7 +429,6 @@ export const PENDING: readonly string[] = [
   'Result',
   'ScrollArea',
   'ScrollShadow',
-  'SearchBar',
   'SearchResultCards',
   'Segmented',
   'Select',
@@ -303,7 +441,6 @@ export const PENDING: readonly string[] = [
   'Snippet',
   'SortableList',
   'Spin',
-  'SplitButton',
   'Statistic',
   'Steps',
   'SyntaxHighlighter',
@@ -312,7 +449,6 @@ export const PENDING: readonly string[] = [
   'Tabs',
   'Tag',
   'Text',
-  'TextArea',
   'ThemeScope',
   'ToggleGroup',
   'Tooltip',

@@ -1,6 +1,6 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { LucideLoader2, Search } from 'lucide-react';
 import { memo, useMemo, useRef, useState } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
@@ -12,7 +12,9 @@ import Hotkey from '@/Hotkey';
 import Icon from '@/Icon';
 import { Input } from '@/Input';
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
+import { searchBarClasses } from './stable';
 import { styles } from './style';
 import { type SearchBarProps } from './type';
 
@@ -57,11 +59,10 @@ const SearchBar = memo<SearchBarProps>(
     const prefix = useMemo(
       () => (
         <Icon
-          {...stylex.props(styles.icon)}
+          {...styleProps(styles.icon, searchBarClasses('icon'))}
           icon={loading ? LucideLoader2 : Search}
           size="small"
           spin={loading}
-          style={{ marginRight: 4 }}
         />
       ),
       [loading],
@@ -102,11 +103,14 @@ const SearchBar = memo<SearchBarProps>(
     );
 
     return (
-      <div {...styleProps(styles.search, className, style)}>
+      <div
+        {...toDataAttributes({ loading })}
+        {...styleProps(styles.search, clsx(searchBarClasses(), className), style)}
+      >
         {spotlight && <Spotlight />}
         <Input
           allowClear
-          className={inputClassName}
+          className={clsx(searchBarClasses('input'), inputClassName)}
           placeholder={placeholder ?? 'Type keywords...'}
           prefix={prefix}
           ref={inputReference}
@@ -123,7 +127,11 @@ const SearchBar = memo<SearchBarProps>(
             compact
             keys={hotkey}
             styles={{ kbdStyle: { color: 'inherit' } }}
-            {...styleProps(styles.tag, shortKeyClassName, shortKeyStyle)}
+            {...styleProps(
+              styles.tag,
+              clsx(searchBarClasses('short-key'), shortKeyClassName),
+              shortKeyStyle,
+            )}
           />
         )}
       </div>

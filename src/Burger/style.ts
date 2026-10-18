@@ -15,6 +15,7 @@ export const styles = stylex.create({
     alignItems: 'center',
     display: 'flex',
     justifyContent: 'flex-end',
+    height: 64,
   },
   largeRow: {
     borderRadius: 12,

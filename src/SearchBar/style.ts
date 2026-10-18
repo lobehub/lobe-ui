@@ -5,6 +5,7 @@ import { cssVar } from '@/styles/stylex/cssVar.stylex';
 export const styles = stylex.create({
   icon: {
     color: cssVar.colorTextPlaceholder,
+    marginRight: 4,
   },
   search: {
     position: 'relative',

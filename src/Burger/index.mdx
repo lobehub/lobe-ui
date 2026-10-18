@@ -5,6 +5,8 @@ category: Navigation
 ---
 
 import DemoIndex from './demos/index.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { burgerClasses } from './stable';
 
 ## Basic
 
@@ -21,3 +23,9 @@ import DemoIndex from './demos/index.tsx?demo';
 - `setOpened` → `onOpenChange`; `selectedKeys` → `activeKey`; `onClick` → `onSelect(key)`.
 - antd `Menu` items → base-ui `List` items; nested submenus are not supported.
 - `drawerProps`, `openKeys`, `rootClassName` and `iconProps` are gone.
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={burgerClasses} />

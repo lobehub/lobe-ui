@@ -9,7 +9,9 @@ import { ButtonImpl } from '@/Button/Button';
 import Icon from '@/Icon';
 import type { styleProps } from '@/styles/stylex/props';
 import Tooltip from '@/Tooltip';
+import { toDataAttributes } from '@/utils/bem';
 
+import { actionIconClasses } from './stable';
 import { styles } from './style';
 import type { ActionIconOutdent, ActionIconProps, ActionIconVariant } from './type';
 import { calcOutdent, calcSize } from './utils';
@@ -25,6 +27,15 @@ const activeStyles = {
   filled: styles.activeFill,
   outlined: styles.activeOutlined,
 };
+
+const presetSizeStyles = {
+  large: styles.sizeLarge,
+  middle: styles.sizeMiddle,
+  small: styles.sizeSmall,
+};
+
+const isPresetSize = (size: ActionIconProps['size']): size is keyof typeof presetSizeStyles =>
+  typeof size === 'string' && size in presetSizeStyles;
 
 const resolveButtonSize = (size: ActionIconProps['size']) => {
   if (size === 'small') return 'small' as const;
@@ -67,7 +78,8 @@ export const ActionIconImpl = memo<ActionIconImplProps>(
     xstyle,
     ...rest
   }) => {
-    const { blockSize, borderRadius } = useMemo(() => calcSize(size), [size]);
+    const presetSize = isPresetSize(size) ? size : undefined;
+    const customSize = useMemo(() => (presetSize ? undefined : calcSize(size)), [presetSize, size]);
     const popupTriggerAria = rest as {
       'aria-expanded'?: unknown;
       'aria-haspopup'?: unknown;
@@ -86,7 +98,7 @@ export const ActionIconImpl = memo<ActionIconImplProps>(
 
     const iconNode = icon ? (
       <Icon
-        className={classNames?.icon}
+        className={clsx(actionIconClasses('icon'), classNames?.icon)}
         color={color}
         fill={fill}
         fillOpacity={fillOpacity}
@@ -110,7 +122,7 @@ export const ActionIconImpl = memo<ActionIconImplProps>(
       <ButtonImpl
         {...(rest as unknown as ButtonProps)}
         aria-label={popupTriggerLabel}
-        className={clsx(classNames?.root, className)}
+        className={clsx(actionIconClasses(), classNames?.root, className)}
         danger={danger}
         disabled={disabled}
         htmlType="button"
@@ -120,16 +132,28 @@ export const ActionIconImpl = memo<ActionIconImplProps>(
         size={resolveButtonSize(size)}
         tabIndex={disabled ? -1 : 0}
         type={resolveButtonType(variant)}
+        stableData={toDataAttributes({
+          active,
+          danger,
+          glass,
+          loading,
+          shadow,
+          size: typeof size === 'object' ? undefined : size,
+          variant,
+        })}
         style={{
           ...outdentMargin,
-          borderRadius,
-          height: blockSize,
-          width: blockSize,
+          ...(customSize && {
+            borderRadius: customSize.borderRadius,
+            height: customSize.blockSize,
+            width: customSize.blockSize,
+          }),
           ...slotStyles?.root,
           ...style,
         }}
         xstyle={[
           styles.root,
+          presetSize && presetSizeStyles[presetSize],
           active && activeStyles[variant],
           danger && styles.dangerRoot,
           glass && styles.glass,

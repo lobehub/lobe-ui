@@ -7,15 +7,17 @@ import { memo } from 'react';
 import common from '@/i18n/resources/en/common';
 import { useTranslation } from '@/i18n/useTranslation';
 import Icon from '@/Icon';
+import { styleProps } from '@/styles/stylex/props';
 
 import { styles } from './style';
 
 interface ClearButtonProps {
+  className?: string;
   onClear: () => void;
   xstyle?: stylex.StyleXStyles;
 }
 
-const ClearButton = memo<ClearButtonProps>(({ xstyle, onClear }) => {
+const ClearButton = memo<ClearButtonProps>(({ className, xstyle, onClear }) => {
   const { t } = useTranslation(common);
 
   return (
@@ -26,9 +28,9 @@ const ClearButton = memo<ClearButtonProps>(({ xstyle, onClear }) => {
       type="button"
       onClick={onClear}
       onMouseDown={(event) => event.preventDefault()}
-      {...stylex.props(styles.clear, xstyle)}
+      {...styleProps([styles.clear, xstyle], className)}
     >
-      <Icon icon={X} size={10} style={{ strokeWidth: 3 }} />
+      <Icon icon={X} size={10} {...stylex.props(styles.clearIcon)} />
     </button>
   );
 });

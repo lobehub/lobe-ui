@@ -165,8 +165,8 @@ export const SwitchRoot = ({
         required={required}
         render={
           <button
-            {...rest}
             {...toDataAttributes({ size })}
+            {...rest}
             {...styleProps(
               [switchMarker, focusRing.info, styles.root, rootSizeStyles[size], xstyle],
               clsx(switchClasses(), className),

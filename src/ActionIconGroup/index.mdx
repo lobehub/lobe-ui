@@ -5,6 +5,8 @@ category: General
 ---
 
 import DemoIndex from './demos/index.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { actionIconGroupClasses } from './stable';
 
 ## Introduction
 
@@ -27,3 +29,9 @@ ActionIconGroup is a container component for organizing and managing multiple Ac
 | key      | The key of the clicked item      | `string`     |
 | keyPath  | The key path of the clicked item | `string[]`   |
 | domEvent | The DOM event                    | `MouseEvent` |
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={actionIconGroupClasses} />

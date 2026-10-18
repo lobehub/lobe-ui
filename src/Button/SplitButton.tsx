@@ -1,12 +1,15 @@
 'use client';
 
+import clsx from 'clsx';
 import { ChevronDownIcon } from 'lucide-react';
 import { createContext, type CSSProperties, type ReactNode, use, useMemo } from 'react';
 
 import { DropdownMenu, type DropdownMenuProps } from '@/DropdownMenu';
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
 import { ButtonImpl } from './Button';
+import { splitButtonClasses } from './stable';
 import { splitStyles } from './style';
 import type { ButtonProps } from './type';
 
@@ -43,13 +46,14 @@ const SplitButton = ({
   return (
     <SplitButtonContext value={shared}>
       <div
+        {...toDataAttributes({ danger, loading, size, type })}
         {...styleProps(
           [
             splitStyles.root,
             type === 'primary' && (danger ? splitStyles.solidDanger : splitStyles.solidPrimary),
             (disabled || loading) && splitStyles.interactionDisabled,
           ],
-          className,
+          clsx(splitButtonClasses(), className),
           style,
         )}
       >
@@ -81,7 +85,14 @@ const itemStyle = (
 
 const SplitButtonMain = (props: ButtonProps) => {
   const shared = use(SplitButtonContext);
-  return <ButtonImpl {...shared} {...props} xstyle={itemStyle(shared, props)} />;
+  return (
+    <ButtonImpl
+      {...shared}
+      {...props}
+      className={clsx(splitButtonClasses('main'), props.className)}
+      xstyle={itemStyle(shared, props)}
+    />
+  );
 };
 
 interface SplitButtonMenuProps extends Omit<DropdownMenuProps, 'children'> {
@@ -100,6 +111,7 @@ const SplitButtonMenu = ({
     <DropdownMenu {...menuProps} disabled={interactionDisabled}>
       <ButtonImpl
         {...shared}
+        className={splitButtonClasses('menu')}
         disabled={interactionDisabled}
         icon={icon}
         xstyle={itemStyle(shared, {})}

@@ -29,6 +29,9 @@ export const styles = stylex.create({
     backgroundImage: 'none',
     boxShadow: { default: null, [invalidFocus]: errorRing },
   },
+  clearIcon: {
+    strokeWidth: 3,
+  },
   clear: {
     padding: 0,
     borderColor: 'currentcolor',

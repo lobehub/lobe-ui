@@ -32,6 +32,21 @@ export const styles = stylex.create({
       ':active': cssVar.colorText,
     },
   },
+  sizeLarge: {
+    borderRadius: 8,
+    height: 44,
+    width: 44,
+  },
+  sizeMiddle: {
+    borderRadius: 6,
+    height: 36,
+    width: 36,
+  },
+  sizeSmall: {
+    borderRadius: 4,
+    height: 24,
+    width: 24,
+  },
   shadow: {
     boxShadow: `0 1px 0 -1px ${cssVar.colorBorder}, 0 1px 2px -0.5px ${cssVar.colorBorder}, 0 2px 2px -1px ${cssVar.colorBorderSecondary}, 0 3px 6px -4px ${cssVar.colorBorderSecondary}`,
   },

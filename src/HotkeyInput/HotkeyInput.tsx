@@ -1,6 +1,6 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { isEqual } from 'es-toolkit/compat';
 import { Undo2Icon, XIcon } from 'lucide-react';
 import {
@@ -22,8 +22,11 @@ import Hotkey from '@/Hotkey';
 import { checkIsAppleDevice, NORMATIVE_MODIFIER, splitKeysByPlus } from '@/Hotkey/utils';
 import hotkeyMessages from '@/i18n/resources/en/hotkey';
 import { useTranslation } from '@/i18n/useTranslation';
+import { styleProps } from '@/styles/stylex/props';
 import { useThemeMode } from '@/styles/theme/scope';
+import { toDataAttributes } from '@/utils/bem';
 
+import { hotkeyInputClasses } from './stable';
 import { styles } from './style';
 import { type HotkeyInputProps } from './type';
 
@@ -229,55 +232,63 @@ const HotkeyInput = memo<HotkeyInputProps>(
 
     return (
       <Flexbox
-        className={className}
         gap={8}
-        style={{
-          position: 'relative',
-          ...style,
-        }}
+        {...toDataAttributes({
+          disabled,
+          error: hasError,
+          recording: isRecording,
+          shadow,
+          variant: resolvedVariant,
+        })}
+        {...styleProps(styles.wrapper, clsx(hotkeyInputClasses(), className), style)}
       >
         <Flexbox
           horizontal
           align={'center'}
           justify={'space-between'}
-          {...stylex.props(
-            styles.root,
-            styles[resolvedVariant],
-            shadow && styles.shadow,
-            isFocused && styles.focused,
-            hasError && styles.error,
-            hasError && resolvedVariant === 'outlined' && styles.errorOutlined,
-            disabled && styles.disabled,
+          {...styleProps(
+            [
+              styles.root,
+              styles[resolvedVariant],
+              shadow && styles.shadow,
+              isFocused && styles.focused,
+              hasError && styles.error,
+              hasError && resolvedVariant === 'outlined' && styles.errorOutlined,
+              disabled && styles.disabled,
+            ],
+            hotkeyInputClasses('control'),
           )}
           onClick={handleClick}
         >
-          <div style={{ pointerEvents: 'none' }}>
+          <div {...styleProps(styles.value, hotkeyInputClasses('value'))}>
             {isRecording ? (
-              <span {...stylex.props(styles.placeholder)}>
+              <span {...styleProps(styles.placeholder, hotkeyInputClasses('placeholder'))}>
                 {keys.length > 0 ? <Hotkey keys={keysString} /> : placeholderText}
               </span>
             ) : hotkeyValue ? (
               <Hotkey keys={hotkeyValue} />
             ) : (
-              <span {...stylex.props(styles.placeholder)}>{placeholderText}</span>
+              <span {...styleProps(styles.placeholder, hotkeyInputClasses('placeholder'))}>
+                {placeholderText}
+              </span>
             )}
           </div>
 
           {/* 隐藏的输入框，用于接收焦点 */}
           <input
             readOnly
-            {...stylex.props(styles.hiddenInput)}
+            {...styleProps(styles.hiddenInput, hotkeyInputClasses('input'))}
             disabled={disabled}
             ref={inputRef as any}
-            style={{ pointerEvents: 'none' }}
             onBlur={handleBlur}
             onFocus={handleFocus}
           />
 
           {!isFocused && hotkeyValue && !disabled && (allowReset || allowClear) && (
-            <Flexbox horizontal gap={4}>
+            <Flexbox horizontal className={hotkeyInputClasses('actions')} gap={4}>
               {allowReset && hotkeyValue !== resetValue && (
                 <ActionIcon
+                  className={hotkeyInputClasses('reset')}
                   icon={Undo2Icon}
                   size={'small'}
                   title={resetTitle}
@@ -287,6 +298,7 @@ const HotkeyInput = memo<HotkeyInputProps>(
               )}
               {allowClear && (
                 <ActionIcon
+                  className={hotkeyInputClasses('clear')}
                   icon={XIcon}
                   size={'small'}
                   title={clearTitle}
@@ -297,8 +309,12 @@ const HotkeyInput = memo<HotkeyInputProps>(
             </Flexbox>
           )}
         </Flexbox>
-        {hasConflict && <div {...stylex.props(styles.errorText)}>{conflictText}</div>}
-        {hasInvalidCombination && <div {...stylex.props(styles.errorText)}>{invalidText}</div>}
+        {hasConflict && (
+          <div {...styleProps(styles.errorText, hotkeyInputClasses('error'))}>{conflictText}</div>
+        )}
+        {hasInvalidCombination && (
+          <div {...styleProps(styles.errorText, hotkeyInputClasses('error'))}>{invalidText}</div>
+        )}
       </Flexbox>
     );
   },
