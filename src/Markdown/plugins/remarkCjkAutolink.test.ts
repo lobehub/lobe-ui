@@ -71,6 +71,16 @@ describe('remarkCjkAutolink', () => {
     ]);
   });
 
+  it('re-links a second URL that sat in the swallowed tail', async () => {
+    expect(await parse('见 https://a.com。https://b.com。')).toEqual([
+      { type: 'text', value: '见 ' },
+      { text: 'https://a.com', type: 'link', url: 'https://a.com' },
+      { type: 'text', value: '。' },
+      { text: 'https://b.com', type: 'link', url: 'https://b.com' },
+      { type: 'text', value: '。' },
+    ]);
+  });
+
   it('does not touch explicit links', async () => {
     expect(await parse('[文字](https://b.com/x）y)')).toEqual([
       { text: '文字', type: 'link', url: 'https://b.com/x）y' },
