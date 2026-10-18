@@ -45,7 +45,7 @@ const Layout = memo<LayoutProps>(
     }, [laptop]);
 
     return (
-      <div className={clsx(layoutClasses(), className)} style={rootStyle}>
+      <div {...styleProps(styles.root, clsx(layoutClasses(), className), rootStyle)}>
         {helmet}
         {header && (
           <LayoutHeader

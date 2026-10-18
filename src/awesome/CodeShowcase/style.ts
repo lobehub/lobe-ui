@@ -27,9 +27,10 @@ export const styles = stylex.create({
     minInlineSize: 0,
   },
   root: {
-    gap: 20,
-    alignItems: 'stretch',
-    display: 'flex',
-    flexDirection: 'column',
+    '--code-showcase-min-height': 'auto',
+    'gap': 20,
+    'alignItems': 'stretch',
+    'display': 'flex',
+    'flexDirection': 'column',
   },
 });

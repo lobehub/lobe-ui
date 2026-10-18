@@ -14,9 +14,10 @@ export const styles = stylex.create({
     textWrap: 'pretty',
   },
   grid: {
-    gap: 16,
-    display: 'grid',
-    gridTemplateColumns: {
+    '--feature-grid-columns': 3,
+    'gap': 16,
+    'display': 'grid',
+    'gridTemplateColumns': {
       default: 'repeat(var(--feature-grid-columns, 3), minmax(0, 1fr))',
       [tabletOnly]: 'repeat(2, minmax(0, 1fr))',
       [media.mobile]: '1fr',

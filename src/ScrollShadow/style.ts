@@ -27,8 +27,9 @@ export const styles = stylex.create({
       'linear-gradient(90deg, #000 calc(100% - var(--scroll-shadow-size, 16%)), transparent)',
   },
   root: {
-    overflow: 'hidden',
-    position: 'relative',
+    '--scroll-shadow-size': '16%',
+    'overflow': 'hidden',
+    'position': 'relative',
   },
   top: {
     maskImage:

@@ -1,3 +1,6 @@
+import { readFileSync } from 'node:fs';
+import { resolve } from 'node:path';
+
 import { cleanup, render } from '@testing-library/react';
 
 import { TableSkeleton } from '@/dashboard';
@@ -42,5 +45,25 @@ describe('subpath stable classes', () => {
     expect(getComputedStyle(tag).width).toBe('72px');
     expect(getComputedStyle(cell).height).toBe('14px');
     expect(getComputedStyle(cell).width).toBe('88px');
+  });
+});
+
+describe('class tables for components without a published docs page', () => {
+  it('lists them on the styling overrides guide', () => {
+    const guide = readFileSync(resolve(__dirname, '../docs/styling-overrides.mdx'), 'utf8');
+    for (const name of [
+      'aClasses',
+      'autoCompleteClasses',
+      'checkboxClasses',
+      'checkboxGroupClasses',
+      'formClasses',
+      'inputClasses',
+      'inputNumberClasses',
+      'inputOTPClasses',
+      'inputPasswordClasses',
+      'textAreaClasses',
+    ]) {
+      expect(guide).toContain(`<StableClassTable of={${name}} />`);
+    }
   });
 });

@@ -15,45 +15,49 @@ export const styles = stylex.create({
     minInlineSize: 0,
   },
   card: {
-    borderColor: {
+    '--bento-col-span': 1,
+    '--bento-row-span': 1,
+    'borderColor': {
       'default': cssVar.colorBorderSecondary,
       ':hover': cssVar.colorBorder,
     },
-    borderRadius: cssVar.borderRadiusLG,
-    borderStyle: 'solid',
-    borderWidth: 1,
-    gridColumn: {
+    'borderRadius': cssVar.borderRadiusLG,
+    'borderStyle': 'solid',
+    'borderWidth': 1,
+    'gridColumn': {
       default: 'span var(--bento-col-span, 1)',
       [tabletOnly]: { 'default': null, ':is([data-wide="true"])': 'span 2' },
       [media.mobile]: 'span 1',
     },
-    gridRow: {
+    'gridRow': {
       default: 'span var(--bento-row-span, 1)',
       [media.mobile]: 'span 1',
     },
-    paddingInline: 16,
-    transition: 'border-color 140ms ease, transform 140ms ease, box-shadow 140ms ease',
-    backgroundColor: `color-mix(in srgb, ${cssVar.colorBgElevated} 25%, transparent)`,
-    boxShadow: {
+    'paddingInline': 16,
+    'transition': 'border-color 140ms ease, transform 140ms ease, box-shadow 140ms ease',
+    'backgroundColor': `color-mix(in srgb, ${cssVar.colorBgElevated} 25%, transparent)`,
+    'boxShadow': {
       'default': cssVar.boxShadowTertiary,
       ':hover': cssVar.boxShadowSecondary,
     },
-    display: 'flex',
-    flexDirection: 'column',
-    minInlineSize: 0,
-    paddingBlockEnd: '16px',
-    paddingBlockStart: '14px',
-    transform: {
+    'display': 'flex',
+    'flexDirection': 'column',
+    'minInlineSize': 0,
+    'paddingBlockEnd': '16px',
+    'paddingBlockStart': '14px',
+    'transform': {
       'default': null,
       ':hover': 'translateY(-2px)',
       '@media (prefers-reduced-motion: reduce)': { 'default': null, ':hover': 'none' },
     },
   },
   grid: {
-    gap: 12,
-    display: 'grid',
-    gridAutoRows: 'minmax(var(--bento-row-height, 120px), auto)',
-    gridTemplateColumns: {
+    '--bento-columns': 4,
+    '--bento-row-height': '120px',
+    'gap': 12,
+    'display': 'grid',
+    'gridAutoRows': 'minmax(var(--bento-row-height, 120px), auto)',
+    'gridTemplateColumns': {
       default: 'repeat(var(--bento-columns, 4), minmax(0, 1fr))',
       [tabletOnly]: 'repeat(2, minmax(0, 1fr))',
       [media.mobile]: '1fr',

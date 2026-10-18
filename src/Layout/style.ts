@@ -1,6 +1,9 @@
 import * as stylex from '@stylexjs/stylex';
 
 export const styles = stylex.create({
+  root: {
+    '--layout-header-height': '64px',
+  },
   aside: {
     position: 'sticky',
     zIndex: 2,

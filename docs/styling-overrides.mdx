@@ -4,6 +4,18 @@ description: Stable class names and data attributes for overriding Lobe UI compo
 order: 3
 ---
 
+import { aClasses } from '../src/A/stable';
+import { autoCompleteClasses } from '../src/AutoComplete/stable';
+import { checkboxClasses, checkboxGroupClasses } from '../src/Checkbox/stable';
+import { formClasses } from '../src/Form/stable';
+import {
+  inputClasses,
+  inputNumberClasses,
+  inputOTPClasses,
+  inputPasswordClasses,
+  textAreaClasses,
+} from '../src/Input/stable';
+import { StableClassTable } from './stable-classes/StableClassTable';
 import { OverrideDemo } from './styling-overrides/OverrideDemo';
 
 Component styles are compiled by StyleX into hashed class names that change between releases. To override a component from your own CSS, target its stable class names instead. They follow BEM and are public API: a rename is a breaking change.
@@ -50,6 +62,50 @@ Lobe UI ships its styles inside `@layer lobe-base, lobe-popup, lobe-ui`. CSS out
 - Class names listed on a component page do not change in minor or patch releases.
 - Older `lobe-*` classes that predate this scheme (`lobe-select-arrow`, `lobe-chat-item-bubble`, …) keep working.
 - Do not target generated class names; they change on every build.
+
+## Components without a page
+
+These components have no page on this site yet, so their class names are listed here.
+
+### A
+
+<StableClassTable of={aClasses} />
+
+### AutoComplete
+
+<StableClassTable of={autoCompleteClasses} />
+
+### Checkbox
+
+<StableClassTable of={checkboxClasses} />
+
+### CheckboxGroup
+
+<StableClassTable of={checkboxGroupClasses} />
+
+### Form
+
+<StableClassTable of={formClasses} />
+
+### Input
+
+<StableClassTable of={inputClasses} />
+
+### InputNumber
+
+<StableClassTable of={inputNumberClasses} />
+
+### InputOTP
+
+<StableClassTable of={inputOTPClasses} />
+
+### InputPassword
+
+<StableClassTable of={inputPasswordClasses} />
+
+### TextArea
+
+<StableClassTable of={textAreaClasses} />
 
 ## Example
 
