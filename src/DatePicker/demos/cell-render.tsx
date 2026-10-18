@@ -7,10 +7,9 @@ import {
 import type { Dayjs } from 'dayjs';
 import { cloneElement, type CSSProperties, type ReactElement } from 'react';
 
-// Theme tokens are exposed as CSS variables by the ThemeProvider.
-const colorPrimary = 'var(--ant-color-primary)';
-const colorSuccess = 'var(--ant-color-success)';
-const colorWarning = 'var(--ant-color-warning)';
+const colorPrimary = 'var(--lobe-color-primary)';
+const colorSuccess = 'var(--lobe-color-success)';
+const colorWarning = 'var(--lobe-color-warning)';
 
 const cellRender: DatePickerProps['cellRender'] = (current, info) => {
   if (info.type !== 'date') return info.originNode;

@@ -48,7 +48,7 @@ export const SyntaxHighlighterImpl = memo<SyntaxHighlighterImplProps>(
 
     const shiki = styleProps(
       [styles.root, xstyle],
-      clsx(classes, 'ant-highlighter-highlighter-shiki lobe-syntax-highlighter-shiki', className),
+      clsx(classes, 'lobe-syntax-highlighter-shiki', className),
       mergedStyle,
     );
     const fallback = styleProps(

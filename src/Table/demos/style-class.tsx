@@ -80,7 +80,7 @@ const stylesFn = ({ props }: { props: TableProps<DataType> }): TableStyles => ({
   body: { cell: props.size === 'small' ? { fontSize: 12 } : undefined },
   header: {
     cell: {
-      background: props.variant === 'outlined' ? 'var(--ant-color-fill-tertiary)' : undefined,
+      background: props.variant === 'outlined' ? 'var(--lobe-color-fill-tertiary)' : undefined,
     },
   },
   root: { boxShadow: props.variant === 'outlined' ? '0 2px 8px rgba(0, 0, 0, 0.06)' : undefined },
