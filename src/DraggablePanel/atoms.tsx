@@ -22,7 +22,6 @@ import { useControlledState } from '@/hooks/useControlledState';
 import { useMotionComponent } from '@/MotionProvider';
 import { styleProps } from '@/styles/stylex/props';
 import type { DivProps } from '@/types';
-import { bem } from '@/utils/bem';
 
 import { DraggablePanelContext, useDraggablePanelContext } from './context';
 import type { Placement } from './core/axes';
@@ -33,9 +32,10 @@ import { coarsePointer, handleSize as getHandleSize } from './core/env';
 import { useIsomorphicLayoutEffect, useStore } from './core/internal';
 import { timing } from './core/transition';
 import { draggablePanelMarker, draggablePanelToggleMarker } from './marker.stylex';
+import { draggablePanelClasses } from './stable';
 import { SEAM_ARROW, styles } from './style';
 
-const panel = bem('draggable-panel');
+const panel = draggablePanelClasses;
 
 const floatStyles = {
   bottom: styles.bottomFloat,
@@ -397,10 +397,8 @@ export const DraggablePanelToggle = memo<DraggablePanelToggleProps>(
         data-placement={placement}
         style={{ opacity: expand ? undefined : showHandleWhenCollapsed ? 1 : 0, ...style }}
         className={
-          styleProps(
-            [styles.toggleRoot, toggleStyles[placement]],
-            clsx(panel('toggle'), className),
-          ).className
+          styleProps([styles.toggleRoot, toggleStyles[placement]], clsx(panel('toggle'), className))
+            .className
         }
         {...rest}
       >
@@ -470,7 +468,10 @@ export type DraggablePanelContainerProps = DivProps;
 
 export const DraggablePanelContainer = memo<DraggablePanelContainerProps>(
   ({ className, ...rest }) => (
-    <div className={styleProps(styles.container, className).className} {...rest} />
+    <div
+      className={styleProps(styles.container, clsx(panel('container'), className)).className}
+      {...rest}
+    />
   ),
 );
 
@@ -479,7 +480,10 @@ DraggablePanelContainer.displayName = 'DraggablePanelContainer';
 export type DraggablePanelBodyProps = DivProps;
 
 export const DraggablePanelBody = memo<DraggablePanelBodyProps>(({ className, style, ...rest }) => (
-  <div {...styleProps(styles.body, className, { flex: 1, ...style })} {...rest} />
+  <div
+    {...styleProps(styles.body, clsx(panel('body'), className), { flex: 1, ...style })}
+    {...rest}
+  />
 ));
 
 DraggablePanelBody.displayName = 'DraggablePanelBody';
@@ -487,7 +491,10 @@ DraggablePanelBody.displayName = 'DraggablePanelBody';
 export type DraggablePanelFooterProps = DivProps;
 
 export const DraggablePanelFooter = memo<DraggablePanelFooterProps>(({ className, ...rest }) => (
-  <div className={styleProps(styles.footer, className).className} {...rest} />
+  <div
+    className={styleProps(styles.footer, clsx(panel('footer'), className)).className}
+    {...rest}
+  />
 ));
 
 DraggablePanelFooter.displayName = 'DraggablePanelFooter';
@@ -503,7 +510,10 @@ export const DraggablePanelHeader = memo<DraggablePanelHeaderProps>(
     const { toggleExpand } = useDraggablePanelContext();
 
     return (
-      <div className={styleProps(styles.header, className).className} {...rest}>
+      <div
+        className={styleProps(styles.header, clsx(panel('header'), className)).className}
+        {...rest}
+      >
         <ActionIcon icon={ChevronLeft} size={'small'} onClick={onCollapse ?? toggleExpand} />
         {title}
         {extra}

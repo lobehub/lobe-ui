@@ -1,4 +1,8 @@
-import { cleanup, render } from '@testing-library/react';
+import { cleanup, render as rtlRender } from '@testing-library/react';
+import { motion } from 'motion/react';
+import type { ReactElement, ReactNode } from 'react';
+
+import { MotionProvider } from '@/MotionProvider';
 
 import { EXEMPT, FIXTURES, PENDING, type StableFixture } from './stableClasses.fixtures';
 
@@ -26,6 +30,12 @@ const collectExportKeys = async () => {
   }
   return keys.sort();
 };
+
+const Wrapper = ({ children }: { children: ReactNode }) => (
+  <MotionProvider motion={motion}>{children}</MotionProvider>
+);
+
+const render = (node: ReactElement) => rtlRender(node, { wrapper: Wrapper });
 
 const findBlock = (fixture: StableFixture, container: HTMLElement) =>
   fixture.portal

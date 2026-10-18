@@ -57,6 +57,12 @@ export interface StableClasses<E extends string> {
   elements: readonly E[];
 }
 
+export type AnyStableClasses = Pick<
+  StableClasses<string>,
+  'block' | 'dataAttributes' | 'elements'
+> &
+  ((element?: any) => string);
+
 export const stableClasses = <const E extends string>({
   block,
   dataAttributes = [],

@@ -7,6 +7,7 @@ import { memo } from 'react';
 
 import Icon from '@/Icon';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { toDataAttributes } from '@/utils/bem';
 
 import { SwitchIcon, SwitchRoot, SwitchThumb } from './atoms';
 import { styles } from './style';
@@ -49,6 +50,7 @@ const Switch = memo<SwitchProps>(
     return (
       <SwitchRoot
         {...rest}
+        {...toDataAttributes({ loading })}
         autoFocus={autoFocus}
         checked={resolvedChecked}
         className={clsx(hasText && 'lobe-switch-text', className, rootClassName, classNames?.root)}

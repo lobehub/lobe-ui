@@ -1,6 +1,6 @@
-import type { StableClasses } from '@/utils/bem';
+import type { AnyStableClasses } from '@/utils/bem';
 
-export function StableClassTable({ of }: { of: StableClasses<string> }) {
+export function StableClassTable({ of }: { of: AnyStableClasses }) {
   return (
     <>
       <table>

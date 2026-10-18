@@ -1,15 +1,45 @@
 import type { ReactElement } from 'react';
 
-import type { StableClasses } from '@/utils/bem';
+import { draggablePanelClasses } from '@/DraggablePanel/stable';
+import { DraggablePanel, Popover, Switch } from '@/index';
+import { popoverClasses } from '@/Popover/stable';
+import { switchClasses } from '@/Switch/stable';
+import type { AnyStableClasses } from '@/utils/bem';
 
 export interface StableFixture {
-  classes: StableClasses<string>;
+  classes: AnyStableClasses;
   conditional?: readonly string[];
   portal?: boolean;
   render: (props: { className?: string }) => ReactElement;
 }
 
-export const FIXTURES: Record<string, StableFixture> = {};
+export const FIXTURES: Record<string, StableFixture> = {
+  DraggablePanel: {
+    classes: draggablePanelClasses,
+    conditional: ['container', 'header', 'body', 'footer'],
+    render: ({ className }) => (
+      <DraggablePanel className={className} placement="left">
+        Panel
+      </DraggablePanel>
+    ),
+  },
+  Popover: {
+    classes: popoverClasses,
+    conditional: ['arrow', 'backdrop'],
+    portal: true,
+    render: ({ className }) => (
+      <Popover open className={className} content="Content">
+        <button type="button">Trigger</button>
+      </Popover>
+    ),
+  },
+  Switch: {
+    classes: switchClasses,
+    render: ({ className }) => (
+      <Switch checkedChildren="On" className={className} unCheckedChildren="Off" />
+    ),
+  },
+};
 
 export const EXEMPT: Record<string, string> = {
   'AccordionHeader': 'atom of Accordion',
@@ -207,7 +237,6 @@ export const PENDING: readonly string[] = [
   'Descriptions',
   'Divider',
   'DownloadButton',
-  'DraggablePanel',
   'DraggableSideNav',
   'Drawer',
   'DropdownMenu',
@@ -253,7 +282,6 @@ export const PENDING: readonly string[] = [
   'Modal',
   'Pagination',
   'PatchDiff',
-  'Popover',
   'PreviewGroup',
   'Progress',
   'Radio',
@@ -278,7 +306,6 @@ export const PENDING: readonly string[] = [
   'SplitButton',
   'Statistic',
   'Steps',
-  'Switch',
   'SyntaxHighlighter',
   'SyntaxMermaid',
   'Table',
