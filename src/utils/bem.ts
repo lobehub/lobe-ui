@@ -43,3 +43,42 @@ export const bem = (block: string): BEM => {
   cache.set(block, factory);
   return factory;
 };
+
+export interface StableClassManifest<E extends string> {
+  block: string;
+  dataAttributes?: readonly string[];
+  elements: readonly E[];
+}
+
+export interface StableClasses<E extends string> {
+  (element?: E): string;
+  block: string;
+  dataAttributes: readonly string[];
+  elements: readonly E[];
+}
+
+export const stableClasses = <const E extends string>({
+  block,
+  dataAttributes = [],
+  elements,
+}: StableClassManifest<E>): StableClasses<E> => {
+  const base = bem(block);
+  const classes = ((element?: E) => base(element)) as StableClasses<E>;
+  classes.block = base.block;
+  classes.elements = elements;
+  classes.dataAttributes = dataAttributes;
+  return classes;
+};
+
+const toKebab = (key: string) => key.replaceAll(/[A-Z]/g, (char) => `-${char.toLowerCase()}`);
+
+export const toDataAttributes = (
+  attrs: Record<string, string | number | boolean | null | undefined>,
+): Record<`data-${string}`, string> => {
+  const result: Record<`data-${string}`, string> = {};
+  for (const [key, value] of Object.entries(attrs)) {
+    if (value === undefined || value === null || value === false || value === '') continue;
+    result[`data-${toKebab(key)}`] = value === true ? '' : String(value);
+  }
+  return result;
+};
