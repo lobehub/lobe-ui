@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [6.5.0](https://github.com/lobehub/lobe-ui/compare/v6.4.1...v6.5.0) (2026-10-19)
+
+### ✨ Features
+
+- Stable BEM class names for CSS overrides, closes [#750](https://github.com/lobehub/lobe-ui/issues/750) ([df73069](https://github.com/lobehub/lobe-ui/commit/df73069))
+
 ## [6.4.1](https://github.com/lobehub/lobe-ui/compare/v6.4.0...v6.4.1) (2026-10-18)
 
 ### 🐛 Bug Fixes
