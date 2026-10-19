@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [6.5.1](https://github.com/lobehub/lobe-ui/compare/v6.5.0...v6.5.1) (2026-10-19)
+
+### 🐛 Bug Fixes
+
+- **markdown**: Stop GFM autolink from swallowing CJK punctuation, closes [#747](https://github.com/lobehub/lobe-ui/issues/747) ([4a7b08a](https://github.com/lobehub/lobe-ui/commit/4a7b08a))
+
 # [6.5.0](https://github.com/lobehub/lobe-ui/compare/v6.4.1...v6.5.0) (2026-10-19)
 
 ### ✨ Features
