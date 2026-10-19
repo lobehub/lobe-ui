@@ -91,6 +91,14 @@ describe('transformCitations', () => {
       'Example `array[1]` $[2]$. This is a reference [#citation-3](citation-3)',
     );
   });
+
+  it('should leave adjacent brackets outside citations untouched', () => {
+    const content =
+      '```js\nmatrix[0][1];\n```\n\nSee `a[i][j]` and [docs][ref] [1].\n\n[ref]: /docs';
+    expect(transformCitations(content, 1)).toBe(
+      '```js\nmatrix[0][1];\n```\n\nSee `a[i][j]` and [docs][ref] [#citation-1](citation-1).\n\n[ref]: /docs',
+    );
+  });
 });
 
 describe('preprocessMarkdownContent', () => {

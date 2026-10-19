@@ -107,8 +107,7 @@ export const transformCitations = (rawContent: string, length: number = 0) => {
     result = before + `[#citation-${citation.id}](citation-${citation.id})` + after;
   }
 
-  // 处理连续引用
-  return result.replaceAll('][', '] [');
+  return result;
 };
 
 /**
