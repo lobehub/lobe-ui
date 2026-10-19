@@ -110,6 +110,10 @@ export const styles = stylex.create({
       [readonly]: readonlyBg,
     },
   },
+  popupBounds: {
+    maxWidth: 'var(--available-width)',
+    minWidth: 'var(--anchor-width)',
+  },
   popup: {
     '--lobe-select-available-height':
       'min(var(--available-height), var(--lobe-select-popup-max-height, var(--available-height)))',

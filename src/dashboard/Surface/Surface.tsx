@@ -2,7 +2,6 @@
 
 import './style.css';
 
-import * as stylex from '@stylexjs/stylex';
 import clsx from 'clsx';
 import { ArrowUpRight } from 'lucide-react';
 import type { ReactNode } from 'react';
@@ -10,9 +9,11 @@ import type { ReactNode } from 'react';
 import Skeleton from '@/Skeleton';
 import Spin from '@/Spin';
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
 import { SurfaceDepthContext, useSurfaceCardStyles, useSurfaceDepth, useSurfaceLink } from './link';
 import { surfaceMarker } from './marker.stylex';
+import { dashboardSurfaceClasses } from './stable';
 import { styles, surfaceClassNames } from './style';
 import type { SurfaceProps } from './type';
 
@@ -47,14 +48,18 @@ function Surface({
   const pad = bleed ? false : (padded ?? (hasHeader || placeholder));
 
   const heading = (
-    <div {...stylex.props(styles.heading)}>
-      {defined(title) ? <div {...stylex.props(styles.title)}>{title}</div> : null}
-      {defined(description) ? <div {...stylex.props(styles.desc)}>{description}</div> : null}
+    <div {...styleProps(styles.heading, dashboardSurfaceClasses('heading'))}>
+      {defined(title) ? (
+        <div {...styleProps(styles.title, dashboardSurfaceClasses('title'))}>{title}</div>
+      ) : null}
+      {defined(description) ? (
+        <div {...styleProps(styles.desc, dashboardSurfaceClasses('desc'))}>{description}</div>
+      ) : null}
     </div>
   );
 
   const body = placeholder ? (
-    <div aria-busy="true" {...stylex.props(styles.loading)}>
+    <div aria-busy="true" {...styleProps(styles.loading, dashboardSurfaceClasses('loading'))}>
       <Skeleton height={220} radius={8} />
     </div>
   ) : (
@@ -67,7 +72,10 @@ function Surface({
     <ArrowUpRight
       aria-hidden
       size={16}
-      {...stylex.props(styles.arrow, trailing && styles.arrowInLink)}
+      {...styleProps(
+        [styles.arrow, trailing && styles.arrowInLink],
+        dashboardSurfaceClasses('arrow'),
+      )}
     />
   );
 
@@ -81,13 +89,19 @@ function Surface({
             styles.clip,
             Boolean(href) && [styles.cardLinked, surfaceMarker],
           ],
-          clsx(surfaceClassNames.root, bleed && surfaceClassNames.bleed, className),
+          clsx(
+            dashboardSurfaceClasses(),
+            surfaceClassNames.root,
+            bleed && surfaceClassNames.bleed,
+            className,
+          ),
           style,
         )}
+        {...toDataAttributes({ bleed, linked: Boolean(href) })}
         {...rest}
       >
         {hasHeader ? (
-          <div {...stylex.props(styles.header)}>
+          <div {...styleProps(styles.header, dashboardSurfaceClasses('header'))}>
             {href
               ? link({
                   children: (
@@ -96,19 +110,23 @@ function Surface({
                       {trailing ? null : arrow}
                     </>
                   ),
-                  className: stylex.props(styles.headingLink).className,
+                  className: styleProps(styles.headingLink, dashboardSurfaceClasses('heading-link'))
+                    .className,
                   href,
                 })
               : heading}
             {trailing ? (
-              <div {...stylex.props(styles.extra)}>
+              <div {...styleProps(styles.extra, dashboardSurfaceClasses('extra'))}>
                 {refreshing ? <Spin size="small" variant="network" /> : null}
                 {extra}
                 {href
                   ? link({
                       'aria-hidden': true,
                       'children': arrow,
-                      'className': stylex.props(styles.arrowLink).className,
+                      'className': styleProps(
+                        styles.arrowLink,
+                        dashboardSurfaceClasses('arrow-link'),
+                      ).className,
                       href,
                       'tabIndex': -1,
                     } as any)
@@ -117,8 +135,21 @@ function Surface({
             ) : null}
           </div>
         ) : null}
-        {pad ? <div {...styleProps(styles.body, surfaceClassNames.tableBleed)}>{body}</div> : body}
-        {defined(chart) ? <div {...stylex.props(styles.chart)}>{chart}</div> : null}
+        {pad ? (
+          <div
+            {...styleProps(
+              styles.body,
+              clsx(dashboardSurfaceClasses('body'), surfaceClassNames.tableBleed),
+            )}
+          >
+            {body}
+          </div>
+        ) : (
+          body
+        )}
+        {defined(chart) ? (
+          <div {...styleProps(styles.chart, dashboardSurfaceClasses('chart'))}>{chart}</div>
+        ) : null}
       </div>
     </SurfaceDepthContext>
   );

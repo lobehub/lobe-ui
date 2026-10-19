@@ -8,6 +8,12 @@ order: 0
 import DemoIndex from './demos/index.tsx?demo';
 import DemoSkeleton from './demos/skeleton.tsx?demo';
 import DemoTree from './demos/tree.tsx?demo';
+import { StableClassTable } from '../../../docs/stable-classes/StableClassTable';
+import {
+  dashboardConsoleNavClasses,
+  dashboardConsoleNavSkeletonClasses,
+  dashboardConsoleFooterSkeletonClasses,
+} from './stable';
 
 ## Default
 
@@ -32,3 +38,19 @@ Use `items` for top-level links and nested `groups` for a second level. Icons ar
 <Api name="ConsoleNav" />
 
 <Api name="ConsoleNavSkeleton" from="." />
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+### ConsoleNav
+
+<StableClassTable of={dashboardConsoleNavClasses} />
+
+### ConsoleNavSkeleton
+
+<StableClassTable of={dashboardConsoleNavSkeletonClasses} />
+
+### ConsoleFooterSkeleton
+
+<StableClassTable of={dashboardConsoleFooterSkeletonClasses} />

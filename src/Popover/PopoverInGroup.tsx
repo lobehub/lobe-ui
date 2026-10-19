@@ -13,6 +13,7 @@ import { parseTrigger } from '@/utils/parseTrigger';
 
 import { PopoverGroupHandleContext } from './groupContext';
 import { HOVER_ONLY_TRIGGER_ATTR } from './hoverOnlyPress';
+import { popoverClasses } from './stable';
 import { type PopoverProps } from './type';
 import { useMergedPopoverProps } from './useMergedPopoverProps';
 
@@ -70,7 +71,7 @@ export const PopoverInGroup: FC<PopoverProps> = ({ children, ref: refProp, ...pr
           const mergedProps = mergeProps((children as any).props, resolvedProps);
           return cloneElement(children as any, {
             ...mergedProps,
-            className: clsx(mergedProps.className, triggerClassName),
+            className: clsx(popoverClasses('trigger'), mergedProps.className, triggerClassName),
             ref: mergeRefs([getElementRef(children), (renderProps as any).ref, refProp]),
           });
         }}
@@ -82,7 +83,7 @@ export const PopoverInGroup: FC<PopoverProps> = ({ children, ref: refProp, ...pr
     <BasePopover.Trigger
       handle={group ?? undefined}
       {...triggerProps}
-      className={triggerClassName}
+      className={clsx(popoverClasses('trigger'), triggerClassName)}
       nativeButton={resolvedNativeButton}
       ref={refProp}
     >

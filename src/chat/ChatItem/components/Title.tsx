@@ -1,10 +1,11 @@
-import * as stylex from '@stylexjs/stylex';
 import type { FC } from 'react';
 
 import { type ChatItemProps } from '@/chat/ChatItem';
 import { Flexbox } from '@/Flex';
+import { styleProps } from '@/styles/stylex/props';
 import { formatTime } from '@/utils/formatTime';
 
+import { chatChatItemClasses } from '../stable';
 import { styles } from '../style';
 
 export interface TitleProps {
@@ -21,11 +22,14 @@ const Title: FC<TitleProps> = ({ showTitle, placement = 'left', time, avatar, ti
       align={'center'}
       direction={placement === 'left' ? 'horizontal' : 'horizontal-reverse'}
       gap={4}
-      {...stylex.props(styles.name, placement === 'left' ? styles.nameLeft : styles.nameRight)}
+      {...styleProps(
+        [styles.name, placement === 'left' ? styles.nameLeft : styles.nameRight],
+        chatChatItemClasses('title'),
+      )}
     >
       {showTitle ? avatar.title || 'untitled' : undefined}
       {showTitle ? titleAddon : undefined}
-      {time && <time>{formatTime(time)}</time>}
+      {time && <time className={chatChatItemClasses('time')}>{formatTime(time)}</time>}
     </Flexbox>
   );
 };

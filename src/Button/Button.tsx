@@ -1,6 +1,7 @@
 'use client';
 
 import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import {
   isValidElement,
   type MouseEvent,
@@ -13,7 +14,9 @@ import Icon, { type IconProps } from '@/Icon';
 import { useMotionComponent } from '@/MotionProvider';
 import { focusRing } from '@/styles/stylex/focusRing';
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
+import { buttonClasses } from './stable';
 import { styles } from './style';
 import type { ButtonOutdent, ButtonProps, ButtonType } from './type';
 
@@ -86,6 +89,7 @@ const motionTransition = {
 
 type ButtonImplProps = Omit<ButtonProps, 'outdent' | 'type'> & {
   outdent?: ButtonOutdent;
+  stableData?: Record<`data-${string}`, string>;
   type?: ButtonType;
   xstyle?: Parameters<typeof styleProps>[0];
 };
@@ -108,6 +112,7 @@ const ButtonImpl = ({
   ref,
   shape = 'default',
   size = 'middle',
+  stableData,
   styles: userStyles,
   target,
   type = 'default',
@@ -147,8 +152,11 @@ const ButtonImpl = ({
       outdentCls,
       xstyle,
     ],
-    className,
+    clsx(buttonClasses(), className),
   ).className;
+
+  const dataAttributes =
+    stableData ?? toDataAttributes({ block, danger, ghost, loading, shape, size, type });
 
   const spinnerNode = (
     <span
@@ -160,7 +168,7 @@ const ButtonImpl = ({
           iconPosition === 'end' && styles.spinnerSlotEnd,
           loading && styles.spinnerSlotShow,
         ],
-        classNames?.icon,
+        clsx(buttonClasses('spinner'), classNames?.icon),
         userStyles?.icon,
       )}
     >
@@ -170,7 +178,13 @@ const ButtonImpl = ({
 
   const iconNode =
     icon && !loading ? (
-      <span {...styleProps(styles.iconBox, classNames?.icon, userStyles?.icon)}>
+      <span
+        {...styleProps(
+          styles.iconBox,
+          clsx(buttonClasses('icon'), classNames?.icon),
+          userStyles?.icon,
+        )}
+      >
         {resolveIconNode(icon)}
       </span>
     ) : null;
@@ -202,6 +216,7 @@ const ButtonImpl = ({
         aria-disabled={isInteractionDisabled || undefined}
         href={disabled ? undefined : href}
         target={target}
+        {...dataAttributes}
         {...(rest as any)}
         className={composedClassName}
         ref={ref as Ref<HTMLAnchorElement>}
@@ -224,6 +239,7 @@ const ButtonImpl = ({
   return (
     <Motion.button
       type={htmlType}
+      {...dataAttributes}
       {...(rest as any)}
       aria-busy={loading || undefined}
       aria-disabled={isInteractionDisabled || undefined}

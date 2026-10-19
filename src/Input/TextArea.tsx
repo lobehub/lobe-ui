@@ -1,16 +1,18 @@
 'use client';
 
 import { Field } from '@base-ui/react/field';
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { type CSSProperties, memo, useMemo, useRef, useState } from 'react';
 
 import { styleProps } from '@/styles/stylex/props';
 import { useThemeMode } from '@/styles/theme/scope';
+import { toDataAttributes } from '@/utils/bem';
 import { useMergeRefs } from '@/utils/mergeRefs';
 
 import ClearButton from './ClearButton';
 import { clearNativeValue } from './clearNativeValue';
 import { isPressEnter } from './pressEnter';
+import { textAreaClasses } from './stable';
 import { inputRootStyles, styles } from './style';
 import type { TextAreaProps } from './type';
 
@@ -62,13 +64,14 @@ const TextArea = memo<TextAreaProps>(
       <div
         data-disabled={disabled ? '' : undefined}
         data-variant={mergedVariant}
+        {...toDataAttributes({ shadow })}
         {...styleProps(
           [
             ...inputRootStyles({ shadow, variant: mergedVariant }),
             styles.textarea,
             showCount && styles.textareaWithCount,
           ],
-          className,
+          clsx(textAreaClasses(), className),
           { ...cssVariables, ...style },
         )}
       >
@@ -81,7 +84,7 @@ const TextArea = memo<TextAreaProps>(
               autoSize && styles.textareaAutoSize,
               resize && styles.textareaResize,
             ],
-            classNames?.input,
+            clsx(textAreaClasses('input'), classNames?.input),
             customStyles?.input,
           )}
           render={
@@ -105,6 +108,7 @@ const TextArea = memo<TextAreaProps>(
         />
         {showClear && (
           <ClearButton
+            className={textAreaClasses('clear')}
             xstyle={styles.textareaClear}
             onClear={() => {
               clearNativeValue(textareaRef.current);
@@ -113,7 +117,10 @@ const TextArea = memo<TextAreaProps>(
           />
         )}
         {showCount && (
-          <span data-over={over ? '' : undefined} {...stylex.props(styles.count)}>
+          <span
+            data-over={over ? '' : undefined}
+            {...styleProps(styles.count, textAreaClasses('count'))}
+          >
             {maxLength === undefined ? length : `${length} / ${maxLength}`}
           </span>
         )}

@@ -1,14 +1,16 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { ChevronRight } from 'lucide-react';
 
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
 import { useSurfaceLink } from '../Surface/link';
 import Surface from '../Surface/Surface';
+import { dashboardSectionClasses } from './stable';
 import { styles } from './style';
 import type { SectionProps } from './type';
 
@@ -38,7 +40,7 @@ const Section = ({
             <Icon icon={ChevronRight} />
           </>
         ),
-        className: stylex.props(styles.more).className,
+        className: styleProps(styles.more, dashboardSectionClasses('more')).className,
         href: moreLink,
         rel: moreLink.startsWith('http') ? 'noreferrer' : undefined,
         target: moreLink.startsWith('http') ? '_blank' : undefined,
@@ -46,7 +48,7 @@ const Section = ({
     : null;
   const actions =
     extra || moreNode ? (
-      <Flexbox horizontal align="center" gap={8}>
+      <Flexbox horizontal align="center" className={dashboardSectionClasses('actions')} gap={8}>
         {extra}
         {moreNode}
       </Flexbox>
@@ -55,19 +57,31 @@ const Section = ({
   if (variant === 'card') {
     return (
       <Surface
+        className={dashboardSectionClasses()}
         description={desc}
         extra={actions}
         padded={padded ?? true}
+        {...toDataAttributes({ variant })}
         title={
           title ? (
-            <span {...styleProps(styles.title, undefined, fontSize ? { fontSize } : undefined)}>
+            <span
+              {...styleProps(
+                styles.title,
+                dashboardSectionClasses('title'),
+                fontSize ? { fontSize } : undefined,
+              )}
+            >
               {icon}
               {title}
             </span>
           ) : undefined
         }
       >
-        <Flexbox className={className} gap={gap ?? 12} {...rest}>
+        <Flexbox
+          className={clsx(dashboardSectionClasses('body'), className)}
+          gap={gap ?? 12}
+          {...rest}
+        >
           {children}
         </Flexbox>
       </Surface>
@@ -76,21 +90,47 @@ const Section = ({
 
   if (!title) {
     return (
-      <Flexbox className={className} gap={gap} {...rest}>
+      <Flexbox
+        className={clsx(dashboardSectionClasses(), className)}
+        gap={gap}
+        {...toDataAttributes({ variant })}
+        {...rest}
+      >
         {children}
       </Flexbox>
     );
   }
 
   return (
-    <Flexbox className={className} gap={gap ?? 16} width="100%" {...rest}>
-      <Flexbox horizontal align="center" gap={12} justify="space-between" width="100%">
-        <Flexbox gap={4}>
+    <Flexbox
+      className={clsx(dashboardSectionClasses(), className)}
+      gap={gap ?? 16}
+      width="100%"
+      {...toDataAttributes({ variant })}
+      {...rest}
+    >
+      <Flexbox
+        horizontal
+        align="center"
+        className={dashboardSectionClasses('header')}
+        gap={12}
+        justify="space-between"
+        width="100%"
+      >
+        <Flexbox className={dashboardSectionClasses('heading')} gap={4}>
           {icon}
-          <h2 {...styleProps(styles.title, undefined, fontSize ? { fontSize } : undefined)}>
+          <h2
+            {...styleProps(
+              styles.title,
+              dashboardSectionClasses('title'),
+              fontSize ? { fontSize } : undefined,
+            )}
+          >
             {title}
           </h2>
-          {desc ? <div {...stylex.props(styles.desc)}>{desc}</div> : null}
+          {desc ? (
+            <div {...styleProps(styles.desc, dashboardSectionClasses('desc'))}>{desc}</div>
+          ) : null}
         </Flexbox>
         {actions ?? null}
       </Flexbox>

@@ -9,6 +9,7 @@ import { RangePicker as RcRangePicker } from './core';
 import type { GenerateConfig } from './core/generate';
 import { isNativeDateConfig, normalizeLegacyDateProps } from './legacyDate';
 import { usePickerLocale } from './locale';
+import { dateRangePickerClasses } from './stable';
 import type { DateRangePickerProps, RangePickerComponent } from './type';
 import { usePanelKeyboard } from './usePanelKeyboard';
 import { usePickerShared } from './usePickerShared';
@@ -107,6 +108,7 @@ const generateRangePicker = <DateType extends object>(generateConfig: GenerateCo
       value,
     });
     const shared = usePickerShared({
+      stable: dateRangePickerClasses,
       allowClear,
       changeOnBlur,
       className,

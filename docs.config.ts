@@ -24,7 +24,7 @@ export default defineDocsConfig({
   },
   homePage: './docs/home/home.tsx',
   legacyRedirects,
-  publicDocs: ['docs/design-tokens.mdx', 'docs/migration-v6.mdx'],
+  publicDocs: ['docs/design-tokens.mdx', 'docs/migration-v6.mdx', 'docs/styling-overrides.mdx'],
   siteUrl: 'https://ui.lobehub.com',
   stylex: './config/stylex.ts',
   themeConfig: {
@@ -54,6 +54,7 @@ export default defineDocsConfig({
     navItems: [
       { href: '/design-tokens', icon: 'swatch-book', label: 'Design Tokens' },
       { href: '/migration-v6', icon: 'milestone', label: 'Migrating to v6' },
+      { href: '/styling-overrides', icon: 'paintbrush', label: 'Styling Overrides' },
     ],
     prefersColor: 'auto',
     socialLinks: [

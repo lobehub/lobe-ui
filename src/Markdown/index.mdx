@@ -37,6 +37,8 @@ import DemoStreamingAnimationRepro from './demos/streamingAnimationRepro.tsx?dem
 import DemoComponents from './demos/custom/components.tsx?demo';
 import DemoIndex from './demos/custom/citations/index.tsx?demo';
 import DemoIndex2 from './demos/custom/plugins/index.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { markdownClasses, typographyClasses, searchResultCardsClasses } from './stable';
 
 ## Basic
 
@@ -329,3 +331,19 @@ The `skipped` counter tallies `.stream-char` spans that were inserted into the D
 ## APIs
 
 <Api name="Markdown" migrationKey="unheaded:0" />
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+### Markdown
+
+<StableClassTable of={markdownClasses} />
+
+### Typography
+
+<StableClassTable of={typographyClasses} />
+
+### SearchResultCards
+
+<StableClassTable of={searchResultCardsClasses} />

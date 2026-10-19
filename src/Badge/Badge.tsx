@@ -1,10 +1,12 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
-import { memo, type ReactNode } from 'react';
+import clsx from 'clsx';
+import { type CSSProperties, memo, type ReactNode } from 'react';
 
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
+import { badgeClasses } from './stable';
 import { statusColor, styles } from './style';
 import type { BadgeProps } from './type';
 
@@ -33,15 +35,22 @@ const Badge = memo<BadgeProps>(
       const dotColor = color ?? statusColor[status ?? 'default'];
 
       return (
-        <span ref={ref} {...styleProps([styles.statusRoot], className, style)} {...rest}>
+        <span
+          ref={ref}
+          {...toDataAttributes({ status: status ?? 'default' })}
+          {...styleProps([styles.statusRoot], clsx(badgeClasses(), className), style)}
+          {...rest}
+        >
           <span
             {...styleProps(
               [styles.statusDot, status === 'processing' && styles.statusDotProcessing],
-              undefined,
-              { background: dotColor, color: dotColor },
+              badgeClasses('dot'),
+              color === undefined
+                ? ({ '--lobe-badge-color': dotColor } as CSSProperties)
+                : { background: color, color },
             )}
           />
-          {text && <span {...stylex.props(styles.statusText)}>{text}</span>}
+          {text && <span {...styleProps(styles.statusText, badgeClasses('text'))}>{text}</span>}
         </span>
       );
     }
@@ -72,10 +81,15 @@ const Badge = memo<BadgeProps>(
       return (
         <span
           ref={ref}
-          {...styleProps([styles.pill, pillSizeStyles[size], dot && styles.pillDot], className, {
-            ...pillStyle,
-            ...style,
-          })}
+          {...toDataAttributes({ dot, size })}
+          {...styleProps(
+            [styles.pill, pillSizeStyles[size], dot && styles.pillDot],
+            clsx(badgeClasses(), badgeClasses('count'), className),
+            {
+              ...pillStyle,
+              ...style,
+            },
+          )}
           {...rest}
         >
           {!dot && content}
@@ -84,13 +98,18 @@ const Badge = memo<BadgeProps>(
     }
 
     return (
-      <span ref={ref} {...styleProps([styles.wrapper], className, style)} {...rest}>
+      <span
+        ref={ref}
+        {...toDataAttributes({ dot, size })}
+        {...styleProps([styles.wrapper], clsx(badgeClasses(), className), style)}
+        {...rest}
+      >
         {children}
         {renderPill && (
           <span
             {...styleProps(
               [styles.pill, pillSizeStyles[size], styles.pillAbsolute, dot && styles.pillDot],
-              undefined,
+              badgeClasses('count'),
               pillStyle,
             )}
           >

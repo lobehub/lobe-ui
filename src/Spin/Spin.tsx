@@ -1,13 +1,16 @@
 'use client';
 
 import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { LoaderCircle } from 'lucide-react';
 import { memo, useMemo } from 'react';
 
 import Icon from '@/Icon';
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
 import NetworkGlyph from './NetworkGlyph';
+import { spinClasses } from './stable';
 import { styles } from './style';
 import type { SpinProps, SpinSize } from './type';
 
@@ -80,6 +83,11 @@ const Spin = memo<SpinProps>(
 
     if (!spinning) return children ?? null;
 
+    const dataAttributes = toDataAttributes({
+      size: typeof size === 'string' ? size : undefined,
+      variant,
+    });
+
     if (!children) {
       return (
         <div
@@ -87,10 +95,11 @@ const Spin = memo<SpinProps>(
           aria-live="polite"
           ref={ref}
           role="status"
-          {...styleProps(styles.root, className, style)}
+          {...styleProps(styles.root, clsx(spinClasses(), className), style)}
+          {...dataAttributes}
           {...rest}
         >
-          <span aria-hidden {...stylex.props(styles.glyphBox)}>
+          <span aria-hidden {...styleProps(styles.glyphBox, spinClasses('indicator'))}>
             {glyph}
           </span>
         </div>
@@ -98,13 +107,23 @@ const Spin = memo<SpinProps>(
     }
 
     return (
-      <div ref={ref} {...styleProps(styles.wrapper, className, style)} {...rest}>
+      <div
+        ref={ref}
+        {...styleProps(styles.wrapper, clsx(spinClasses(), className), style)}
+        {...dataAttributes}
+        {...rest}
+      >
         {children}
-        <div aria-busy aria-live="polite" {...stylex.props(styles.overlay)} role="status">
-          <span aria-hidden {...stylex.props(styles.glyphBox)}>
+        <div
+          aria-busy
+          aria-live="polite"
+          {...styleProps(styles.overlay, spinClasses('overlay'))}
+          role="status"
+        >
+          <span aria-hidden {...styleProps(styles.glyphBox, spinClasses('indicator'))}>
             {glyph}
           </span>
-          {tip && <span {...stylex.props(styles.tip)}>{tip}</span>}
+          {tip && <span {...styleProps(styles.tip, spinClasses('tip'))}>{tip}</span>}
         </div>
       </div>
     );

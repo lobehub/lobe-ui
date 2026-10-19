@@ -5,6 +5,8 @@ category: Navigation
 ---
 
 import DemoIndex from './demos/index.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { listClasses } from './stable';
 
 ## Basic
 
@@ -22,3 +24,9 @@ Rows render as `button`, or as lobe-ui `A` when `href` is set (router-aware thro
 - root `@lobehub/ui` `List`: `title` → `label`.
 - antd `List`: map `dataSource` to `items`; `bordered` → `variant="outlined"`.
 - Submenus, groups, horizontal mode and virtual scrolling are not supported.
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={listClasses} />

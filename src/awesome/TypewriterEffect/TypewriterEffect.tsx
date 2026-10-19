@@ -1,11 +1,12 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
 import clsx from 'clsx';
 import { createElement, memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useMotionComponent } from '@/MotionProvider';
+import { styleProps } from '@/styles/stylex/props';
 
+import { awesomeTypewriterEffectClasses } from './stable';
 import { styles } from './style';
 import type { TypewriterEffectProps } from './type';
 
@@ -238,18 +239,24 @@ const TypewriterEffect = memo<TypewriterEffectProps>(
     return createElement(
       Component,
       {
-        className: clsx(stylex.props(styles.container).className, className),
+        className: clsx(
+          styleProps(styles.container, awesomeTypewriterEffectClasses()).className,
+          className,
+        ),
         ref: containerRef,
         ...props,
       },
       <>
-        <span {...stylex.props(styles.text)} style={textColor ? { color: textColor } : undefined}>
+        <span
+          {...styleProps(styles.text, awesomeTypewriterEffectClasses('text'))}
+          style={textColor ? { color: textColor } : undefined}
+        >
           {characters.map((char, index) => (
             <Motion.span
               animate={{ opacity: 1 }}
               initial={{ opacity: 0 }}
               key={`${currentTextIndex}-${index}`}
-              style={{ display: 'inline-block' }}
+              {...styleProps(styles.char, awesomeTypewriterEffectClasses('char'))}
               transition={{
                 duration: typingSpeed / 500,
                 ease: 'easeInOut',
@@ -263,9 +270,12 @@ const TypewriterEffect = memo<TypewriterEffectProps>(
           (cursorFade ? (
             <Motion.span
               animate={{ opacity: shouldHideCursor ? 0 : 1 }}
-              className={clsx(stylex.props(getCursorStyle()).className, cursorClassName)}
               initial={{ opacity: 0 }}
               style={finalCursorColor ? { backgroundColor: finalCursorColor } : undefined}
+              className={clsx(
+                styleProps(getCursorStyle(), awesomeTypewriterEffectClasses('cursor')).className,
+                cursorClassName,
+              )}
               transition={{
                 duration: shouldHideCursor ? 0.2 : cursorBlinkDuration,
                 ease: 'easeInOut',
@@ -277,7 +287,10 @@ const TypewriterEffect = memo<TypewriterEffectProps>(
             </Motion.span>
           ) : (
             <span
-              className={clsx(stylex.props(getCursorStyle()).className, cursorClassName)}
+              className={clsx(
+                styleProps(getCursorStyle(), awesomeTypewriterEffectClasses('cursor')).className,
+                cursorClassName,
+              )}
               style={{
                 backgroundColor: finalCursorColor,
                 opacity: shouldHideCursor ? 0 : 1,

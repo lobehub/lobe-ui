@@ -2,7 +2,7 @@
 
 import './style.css';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { Bot, UserRound } from 'lucide-react';
 import { memo, useState } from 'react';
 
@@ -11,9 +11,11 @@ import Icon from '@/Icon';
 import Segmented from '@/Segmented';
 import Snippet from '@/Snippet';
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
 import { DEFAULT_SKILL_AGENTS } from './agents';
-import { childStyles, styles } from './style';
+import { awesomeAgentSkillCardClasses } from './stable';
+import { styles } from './style';
 import type { AgentSkillCardMode, AgentSkillCardProps } from './type';
 
 const AVATAR_SIZE = 28;
@@ -36,10 +38,15 @@ const AgentSkillCard = memo<AgentSkillCardProps>(
     const shell = panel.shell ?? mode === 'human';
 
     return (
-      <div {...styleProps(styles.root, className)} {...rest}>
+      <div
+        {...styleProps(styles.root, clsx(awesomeAgentSkillCardClasses(), className))}
+        {...toDataAttributes({ mode })}
+        {...rest}
+      >
         {human && (
           <Segmented<AgentSkillCardMode>
             block
+            className={awesomeAgentSkillCardClasses('mode-switch')}
             size={'large'}
             value={mode}
             variant={'outlined'}
@@ -61,28 +68,43 @@ const AgentSkillCard = memo<AgentSkillCardProps>(
             }}
           />
         )}
-        <div {...stylex.props(styles.panel)}>
+        <div {...styleProps(styles.panel, awesomeAgentSkillCardClasses('panel'))}>
           {mode === 'agent' && agents.length > 0 && (
-            <div {...stylex.props(styles.agents)}>
+            <div {...styleProps(styles.agents, awesomeAgentSkillCardClasses('agents'))}>
               {agents.map(({ avatar, title }) => (
-                <span key={title} title={title} {...stylex.props(styles.agent)}>
+                <span
+                  key={title}
+                  title={title}
+                  {...styleProps(styles.agent, awesomeAgentSkillCardClasses('agent'))}
+                >
                   {renderLandingIcon(avatar, AVATAR_SIZE)}
                 </span>
               ))}
             </div>
           )}
-          {panel.description && <p {...stylex.props(styles.description)}>{panel.description}</p>}
+          {panel.description && (
+            <p {...styleProps(styles.description, awesomeAgentSkillCardClasses('description'))}>
+              {panel.description}
+            </p>
+          )}
           <Snippet
+            className={awesomeAgentSkillCardClasses('code')}
             language={'bash'}
             prefix={shell ? '$' : undefined}
-            style={childStyles.code}
             variant={'outlined'}
           >
             {panel.code}
           </Snippet>
         </div>
         {footer && (
-          <div {...styleProps(styles.footer, 'lobe-agent-skill-card-footer')}>{footer}</div>
+          <div
+            {...styleProps(
+              styles.footer,
+              clsx(awesomeAgentSkillCardClasses('footer'), 'lobe-agent-skill-card-footer'),
+            )}
+          >
+            {footer}
+          </div>
         )}
       </div>
     );

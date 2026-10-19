@@ -8,6 +8,7 @@ import ActionIcon from '@/ActionIcon';
 import type { TableInternalHandle } from '@/Table/internal';
 
 import { useSelectedRowKeys } from '../hooks/useTableSelection';
+import { proTableClasses } from '../stable';
 import { PRO_PREFIX_CLS, styles } from '../style';
 import type { ProTableActionType, ProTableProps } from '../type';
 
@@ -58,9 +59,9 @@ const Toolbar = <T,>({
   if (empty) return null;
 
   return (
-    <div className={clsx(styles.toolbar, `${PRO_PREFIX_CLS}-toolbar`)}>
+    <div className={clsx(styles.toolbar, `${PRO_PREFIX_CLS}-toolbar`, proTableClasses('toolbar'))}>
       {(title !== undefined || subTitle) && (
-        <div className={styles.title}>
+        <div className={clsx(styles.title, proTableClasses('toolbar-title'))}>
           {title}
           {tooltip && <ActionIcon icon={CircleHelp} size="small" title={tooltip} />}
           {subTitle && <span className={styles.titleSub}>{subTitle}</span>}

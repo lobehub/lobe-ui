@@ -9,8 +9,10 @@ import { memo, useMemo, useState } from 'react';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import { styleProps } from '@/styles/stylex/props';
 import { stylish } from '@/styles/stylex/stylish';
+import { toDataAttributes } from '@/utils/bem';
 import { safeReadableColor } from '@/utils/safeReadableColor';
 
+import { tagClasses } from './stable';
 import { styles } from './style';
 import type { TagProps } from './type';
 import { colorsPreset, colorsPresetSystem, presetColors, presetSystemColors } from './utils';
@@ -50,7 +52,7 @@ const Tag = memo<TagProps>(
     const [visible, setVisible] = useState(true);
 
     const colors = useMemo(() => {
-      let textColor = cssVar.colorTextSecondary;
+      let textColor: string | undefined;
       let backgroundColor;
       let borderColor;
       const isBorderless = variant === 'borderless';
@@ -112,18 +114,20 @@ const Tag = memo<TagProps>(
             variantStyles[variant],
             styles[size],
             shape === 'round' && [styles.round, roundSizeStyles[size]],
+            !colors.textColor && styles.defaultColor,
+            !!onClick && styles.clickable,
           ],
           clsx('lobe-tag', className, classNames?.root),
           {
             background: colors.backgroundColor,
             borderColor: colors.borderColor,
             color: colors.textColor,
-            cursor: onClick ? 'pointer' : undefined,
             ...style,
             ...customStyles?.root,
           },
         )}
         onClick={onClick}
+        {...toDataAttributes({ color, shape, size, variant })}
         {...rest}
       >
         {icon}
@@ -131,7 +135,11 @@ const Tag = memo<TagProps>(
         {closable && (
           <button
             aria-label="Close"
-            {...styleProps(styles.close, classNames?.closeIcon, customStyles?.closeIcon)}
+            {...styleProps(
+              styles.close,
+              clsx(tagClasses('close'), classNames?.closeIcon),
+              customStyles?.closeIcon,
+            )}
             type="button"
             onClick={(e) => {
               e.stopPropagation();

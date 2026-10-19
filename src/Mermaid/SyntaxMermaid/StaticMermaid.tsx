@@ -1,5 +1,6 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { type Ref } from 'react';
 import { memo, useMemo } from 'react';
 
@@ -10,10 +11,12 @@ import { getMermaidThemeVars } from '../themes';
 import { type SyntaxMermaidProps } from '../type';
 import MermaidFallback from './MermaidFallback';
 import MermaidSvg from './MermaidSvg';
+import { styles } from './style';
 
 interface StaticMermaidProps {
   children: string;
   className?: string;
+  dataAttributes?: Record<`data-${string}`, string>;
   fallbackClassName?: string;
   ref?: Ref<HTMLDivElement>;
   style?: SyntaxMermaidProps['style'];
@@ -22,7 +25,16 @@ interface StaticMermaidProps {
 }
 
 const StaticMermaid = memo<StaticMermaidProps>(
-  ({ children, className, fallbackClassName, ref, style, theme: customTheme, variant }) => {
+  ({
+    children,
+    className,
+    dataAttributes,
+    fallbackClassName,
+    ref,
+    style,
+    theme: customTheme,
+    variant,
+  }) => {
     const safeChildren = children ?? '';
     const isDefaultTheme = customTheme === 'lobe-theme' || !customTheme;
 
@@ -36,17 +48,17 @@ const StaticMermaid = memo<StaticMermaidProps>(
     const containerStyle = {
       ...getMermaidThemeVars(customTheme),
       background: variant === 'filled' ? background : undefined,
-      margin: 0,
-      minWidth: 300,
-      padding: variant === 'borderless' ? 0 : 16,
-      position: 'relative' as const,
-      width: '100%',
       ...style,
     };
 
     if (error && !loading) {
       return (
-        <MermaidFallback className={fallbackClassName} message={error} style={style}>
+        <MermaidFallback
+          className={fallbackClassName}
+          dataAttributes={dataAttributes}
+          message={error}
+          style={style}
+        >
           {safeChildren}
         </MermaidFallback>
       );
@@ -54,13 +66,21 @@ const StaticMermaid = memo<StaticMermaidProps>(
 
     if (!svg) {
       return (
-        <div className={fallbackClassName} style={style}>
-          <div style={{ padding: 16 }}>Loading...</div>
+        <div {...dataAttributes} className={fallbackClassName} style={style}>
+          <div {...stylex.props(styles.status)}>Loading...</div>
         </div>
       );
     }
 
-    return <MermaidSvg className={className} ref={ref} style={containerStyle} svg={svg} />;
+    return (
+      <MermaidSvg
+        className={className}
+        dataAttributes={dataAttributes}
+        ref={ref}
+        style={containerStyle}
+        svg={svg}
+      />
+    );
   },
 );
 

@@ -7,12 +7,38 @@ const hover = ':hover:not([data-disabled], [data-checked], [data-indeterminate])
 const disabled = ':is([data-disabled])';
 
 export const styles = stylex.create({
+  circle: {
+    borderRadius: '50%',
+  },
+  defaultSize: {
+    height: 16,
+    width: 16,
+  },
+  defaultSquare: {
+    borderRadius: 4,
+  },
+  group: {
+    gap: 12,
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  groupVertical: {
+    flexDirection: 'column',
+  },
+  iconCircle: {
+    transform: 'scale(0.66)',
+  },
+  iconSquare: {
+    transform: 'scale(0.75)',
+  },
   indicator: {
     alignItems: 'center',
     display: 'flex',
     justifyContent: 'center',
   },
   label: {
+    gap: 8,
     alignItems: 'center',
     cursor: { 'default': 'pointer', ':has([data-disabled])': 'not-allowed' },
     display: 'inline-flex',

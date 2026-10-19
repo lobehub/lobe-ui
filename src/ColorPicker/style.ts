@@ -31,6 +31,9 @@ export const styles = stylex.create({
     fontVariantNumeric: 'tabular-nums',
     textAlign: 'center',
   },
+  compareAlpha: {
+    height: 30,
+  },
   compare: {
     backgroundPosition: '0 0, 4px 4px',
     borderRadius: 8,
@@ -41,6 +44,7 @@ export const styles = stylex.create({
     boxShadow: insetRing,
     display: 'flex',
     flexDirection: 'column',
+    height: 28,
     width: 28,
   },
   compareHalf: {
@@ -290,6 +294,18 @@ export const triggerStyles = stylex.create({
   fieldSmall: { paddingInlineEnd: 8, paddingInlineStart: 5, minWidth: 112 },
   fieldMiddle: { paddingInlineEnd: 10, paddingInlineStart: 8, minWidth: 140 },
   fieldLarge: { paddingInlineEnd: 12, paddingInlineStart: 10, minWidth: 168 },
+  tileLarge: {
+    height: 32,
+    width: 32,
+  },
+  tileMiddle: {
+    height: 28,
+    width: 28,
+  },
+  tileSmall: {
+    height: 24,
+    width: 24,
+  },
   swatch: {
     padding: 0,
     borderRadius: 8,

@@ -1,16 +1,19 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { useEffect, useState } from 'react';
 
+import { styleProps } from '@/styles/stylex/props';
+
+import { dashboardRouteProgressClasses } from './stable';
 import { styles } from './style';
 import type { RouteProgressProps } from './type';
 
 const FADE_MS = 200;
 const CREEP_MS = 120;
 
-function RouteProgress({ loading = false }: RouteProgressProps) {
-  const [progress, setProgress] = useState<number | null>(null);
+function RouteProgress({ className, loading = false }: RouteProgressProps) {
+  const [progress, setProgress] = useState<number | null>(loading ? 0 : null);
 
   useEffect(() => {
     if (loading) {
@@ -37,12 +40,10 @@ function RouteProgress({ loading = false }: RouteProgressProps) {
   return (
     <div
       aria-hidden
-      {...stylex.props(styles.bar)}
-      style={{
+      {...styleProps(styles.bar, clsx(dashboardRouteProgressClasses(), className), {
         opacity: progress >= 1 ? 0 : 1,
         transform: `scaleX(${progress})`,
-        transition: `transform ${FADE_MS}ms ease-out, opacity ${FADE_MS}ms ease-in`,
-      }}
+      })}
     />
   );
 }

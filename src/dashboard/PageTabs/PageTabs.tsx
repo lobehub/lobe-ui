@@ -1,31 +1,39 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
+import './style.css';
 
-import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import clsx from 'clsx';
+
+import { styleProps } from '@/styles/stylex/props';
 import Tabs from '@/Tabs';
 
+import { dashboardPageTabsClasses } from './stable';
 import { styles } from './style';
 import type { PageTabsProps } from './type';
 
 const classNames = {
-  list: stylex.props(styles.list).className,
-  tab: stylex.props(styles.tab).className,
+  list: styleProps(styles.list, dashboardPageTabsClasses('list')).className,
+  panel: dashboardPageTabsClasses('panel'),
+  tab: styleProps(styles.tab, dashboardPageTabsClasses('tab')).className,
 };
 
-const slotStyles = {
-  list: { gap: cssVar.paddingXXS, padding: cssVar.paddingXXS },
-  panel: { paddingBlockStart: 16 },
-  tab: { gap: cssVar.paddingXS },
-};
-
-function PageTabs<Value extends string>({ label, onChange, tabs, value }: PageTabsProps<Value>) {
+function PageTabs<Value extends string>({
+  className,
+  label,
+  onChange,
+  tabs,
+  value,
+}: PageTabsProps<Value>) {
   return (
-    <div aria-label={label} role="navigation" {...stylex.props(styles.root)}>
+    <div
+      aria-label={label}
+      role="navigation"
+      {...styleProps(styles.root, clsx(dashboardPageTabsClasses(), className))}
+    >
       <Tabs
         activeKey={value}
+        className={dashboardPageTabsClasses('tabs')}
         classNames={classNames}
-        styles={slotStyles}
         items={tabs.map((tab) => ({
           children: tab.content,
           key: tab.value,
@@ -33,7 +41,9 @@ function PageTabs<Value extends string>({ label, onChange, tabs, value }: PageTa
             <>
               {tab.label}
               {tab.count !== undefined ? (
-                <span {...stylex.props(styles.count)}>{tab.count}</span>
+                <span {...styleProps(styles.count, dashboardPageTabsClasses('count'))}>
+                  {tab.count}
+                </span>
               ) : null}
             </>
           ),

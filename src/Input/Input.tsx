@@ -1,16 +1,19 @@
 'use client';
 
 import { Input as BaseInput } from '@base-ui/react/input';
+import clsx from 'clsx';
 import { memo, useRef, useState } from 'react';
 
 import { useEventCallback } from '@/hooks/useEventCallback';
 import { styleProps } from '@/styles/stylex/props';
 import { useThemeMode } from '@/styles/theme/scope';
+import { toDataAttributes } from '@/utils/bem';
 import { useMergeRefs } from '@/utils/mergeRefs';
 
 import ClearButton from './ClearButton';
 import { clearNativeValue } from './clearNativeValue';
 import { isPressEnter } from './pressEnter';
+import { inputClasses } from './stable';
 import { inputRootStyles, styles } from './style';
 import type { InputProps } from './type';
 
@@ -57,10 +60,21 @@ const Input = memo<InputProps>(
       <div
         data-disabled={disabled ? '' : undefined}
         data-variant={mergedVariant}
-        {...styleProps(inputRootStyles({ shadow, size, variant: mergedVariant }), className, style)}
+        {...toDataAttributes({ shadow, size })}
+        {...styleProps(
+          inputRootStyles({ shadow, size, variant: mergedVariant }),
+          clsx(inputClasses(), className),
+          style,
+        )}
       >
         {prefix && (
-          <span {...styleProps(styles.slot, classNames?.prefix, customStyles?.prefix)}>
+          <span
+            {...styleProps(
+              styles.slot,
+              clsx(inputClasses('prefix'), classNames?.prefix),
+              customStyles?.prefix,
+            )}
+          >
             {prefix}
           </span>
         )}
@@ -70,7 +84,11 @@ const Input = memo<InputProps>(
           readOnly={readOnly}
           ref={mergedRef}
           value={value}
-          {...styleProps(styles.input, classNames?.input, customStyles?.input)}
+          {...styleProps(
+            styles.input,
+            clsx(inputClasses('input'), classNames?.input),
+            customStyles?.input,
+          )}
           onChange={(event) => {
             setFilled(event.currentTarget.value.length > 0);
             onChange?.(event);
@@ -81,9 +99,15 @@ const Input = memo<InputProps>(
           }}
           {...rest}
         />
-        {showClear && <ClearButton onClear={handleClear} />}
+        {showClear && <ClearButton className={inputClasses('clear')} onClear={handleClear} />}
         {suffix && (
-          <span {...styleProps(styles.slot, classNames?.suffix, customStyles?.suffix)}>
+          <span
+            {...styleProps(
+              styles.slot,
+              clsx(inputClasses('suffix'), classNames?.suffix),
+              customStyles?.suffix,
+            )}
+          >
             {suffix}
           </span>
         )}

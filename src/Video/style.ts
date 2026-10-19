@@ -194,6 +194,7 @@ export const styles = stylex.create({
     color: '#8a8a8a',
     fontFamily: cssVar.fontFamilyCode,
     fontVariantNumeric: 'tabular-nums',
+    marginInlineEnd: 6,
     whiteSpace: 'nowrap',
   },
   hairline: {
@@ -346,6 +347,9 @@ export const styles = stylex.create({
     insetInlineStart: 0,
     position: 'absolute',
   },
+  segmentHoverFill: {
+    backgroundColor: 'rgb(255 255 255 / 32%)',
+  },
   segmentHovered: {
     insetBlockStart: 6,
     height: 8,
@@ -358,11 +362,18 @@ export const styles = stylex.create({
     cursor: 'pointer',
     position: 'absolute',
   },
+  segmentPlayedFill: {
+    backgroundColor: '#fff',
+  },
   time: {
+    marginInline: 6,
     color: '#ddd',
     fontFamily: cssVar.fontFamilyCode,
     fontVariantNumeric: 'tabular-nums',
     whiteSpace: 'nowrap',
+  },
+  timeline: {
+    position: 'relative',
   },
   track: {
     outline: 'none',

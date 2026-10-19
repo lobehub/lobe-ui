@@ -2,14 +2,17 @@
 
 import { NumberField } from '@base-ui/react/number-field';
 import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { memo } from 'react';
 
 import Icon from '@/Icon';
 import { styleProps } from '@/styles/stylex/props';
 import { useThemeMode } from '@/styles/theme/scope';
+import { toDataAttributes } from '@/utils/bem';
 
 import { isPressEnter } from './pressEnter';
+import { inputNumberClasses } from './stable';
 import { inputRootStyles, styles } from './style';
 import type { InputNumberProps } from './type';
 
@@ -54,10 +57,15 @@ const InputNumber = memo<InputNumberProps>(
         data-variant={mergedVariant}
         format={mergedFormat}
         onValueChange={onChange}
+        {...toDataAttributes({ shadow, size })}
         {...rest}
-        {...styleProps(inputRootStyles({ shadow, size, variant: mergedVariant }), className, style)}
+        {...styleProps(
+          inputRootStyles({ shadow, size, variant: mergedVariant }),
+          clsx(inputNumberClasses(), className),
+          style,
+        )}
       >
-        {prefix && <span {...stylex.props(styles.slot)}>{prefix}</span>}
+        {prefix && <span {...styleProps(styles.slot, inputNumberClasses('prefix'))}>{prefix}</span>}
         <NumberField.Input
           placeholder={placeholder}
           ref={ref}
@@ -66,19 +74,28 @@ const InputNumber = memo<InputNumberProps>(
           }}
           {...styleProps(
             [styles.input, styles.numberInput],
-            classNames?.input,
+            clsx(inputNumberClasses('input'), classNames?.input),
             customStyles?.input,
           )}
         />
-        {suffix && <span {...stylex.props(styles.slot)}>{suffix}</span>}
+        {suffix && <span {...styleProps(styles.slot, inputNumberClasses('suffix'))}>{suffix}</span>}
         {controls && (
           <div
-            {...stylex.props(styles.numberControls, size === 'small' && styles.numberControlsSmall)}
+            {...styleProps(
+              [styles.numberControls, size === 'small' && styles.numberControlsSmall],
+              inputNumberClasses('controls'),
+            )}
           >
-            <NumberField.Increment {...controlProps}>
+            <NumberField.Increment
+              {...controlProps}
+              className={clsx(controlProps.className, inputNumberClasses('increment'))}
+            >
               <Icon icon={ChevronUp} size={controlIconSize[size]} />
             </NumberField.Increment>
-            <NumberField.Decrement {...controlProps}>
+            <NumberField.Decrement
+              {...controlProps}
+              className={clsx(controlProps.className, inputNumberClasses('decrement'))}
+            >
               <Icon icon={ChevronDown} size={controlIconSize[size]} />
             </NumberField.Decrement>
           </div>

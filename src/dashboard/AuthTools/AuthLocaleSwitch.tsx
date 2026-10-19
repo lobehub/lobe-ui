@@ -2,13 +2,14 @@
 
 import './style.css';
 
-import * as stylex from '@stylexjs/stylex';
 import clsx from 'clsx';
 import { GlobeIcon } from 'lucide-react';
 
 import Icon from '@/Icon';
 import Select from '@/Select';
+import { styleProps } from '@/styles/stylex/props';
 
+import { dashboardAuthLocaleSwitchClasses } from './stable';
 import { styles } from './style';
 import type { AuthLocaleSwitchProps } from './type';
 
@@ -24,13 +25,18 @@ function AuthLocaleSwitch({
   return (
     <Select
       aria-label={ariaLabel}
-      className={clsx('lobe-auth-locale-switch', className)}
+      className={clsx(dashboardAuthLocaleSwitchClasses(), 'lobe-auth-locale-switch', className)}
       options={options}
-      prefix={<Icon icon={GlobeIcon} {...stylex.props(styles.localeIcon)} />}
       size="small"
       style={style}
       value={value}
       variant="outlined"
+      prefix={
+        <Icon
+          icon={GlobeIcon}
+          {...styleProps(styles.localeIcon, dashboardAuthLocaleSwitchClasses('icon'))}
+        />
+      }
       onChange={(next: unknown) => {
         if (typeof next === 'string') onChange?.(next);
       }}

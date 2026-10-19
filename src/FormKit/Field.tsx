@@ -1,6 +1,6 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import {
   cloneElement,
   isValidElement,
@@ -26,6 +26,7 @@ import { useFormKitContext } from './context';
 import type { FieldValidator } from './engine/types';
 import { getInternals } from './instance';
 import { toFieldValidator } from './schema';
+import { formKitClasses } from './stable';
 import { fieldKitStyles } from './style';
 import type { FieldRenderProps, FormFieldProps, FormValues } from './type';
 import { useStoreSelector } from './useStoreSelector';
@@ -135,7 +136,7 @@ const FieldControl = memo<ControlProps>(
 
     const errorNode =
       field.error && !bare ? (
-        <div {...stylex.props(fieldStyles.error)} id={errorId}>
+        <div {...styleProps(fieldStyles.error, formKitClasses('field-error'))} id={errorId}>
           {field.error}
         </div>
       ) : null;
@@ -257,8 +258,17 @@ const FormField = memo<FormFieldProps>(
     return (
       <>
         {divider && <FormDivider visible={mergedVariant !== 'borderless'} />}
-        <div {...styleProps([fieldStyles.root, fieldLayoutStyles[mergedLayout]], className, style)}>
-          <label {...stylex.props(fieldStyles.label)} htmlFor={labelFor}>
+        <div
+          {...styleProps(
+            [fieldStyles.root, fieldLayoutStyles[mergedLayout]],
+            clsx(formKitClasses('field'), className),
+            style,
+          )}
+        >
+          <label
+            {...styleProps(fieldStyles.label, formKitClasses('field-label'))}
+            htmlFor={labelFor}
+          >
             <FormTitle
               avatar={avatar}
               desc={desc}
@@ -267,7 +277,10 @@ const FormField = memo<FormFieldProps>(
                 required ? (
                   <>
                     {label}
-                    <span aria-hidden {...stylex.props(fieldKitStyles.required)}>
+                    <span
+                      aria-hidden
+                      {...styleProps(fieldKitStyles.required, formKitClasses('field-required'))}
+                    >
                       *
                     </span>
                   </>
@@ -278,15 +291,22 @@ const FormField = memo<FormFieldProps>(
             />
           </label>
           <div
-            {...stylex.props(
-              fieldStyles.control,
-              mergedLayout === 'vertical' && fieldStyles.controlVertical,
-              Boolean(controlWidth) && fieldKitStyles.controlFixed,
+            {...styleProps(
+              [
+                fieldStyles.control,
+                mergedLayout === 'vertical' && fieldStyles.controlVertical,
+                Boolean(controlWidth) && fieldKitStyles.controlFixed,
+              ],
+              formKitClasses('field-control'),
             )}
             style={controlWidth ? { width: controlWidth } : undefined}
           >
             {control}
-            {extra && <div {...stylex.props(fieldKitStyles.extra)}>{extra}</div>}
+            {extra && (
+              <div {...styleProps(fieldKitStyles.extra, formKitClasses('field-extra'))}>
+                {extra}
+              </div>
+            )}
           </div>
         </div>
       </>

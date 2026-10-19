@@ -7,6 +7,8 @@ category: General
 import DemoDropdownMenu from './demos/DropdownMenu.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 import DemoOutdent from './demos/outdent.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { actionIconClasses } from './stable';
 
 ## Playground
 
@@ -33,3 +35,9 @@ Legacy variants map onto Button types: `borderless` to `text`, `filled` to `fill
 When `title` is provided the root is wrapped by the Base UI Tooltip and the tooltip container receives `pointerEvents: none` so hover interactions pass through to the icon. Elements carrying `aria-haspopup` or `aria-expanded` default their `aria-label` to the string `title`.
 
 Optional `classNames` and `styles` slots (`root`, `icon`) allow targeted style overrides on top of the existing props.
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={actionIconClasses} />

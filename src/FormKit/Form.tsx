@@ -1,16 +1,20 @@
 'use client';
 
+import clsx from 'clsx';
 import { type FormEvent, useCallback, useMemo, useRef } from 'react';
 
 import { styleProps } from '@/styles/stylex/props';
 import { useResponsive } from '@/styles/theme/scope';
+import { toDataAttributes } from '@/utils/bem';
 
 import FormFlatGroup from '../Form/components/FormFlatGroup';
 import FormGroup from '../Form/components/FormGroup';
 import { formMarker } from '../Form/marker.stylex';
+import { FormClassesContext } from '../Form/stableContext';
 import { rootStyles } from '../Form/style';
 import { FormKitContext, type FormKitContextValue } from './context';
 import FormField from './Field';
+import { formKitClasses } from './stable';
 import type { FormFieldProps, FormGroupItem, FormProps, FormValues } from './type';
 
 const focusFirstInvalid = (root: HTMLFormElement | null) => {
@@ -125,19 +129,22 @@ const Form = <T extends FormValues>({
   return (
     <FormKitContext value={context}>
       <form
+        {...toDataAttributes({ layout, variant })}
         {...rest}
         noValidate
         ref={mergedRef}
         {...styleProps(
           [formMarker, rootStyles.root, variant === 'borderless' && rootStyles.borderless],
-          className,
+          clsx(formKitClasses(), className),
           { gap: gap ?? (layout === 'vertical' ? 0 : undefined), ...style },
         )}
         onSubmit={handleSubmit}
       >
-        {renderedItems}
-        {children}
-        {footer}
+        <FormClassesContext value={formKitClasses}>
+          {renderedItems}
+          {children}
+          {footer}
+        </FormClassesContext>
       </form>
     </FormKitContext>
   );

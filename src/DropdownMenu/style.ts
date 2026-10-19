@@ -211,6 +211,10 @@ export const menuStyles = stylex.create({
     height: 1,
   },
 
+  switchWrap: {
+    display: 'inline-flex',
+    marginInlineStart: 16,
+  },
   submenuArrow: {
     alignItems: 'center',
     color: `var(--lobe-menu-icon-color, ${cssVar.colorTextSecondary})`,

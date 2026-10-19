@@ -21,9 +21,9 @@ describe('ActionIcon', () => {
     const root = screen.getByRole('button');
 
     expect(root.getAttribute('type')).toBe('button');
-    expect(root.style.width).toBe('24px');
-    expect(root.style.height).toBe('24px');
-    expect(root.style.borderRadius).toBe('4px');
+    expect(getComputedStyle(root).width).toBe('24px');
+    expect(getComputedStyle(root).height).toBe('24px');
+    expect(getComputedStyle(root).borderRadius).toBe('4px');
     expect(root.tabIndex).toBe(0);
   });
 

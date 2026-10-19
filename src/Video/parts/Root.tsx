@@ -1,11 +1,13 @@
 'use client';
 
+import clsx from 'clsx';
 import { useImperativeHandle, useLayoutEffect, useMemo, useState } from 'react';
 
 import { styleProps } from '@/styles/stylex/props';
 
 import { VideoContext, type VideoContextValue } from '../context';
 import { aspectOf, playerWidthOf } from '../sizing';
+import { videoClasses } from '../stable';
 import { createVideoStore, type VideoStore } from '../store';
 import { styles } from '../style';
 import { sortSections } from '../time';
@@ -120,7 +122,7 @@ const Root = ({
         onKeyDown={(event) => {
           if (handleVideoKey(event, store, playbackRates)) event.preventDefault();
         }}
-        {...styleProps(styles.root, className, { ...sizing, ...style })}
+        {...styleProps(styles.root, clsx(videoClasses(), className), { ...sizing, ...style })}
       >
         {children}
       </div>

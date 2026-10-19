@@ -1,6 +1,7 @@
 'use client';
 
-import type { FC } from 'react';
+import clsx from 'clsx';
+import type { CSSProperties, FC } from 'react';
 import { useMemo, useRef } from 'react';
 
 import { Flexbox } from '@/Flex';
@@ -8,6 +9,7 @@ import { useEventCallback } from '@/hooks/useEventCallback';
 import { styleProps } from '@/styles/stylex/props';
 import { mergeRefs } from '@/utils/mergeRefs';
 
+import { scrollShadowClasses } from './stable';
 import { styles } from './style';
 import type { ScrollShadowProps } from './type';
 import { useScrollOverflow } from './useScrollOverflow';
@@ -27,7 +29,7 @@ const ScrollShadow: FC<ScrollShadowProps> = ({
   children,
   orientation = 'vertical',
   hideScrollBar = false,
-  size = 16,
+  size,
   offset = 8,
   visibility = 'auto',
   isEnabled = true,
@@ -36,12 +38,12 @@ const ScrollShadow: FC<ScrollShadowProps> = ({
   ref,
   ...rest
 }) => {
-  // Convert size prop to CSS variable
-  const cssVariables = useMemo<Record<string, string>>(
-    () => ({
-      '--scroll-shadow-size': `${size}%`,
-    }),
-    [size],
+  const rootStyle = useMemo(
+    () =>
+      size === undefined
+        ? style
+        : ({ '--scroll-shadow-size': `${size}%`, ...style } as CSSProperties),
+    [size, style],
   );
   const domRef = useRef<HTMLDivElement>(null);
 
@@ -127,6 +129,7 @@ const ScrollShadow: FC<ScrollShadowProps> = ({
   return (
     <Flexbox
       ref={mergeRefs<HTMLDivElement>([domRef, ref])}
+      style={rootStyle}
       className={
         styleProps(
           [
@@ -135,13 +138,9 @@ const ScrollShadow: FC<ScrollShadowProps> = ({
             hideScrollBar && styles.hideScrollBar,
             scrollPositionStyles[scrollPosition],
           ],
-          className,
+          clsx(scrollShadowClasses(), className),
         ).className
       }
-      style={{
-        ...cssVariables,
-        ...style,
-      }}
       {...dataAttributes}
       {...rest}
     >

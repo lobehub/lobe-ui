@@ -1,5 +1,6 @@
 'use client';
 
+import clsx from 'clsx';
 import type { FC } from 'react';
 
 import A from '@/A';
@@ -8,6 +9,7 @@ import type { CitationItem } from '@/types/citation';
 import { safeParseJSON } from '@/utils/safeParseJSON';
 
 import Citation from './Citation';
+import { mdxLinkClasses } from './stable';
 
 export interface LinkProps extends AProps {
   'aria-describedby'?: string;
@@ -45,7 +47,14 @@ const Link: FC<LinkProps> = ({ href, target, citations, ...rest }) => {
 
   const isNewWindow = href?.startsWith('http');
 
-  return <A href={href} target={target || isNewWindow ? '_blank' : undefined} {...rest} />;
+  return (
+    <A
+      href={href}
+      target={target || isNewWindow ? '_blank' : undefined}
+      {...rest}
+      className={clsx(mdxLinkClasses(), rest.className)}
+    />
+  );
 };
 
 Link.displayName = 'MdxLink';

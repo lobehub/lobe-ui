@@ -3,7 +3,11 @@ import { type FC } from 'react';
 
 import Divider from '@/Divider';
 import Icon from '@/Icon';
+import { styleProps } from '@/styles/stylex/props';
 import Tag from '@/Tag';
+
+import { chatChatListClasses } from '../stable';
+import { styles } from '../style';
 
 interface HistoryDividerProps {
   enable?: boolean;
@@ -14,7 +18,7 @@ const HistoryDivider: FC<HistoryDividerProps> = ({ enable, text }) => {
   if (!enable) return null;
 
   return (
-    <div style={{ padding: '0 20px' }}>
+    <div {...styleProps(styles.historyDivider, chatChatListClasses('history-divider'))}>
       <Divider style={{ marginBlock: 16 }}>
         <Tag icon={<Icon icon={Timer} />}>{text || 'History Message'}</Tag>
       </Divider>

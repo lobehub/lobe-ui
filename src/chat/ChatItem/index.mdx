@@ -11,6 +11,8 @@ import DemoEditing from './demos/Editing.tsx?demo';
 import DemoAlert from './demos/Alert.tsx?demo';
 import DemoAlertWithDefaultMessagePlacehoder from './demos/AlertWithDefaultMessagePlacehoder.tsx?demo';
 import DemoAlertWithContent from './demos/AlertWithContent.tsx?demo';
+import { StableClassTable } from '../../../docs/stable-classes/StableClassTable';
+import { chatChatItemClasses } from './stable';
 
 ## Default
 
@@ -29,3 +31,9 @@ import DemoAlertWithContent from './demos/AlertWithContent.tsx?demo';
 ## APIs
 
 <Api name="ChatItem" from=".." migrationKey="unheaded:0" />
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={chatChatItemClasses} />

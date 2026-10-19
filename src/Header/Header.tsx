@@ -1,11 +1,13 @@
 'use client';
 
+import clsx from 'clsx';
 import { memo } from 'react';
 
 import { Flexbox } from '@/Flex';
 import { styleProps } from '@/styles/stylex/props';
 import { useResponsive } from '@/styles/theme/scope';
 
+import { headerClasses } from './stable';
 import { styles } from './style';
 import type { HeaderProps } from './type';
 
@@ -32,7 +34,7 @@ const Header = memo<HeaderProps>(
         horizontal
         align={'center'}
         as={'section'}
-        className={styleProps(styles.root, className).className}
+        className={styleProps(styles.root, clsx(headerClasses(), className)).className}
         distribution={'space-between'}
         ref={ref}
         width={'auto'}
@@ -40,18 +42,29 @@ const Header = memo<HeaderProps>(
       >
         {mobile ? (
           <>
-            <Flexbox className={actionsClassName} style={{ flex: 0, ...navStyle }}>
+            <Flexbox
+              {...styleProps(styles.fixed, clsx(headerClasses('nav'), actionsClassName), navStyle)}
+            >
               {nav}
               {children}
             </Flexbox>
             <Flexbox
               horizontal
-              className={styleProps(styles.left, logoClassName).className}
-              style={{ flex: 1, overflow: 'hidden', ...logoStyle }}
+              {...styleProps(
+                [styles.left, styles.logoMobile],
+                clsx(headerClasses('logo'), logoClassName),
+                logoStyle,
+              )}
             >
               {logo}
             </Flexbox>
-            <Flexbox className={actionsClassName} style={{ flex: 0, ...actionsStyle }}>
+            <Flexbox
+              {...styleProps(
+                styles.fixed,
+                clsx(headerClasses('actions'), actionsClassName),
+                actionsStyle,
+              )}
+            >
               {actions}
             </Flexbox>
           </>
@@ -59,24 +72,28 @@ const Header = memo<HeaderProps>(
           <>
             <Flexbox
               horizontal
-              className={styleProps(styles.left, logoClassName).className}
-              style={{ flex: 0, ...logoStyle }}
+              {...styleProps(
+                [styles.left, styles.fixed],
+                clsx(headerClasses('logo'), logoClassName),
+                logoStyle,
+              )}
             >
               {logo}
             </Flexbox>
             <Flexbox
-              className={navClassName}
-              style={{ flex: 1, marginLeft: 48, overflow: 'hidden', ...navStyle }}
+              {...styleProps(styles.nav, clsx(headerClasses('nav'), navClassName), navStyle)}
             >
               {nav}
               {children}
             </Flexbox>
             <Flexbox
               horizontal
-              className={styleProps(styles.right, actionsClassName).className}
               flex={1}
               justify={'space-between'}
               style={actionsStyle}
+              className={
+                styleProps(styles.right, clsx(headerClasses('actions'), actionsClassName)).className
+              }
             >
               <div />
               <Flexbox horizontal align={'center'} gap={8}>

@@ -8,6 +8,8 @@ import DemoIndex from './demos/index.tsx?demo';
 import DemoText from './demos/Text.tsx?demo';
 import DemoAvatar from './demos/Avatar.tsx?demo';
 import DemoComposed from './demos/Composed.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { skeletonClasses, skeletonAvatarClasses, skeletonTextClasses } from './stable';
 
 ## Default
 
@@ -69,3 +71,19 @@ The antd-shaped API is gone. `active` is now `animated`, defaults to `'fade'`, a
 | `<Skeleton.Paragraph rows={3} fontSize={14} />` | `<Skeleton.Text rows={3} fontSize={14} />` |
 | `<Skeleton.Title fontSize={20} width="30%" />` | `<Skeleton.Text fontSize={20} width="30%" />` |
 | `<Skeleton.Tags count={2} />` | two `<Skeleton />` in a `<Flexbox horizontal />` |
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+### Skeleton
+
+<StableClassTable of={skeletonClasses} />
+
+### Skeleton.Avatar
+
+<StableClassTable of={skeletonAvatarClasses} />
+
+### Skeleton.Text
+
+<StableClassTable of={skeletonTextClasses} />

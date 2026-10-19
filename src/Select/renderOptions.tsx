@@ -9,6 +9,7 @@ import Icon from '@/Icon';
 import { styleProps } from '@/styles/stylex/props';
 
 import { getOptionSearchText, isGroupOption } from './helpers';
+import { selectClasses } from './stable';
 import { styles } from './style';
 import {
   type SelectClassNames,
@@ -41,15 +42,20 @@ function renderItem(
       value={option.value}
       {...styleProps(
         [menuStyles.item, isBoldIndicator && styles.itemBoldSelected],
-        clsx(classNames?.item, classNames?.option, option.className),
+        clsx(selectClasses('option'), classNames?.item, classNames?.option, option.className),
         { minHeight: listItemHeight, ...option.style },
       )}
     >
-      <BaseSelect.ItemText className={itemTextClassName}>
+      <BaseSelect.ItemText className={clsx(selectClasses('item-text'), itemTextClassName)}>
         {optionRender ? optionRender(option, { index }) : option.label}
       </BaseSelect.ItemText>
       {!isBoldIndicator && (
-        <BaseSelect.ItemIndicator {...styleProps(styles.itemIndicator, classNames?.itemIndicator)}>
+        <BaseSelect.ItemIndicator
+          {...styleProps(
+            styles.itemIndicator,
+            clsx(selectClasses('item-indicator'), classNames?.itemIndicator),
+          )}
+        >
           <Icon icon={Check} size={'small'} />
         </BaseSelect.ItemIndicator>
       )}
@@ -64,8 +70,16 @@ export function renderOptions(params: RenderOptionsParams) {
   return items.map((item, index) => {
     if (isGroupOption(item)) {
       return (
-        <BaseSelect.Group className={classNames?.group} key={`group-${index}`}>
-          <BaseSelect.GroupLabel {...styleProps(menuStyles.groupLabel, classNames?.groupLabel)}>
+        <BaseSelect.Group
+          className={clsx(selectClasses('group'), classNames?.group)}
+          key={`group-${index}`}
+        >
+          <BaseSelect.GroupLabel
+            {...styleProps(
+              menuStyles.groupLabel,
+              clsx(selectClasses('group-label'), classNames?.groupLabel),
+            )}
+          >
             {item.label}
           </BaseSelect.GroupLabel>
           {item.options.map((option) => renderItem(option, optionIndex++, params))}

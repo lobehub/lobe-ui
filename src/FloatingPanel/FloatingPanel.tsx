@@ -1,6 +1,5 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
 import clsx from 'clsx';
 import { X } from 'lucide-react';
 import type { MotionProps } from 'motion/react';
@@ -8,6 +7,7 @@ import type { CSSProperties, PointerEvent as ReactPointerEvent } from 'react';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
 import type { ModalRootProps } from '../Modal';
 import { ModalBackdrop, ModalPortal, ModalRoot } from '../Modal';
@@ -19,6 +19,7 @@ import {
   ModalPopupImpl,
   ModalTitleImpl,
 } from '../Modal/atoms';
+import { floatingPanelClasses } from './stable';
 import { styles } from './style';
 import { ToastDodge } from './ToastDodge';
 import type {
@@ -198,8 +199,8 @@ const FloatingPanel = memo<FloatingPanelProps>(
     maskClosable = true,
     maxHeight,
     maxWidth,
-    minHeight = DEFAULT_MIN_HEIGHT,
-    minWidth = DEFAULT_MIN_WIDTH,
+    minHeight: minHeightProp,
+    minWidth: minWidthProp,
     modal = false,
     motionProps,
     offset = 8,
@@ -212,9 +213,13 @@ const FloatingPanel = memo<FloatingPanelProps>(
     resizable = true,
     styles: semanticStyles,
     title,
-    width = 640,
+    width: widthProp,
     zIndex,
   }) => {
+    const minHeight = minHeightProp ?? DEFAULT_MIN_HEIGHT;
+    const minWidth = minWidthProp ?? DEFAULT_MIN_WIDTH;
+    const width = widthProp ?? 640;
+    const dataAttributes = toDataAttributes({ placement });
     const s = styles;
     const isTop = placement.startsWith('top');
     const container = getContainer === false ? undefined : getContainer;
@@ -323,21 +328,33 @@ const FloatingPanel = memo<FloatingPanelProps>(
       >
         <ModalPortal container={container}>
           {mask && (
-            <ModalBackdrop className={classNames?.backdrop} style={semanticStyles?.backdrop} />
+            <ModalBackdrop
+              className={clsx(floatingPanelClasses('backdrop'), classNames?.backdrop)}
+              style={semanticStyles?.backdrop}
+              {...dataAttributes}
+            />
           )}
           <ModalPopupImpl
             aria-label={ariaLabel}
-            className={classNames?.wrapper}
+            className={clsx(floatingPanelClasses('wrapper'), classNames?.wrapper)}
             motionProps={resolvedMotionProps}
-            panelClassName={clsx(className, classNames?.panel)}
-            panelXstyle={[s.panel, isTop && s.panelTop]}
+            panelClassName={clsx(floatingPanelClasses(), className, classNames?.panel)}
+            panelData={dataAttributes}
             popupStyle={popupStyle}
-            width={activeResizeSize?.width ?? width}
+            width={activeResizeSize?.width ?? widthProp}
             xstyle={s.wrapper}
+            panelXstyle={[
+              s.panel,
+              isTop && s.panelTop,
+              widthProp === undefined && s.panelDefaultWidth,
+              minHeightProp === undefined && s.panelDefaultMinHeight,
+              minWidthProp === undefined && s.panelDefaultMinWidth,
+            ]}
+            {...dataAttributes}
             style={{
               height: activeResizeSize?.height ?? height,
-              minHeight,
-              minWidth,
+              minHeight: minHeightProp,
+              minWidth: minWidthProp,
               width: activeResizeSize?.width,
               ...semanticStyles?.panel,
             }}
@@ -351,7 +368,7 @@ const FloatingPanel = memo<FloatingPanelProps>(
                   key={handle}
                   {...styleProps(
                     [s.resizeHandle, getResizeHandleClassName(s, handle)],
-                    classNames?.resizeHandle,
+                    clsx(floatingPanelClasses('resize-handle'), classNames?.resizeHandle),
                     semanticStyles?.resizeHandle,
                   )}
                   onPointerDown={handleResizeStart(handle)}
@@ -359,13 +376,13 @@ const FloatingPanel = memo<FloatingPanelProps>(
               ))}
             {showHeader && (
               <ModalHeaderImpl
-                className={classNames?.header}
+                className={clsx(floatingPanelClasses('header'), classNames?.header)}
                 style={semanticStyles?.header}
                 xstyle={s.header}
               >
                 {title !== undefined ? (
                   <ModalTitleImpl
-                    className={classNames?.title}
+                    className={clsx(floatingPanelClasses('title'), classNames?.title)}
                     style={semanticStyles?.title}
                     xstyle={s.title}
                   >
@@ -374,10 +391,14 @@ const FloatingPanel = memo<FloatingPanelProps>(
                 ) : (
                   <span />
                 )}
-                <div {...stylex.props(s.headerActions)}>
+                <div {...styleProps(s.headerActions, floatingPanelClasses('header-actions'))}>
                   {actions && (
                     <div
-                      {...styleProps(s.actions, classNames?.actions, semanticStyles?.actions)}
+                      {...styleProps(
+                        s.actions,
+                        clsx(floatingPanelClasses('actions'), classNames?.actions),
+                        semanticStyles?.actions,
+                      )}
                     >
                       {actions}
                     </div>
@@ -385,7 +406,7 @@ const FloatingPanel = memo<FloatingPanelProps>(
                   {closable && (
                     <ModalCloseImpl
                       aria-label={closeLabel}
-                      className={classNames?.close}
+                      className={clsx(floatingPanelClasses('close'), classNames?.close)}
                       style={semanticStyles?.close}
                       xstyle={s.close}
                     >
@@ -396,7 +417,7 @@ const FloatingPanel = memo<FloatingPanelProps>(
               </ModalHeaderImpl>
             )}
             <ModalContentImpl
-              className={classNames?.body}
+              className={clsx(floatingPanelClasses('body'), classNames?.body)}
               style={semanticStyles?.body}
               xstyle={s.body}
             >
@@ -404,7 +425,7 @@ const FloatingPanel = memo<FloatingPanelProps>(
             </ModalContentImpl>
             {footer && (
               <ModalFooterImpl
-                className={classNames?.footer}
+                className={clsx(floatingPanelClasses('footer'), classNames?.footer)}
                 style={semanticStyles?.footer}
                 xstyle={s.footer}
               >

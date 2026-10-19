@@ -1,5 +1,6 @@
 'use client';
 
+import clsx from 'clsx';
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import CopyButton from '@/CopyButton';
@@ -7,10 +8,12 @@ import { Flexbox } from '@/Flex';
 import { getCodeLanguageDisplayName } from '@/Highlighter/const';
 import { styleProps } from '@/styles/stylex/props';
 import Tag from '@/Tag';
+import { toDataAttributes } from '@/utils/bem';
 
 import FullFeatured from './FullFeatured';
+import { highlighterClasses } from './stable';
 import { actionsHoverCls, langHoverCls, rootClassName, rootStyles, styles } from './style';
-import SyntaxHighlighter from './SyntaxHighlighter';
+import { SyntaxHighlighterImpl } from './SyntaxHighlighter';
 import { type HighlighterProps } from './type';
 
 export const Highlighter = memo<HighlighterProps>(
@@ -82,20 +85,18 @@ export const Highlighter = memo<HighlighterProps>(
 
     const originalBody = useMemo(
       () => (
-        <SyntaxHighlighter
+        <SyntaxHighlighterImpl
           animated={animated}
-          className={classNames?.content}
+          className={clsx(highlighterClasses('content'), classNames?.content)}
           enableTransformer={enableTransformer}
           language={lang?.toLowerCase()}
+          style={customStyles?.content}
           theme={theme}
           variant={variant}
-          style={{
-            height: '100%',
-            ...customStyles?.content,
-          }}
+          xstyle={styles.content}
         >
           {tirmedChildren}
-        </SyntaxHighlighter>
+        </SyntaxHighlighterImpl>
       ),
       [
         animated,
@@ -104,7 +105,7 @@ export const Highlighter = memo<HighlighterProps>(
         theme,
         tirmedChildren,
         variant,
-        customStyles?.content,
+        classNames?.content,
         customStyles?.content,
       ],
     );
@@ -148,6 +149,7 @@ export const Highlighter = memo<HighlighterProps>(
       <Flexbox
         data-code-type="highlighter"
         width={'100%'}
+        {...toDataAttributes({ shadow, variant, wrap })}
         {...rest}
         {...styleProps(rootStyles({ shadow, variant }), rootClassName(wrap, className), rest.style)}
       >
@@ -156,11 +158,13 @@ export const Highlighter = memo<HighlighterProps>(
           align={'center'}
           flex={'none'}
           gap={4}
-          {...styleProps(styles.actions, actionsHoverCls)}
+          {...styleProps(styles.actions, clsx(actionsHoverCls, highlighterClasses('actions')))}
         >
           {actions}
         </Flexbox>
-        {showLanguage && language && <Tag className={langHoverCls}>{displayName}</Tag>}
+        {showLanguage && language && (
+          <Tag className={clsx(langHoverCls, highlighterClasses('language'))}>{displayName}</Tag>
+        )}
         {body}
       </Flexbox>
     );

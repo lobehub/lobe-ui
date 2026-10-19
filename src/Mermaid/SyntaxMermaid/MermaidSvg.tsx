@@ -1,5 +1,6 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import { memo, type Ref, useCallback, useEffect, useRef, useState } from 'react';
 
 import { DEFAULT_AUTO_ZOOM_THRESHOLD, DEFAULT_MAX_SCALE } from '@/Image/viewer/geometry';
@@ -7,9 +8,11 @@ import PreviewOutlet from '@/Image/viewer/PreviewOutlet';
 import { openPreview } from '@/Image/viewer/registry';
 
 import { toStandaloneSvgString } from './standaloneSvg';
+import { styles } from './style';
 
 interface MermaidSvgProps {
   className?: string;
+  dataAttributes?: Record<`data-${string}`, string>;
   ref?: Ref<HTMLDivElement>;
   style?: React.CSSProperties;
   svg: string;
@@ -28,7 +31,7 @@ const anchorStyle: React.CSSProperties = {
   width: '100%',
 };
 
-const MermaidSvg = memo<MermaidSvgProps>(({ className, ref, style, svg }) => {
+const MermaidSvg = memo<MermaidSvgProps>(({ className, dataAttributes, ref, style, svg }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const anchorRef = useRef<HTMLImageElement>(null);
   const [previewUrl, setPreviewUrl] = useState<string>();
@@ -65,11 +68,11 @@ const MermaidSvg = memo<MermaidSvgProps>(({ className, ref, style, svg }) => {
   }, []);
 
   return (
-    <div className={className} ref={ref} style={{ position: 'relative', ...style }}>
+    <div {...dataAttributes} className={className} ref={ref} style={style}>
       <div
+        {...stylex.props(styles.zoomIn)}
         dangerouslySetInnerHTML={{ __html: svg }}
         ref={containerRef}
-        style={{ cursor: 'zoom-in' }}
         onClick={handleOpen}
       />
       <img aria-hidden alt="" ref={anchorRef} src={previewUrl} style={anchorStyle} />

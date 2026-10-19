@@ -1,12 +1,15 @@
 'use client';
 
+import clsx from 'clsx';
 import { type CSSProperties, type FC, useMemo } from 'react';
 
 import Avatar from '@/Avatar';
 import { BlockImpl as Block } from '@/Block/Block';
 import Grid from '@/Grid';
+import { toDataAttributes } from '@/utils/bem';
 import { SMOOTH_CORNER_MASKS } from '@/utils/smoothCorners';
 
+import { groupAvatarClasses } from './stable';
 import { styles } from './style';
 import type { GroupAvatarProps } from './type';
 
@@ -47,7 +50,8 @@ const GroupAvatar: FC<GroupAvatarProps> = ({
   return (
     <Block
       align={'center'}
-      className={className}
+      {...toDataAttributes({ cornerShape })}
+      className={clsx(groupAvatarClasses(), className)}
       height={size}
       justify={'center'}
       width={size}
@@ -61,6 +65,7 @@ const GroupAvatar: FC<GroupAvatarProps> = ({
       {...rest}
     >
       <Grid
+        className={groupAvatarClasses('grid')}
         gap={calcSize.gapSize}
         maxItemWidth={0}
         rows={calcSize.gridSize}
@@ -71,6 +76,7 @@ const GroupAvatar: FC<GroupAvatarProps> = ({
             return (
               <Avatar
                 avatar={item}
+                className={groupAvatarClasses('avatar')}
                 key={index}
                 shape={avatarShape}
                 size={isSingle ? size * 0.8 : calcSize.avatarSize}
@@ -80,6 +86,7 @@ const GroupAvatar: FC<GroupAvatarProps> = ({
             <Avatar
               key={index}
               {...item}
+              className={clsx(groupAvatarClasses('avatar'), item.className)}
               shape={avatarShape}
               size={isSingle ? size * 0.8 : calcSize.avatarSize}
             />

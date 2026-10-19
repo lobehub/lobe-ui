@@ -1,16 +1,18 @@
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 
 import type { DivProps } from '@/types';
 
 export interface LayoutProps {
   asideWidth?: number;
   children?: ReactNode;
+  className?: string;
   content?: ReactNode;
   footer?: ReactNode;
   header?: ReactNode;
   headerHeight?: number;
   helmet?: ReactNode;
   sidebar?: ReactNode;
+  style?: CSSProperties;
   toc?: ReactNode;
   tocWidth?: number;
 }

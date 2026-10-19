@@ -150,6 +150,9 @@ export const styles = stylex.create({
     lineHeight: 1.5,
   },
 
+  descriptionWithTitle: {
+    marginBlockStart: 4,
+  },
   descriptionStandalone: {
     color: cssVar.colorText,
   },

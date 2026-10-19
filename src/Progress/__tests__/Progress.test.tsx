@@ -50,9 +50,9 @@ describe('Progress', () => {
   test('renders the segments variant with the correct filled cell count', () => {
     const { container } = render(<Progress percent={50} segments={10} variant="segments" />);
 
-    const cells = container.querySelectorAll('span[style]');
-    const filled = container.querySelectorAll('span[style*="background"]');
-    expect(cells.length + filled.length).toBeGreaterThan(0);
+    const cells = container.querySelectorAll('.lobe-progress__segment');
+    const filled = container.querySelectorAll('.lobe-progress__segment[data-filled]');
+    expect(cells.length).toBe(10);
     expect(filled.length).toBe(5);
   });
 
@@ -62,7 +62,8 @@ describe('Progress', () => {
     const split = container.querySelector('[role="progressbar"] > div')!;
     expect(split.children).toHaveLength(2);
     expect((split.children[0] as HTMLElement).style.width).toMatch(/0\.7.*100% - 3px/);
-    expect((split.children[0] as HTMLElement).style.minWidth).toBe('8px');
+    expect((split.children[0] as HTMLElement).style.minWidth).toBe('');
+    expect(getComputedStyle(split.children[0]).minWidth).toBe('8px');
   });
 
   test('drops the remaining pill at 100% and the filled pill at 0% in the inset variant', () => {

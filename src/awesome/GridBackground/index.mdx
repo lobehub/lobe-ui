@@ -6,6 +6,8 @@ category: Effect
 
 import DemoIndex from './demos/index.tsx?demo';
 import DemoShowcase from './demos/Showcase.tsx?demo';
+import { StableClassTable } from '../../../docs/stable-classes/StableClassTable';
+import { awesomeGridBackgroundClasses, awesomeGridShowcaseClasses } from './stable';
 
 ## Default
 
@@ -29,3 +31,15 @@ import DemoShowcase from './demos/Showcase.tsx?demo';
 | innerProps      | Props for the inner container | `FlexboxProps` | -       |
 
 > GridBackground inherits all div element properties GridShowcase inherits all Flexbox properties
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+### GridBackground
+
+<StableClassTable of={awesomeGridBackgroundClasses} />
+
+### GridShowcase
+
+<StableClassTable of={awesomeGridShowcaseClasses} />

@@ -20,12 +20,12 @@ import { mergeRefs, useMergeRefs } from '@/utils/mergeRefs';
 import { placementMap } from '@/utils/placement';
 
 import { useLayerZIndex } from '../internal/zIndex';
+import { dropdownMenuClasses } from './stable';
 import { menuClassNames, menuStyles } from './style';
 import { type DropdownMenuPlacement } from './type';
 
 export const DropdownMenuRoot: typeof Menu.Root = (props) => <Menu.Root modal={false} {...props} />;
 export const DropdownMenuSubmenuRoot = Menu.SubmenuRoot;
-export const DropdownMenuCheckboxItemIndicator = Menu.CheckboxItemIndicator;
 
 type XStyle = Parameters<typeof styleProps>[0];
 
@@ -41,7 +41,15 @@ const sx = (styles: XStyle, stableClassName?: string) =>
   clsx(stylex.props(styles).className, stableClassName);
 
 const itemClassName = (danger: boolean | undefined) =>
-  sx([menuStyles.item, danger && menuStyles.danger]);
+  sx([menuStyles.item, danger && menuStyles.danger], dropdownMenuClasses('item'));
+
+const withStateClassName =
+  <TState,>(
+    base: string,
+    className: string | ((state: TState) => string | undefined) | undefined,
+  ) =>
+  (state: TState) =>
+    clsx(base, typeof className === 'function' ? className(state) : className);
 
 export type DropdownMenuTriggerProps = Omit<
   React.ComponentPropsWithRef<typeof Menu.Trigger>,
@@ -75,7 +83,12 @@ export const DropdownMenuTrigger = ({
     const mergedProps = mergeProps((children as any).props, resolvedProps);
     return cloneElement(children as any, {
       ...mergedProps,
-      className: clsx(CLASSNAMES.DropdownMenuTrigger, className, mergedProps.className),
+      className: clsx(
+        CLASSNAMES.DropdownMenuTrigger,
+        dropdownMenuClasses('trigger'),
+        className,
+        mergedProps.className,
+      ),
       ref: mergeRefs([getElementRef(children), (props as any).ref, refProp]),
     });
   };
@@ -87,7 +100,7 @@ export const DropdownMenuTrigger = ({
   return (
     <Menu.Trigger
       {...rest}
-      className={clsx(CLASSNAMES.DropdownMenuTrigger, className)}
+      className={clsx(CLASSNAMES.DropdownMenuTrigger, dropdownMenuClasses('trigger'), className)}
       nativeButton={resolvedNativeButton}
       ref={refProp as any}
     >
@@ -157,7 +170,10 @@ export const DropdownMenuPositioner = ({
       style={resolvedStyle}
       className={
         mergeStateClassName(
-          sx(menuStyles.positioner, menuClassNames.positioner),
+          sx(
+            menuStyles.positioner,
+            clsx(menuClassNames.positioner, dropdownMenuClasses('positioner')),
+          ),
           className as any,
         ) as any
       }
@@ -181,7 +197,7 @@ export const DropdownMenuPopupImpl = ({
       {...rest}
       className={
         mergeStateClassName(
-          sx([menuStyles.popup, xstyle], menuClassNames.popup),
+          sx([menuStyles.popup, xstyle], clsx(menuClassNames.popup, dropdownMenuClasses())),
           className as any,
         ) as any
       }
@@ -198,7 +214,13 @@ DropdownMenuPopup.displayName = 'DropdownMenuPopup';
 export type DropdownMenuHeaderProps = React.HTMLAttributes<HTMLDivElement>;
 
 export const DropdownMenuHeader = ({ className, ...rest }: DropdownMenuHeaderProps) => {
-  return <div {...rest} className={clsx(sx(menuStyles.header), className)} data-slot="header" />;
+  return (
+    <div
+      {...rest}
+      className={clsx(sx(menuStyles.header, dropdownMenuClasses('header')), className)}
+      data-slot="header"
+    />
+  );
 };
 
 DropdownMenuHeader.displayName = 'DropdownMenuHeader';
@@ -206,7 +228,13 @@ DropdownMenuHeader.displayName = 'DropdownMenuHeader';
 export type DropdownMenuFooterProps = React.HTMLAttributes<HTMLDivElement>;
 
 export const DropdownMenuFooter = ({ className, ...rest }: DropdownMenuFooterProps) => {
-  return <div {...rest} className={clsx(sx(menuStyles.footer), className)} data-slot="footer" />;
+  return (
+    <div
+      {...rest}
+      className={clsx(sx(menuStyles.footer, dropdownMenuClasses('footer')), className)}
+      data-slot="footer"
+    />
+  );
 };
 
 DropdownMenuFooter.displayName = 'DropdownMenuFooter';
@@ -225,7 +253,10 @@ export const DropdownMenuScrollViewport = ({
 }: DropdownMenuScrollViewportProps) => {
   if (!virtual) {
     return (
-      <div {...rest} className={clsx(sx(menuStyles.slotViewport), className)}>
+      <div
+        {...rest}
+        className={clsx(sx(menuStyles.slotViewport, dropdownMenuClasses('viewport')), className)}
+      >
         {children}
       </div>
     );
@@ -234,7 +265,7 @@ export const DropdownMenuScrollViewport = ({
   return (
     <MenuVirtualList
       {...rest}
-      className={className}
+      className={clsx(dropdownMenuClasses('viewport'), className)}
       getItemLabel={getItemLabel}
       itemSize={listItemHeight}
       keepMounted={keepMounted}
@@ -249,14 +280,7 @@ DropdownMenuScrollViewport.displayName = 'DropdownMenuScrollViewport';
 export type DropdownMenuItemProps = React.ComponentProps<typeof Menu.Item> & { danger?: boolean };
 
 export const DropdownMenuItem = ({ className, danger, ...rest }: DropdownMenuItemProps) => {
-  return (
-    <Menu.Item
-      {...rest}
-      className={(state) =>
-        clsx(itemClassName(danger), typeof className === 'function' ? className(state) : className)
-      }
-    />
-  );
+  return <Menu.Item {...rest} className={withStateClassName(itemClassName(danger), className)} />;
 };
 
 DropdownMenuItem.displayName = 'DropdownMenuItem';
@@ -271,12 +295,7 @@ export const DropdownMenuCheckboxItemPrimitive = ({
   ...rest
 }: DropdownMenuCheckboxItemProps) => {
   return (
-    <Menu.CheckboxItem
-      {...rest}
-      className={(state) =>
-        clsx(itemClassName(danger), typeof className === 'function' ? className(state) : className)
-      }
-    />
+    <Menu.CheckboxItem {...rest} className={withStateClassName(itemClassName(danger), className)} />
   );
 };
 
@@ -288,19 +307,39 @@ export const DropdownMenuSeparator = ({ className, ...rest }: DropdownMenuSepara
   return (
     <Menu.Separator
       {...rest}
-      className={(state) =>
-        clsx(
-          sx(menuStyles.separator),
-          typeof className === 'function' ? className(state) : className,
-        )
-      }
+      className={withStateClassName(
+        sx(menuStyles.separator, dropdownMenuClasses('separator')),
+        className,
+      )}
     />
   );
 };
 
 DropdownMenuSeparator.displayName = 'DropdownMenuSeparator';
 
-export const DropdownMenuGroup = Menu.Group;
+export type DropdownMenuGroupProps = React.ComponentProps<typeof Menu.Group>;
+
+export const DropdownMenuGroup = ({ className, ...rest }: DropdownMenuGroupProps) => (
+  <Menu.Group {...rest} className={withStateClassName(dropdownMenuClasses('group'), className)} />
+);
+
+DropdownMenuGroup.displayName = 'DropdownMenuGroup';
+
+export type DropdownMenuCheckboxItemIndicatorProps = React.ComponentProps<
+  typeof Menu.CheckboxItemIndicator
+>;
+
+export const DropdownMenuCheckboxItemIndicator = ({
+  className,
+  ...rest
+}: DropdownMenuCheckboxItemIndicatorProps) => (
+  <Menu.CheckboxItemIndicator
+    {...rest}
+    className={withStateClassName(dropdownMenuClasses('checkbox-indicator'), className)}
+  />
+);
+
+DropdownMenuCheckboxItemIndicator.displayName = 'DropdownMenuCheckboxItemIndicator';
 
 export type DropdownMenuGroupLabelProps = React.ComponentProps<typeof Menu.GroupLabel>;
 
@@ -308,12 +347,10 @@ export const DropdownMenuGroupLabel = ({ className, ...rest }: DropdownMenuGroup
   return (
     <Menu.GroupLabel
       {...rest}
-      className={(state) =>
-        clsx(
-          sx(menuStyles.groupLabel),
-          typeof className === 'function' ? className(state) : className,
-        )
-      }
+      className={withStateClassName(
+        sx(menuStyles.groupLabel, dropdownMenuClasses('group-label')),
+        className,
+      )}
     />
   );
 };
@@ -332,9 +369,7 @@ export const DropdownMenuSubmenuTrigger = ({
   return (
     <Menu.SubmenuTrigger
       {...rest}
-      className={(state) =>
-        clsx(itemClassName(danger), typeof className === 'function' ? className(state) : className)
-      }
+      className={withStateClassName(itemClassName(danger), className)}
     />
   );
 };
@@ -348,7 +383,15 @@ export const DropdownMenuItemContentImpl = ({
   xstyle,
   ...rest
 }: DropdownMenuItemContentProps & { xstyle?: XStyle }) => {
-  return <div {...rest} className={clsx(sx([menuStyles.itemContent, xstyle]), className)} />;
+  return (
+    <div
+      {...rest}
+      className={clsx(
+        sx([menuStyles.itemContent, xstyle], dropdownMenuClasses('item-content')),
+        className,
+      )}
+    />
+  );
 };
 
 export const DropdownMenuItemContent = (props: DropdownMenuItemContentProps) => (
@@ -367,7 +410,10 @@ export const DropdownMenuItemIconImpl = ({
   return (
     <span
       {...rest}
-      className={clsx(sx([menuStyles.icon, xstyle], menuClassNames.icon), className)}
+      className={clsx(
+        sx([menuStyles.icon, xstyle], clsx(menuClassNames.icon, dropdownMenuClasses('icon'))),
+        className,
+      )}
     />
   );
 };
@@ -384,7 +430,12 @@ export const DropdownMenuItemLabelGroup = ({
   className,
   ...rest
 }: DropdownMenuItemLabelGroupProps) => {
-  return <div {...rest} className={clsx(sx(menuStyles.labelGroup), className)} />;
+  return (
+    <div
+      {...rest}
+      className={clsx(sx(menuStyles.labelGroup, dropdownMenuClasses('label-group')), className)}
+    />
+  );
 };
 
 DropdownMenuItemLabelGroup.displayName = 'DropdownMenuItemLabelGroup';
@@ -392,7 +443,15 @@ DropdownMenuItemLabelGroup.displayName = 'DropdownMenuItemLabelGroup';
 export type DropdownMenuItemLabelProps = React.HTMLAttributes<HTMLSpanElement>;
 
 export const DropdownMenuItemLabel = ({ className, ...rest }: DropdownMenuItemLabelProps) => {
-  return <span {...rest} className={clsx(sx(menuStyles.label, menuClassNames.label), className)} />;
+  return (
+    <span
+      {...rest}
+      className={clsx(
+        sx(menuStyles.label, clsx(menuClassNames.label, dropdownMenuClasses('label'))),
+        className,
+      )}
+    />
+  );
 };
 
 DropdownMenuItemLabel.displayName = 'DropdownMenuItemLabel';
@@ -400,7 +459,9 @@ DropdownMenuItemLabel.displayName = 'DropdownMenuItemLabel';
 export type DropdownMenuItemDescProps = React.HTMLAttributes<HTMLSpanElement>;
 
 export const DropdownMenuItemDesc = ({ className, ...rest }: DropdownMenuItemDescProps) => {
-  return <span {...rest} className={clsx(sx(menuStyles.desc), className)} />;
+  return (
+    <span {...rest} className={clsx(sx(menuStyles.desc, dropdownMenuClasses('desc')), className)} />
+  );
 };
 
 DropdownMenuItemDesc.displayName = 'DropdownMenuItemDesc';
@@ -408,7 +469,12 @@ DropdownMenuItemDesc.displayName = 'DropdownMenuItemDesc';
 export type DropdownMenuItemExtraProps = React.HTMLAttributes<HTMLSpanElement>;
 
 export const DropdownMenuItemExtra = ({ className, ...rest }: DropdownMenuItemExtraProps) => {
-  return <span {...rest} className={clsx(sx(menuStyles.extra), className)} />;
+  return (
+    <span
+      {...rest}
+      className={clsx(sx(menuStyles.extra, dropdownMenuClasses('extra')), className)}
+    />
+  );
 };
 
 DropdownMenuItemExtra.displayName = 'DropdownMenuItemExtra';
@@ -419,7 +485,13 @@ export const DropdownMenuSubmenuArrow = ({ className, ...rest }: DropdownMenuSub
   return (
     <span
       {...rest}
-      className={clsx(sx(menuStyles.submenuArrow, menuClassNames.submenuArrow), className)}
+      className={clsx(
+        sx(
+          menuStyles.submenuArrow,
+          clsx(menuClassNames.submenuArrow, dropdownMenuClasses('submenu-arrow')),
+        ),
+        className,
+      )}
     />
   );
 };
@@ -465,11 +537,9 @@ export const DropdownMenuSwitchItem = ({
   return (
     <Menu.Item
       {...rest}
+      className={withStateClassName(itemClassName(danger), className)}
       closeOnClick={closeOnClick}
       disabled={disabled}
-      className={(state) =>
-        clsx(itemClassName(danger), typeof className === 'function' ? className(state) : className)
-      }
       onClick={(e) => {
         e.preventDefault();
         if (!disabled) {
@@ -479,7 +549,7 @@ export const DropdownMenuSwitchItem = ({
     >
       {children}
       <span
-        style={{ display: 'inline-flex', marginInlineStart: 16 }}
+        className={sx(menuStyles.switchWrap, dropdownMenuClasses('switch'))}
         onFocus={(e) => e.stopPropagation()}
       >
         <Switch

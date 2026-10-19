@@ -49,6 +49,21 @@ export const styles = stylex.create({
     backgroundColor: 'transparent',
     backgroundImage: `conic-gradient(${cssVar.red}, ${cssVar.volcano}, ${cssVar.orange}, ${cssVar.gold}, ${cssVar.yellow}, ${cssVar.lime}, ${cssVar.green}, ${cssVar.cyan}, ${cssVar.blue}, ${cssVar.geekblue}, ${cssVar.purple}, ${cssVar.magenta}, ${cssVar.red})`,
   },
+  inlineFlex: {
+    display: 'inline-flex',
+  },
+  check: {
+    pointerEvents: 'none',
+  },
+  root: {
+    flexWrap: 'wrap',
+  },
+  shapeCircle: {
+    borderRadius: '50%',
+  },
+  shapeSquare: {
+    borderRadius: cssVar.borderRadius,
+  },
   container: {
     flex: 'none',
     backgroundColor: cssVar.colorBgContainer,

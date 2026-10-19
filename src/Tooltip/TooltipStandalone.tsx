@@ -24,6 +24,7 @@ import { mergeRefs } from '@/utils/mergeRefs';
 import { placementMap } from '@/utils/placement';
 
 import { TooltipArrowIcon } from './ArrowIcon';
+import { tooltipClasses } from './stable';
 import { styles } from './style';
 import TooltipContent from './TooltipContent';
 import { type TooltipProps } from './type';
@@ -112,15 +113,27 @@ export const TooltipStandalone = memo<TooltipProps>(
     const slots = useMemo(() => {
       const customStyles = typeof customStylesProp === 'function' ? undefined : customStylesProp;
       return {
-        arrow: styleProps(styles.arrow, classNames?.arrow, customStyles?.arrow),
-        popup: styleProps(styles.popup, clsx(className, classNames?.root, classNames?.container), {
-          ...customStyles?.root,
-          ...customStyles?.container,
-        }),
-        positioner: styleProps(styles.positioner, undefined, { zIndex: zIndex ?? 114_514 }),
+        arrow: styleProps(
+          styles.arrow,
+          clsx(tooltipClasses('arrow'), classNames?.arrow),
+          customStyles?.arrow,
+        ),
+        popup: styleProps(
+          styles.popup,
+          clsx(tooltipClasses(), className, classNames?.root, classNames?.container),
+          {
+            ...customStyles?.root,
+            ...customStyles?.container,
+          },
+        ),
+        positioner: styleProps(
+          styles.positioner,
+          tooltipClasses('positioner'),
+          zIndex === undefined ? undefined : { zIndex },
+        ),
         viewport: styleProps(
           styles.viewport,
-          clsx('lobe-tooltip-viewport', classNames?.content),
+          clsx('lobe-tooltip-viewport', tooltipClasses('viewport'), classNames?.content),
           customStyles?.content,
         ),
       };
@@ -171,6 +184,7 @@ export const TooltipStandalone = memo<TooltipProps>(
 
               return cloneElement(children as any, {
                 ...mergedProps,
+                className: clsx(tooltipClasses('trigger'), mergedProps.className),
                 id: shouldPreservePopupTriggerId ? childProps.id : mergedProps.id,
                 ref: mergeRefs([
                   getElementRef(children),
@@ -187,6 +201,7 @@ export const TooltipStandalone = memo<TooltipProps>(
       return (
         <BaseTooltip.Trigger
           {...baseTriggerProps}
+          className={tooltipClasses('trigger')}
           ref={mergeRefs([refProp, triggerCallbackRef]) as Ref<HTMLButtonElement>}
         >
           {children}
@@ -221,7 +236,7 @@ export const TooltipStandalone = memo<TooltipProps>(
           {...positionerProps}
           collisionPadding={positionerProps?.collisionPadding ?? getFloatingCollisionPadding()}
         >
-          <BaseTooltip.Popup {...slots.popup} {...popupProps}>
+          <BaseTooltip.Popup data-placement={placement} {...slots.popup} {...popupProps}>
             {arrow && <BaseTooltip.Arrow {...slots.arrow}>{TooltipArrowIcon}</BaseTooltip.Arrow>}
             <BaseTooltip.Viewport {...slots.viewport}>
               <TooltipContent hotkey={hotkey} hotkeyProps={hotkeyProps} title={title} />

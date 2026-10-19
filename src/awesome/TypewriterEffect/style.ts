@@ -3,6 +3,9 @@ import * as stylex from '@stylexjs/stylex';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
 export const styles = stylex.create({
+  char: {
+    display: 'inline-block',
+  },
   container: {
     display: 'inline-block',
     whiteSpace: 'pre-wrap',

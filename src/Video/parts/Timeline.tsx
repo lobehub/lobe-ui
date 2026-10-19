@@ -1,5 +1,6 @@
 'use client';
 
+import clsx from 'clsx';
 import {
   type PointerEvent as ReactPointerEvent,
   useLayoutEffect,
@@ -13,6 +14,7 @@ import { useTranslation } from '@/i18n/useTranslation';
 import { styleProps } from '@/styles/stylex/props';
 
 import { useVideoContext } from '../context';
+import { videoClasses } from '../stable';
 import { markerColor, styles } from '../style';
 import { formatTime, mergeSegments, sectionAt } from '../time';
 import type { VideoMarker, VideoState, VideoTimelineProps } from '../type';
@@ -130,7 +132,7 @@ const Timeline = ({ children, className, style, thumbnails = true }: VideoTimeli
   };
 
   return (
-    <div {...styleProps(undefined, className, { position: 'relative', ...style })}>
+    <div {...styleProps(styles.timeline, clsx(videoClasses('timeline'), className), style)}>
       {hover && (
         <HoverPreview
           marker={hover.marker}
@@ -148,7 +150,7 @@ const Timeline = ({ children, className, style, thumbnails = true }: VideoTimeli
         aria-valuemin={0}
         ref={trackRef}
         role="slider"
-        {...styleProps(styles.track)}
+        {...styleProps(styles.track, videoClasses('track'))}
         onPointerDown={onPointerDown}
         onPointerLeave={() => setHovering(false)}
         onPointerMove={onPointerMove}
@@ -165,22 +167,24 @@ const Timeline = ({ children, className, style, thumbnails = true }: VideoTimeli
             <div
               data-video-segment=""
               key={segment.start}
-              {...styleProps([styles.segment, hovered && styles.segmentHovered], undefined, {
-                left: `calc(${pct(segment.start)}% + ${leftInset}px)`,
-                width: `calc(${pct(span)}% - ${leftInset + rightInset}px)`,
-              })}
+              {...styleProps(
+                [styles.segment, hovered && styles.segmentHovered],
+                videoClasses('segment'),
+                {
+                  left: `calc(${pct(segment.start)}% + ${leftInset}px)`,
+                  width: `calc(${pct(span)}% - ${leftInset + rightInset}px)`,
+                },
+              )}
             >
               {hoverFill > 0 && (
                 <div
-                  {...styleProps(styles.segmentFill, undefined, {
-                    background: 'rgb(255 255 255 / 32%)',
+                  {...styleProps([styles.segmentFill, styles.segmentHoverFill], undefined, {
                     width: `${hoverFill * 100}%`,
                   })}
                 />
               )}
               <div
-                {...styleProps(styles.segmentFill, undefined, {
-                  background: '#fff',
+                {...styleProps([styles.segmentFill, styles.segmentPlayedFill], undefined, {
                   width: `calc(clamp(0, (var(--video-time, 0) - ${segment.start}) / ${span}, 1) * 100%)`,
                 })}
               />
@@ -191,7 +195,7 @@ const Timeline = ({ children, className, style, thumbnails = true }: VideoTimeli
           <div key={at} {...styleProps(styles.hairline, undefined, { left: `${pct(at)}%` })} />
         ))}
         <div
-          {...styleProps(styles.head, undefined, {
+          {...styleProps(styles.head, videoClasses('head'), {
             left: duration > 0 ? `calc(var(--video-time, 0) / ${duration} * 100%)` : 0,
           })}
         />
@@ -200,7 +204,7 @@ const Timeline = ({ children, className, style, thumbnails = true }: VideoTimeli
             aria-label={markerName(marker)}
             key={marker.key ?? `${marker.time}-${index}`}
             type="button"
-            {...styleProps(styles.marker, undefined, {
+            {...styleProps(styles.marker, videoClasses('marker'), {
               background: markerColor(marker.color),
               left: `${pct(marker.time)}%`,
             })}

@@ -30,12 +30,21 @@ export const styles = stylex.create({
   blockSm: {
     height: 4,
   },
+  circleBar: {
+    transition: 'stroke-dashoffset 0.3s',
+  },
   circleInfo: {
     color: cssVar.colorText,
     fontVariantNumeric: 'tabular-nums',
     lineHeight: 1,
     position: 'absolute',
     whiteSpace: 'nowrap',
+  },
+  circleInfoLg: {
+    fontSize: 17,
+  },
+  circleInfoMd: {
+    fontSize: 12,
   },
   circleRoot: {
     alignItems: 'center',
@@ -49,6 +58,33 @@ export const styles = stylex.create({
   circleTrack: {
     fill: 'none',
     stroke: cssVar.colorFillTertiary,
+  },
+  fillActive: {
+    backgroundColor: cssVar.colorInfo,
+  },
+  fillException: {
+    backgroundColor: cssVar.colorError,
+  },
+  fillMinLg: {
+    minWidth: 12,
+  },
+  fillMinMd: {
+    minWidth: 8,
+  },
+  fillMinSm: {
+    minWidth: 4,
+  },
+  fillNormal: {
+    backgroundColor: cssVar.colorPrimary,
+  },
+  fillSuccess: {
+    backgroundColor: cssVar.colorSuccess,
+  },
+  iconException: {
+    color: cssVar.colorError,
+  },
+  iconSuccess: {
+    color: cssVar.colorSuccess,
   },
   lineLg: {
     height: 6,
@@ -102,9 +138,6 @@ export const styles = stylex.create({
     borderRadius: 1,
     flex: '1',
     backgroundColor: cssVar.colorFillTertiary,
-  },
-  segmentOn: {
-    backgroundColor: cssVar.colorPrimary,
   },
   segments: {
     flex: '1',

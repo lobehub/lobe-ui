@@ -5,8 +5,10 @@ import { memo } from 'react';
 
 import { Flexbox } from '@/Flex';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { styleProps } from '@/styles/stylex/props';
 
 import { AvatarImpl as Avatar } from '../Avatar';
+import { avatarGroupClasses } from '../stable';
 import type { AvatarGroupProps } from '../type';
 import { styles } from './style';
 
@@ -18,7 +20,7 @@ const AvatarGroup = memo<AvatarGroupProps>(
     variant = 'borderless',
     bordered,
     shadow,
-    size = 48,
+    size: sizeProp,
     background,
     animation,
     draggable,
@@ -28,8 +30,10 @@ const AvatarGroup = memo<AvatarGroupProps>(
     onClick,
     ref,
     zIndexReverse,
+    className,
     ...rest
   }) => {
+    const size = sizeProp ?? 48;
     const avatars = max ? items.slice(0, max) : items;
     const restAvatars = items.slice(max, items.length);
     const gapValue = gap ?? Math.floor(-size / 4);
@@ -41,7 +45,7 @@ const AvatarGroup = memo<AvatarGroupProps>(
       draggable,
       shadow,
       shape,
-      size,
+      size: sizeProp,
       variant,
     };
 
@@ -50,9 +54,7 @@ const AvatarGroup = memo<AvatarGroupProps>(
         horizontal
         gap={gap}
         ref={ref}
-        style={{
-          position: 'relative',
-        }}
+        {...styleProps(styles.root, clsx(avatarGroupClasses(), className))}
         {...rest}
       >
         {avatars.map((avatar, index) => {
@@ -64,7 +66,7 @@ const AvatarGroup = memo<AvatarGroupProps>(
           } = avatar;
           return (
             <Avatar
-              className={clsx(classNames?.avatar, avatarClassName)}
+              className={clsx(avatarGroupClasses('avatar'), classNames?.avatar, avatarClassName)}
               key={key}
               xstyle={styles.avatar}
               style={{
@@ -84,7 +86,7 @@ const AvatarGroup = memo<AvatarGroupProps>(
             {...avatarProps}
             avatar={`+${restAvatars.length}`}
             background={cssVar.colorText}
-            className={classNames?.count}
+            className={clsx(avatarGroupClasses('count'), classNames?.count)}
             contentXstyle={styles.count}
             sliceText={false}
             xstyle={styles.avatar}

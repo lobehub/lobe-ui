@@ -34,6 +34,12 @@ export const styles = stylex.create({
     height: '100%',
     width: '100%',
   },
+  flip: {
+    transform: 'scaleY(-1)',
+  },
+  grid: {
+    zIndex: 2,
+  },
   container: {
     maskImage: 'linear-gradient(to bottom, transparent, #fff 30%, #fff 70%, transparent)',
     maskSize: 'cover',
@@ -55,5 +61,23 @@ export const styles = stylex.create({
   },
   highlightReverse: {
     animationName: highlightAnimationReverse,
+  },
+});
+
+export const gridStyles = stylex.create({
+  svg: {
+    width: '100%',
+  },
+});
+
+export const showcaseStyles = stylex.create({
+  content: {
+    zIndex: 4,
+  },
+  front: {
+    zIndex: 0,
+  },
+  root: {
+    position: 'relative',
   },
 });

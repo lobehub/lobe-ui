@@ -1,13 +1,15 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { memo } from 'react';
 
 import { Flexbox } from '@/Flex';
 import { useControlledState } from '@/hooks/useControlledState';
 import SafeArea from '@/mobile/SafeArea';
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
+import { mobileTabBarClasses } from './stable';
 import { styles } from './style';
 import type { TabBarProps } from './type';
 
@@ -28,7 +30,7 @@ const TabBar = memo<TabBarProps>(
         flex={'none'}
         ref={ref}
         width={'100vw'}
-        {...styleProps(styles.container, className)}
+        {...styleProps(styles.container, clsx(mobileTabBarClasses(), className))}
         {...rest}
       >
         <Flexbox
@@ -36,7 +38,7 @@ const TabBar = memo<TabBarProps>(
           align={'center'}
           height={48}
           justify={'space-around'}
-          {...styleProps(styles.inner, className)}
+          {...styleProps(styles.inner, mobileTabBarClasses('inner'))}
         >
           {items.map((item) => {
             const active = item.key === currentActive;
@@ -48,7 +50,8 @@ const TabBar = memo<TabBarProps>(
                 justify={'center'}
                 key={item.key}
                 width={48}
-                {...stylex.props(styles.tab, active && styles.active)}
+                {...styleProps([styles.tab, active && styles.active], mobileTabBarClasses('tab'))}
+                {...toDataAttributes({ active })}
                 onClick={() => {
                   setCurrentActive(item.key);
                   item?.onClick?.();
@@ -59,11 +62,11 @@ const TabBar = memo<TabBarProps>(
                   height={24}
                   justify={'center'}
                   width={24}
-                  {...stylex.props(styles.icon)}
+                  {...styleProps(styles.icon, mobileTabBarClasses('icon'))}
                 >
                   {typeof item.icon === 'function' ? item.icon(active) : item.icon}
                 </Flexbox>
-                <div {...stylex.props(styles.title)}>
+                <div {...styleProps(styles.title, mobileTabBarClasses('title'))}>
                   {typeof item.title === 'function' ? item.title(active) : item.title}
                 </div>
               </Flexbox>

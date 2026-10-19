@@ -1,6 +1,7 @@
 'use client';
 
 import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { InfoIcon } from 'lucide-react';
 import { memo, useEffect } from 'react';
 
@@ -14,6 +15,7 @@ import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import { styleProps } from '@/styles/stylex/props';
 
 import { useFormContext } from '../context';
+import { useFormClasses } from '../stableContext';
 import { submitFooterStyles as styles } from '../style';
 import type { FormSubmitFooterProps } from '../type';
 
@@ -32,6 +34,7 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
     style,
     ...rest
   }) => {
+    const formClasses = useFormClasses();
     const Motion = useMotionComponent();
     const { hasUnsavedChanges, requestReset, submitLoading } = useFormContext();
     const { t } = useTranslation(formMessages);
@@ -56,18 +59,16 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
         {(float || hasUnsavedChanges) && (
           <>
             <Icon
+              className={stylex.props(styles.unsavedIcon).className}
               color={cssVar.colorTextDescription}
               icon={InfoIcon}
               size={12}
-              style={{ marginLeft: 8 }}
             />
             <span
-              style={{
-                color: cssVar.colorTextDescription,
-                flex: 'none',
-                fontSize: 12,
-                marginRight: float ? 16 : 4,
-              }}
+              {...styleProps(
+                [styles.unsavedText, float && styles.unsavedTextFloat],
+                formClasses('unsaved'),
+              )}
             >
               {unsavedText}
             </span>
@@ -110,7 +111,7 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
           gap={8}
           justify={'flex-end'}
           {...rest}
-          {...styleProps(styles.footer, className, style)}
+          {...styleProps(styles.footer, clsx(formClasses('submit-footer'), className), style)}
         >
           {content}
         </Flexbox>
@@ -138,7 +139,7 @@ const FormSubmitFooter = memo<FormSubmitFooterProps>(
         <Flexbox
           horizontal
           align={'center'}
-          className={className}
+          className={clsx(formClasses('submit-footer'), className)}
           gap={8}
           justify={'center'}
           style={style}

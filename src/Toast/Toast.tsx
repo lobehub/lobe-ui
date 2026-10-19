@@ -1,7 +1,7 @@
 'use client';
 
 import { Toast as BaseToast } from '@base-ui/react/toast';
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { AlertTriangle, CheckCircle, Info, Loader2, X, XCircle } from 'lucide-react';
 import { memo, type ReactNode } from 'react';
 
@@ -9,8 +9,10 @@ import Icon from '@/Icon';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import { focusRing } from '@/styles/stylex/focusRing';
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
 import { useToastContext } from './context';
+import { toastClasses } from './stable';
 import { actionVariantStyles, rootPositionStyles, styles } from './style';
 import { type ToastOptions, type ToastProps, type ToastType } from './type';
 
@@ -52,7 +54,13 @@ const ToastItem = memo<ToastProps>(({ toast, classNames, styles: customStyles })
   const renderIcon = (): ReactNode => {
     if (!IconComponent) return null;
     return (
-      <div {...styleProps(styles.icon, classNames?.icon, customStyles?.icon)}>
+      <div
+        {...styleProps(
+          styles.icon,
+          clsx(toastClasses('icon'), classNames?.icon),
+          customStyles?.icon,
+        )}
+      >
         <Icon color={iconColor} icon={IconComponent} size={18} spin={isLoading} />
       </div>
     );
@@ -61,13 +69,19 @@ const ToastItem = memo<ToastProps>(({ toast, classNames, styles: customStyles })
   const renderActions = (): ReactNode => {
     if (actions && actions.length > 0) {
       return (
-        <div {...styleProps(styles.actions, classNames?.actions, customStyles?.actions)}>
+        <div
+          {...styleProps(
+            styles.actions,
+            clsx(toastClasses('actions'), classNames?.actions),
+            customStyles?.actions,
+          )}
+        >
           {actions.map((action, index) => (
             <BaseToast.Action
               key={index}
               {...styleProps(
                 [styles.action, focusRing.info, actionVariantStyles[action.variant ?? 'primary']],
-                classNames?.action,
+                clsx(toastClasses('action'), classNames?.action),
                 customStyles?.action,
               )}
               onClick={action.onClick}
@@ -84,7 +98,7 @@ const ToastItem = memo<ToastProps>(({ toast, classNames, styles: customStyles })
         <BaseToast.Action
           {...styleProps(
             [styles.action, focusRing.info, styles.actionPrimary],
-            classNames?.action,
+            clsx(toastClasses('action'), classNames?.action),
             customStyles?.action,
           )}
           {...actionProps}
@@ -98,29 +112,46 @@ const ToastItem = memo<ToastProps>(({ toast, classNames, styles: customStyles })
     <BaseToast.Root
       swipeDirection={swipeDirection}
       toast={toast}
-      {...styleProps([styles.root, rootPositionStyles[position]], classNames?.root, {
-        ...customStyles?.root,
-        ...toastData?.style,
-      })}
+      {...toDataAttributes({ position, type })}
+      {...styleProps(
+        [styles.root, rootPositionStyles[position]],
+        clsx(toastClasses(), classNames?.root),
+        {
+          ...customStyles?.root,
+          ...toastData?.style,
+        },
+      )}
     >
       <BaseToast.Content
-        {...styleProps(styles.content, classNames?.content, customStyles?.content)}
+        {...styleProps(
+          styles.content,
+          clsx(toastClasses('content'), classNames?.content),
+          customStyles?.content,
+        )}
       >
-        <div {...stylex.props(styles.toastBody)}>
+        <div {...styleProps(styles.toastBody, toastClasses('body'))}>
           {renderIcon()}
-          <div {...stylex.props(styles.contentArea)}>
+          <div {...styleProps(styles.contentArea, toastClasses('main'))}>
             {title ? (
               <>
-                <div {...stylex.props(styles.titleRow)}>
+                <div {...styleProps(styles.titleRow, toastClasses('title-row'))}>
                   <BaseToast.Title
-                    {...styleProps(styles.title, classNames?.title, customStyles?.title)}
+                    {...styleProps(
+                      styles.title,
+                      clsx(toastClasses('title'), classNames?.title),
+                      customStyles?.title,
+                    )}
                   >
                     {title}
                   </BaseToast.Title>
                   {showCloseButton && (
                     <BaseToast.Close
                       aria-label="Close"
-                      {...styleProps(styles.close, classNames?.close, customStyles?.close)}
+                      {...styleProps(
+                        styles.close,
+                        clsx(toastClasses('close'), classNames?.close),
+                        customStyles?.close,
+                      )}
                     >
                       <X size={14} />
                     </BaseToast.Close>
@@ -128,10 +159,11 @@ const ToastItem = memo<ToastProps>(({ toast, classNames, styles: customStyles })
                 </div>
                 {description && (
                   <BaseToast.Description
-                    {...styleProps(styles.description, classNames?.description, {
-                      marginBlockStart: 4,
-                      ...customStyles?.description,
-                    })}
+                    {...styleProps(
+                      [styles.description, styles.descriptionWithTitle],
+                      clsx(toastClasses('description'), classNames?.description),
+                      customStyles?.description,
+                    )}
                   >
                     {description}
                   </BaseToast.Description>
@@ -139,11 +171,11 @@ const ToastItem = memo<ToastProps>(({ toast, classNames, styles: customStyles })
               </>
             ) : (
               description && (
-                <div {...stylex.props(styles.titleRow)}>
+                <div {...styleProps(styles.titleRow, toastClasses('title-row'))}>
                   <BaseToast.Description
                     {...styleProps(
                       [styles.description, styles.descriptionStandalone],
-                      classNames?.description,
+                      clsx(toastClasses('description'), classNames?.description),
                       customStyles?.description,
                     )}
                   >
@@ -152,7 +184,11 @@ const ToastItem = memo<ToastProps>(({ toast, classNames, styles: customStyles })
                   {showCloseButton && (
                     <BaseToast.Close
                       aria-label="Close"
-                      {...styleProps(styles.close, classNames?.close, customStyles?.close)}
+                      {...styleProps(
+                        styles.close,
+                        clsx(toastClasses('close'), classNames?.close),
+                        customStyles?.close,
+                      )}
                     >
                       <X size={14} />
                     </BaseToast.Close>

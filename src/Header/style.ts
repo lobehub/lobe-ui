@@ -4,8 +4,20 @@ import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import { media } from '@/styles/stylex/media.stylex';
 
 export const styles = stylex.create({
+  fixed: {
+    flex: '0',
+  },
   left: {
     zIndex: 10,
+  },
+  logoMobile: {
+    flex: '1',
+    overflow: 'hidden',
+  },
+  nav: {
+    flex: '1',
+    overflow: 'hidden',
+    marginLeft: 48,
   },
   right: {
     zIndex: 10,

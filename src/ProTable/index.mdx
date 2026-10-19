@@ -17,6 +17,8 @@ import DemoToolbar from './demos/toolbar.tsx?demo';
 import DemoPolling from './demos/polling.tsx?demo';
 import DemoDataSource from './demos/data-source.tsx?demo';
 import DemoTableRender from './demos/table-render.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { proTableClasses } from './stable';
 
 ## When to use
 
@@ -252,3 +254,9 @@ The Form instance — `getValue`, `getValues`, `setValue`, `setValues`, `reset`,
 - **Money** defaults to the `¥` symbol like Pro's zh-CN locale; set `fieldProps.customSymbol`. Texts default to English and are overridden via `locale` (they are not in `@lobehub/ui/i18n` yet).
 - **`valueType: 'progress'`** renders a `size="small"` `Progress variant="inset"` — a one-line meter with the percentage at the trailing edge, so rows keep their height. For another shape (`line`, `segments`) use the column `render`.
 - The toolbar icons are one small outlined `ActionIconGroup` (`size="small"`, `variant="outlined"`) (every icon gets a tooltip). The group only renders plain buttons, so the density menu and the column setting panel are controlled popovers anchored to the clicked icon rather than `DropdownMenu` / `Popover` triggers.
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={proTableClasses} />

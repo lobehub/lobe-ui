@@ -7,6 +7,8 @@ category: Data Display
 import DemoIndex from './demos/index.tsx?demo';
 import DemoFullFeatured from './demos/FullFeatured.tsx?demo';
 import DemoActionsRender from './demos/ActionsRender.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { highlighterClasses, syntaxHighlighterClasses } from './stable';
 
 ## Default
 
@@ -35,3 +37,15 @@ import DemoActionsRender from './demos/ActionsRender.tsx?demo';
 | theme | Syntax highlighting theme | `'lobe-theme' \| BuiltinTheme` | - |
 | variant | Visual style variant | `'filled' \| 'outlined' \| 'borderless'` | - |
 | enableTransformer | Whether to enable content transformers | `boolean` | - |
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+### Highlighter
+
+<StableClassTable of={highlighterClasses} />
+
+### SyntaxHighlighter
+
+<StableClassTable of={syntaxHighlighterClasses} />

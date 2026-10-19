@@ -2,6 +2,7 @@
 
 import { Select as BaseSelect } from '@base-ui/react/select';
 import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { ChevronDown, Loader2, X } from 'lucide-react';
 import {
   type ChangeEvent,
@@ -18,6 +19,7 @@ import { styleProps } from '@/styles/stylex/props';
 
 import { isValueEmpty } from './helpers';
 import { type useSelectVirtual } from './hooks';
+import { selectClasses } from './stable';
 import { styles } from './style';
 import { type SelectClassNames, type SelectOption, type SelectProps } from './type';
 
@@ -154,7 +156,7 @@ export function SelectListSection({
 }: SelectListSectionProps) {
   const listClassName = styleProps(
     [styles.list, hasSearch && styles.listWithSearch],
-    classNames?.list,
+    clsx(selectClasses('list'), classNames?.list),
   ).className;
   const enabled = Boolean(virtual) && !isEmpty;
   const { keepMountedIndices, viewportProps, viewportRef, virtualChildren, virtualizerRef } =
@@ -192,7 +194,12 @@ interface EmptyContentProps {
 
 export function EmptyContent({ classNames }: EmptyContentProps) {
   return (
-    <div {...styleProps([menuStyles.item, menuStyles.empty, styles.empty], classNames?.empty)}>
+    <div
+      {...styleProps(
+        [menuStyles.item, menuStyles.empty, styles.empty],
+        clsx(selectClasses('empty'), classNames?.empty),
+      )}
+    >
       No data
     </div>
   );
@@ -224,7 +231,12 @@ export function SelectSearchInput({
   value,
 }: SelectSearchInputProps) {
   return (
-    <div {...styleProps(inline ? styles.tagsSearch : styles.search, classNames?.search)}>
+    <div
+      {...styleProps(
+        inline ? styles.tagsSearch : styles.search,
+        clsx(selectClasses('search'), classNames?.search),
+      )}
+    >
       <input
         autoFocus={autoFocus}
         {...stylex.props(styles.searchInput)}
@@ -255,10 +267,10 @@ export function SelectTriggerSuffix({
   suffixIconNode,
 }: SelectTriggerSuffixProps) {
   return (
-    <span {...styleProps(styles.suffix, classNames?.suffix)}>
+    <span {...styleProps(styles.suffix, clsx(selectClasses('suffix'), classNames?.suffix))}>
       {showClear && (
         <span
-          {...styleProps(styles.clear, classNames?.clear)}
+          {...styleProps(styles.clear, clsx(selectClasses('clear'), classNames?.clear))}
           data-role="lobe-select-clear"
           onClick={onClear}
         >
@@ -266,7 +278,9 @@ export function SelectTriggerSuffix({
         </span>
       )}
       {suffixIconNode !== null && suffixIconNode !== undefined && (
-        <BaseSelect.Icon {...styleProps(styles.icon, classNames?.icon)}>
+        <BaseSelect.Icon
+          {...styleProps(styles.icon, clsx(selectClasses('icon'), classNames?.icon))}
+        >
           {suffixIconNode}
         </BaseSelect.Icon>
       )}

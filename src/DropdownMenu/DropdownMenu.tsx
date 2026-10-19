@@ -125,6 +125,7 @@ const DropdownMenu = memo<DropdownMenuProps>(
               {...popupProps}
               data-has-footer={footer == null ? undefined : ''}
               data-has-header={header == null ? undefined : ''}
+              data-placement={placement}
               xstyle={hasSlots && menuStyles.popupWithSlots}
             >
               {header == null ? null : <DropdownMenuHeader>{header}</DropdownMenuHeader>}

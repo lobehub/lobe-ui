@@ -1,14 +1,16 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { Upload as UploadIcon } from 'lucide-react';
 import type { ChangeEvent, DragEvent, KeyboardEvent, MouseEvent, Ref } from 'react';
 import { memo, useCallback, useRef, useState } from 'react';
 
 import Icon from '@/Icon';
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
 import { filterFilesByAccept } from './helpers';
+import { uploadClasses } from './stable';
 import { styles } from './style';
 import type { UploadProps } from './type';
 
@@ -138,7 +140,7 @@ const Upload = memo<UploadProps>(
         disabled={disabled}
         multiple={multiple}
         ref={inputRef}
-        style={{ display: 'none' }}
+        {...styleProps(styles.input, uploadClasses('input'))}
         type="file"
         onChange={handleInputChange}
         {...directoryProps}
@@ -151,7 +153,12 @@ const Upload = memo<UploadProps>(
           aria-disabled={disabled}
           ref={ref as Ref<HTMLDivElement>}
           role="button"
-          {...styleProps([styles.dragger, isDragOver && styles.draggerOver], className, style)}
+          {...toDataAttributes({ dragOver: isDragOver, dragger: true })}
+          {...styleProps(
+            [styles.dragger, isDragOver && styles.draggerOver],
+            clsx(uploadClasses(), className),
+            style,
+          )}
           tabIndex={disabled ? -1 : 0}
           onClick={handleClick}
           onDragEnter={handleDragEnter}
@@ -164,12 +171,18 @@ const Upload = memo<UploadProps>(
           {inputEl}
           {children ?? (
             <>
-              <Icon {...stylex.props(styles.draggerIcon)} icon={UploadIcon} size={24} />
-              <b {...stylex.props(styles.draggerTitle)}>
+              <Icon
+                {...styleProps(styles.draggerIcon, uploadClasses('icon'))}
+                icon={UploadIcon}
+                size={24}
+              />
+              <b {...styleProps(styles.draggerTitle, uploadClasses('title'))}>
                 {title ?? 'Click or drag file to this area to upload'}
               </b>
               {description && (
-                <span {...stylex.props(styles.draggerDescription)}>{description}</span>
+                <span {...styleProps(styles.draggerDescription, uploadClasses('description'))}>
+                  {description}
+                </span>
               )}
             </>
           )}
@@ -182,7 +195,7 @@ const Upload = memo<UploadProps>(
         aria-disabled={disabled}
         ref={ref as Ref<HTMLSpanElement>}
         role="button"
-        {...styleProps(styles.trigger, className, style)}
+        {...styleProps(styles.trigger, clsx(uploadClasses(), className), style)}
         tabIndex={disabled ? -1 : 0}
         onClick={handleClick}
         onKeyDown={handleKeyDown}

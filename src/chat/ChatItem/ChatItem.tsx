@@ -1,6 +1,5 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
 import clsx from 'clsx';
 import { memo, useEffect, useMemo, useRef, useState } from 'react';
 
@@ -9,6 +8,7 @@ import chatMessages from '@/i18n/resources/en/chat';
 import { useTranslation } from '@/i18n/useTranslation';
 import { styleProps } from '@/styles/stylex/props';
 import { useResponsive } from '@/styles/theme/scope';
+import { toDataAttributes } from '@/utils/bem';
 
 import Actions from './components/Actions';
 import Avatar from './components/Avatar';
@@ -16,6 +16,7 @@ import BorderSpacing from './components/BorderSpacing';
 import ErrorContent from './components/ErrorContent';
 import MessageContent from './components/MessageContent';
 import Title from './components/Title';
+import { chatChatItemClasses } from './stable';
 import { styles } from './style';
 import type { ChatItemProps } from './type';
 
@@ -107,7 +108,12 @@ const ChatItem = memo<ChatItemProps>(
     const isDocs = variant === 'docs';
     const containerClassName = styleProps(
       [styles.container, isDocs && styles.containerDocs],
-      clsx('lobe-chat-item', isDocs ? 'lobe-chat-item-docs' : 'lobe-chat-item-bubble', className),
+      clsx(
+        chatChatItemClasses(),
+        'lobe-chat-item',
+        isDocs ? 'lobe-chat-item-docs' : 'lobe-chat-item-bubble',
+        className,
+      ),
     ).className;
 
     return (
@@ -117,6 +123,7 @@ const ChatItem = memo<ChatItemProps>(
         gap={mobile ? 6 : 12}
         style={cssVariables}
         width={'100%'}
+        {...toDataAttributes({ editing, loading, placement, variant })}
         {...rest}
       >
         {showAvatar && (
@@ -128,10 +135,8 @@ const ChatItem = memo<ChatItemProps>(
             loading={loading}
             placement={placement}
             size={avatarSize}
-            style={{
-              marginTop: showTitle ? -12 : 6,
-              ...avatarProps?.style,
-            }}
+            style={avatarProps?.style}
+            withTitle={showTitle}
             onClick={onAvatarClick}
           />
         )}
@@ -139,7 +144,10 @@ const ChatItem = memo<ChatItemProps>(
           align={placement === 'left' ? 'flex-start' : 'flex-end'}
           ref={containerRef}
           width={editing ? '100%' : undefined}
-          {...stylex.props(styles.messageBox, styles.messageContainer, hasTime && styles.withTime)}
+          {...styleProps(
+            [styles.messageBox, styles.messageContainer, hasTime && styles.withTime],
+            chatChatItemClasses('body'),
+          )}
         >
           <Title
             avatar={avatar}
@@ -154,7 +162,10 @@ const ChatItem = memo<ChatItemProps>(
             data-layout={layoutMode}
             gap={8}
             width={editing ? '100%' : undefined}
-            {...stylex.props(styles.messageBox, styles.messageContent)}
+            {...styleProps(
+              [styles.messageBox, styles.messageContent],
+              chatChatItemClasses('content'),
+            )}
             direction={
               layoutMode === 'horizontal'
                 ? placement === 'left'

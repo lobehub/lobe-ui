@@ -27,6 +27,8 @@ import DemoStyleClass from './demos/style-class.tsx?demo';
 import DemoNested from './demos/nested.tsx?demo';
 import DemoMode from './demos/mode.tsx?demo';
 import DemoControlled from './demos/controlled.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { datePickerClasses, dateRangePickerClasses } from './stable';
 
 `DatePicker` follows antd DatePicker's API and behaviour: it runs on a fork of `@rc-component/picker` 1.12.2 (the core antd uses) kept in `src/DatePicker/core`, with the Dayjs adapter, the popup on lobe's Popover parts and Motion, styled from the `--lobe-*` theme tokens and composed with lobe parts only (Button, Input, lucide icons). The sections below follow the order of antd's demo list; variations of single props live in the Playground, and demos marked **lobe** are extra demos for behaviour antd shows only in its API table. `DatePicker` / `DateRangePicker` take and return native `Date` like the previous lobe DatePicker; `DayjsDatePicker` / `DayjsDateRangePicker` are the antd-shaped `Dayjs` versions, which the demos use (see Date types and compatibility). Coming from antd or from the previous lobe DatePicker, see the differences and migration notes at the end of the page.
 
@@ -585,3 +587,15 @@ The lobe-only demos are `static-members`, `range-interaction`, `multiple-custom`
 The default `DatePicker` / `DateRangePicker` keep the previous lobe API built on native `Date`: `value`, `onChange` and `disabledDate` use `Date`, `DateRangeValue` is `[Date | null, Date | null]`, and a cleared range emits `[null, null]` (never `null`). Inputs (`value`, `defaultValue`, `minDate`, `maxDate`, …) also accept `Dayjs`, date strings and timestamps.
 
 For the antd-aligned `Dayjs` API (values and callbacks are `Dayjs`, a cleared range emits `null`), use `DayjsDatePicker` / `DayjsDateRangePicker` with `DayjsDatePickerProps`, `DayjsDateRangePickerProps` and `DayjsDateRangeValue`; the demos above use them. Any other date library works through `DatePicker.generatePicker(generateConfig)`.
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+### DatePicker / DayjsDatePicker
+
+<StableClassTable of={datePickerClasses} />
+
+### DateRangePicker / DayjsDateRangePicker
+
+<StableClassTable of={dateRangePickerClasses} />

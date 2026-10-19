@@ -1,6 +1,6 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import {
   type CSSProperties,
   memo,
@@ -16,6 +16,7 @@ import { useEventCallback } from '@/hooks/useEventCallback';
 import { styleProps } from '@/styles/stylex/props';
 import { useMergeRefs } from '@/utils/mergeRefs';
 
+import { anchorClasses } from './stable';
 import { styles } from './style';
 import type { AnchorItem, AnchorProps } from './type';
 
@@ -156,12 +157,12 @@ const Anchor = memo<AnchorProps>(
     };
 
     const renderList = (list: AnchorItem[], nested: boolean) => (
-      <ul {...stylex.props(styles.list, nested && styles.listNested)}>
+      <ul {...styleProps([styles.list, nested && styles.listNested], anchorClasses('list'))}>
         {list.map((item) => (
           <li key={item.key}>
             <a
               aria-current={item.key === mergedActiveKey ? 'location' : undefined}
-              {...stylex.props(styles.link, nested && styles.linkNested)}
+              {...styleProps([styles.link, nested && styles.linkNested], anchorClasses('link'))}
               data-key={item.key}
               href={item.href}
               title={typeof item.title === 'string' ? item.title : undefined}
@@ -176,8 +177,16 @@ const Anchor = memo<AnchorProps>(
     );
 
     return (
-      <nav ref={mergedRef} {...rest} {...styleProps(styles.root, className, style)}>
-        <span aria-hidden {...stylex.props(styles.marker)} hidden={!marker} style={marker} />
+      <nav
+        ref={mergedRef}
+        {...rest}
+        {...styleProps(styles.root, clsx(anchorClasses(), className), style)}
+      >
+        <span
+          aria-hidden
+          {...styleProps(styles.marker, anchorClasses('marker'), marker)}
+          hidden={!marker}
+        />
         {renderList(items, false)}
       </nav>
     );

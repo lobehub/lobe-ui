@@ -6,6 +6,12 @@ const reducedMotion = '@media (prefers-reduced-motion: reduce)';
 const current = ':is([aria-current="true"])';
 
 export const styles = stylex.create({
+  arrowNext: {
+    insetInlineEnd: 8,
+  },
+  arrowPrev: {
+    insetInlineStart: 8,
+  },
   arrow: {
     backgroundColor: cssVar.colorBgContainer,
     boxShadow: '0 1px 4px rgb(0 0 0 / 12%)',

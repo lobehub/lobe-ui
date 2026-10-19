@@ -3,7 +3,6 @@
 import Picker from '@emoji-mart/react';
 import { getLobeIconCDN } from '@lobehub/icons/es/features/getLobeIconCDN';
 import { toc } from '@lobehub/icons/es/toc';
-import * as stylex from '@stylexjs/stylex';
 import chroma from 'chroma-js';
 import clsx from 'clsx';
 import { SmileIcon, TrashIcon, UploadIcon } from 'lucide-react';
@@ -24,6 +23,7 @@ import Tooltip from '@/Tooltip';
 
 import AvatarUploader from './AvatarUploader';
 import { loadEmojiData } from './loadEmojiData';
+import { emojiPickerClasses } from './stable';
 import { styles } from './style';
 import { type EmojiPickerProps } from './type';
 import { useEmojiMartI18n } from './useEmojiMartI18n';
@@ -140,19 +140,21 @@ const EmojiPicker = memo<EmojiPickerProps>(
     const content = (
       <Flexbox
         ref={ref}
-        {...styleProps(styles.picker, clsx('lobe-emoji-picker', popupClassName), {
-          minWidth: 310,
-          paddingTop: showTabs ? 4 : 0,
-          ...pickerCssVariables,
-          ...popupStyle,
-        })}
+        {...styleProps(
+          [styles.picker, showTabs && styles.pickerWithTabs],
+          clsx('lobe-emoji-picker', popupClassName),
+          {
+            ...pickerCssVariables,
+            ...popupStyle,
+          },
+        )}
         {...contentProps}
       >
         {showTabs && (
           <Flexbox
             horizontal
             align={'center'}
-            {...stylex.props(styles.tabs)}
+            {...styleProps(styles.tabs, emojiPickerClasses('tabs'))}
             justify={'space-between'}
             paddingInline={10}
           >
@@ -170,6 +172,7 @@ const EmojiPicker = memo<EmojiPickerProps>(
             />
             {allowDelete && (
               <ActionIcon
+                className={emojiPickerClasses('delete')}
                 icon={TrashIcon}
                 title={deleteText}
                 size={{
@@ -210,7 +213,7 @@ const EmojiPicker = memo<EmojiPickerProps>(
         {customTabs.map(
           (item) =>
             tab === item.value && (
-              <Flexbox key={item.value} padding={10}>
+              <Flexbox className={emojiPickerClasses('custom-tab')} key={item.value} padding={10}>
                 {item.render(handleAvatarChange)}
               </Flexbox>
             ),
@@ -220,7 +223,7 @@ const EmojiPicker = memo<EmojiPickerProps>(
 
     return (
       <Popover
-        className="lobe-emoji-picker-popover"
+        className={clsx('lobe-emoji-picker-popover', emojiPickerClasses('popup'))}
         content={content}
         defaultOpen={defaultOpen}
         open={visible}
@@ -241,7 +244,7 @@ const EmojiPicker = memo<EmojiPickerProps>(
         ) : (
           <Avatar
             avatar={ava}
-            className={clsx('lobe-emoji-picker-avatar', className)}
+            className={clsx('lobe-emoji-picker-avatar', emojiPickerClasses('trigger'), className)}
             loading={loading}
             shape={shape}
             {...rest}

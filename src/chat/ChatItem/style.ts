@@ -18,6 +18,15 @@ export const styles = stylex.create({
     height: 'var(--chat-item-avatar-size, 40px)',
     width: 'var(--chat-item-avatar-size, 40px)',
   },
+  avatarOffset: {
+    marginTop: 6,
+  },
+  avatarWithTitle: {
+    marginTop: -12,
+  },
+  spacing: {
+    flex: 'none',
+  },
   container: {
     paddingInline: { default: 12, [media.sm]: 8 },
     paddingBlockEnd: 12,

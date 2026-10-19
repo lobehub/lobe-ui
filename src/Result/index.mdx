@@ -5,6 +5,8 @@ category: Feedback
 ---
 
 import DemoIndex from './demos/index.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { resultClasses } from './stable';
 
 ## Basic
 
@@ -29,3 +31,9 @@ import { Result } from '@lobehub/ui';
 `icon` overrides the default status icon. `extra` renders a row of actions below the subtitle, and `children` render below that.
 
 antd's error-page presets (`status="404" | "403" | "500"`) are not supported; only `success` | `error` | `info` | `warning` are.
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={resultClasses} />

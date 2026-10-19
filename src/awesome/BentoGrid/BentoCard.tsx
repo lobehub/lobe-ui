@@ -2,53 +2,49 @@
 
 import './style.css';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { type CSSProperties, memo } from 'react';
 
 import { renderLandingLink } from '@/awesome/landingLink';
 import { styleProps } from '@/styles/stylex/props';
 
+import { awesomeBentoCardClasses } from './stable';
 import { styles } from './style';
 import type { BentoCardProps } from './type';
 
 const BentoCard = memo<BentoCardProps>(
-  ({
-    children,
-    className,
-    colSpan = 1,
-    hint,
-    href,
-    renderLink,
-    rowSpan = 1,
-    style,
-    title,
-    ...rest
-  }) => (
+  ({ children, className, colSpan, hint, href, renderLink, rowSpan, style, title, ...rest }) => (
     <div
-      data-wide={colSpan > 2}
-      {...styleProps(styles.card, className, {
-        '--bento-col-span': colSpan,
-        '--bento-row-span': rowSpan,
+      data-wide={(colSpan ?? 1) > 2}
+      {...styleProps(styles.card, clsx(awesomeBentoCardClasses(), className), {
+        ...(colSpan === undefined ? undefined : { '--bento-col-span': colSpan }),
+        ...(rowSpan === undefined ? undefined : { '--bento-row-span': rowSpan }),
         ...style,
       } as CSSProperties)}
       {...rest}
     >
       {(title || hint) && (
-        <div {...stylex.props(styles.header)}>
+        <div {...styleProps(styles.header, awesomeBentoCardClasses('header'))}>
           {title &&
             (href ? (
               renderLandingLink(renderLink, {
                 children: title,
-                className: stylex.props(styles.title).className,
+                className: styleProps(styles.title, awesomeBentoCardClasses('title')).className,
                 href,
               })
             ) : (
-              <span {...stylex.props(styles.title)}>{title}</span>
+              <span {...styleProps(styles.title, awesomeBentoCardClasses('title'))}>{title}</span>
             ))}
-          {hint && <span {...stylex.props(styles.hint)}>{hint}</span>}
+          {hint && (
+            <span {...styleProps(styles.hint, awesomeBentoCardClasses('hint'))}>{hint}</span>
+          )}
         </div>
       )}
-      <div {...styleProps(styles.body, 'lobe-bento-card-body')}>{children}</div>
+      <div
+        {...styleProps(styles.body, clsx(awesomeBentoCardClasses('body'), 'lobe-bento-card-body'))}
+      >
+        {children}
+      </div>
     </div>
   ),
 );

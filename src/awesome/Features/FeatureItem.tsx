@@ -2,7 +2,6 @@
 
 import './style.css';
 
-import * as stylex from '@stylexjs/stylex';
 import clsx from 'clsx';
 import { type CSSProperties, memo, useMemo } from 'react';
 
@@ -13,7 +12,8 @@ import Img from '@/Img';
 import { styleProps } from '@/styles/stylex/props';
 import Text from '@/Text';
 
-import { childStyles, styles } from './style';
+import { awesomeFeaturesClasses } from './stable';
+import { styles } from './style';
 import type { FeatureItemProps } from './type';
 
 const Image = memo<{ className?: string; image: string; style?: CSSProperties; title: string }>(
@@ -56,20 +56,28 @@ const Item = memo<FeatureItemProps>(
 
     return (
       <div
-        {...styleProps(styles.container, clsx('lobe-features-item', className), {
-          ...cssVariables,
-          gridColumn: `span ${column || 1}`,
-          gridRow: `span ${rowNumber}`,
-          ...style,
-        })}
+        {...styleProps(
+          styles.container,
+          clsx(awesomeFeaturesClasses('item'), 'lobe-features-item', className),
+          {
+            ...cssVariables,
+            gridColumn: `span ${column || 1}`,
+            gridRow: `span ${rowNumber}`,
+            ...style,
+          },
+        )}
         {...rest}
       >
-        <div {...stylex.props(styles.cell)}>
+        <div {...styleProps(styles.cell, awesomeFeaturesClasses('cell'))}>
           {image ||
             (icon && (
-              <Center {...styleProps(styles.imgContainer, undefined, imageStyle)}>
-                {icon && <Icon icon={icon} style={childStyles.img} />}
-                {image && <Image image={image} style={childStyles.img} title={title} />}
+              <Center
+                {...styleProps(styles.imgContainer, awesomeFeaturesClasses('image'), imageStyle)}
+              >
+                {icon && <Icon className={awesomeFeaturesClasses('icon')} icon={icon} />}
+                {image && (
+                  <Image className={awesomeFeaturesClasses('icon')} image={image} title={title} />
+                )}
               </Center>
             ))}
           {title && (
@@ -77,7 +85,7 @@ const Item = memo<FeatureItemProps>(
               horizontal
               align={'center'}
               as={'h3'}
-              className={stylex.props(styles.title).className}
+              className={styleProps(styles.title, awesomeFeaturesClasses('title')).className}
               gap={8}
             >
               {title}
@@ -85,7 +93,7 @@ const Item = memo<FeatureItemProps>(
           )}
           {description && (
             <Text
-              style={childStyles.desc}
+              className={awesomeFeaturesClasses('description')}
               ellipsis={{
                 rows: 4,
               }}
@@ -94,7 +102,7 @@ const Item = memo<FeatureItemProps>(
             </Text>
           )}
           {link && (
-            <div {...stylex.props(styles.link)}>
+            <div {...styleProps(styles.link, awesomeFeaturesClasses('link'))}>
               <A href={link} rel="noreferrer" target={openExternal ? '_blank' : undefined}>
                 Read More
               </A>

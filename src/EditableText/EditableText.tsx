@@ -1,15 +1,19 @@
 'use client';
 
 import { Edit3 } from 'lucide-react';
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 import { useHotkeys } from 'react-hotkeys-hook';
 
 import ActionIcon from '@/ActionIcon';
 import { Flexbox } from '@/Flex';
 import { useControlledState } from '@/hooks/useControlledState';
 import { cx } from '@/styles';
+import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
 import ControlInput from './ControlInput';
+import { editableTextClasses } from './stable';
+import { sizeStyles, styles as localStyles } from './style';
 import type { EditableTextProps } from './type';
 
 const EditableText = memo<EditableTextProps>(
@@ -50,33 +54,18 @@ const EditableText = memo<EditableTextProps>(
       },
     );
 
-    const height = useMemo(() => {
-      if (!size) return 32;
-      switch (size) {
-        case 'large': {
-          return 40;
-        }
-        case 'middle': {
-          return 32;
-        }
-        case 'small': {
-          return 24;
-        }
-      }
-    }, [size]);
+    const sizeStyle = sizeStyles[size ?? 'middle'];
 
     const input = (
       <ControlInput
-        className={cx(className, classNames?.input)}
         size={size}
         value={value as string}
         variant={variant}
-        style={{
-          height,
-          ...(size === 'small' && { fontSize: 14 }),
-          ...style,
-          ...styles?.input,
-        }}
+        {...styleProps(
+          [sizeStyle, size === 'small' && localStyles.inputSmall],
+          cx(editableTextClasses('input'), className, classNames?.input),
+          { ...style, ...styles?.input },
+        )}
         onBlur={onBlur}
         onChange={onChange}
         onFocus={onFocus}
@@ -91,9 +80,10 @@ const EditableText = memo<EditableTextProps>(
 
     const content = (
       <>
-        <span>{value}</span>
+        <span className={editableTextClasses('text')}>{value}</span>
         {showEditIcon && (
           <ActionIcon
+            className={editableTextClasses('edit')}
             icon={Edit3}
             size="small"
             title={'Edit'}
@@ -109,14 +99,13 @@ const EditableText = memo<EditableTextProps>(
       <Flexbox
         horizontal
         align={'center'}
-        className={cx(className, classNames?.container)}
         gap={gap}
-        style={{
-          height,
-          width: '100%',
-          ...style,
-          ...styles?.container,
-        }}
+        {...toDataAttributes({ editing: edited, size, variant })}
+        {...styleProps(
+          [localStyles.root, sizeStyle],
+          cx(editableTextClasses(), className, classNames?.container),
+          { ...style, ...styles?.container },
+        )}
         {...rest}
       >
         {edited ? input : content}

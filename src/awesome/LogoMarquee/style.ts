@@ -5,7 +5,7 @@ import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import { logoMarqueeMarker } from './marker.stylex';
 
 const slide = stylex.keyframes({
-  to: { transform: 'translateX(calc(-100% - var(--logo-marquee-gap)))' },
+  to: { transform: 'translateX(calc(-100% - var(--logo-marquee-gap, 36px)))' },
 });
 
 const reducedMotion = '@media (prefers-reduced-motion: reduce)';
@@ -25,17 +25,20 @@ export const styles = stylex.create({
     whiteSpace: 'nowrap',
   },
   root: {
-    gap: 16,
-    alignItems: 'center',
-    display: 'flex',
-    flexDirection: 'column',
-    inlineSize: '100%',
+    '--logo-marquee-duration': '28s',
+    '--logo-marquee-gap': '36px',
+    '--logo-marquee-max-width': '640px',
+    'gap': 16,
+    'alignItems': 'center',
+    'display': 'flex',
+    'flexDirection': 'column',
+    'inlineSize': '100%',
   },
   track: {
     flex: 'none',
-    gap: 'var(--logo-marquee-gap)',
+    gap: 'var(--logo-marquee-gap, 36px)',
     alignItems: 'center',
-    animationDuration: { default: 'var(--logo-marquee-duration)', [reducedMotion]: '0s' },
+    animationDuration: { default: 'var(--logo-marquee-duration, 28s)', [reducedMotion]: '0s' },
     animationIterationCount: { default: 'infinite', [reducedMotion]: 1 },
     animationName: { default: slide, [reducedMotion]: 'none' },
     animationPlayState: {
@@ -46,10 +49,10 @@ export const styles = stylex.create({
     display: 'flex',
   },
   viewport: {
-    gap: 'var(--logo-marquee-gap)',
+    gap: 'var(--logo-marquee-gap, 36px)',
     overflow: 'hidden',
     display: 'flex',
-    inlineSize: 'min(100%, var(--logo-marquee-max-width))',
+    inlineSize: 'min(100%, var(--logo-marquee-max-width, 640px))',
     maskImage: 'linear-gradient(90deg, transparent, #000 18%, #000 82%, transparent)',
   },
 });

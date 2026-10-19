@@ -1,21 +1,18 @@
 'use client';
 
+import './style.css';
+
+import clsx from 'clsx';
 import type { FC } from 'react';
 
 import LobeImage, { type ImageProps as LobeImageProps } from '@/Image';
 
+import { mdxImageClasses } from './stable';
+
 export type ImageProps = LobeImageProps;
-const Image: FC<ImageProps> = ({ style, alt = 'img', ...rest }) => {
+const Image: FC<ImageProps> = ({ className, style, alt = 'img', ...rest }) => {
   return (
-    <LobeImage
-      alt={alt}
-      style={{
-        borderRadius: 'calc(var(--lobe-markdown-border-radius) * 1px)',
-        marginBlock: 'calc(var(--lobe-markdown-margin-multiple) * 1em)',
-        ...style,
-      }}
-      {...rest}
-    />
+    <LobeImage alt={alt} className={clsx(mdxImageClasses(), className)} style={style} {...rest} />
   );
 };
 

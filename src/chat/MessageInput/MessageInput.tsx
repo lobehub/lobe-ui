@@ -10,10 +10,12 @@ import { Flexbox } from '@/Flex';
 import { KeyMapEnum } from '@/Hotkey/const';
 import { combineKeys } from '@/Hotkey/utils';
 import { TextArea } from '@/Input';
+import { styleProps } from '@/styles/stylex/props';
 import { useResponsive } from '@/styles/theme/scope';
 import Tooltip from '@/Tooltip';
 
-import { styles, textAreaStyle } from './style';
+import { chatMessageInputClasses } from './stable';
+import { rootStyles, styles } from './style';
 import type { MessageInputProps } from './type';
 
 const MessageInput = memo<MessageInputProps>(
@@ -26,6 +28,7 @@ const MessageInput = memo<MessageInputProps>(
     renderButtons,
     placeholder,
     styles: customStyles,
+    className,
     style,
     editButtonSize = 'middle',
     classNames,
@@ -50,25 +53,39 @@ const MessageInput = memo<MessageInputProps>(
     });
 
     const confirmButton = (
-      <Button size={editButtonSize} type="primary" onClick={handleConfirm}>
+      <Button
+        className={chatMessageInputClasses('confirm')}
+        size={editButtonSize}
+        type="primary"
+        onClick={handleConfirm}
+      >
         {confirmText}
       </Button>
     );
 
     const cancllButton = (
-      <Button size={editButtonSize} type={'fill'} onClick={handleCancel}>
+      <Button
+        className={chatMessageInputClasses('cancel')}
+        size={editButtonSize}
+        type={'fill'}
+        onClick={handleCancel}
+      >
         {text?.cancel || 'Cancel'}
       </Button>
     );
 
     return (
-      <Flexbox gap={16} style={{ flex: 1, width: '100%', ...style }} {...rest}>
+      <Flexbox
+        gap={16}
+        {...styleProps(rootStyles.root, clsx(chatMessageInputClasses(), className), style)}
+        {...rest}
+      >
         {mobile ? (
           <TextArea
             autoSize
-            className={clsx(styles, classNames?.editor)}
+            className={clsx(chatMessageInputClasses('editor'), styles, classNames?.editor)}
             placeholder={placeholder}
-            style={{ ...textAreaStyle, ...customStyles?.editor }}
+            style={customStyles?.editor}
             value={temporaryValue}
             variant={variant}
             onBlur={(e) => setValue(e.target.value)}
@@ -76,7 +93,7 @@ const MessageInput = memo<MessageInputProps>(
           />
         ) : (
           <CodeEditor
-            className={clsx(styles, classNames?.editor)}
+            className={clsx(chatMessageInputClasses('editor'), styles, classNames?.editor)}
             classNames={classNames}
             language={language}
             placeholder={placeholder}
@@ -88,7 +105,11 @@ const MessageInput = memo<MessageInputProps>(
             onValueChange={(e) => setValue(e)}
           />
         )}
-        <Flexbox direction={'horizontal-reverse'} gap={8}>
+        <Flexbox
+          className={chatMessageInputClasses('actions')}
+          direction={'horizontal-reverse'}
+          gap={8}
+        >
           {renderButtons ? (
             renderButtons(temporaryValue).map((buttonProps, index) => (
               <Button key={index} size={editButtonSize} {...buttonProps} />

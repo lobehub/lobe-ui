@@ -9,16 +9,18 @@ import ActionIcon from '@/ActionIcon';
 import CopyButton from '@/CopyButton';
 import { Flexbox } from '@/Flex';
 import { actionsHoverCls, rootClassName, rootStyles } from '@/Highlighter/style';
-import SyntaxHighlighter from '@/Highlighter/SyntaxHighlighter';
+import { SyntaxHighlighterImpl } from '@/Highlighter/SyntaxHighlighter';
 import Segmented, { type SegmentedStyles } from '@/Segmented';
 import Spin from '@/Spin';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 import { stopPropagation } from '@/utils/dom';
 import { downloadBlob } from '@/utils/downloadBlob';
 
-import { containsScript, DEFAULT_HEIGHT, isFullHtmlDocument, isHtmlContentClosed } from './const';
+import { containsScript, isFullHtmlDocument, isHtmlContentClosed } from './const';
 import HtmlPreviewIframe from './Iframe';
+import { htmlPreviewClasses } from './stable';
 import { styles } from './style';
 import type { HtmlPreviewMode, HtmlPreviewProps } from './type';
 
@@ -251,15 +253,16 @@ const HtmlPreview = memo<HtmlPreviewProps>(
 
     const sourceBody = useMemo(
       () => (
-        <SyntaxHighlighter
+        <SyntaxHighlighterImpl
           animated={animated}
-          className={classNames?.content}
+          className={clsx(htmlPreviewClasses('content'), classNames?.content)}
           language={'html'}
-          style={{ height: '100%', ...customStyles?.content }}
+          style={customStyles?.content}
           variant={variant}
+          xstyle={styles.content}
         >
           {trimmedChildren}
-        </SyntaxHighlighter>
+        </SyntaxHighlighterImpl>
       ),
       [animated, classNames?.content, customStyles?.content, trimmedChildren, variant],
     );
@@ -269,7 +272,7 @@ const HtmlPreview = memo<HtmlPreviewProps>(
         <HtmlPreviewIframe
           animated={animated}
           background={background}
-          className={classNames?.iframe}
+          className={clsx(htmlPreviewClasses('iframe'), classNames?.iframe)}
           content={throttledContent}
           defaultHeight={defaultHeight}
           sandbox={sandbox}
@@ -299,19 +302,25 @@ const HtmlPreview = memo<HtmlPreviewProps>(
     const loadingBody = useMemo(
       () => (
         <div
-          {...stylex.props(styles.loadingRoot)}
-          style={{ height: defaultHeight ?? DEFAULT_HEIGHT }}
+          {...styleProps(
+            [styles.loadingRoot, defaultHeight === undefined && styles.loadingRootDefaultHeight],
+            htmlPreviewClasses('loading'),
+            defaultHeight === undefined ? undefined : { height: defaultHeight },
+          )}
         >
           <div
             ref={loadingSourceRef}
-            {...styleProps(styles.loadingSource, 'lobe-html-preview-loading-source')}
+            {...styleProps(
+              styles.loadingSource,
+              clsx('lobe-html-preview-loading-source', htmlPreviewClasses('loading-source')),
+            )}
           >
-            <SyntaxHighlighter animated={animated} language={'html'} variant={'borderless'}>
+            <SyntaxHighlighterImpl animated={animated} language={'html'} variant={'borderless'}>
               {trimmedChildren}
-            </SyntaxHighlighter>
+            </SyntaxHighlighterImpl>
           </div>
           <div {...stylex.props(styles.loadingBackdrop)} />
-          <div {...stylex.props(styles.loadingBadge)}>
+          <div {...styleProps(styles.loadingBadge, htmlPreviewClasses('loading-badge'))}>
             <Spin size={16} variant="network" />
             <span>Preparing preview…</span>
           </div>
@@ -389,8 +398,13 @@ const HtmlPreview = memo<HtmlPreviewProps>(
       <div
         data-code-type="html-preview"
         data-html-preview-language={language}
+        {...toDataAttributes({ mode: effectiveMode, shadow, variant })}
         {...rest}
-        {...styleProps(rootStyles({ shadow, variant }), rootClassName(false, className), style)}
+        {...styleProps(
+          rootStyles({ shadow, variant }),
+          rootClassName(false, clsx(htmlPreviewClasses(), className)),
+          style,
+        )}
       >
         <Flexbox
           horizontal
@@ -401,7 +415,7 @@ const HtmlPreview = memo<HtmlPreviewProps>(
           onClick={stopPropagation}
           {...styleProps(
             styles.toolbar,
-            clsx(actionsHoverCls, classNames?.header),
+            clsx(actionsHoverCls, htmlPreviewClasses('toolbar'), classNames?.header),
             customStyles?.header,
           )}
         >

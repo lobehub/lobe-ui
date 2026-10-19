@@ -7,6 +7,8 @@ category: Data Entry
 import DemoAlpha from './demos/alpha.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 import DemoSizes from './demos/sizes.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { colorPickerClasses } from './stable';
 
 ## Triggers
 
@@ -40,3 +42,9 @@ The panel keeps the colour it opened with in the compare swatch: click its top h
 - `showText` → `trigger="field"` (`showText` still works).
 - `format` / `defaultFormat` → `defaultFormat` only; values are always hex, the format only changes the panel inputs.
 - Gradients are not supported.
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={colorPickerClasses} />

@@ -3,7 +3,6 @@
 import './style.css';
 
 import { GithubIcon } from '@lobehub/ui/icons';
-import * as stylex from '@stylexjs/stylex';
 import clsx from 'clsx';
 import { memo, useCallback } from 'react';
 
@@ -13,12 +12,14 @@ import GradientButton from '@/awesome/GradientButton';
 import Button from '@/Button';
 import { Center, Flexbox } from '@/Flex';
 import Icon from '@/Icon';
+import { styleProps } from '@/styles/stylex/props';
 import { useResponsive } from '@/styles/theme/scope';
 
+import { awesomeHeroClasses } from './stable';
 import { styles } from './style';
 import { type HeroProps } from './type';
 
-const Hero = memo<HeroProps>(({ title, description, actions, Link }) => {
+const Hero = memo<HeroProps>(({ className, title, description, actions, Link }) => {
   const { mobile } = useResponsive();
 
   const LinkRender = Link || A;
@@ -26,7 +27,12 @@ const Hero = memo<HeroProps>(({ title, description, actions, Link }) => {
   const ButtonGroups = useCallback(
     () =>
       Boolean(actions?.length) && (
-        <div className={clsx(stylex.props(styles.actions).className, 'lobe-hero-actions')}>
+        <div
+          className={clsx(
+            styleProps(styles.actions, awesomeHeroClasses('actions')).className,
+            'lobe-hero-actions',
+          )}
+        >
           {actions!.map(({ text, link, openExternal, github, type }, index) => {
             const content =
               type === 'primary' ? (
@@ -67,11 +73,11 @@ const Hero = memo<HeroProps>(({ title, description, actions, Link }) => {
 
   return (
     <>
-      <AuroraBackground />
-      <Flexbox align={'center'} style={{ fontSize: 16, zIndex: 1 }}>
+      <AuroraBackground className={awesomeHeroClasses('background')} />
+      <Flexbox align={'center'} {...styleProps(styles.root, clsx(awesomeHeroClasses(), className))}>
         <Flexbox
           horizontal
-          className={stylex.props(styles.container).className}
+          className={styleProps(styles.container, awesomeHeroClasses('container')).className}
           distribution={'center'}
         >
           <Center>
@@ -79,14 +85,20 @@ const Hero = memo<HeroProps>(({ title, description, actions, Link }) => {
               <Center
                 horizontal
                 as={'h1'}
-                className={clsx(stylex.props(styles.title).className, 'lobe-hero-title')}
                 dangerouslySetInnerHTML={{ __html: title }}
                 gap={'0.25em'}
                 wrap={'wrap'}
+                className={clsx(
+                  styleProps(styles.title, awesomeHeroClasses('title')).className,
+                  'lobe-hero-title',
+                )}
               />
             )}
             {description && (
-              <p {...stylex.props(styles.desc)} dangerouslySetInnerHTML={{ __html: description }} />
+              <p
+                {...styleProps(styles.desc, awesomeHeroClasses('description'))}
+                dangerouslySetInnerHTML={{ __html: description }}
+              />
             )}
             <ButtonGroups />
           </Center>

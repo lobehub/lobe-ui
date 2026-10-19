@@ -6,11 +6,12 @@ import { type FC } from 'react';
 
 import { ColorPicker } from '@/ColorPicker';
 import Icon from '@/Icon';
-import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { styleProps } from '@/styles/stylex/props';
 import Tooltip from '@/Tooltip';
 import { safeReadableColor } from '@/utils/safeReadableColor';
 
 import { chipMarker } from './marker.stylex';
+import { colorSwatchesClasses } from './stable';
 import { styles } from './style';
 import type { ColorSwatchesPickerRenderProps } from './type';
 
@@ -30,18 +31,24 @@ const CustomPicker: FC<CustomPickerProps> = ({
   standalone,
   value,
 }) => {
-  const borderRadius = shape === 'circle' ? '50%' : cssVar.borderRadius;
+  const shapeStyle = shape === 'circle' ? styles.shapeCircle : styles.shapeSquare;
+  const pickerClassName = colorSwatchesClasses('picker');
 
   if (standalone)
     return (
       <Tooltip title={label}>
-        <span style={{ display: 'inline-flex' }}>
+        <span {...stylex.props(styles.inlineFlex)}>
           <ColorPicker presets={presets} value={value} onChangeComplete={onChange}>
             <button
               aria-label={label}
               type="button"
-              {...stylex.props(styles.picker, active && styles.activePicker)}
-              style={{ background: current, borderRadius }}
+              {...styleProps(
+                [styles.picker, shapeStyle, active && styles.activePicker],
+                pickerClassName,
+                {
+                  background: current,
+                },
+              )}
             />
           </ColorPicker>
         </span>
@@ -61,8 +68,11 @@ const CustomPicker: FC<CustomPickerProps> = ({
             aria-label={value}
             aria-pressed="true"
             type="button"
-            {...stylex.props(styles.picker, styles.chip, styles.activePicker, chipMarker)}
-            style={{ background: value, borderRadius }}
+            {...styleProps(
+              [styles.picker, shapeStyle, styles.chip, styles.activePicker, chipMarker],
+              pickerClassName,
+              { background: value },
+            )}
           >
             <Icon
               className={stylex.props(styles.chipIcon, styles.chipCheck).className}
@@ -80,13 +90,15 @@ const CustomPicker: FC<CustomPickerProps> = ({
         </ColorPicker>
       )}
       <Tooltip title={label}>
-        <span style={{ display: 'inline-flex' }}>
+        <span {...stylex.props(styles.inlineFlex)}>
           <ColorPicker value={value} onChangeComplete={onChange}>
             <button
               aria-label={label}
               type="button"
-              {...stylex.props(styles.picker, styles.conic, styles.add)}
-              style={{ borderRadius }}
+              {...styleProps(
+                [styles.picker, shapeStyle, styles.conic, styles.add],
+                pickerClassName,
+              )}
             >
               <Icon icon={PlusIcon} size={{ size: 12, strokeWidth: 3 }} />
             </button>

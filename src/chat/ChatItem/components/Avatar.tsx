@@ -1,9 +1,10 @@
-import * as stylex from '@stylexjs/stylex';
 import { type CSSProperties, type FC, useMemo } from 'react';
 
 import A from '@/Avatar';
 import { Flexbox } from '@/Flex';
+import { styleProps } from '@/styles/stylex/props';
 
+import { chatChatItemClasses } from '../stable';
 import { styles } from '../style';
 import type { ChatItemProps } from '../type';
 import Loading from './Loading';
@@ -18,6 +19,7 @@ export interface AvatarProps {
   size?: number;
   style?: CSSProperties;
   unoptimized?: boolean;
+  withTitle?: boolean;
 }
 
 const Avatar: FC<AvatarProps> = ({
@@ -30,6 +32,7 @@ const Avatar: FC<AvatarProps> = ({
   size = 40,
   style,
   alt,
+  withTitle,
 }) => {
   const cssVariables = useMemo<Record<string, string>>(
     () => ({
@@ -39,7 +42,13 @@ const Avatar: FC<AvatarProps> = ({
   );
 
   const avatarContent = (
-    <div {...stylex.props(styles.avatarContainer)} style={{ ...cssVariables, ...style }}>
+    <div
+      {...styleProps(
+        [styles.avatarContainer, withTitle ? styles.avatarWithTitle : styles.avatarOffset],
+        chatChatItemClasses('avatar'),
+        { ...cssVariables, ...style },
+      )}
+    >
       <A
         alt={alt || avatar.title}
         animation={loading}
@@ -56,7 +65,12 @@ const Avatar: FC<AvatarProps> = ({
 
   if (!addon) return avatarContent;
   return (
-    <Flexbox align={'center'} gap={8} width={'var(--chat-item-avatar-size, 40px)'}>
+    <Flexbox
+      align={'center'}
+      className={chatChatItemClasses('avatar-group')}
+      gap={8}
+      width={'var(--chat-item-avatar-size, 40px)'}
+    >
       {avatarContent}
       {addon}
     </Flexbox>

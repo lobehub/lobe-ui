@@ -1,4 +1,15 @@
 @layer lobe-ui {
+  .lobe-awesome-code-showcase__tabs {
+    align-self: center;
+    max-inline-size: 100%;
+  }
+
+  .lobe-awesome-code-showcase__code {
+    overflow: auto;
+    min-block-size: var(--code-showcase-min-height);
+    min-inline-size: 0;
+  }
+
   .lobe-code-showcase-preview > * {
     max-inline-size: 100%;
   }

@@ -7,6 +7,7 @@ import { useTranslation } from '@/i18n/useTranslation';
 import { styleProps } from '@/styles/stylex/props';
 
 import { useVideoContext } from '../context';
+import { videoClasses } from '../stable';
 import { styles } from '../style';
 import { useVideo } from '../useVideo';
 
@@ -20,7 +21,7 @@ const CenterPlay = () => {
     <button
       aria-label={t('video.play')}
       type="button"
-      {...styleProps(styles.centerPlay)}
+      {...styleProps(styles.centerPlay, videoClasses('center-play'))}
       onClick={(event) => {
         event.stopPropagation();
         void store.play();

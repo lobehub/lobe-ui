@@ -1,9 +1,10 @@
 'use client';
 
+import clsx from 'clsx';
 import { memo, useState } from 'react';
 
 import Button from '@/Button';
-import { styles as textStyles, textAreaStyle } from '@/chat/MessageInput/style';
+import { styles as textStyles } from '@/chat/MessageInput/style';
 import CodeEditor from '@/CodeEditor';
 import { Flexbox } from '@/Flex';
 import { useControlledState } from '@/hooks/useControlledState';
@@ -14,12 +15,14 @@ import Markdown from '@/Markdown';
 import { Modal } from '@/Modal';
 import { useResponsive } from '@/styles/theme/scope';
 
+import { chatMessageModalClasses } from './stable';
 import { type MessageModalProps } from './type';
 
 const MessageModal = memo<MessageModalProps>(
   ({
     editing,
     open,
+    className,
     height = '75vh',
     onOpenChange,
     onEditingChange,
@@ -50,8 +53,13 @@ const MessageModal = memo<MessageModalProps>(
     const editText = text?.edit ?? t('messageModal.edit');
 
     const modalFooter = isEdit ? (
-      <Flexbox direction={'horizontal-reverse'} gap={8}>
+      <Flexbox
+        className={chatMessageModalClasses('actions')}
+        direction={'horizontal-reverse'}
+        gap={8}
+      >
         <Button
+          className={chatMessageModalClasses('confirm')}
           type="primary"
           onClick={() => {
             setTyping(false);
@@ -62,6 +70,7 @@ const MessageModal = memo<MessageModalProps>(
           {confirmText}
         </Button>
         <Button
+          className={chatMessageModalClasses('cancel')}
           onClick={() => {
             setTyping(false);
             setMessage(value);
@@ -79,6 +88,7 @@ const MessageModal = memo<MessageModalProps>(
         allowFullscreen
         destroyOnHidden
         cancelText={cancelText}
+        className={clsx(chatMessageModalClasses(), className)}
         footer={modalFooter}
         height={height}
         okText={editText}
@@ -95,10 +105,9 @@ const MessageModal = memo<MessageModalProps>(
           mobile ? (
             <TextArea
               autoSize
-              className={textStyles}
+              className={clsx(chatMessageModalClasses('editor'), textStyles)}
               defaultValue={temporaryValue}
               placeholder={placeholder}
-              style={textAreaStyle}
               value={temporaryValue}
               variant={'borderless'}
               onBlur={(e) => setMessage(e.target.value)}
@@ -106,7 +115,7 @@ const MessageModal = memo<MessageModalProps>(
             />
           ) : (
             <CodeEditor
-              className={textStyles}
+              className={clsx(chatMessageModalClasses('editor'), textStyles)}
               defaultValue={temporaryValue}
               language={language}
               placeholder={placeholder}

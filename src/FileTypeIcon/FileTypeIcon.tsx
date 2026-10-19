@@ -1,6 +1,6 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { type FC, useMemo } from 'react';
 
 import { Center } from '@/Flex';
@@ -10,6 +10,7 @@ import { useThemeMode } from '@/styles/theme/scope';
 
 import FileIcon from './components/FileIcon';
 import FolderIcon from './components/FolderIcon';
+import { fileTypeIconClasses } from './stable';
 import { styles } from './style';
 import type { FileTypeIconProps } from './type';
 
@@ -46,6 +47,9 @@ const FileTypeIcon: FC<FileTypeIconProps> = ({
     [isMono, isDarkMode, color],
   );
 
+  const contentClassName = icon
+    ? fileTypeIconClasses('shape')
+    : clsx(fileTypeIconClasses(), className);
   const content =
     type === 'file' ? (
       <FileIcon
@@ -56,6 +60,7 @@ const FileTypeIcon: FC<FileTypeIconProps> = ({
         isMono={isMono}
         size={size}
         {...rest}
+        className={contentClassName}
       />
     ) : (
       <FolderIcon
@@ -66,6 +71,7 @@ const FileTypeIcon: FC<FileTypeIconProps> = ({
         isMono={isMono}
         size={size}
         {...rest}
+        className={contentClassName}
       />
     );
 
@@ -78,14 +84,13 @@ const FileTypeIcon: FC<FileTypeIconProps> = ({
       ref={ref}
       width={size}
       {...rest}
-      {...styleProps(styles.container, className, style)}
+      {...styleProps(styles.container, clsx(fileTypeIconClasses(), className), style)}
     >
       <div
-        {...stylex.props(styles.inner)}
-        style={{
+        {...styleProps(styles.inner, fileTypeIconClasses('icon'), {
           fontSize: size / 2.4,
           top: type === 'file' ? '20%' : '16%',
-        }}
+        })}
       >
         {icon}
       </div>

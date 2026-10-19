@@ -1,8 +1,11 @@
 'use client';
 
+import clsx from 'clsx';
+
 import ActionIcon from '@/ActionIcon';
 import { Flexbox } from '@/Flex';
 
+import { dashboardTableIconActionClasses, dashboardTableIconActionsClasses } from './stable';
 import type { TableIconActionProps, TableIconActionsProps } from './type';
 
 /** `ActionIcon` `size="small"` is 24px. */
@@ -16,8 +19,15 @@ export const tableActionColumnWidth = (count: number) =>
   count * ACTION_ICON_SIZE + Math.max(0, count - 1) * ACTION_ICON_GAP + ACTION_CELL_PADDING;
 
 /** Right-aligned row of icon actions for a table's last column. */
-const TableIconActions = ({ children }: TableIconActionsProps) => (
-  <Flexbox horizontal align={'center'} gap={ACTION_ICON_GAP} justify={'flex-end'} width={'100%'}>
+const TableIconActions = ({ children, className }: TableIconActionsProps) => (
+  <Flexbox
+    horizontal
+    align={'center'}
+    className={clsx(dashboardTableIconActionsClasses(), className)}
+    gap={ACTION_ICON_GAP}
+    justify={'flex-end'}
+    width={'100%'}
+  >
     {children}
   </Flexbox>
 );
@@ -26,6 +36,7 @@ TableIconActions.displayName = 'TableIconActions';
 
 /** One row action: a small filled icon button whose label is its name and tooltip. */
 export const TableIconAction = ({
+  className,
   danger,
   disabled,
   icon,
@@ -35,6 +46,7 @@ export const TableIconAction = ({
 }: TableIconActionProps) => (
   <ActionIcon
     aria-label={label}
+    className={clsx(dashboardTableIconActionClasses(), className)}
     danger={danger}
     disabled={disabled}
     icon={icon}

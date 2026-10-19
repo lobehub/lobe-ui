@@ -1,24 +1,26 @@
 'use client';
 
+import './style.css';
+
+import clsx from 'clsx';
 import type { FC } from 'react';
 
 import LobeVideo, { type VideoProps as LobeVideoProps } from '@/Video';
+
+import { mdxVideoClasses } from './stable';
 
 export type VideoProps = LobeVideoProps;
 
 const toLength = (value?: number | string) =>
   typeof value === 'string' && /^\d+$/.test(value) ? Number(value) : value;
 
-const Video: FC<VideoProps> = ({ height, style, width, ...rest }) => {
+const Video: FC<VideoProps> = ({ className, height, style, width, ...rest }) => {
   return (
     <LobeVideo
+      className={clsx(mdxVideoClasses(), className)}
       height={toLength(height)}
+      style={style}
       width={toLength(width)}
-      style={{
-        borderRadius: 'calc(var(--lobe-markdown-border-radius) * 1px)',
-        marginBlock: 'calc(var(--lobe-markdown-margin-multiple) * 1em)',
-        ...style,
-      }}
       {...rest}
     />
   );

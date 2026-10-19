@@ -2,13 +2,13 @@
 
 import './style.css';
 
-import * as stylex from '@stylexjs/stylex';
 import clsx from 'clsx';
 import { memo } from 'react';
 
 import { LandingActions } from '@/awesome/landingActions';
 import { styleProps } from '@/styles/stylex/props';
 
+import { awesomeLandingHeroClasses } from './stable';
 import { styles } from './style';
 import type { LandingHeroProps } from './type';
 
@@ -31,33 +31,62 @@ const LandingHero = memo<LandingHeroProps>(
 
     return (
       <section
-        {...styleProps([styles.root, split && styles.rootSplit], className, style)}
+        {...styleProps(
+          [styles.root, split && styles.rootSplit],
+          clsx(awesomeLandingHeroClasses(), className),
+          style,
+        )}
         data-layout={split ? 'split' : 'center'}
         {...rest}
       >
-        <div {...stylex.props(styles.content)}>
-          <div {...stylex.props(styles.main, split && styles.mainSplit)}>
-            <div {...stylex.props(styles.intro, split && styles.introSplit)}>
+        <div {...styleProps(styles.content, awesomeLandingHeroClasses('content'))}>
+          <div
+            {...styleProps(
+              [styles.main, split && styles.mainSplit],
+              awesomeLandingHeroClasses('main'),
+            )}
+          >
+            <div
+              {...styleProps(
+                [styles.intro, split && styles.introSplit],
+                awesomeLandingHeroClasses('intro'),
+              )}
+            >
               {badge && (
                 <div
-                  className={clsx(stylex.props(styles.badge).className, 'lobe-landing-hero-badge')}
+                  className={clsx(
+                    styleProps(styles.badge, awesomeLandingHeroClasses('badge')).className,
+                    'lobe-landing-hero-badge',
+                  )}
                 >
                   {badge}
                 </div>
               )}
-              <h1 {...stylex.props(styles.title, split && styles.titleSplit)}>
+              <h1
+                {...styleProps(
+                  [styles.title, split && styles.titleSplit],
+                  awesomeLandingHeroClasses('title'),
+                )}
+              >
                 {title}
                 {accent && (
                   <>
                     {' '}
-                    <span {...stylex.props(styles.accent)}>{accent}</span>
+                    <span {...styleProps(styles.accent, awesomeLandingHeroClasses('accent'))}>
+                      {accent}
+                    </span>
                   </>
                 )}
               </h1>
-              {description && <p {...stylex.props(styles.description)}>{description}</p>}
+              {description && (
+                <p {...styleProps(styles.description, awesomeLandingHeroClasses('description'))}>
+                  {description}
+                </p>
+              )}
               {actions && actions.length > 0 && (
                 <LandingActions
                   actions={actions}
+                  className={awesomeLandingHeroClasses('actions')}
                   renderLink={renderLink}
                   xstyle={[styles.actions, split && styles.actionsSplit]}
                   onNavigate={onNavigate}
@@ -66,13 +95,18 @@ const LandingHero = memo<LandingHeroProps>(
             </div>
             {aside && (
               <div
-                className={clsx(stylex.props(styles.aside).className, 'lobe-landing-hero-aside')}
+                className={clsx(
+                  styleProps(styles.aside, awesomeLandingHeroClasses('aside')).className,
+                  'lobe-landing-hero-aside',
+                )}
               >
                 {aside}
               </div>
             )}
           </div>
-          {children && <div {...stylex.props(styles.extra)}>{children}</div>}
+          {children && (
+            <div {...styleProps(styles.extra, awesomeLandingHeroClasses('extra'))}>{children}</div>
+          )}
         </div>
       </section>
     );

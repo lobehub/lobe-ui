@@ -5,6 +5,8 @@ category: Data Entry
 ---
 
 import DemoIndex from './demos/index.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { codeEditorClasses } from './stable';
 
 CodeEditor is a component for editing code with syntax highlighting support for various programming languages.
 
@@ -17,3 +19,9 @@ CodeEditor is a component for editing code with syntax highlighting support for 
 <Api name="CodeEditor" migrationKey="unheaded:0" />
 
 > CodeEditor also inherits some properties from TextArea and Flexbox components
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={codeEditorClasses} />

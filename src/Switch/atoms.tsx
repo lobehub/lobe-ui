@@ -12,8 +12,10 @@ import { createContext, use, useEffect, useLayoutEffect, useMemo, useRef, useSta
 import { useControlledState } from '@/hooks/useControlledState';
 import { focusRing } from '@/styles/stylex/focusRing';
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
 import { switchMarker } from './marker.stylex';
+import { switchClasses } from './stable';
 import { styles } from './style';
 import type {
   SwitchChangeEventHandler,
@@ -163,10 +165,11 @@ export const SwitchRoot = ({
         required={required}
         render={
           <button
+            {...toDataAttributes({ size })}
             {...rest}
             {...styleProps(
               [switchMarker, focusRing.info, styles.root, rootSizeStyles[size], xstyle],
-              clsx('lobe-switch', className),
+              clsx(switchClasses(), className),
               style,
             )}
             onClick={handleClick}
@@ -264,10 +267,14 @@ export const SwitchThumb = ({
         <span
           {...rest}
           ref={ref}
-          {...styleProps([styles.thumb, thumbSizeStyles[size]], className, {
-            ...initialStyle,
-            ...style,
-          })}
+          {...styleProps(
+            [styles.thumb, thumbSizeStyles[size]],
+            clsx(switchClasses('thumb'), className),
+            {
+              ...initialStyle,
+              ...style,
+            },
+          )}
         >
           {children}
         </span>
@@ -293,7 +300,14 @@ export const SwitchIcon = ({
   ...rest
 }: SwitchIconProps) => {
   return (
-    <span {...styleProps([styles.icon, iconPositionStyles[position]], className, style)} {...rest}>
+    <span
+      {...styleProps(
+        [styles.icon, iconPositionStyles[position]],
+        clsx(switchClasses('content'), className),
+        style,
+      )}
+      {...rest}
+    >
       {children}
     </span>
   );

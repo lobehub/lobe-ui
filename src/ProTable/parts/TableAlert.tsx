@@ -8,6 +8,7 @@ import type { TableInternalHandle } from '@/Table/internal';
 
 import { useSelectedRowKeys } from '../hooks/useTableSelection';
 import type { ProTableLocaleResolved } from '../locale';
+import { proTableClasses } from '../stable';
 import { PRO_PREFIX_CLS, styles } from '../style';
 import type { ProTableAlertRender } from '../type';
 
@@ -48,9 +49,14 @@ const TableAlert = <T,>({
     );
 
   return (
-    <div className={clsx(styles.alert, `${PRO_PREFIX_CLS}-alert`)} role="status">
-      <div className={styles.alertInfo}>{info}</div>
-      {option && <div className={styles.alertOption}>{option}</div>}
+    <div
+      className={clsx(styles.alert, `${PRO_PREFIX_CLS}-alert`, proTableClasses('alert'))}
+      role="status"
+    >
+      <div className={clsx(styles.alertInfo, proTableClasses('alert-info'))}>{info}</div>
+      {option && (
+        <div className={clsx(styles.alertOption, proTableClasses('alert-option'))}>{option}</div>
+      )}
     </div>
   );
 };

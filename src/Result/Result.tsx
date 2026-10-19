@@ -2,14 +2,15 @@
 
 import './style.css';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { Check, Info, TriangleAlert, X } from 'lucide-react';
-import { memo, useMemo } from 'react';
+import { memo } from 'react';
 
-import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
-import { statusColor, styles } from './style';
+import { resultClasses } from './stable';
+import { styles } from './style';
 import type { ResultProps } from './type';
 
 const statusIcon = {
@@ -19,28 +20,36 @@ const statusIcon = {
   warning: <TriangleAlert size={36} strokeWidth={2} />,
 };
 
+const iconStatusStyles = {
+  error: styles.iconError,
+  info: styles.iconInfo,
+  success: styles.iconSuccess,
+  warning: styles.iconWarning,
+};
+
 const Result = memo<ResultProps>(
   ({ children, className, extra, icon, ref, status = 'info', style, subTitle, title, ...rest }) => {
-    const iconStyle = useMemo(() => {
-      if (status === 'info') {
-        return { background: cssVar.colorFillTertiary, color: cssVar.colorTextSecondary };
-      }
-      const color = statusColor[status];
-      return { background: `color-mix(in srgb, ${color} 12%, transparent)`, color };
-    }, [status]);
-
     return (
-      <section ref={ref} {...styleProps(styles.root, className, style)} {...rest}>
+      <section
+        ref={ref}
+        {...styleProps(styles.root, clsx(resultClasses(), className), style)}
+        {...toDataAttributes({ status })}
+        {...rest}
+      >
         {icon ? (
-          <div {...stylex.props(styles.customIcon)}>{icon}</div>
+          <div {...styleProps(styles.customIcon, resultClasses('icon'))}>{icon}</div>
         ) : (
-          <div {...stylex.props(styles.icon)} style={iconStyle}>
+          <div {...styleProps([styles.icon, iconStatusStyles[status]], resultClasses('icon'))}>
             {statusIcon[status]}
           </div>
         )}
-        {title && <h3 {...stylex.props(styles.title)}>{title}</h3>}
-        {subTitle && <p {...stylex.props(styles.subTitle)}>{subTitle}</p>}
-        {extra && <div {...styleProps(styles.extra, 'lobe-result-extra')}>{extra}</div>}
+        {title && <h3 {...styleProps(styles.title, resultClasses('title'))}>{title}</h3>}
+        {subTitle && <p {...styleProps(styles.subTitle, resultClasses('sub-title'))}>{subTitle}</p>}
+        {extra && (
+          <div {...styleProps(styles.extra, clsx('lobe-result-extra', resultClasses('extra')))}>
+            {extra}
+          </div>
+        )}
         {children}
       </section>
     );

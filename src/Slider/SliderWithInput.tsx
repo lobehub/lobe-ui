@@ -1,12 +1,17 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { isNull } from 'es-toolkit/compat';
 import { memo } from 'react';
 
 import { Flexbox } from '@/Flex';
 import { InputNumber } from '@/Input';
+import { toDataAttributes } from '@/utils/bem';
 
 import Slider from './Slider';
+import { sliderWithInputClasses } from './stable';
+import { styles } from './style';
 import type { SliderWithInputProps } from './type';
 
 const SliderWithInput = memo<SliderWithInputProps>(
@@ -44,24 +49,35 @@ const SliderWithInput = memo<SliderWithInputProps>(
     const { slider: sliderStyle, input: inputStyle, ...sliderPartStyles } = customStyles || {};
 
     return (
-      <Flexbox horizontal align={'center'} className={className} gap={gap} style={style}>
+      <Flexbox
+        horizontal
+        align={'center'}
+        className={clsx(sliderWithInputClasses(), className)}
+        gap={gap}
+        style={style}
+        {...toDataAttributes({ size })}
+      >
         <Slider
-          className={sliderClassName}
           classNames={sliderPartClassNames}
           defaultValue={defaultValue}
           disabled={disabled}
           max={max}
           min={min}
           step={step}
-          style={{ flex: 1, ...sliderStyle }}
+          style={sliderStyle}
           styles={sliderPartStyles}
           value={value}
+          className={clsx(
+            stylex.props(styles.withInputSlider).className,
+            sliderWithInputClasses('slider'),
+            sliderClassName,
+          )}
           onChange={handleChange}
           {...rest}
         />
         <InputNumber
           changeOnWheel={changeOnWheel}
-          className={inputClassName}
+          className={clsx(sliderWithInputClasses('input'), inputClassName)}
           controls={size !== 'small' && controls !== false}
           defaultValue={defaultValue}
           disabled={disabled}

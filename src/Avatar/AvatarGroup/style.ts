@@ -8,6 +8,9 @@ export const styles = stylex.create({
     borderStyle: 'solid',
     borderWidth: 2,
   },
+  root: {
+    position: 'relative',
+  },
   count: {
     color: cssVar.colorBgLayout,
     fontSize: '0.8em',

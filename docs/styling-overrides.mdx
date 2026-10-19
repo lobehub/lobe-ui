@@ -1,0 +1,114 @@
+---
+title: Styling Overrides
+description: Stable class names and data attributes for overriding Lobe UI component styles with plain CSS.
+order: 3
+---
+
+import { aClasses } from '../src/A/stable';
+import { autoCompleteClasses } from '../src/AutoComplete/stable';
+import { checkboxClasses, checkboxGroupClasses } from '../src/Checkbox/stable';
+import { formClasses } from '../src/Form/stable';
+import {
+  inputClasses,
+  inputNumberClasses,
+  inputOTPClasses,
+  inputPasswordClasses,
+  textAreaClasses,
+} from '../src/Input/stable';
+import { StableClassTable } from './stable-classes/StableClassTable';
+import { OverrideDemo } from './styling-overrides/OverrideDemo';
+
+Component styles are compiled by StyleX into hashed class names that change between releases. To override a component from your own CSS, target its stable class names instead. They follow BEM and are public API: a rename is a breaking change.
+
+## Class names
+
+Every component renders a block class on its root and an element class on each part you can style.
+
+| Selector                    | Matches                    |
+| --------------------------- | -------------------------- |
+| `.lobe-switch`              | the Switch root (block)    |
+| `.lobe-switch__thumb`       | the Switch thumb (element) |
+| `.lobe-popover`             | the visible Popover box    |
+| `.lobe-popover__positioner` | the Popover positioner     |
+
+- Element names match the component's `classNames` slot keys. When a slot lands on a differently named part, the part name wins: Popover `classNames.root` is on `.lobe-popover__positioner`.
+- Components from a subpath carry the subpath in the block: `@lobehub/ui/mdx` Tabs is `.lobe-mdx-tabs`.
+- Overlays (Popover, Tooltip, Modal, Drawer, menus, toasts) put the block class on the visible popup box.
+- Each component page lists its classes under **Class names**.
+
+## State and variants
+
+There are no modifier classes. State and variants are data attributes:
+
+- State from the underlying primitive: `.lobe-switch[data-checked]`, `.lobe-select__option[data-highlighted]`.
+- Lobe UI's own props: `.lobe-button[data-variant="filled"]`, `.lobe-highlighter[data-expanded]`. Enum props render their value, boolean props render the attribute only when true.
+- Parts rendered in a portal repeat the root's attributes, so `.lobe-select__popup[data-variant="borderless"]` works without a descendant selector.
+
+## Cascade
+
+Lobe UI ships its styles inside `@layer lobe-base, lobe-popup, lobe-ui`. CSS outside any layer always wins over layered CSS, so a single class is enough:
+
+```css
+.lobe-switch__thumb {
+  background: rebeccapurple;
+}
+```
+
+- Put overrides outside any `@layer`, or in a layer declared after `lobe-ui`. A layer declared before it loses.
+- Values you pass through props (for example `height` on Skeleton) render inline and win over global CSS. Component defaults do not, so you can restyle them.
+
+## Stability
+
+- Class names listed on a component page do not change in minor or patch releases.
+- Older `lobe-*` classes that predate this scheme (`lobe-select-arrow`, `lobe-chat-item-bubble`, …) keep working.
+- Do not target generated class names; they change on every build.
+
+## Components without a page
+
+These components have no page on this site yet, so their class names are listed here.
+
+### A
+
+<StableClassTable of={aClasses} />
+
+### AutoComplete
+
+<StableClassTable of={autoCompleteClasses} />
+
+### Checkbox
+
+<StableClassTable of={checkboxClasses} />
+
+### CheckboxGroup
+
+<StableClassTable of={checkboxGroupClasses} />
+
+### Form
+
+<StableClassTable of={formClasses} />
+
+### Input
+
+<StableClassTable of={inputClasses} />
+
+### InputNumber
+
+<StableClassTable of={inputNumberClasses} />
+
+### InputOTP
+
+<StableClassTable of={inputOTPClasses} />
+
+### InputPassword
+
+<StableClassTable of={inputPasswordClasses} />
+
+### TextArea
+
+<StableClassTable of={textAreaClasses} />
+
+## Example
+
+The demo below loads plain CSS that recolors the Switch thumb, squares the Popover corners and paints the DraggablePanel content.
+
+<OverrideDemo />

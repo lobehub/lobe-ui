@@ -1,11 +1,14 @@
+import clsx from 'clsx';
 import { ArrowBigUp, CornerDownLeft, Loader2 } from 'lucide-react';
 import { type FC } from 'react';
 
 import Button from '@/Button';
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
-import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { styleProps } from '@/styles/stylex/props';
 
+import { chatChatSendButtonClasses } from '../stable';
+import { sendButtonStyles as styles } from '../style';
 import type { ChatSendButtonProps } from '../type';
 
 const ChatSendButton: FC<ChatSendButtonProps> = ({
@@ -16,12 +19,14 @@ const ChatSendButton: FC<ChatSendButtonProps> = ({
   onSend,
   loading,
   onStop,
+  className,
   ...rest
 }) => {
   return (
     <Flexbox
       horizontal
       align={'end'}
+      className={clsx(chatChatSendButtonClasses(), className)}
       distribution={'space-between'}
       flex={'none'}
       gap={8}
@@ -29,15 +34,11 @@ const ChatSendButton: FC<ChatSendButtonProps> = ({
       ref={ref}
       {...rest}
     >
-      <Flexbox horizontal align={'center'} gap={8}>
+      <Flexbox horizontal align={'center'} className={chatChatSendButtonClasses('left')} gap={8}>
         {leftAddons}
       </Flexbox>
-      <Flexbox horizontal align={'center'} gap={8}>
-        <Flexbox
-          horizontal
-          gap={4}
-          style={{ color: cssVar.colorTextDescription, fontSize: 12, marginRight: 12 }}
-        >
+      <Flexbox horizontal align={'center'} className={chatChatSendButtonClasses('right')} gap={8}>
+        <Flexbox horizontal gap={4} {...styleProps(styles.hint, chatChatSendButtonClasses('hint'))}>
           <Icon icon={CornerDownLeft} />
           <span>{texts?.send || 'Send'}</span>
           <span>/</span>
@@ -49,11 +50,15 @@ const ChatSendButton: FC<ChatSendButtonProps> = ({
         </Flexbox>
         {rightAddons}
         {loading ? (
-          <Button icon={loading && Loader2} onClick={onStop}>
+          <Button
+            className={chatChatSendButtonClasses('stop')}
+            icon={loading && Loader2}
+            onClick={onStop}
+          >
             {texts?.stop || 'Stop'}
           </Button>
         ) : (
-          <Button type={'primary'} onClick={onSend}>
+          <Button className={chatChatSendButtonClasses('send')} type={'primary'} onClick={onSend}>
             {texts?.send || 'Send'}
           </Button>
         )}

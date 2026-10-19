@@ -1,10 +1,12 @@
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
 import { FloatingSheetHeader } from './FloatingSheetHeader';
 import { clamp, dampenValue, resolveSize } from './helpers';
+import { floatingSheetClasses } from './stable';
 import { styles } from './style';
 import type { FloatingSheetProps } from './type';
 import { useSheetDrag } from './useSheetDrag';
@@ -24,7 +26,7 @@ export function FloatingSheet({
   restingHeight: restingHeightProp,
   mode = 'overlay',
   variant = 'elevated',
-  width = '100%',
+  width,
   title,
   headerActions,
   dismissible = true,
@@ -272,6 +274,7 @@ export function FloatingSheet({
       data-floating-sheet=""
       data-state={isOpen ? 'open' : 'closed'}
       ref={sheetRef}
+      {...toDataAttributes({ dragging: isDragging, mode, variant })}
       {...styleProps(
         [
           s.root,
@@ -281,7 +284,7 @@ export function FloatingSheet({
           shouldAnimate && s.transition,
           !isVisible && s.hidden,
         ],
-        className,
+        clsx(floatingSheetClasses(), className),
         {
           height: isVisible ? height : 0,
           marginTop: inlineOverflowUp ? -inlineOverflowUp : undefined,
@@ -295,7 +298,7 @@ export function FloatingSheet({
         isDragging={isDragging}
         title={title}
       />
-      <div {...stylex.props(s.content)}>{children}</div>
+      <div {...styleProps(s.content, floatingSheetClasses('content'))}>{children}</div>
     </div>
   );
 }

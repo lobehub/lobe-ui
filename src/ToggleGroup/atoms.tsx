@@ -10,6 +10,7 @@ import { focusRing } from '@/styles/stylex/focusRing';
 import { styleProps } from '@/styles/stylex/props';
 
 import { toggleGroupItemMarker } from './marker.stylex';
+import { toggleGroupClasses } from './stable';
 import { styles } from './style';
 import type { ToggleGroupSize, ToggleGroupVariant } from './type';
 
@@ -47,8 +48,11 @@ export const ToggleGroupRoot = <Value extends string = string>({
 }: ToggleGroupRootProps<Value>) => {
   return (
     <BaseUIToggleGroup<Value>
-      className={styleProps([styles.root, rootVariantStyles[variant]], className).className}
       data-variant={variant}
+      className={
+        styleProps([styles.root, rootVariantStyles[variant]], clsx(toggleGroupClasses(), className))
+          .className
+      }
       {...rest}
     />
   );
@@ -77,8 +81,10 @@ export const ToggleGroupItem = <Value extends string = string>({
     <BaseUIToggle<Value>
       {...rest}
       className={
-        styleProps([styles.item, focusRing.info, sizeStyle, itemVariantStyles[variant]], className)
-          .className
+        styleProps(
+          [styles.item, focusRing.info, sizeStyle, itemVariantStyles[variant]],
+          clsx(toggleGroupClasses('item'), className),
+        ).className
       }
     />
   );
@@ -93,12 +99,20 @@ interface SimpleSpanProps {
 }
 
 export const ToggleGroupItemIcon: FC<SimpleSpanProps> = ({ children, className, style }) => (
-  <span {...styleProps(styles.itemIcon, className, style)}>{children}</span>
+  <span {...styleProps(styles.itemIcon, clsx(toggleGroupClasses('item-icon'), className), style)}>
+    {children}
+  </span>
 );
 ToggleGroupItemIcon.displayName = 'ToggleGroupItemIcon';
 
 export const ToggleGroupItemLabel: FC<SimpleSpanProps> = ({ children, className, style }) => (
-  <span {...styleProps(styles.itemLabel, clsx('toggle-group-item-label', className), style)}>
+  <span
+    {...styleProps(
+      styles.itemLabel,
+      clsx('toggle-group-item-label', toggleGroupClasses('item-label'), className),
+      style,
+    )}
+  >
     {children}
   </span>
 );

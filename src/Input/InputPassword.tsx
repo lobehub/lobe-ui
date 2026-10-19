@@ -1,17 +1,19 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { Eye, EyeOff } from 'lucide-react';
 import { memo, useState } from 'react';
 
 import Icon from '@/Icon';
+import { styleProps } from '@/styles/stylex/props';
 
 import Input from './Input';
+import { inputPasswordClasses } from './stable';
 import { styles } from './style';
 import type { InputPasswordProps } from './type';
 
 const InputPassword = memo<InputPasswordProps>(
-  ({ visibilityToggle = true, visibilityToggleLabels, suffix, ...rest }) => {
+  ({ className, visibilityToggle = true, visibilityToggleLabels, suffix, ...rest }) => {
     const [visible, setVisible] = useState(false);
     const toggleLabel = visible
       ? (visibilityToggleLabels?.hide ?? 'Hide password')
@@ -30,7 +32,7 @@ const InputPassword = memo<InputPasswordProps>(
                 title={toggleLabel}
                 type={'button'}
                 onClick={() => setVisible((v) => !v)}
-                {...stylex.props(styles.passwordToggle)}
+                {...styleProps(styles.passwordToggle, inputPasswordClasses('toggle'))}
               >
                 <Icon icon={visible ? Eye : EyeOff} size={16} />
               </button>
@@ -38,6 +40,7 @@ const InputPassword = memo<InputPasswordProps>(
           </>
         }
         {...rest}
+        className={clsx(inputPasswordClasses(), className)}
       />
     );
   },

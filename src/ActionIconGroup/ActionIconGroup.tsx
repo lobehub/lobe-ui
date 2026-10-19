@@ -1,5 +1,6 @@
 'use client';
 
+import clsx from 'clsx';
 import { MoreHorizontal } from 'lucide-react';
 import { type FC, useMemo } from 'react';
 
@@ -9,7 +10,9 @@ import { Center } from '@/Flex';
 import { styleProps } from '@/styles/stylex/props';
 import { stylish } from '@/styles/stylex/stylish';
 import { TooltipGroup } from '@/Tooltip';
+import { toDataAttributes } from '@/utils/bem';
 
+import { actionIconGroupClasses } from './stable';
 import { styles } from './style';
 import type { ActionIconGroupProps } from './type';
 
@@ -66,9 +69,15 @@ const ActionIconGroup: FC<ActionIconGroupProps> = ({
               shadow && styles.shadow,
               disabled && styles.disabled,
             ],
-            className,
+            clsx(actionIconGroupClasses(), className),
           ).className
         }
+        {...toDataAttributes({
+          glass,
+          shadow,
+          size: typeof size === 'object' ? undefined : size,
+          variant,
+        })}
         {...rest}
       >
         {items?.length > 0 &&
@@ -94,6 +103,7 @@ const ActionIconGroup: FC<ActionIconGroupProps> = ({
                   onClick?.(e as any);
                 }}
                 {...actionIconProps}
+                className={clsx(actionIconGroupClasses('item'), actionIconProps?.className)}
                 disabled={disabled || loading || itemRest?.disabled}
               />
             );
@@ -106,6 +116,7 @@ const ActionIconGroup: FC<ActionIconGroupProps> = ({
               key="more"
               size={size}
               {...actionIconProps}
+              className={clsx(actionIconGroupClasses('more'), actionIconProps?.className)}
               tooltipProps={{
                 placement: tooltipPlacement,
                 ...actionIconProps?.tooltipProps,

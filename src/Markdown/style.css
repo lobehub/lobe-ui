@@ -1,4 +1,12 @@
 @layer lobe-ui {
+  .lobe-typography {
+    --lobe-markdown-font-size: 16px;
+    --lobe-markdown-header-multiple: 1;
+    --lobe-markdown-margin-multiple: 2;
+    --lobe-markdown-line-height: 1.8;
+    --lobe-markdown-border-radius: 8;
+  }
+
   .lobe-markdown:not(:has(.ignore-markdown-style)),
   .lobe-markdown .markdown {
     --lobe-markdown-font-size: 16px;
@@ -339,6 +347,17 @@
       line-height: var(--lobe-markdown-line-height);
       vertical-align: baseline;
     }
+  }
+
+  .lobe-markdown.lobe-typography {
+    --lobe-markdown-border-radius: 8;
+  }
+
+  .lobe-markdown.lobe-markdown-chat {
+    --lobe-markdown-font-size: 14px;
+    --lobe-markdown-header-multiple: 0.25;
+    --lobe-markdown-margin-multiple: 1;
+    --lobe-markdown-line-height: 1.6;
   }
 
   .lobe-markdown-chat ol > li::marker,

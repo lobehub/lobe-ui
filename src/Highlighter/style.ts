@@ -13,6 +13,13 @@ export const langHoverCls = 'lobe-highlighter-lang';
 export const expandCls = 'lobe-highlighter-body-expand';
 
 export const styles = stylex.create({
+  content: {
+    height: '100%',
+  },
+  langSelect: {
+    maxWidth: 240,
+    width: '100%',
+  },
   actions: {
     insetBlockStart: 8,
     insetInlineEnd: 8,

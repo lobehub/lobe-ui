@@ -21,6 +21,10 @@ export const styles = stylex.create({
       [stylex.when.ancestor(':hover', cardMarker)]: cssVar.colorTextSecondary,
     },
   },
+  image: {
+    height: 'auto',
+    width: '100%',
+  },
   icon: {
     marginBlock: '0.1em',
     transition: `opacity 0.2s ${cssVar.motionEaseInOut}`,
@@ -28,5 +32,9 @@ export const styles = stylex.create({
       default: 0.5,
       [stylex.when.ancestor(':hover', cardMarker)]: 1,
     },
+  },
+  tagRow: {
+    paddingBottom: '0.2em',
+    paddingTop: '1.8em',
   },
 });

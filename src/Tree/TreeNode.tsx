@@ -15,6 +15,7 @@ import { focusRing } from '@/styles/stylex/focusRing';
 import { styleProps } from '@/styles/stylex/props';
 
 import { useTreeContext } from './context';
+import { treeClasses } from './stable';
 import { styles } from './style';
 import type { TreeDataNode } from './type';
 import { hasChildren as isExpandable } from './utils';
@@ -106,7 +107,7 @@ const TreeNode = memo<TreeNodeProps>(({ node, depth, isLast, trail }) => {
             ],
             disabled && styles.nodeDisabled,
           ],
-          ctx.classNames.node,
+          clsx(treeClasses('node'), ctx.classNames.node),
           rowStyle,
         )}
         onClick={ctx.blockNode ? select : undefined}
@@ -118,7 +119,11 @@ const TreeNode = memo<TreeNodeProps>(({ node, depth, isLast, trail }) => {
             aria-hidden
             height={rowHeight}
             width={depth * ctx.indent}
-            {...styleProps(styles.guide, ctx.classNames.guide, ctx.styles.guide)}
+            {...styleProps(
+              styles.guide,
+              clsx(treeClasses('guide'), ctx.classNames.guide),
+              ctx.styles.guide,
+            )}
           >
             <path
               {...stylex.props(styles.guidePath)}
@@ -132,7 +137,7 @@ const TreeNode = memo<TreeNodeProps>(({ node, depth, isLast, trail }) => {
           type="button"
           {...styleProps(
             [styles.switcher, !expandable && styles.switcherLeaf],
-            clsx('lobe-tree-switcher', ctx.classNames.switcher),
+            clsx('lobe-tree-switcher', treeClasses('switcher'), ctx.classNames.switcher),
             ctx.styles.switcher,
           )}
           onClick={(event) => {
@@ -145,7 +150,7 @@ const TreeNode = memo<TreeNodeProps>(({ node, depth, isLast, trail }) => {
         {checkable && (
           <Checkbox
             checked={checkState === 'checked'}
-            className={stylex.props(styles.checkbox).className}
+            className={clsx(stylex.props(styles.checkbox).className, treeClasses('checkbox'))}
             disabled={disabled}
             indeterminate={checkState === 'mixed'}
             onChange={() => ctx.toggleCheck(node)}
@@ -153,7 +158,7 @@ const TreeNode = memo<TreeNodeProps>(({ node, depth, isLast, trail }) => {
           />
         )}
         {ctx.showIcon && (
-          <span {...stylex.props(styles.icon)}>
+          <span {...styleProps(styles.icon, treeClasses('icon'))}>
             {node.icon ?? <Icon icon={expandable ? Folder : File} size={16} />}
           </span>
         )}
@@ -169,7 +174,7 @@ const TreeNode = memo<TreeNodeProps>(({ node, depth, isLast, trail }) => {
                     disabled && styles.titleInlineDisabled,
                   ],
             ],
-            ctx.classNames.title,
+            clsx(treeClasses('title'), ctx.classNames.title),
             ctx.styles.title,
           )}
           onClick={ctx.blockNode ? undefined : select}
@@ -179,7 +184,9 @@ const TreeNode = memo<TreeNodeProps>(({ node, depth, isLast, trail }) => {
       </div>
       {expandable && (
         <Collapsible.Root open={expanded}>
-          <Collapsible.Panel className={stylex.props(styles.panel).className}>
+          <Collapsible.Panel
+            className={clsx(stylex.props(styles.panel).className, treeClasses('panel'))}
+          >
             {node.children!.map((child, i) => (
               <TreeNode
                 depth={depth + 1}

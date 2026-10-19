@@ -13,10 +13,12 @@ import {
   PopoverRoot,
   PopoverTriggerElement,
 } from '@/Popover';
+import { toDataAttributes } from '@/utils/bem';
 
 import { type ColorFormat, formatColor, type Hsva, parseColor } from './color';
 import ColorPanel from './ColorPanel';
 import { pushRecentColor } from './recent';
+import { colorPickerClasses } from './stable';
 import ColorTrigger from './Trigger';
 import type { ColorPickerProps } from './type';
 
@@ -96,6 +98,8 @@ const ColorPicker = memo<ColorPickerProps>(
         <PopoverPortal>
           <PopoverPositioner placement="bottomLeft">
             <PopoverPopup
+              {...toDataAttributes({ size, trigger })}
+              className={colorPickerClasses('popup')}
               ref={popupRef}
               xstyle={panelStyles.popup}
               initialFocus={() =>

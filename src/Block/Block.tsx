@@ -1,11 +1,14 @@
 'use client';
 
+import clsx from 'clsx';
 import { type FC } from 'react';
 
 import { Flexbox } from '@/Flex';
 import { styleProps } from '@/styles/stylex/props';
 import { stylish } from '@/styles/stylex/stylish';
+import { toDataAttributes } from '@/utils/bem';
 
+import { blockClasses } from './stable';
 import { styles } from './style';
 import type { BlockProps } from './type';
 
@@ -36,6 +39,7 @@ export const BlockImpl: FC<BlockProps & { xstyle?: Parameters<typeof styleProps>
   return (
     <Flexbox
       ref={ref}
+      {...toDataAttributes({ clickable, glass, shadow, variant })}
       {...rest}
       {...styleProps(
         [
@@ -47,7 +51,7 @@ export const BlockImpl: FC<BlockProps & { xstyle?: Parameters<typeof styleProps>
           clickable && clickableVariantStyles[variant],
           xstyle,
         ],
-        className,
+        clsx(blockClasses(), className),
         style,
       )}
     >

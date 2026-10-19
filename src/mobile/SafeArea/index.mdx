@@ -5,6 +5,8 @@ category: Layout
 ---
 
 import DemoIndex from './demos/index.tsx?demo';
+import { StableClassTable } from '../../../docs/stable-classes/StableClassTable';
+import { mobileSafeAreaClasses } from './stable';
 
 ## Default
 
@@ -13,3 +15,9 @@ import DemoIndex from './demos/index.tsx?demo';
 ## APIs
 
 <Api name="SafeArea" from=".." />
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={mobileSafeAreaClasses} />

@@ -1,12 +1,14 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { memo } from 'react';
 
-import Skeleton from '@/Skeleton';
+import { SkeletonImpl } from '@/Skeleton/Skeleton';
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
 import { formatStatisticValue } from './formatValue';
+import { statisticClasses } from './stable';
 import { styles } from './style';
 import type { StatisticProps } from './type';
 
@@ -27,17 +29,42 @@ const Statistic = memo<StatisticProps>(
     ...rest
   }) => {
     return (
-      <div ref={ref} {...rest} {...styleProps(styles.root, className, style)}>
+      <div
+        ref={ref}
+        {...toDataAttributes({ loading })}
+        {...rest}
+        {...styleProps(styles.root, clsx(statisticClasses(), className), style)}
+      >
         {title != null && (
-          <div {...styleProps(styles.title, classNames?.title, customStyles?.title)}>{title}</div>
+          <div
+            {...styleProps(
+              styles.title,
+              clsx(statisticClasses('title'), classNames?.title),
+              customStyles?.title,
+            )}
+          >
+            {title}
+          </div>
         )}
         {loading ? (
-          <Skeleton height={30} width={96} />
+          <SkeletonImpl className={statisticClasses('skeleton')} xstyle={styles.skeleton} />
         ) : (
-          <div {...styleProps(styles.value, classNames?.value, customStyles?.value)}>
-            {prefix != null && <span {...stylex.props(styles.affix)}>{prefix}</span>}
-            <span>{formatter ? formatter(value) : formatStatisticValue(value, precision)}</span>
-            {suffix != null && <span {...stylex.props(styles.affix)}>{suffix}</span>}
+          <div
+            {...styleProps(
+              styles.value,
+              clsx(statisticClasses('value'), classNames?.value),
+              customStyles?.value,
+            )}
+          >
+            {prefix != null && (
+              <span {...styleProps(styles.affix, statisticClasses('prefix'))}>{prefix}</span>
+            )}
+            <span className={statisticClasses('number')}>
+              {formatter ? formatter(value) : formatStatisticValue(value, precision)}
+            </span>
+            {suffix != null && (
+              <span {...styleProps(styles.affix, statisticClasses('suffix'))}>{suffix}</span>
+            )}
           </div>
         )}
       </div>

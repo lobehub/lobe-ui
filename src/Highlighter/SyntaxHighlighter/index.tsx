@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import { type CSSProperties, memo } from 'react';
 
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
 import type { SyntaxHighlighterProps } from '../type';
 import StaticRenderer from './StaticRenderer';
@@ -46,6 +47,7 @@ export const SyntaxHighlighterImpl = memo<SyntaxHighlighterImplProps>(
         } as CSSProperties)
       : style;
 
+    const dataAttributes = toDataAttributes({ animated, variant });
     const shiki = styleProps(
       [styles.root, xstyle],
       clsx(classes, 'lobe-syntax-highlighter-shiki', className),
@@ -62,6 +64,7 @@ export const SyntaxHighlighterImpl = memo<SyntaxHighlighterImplProps>(
     return (
       <Renderer
         className={shiki.className}
+        dataAttributes={dataAttributes}
         enableTransformer={enableTransformer}
         fallbackClassName={fallback.className}
         language={language}

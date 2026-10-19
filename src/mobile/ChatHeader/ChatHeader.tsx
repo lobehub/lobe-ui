@@ -1,6 +1,6 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { ChevronLeft } from 'lucide-react';
 import { memo } from 'react';
 
@@ -9,6 +9,7 @@ import { Flexbox } from '@/Flex';
 import MobileSafeArea from '@/mobile/SafeArea';
 import { styleProps } from '@/styles/stylex/props';
 
+import { mobileChatHeaderClasses } from './stable';
 import { styles } from './style';
 import type { ChatHeaderProps } from './type';
 
@@ -35,7 +36,7 @@ const ChatHeader = memo<ChatHeaderProps>(
         flex={'none'}
         ref={ref}
         width={'100vw'}
-        {...styleProps(styles.container, className, style)}
+        {...styleProps(styles.container, clsx(mobileChatHeaderClasses(), className), style)}
         {...rest}
       >
         {safeArea && <MobileSafeArea position={'top'} />}
@@ -46,24 +47,30 @@ const ChatHeader = memo<ChatHeaderProps>(
           height={44}
           justify={'space-between'}
           paddingInline={6}
-          {...stylex.props(styles.inner)}
+          {...styleProps(styles.inner, mobileChatHeaderClasses('inner'))}
         >
           <Flexbox
             horizontal
             align={'center'}
-            className={classNames?.left}
+            className={clsx(mobileChatHeaderClasses('left'), classNames?.left)}
             flex={1}
             gap={gaps?.left}
             height={'100%'}
             style={custmStyles?.left}
           >
-            {showBackButton && <ActionIcon icon={ChevronLeft} onClick={() => onBackClick?.()} />}
+            {showBackButton && (
+              <ActionIcon
+                className={mobileChatHeaderClasses('back')}
+                icon={ChevronLeft}
+                onClick={() => onBackClick?.()}
+              />
+            )}
             {left}
           </Flexbox>
           <Flexbox
             horizontal
             align={'center'}
-            className={classNames?.center}
+            className={clsx(mobileChatHeaderClasses('center'), classNames?.center)}
             flex={1}
             gap={gaps?.center}
             height={'100%'}
@@ -76,7 +83,7 @@ const ChatHeader = memo<ChatHeaderProps>(
           <Flexbox
             horizontal
             align={'center'}
-            className={classNames?.right}
+            className={clsx(mobileChatHeaderClasses('right'), classNames?.right)}
             flex={1}
             gap={gaps?.right}
             height={'100%'}

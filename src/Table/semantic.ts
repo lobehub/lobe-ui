@@ -3,6 +3,7 @@ import { type CSSProperties, useRef } from 'react';
 
 import type { PaginationSemanticName } from '@/Pagination/type';
 
+import { tableClasses } from './stable';
 import type {
   TableClassNames,
   TableComponentsSemanticName,
@@ -33,8 +34,25 @@ export const resolveSemantic = <V, T>(
 export const normalizeClassNames = (
   classNames: TableClassNames | undefined,
 ): NormalizedSemantic<string> => {
-  const { body, header, pagination, ...rest } = classNames ?? {};
-  return { ...rest, body: { ...body }, header: { ...header }, pagination: { ...pagination } };
+  const { body, content, footer, header, pagination, root, section, title } = classNames ?? {};
+  return {
+    body: {
+      cell: clsx(tableClasses('body-cell'), body?.cell),
+      row: clsx(tableClasses('body-row'), body?.row),
+      wrapper: clsx(tableClasses('body-wrapper'), body?.wrapper),
+    },
+    content: clsx(tableClasses('content'), content),
+    footer: clsx(tableClasses('footer'), footer),
+    header: {
+      cell: clsx(tableClasses('header-cell'), header?.cell),
+      row: clsx(tableClasses('header-row'), header?.row),
+      wrapper: clsx(tableClasses('header-wrapper'), header?.wrapper),
+    },
+    pagination: { ...pagination },
+    root: clsx(tableClasses('wrapper'), root),
+    section: clsx(tableClasses('section'), section),
+    title: clsx(tableClasses('title'), title),
+  };
 };
 
 export const normalizeStyles = (

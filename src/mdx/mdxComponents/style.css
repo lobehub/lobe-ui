@@ -1,4 +1,10 @@
 @layer lobe-ui {
+  .lobe-mdx-image,
+  .lobe-mdx-video {
+    margin-block: calc(var(--lobe-markdown-margin-multiple) * 1em);
+    border-radius: calc(var(--lobe-markdown-border-radius) * 1px);
+  }
+
   .lobe-mdx-pre {
     overflow: hidden;
     margin-block: calc(var(--lobe-markdown-margin-multiple) * 0.5em);

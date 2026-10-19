@@ -37,6 +37,7 @@ export const styles = stylex.create({
     insetBlockStart: 0,
     insetInlineStart: 0,
     opacity: 0,
+    pointerEvents: 'none',
     position: 'absolute',
     zIndex: -1,
     height: '100%',
@@ -47,6 +48,12 @@ export const styles = stylex.create({
     borderStyle: 'solid',
     borderWidth: 1,
     backgroundColor: cssVar.colorBgContainer,
+  },
+  value: {
+    pointerEvents: 'none',
+  },
+  wrapper: {
+    position: 'relative',
   },
   placeholder: {
     color: cssVar.colorTextDescription,

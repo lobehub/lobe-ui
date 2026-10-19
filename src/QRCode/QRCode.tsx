@@ -1,6 +1,6 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { RotateCw } from 'lucide-react';
 import { memo, useMemo } from 'react';
 import { encode } from 'uqr';
@@ -11,8 +11,10 @@ import Icon from '@/Icon';
 import Spin from '@/Spin';
 import { focusRing } from '@/styles/stylex/focusRing';
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
 import { buildQrPath } from './qrPath';
+import { qrCodeClasses } from './stable';
 import { styles } from './style';
 import type { QRCodeProps } from './type';
 
@@ -20,7 +22,7 @@ const ICON_RATIO = 0.22;
 
 const QRCode = memo<QRCodeProps>(
   ({
-    bgColor = '#fff',
+    bgColor,
     bordered = true,
     className,
     color = '#000',
@@ -28,13 +30,14 @@ const QRCode = memo<QRCodeProps>(
     icon,
     onRefresh,
     ref,
-    size = 160,
+    size: sizeProp,
     status = 'active',
     style,
     value,
     ...rest
   }) => {
     const { t } = useTranslation(qrCodeMessages);
+    const size = sizeProp ?? 160;
     const { count, path } = useMemo(() => {
       try {
         const { data } = encode(value, { border: 0, ecc: icon ? 'H' : errorLevel });
@@ -48,43 +51,56 @@ const QRCode = memo<QRCodeProps>(
     return (
       <div
         ref={ref}
-        {...styleProps([styles.root, bordered && styles.bordered], className, {
-          background: bgColor,
-          ...style,
-        })}
+        {...styleProps(
+          [styles.root, bordered && styles.bordered],
+          clsx(qrCodeClasses(), className),
+          bgColor === undefined ? style : { background: bgColor, ...style },
+        )}
+        {...toDataAttributes({ bordered, status })}
         {...rest}
       >
         <svg
           aria-label={value}
+          className={qrCodeClasses('code')}
           height={size}
           role="img"
           shapeRendering="crispEdges"
           viewBox={`0 0 ${count} ${count}`}
           width={size}
         >
-          <rect fill={bgColor} height={count} width={count} />
+          <rect fill={bgColor ?? '#fff'} height={count} width={count} />
           <path d={path} fill={color} />
         </svg>
         {icon && (
           <span
-            {...stylex.props(styles.icon)}
-            style={{ height: size * ICON_RATIO, width: size * ICON_RATIO }}
+            {...styleProps(
+              [styles.icon, sizeProp === undefined && styles.iconDefaultSize],
+              qrCodeClasses('icon'),
+              sizeProp === undefined
+                ? undefined
+                : { height: size * ICON_RATIO, width: size * ICON_RATIO },
+            )}
           >
             {icon}
           </span>
         )}
         {status === 'loading' && (
-          <span aria-label={t('qrCode.loading')} {...stylex.props(styles.overlay)} role="status">
-            <Spin style={{ color: '#666' }} />
+          <span
+            aria-label={t('qrCode.loading')}
+            {...styleProps(styles.overlay, qrCodeClasses('overlay'))}
+            role="status"
+          >
+            <Spin className={styleProps(styles.spin).className} />
           </span>
         )}
         {status === 'expired' && (
-          <span {...stylex.props(styles.overlay)}>
-            <span {...stylex.props(styles.overlayTitle)}>{t('qrCode.expired')}</span>
+          <span {...styleProps(styles.overlay, qrCodeClasses('overlay'))}>
+            <span {...styleProps(styles.overlayTitle, qrCodeClasses('title'))}>
+              {t('qrCode.expired')}
+            </span>
             {onRefresh && (
               <button
-                {...stylex.props(focusRing.info, styles.refresh)}
-                style={{ background: '#080808', color: '#fff' }}
+                {...styleProps([focusRing.info, styles.refresh], qrCodeClasses('refresh'))}
                 type="button"
                 onClick={onRefresh}
               >

@@ -8,6 +8,8 @@ import DemoIndex from './demos/index.tsx?demo';
 import DemoAsyncLoading from './demos/asyncLoading.tsx?demo';
 import DemoAtoms from './demos/atoms.tsx?demo';
 import DemoNativeButton from './demos/nativeButton.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { switchClasses } from './stable';
 
 ## Default
 
@@ -24,3 +26,9 @@ import DemoNativeButton from './demos/nativeButton.tsx?demo';
 ## Atom Components
 
 <Demo of={DemoAtoms} />
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={switchClasses} />

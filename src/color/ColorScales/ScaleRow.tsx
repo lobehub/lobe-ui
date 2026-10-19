@@ -2,10 +2,13 @@ import * as stylex from '@stylexjs/stylex';
 import { memo } from 'react';
 
 import { Flexbox } from '@/Flex';
+import { styleProps } from '@/styles/stylex/props';
 import { toast } from '@/Toast';
+import { toDataAttributes } from '@/utils/bem';
 import { copyToClipboard } from '@/utils/copyToClipboard';
 
-import { alphaBg, styles } from './style';
+import { colorScalesClasses } from './stable';
+import { styles } from './style';
 
 export interface IScaleRow {
   name: string;
@@ -14,28 +17,17 @@ export interface IScaleRow {
 }
 
 const ScaleRow = memo<IScaleRow>(({ name, title, scale }) => {
-  let style = {};
-  let isAlpha = false;
-
-  switch (title) {
-    case 'lightA': {
-      style = { background: alphaBg.light, backgroundColor: '#fff' };
-      isAlpha = true;
-      break;
-    }
-    case 'darkA': {
-      style = { background: alphaBg.dark, backgroundColor: '#000' };
-      isAlpha = true;
-      break;
-    }
-    default: {
-      break;
-    }
-  }
+  const isAlpha = title === 'lightA' || title === 'darkA';
 
   return (
-    <Flexbox horizontal align={'center'} gap={2}>
-      <div {...stylex.props(styles.scaleRowTitle)} key={title}>
+    <Flexbox
+      horizontal
+      align={'center'}
+      className={colorScalesClasses('row')}
+      gap={2}
+      {...toDataAttributes({ scale: title })}
+    >
+      <div {...styleProps(styles.scaleRowTitle, colorScalesClasses('row-title'))} key={title}>
         <div {...stylex.props(styles.text)}>{title}</div>
       </div>
       {scale.map((color, index) => {
@@ -43,9 +35,15 @@ const ScaleRow = memo<IScaleRow>(({ name, title, scale }) => {
 
         return (
           <div
-            {...stylex.props(styles.scaleBox)}
             key={index}
-            style={style}
+            {...styleProps(
+              [
+                styles.scaleBox,
+                title === 'lightA' && styles.alphaLight,
+                title === 'darkA' && styles.alphaDark,
+              ],
+              colorScalesClasses('cell'),
+            )}
             title={color}
             onClick={async () => {
               const content = `token.${name}${index}${isAlpha ? 'A' : ''} /* ${color} */`;
@@ -57,8 +55,8 @@ const ScaleRow = memo<IScaleRow>(({ name, title, scale }) => {
             <Flexbox
               horizontal
               align={'center'}
-              {...stylex.props(styles.scaleItem)}
               justify={'center'}
+              {...styleProps(styles.scaleItem, colorScalesClasses('swatch'))}
               style={{ backgroundColor: color }}
             />
           </div>

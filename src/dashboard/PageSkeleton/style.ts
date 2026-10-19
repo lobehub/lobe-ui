@@ -6,13 +6,13 @@ import { media } from '@/styles/stylex/media.stylex';
 export const styles = stylex.create({
   action: {
     flex: 'none',
-    blockSize: { default: 32, [media.mobile]: 44 },
-    inlineSize: { default: 96, [media.mobile]: '100%' },
+    height: { default: 32, [media.mobile]: 44 },
+    width: { default: 96, [media.mobile]: '100%' },
   },
   cell: {
     flex: 'none',
-    blockSize: 14,
-    inlineSize: 88,
+    height: 14,
+    width: 88,
   },
   copy: {
     flex: '1',
@@ -71,19 +71,20 @@ export const styles = stylex.create({
     gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
   },
   statValue: {
-    blockSize: cssVar.fontSizeHeading2,
-    inlineSize: '42%',
     marginBlockEnd: '14px',
     marginBlockStart: '6px',
+    height: cssVar.fontSizeHeading2,
+    width: '42%',
   },
   table: {
     overflow: 'hidden',
     minInlineSize: 0,
   },
   tag: {
+    borderRadius: cssVar.borderRadiusSM,
     flex: 'none',
-    blockSize: 22,
-    inlineSize: 72,
+    height: 22,
+    width: 72,
   },
   thead: {
     gap: 12,
@@ -96,11 +97,11 @@ export const styles = stylex.create({
   },
   theadCell: {
     flex: 'none',
-    blockSize: 12,
+    height: 12,
   },
   title: {
-    blockSize: cssVar.fontSizeHeading3,
-    inlineSize: 220,
     maxInlineSize: '70%',
+    height: cssVar.fontSizeHeading3,
+    width: 220,
   },
 });

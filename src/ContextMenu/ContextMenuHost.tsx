@@ -14,6 +14,7 @@ import { preventDefaultAndStopPropagation } from '@/utils/dom';
 
 import { useLayerZIndex } from '../internal/zIndex';
 import { renderContextMenuItems } from './renderItems';
+import { contextMenuClasses } from './stable';
 import {
   closeContextMenu,
   getServerSnapshot,
@@ -74,7 +75,7 @@ export const ContextMenuHost = memo(() => {
       <ContextMenu.Portal container={appElement}>
         <ContextMenu.Positioner
           anchor={state.anchor ?? undefined}
-          className={styles.positioner}
+          className={clsx(styles.positioner, contextMenuClasses('positioner'))}
           collisionPadding={getFloatingCollisionPadding()}
           ref={zRef as any}
           sideOffset={6}
@@ -86,18 +87,34 @@ export const ContextMenuHost = memo(() => {
             className={clsx(
               stylex.props(menuStyles.popup, hasSlots && menuStyles.popupWithSlots).className,
               menuClassNames.popup,
+              contextMenuClasses(),
             )}
             onContextMenu={preventDefaultAndStopPropagation}
           >
-            {state.header == null ? null : <div className={styles.header}>{state.header}</div>}
+            {state.header == null ? null : (
+              <div className={clsx(styles.header, contextMenuClasses('header'))}>
+                {state.header}
+              </div>
+            )}
             {state.virtual ? (
-              <MenuVirtualList itemSize={state.listItemHeight}>{menuItems}</MenuVirtualList>
+              <MenuVirtualList
+                className={contextMenuClasses('viewport')}
+                itemSize={state.listItemHeight}
+              >
+                {menuItems}
+              </MenuVirtualList>
             ) : hasSlots ? (
-              <div className={styles.slotViewport}>{menuItems}</div>
+              <div className={clsx(styles.slotViewport, contextMenuClasses('viewport'))}>
+                {menuItems}
+              </div>
             ) : (
               menuItems
             )}
-            {state.footer == null ? null : <div className={styles.footer}>{state.footer}</div>}
+            {state.footer == null ? null : (
+              <div className={clsx(styles.footer, contextMenuClasses('footer'))}>
+                {state.footer}
+              </div>
+            )}
           </ContextMenu.Popup>
         </ContextMenu.Positioner>
       </ContextMenu.Portal>

@@ -8,6 +8,9 @@ const reducedMotion = '@media (prefers-reduced-motion: reduce)';
 const activeRing = `0 0 0 2px ${cssVar.colorPrimaryBorder}`;
 
 export const styles = stylex.create({
+  withInputSlider: {
+    flex: '1',
+  },
   control: {
     alignItems: 'center',
     display: 'flex',

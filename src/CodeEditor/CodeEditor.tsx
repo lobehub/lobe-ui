@@ -6,9 +6,10 @@ import { memo } from 'react';
 import { Flexbox } from '@/Flex';
 import { SyntaxHighlighterImpl } from '@/Highlighter/SyntaxHighlighter';
 import { useControlledState } from '@/hooks/useControlledState';
-import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
+import { codeEditorClasses } from './stable';
 import { styles, variantStyles } from './style';
 import type { CodeEditorProps } from './type';
 
@@ -43,6 +44,7 @@ const CodeEditor = memo<CodeEditorProps>(
         flex={flex}
         height={height ?? 'fit-content'}
         width={width ?? '100%'}
+        {...toDataAttributes({ variant })}
         {...styleProps(
           [styles.root, variantStyles[variant]],
           clsx(
@@ -55,22 +57,28 @@ const CodeEditor = memo<CodeEditorProps>(
       >
         {value ? (
           <SyntaxHighlighterImpl
-            className={clsx('lobe-code-editor-highlight', classNames?.highlight)}
             language={language}
             style={customStyles?.highlight}
             variant={variant}
             xstyle={styles.highlight}
+            className={clsx(
+              'lobe-code-editor-highlight',
+              codeEditorClasses('highlight'),
+              classNames?.highlight,
+            )}
           >
             {value}
           </SyntaxHighlighterImpl>
         ) : (
           <pre
             {...styleProps(
-              styles.highlight,
-              clsx('lobe-code-editor-highlight', classNames?.highlight),
-              {
-                color: cssVar.colorTextDescription,
-              },
+              [styles.highlight, styles.placeholder],
+              clsx(
+                'lobe-code-editor-highlight',
+                codeEditorClasses('highlight'),
+                classNames?.highlight,
+              ),
+              customStyles?.highlight,
             )}
           >
             {placeholder || ' '}
@@ -89,7 +97,11 @@ const CodeEditor = memo<CodeEditorProps>(
             onChange?.(e);
             setCode(e.target.value);
           }}
-          {...styleProps(styles.textarea, classNames?.textarea, customStyles?.textarea)}
+          {...styleProps(
+            styles.textarea,
+            clsx(codeEditorClasses('textarea'), classNames?.textarea),
+            customStyles?.textarea,
+          )}
           {...rest}
         />
       </Flexbox>

@@ -51,6 +51,15 @@ export const styles = stylex.create({
     alignItems: 'center',
     display: 'flex',
   },
+  panelDefaultMinHeight: {
+    minHeight: 180,
+  },
+  panelDefaultMinWidth: {
+    minWidth: 320,
+  },
+  panelDefaultWidth: {
+    maxWidth: 640,
+  },
   panel: {
     borderRadius: 12,
     boxShadow: `${cssVar.boxShadowSecondary}, var(--lobe-ring)`,

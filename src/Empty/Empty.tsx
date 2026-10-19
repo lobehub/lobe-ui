@@ -1,6 +1,7 @@
 'use client';
 
 import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { Plus } from 'lucide-react';
 import { type KeyboardEvent, memo, useMemo } from 'react';
 
@@ -9,7 +10,9 @@ import Icon from '@/Icon';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import { styleProps } from '@/styles/stylex/props';
 import Text from '@/Text';
+import { toDataAttributes } from '@/utils/bem';
 
+import { emptyClasses } from './stable';
 import { styles } from './style';
 import type { EmptyProps } from './type';
 
@@ -65,8 +68,9 @@ const Empty = memo<EmptyProps>(
         isPage ? styles.rootPage : styles.root,
         !isPage && variant === 'dashed' && styles.dashed,
         isClickable && styles.dashedClickable,
+        !isPage && variant === 'dashed' ? styles.colorDashed : styles.colorDefault,
       ],
-      className,
+      clsx(emptyClasses(), className),
     ).className;
 
     const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -77,11 +81,8 @@ const Empty = memo<EmptyProps>(
       (onClick as (event: unknown) => void)?.(event);
     };
 
-    const rootStyle: EmptyProps['style'] = {
-      color:
-        !isPage && variant === 'dashed' ? cssVar.colorTextTertiary : cssVar.colorTextQuaternary,
-      ...style,
-    };
+    const rootStyle: EmptyProps['style'] = style;
+    const dataAttributes = toDataAttributes({ type, variant });
 
     const titleNode = title && (
       <Text
@@ -89,11 +90,15 @@ const Empty = memo<EmptyProps>(
         color={cssVar.colorText}
         fontSize={isPage ? 18 : 14}
         weight={isPage ? 600 : 500}
-        style={{
-          marginBottom: isPage ? 4 : 0,
-          marginTop: isPage ? 0 : variant === 'dashed' ? 6 : 8,
-        }}
         {...titleProps}
+        className={clsx(
+          stylex.props(
+            styles.title,
+            isPage ? styles.titlePage : variant === 'dashed' && styles.titleDashed,
+          ).className,
+          emptyClasses('title'),
+          titleProps?.className,
+        )}
       >
         {title}
       </Text>
@@ -104,8 +109,12 @@ const Empty = memo<EmptyProps>(
         align={isCenter ? 'center' : undefined}
         color={cssVar.colorTextTertiary}
         fontSize={13}
-        style={{ maxWidth: isPage ? '52ch' : '34ch' }}
         {...descriptionProps}
+        className={clsx(
+          stylex.props(styles.description, isPage && styles.descriptionPage).className,
+          emptyClasses('description'),
+          descriptionProps?.className,
+        )}
       >
         {description}
       </Text>
@@ -114,19 +123,30 @@ const Empty = memo<EmptyProps>(
     if (isPage) {
       return (
         <div
+          {...dataAttributes}
           className={rootClassName}
           ref={ref}
           style={{ alignItems: alignValue, ...rootStyle }}
           onClick={onClick}
           {...rest}
         >
-          {cover && <div {...imageProps}>{cover}</div>}
+          {cover && (
+            <div {...imageProps} className={clsx(emptyClasses('cover'), imageProps?.className)}>
+              {cover}
+            </div>
+          )}
           <div>
             {titleNode}
             {descriptionNode}
             {children}
             {action && (
-              <div {...stylex.props(styles.extraPage)} {...actionProps}>
+              <div
+                {...actionProps}
+                {...styleProps(
+                  styles.extraPage,
+                  clsx(emptyClasses('action'), actionProps?.className),
+                )}
+              >
                 {action}
               </div>
             )}
@@ -137,6 +157,7 @@ const Empty = memo<EmptyProps>(
 
     return (
       <div
+        {...dataAttributes}
         className={rootClassName}
         ref={ref}
         role={isClickable ? 'button' : undefined}
@@ -146,12 +167,19 @@ const Empty = memo<EmptyProps>(
         onKeyDown={handleKeyDown}
         {...rest}
       >
-        {cover && <div {...imageProps}>{cover}</div>}
+        {cover && (
+          <div {...imageProps} className={clsx(emptyClasses('cover'), imageProps?.className)}>
+            {cover}
+          </div>
+        )}
         {titleNode}
         {descriptionNode}
         {children}
         {action && (
-          <div {...stylex.props(styles.action)} {...actionProps}>
+          <div
+            {...actionProps}
+            {...styleProps(styles.action, clsx(emptyClasses('action'), actionProps?.className))}
+          >
             {action}
           </div>
         )}

@@ -12,6 +12,7 @@ import {
   AccordionRoot,
   AccordionTrigger,
 } from './atoms';
+import { accordionClasses } from './stable';
 import { styles } from './style';
 import type { AccordionProps } from './type';
 
@@ -65,7 +66,7 @@ const Accordion: FC<AccordionProps> = ({
                     variant === 'borderless' ? styles.actionBorderless : styles.actionOutlined,
                     item.alwaysShowAction && styles.actionAlwaysVisible,
                   ],
-                  clsx('accordion-action', classNames?.action),
+                  clsx('accordion-action', accordionClasses('action'), classNames?.action),
                   customStyles?.action,
                 )}
               >

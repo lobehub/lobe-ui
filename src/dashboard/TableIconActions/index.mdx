@@ -6,6 +6,8 @@ order: 2
 ---
 
 import DemoIndex from './demos/index.tsx?demo';
+import { StableClassTable } from '../../../docs/stable-classes/StableClassTable';
+import { dashboardTableIconActionsClasses, dashboardTableIconActionClasses } from './stable';
 
 ## Default
 
@@ -14,3 +16,15 @@ import DemoIndex from './demos/index.tsx?demo';
 ## APIs
 
 <Api name="TableIconActions" />
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+### TableIconActions
+
+<StableClassTable of={dashboardTableIconActionsClasses} />
+
+### TableIconAction
+
+<StableClassTable of={dashboardTableIconActionClasses} />

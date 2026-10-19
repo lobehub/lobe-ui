@@ -14,6 +14,8 @@ export const styles = stylex.create({
     borderRadius: cssVar.borderRadius,
     backgroundColor: { 'default': cssVar.colorFillTertiary, ':hover': cssVar.colorFillSecondary },
     boxShadow: { 'default': null, ':hover': `0 0 0 2px ${cssVar.colorText}` },
+    height: 86,
+    width: 144,
   },
   imgActive: {
     backgroundColor: { 'default': cssVar.colorFillSecondary, ':hover': cssVar.colorFill },

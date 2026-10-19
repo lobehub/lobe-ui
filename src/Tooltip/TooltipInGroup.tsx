@@ -2,6 +2,7 @@
 
 import { mergeProps } from '@base-ui/react/merge-props';
 import { Tooltip as BaseTooltip } from '@base-ui/react/tooltip';
+import clsx from 'clsx';
 import { cloneElement, type FC, isValidElement, use, useCallback, useMemo } from 'react';
 
 import { useNativeButton } from '@/hooks/useNativeButton';
@@ -9,6 +10,7 @@ import { getElementRef } from '@/utils/getElementRef';
 import { mergeRefs } from '@/utils/mergeRefs';
 
 import { TooltipGroupHandleContext } from './groupContext';
+import { tooltipClasses } from './stable';
 import { type TooltipProps } from './type';
 import { useMergedTooltipProps } from './useMergedTooltipProps';
 
@@ -144,6 +146,7 @@ export const TooltipInGroup: FC<TooltipProps> = ({
 
       return cloneElement(childElement as any, {
         ...mergedProps,
+        className: clsx(tooltipClasses('trigger'), mergedProps.className),
         id: shouldPreservePopupTriggerId ? childProps.id : mergedProps.id,
         ref: mergeRefs([getElementRef(childElement), (renderProps as any).ref, refProp]),
       });
@@ -173,7 +176,12 @@ export const TooltipInGroup: FC<TooltipProps> = ({
   }
 
   return (
-    <BaseTooltip.Trigger handle={group ?? undefined} {...triggerProps} ref={refProp}>
+    <BaseTooltip.Trigger
+      className={tooltipClasses('trigger')}
+      handle={group ?? undefined}
+      {...triggerProps}
+      ref={refProp}
+    >
       {children}
     </BaseTooltip.Trigger>
   );

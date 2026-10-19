@@ -1,11 +1,13 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { type FC } from 'react';
 
 import { Flexbox } from '@/Flex';
+import { styleProps } from '@/styles/stylex/props';
 import { useResponsive } from '@/styles/theme/scope';
 
+import { chatChatInputActionBarClasses } from '../stable';
 import { actionBarStyles as styles } from '../style';
 import type { ChatInputActionBarProps } from '../type';
 
@@ -14,6 +16,7 @@ const ChatInputActionBar: FC<ChatInputActionBarProps> = ({
   padding = '0 16px',
   leftAddons,
   rightAddons,
+  className,
   ...rest
 }) => {
   const { mobile } = useResponsive();
@@ -21,7 +24,7 @@ const ChatInputActionBar: FC<ChatInputActionBarProps> = ({
     <Flexbox
       horizontal
       align={'center'}
-      {...stylex.props(styles.root)}
+      {...styleProps(styles.root, clsx(chatChatInputActionBarClasses(), className))}
       flex={'none'}
       justify={'space-between'}
       padding={padding}
@@ -31,13 +34,20 @@ const ChatInputActionBar: FC<ChatInputActionBarProps> = ({
       <Flexbox
         horizontal
         align={'center'}
-        {...stylex.props(styles.left)}
+        {...styleProps(styles.left, chatChatInputActionBarClasses('left'))}
         flex={1}
         gap={mobile ? 0 : 4}
       >
         {leftAddons}
       </Flexbox>
-      <Flexbox horizontal align={'center'} flex={0} gap={mobile ? 0 : 4} justify={'flex-end'}>
+      <Flexbox
+        horizontal
+        align={'center'}
+        className={chatChatInputActionBarClasses('right')}
+        flex={0}
+        gap={mobile ? 0 : 4}
+        justify={'flex-end'}
+      >
         {rightAddons}
       </Flexbox>
     </Flexbox>

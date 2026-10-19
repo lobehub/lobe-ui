@@ -15,6 +15,10 @@ export const styles = stylex.create({
     height: 1,
     minWidth: 16,
   },
+  connectorDot: {
+    insetBlockStart: 20,
+    insetInlineStart: 3,
+  },
   connectorFinish: {
     backgroundColor: cssVar.colorPrimary,
   },

@@ -6,8 +6,9 @@ import Pagination from '../Pagination';
 import { styles } from '../style';
 
 vi.mock('@/Select', () => ({
-  default: ({ onChange, options, style, value }: any) => (
+  default: ({ className, onChange, options, style, value }: any) => (
     <select
+      className={className}
       data-testid="size-changer"
       style={style}
       value={value}
@@ -171,7 +172,7 @@ describe('Pagination', () => {
     );
 
     const select = screen.getByTestId('size-changer');
-    expect(select.style.flex).toBe('0 0 auto');
+    expect(getComputedStyle(select).flex).toBe('0 0 auto');
     expect(select.style.width).toBe('auto');
   });
 
@@ -362,15 +363,21 @@ describe('Pagination', () => {
     const smallClassName = stylex.props(styles.button, styles.small).className;
     try {
       render(<Pagination responsive total={30} />);
-      expect(screen.getByLabelText('Next page').className === smallClassName).toBe(true);
+      expect(screen.getByLabelText('Next page').className.startsWith(`${smallClassName} `)).toBe(
+        true,
+      );
 
       cleanup();
       render(<Pagination total={30} />);
-      expect(screen.getByLabelText('Next page').className === smallClassName).toBe(false);
+      expect(screen.getByLabelText('Next page').className.startsWith(`${smallClassName} `)).toBe(
+        false,
+      );
 
       cleanup();
       render(<Pagination responsive size="middle" total={30} />);
-      expect(screen.getByLabelText('Next page').className === smallClassName).toBe(false);
+      expect(screen.getByLabelText('Next page').className.startsWith(`${smallClassName} `)).toBe(
+        false,
+      );
     } finally {
       window.matchMedia = matchMedia;
     }

@@ -9,11 +9,13 @@ import { type ReactNode, useCallback, useEffect, useId, useRef, useState } from 
 
 import Icon from '@/Icon';
 import ScrollShadow from '@/ScrollShadow';
+import { styleProps } from '@/styles/stylex/props';
 import Tooltip from '@/Tooltip';
 
 import { useConsoleShellState } from '../ConsoleShell/context';
 import { useLocalStorage, usePrefersReducedMotion } from '../hooks';
 import { collectNavItems, findActiveBranch, resolveActiveHref } from './active';
+import { dashboardConsoleNavClasses } from './stable';
 import { styles } from './style';
 import type { ConsoleNavGroup, ConsoleNavItem, ConsoleNavLinkProps, ConsoleNavProps } from './type';
 
@@ -110,38 +112,62 @@ function NavLink({
     'children': overlay ? null : (
       <>
         {icon ? (
-          <Icon className={stylex.props(styles.navIcon).className} icon={icon} size={18} />
+          <Icon
+            className={styleProps(styles.navIcon, dashboardConsoleNavClasses('icon')).className}
+            icon={icon}
+            size={18}
+          />
         ) : null}
         <span
-          {...stylex.props(
-            styles.itemLabel,
-            styles.railFade,
-            collapsed && [styles.itemLabelRail, styles.railFaded],
+          {...styleProps(
+            [
+              styles.itemLabel,
+              styles.railFade,
+              collapsed && [styles.itemLabelRail, styles.railFaded],
+            ],
+            dashboardConsoleNavClasses('label'),
           )}
         >
           {label}
         </span>
         {item?.badge ? (
-          <span {...stylex.props(styles.badge, styles.railFade, collapsed && styles.railFaded)}>
+          <span
+            {...styleProps(
+              [styles.badge, styles.railFade, collapsed && styles.railFaded],
+              dashboardConsoleNavClasses('badge'),
+            )}
+          >
             {item.badge}
           </span>
         ) : null}
         {item?.badge ? (
-          <span aria-hidden {...stylex.props(styles.dot, collapsed && styles.dotRail)} />
+          <span
+            aria-hidden
+            {...styleProps(
+              [styles.dot, collapsed && styles.dotRail],
+              dashboardConsoleNavClasses('dot'),
+            )}
+          />
         ) : null}
       </>
     ),
     'className': overlay
       ? clsx(
-          stylex.props(styles.railLink, active && styles.railLinkActive).className,
+          styleProps(
+            [styles.railLink, active && styles.railLinkActive],
+            dashboardConsoleNavClasses('rail-link'),
+          ).className,
           railLinkClassName,
         )
-      : (stylex.props(
-          styles.item,
-          active && styles.itemActive,
-          (indent === 1 || indent === 2) && styles.itemIndented,
-          itemIndentStyles[indent],
-          collapsed && indent !== 0 && styles.itemRailIndent,
+      : (styleProps(
+          [
+            styles.item,
+            active && styles.itemActive,
+            (indent === 1 || indent === 2) && styles.itemIndented,
+            itemIndentStyles[indent],
+            collapsed && indent !== 0 && styles.itemRailIndent,
+          ],
+          dashboardConsoleNavClasses('item'),
         ).className ?? ''),
     'data-active': active,
     'data-collapsed': collapsed,
@@ -169,14 +195,17 @@ function Fold({ children, folded }: { children: ReactNode; folded: boolean }) {
       aria-hidden={folded || undefined}
       data-folded={folded}
       inert={folded || undefined}
-      {...stylex.props(styles.fold, folded && styles.folded)}
+      {...styleProps([styles.fold, folded && styles.folded], dashboardConsoleNavClasses('fold'))}
     >
-      <div {...stylex.props(styles.foldBody)}>{children}</div>
+      <div {...styleProps(styles.foldBody, dashboardConsoleNavClasses('fold-body'))}>
+        {children}
+      </div>
     </div>
   );
 }
 
 function ConsoleNav({
+  className,
   collapsed: collapsedProp,
   defaultExpanded = 'all',
   groups = [],
@@ -305,24 +334,36 @@ function ConsoleNav({
         tabIndex={onRail && railIcon ? -1 : undefined}
         type="button"
         onClick={() => toggleGroup(group.key, expanded)}
-        {...stylex.props(
-          styles.groupHeader,
-          active && styles.groupHeaderActive,
-          Boolean(group.icon) && styles.groupHeaderIcon,
-          !nested && Boolean(group.icon) && styles.groupHeaderRailIcon,
-          nested && styles.groupHeaderNested,
-          nested && active && styles.groupHeaderNestedActive,
-          groupHeaderIndentStyles[indent],
+        {...styleProps(
+          [
+            styles.groupHeader,
+            active && styles.groupHeaderActive,
+            Boolean(group.icon) && styles.groupHeaderIcon,
+            !nested && Boolean(group.icon) && styles.groupHeaderRailIcon,
+            nested && styles.groupHeaderNested,
+            nested && active && styles.groupHeaderNestedActive,
+            groupHeaderIndentStyles[indent],
+          ],
+          dashboardConsoleNavClasses('group-header'),
         )}
       >
-        {group.icon ? <Icon className={headerIconClassName} icon={group.icon} size={16} /> : null}
+        {group.icon ? (
+          <Icon
+            className={clsx(dashboardConsoleNavClasses('group-icon'), headerIconClassName)}
+            icon={group.icon}
+            size={16}
+          />
+        ) : null}
         <span
           data-label=""
-          {...stylex.props(
-            styles.itemLabel,
-            styles.railFade,
-            collapsed && [styles.itemLabelRail, styles.railFaded],
-            nested && styles.groupLabelNested,
+          {...styleProps(
+            [
+              styles.itemLabel,
+              styles.railFade,
+              collapsed && [styles.itemLabelRail, styles.railFaded],
+              nested && styles.groupLabelNested,
+            ],
+            dashboardConsoleNavClasses('label'),
           )}
         >
           {group.label}
@@ -334,17 +375,19 @@ function ConsoleNav({
             size={14}
             className={clsx(
               headerIconClassName,
-              stylex.props(
-                styles.chevron,
-                !expanded && styles.chevronFolded,
-                collapsed && styles.railFaded,
+              styleProps(
+                [styles.chevron, !expanded && styles.chevronFolded, collapsed && styles.railFaded],
+                dashboardConsoleNavClasses('chevron'),
               ).className,
             )}
           />
         ) : (
           <span
             data-expanded={expanded}
-            {...stylex.props(styles.indicator, expanded && styles.indicatorExpanded)}
+            {...styleProps(
+              [styles.indicator, expanded && styles.indicatorExpanded],
+              dashboardConsoleNavClasses('indicator'),
+            )}
           >
             <Play fill={'currentColor'} size={7} strokeWidth={1} />
           </span>
@@ -355,7 +398,7 @@ function ConsoleNav({
     let head: ReactNode = header;
     if (railIcon) {
       head = (
-        <div {...stylex.props(styles.groupHead)}>
+        <div {...styleProps(styles.groupHead, dashboardConsoleNavClasses('group-head'))}>
           {header}
           {onRail && railHref ? (
             <NavLink
@@ -379,12 +422,15 @@ function ConsoleNav({
         data-level={level}
         data-rail-empty={railEmpty}
         key={group.key}
-        {...stylex.props(
-          styles.group,
-          !nested && Boolean(group.icon) && styles.groupLevelIcon,
-          nested && styles.groupNested,
-          collapsed && railEmpty && styles.groupRailEmpty,
-          collapsed && afterGroup && !nested && !group.icon && styles.groupDivider,
+        {...styleProps(
+          [
+            styles.group,
+            !nested && Boolean(group.icon) && styles.groupLevelIcon,
+            nested && styles.groupNested,
+            collapsed && railEmpty && styles.groupRailEmpty,
+            collapsed && afterGroup && !nested && !group.icon && styles.groupDivider,
+          ],
+          dashboardConsoleNavClasses('group'),
         )}
       >
         {head}
@@ -394,13 +440,16 @@ function ConsoleNav({
           data-instant={reducedMotion}
           id={panelId}
           inert={open ? undefined : true}
-          {...stylex.props(
-            styles.groupPanel,
-            !open && styles.groupPanelCollapsed,
-            reducedMotion && styles.groupPanelInstant,
+          {...styleProps(
+            [
+              styles.groupPanel,
+              !open && styles.groupPanelCollapsed,
+              reducedMotion && styles.groupPanelInstant,
+            ],
+            dashboardConsoleNavClasses('group-panel'),
           )}
         >
-          <div {...stylex.props(styles.groupItems)}>
+          <div {...styleProps(styles.groupItems, dashboardConsoleNavClasses('group-items'))}>
             {renderItems(group.items ?? [], childIndent, group.label, !(underRailIcon || railIcon))}
             {(group.groups ?? []).map((child, index) =>
               renderGroup(child, level + 1, childIndent, underRailIcon || railIcon, index > 0),
@@ -415,7 +464,7 @@ function ConsoleNav({
     <ScrollShadow
       aria-label={label}
       as={'nav'}
-      className={stylex.props(styles.nav).className}
+      className={styleProps(styles.nav, clsx(dashboardConsoleNavClasses(), className)).className}
       data-collapsed={collapsed}
       orientation={'vertical'}
       ref={navRef}
@@ -425,10 +474,13 @@ function ConsoleNav({
         <div
           data-divided={groups.length > 0}
           data-rail-empty={!items.some((item) => item.icon)}
-          {...stylex.props(
-            styles.topItems,
-            groups.length > 0 && styles.topItemsDivided,
-            collapsed && !items.some((item) => item.icon) && styles.topItemsRailEmpty,
+          {...styleProps(
+            [
+              styles.topItems,
+              groups.length > 0 && styles.topItemsDivided,
+              collapsed && !items.some((item) => item.icon) && styles.topItemsRailEmpty,
+            ],
+            dashboardConsoleNavClasses('top-items'),
           )}
         >
           {renderItems(items, 0, undefined, true)}

@@ -5,6 +5,8 @@ category: Data Entry
 ---
 
 import DemoIndex from './demos/index.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { hotkeyInputClasses } from './stable';
 
 ## Default
 
@@ -27,3 +29,9 @@ import DemoIndex from './demos/index.tsx?demo';
 ### Key Format
 
 The input and output values use the same format as the Hotkey component, with keys separated by `+` (e.g., `"ctrl+shift+a"`). The component supports both standard keyboard keys and modifier keys.
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={hotkeyInputClasses} />

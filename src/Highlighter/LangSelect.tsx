@@ -1,5 +1,7 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { memo, useMemo } from 'react';
 import { bundledLanguagesInfo } from 'shiki';
 
@@ -8,6 +10,9 @@ import MaterialFileTypeIcon from '@/MaterialFileTypeIcon';
 import Select, { type SelectProps } from '@/Select';
 import Text from '@/Text';
 import { stopPropagation } from '@/utils/dom';
+
+import { highlighterClasses } from './stable';
+import { styles } from './style';
 
 export const LangSelect = memo<Omit<SelectProps<string>, 'options'>>(({ style, ...rest }) => {
   const options = useMemo(
@@ -53,11 +58,11 @@ export const LangSelect = memo<Omit<SelectProps<string>, 'options'>>(({ style, .
   );
 
   return (
-    <div style={{ maxWidth: 240, width: '100%' }} onClick={stopPropagation}>
+    <div {...stylex.props(styles.langSelect)} onClick={stopPropagation}>
       <Select
         showSearch
         virtual
-        className={'language-title'}
+        className={clsx('language-title', highlighterClasses('title'))}
         options={options}
         size={'small'}
         style={{ width: '100%', ...style }}

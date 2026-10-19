@@ -10,6 +10,7 @@ import type { ReactElement } from 'react';
 import { focusRing } from '@/styles/stylex/focusRing';
 import { styleProps } from '@/styles/stylex/props';
 
+import { scrollAreaClasses } from './stable';
 import { styles } from './style';
 
 const classNameOf = (styles: Parameters<typeof styleProps>[0]) => styleProps(styles).className;
@@ -48,7 +49,9 @@ export const ScrollAreaRoot = ({ className, ...rest }: ScrollAreaRootProps) => {
   return (
     <BaseScrollArea.Root
       {...rest}
-      className={mergeStateClassName(classNameOf(styles.root), className) as any}
+      className={
+        mergeStateClassName(clsx(classNameOf(styles.root), scrollAreaClasses()), className) as any
+      }
     />
   );
 };
@@ -78,6 +81,7 @@ export const ScrollAreaViewportImpl = ({
         mergeStateClassName(
           clsx(
             classNameOf([styles.viewport, focusRing.info, xstyle]),
+            scrollAreaClasses('viewport'),
             resolveFadeClass(scrollFade),
           ),
           className,
@@ -93,13 +97,27 @@ export const ScrollAreaViewport = ScrollAreaViewportImpl as (
   props: ScrollAreaViewportProps,
 ) => ReactElement;
 
-export const ScrollAreaContent = BaseScrollArea.Content;
+export const ScrollAreaContent = ({ className, ...rest }: ScrollAreaContentProps) => {
+  return (
+    <BaseScrollArea.Content
+      {...rest}
+      className={mergeStateClassName(scrollAreaClasses('content'), className) as any}
+    />
+  );
+};
+
+ScrollAreaContent.displayName = 'ScrollAreaContent';
 
 export const ScrollAreaScrollbar = ({ className, ...rest }: ScrollAreaScrollbarProps) => {
   return (
     <BaseScrollArea.Scrollbar
       {...rest}
-      className={mergeStateClassName(classNameOf(styles.scrollbar), className) as any}
+      className={
+        mergeStateClassName(
+          clsx(classNameOf(styles.scrollbar), scrollAreaClasses('scrollbar')),
+          className,
+        ) as any
+      }
     />
   );
 };
@@ -110,7 +128,12 @@ export const ScrollAreaThumb = ({ className, ...rest }: ScrollAreaThumbProps) =>
   return (
     <BaseScrollArea.Thumb
       {...rest}
-      className={mergeStateClassName(classNameOf(styles.thumb), className) as any}
+      className={
+        mergeStateClassName(
+          clsx(classNameOf(styles.thumb), scrollAreaClasses('thumb')),
+          className,
+        ) as any
+      }
     />
   );
 };
@@ -121,7 +144,12 @@ export const ScrollAreaCorner = ({ className, ...rest }: ScrollAreaCornerProps) 
   return (
     <BaseScrollArea.Corner
       {...rest}
-      className={mergeStateClassName(classNameOf(styles.corner), className) as any}
+      className={
+        mergeStateClassName(
+          clsx(classNameOf(styles.corner), scrollAreaClasses('corner')),
+          className,
+        ) as any
+      }
     />
   );
 };

@@ -7,6 +7,8 @@ category: Feedback
 import DemoIndex from './demos/index.tsx?demo';
 import DemoExtra from './demos/Extra.tsx?demo';
 import DemoPlayground from './demos/Playground.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { alertClasses } from './stable';
 
 ## Playground
 
@@ -57,3 +59,9 @@ import { Alert } from '@lobehub/ui';
 ```
 
 `extra` adds a compact disclosure for diagnostics. Set `extraIsolate` when the detail is an independent block that should remain visible instead of participating in the disclosure.
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={alertClasses} />

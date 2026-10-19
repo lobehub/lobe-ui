@@ -7,6 +7,7 @@ import { memo } from 'react';
 
 import Icon from '@/Icon';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { toDataAttributes } from '@/utils/bem';
 
 import { SwitchIcon, SwitchRoot, SwitchThumb } from './atoms';
 import { styles } from './style';
@@ -48,6 +49,7 @@ const Switch = memo<SwitchProps>(
 
     return (
       <SwitchRoot
+        {...toDataAttributes({ loading })}
         {...rest}
         autoFocus={autoFocus}
         checked={resolvedChecked}

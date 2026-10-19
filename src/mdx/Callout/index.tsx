@@ -2,59 +2,32 @@
 
 import './style.css';
 
-import * as stylex from '@stylexjs/stylex';
 import clsx from 'clsx';
 import { AlertOctagon, AlertTriangle, Info, Lightbulb, MessageSquareWarning } from 'lucide-react';
-import { type FC, useMemo } from 'react';
+import { type FC } from 'react';
 
 import { Flexbox, type FlexboxProps } from '@/Flex';
 import Icon from '@/Icon';
-import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import { styleProps } from '@/styles/stylex/props';
-import { useTheme } from '@/styles/theme/scope';
+import { toDataAttributes } from '@/utils/bem';
 
+import { mdxCalloutClasses } from './stable';
 import { styles } from './style';
 
 export interface CalloutProps extends FlexboxProps {
   type?: 'tip' | 'error' | 'important' | 'info' | 'warning';
 }
 
+const typeIcons = {
+  error: AlertOctagon,
+  important: MessageSquareWarning,
+  info: Info,
+  tip: Lightbulb,
+  warning: AlertTriangle,
+};
+
 const Callout: FC<CalloutProps> = ({ children, type = 'info', className, style, ...rest }) => {
-  const theme = useTheme();
-  const typeConfig = useMemo(
-    () => ({
-      error: {
-        background: theme.colorErrorFillTertiary,
-        color: cssVar.colorError,
-        icon: AlertOctagon,
-      },
-      important: {
-        background: theme.purpleFillTertiary,
-        color: cssVar.purple,
-        icon: MessageSquareWarning,
-      },
-      info: {
-        background: theme.colorInfoFillTertiary,
-        color: cssVar.colorInfo,
-        icon: Info,
-      },
-      tip: {
-        background: theme.colorSuccessFillTertiary,
-        color: cssVar.colorSuccess,
-        icon: Lightbulb,
-      },
-      warning: {
-        background: theme.colorWarningFillTertiary,
-        color: cssVar.colorWarning,
-        icon: AlertTriangle,
-      },
-    }),
-    [theme],
-  );
-
-  const selectedType = typeConfig?.[type] || typeConfig.info;
-
-  const { icon, color, background } = selectedType;
+  const resolvedType = type in typeIcons ? type : 'info';
 
   return (
     <Flexbox
@@ -63,22 +36,30 @@ const Callout: FC<CalloutProps> = ({ children, type = 'info', className, style, 
       gap={'0.75em'}
       paddingBlock={'calc(var(--lobe-markdown-margin-multiple) * 1em)'}
       paddingInline={'1em'}
-      {...styleProps(styles.container, className, {
-        background,
-        boxShadow: `0 0 0 1px ${background} inset`,
-        color,
-        ...style,
-      })}
+      {...styleProps(
+        [styles.container, styles[resolvedType]],
+        clsx(mdxCalloutClasses(), className),
+        style,
+      )}
+      {...toDataAttributes({ type: resolvedType })}
       {...rest}
     >
-      <Icon icon={icon} size={{ size: '1.2em' }} style={{ marginBlock: '0.25em' }} />
+      <Icon
+        {...styleProps(styles.icon, mdxCalloutClasses('icon'))}
+        icon={typeIcons[resolvedType]}
+        size={{ size: '1.2em' }}
+      />
       <div
         {...styleProps(
           styles.content,
-          clsx('lobe-mdx-callout-content', type === 'info' && 'lobe-mdx-callout-underline'),
+          clsx(
+            mdxCalloutClasses('content'),
+            'lobe-mdx-callout-content',
+            resolvedType === 'info' && 'lobe-mdx-callout-underline',
+          ),
         )}
       >
-        <div {...stylex.props(styles.inner)}>{children}</div>
+        <div {...styleProps(styles.inner, mdxCalloutClasses('inner'))}>{children}</div>
       </div>
     </Flexbox>
   );

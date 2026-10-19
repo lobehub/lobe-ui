@@ -19,6 +19,19 @@ export const styles = stylex.create({
     height: 32,
     width: 48,
   },
+  content: {
+    paddingBottom: '32px',
+    paddingLeft: '0',
+    paddingRight: '16px',
+    paddingTop: '8px',
+  },
+  index: {
+    fontWeight: 400,
+    opacity: 0.5,
+  },
+  indexHighlight: {
+    fontWeight: 700,
+  },
   scaleItem: {
     height: '100%',
     width: '100%',

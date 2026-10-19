@@ -1,12 +1,14 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { Check } from 'lucide-react';
 import { memo, type ReactNode } from 'react';
 
 import Icon from '@/Icon';
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
+import { stepsClasses } from './stable';
 import { indicatorStatusStyles, styles, titleStatusStyles } from './style';
 import type { StepItem, StepsProps, StepStatus } from './type';
 
@@ -52,10 +54,11 @@ const Steps = memo<StepsProps>(
     return (
       <ol
         ref={ref}
+        {...toDataAttributes({ orientation, variant })}
         {...rest}
         {...styleProps(
           [styles.root, isVertical ? styles.vertical : styles.horizontal],
-          className,
+          clsx(stepsClasses(), className),
           rest.style,
         )}
       >
@@ -73,7 +76,7 @@ const Steps = memo<StepsProps>(
                 isVertical
                   ? [styles.itemVertical, isLast && styles.itemVerticalLast]
                   : [styles.itemHorizontal, isLast && styles.itemHorizontalLast],
-                classNames?.item,
+                clsx(stepsClasses('item'), classNames?.item),
                 customStyles?.item,
               )}
             >
@@ -87,14 +90,14 @@ const Steps = memo<StepsProps>(
                       (statusKey === 'process' || statusKey === 'finish') &&
                       styles.dotActive,
                   ],
-                  classNames?.indicator,
+                  clsx(stepsClasses('indicator'), classNames?.indicator),
                   customStyles?.indicator,
                 )}
               >
                 {renderIndicator(item, index, status, isDot)}
               </span>
               {(item.title != null || item.description != null) && (
-                <div {...stylex.props(styles.body)}>
+                <div {...styleProps(styles.body, stepsClasses('body'))}>
                   {item.title != null && (
                     <div
                       {...styleProps(
@@ -103,7 +106,7 @@ const Steps = memo<StepsProps>(
                           titleStatusStyles[statusKey],
                           isVertical && styles.titleVertical,
                         ],
-                        classNames?.title,
+                        clsx(stepsClasses('title'), classNames?.title),
                         customStyles?.title,
                       )}
                     >
@@ -114,7 +117,7 @@ const Steps = memo<StepsProps>(
                     <div
                       {...styleProps(
                         styles.description,
-                        classNames?.description,
+                        clsx(stepsClasses('description'), classNames?.description),
                         customStyles?.description,
                       )}
                     >
@@ -131,9 +134,9 @@ const Steps = memo<StepsProps>(
                       styles.connector,
                       statusKey === 'finish' && styles.connectorFinish,
                       isVertical && styles.connectorVertical,
+                      isDot && styles.connectorDot,
                     ],
-                    undefined,
-                    isDot ? { insetBlockStart: 20, insetInlineStart: 3 } : undefined,
+                    stepsClasses('connector'),
                   )}
                 />
               )}

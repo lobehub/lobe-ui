@@ -22,11 +22,25 @@ import { placementMap } from '@/utils/placement';
 import { useLayerZIndex } from '../internal/zIndex';
 import { PopoverArrowIcon } from './ArrowIcon';
 import { usePopoverPortalContainer } from './PopoverPortal';
+import { popoverClasses } from './stable';
 import { styles } from './style';
 import { type PopoverPlacement } from './type';
 
 export const PopoverRoot = BasePopover.Root;
-export const PopoverBackdrop = BasePopover.Backdrop;
+export const PopoverBackdrop = ({
+  className,
+  ...rest
+}: ComponentProps<typeof BasePopover.Backdrop>) => (
+  <BasePopover.Backdrop
+    {...rest}
+    className={(state) =>
+      clsx(
+        popoverClasses('backdrop'),
+        typeof className === 'function' ? className(state) : className,
+      )
+    }
+  />
+);
 
 export type PopoverTriggerElementProps = Omit<
   ComponentPropsWithRef<typeof BasePopover.Trigger>,
@@ -72,7 +86,7 @@ export const PopoverTriggerElement = ({
 
           return cloneElement(children as any, {
             ...mergedProps,
-            className: clsx(baseClassName, extraClassName),
+            className: clsx(popoverClasses('trigger'), baseClassName, extraClassName),
             ref: mergeRefs([getElementRef(children), (props as any).ref, refProp]),
           });
         }}
@@ -83,9 +97,14 @@ export const PopoverTriggerElement = ({
   return (
     <BasePopover.Trigger
       {...rest}
-      className={className}
       nativeButton={resolvedNativeButton}
       ref={refProp}
+      className={(state) =>
+        clsx(
+          popoverClasses('trigger'),
+          typeof className === 'function' ? className(state) : className,
+        )
+      }
     >
       {children}
     </BasePopover.Trigger>
@@ -167,6 +186,7 @@ export const PopoverPositioner = ({
       className={(state) =>
         clsx(
           stylex.props(styles.positioner).className,
+          popoverClasses('positioner'),
           typeof className === 'function' ? className(state) : className,
         )
       }
@@ -189,6 +209,7 @@ export const PopoverPopup = ({ className, xstyle, ...rest }: PopoverPopupAtomPro
       className={(state) =>
         clsx(
           stylex.props(styles.popup, xstyle).className,
+          popoverClasses(),
           typeof className === 'function' ? className(state) : className,
         )
       }
@@ -207,6 +228,7 @@ export const PopoverArrow = ({ className, children, ...rest }: PopoverArrowAtomP
       className={(state) =>
         clsx(
           stylex.props(styles.arrow).className,
+          popoverClasses('arrow'),
           typeof className === 'function' ? className(state) : className,
         )
       }
@@ -228,6 +250,7 @@ export const PopoverViewport = ({ className, ...rest }: PopoverViewportAtomProps
         clsx(
           stylex.props(styles.viewport).className,
           'lobe-popover-viewport',
+          popoverClasses('viewport'),
           typeof className === 'function' ? className(state) : className,
         )
       }

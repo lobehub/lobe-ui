@@ -10,11 +10,14 @@ import emojiPickerMessages from '@/i18n/resources/en/emojiPicker';
 import { useTranslation } from '@/i18n/useTranslation';
 import Icon from '@/Icon';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { styleProps } from '@/styles/stylex/props';
 import Tag from '@/Tag';
 import Text from '@/Text';
 import { toast, ToastHost } from '@/Toast';
 import { UploadDragger } from '@/Upload';
 
+import { emojiPickerClasses } from './stable';
+import { styles } from './style';
 import { type AvatarUploaderProps } from './type';
 
 const ACCEPTED_IMAGE_TYPES = new Set(['image/jpeg', 'image/png', 'image/gif', 'image/webp']);
@@ -70,7 +73,11 @@ const AvatarUploader = memo<AvatarUploaderProps>(
     };
 
     return (
-      <Flexbox padding={10} style={{ position: 'relative' }} width={'100%'}>
+      <Flexbox
+        className={styleProps(styles.relative, emojiPickerClasses('uploader')).className}
+        padding={10}
+        width={'100%'}
+      >
         {!previewImage && (
           <UploadDragger maxCount={1} onFiles={handleFiles}>
             <Center gap={16} height={compressSize} width={compressSize}>
@@ -86,7 +93,7 @@ const AvatarUploader = memo<AvatarUploaderProps>(
           </UploadDragger>
         )}
         {previewImage && (
-          <Center gap={8} style={{ position: 'relative' }} width={'100%'}>
+          <Center className={styleProps(styles.relative).className} gap={8} width={'100%'}>
             <AvatarEditor
               border={0}
               borderRadius={shape === 'square' ? undefined : compressSize / 2}
@@ -96,7 +103,12 @@ const AvatarUploader = memo<AvatarUploaderProps>(
               width={compressSize}
             />
 
-            <Flexbox horizontal gap={8} style={{ position: 'relative' }} width={'100%'}>
+            <Flexbox
+              horizontal
+              className={styleProps(styles.relative).className}
+              gap={8}
+              width={'100%'}
+            >
               <Button
                 icon={ChevronLeftIcon}
                 style={{ flex: 'none' }}

@@ -1,11 +1,13 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { type Key, memo, type MouseEvent, type NamedExoticComponent, useState } from 'react';
 
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
 import ListRow, { type ListRowXstyle } from './ListRow';
+import { listClasses } from './stable';
 import { styles } from './style';
 import type { ListDividerType, ListItem, ListItemType, ListProps } from './type';
 
@@ -49,9 +51,13 @@ export const ListImpl = memo<ListProps & { itemXstyle?: ListRowXstyle }>(
 
     return (
       <ul
-        className={styleProps([styles.root, variantStyles[variant]], className).className}
         ref={ref}
         role="list"
+        className={
+          styleProps([styles.root, variantStyles[variant]], clsx(listClasses(), className))
+            .className
+        }
+        {...toDataAttributes({ compact, selectable, variant })}
         {...rest}
       >
         {items.map((item, index) =>
@@ -59,7 +65,7 @@ export const ListImpl = memo<ListProps & { itemXstyle?: ListRowXstyle }>(
             <li
               key={item.key ?? `divider-${index}`}
               role="separator"
-              {...stylex.props(styles.divider)}
+              {...styleProps(styles.divider, listClasses('divider'))}
             />
           ) : (
             <ListRow

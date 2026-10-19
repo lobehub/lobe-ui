@@ -1,13 +1,16 @@
 'use client';
 
+import clsx from 'clsx';
 import { memo, useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
 import { buildShellSrcDoc, SHELL_UPDATE_MESSAGE_TYPE } from './buildShellSrcDoc';
 import { buildStaticSrcDoc } from './buildStaticSrcDoc';
 import { DEFAULT_HEIGHT, DEFAULT_SANDBOX, SRCDOC_MAX_LENGTH } from './const';
 import { AUTO_HEIGHT_MESSAGE_TYPE } from './injectAutoHeightScript';
+import { htmlPreviewIframeClasses } from './stable';
 import { styles } from './style';
 import type { HtmlPreviewIframeProps } from './type';
 
@@ -193,7 +196,7 @@ export const HtmlPreviewIframe = memo<HtmlPreviewIframeProps>(
 
     if (tooLarge) {
       return (
-        <div {...styleProps(styles.fallback, className, style)}>
+        <div {...styleProps(styles.fallback, clsx(htmlPreviewIframeClasses(), className), style)}>
           Content too large to preview inline.
         </div>
       );
@@ -217,7 +220,11 @@ export const HtmlPreviewIframe = memo<HtmlPreviewIframeProps>(
         sandbox={sandbox}
         srcDoc={srcDoc}
         title={title}
-        {...styleProps(styles.iframe, className, { height, ...style })}
+        {...toDataAttributes({ animated })}
+        {...styleProps(styles.iframe, clsx(htmlPreviewIframeClasses(), className), {
+          height,
+          ...style,
+        })}
       />
     );
   },

@@ -5,9 +5,11 @@ import { memo, useCallback } from 'react';
 
 import { useStableValue } from '@/hooks/useStableValue';
 import { PreviewGroup } from '@/Image';
+import { toDataAttributes } from '@/utils/bem';
 
 import { MarkdownProvider } from './components/MarkdownProvider';
 import { useDelayedAnimated } from './components/useDelayedAnimated';
+import { markdownClasses } from './stable';
 import { rootStyles, styles } from './style';
 import { MarkdownRender, StreamdownRender } from './SyntaxMarkdown';
 import { type MarkdownProps } from './type';
@@ -33,12 +35,12 @@ const Markdown = memo<MarkdownProps>((props) => {
     rehypePluginsAhead,
     allowHtml,
     borderRadius,
-    fontSize = props.variant === 'chat' ? 14 : undefined,
-    headerMultiple = props.variant === 'chat' ? 0.25 : undefined,
-    marginMultiple = props.variant === 'chat' ? 1 : undefined,
+    fontSize,
+    headerMultiple,
+    marginMultiple,
     variant = 'default',
     reactMarkdownProps,
-    lineHeight = props.variant === 'chat' ? 1.6 : undefined,
+    lineHeight,
     rehypePlugins,
     remarkPlugins,
     remarkPluginsAhead,
@@ -93,9 +95,11 @@ const Markdown = memo<MarkdownProps>((props) => {
           variant === 'chat' && styles.chat,
           enableLatex && styles.latex,
           styles.gfm,
+          markdownClasses(),
           className,
         )}
         onDoubleClick={onDoubleClick}
+        {...toDataAttributes({ variant })}
         {...rest}
       >
         <MarkdownProvider

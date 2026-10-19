@@ -1,12 +1,14 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { memo } from 'react';
 
 import { DraggablePanel } from '@/DraggablePanel';
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
 import ChatInputAreaInner from './components/ChatInputAreaInner';
+import { chatChatInputAreaClasses } from './stable';
 import { styles, textareaClassName } from './style';
 import type { ChatInputAreaProps } from './type';
 
@@ -26,18 +28,18 @@ const ChatInputArea = memo<ChatInputAreaProps>(
     ...rest
   }) => {
     const content = (
-      <section {...stylex.props(styles.container)} style={{ minHeight: heights?.minHeight }}>
+      <section
+        {...styleProps(styles.container, chatChatInputAreaClasses('content'), {
+          minHeight: heights?.minHeight,
+        })}
+      >
         {topAddons}
-        <div {...stylex.props(styles.textareaContainer)}>
+        <div
+          {...styleProps(styles.textareaContainer, chatChatInputAreaClasses('textarea-wrapper'))}
+        >
           <ChatInputAreaInner
-            className={textareaClassName}
+            className={clsx(chatChatInputAreaClasses('textarea'), textareaClassName)}
             ref={ref}
-            style={{
-              alignItems: 'stretch',
-              lineHeight: 1.5,
-              paddingBlock: 0,
-              paddingInline: 16,
-            }}
             onSend={() => {
               onSend?.();
               setExpand?.(false);
@@ -52,10 +54,11 @@ const ChatInputArea = memo<ChatInputAreaProps>(
     if (expand)
       return (
         <div
-          {...styleProps(styles.fullscreen, className, {
-            insetBlockStart: heights?.headerHeight ?? 0,
+          {...styleProps(styles.fullscreen, clsx(chatChatInputAreaClasses(), className), {
+            insetBlockStart: heights?.headerHeight,
             ...style,
           })}
+          {...toDataAttributes({ expand })}
         >
           {content}
         </div>
@@ -63,13 +66,13 @@ const ChatInputArea = memo<ChatInputAreaProps>(
 
     return (
       <DraggablePanel
-        className={className}
+        className={clsx(chatChatInputAreaClasses(), className)}
         classNames={classNames}
         maxHeight={heights?.maxHeight}
         minHeight={heights?.minHeight}
         placement="bottom"
         size={{ height: heights?.inputHeight, width: '100%' }}
-        style={{ zIndex: 10, ...style }}
+        style={style}
         onSizeChange={onSizeChange}
       >
         {content}

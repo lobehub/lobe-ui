@@ -3,9 +3,11 @@ import type { MouseEventHandler, ReactNode } from 'react';
 
 export interface TableIconActionsProps {
   children?: ReactNode;
+  className?: string;
 }
 
 export interface TableIconActionProps {
+  className?: string;
   danger?: boolean;
   disabled?: boolean;
   icon: LucideIcon;

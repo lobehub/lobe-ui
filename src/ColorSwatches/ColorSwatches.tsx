@@ -1,7 +1,7 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
 import chroma from 'chroma-js';
+import clsx from 'clsx';
 import { CheckIcon } from 'lucide-react';
 import { type FC, useMemo } from 'react';
 
@@ -9,10 +9,13 @@ import { Center, Flexbox } from '@/Flex';
 import { useControlledState } from '@/hooks/useControlledState';
 import Icon from '@/Icon';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
+import { styleProps } from '@/styles/stylex/props';
 import Tooltip from '@/Tooltip';
+import { toDataAttributes } from '@/utils/bem';
 import { safeReadableColor } from '@/utils/safeReadableColor';
 
 import CustomPicker from './CustomPicker';
+import { colorSwatchesClasses } from './stable';
 import { styles } from './style';
 import type { ColorSwatchesPickerRenderProps, ColorSwatchesProps } from './type';
 
@@ -29,6 +32,7 @@ const ColorSwatches: FC<ColorSwatchesProps> = ({
   texts,
   renderPicker,
   ref,
+  className,
   ...rest
 }) => {
   const [active, setActive] = useControlledState(defaultValue, {
@@ -73,11 +77,11 @@ const ColorSwatches: FC<ColorSwatchesProps> = ({
       horizontal
       gap={6}
       ref={ref}
-      style={{
+      {...toDataAttributes({ shape, size })}
+      {...styleProps(styles.root, clsx(colorSwatchesClasses(), className), {
         ...cssVariables,
-        flexWrap: 'wrap',
         ...style,
-      }}
+      })}
       {...rest}
     >
       {enableColorSwatches &&
@@ -99,15 +103,16 @@ const ColorSwatches: FC<ColorSwatchesProps> = ({
           return (
             <Tooltip key={c?.key || i} title={c.title}>
               <Center
-                {...stylex.props(
-                  styles.container,
-                  !!isTransparent && styles.transparent,
-                  isActive && styles.activeContainer,
+                {...styleProps(
+                  [
+                    styles.container,
+                    shape === 'circle' ? styles.shapeCircle : styles.shapeSquare,
+                    !!isTransparent && styles.transparent,
+                    isActive && styles.activeContainer,
+                  ],
+                  colorSwatchesClasses('item'),
+                  { background: isTransparent ? undefined : color },
                 )}
-                style={{
-                  background: isTransparent ? undefined : color,
-                  borderRadius: shape === 'circle' ? '50%' : cssVar.borderRadius,
-                }}
                 onClick={() => setActive(c.color || undefined)}
               >
                 {isActive && (
@@ -115,9 +120,7 @@ const ColorSwatches: FC<ColorSwatchesProps> = ({
                     color={`color-mix(in srgb, ${safeReadableColor(color)} 33%, transparent)`}
                     icon={CheckIcon}
                     size={{ size: 14, strokeWidth: 4 }}
-                    style={{
-                      pointerEvents: 'none',
-                    }}
+                    {...styleProps(styles.check, colorSwatchesClasses('check'))}
                   />
                 )}
               </Center>

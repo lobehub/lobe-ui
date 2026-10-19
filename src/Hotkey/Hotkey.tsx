@@ -1,5 +1,6 @@
 'use client';
 
+import clsx from 'clsx';
 import {
   ArrowBigUpIcon,
   ArrowDownIcon,
@@ -27,8 +28,10 @@ import RightDoubleClickIcon from '@/icons/lucideExtra/RightDoubleClickIcon';
 import { styleProps } from '@/styles/stylex/props';
 import { stylish } from '@/styles/stylex/stylish';
 import { useThemeMode } from '@/styles/theme/scope';
+import { toDataAttributes } from '@/utils/bem';
 
 import { KeyMapEnum } from './const';
+import { hotkeyClasses } from './stable';
 import { styles } from './style';
 import type { HotkeyProps } from './type';
 import { checkIsAppleDevice, splitKeysByPlus, startCase } from './utils';
@@ -122,7 +125,7 @@ const Hotkey = memo<HotkeyProps>(
         variantStyles[variant],
         inverseTheme && (isDarkMode ? styles.inverseThemeDark : styles.inverseThemeLight),
       ],
-      classNames?.kbdClassName,
+      clsx(hotkeyClasses('kbd'), classNames?.kbdClassName),
       customStyles?.kbdStyle,
     );
 
@@ -130,9 +133,10 @@ const Hotkey = memo<HotkeyProps>(
       <Flexbox
         horizontal
         align={'center'}
-        className={className}
+        className={clsx(hotkeyClasses(), className)}
         gap={isBorderless ? 6 : 2}
         style={style}
+        {...toDataAttributes({ compact, inverseTheme, variant })}
         {...rest}
       >
         {compact || isBorderless ? (

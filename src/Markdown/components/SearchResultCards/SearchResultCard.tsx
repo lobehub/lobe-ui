@@ -2,6 +2,7 @@
 
 import './style.css';
 
+import clsx from 'clsx';
 import { memo, type Ref, useMemo } from 'react';
 
 import A from '@/A';
@@ -10,6 +11,8 @@ import { Flexbox } from '@/Flex';
 import Img from '@/Img';
 import Text from '@/Text';
 import { type AProps } from '@/types';
+
+import { searchResultCardsClasses } from '../../stable';
 
 export interface SearchResultCardProps extends AProps {
   alt?: string;
@@ -40,7 +43,7 @@ const SearchResultCard = memo<SearchResultCardProps>(({ ref, url, title, alt, ..
     <A href={url} ref={ref} rel="noreferrer" target={'_blank'} {...rest}>
       <Block
         clickable
-        className={'lobe-search-result-card'}
+        className={clsx('lobe-search-result-card', searchResultCardsClasses('card'))}
         gap={2}
         height={'100%'}
         justify={'space-between'}
@@ -49,15 +52,22 @@ const SearchResultCard = memo<SearchResultCardProps>(({ ref, url, title, alt, ..
         paddingInline={8}
         variant={'outlined'}
       >
-        <Text ellipsis={{ rows: 2 }}>{displayTitle}</Text>
+        <Text className={searchResultCardsClasses('title')} ellipsis={{ rows: 2 }}>
+          {displayTitle}
+        </Text>
         <Flexbox horizontal align={'center'} gap={4}>
           <Img
             alt={alt || title || url}
+            className={searchResultCardsClasses('favicon')}
             height={14}
             src={`https://icons.duckduckgo.com/ip3/${host}.ico`}
             width={14}
           />
-          <Text ellipsis className={'lobe-search-result-card-url'} type={'secondary'}>
+          <Text
+            ellipsis
+            className={clsx('lobe-search-result-card-url', searchResultCardsClasses('url'))}
+            type={'secondary'}
+          >
             {domain}
           </Text>
         </Flexbox>

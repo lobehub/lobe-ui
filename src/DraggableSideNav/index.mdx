@@ -5,6 +5,8 @@ category: Navigation
 ---
 
 import DemoIndex from './demos/index.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { draggableSideNavClasses } from './stable';
 
 ## Default
 
@@ -41,3 +43,9 @@ import DemoIndex from './demos/index.tsx?demo';
 - **Fade Animations**: Enable fade effects for header, body, or footer individually with optional blur effect for stunning content transitions using motion
 - **Visual Polish**: Backdrop blur, smooth scrollbar, subtle shadows, micro-interactions
 - Use with any content: Menu, custom navigation, sidebars, panels, etc.
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={draggableSideNavClasses} />

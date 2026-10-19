@@ -1,6 +1,6 @@
 'use client';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { Menu, X } from 'lucide-react';
 import { memo } from 'react';
 
@@ -11,7 +11,9 @@ import { useTranslation } from '@/i18n/useTranslation';
 import { type ListItem } from '@/List';
 import { ListImpl as List } from '@/List/List';
 import type { ListRowXstyle } from '@/List/ListRow';
+import { styleProps } from '@/styles/stylex/props';
 
+import { burgerClasses } from './stable';
 import { styles } from './style';
 import type { BurgerProps } from './type';
 
@@ -36,7 +38,7 @@ const Burger = memo<BurgerProps>(
     className,
     footer,
     fullscreen = false,
-    headerHeight = 64,
+    headerHeight: headerHeightProp,
     items,
     onOpenChange,
     onSelect,
@@ -46,13 +48,14 @@ const Burger = memo<BurgerProps>(
     variant,
   }) => {
     const { t } = useTranslation(burgerMessages);
+    const headerHeight = headerHeightProp ?? 64;
     const close = () => onOpenChange(false);
 
     const toggle = (
       <ActionIcon
         aria-expanded={opened}
         aria-label={opened ? t('burger.close') : t('burger.open')}
-        className={className}
+        className={clsx(burgerClasses(), className)}
         icon={opened ? X : Menu}
         size={size}
         style={style}
@@ -77,7 +80,13 @@ const Burger = memo<BurgerProps>(
           onClose={close}
         >
           {fullscreen && (
-            <div {...stylex.props(styles.fullHeader)} style={{ height: headerHeight }}>
+            <div
+              {...styleProps(
+                styles.fullHeader,
+                burgerClasses('header'),
+                headerHeightProp === undefined ? undefined : { height: headerHeightProp },
+              )}
+            >
               <ActionIcon aria-label={t('burger.close')} icon={X} size={size} onClick={close} />
             </div>
           )}
@@ -91,7 +100,9 @@ const Burger = memo<BurgerProps>(
               close();
             }}
           />
-          {fullscreen && footer && <div {...stylex.props(styles.footer)}>{footer}</div>}
+          {fullscreen && footer && (
+            <div {...styleProps(styles.footer, burgerClasses('footer'))}>{footer}</div>
+          )}
         </Drawer>
       </>
     );

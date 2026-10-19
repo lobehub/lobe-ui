@@ -2,29 +2,23 @@
 
 import './style.css';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { isValidElement } from 'react';
 
 import { Flexbox } from '@/Flex';
 import Skeleton from '@/Skeleton';
-import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import { styleProps } from '@/styles/stylex/props';
 import { useThemeMode } from '@/styles/theme/scope';
 import Text from '@/Text';
+import { toDataAttributes } from '@/utils/bem';
 
 import Aside from './Aside';
+import { dashboardAuthLayoutClasses } from './stable';
 import { styles } from './style';
 import type { AuthLayoutProps } from './type';
 
-const titleStyle = {
-  fontSize: cssVar.fontSizeHeading3,
-  lineHeight: cssVar.lineHeightHeading3,
-  margin: 0,
-};
-const descriptionStyle = { color: cssVar.colorTextSecondary, lineHeight: 1.6 };
-
 const FormSkeleton = () => (
-  <Flexbox aria-hidden gap={12}>
+  <Flexbox aria-hidden className={dashboardAuthLayoutClasses('skeleton')} gap={12}>
     <Skeleton height={36} radius={8} width="100%" />
     <Skeleton height={36} radius={8} width="100%" />
     <Skeleton height={36} radius={8} width="100%" />
@@ -54,19 +48,21 @@ function AuthLayout({
   const art = isValidElement(background) ? background : null;
   const heading =
     title === undefined || title === null ? null : typeof title === 'string' ? (
-      <Text as="h1" style={titleStyle} weight="bold">
+      <Text as="h1" className={dashboardAuthLayoutClasses('title')} weight="bold">
         {title}
       </Text>
     ) : (
-      <div {...stylex.props(styles.titleNode)}>{title}</div>
+      <div {...styleProps(styles.titleNode, dashboardAuthLayoutClasses('title'))}>{title}</div>
     );
   const intro =
     logo || heading || description ? (
-      <Flexbox gap={8}>
-        {logo ? <div {...stylex.props(styles.logo)}>{logo}</div> : null}
+      <Flexbox className={dashboardAuthLayoutClasses('intro')} gap={8}>
+        {logo ? (
+          <div {...styleProps(styles.logo, dashboardAuthLayoutClasses('logo'))}>{logo}</div>
+        ) : null}
         {heading}
         {description ? (
-          <Text style={descriptionStyle} type="secondary">
+          <Text className={dashboardAuthLayoutClasses('description')} type="secondary">
             {description}
           </Text>
         ) : null}
@@ -83,35 +79,65 @@ function AuthLayout({
           background === 'grid' && styles.grid,
           background === 'grid' && isDarkMode && styles.gridDark,
         ],
-        className,
+        clsx(dashboardAuthLayoutClasses(), className),
         style,
       )}
+      {...toDataAttributes({
+        background: typeof background === 'string' ? background : undefined,
+        loading,
+        split,
+        variant,
+      })}
     >
-      {art ? <div {...stylex.props(styles.backdrop)}>{art}</div> : null}
-      <header {...stylex.props(styles.header)}>
+      {art ? (
+        <div {...styleProps(styles.backdrop, dashboardAuthLayoutClasses('backdrop'))}>{art}</div>
+      ) : null}
+      <header {...styleProps(styles.header, dashboardAuthLayoutClasses('header'))}>
         {brand}
-        {tools ? <div {...stylex.props(styles.tools)}>{tools}</div> : null}
+        {tools ? (
+          <div {...styleProps(styles.tools, dashboardAuthLayoutClasses('tools'))}>{tools}</div>
+        ) : null}
       </header>
-      <main {...stylex.props(styles.main)}>
+      <main {...styleProps(styles.main, dashboardAuthLayoutClasses('main'))}>
         {card ? (
           <div
             data-auth-card=""
-            {...stylex.props(
-              styles.lift,
-              split && styles.liftSplit,
-              variant === 'elevated' && styles.elevated,
+            {...styleProps(
+              [styles.lift, split && styles.liftSplit, variant === 'elevated' && styles.elevated],
+              dashboardAuthLayoutClasses('card'),
             )}
           >
-            <div {...stylex.props(styles.frame, split && styles.split)}>
-              <div {...stylex.props(styles.form, split && styles.formSplit)}>
+            <div
+              {...styleProps(
+                [styles.frame, split && styles.split],
+                dashboardAuthLayoutClasses('frame'),
+              )}
+            >
+              <div
+                {...styleProps(
+                  [styles.form, split && styles.formSplit],
+                  dashboardAuthLayoutClasses('form'),
+                )}
+              >
                 {intro}
                 {alert}
                 {loading ? <FormSkeleton /> : children}
                 {footer ? (
-                  <div {...styleProps(styles.footer, 'lobe-auth-layout-footer')}>{footer}</div>
+                  <div
+                    {...styleProps(
+                      styles.footer,
+                      clsx(dashboardAuthLayoutClasses('footer'), 'lobe-auth-layout-footer'),
+                    )}
+                  >
+                    {footer}
+                  </div>
                 ) : null}
               </div>
-              {aside ? <div {...stylex.props(styles.aside)}>{aside}</div> : null}
+              {aside ? (
+                <div {...styleProps(styles.aside, dashboardAuthLayoutClasses('aside'))}>
+                  {aside}
+                </div>
+              ) : null}
             </div>
           </div>
         ) : (

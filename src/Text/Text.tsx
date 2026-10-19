@@ -8,7 +8,9 @@ import { type CSSProperties, memo, type ReactNode, type RefObject, useRef } from
 import { useTextOverflow } from '@/hooks/useTextOverflow';
 import { styleProps } from '@/styles/stylex/props';
 import Tooltip from '@/Tooltip';
+import { toDataAttributes } from '@/utils/bem';
 
+import { textClasses } from './stable';
 import { textStyleArray } from './style';
 import { type TextBaseProps, type TextProps } from './type';
 
@@ -92,6 +94,7 @@ const InternalText = memo<InternalTextProps>(
 
     const content = (
       <Container
+        {...toDataAttributes({ type })}
         {...rest}
         ref={setNodeRef}
         style={textStyle}
@@ -116,7 +119,7 @@ const InternalText = memo<InternalTextProps>(
               type,
               underline,
             }),
-            clsx(shiny && 'lobe-text-shiny', className, classNames?.root),
+            clsx(textClasses(), shiny && 'lobe-text-shiny', className, classNames?.root),
           ).className
         }
       >

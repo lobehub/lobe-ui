@@ -3,6 +3,15 @@
     margin: 0 !important;
   }
 
+  .lobe-mdx-cards__tag {
+    padding-block: 0.1em;
+    padding-inline: 0.6em;
+    border-radius: 1em;
+
+    font-size: 0.8em;
+    font-weight: 500;
+  }
+
   .lobe-mdx-card h3,
   .lobe-mdx-card p {
     margin-block: 0 !important;

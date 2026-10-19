@@ -2,14 +2,15 @@
 
 import './style.css';
 
-import * as stylex from '@stylexjs/stylex';
+import clsx from 'clsx';
 import { type CSSProperties, memo, useState } from 'react';
 
 import Highlighter from '@/Highlighter';
 import Segmented from '@/Segmented';
 import { styleProps } from '@/styles/stylex/props';
 
-import { childStyles, styles } from './style';
+import { awesomeCodeShowcaseClasses } from './stable';
+import { styles } from './style';
 import type { CodeShowcaseProps } from './type';
 
 const CodeShowcase = memo<CodeShowcaseProps>(
@@ -31,16 +32,18 @@ const CodeShowcase = memo<CodeShowcaseProps>(
 
     return (
       <div
-        {...styleProps(styles.root, className, {
-          '--code-showcase-min-height': `${minHeight}px`,
+        {...styleProps(styles.root, clsx(awesomeCodeShowcaseClasses(), className), {
+          ...(minHeight === undefined
+            ? undefined
+            : { '--code-showcase-min-height': `${minHeight}px` }),
           ...style,
         } as CSSProperties)}
         {...rest}
       >
         {items.length > 1 && (
           <Segmented
+            className={awesomeCodeShowcaseClasses('tabs')}
             options={items.map(({ key, label }) => ({ label, value: key }))}
-            style={childStyles.tabs}
             value={active.key}
             variant={'outlined'}
             onChange={(key) => {
@@ -49,15 +52,22 @@ const CodeShowcase = memo<CodeShowcaseProps>(
             }}
           />
         )}
-        <div {...stylex.props(styles.panes)}>
+        <div {...styleProps(styles.panes, awesomeCodeShowcaseClasses('panes'))}>
           <Highlighter
+            className={awesomeCodeShowcaseClasses('code')}
             language={active.language ?? 'tsx'}
-            style={childStyles.code}
             variant={'outlined'}
           >
             {active.code}
           </Highlighter>
-          <div {...styleProps(styles.preview, 'lobe-code-showcase-preview')}>{active.preview}</div>
+          <div
+            {...styleProps(
+              styles.preview,
+              clsx(awesomeCodeShowcaseClasses('preview'), 'lobe-code-showcase-preview'),
+            )}
+          >
+            {active.preview}
+          </div>
         </div>
       </div>
     );

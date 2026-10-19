@@ -9,8 +9,10 @@ import { type ComponentProps, type CSSProperties, type FC, type ReactNode } from
 
 import { focusRing } from '@/styles/stylex/focusRing';
 import { styleProps } from '@/styles/stylex/props';
+import { toDataAttributes } from '@/utils/bem';
 
 import { segmentedMarker } from './marker.stylex';
+import { segmentedClasses } from './stable';
 import { styles } from './style';
 import type { SegmentedSize, SegmentedVariant } from './type';
 
@@ -44,6 +46,7 @@ export const SegmentedRoot = <Value extends string = string>({
   return (
     <BaseUIToggleGroup<Value>
       data-variant={variant}
+      {...toDataAttributes({ block, glass, shadow })}
       className={
         styleProps(
           [
@@ -54,7 +57,7 @@ export const SegmentedRoot = <Value extends string = string>({
             shadow && styles.listShadow,
             listVariantStyles[variant],
           ],
-          className,
+          clsx(segmentedClasses(), className),
         ).className
       }
       {...rest}
@@ -84,7 +87,7 @@ export const SegmentedItem = <Value extends string = string>({
       className={
         styleProps(
           [styles.item, focusRing.info, block && styles.itemBlock, itemSizeStyles[size]],
-          className,
+          clsx(segmentedClasses('item'), className),
         ).className
       }
       {...rest}
@@ -101,12 +104,16 @@ interface SimpleSpanProps {
 }
 
 export const SegmentedItemIcon: FC<SimpleSpanProps> = ({ children, className, style }) => (
-  <span {...styleProps(styles.itemIcon, className, style)}>{children}</span>
+  <span {...styleProps(styles.itemIcon, clsx(segmentedClasses('item-icon'), className), style)}>
+    {children}
+  </span>
 );
 SegmentedItemIcon.displayName = 'SegmentedItemIcon';
 
 export const SegmentedItemLabel: FC<SimpleSpanProps> = ({ children, className, style }) => (
-  <span {...styleProps(styles.itemLabel, className, style)}>{children}</span>
+  <span {...styleProps(styles.itemLabel, clsx(segmentedClasses('item-label'), className), style)}>
+    {children}
+  </span>
 );
 SegmentedItemLabel.displayName = 'SegmentedItemLabel';
 
@@ -118,7 +125,11 @@ export interface SegmentedIndicatorProps {
 export const SegmentedIndicator: FC<SegmentedIndicatorProps> = ({ className, style }) => (
   <span
     aria-hidden
-    {...styleProps(styles.indicator, clsx('lobe-segmented-indicator', className), style)}
+    {...styleProps(
+      styles.indicator,
+      clsx('lobe-segmented-indicator', segmentedClasses('indicator'), className),
+      style,
+    )}
   />
 );
 SegmentedIndicator.displayName = 'SegmentedIndicator';

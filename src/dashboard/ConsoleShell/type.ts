@@ -18,6 +18,7 @@ export interface ConsoleBrandLinkProps {
 }
 
 export interface ConsoleBrandProps {
+  className?: string;
   href?: string;
   /** Accessible name for the home link. Defaults to `title`. */
   label?: string;

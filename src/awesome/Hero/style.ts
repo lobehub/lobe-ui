@@ -4,6 +4,10 @@ import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import { media } from '@/styles/stylex/media.stylex';
 
 export const styles = stylex.create({
+  root: {
+    fontSize: 16,
+    zIndex: 1,
+  },
   actions: {
     gap: 16,
     alignItems: 'stretch',
