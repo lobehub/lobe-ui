@@ -144,7 +144,7 @@
     "test": "vitest --passWithNoTests",
     "test:coverage": "vitest run --coverage  --passWithNoTests",
     "test:update": "vitest -u",
-    "type-check": "lobedocs typegen && tsc --noEmit && tsc --noEmit -p tsconfig.site.json"
+    "type-check": "tsc --noEmit"
   },
   "lint-staged": {
     "*.{md,mdx}": [
@@ -219,7 +219,7 @@
   },
   "devDependencies": {
     "@commitlint/cli": "^21.2.3",
-    "@lobehub/docs-kit": "workspace:*",
+    "@lobehub/docs-kit": "^6.2.1",
     "@lobehub/eslint-config": "2.1.6",
     "@lobehub/fluent-emoji": "^4.1.0",
     "@lobehub/icons": "^5.10.1",

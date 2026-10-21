@@ -1,6 +1,6 @@
 # docs.config.ts reference
 
-Source of truth: `packages/docs-kit/src/config.ts` (`DocsConfig`). Loaded once per process in a
+Source of truth: [`src/config.ts`](https://github.com/lobehub/docs-kit/blob/main/src/config.ts) (`DocsConfig`). Loaded once per process in a
 `node --import tsx` subprocess, so it must be a pure module with a default export; restart
 `lobedocs dev` after edits.
 
@@ -109,7 +109,7 @@ Section is derived per page:
 3. `atomDirs[].subType` if set (capitalized, e.g. `plugins` → `Plugins`).
 4. The second path segment when it is a lobe-ui namespace (`awesome`, `brand`, `chat`,
    `dashboard`, `color`, `icons`, `mdx`, `mobile`, `storybook`; see
-   `packages/docs-kit/src/packageNamespaces.ts`) — lobe-ui specific.
+   `src/packageNamespaces.ts` in lobehub/docs-kit) — lobe-ui specific.
 5. Otherwise `Components`.
 
 Avoid naming your own folders after those namespaces unless you want that grouping. Each section
@@ -151,7 +151,7 @@ A consumer-authored `react-router.config.*` always wins and is never touched by 
 ## TypeScript
 
 `lobedocs typegen` writes route types to `.react-router/types`. If you type-check the site, add
-a `tsconfig.site.json` like lobe-ui's:
+a `tsconfig.site.json` such as:
 
 ```json
 {

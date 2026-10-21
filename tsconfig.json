@@ -42,6 +42,6 @@
       "@lobehub/ui/base-ui/*": ["src/base-ui/*"]
     }
   },
-  "exclude": [".react-router", "packages/docs-kit/site"],
+  "exclude": [".react-router"],
   "include": ["src", "docs", "tests", ".fatherrc.ts"]
 }

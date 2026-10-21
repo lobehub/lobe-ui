@@ -3,12 +3,10 @@ import { existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSy
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { createLegacyDemoId } from '@lobehub/docs-kit/site/compiler/legacyDumiIds';
+import type { DemoReference, DocumentationInventory } from '@lobehub/docs-kit/site/compiler/types';
+
 import { packageNamespaces } from '../config/packageNamespaces';
-import { createLegacyDemoId } from '../packages/docs-kit/site/compiler/legacyDumiIds';
-import type {
-  DemoReference,
-  DocumentationInventory,
-} from '../packages/docs-kit/site/compiler/types';
 
 const { basename, dirname, extname, relative, resolve } = path;
 

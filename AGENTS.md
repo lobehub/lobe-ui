@@ -4,7 +4,7 @@ Guidance for coding agents working in this repository.
 
 ## Overview
 
-`@lobehub/ui` is an ESM-only React 19 component library for AIGC web apps (no antd: components are built on `@base-ui/react` and styled with StyleX). The repo also contains `@lobehub/docs-kit` (the `lobedocs` CLI that builds https://ui.lobehub.com) and `@lobehub/ui-codemod`. pnpm workspace, Node >= 22.22.
+`@lobehub/ui` is an ESM-only React 19 component library for AIGC web apps (no antd: components are built on `@base-ui/react` and styled with StyleX). The repo also contains `@lobehub/ui-codemod`. The docs site is built with `@lobehub/docs-kit` (the `lobedocs` CLI), installed from npm and developed in [lobehub/docs-kit](https://github.com/lobehub/docs-kit). pnpm workspace, Node >= 22.22.
 
 | Path                                                                               | What it is                                                                                                                |
 | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
@@ -14,7 +14,7 @@ Guidance for coding agents working in this repository.
 | `src/i18n/resources/{en,zhCn}/`                                                    | Built-in component texts                                                                                                  |
 | `docs/`                                                                            | Guide pages (`publicDocs` in `docs.config.ts`) and the home page (`docs/home/home.tsx`)                                   |
 | `docs.config.ts`                                                                   | Docs site config (`atomDirs`, aliases, nav, `publicDocs`)                                                                 |
-| `packages/docs-kit/`, `packages/codemod/`                                          | Docs toolkit and v5 → v6 codemod                                                                                          |
+| `packages/codemod/`                                                                | v5 → v6 codemod                                                                                                           |
 | `tests/`                                                                           | Cross-cutting tests (stable class names, StyleX tokens, focus ring)                                                       |
 | `.agents/skills/`, `.agents/acceptance/`                                           | Agent skills and acceptance-testing notes for this repo                                                                   |
 
@@ -68,7 +68,7 @@ pnpm dev                    # docs dev server (lobedocs dev)
 pnpm lint                   # eslint --fix on src/ and tests/
 pnpm run lint:style         # stylelint --fix
 pnpm run lint:circular      # dpdm circular-dependency check
-pnpm type-check             # lobedocs typegen + tsc (lib and site tsconfigs)
+pnpm type-check             # tsc
 pnpm exec vitest run <path> # one test file; `pnpm test` runs the suite in watch mode
 pnpm run build              # tsdown → es/ (+ theme.css, StyleX tokens, workspace packages)
 pnpm run docs:build         # full static docs build, what Vercel runs (vercel.json)
