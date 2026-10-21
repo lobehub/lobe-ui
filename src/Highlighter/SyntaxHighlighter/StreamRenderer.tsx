@@ -1,13 +1,13 @@
 'use client';
 
-import { getTokenStyleObject } from '@shikijs/core';
+import type { ThemedToken } from '@pierre/highlights';
 import clsx from 'clsx';
 import type { CSSProperties } from 'react';
 import { memo, useRef } from 'react';
-import type { BuiltinTheme, ThemedToken } from 'shiki';
 
 import { useStreamHighlight } from '@/hooks/useStreamHighlight';
 
+import { getTokenStyle } from '../tokens';
 import {
   createTokenFadeStore,
   markTokenBirths,
@@ -19,33 +19,15 @@ interface StreamRendererProps {
   children: string;
   className?: string;
   dataAttributes?: Record<`data-${string}`, string>;
-  enableTransformer?: boolean;
   fallbackClassName?: string;
   language: string;
   style?: CSSProperties;
-  theme?: BuiltinTheme;
+  theme?: string;
 }
-
-const normalizeStyleKeys = (style: Record<string, string | number>): CSSProperties => {
-  const normalized: CSSProperties = {};
-  Object.entries(style).forEach(([key, value]) => {
-    const normalizedKey = key.replaceAll(/-([a-z])/g, (_, char) => char.toUpperCase());
-    (normalized as Record<string, string | number>)[normalizedKey] = value;
-  });
-  return normalized;
-};
-
-const getTokenInlineStyle = (token: ThemedToken): CSSProperties => {
-  const rawStyle = token.htmlStyle || getTokenStyleObject(token);
-  const baseStyle = normalizeStyleKeys(rawStyle);
-  return { ...baseStyle, whiteSpace: 'pre' };
-};
 
 const TokenSpan = memo(
   ({ fadeStyle, token }: { fadeStyle?: CSSProperties | null; token: ThemedToken }) => {
-    const style = fadeStyle
-      ? { ...getTokenInlineStyle(token), ...fadeStyle }
-      : getTokenInlineStyle(token);
+    const style = fadeStyle ? { ...getTokenStyle(token), ...fadeStyle } : getTokenStyle(token);
     return (
       <span className={fadeStyle ? 'stream-char' : undefined} style={style}>
         {token.content}
@@ -96,21 +78,11 @@ const TokenLine = memo(
 );
 
 const StreamRenderer = memo<StreamRendererProps>(
-  ({
-    children,
-    className,
-    dataAttributes,
-    enableTransformer,
-    fallbackClassName,
-    language,
-    style,
-    theme,
-  }) => {
+  ({ children, className, dataAttributes, fallbackClassName, language, style, theme }) => {
     // Safely handle empty or invalid children
     const safeChildren = children ?? '';
 
     const streaming = useStreamHighlight(safeChildren, {
-      enableTransformer,
       language,
       streaming: true,
       theme,

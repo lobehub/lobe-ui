@@ -54,3 +54,4 @@ minimumReleaseAgeExclude:
   - '@lobehub/semantic-release-config@2.1.6'
   - '@lobehub/stylelint-config@2.1.6'
   - '@lobehub/docs-kit@6.2.1'
+  - '@pierre/highlights@0.2.0'

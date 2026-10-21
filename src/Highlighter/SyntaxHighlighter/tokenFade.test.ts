@@ -1,4 +1,4 @@
-import type { ThemedToken } from 'shiki';
+import type { ThemedToken } from '@pierre/highlights';
 import { describe, expect, it } from 'vitest';
 
 import { createTokenFadeStore, markTokenBirths, resolveTokenFadeStyle } from './tokenFade';

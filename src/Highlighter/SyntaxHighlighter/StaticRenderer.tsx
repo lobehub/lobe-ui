@@ -1,50 +1,31 @@
 'use client';
 
 import { type CSSProperties, memo } from 'react';
-import type { BuiltinTheme } from 'shiki';
 
 import { useHighlight } from '@/hooks/useHighlight';
+
+import { escapeHtml } from '../tokens';
 
 interface StaticRendererProps {
   children: string;
   className?: string;
   dataAttributes?: Record<`data-${string}`, string>;
-  enableTransformer?: boolean;
   fallbackClassName?: string;
   language: string;
   style?: CSSProperties;
-  theme?: BuiltinTheme;
+  theme?: string;
 }
-
-// Escape HTML for fallback to prevent XSS
-const escapeHtml = (str: string) =>
-  str
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;')
-    .replaceAll("'", '&#039;');
 
 /**
  * Static renderer for syntax highlighting without animation
  * Uses useHighlight hook to generate HTML and renders it directly
  */
 const StaticRenderer = memo<StaticRendererProps>(
-  ({
-    children,
-    className,
-    dataAttributes,
-    enableTransformer,
-    fallbackClassName,
-    language,
-    style,
-    theme,
-  }) => {
+  ({ children, className, dataAttributes, fallbackClassName, language, style, theme }) => {
     // Safely handle empty or invalid children
     const safeChildren = children ?? '';
 
     const data = useHighlight(safeChildren, {
-      enableTransformer,
       language,
       theme,
     });

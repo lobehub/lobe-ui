@@ -1502,18 +1502,6 @@
     },
     {
       "document": "src/Markdown/index.mdx",
-      "legacyId": "src-markdown-demo-transformer",
-      "legacyRouteId": "components/Markdown/index",
-      "options": {
-        "inline": false,
-        "isolated": true,
-        "layout": "bare"
-      },
-      "pathname": "/components/markdown",
-      "source": "src/Markdown/demos/code/transformer.tsx"
-    },
-    {
-      "document": "src/Markdown/index.mdx",
       "legacyId": "src-markdown-demo-citations",
       "legacyRouteId": "components/Markdown/index",
       "options": {
@@ -5690,7 +5678,7 @@
     },
     {
       "category": "Data Display",
-      "description": "The Highlighter component is used to display syntax-highlighted code blocks with powerful features like code copying, language selection, custom themes, and transformers. It supports multiple display variants, expandable views, and customizable actions.",
+      "description": "The Highlighter component is used to display syntax-highlighted code blocks with powerful features like code copying, language selection, and custom themes. It supports multiple display variants, expandable views, and customizable actions.",
       "legacyRouteId": "components/Highlighter/index",
       "pathname": "/components/highlighter",
       "section": "Components",

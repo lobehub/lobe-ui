@@ -33,7 +33,7 @@ export const Highlighter = memo<HighlighterProps>(
     wrap,
     bodyRender,
     actionsRender,
-    enableTransformer,
+    enableTransformer: _enableTransformer,
     theme,
     icon,
     fileName,
@@ -88,7 +88,6 @@ export const Highlighter = memo<HighlighterProps>(
         <SyntaxHighlighterImpl
           animated={animated}
           className={clsx(highlighterClasses('content'), classNames?.content)}
-          enableTransformer={enableTransformer}
           language={lang?.toLowerCase()}
           style={customStyles?.content}
           theme={theme}
@@ -98,16 +97,7 @@ export const Highlighter = memo<HighlighterProps>(
           {tirmedChildren}
         </SyntaxHighlighterImpl>
       ),
-      [
-        animated,
-        enableTransformer,
-        lang,
-        theme,
-        tirmedChildren,
-        variant,
-        classNames?.content,
-        customStyles?.content,
-      ],
+      [animated, lang, theme, tirmedChildren, variant, classNames?.content, customStyles?.content],
     );
 
     const displayName = useMemo(() => {

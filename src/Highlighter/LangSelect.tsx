@@ -3,7 +3,6 @@
 import * as stylex from '@stylexjs/stylex';
 import clsx from 'clsx';
 import { memo, useMemo } from 'react';
-import { bundledLanguagesInfo } from 'shiki';
 
 import { Flexbox } from '@/Flex';
 import MaterialFileTypeIcon from '@/MaterialFileTypeIcon';
@@ -11,6 +10,7 @@ import Select, { type SelectProps } from '@/Select';
 import Text from '@/Text';
 import { stopPropagation } from '@/utils/dom';
 
+import { highlighterLanguages } from './languages';
 import { highlighterClasses } from './stable';
 import { styles } from './style';
 
@@ -35,7 +35,7 @@ export const LangSelect = memo<Omit<SelectProps<string>, 'options'>>(({ style, .
         title: 'Plaintext,plaintext,*.text,*.txt',
         value: 'plaintext',
       },
-      ...bundledLanguagesInfo.map((item) => ({
+      ...highlighterLanguages.map((item) => ({
         label: (
           <Flexbox horizontal align={'center'} gap={4}>
             <MaterialFileTypeIcon

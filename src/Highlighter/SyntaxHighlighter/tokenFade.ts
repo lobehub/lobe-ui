@@ -1,6 +1,6 @@
 import { STREAM_FADE_DURATION } from '@lobehub/streamdown';
+import type { ThemedToken } from '@pierre/highlights';
 import type { CSSProperties } from 'react';
-import type { ThemedToken } from 'shiki';
 
 const MIN_GAP_MS = 16;
 const MAX_GAP_MS = 160;
@@ -10,7 +10,7 @@ const MAX_CHAR_PACE_MS = 18;
 export interface TokenFadeStore {
   /**
    * Birth timestamp per source char. A char's birth is the birth of the
-   * token it is displayed in, and it only ever moves earlier: shiki
+   * token it is displayed in, and it only ever moves earlier: the tokenizer
    * re-splits the last line as it completes (`'rea` becomes `'`, `rea`,
    * `'`) and merges tokens the other way, and a char that was already on
    * screen at some opacity must never drop below it in the new token.

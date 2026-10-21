@@ -1,336 +1,142 @@
 'use client';
 
-import { ShikiStreamTokenizer } from '@shikijs/stream';
-import { type CSSProperties, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { type BuiltinTheme, type ThemedToken } from 'shiki';
+import type { Lang, LiveTokenizer, ThemedToken } from '@pierre/highlights';
+import { type CSSProperties, useEffect, useMemo, useRef, useState } from 'react';
 
 import { getCodeLanguageByInput } from '@/Highlighter/const';
-import lobeTheme from '@/Highlighter/theme/lobe-theme';
+import { type HighlighterEngine, useHighlighterEngine } from '@/Highlighter/engine';
+import { getPreStyle } from '@/Highlighter/tokens';
 
-import { shikiModulePromise, type StreamingHighlightResult } from './useHighlight';
+export type StreamingHighlightResult = {
+  lines: ThemedToken[][];
+  preStyle?: CSSProperties;
+};
 
-type StreamingOptions = {
-  customThemes?: Record<string, any>;
-  enabled?: boolean;
+interface StreamSession {
+  engine: HighlighterEngine;
   language: string;
-  theme: string;
-};
+  lines: ThemedToken[][];
+  preStyle?: CSSProperties;
+  text: string;
+  tokenizer: LiveTokenizer;
+}
 
-// Optimized version: reduce array allocations and object spreading
-const tokensToLineTokens = (tokens: ThemedToken[]): ThemedToken[][] => {
-  if (!tokens.length) return [[]];
-
-  const lines: ThemedToken[][] = [];
-  let currentLine: ThemedToken[] = [];
-
-  for (const token of tokens) {
-    const content = token.content ?? '';
-
-    if (content === '\n') {
-      lines.push(currentLine);
-      currentLine = [];
-      continue;
-    }
-
-    const newlineIndex = content.indexOf('\n');
-    if (newlineIndex === -1) {
-      // No newline, add token directly
-      currentLine.push(token);
-    } else {
-      // Split on newlines
-      const segments = content.split('\n');
-      for (const [j, segment] of segments.entries()) {
-        if (segment) {
-          // Only create new object if we need to modify content
-          currentLine.push(j === 0 && segment === content ? token : { ...token, content: segment });
-        }
-        if (j < segments.length - 1) {
-          lines.push(currentLine);
-          currentLine = [];
-        }
-      }
-    }
+const readLines = (session: StreamSession, from: number) => {
+  const { tokenizer } = session;
+  const lines = session.lines.slice(0, Math.min(from, tokenizer.lineCount));
+  for (let line = lines.length; line < tokenizer.lineCount; line++) {
+    lines.push(tokenizer.getLineTokens(line).tokens);
   }
-
-  // Don't forget the last line
-  if (currentLine.length > 0 || lines.length === 0) {
-    lines.push(currentLine);
-  }
-
-  return lines.length > 0 ? lines : [[]];
+  session.lines = lines;
 };
 
-const createPreStyle = (bg?: string, fg?: string): CSSProperties | undefined => {
-  if (!bg && !fg) return undefined;
-  return {
-    backgroundColor: bg,
-    color: fg,
-  };
-};
-
-const useStreamingHighlighter = (
+const createSession = (
+  engine: HighlighterEngine,
+  language: string,
   text: string,
-  options: StreamingOptions,
-): StreamingHighlightResult | undefined => {
-  const { customThemes, enabled, language, theme } = options;
-  const [result, setResult] = useState<StreamingHighlightResult>();
-  const tokenizerRef = useRef<ShikiStreamTokenizer | null>(null);
-  const previousTextRef = useRef('');
-  const safeText = text ?? '';
-  const latestTextRef = useRef(safeText);
-  const preStyleRef = useRef<CSSProperties | undefined>(undefined);
-  const linesRef = useRef<ThemedToken[][]>([[]]);
-
-  useEffect(() => {
-    latestTextRef.current = safeText;
-  }, [safeText]);
-
-  // Use ref to store callback to avoid recreating it
-  const setStreamingResultRef = useRef((rawLines: ThemedToken[][]) => {
-    const previousLines = linesRef.current;
-    const newLinesLength = rawLines.length;
-    const prevLinesLength = previousLines.length;
-
-    // Fast path: if lengths differ or it's a complete reset, use new lines directly
-    if (newLinesLength !== prevLinesLength || newLinesLength === 0) {
-      linesRef.current = rawLines;
-      setResult({
-        lines: rawLines,
-        preStyle: preStyleRef.current,
-      });
-      return;
-    }
-
-    // Optimized comparison: only check changed lines
-    let hasChanges = false;
-    const mergedLines: ThemedToken[][] = [];
-
-    for (let i = 0; i < newLinesLength; i++) {
-      const newLine = rawLines[i];
-      const prevLine = previousLines[i];
-
-      // Quick reference equality check first
-      if (prevLine === newLine) {
-        mergedLines[i] = prevLine;
-        continue;
-      }
-
-      // Length check
-      if (!prevLine || prevLine.length !== newLine.length) {
-        mergedLines[i] = newLine;
-        hasChanges = true;
-        continue;
-      }
-
-      // Deep comparison only for lines that might have changed
-      let lineChanged = false;
-      for (const [j, newToken] of newLine.entries()) {
-        if (prevLine[j] !== newToken) {
-          lineChanged = true;
-          break;
-        }
-      }
-
-      if (lineChanged) {
-        mergedLines[i] = newLine;
-        hasChanges = true;
-      } else {
-        mergedLines[i] = prevLine;
-      }
-    }
-
-    // Only update state if there are actual changes
-    if (hasChanges) {
-      linesRef.current = mergedLines;
-      setResult({
-        lines: mergedLines,
-        preStyle: preStyleRef.current,
-      });
-    }
+): StreamSession => {
+  const tokenizer = new engine.highlights.LiveTokenizer({
+    code: text,
+    lang: language as Lang,
+    theme: engine.theme,
   });
+  const { bg, fg } = engine.highlights.codeToTokens('', {
+    lang: language as Lang,
+    theme: engine.theme,
+  });
+  const session: StreamSession = {
+    engine,
+    language,
+    lines: [],
+    preStyle: getPreStyle({ bg, fg }),
+    text,
+    tokenizer,
+  };
+  readLines(session, 0);
+  return session;
+};
 
-  const updateTokens = useCallback(async (nextText: string, forceReset = false) => {
-    const tokenizer = tokenizerRef.current;
-    if (!tokenizer) return;
+const updateSession = (session: StreamSession, text: string) => {
+  if (text === session.text) return false;
 
-    if (forceReset) {
-      tokenizer.clear();
-      previousTextRef.current = '';
-    }
-
-    const previousText = previousTextRef.current;
-    let chunk = nextText;
-    const canAppend = !forceReset && nextText.startsWith(previousText);
-
-    if (canAppend) {
-      chunk = nextText.slice(previousText.length);
-    } else if (!forceReset) {
-      tokenizer.clear();
-    }
-
-    previousTextRef.current = nextText;
-
-    if (!chunk) {
-      // Optimize: avoid array spread if possible
-      const stableTokens = tokenizer.tokensStable;
-      const unstableTokens = tokenizer.tokensUnstable;
-      const totalLength = stableTokens.length + unstableTokens.length;
-
-      if (totalLength === 0) {
-        setStreamingResultRef.current([[]]);
-        return;
-      }
-
-      // Only create merged array if we have both stable and unstable tokens
-      const mergedTokens =
-        stableTokens.length === 0
-          ? unstableTokens
-          : unstableTokens.length === 0
-            ? stableTokens
-            : [...stableTokens, ...unstableTokens];
-
-      setStreamingResultRef.current(tokensToLineTokens(mergedTokens));
-      return;
-    }
-
-    try {
-      await tokenizer.enqueue(chunk);
-      // Optimize: avoid array spread if possible
-      const stableTokens = tokenizer.tokensStable;
-      const unstableTokens = tokenizer.tokensUnstable;
-      const mergedTokens =
-        stableTokens.length === 0
-          ? unstableTokens
-          : unstableTokens.length === 0
-            ? stableTokens
-            : [...stableTokens, ...unstableTokens];
-      setStreamingResultRef.current(tokensToLineTokens(mergedTokens));
-    } catch (error) {
-      console.error('Streaming highlighting failed:', error);
-    }
-  }, []);
-
-  // Cache highlighter key to avoid unnecessary recreations
-  const highlighterKeyRef = useRef<string>('');
-
-  useEffect(() => {
-    if (!enabled) {
-      tokenizerRef.current?.clear();
-      tokenizerRef.current = null;
-      previousTextRef.current = '';
-      preStyleRef.current = undefined;
-      linesRef.current = [[]];
-      setResult(undefined);
-      highlighterKeyRef.current = '';
-      return;
-    }
-
-    // Skip if language/theme combination hasn't changed
-    const currentKey = `${language}-${theme}`;
-    if (highlighterKeyRef.current === currentKey && tokenizerRef.current) {
-      return;
-    }
-
-    let cancelled = false;
-
-    (async () => {
-      const mod = await shikiModulePromise;
-      if (!mod || cancelled) return;
-
-      try {
-        // Load custom theme if using slack-dark or slack-ochin
-        let themesToLoad: any[] = [theme];
-        if (customThemes && theme === 'lobe-theme') {
-          const customTheme = customThemes[theme];
-          if (customTheme) {
-            themesToLoad = [customTheme as any];
-          }
-        }
-
-        // Only load the specific language and theme needed
-        // getSingletonHighlighter will cache the instance internally
-        const highlighter = await mod.getSingletonHighlighter({
-          langs: language ? [language] : ['plaintext'],
-          themes: themesToLoad,
-        });
-
-        if (!highlighter || cancelled) return;
-
-        // Only create new tokenizer if key changed
-        if (highlighterKeyRef.current !== currentKey) {
-          // Clear old tokenizer
-          tokenizerRef.current?.clear();
-
-          const tokenizer = new ShikiStreamTokenizer({
-            highlighter,
-            lang: language,
-            theme,
-          });
-
-          tokenizerRef.current = tokenizer;
-          highlighterKeyRef.current = currentKey;
-          previousTextRef.current = '';
-          linesRef.current = [[]];
-
-          const themeInfo = highlighter.getTheme(theme);
-          preStyleRef.current = createPreStyle(themeInfo?.bg, themeInfo?.fg);
-        }
-
-        const currentText = latestTextRef.current;
-        if (currentText) {
-          await updateTokens(currentText, true);
-        } else {
-          setStreamingResultRef.current([[]]);
-        }
-      } catch (error) {
-        console.error('Streaming highlighter initialization failed:', error);
-        // Reset on error
-        highlighterKeyRef.current = '';
-      }
-    })();
-
-    return () => {
-      cancelled = true;
-      // Cleanup only if this effect was cancelled before completion
-      // The next effect will handle cleanup if key changed
-    };
-  }, [enabled, language, theme, updateTokens, customThemes]);
-
-  // Separate effect for text updates to avoid unnecessary tokenizer recreation
-  useEffect(() => {
-    if (!enabled) return;
-    if (!tokenizerRef.current) return;
-    // Use ref to get latest text to avoid stale closures
-    const currentText = latestTextRef.current;
-    updateTokens(currentText);
-  }, [enabled, safeText, updateTokens]);
-
-  return result;
+  const { tokenizer } = session;
+  if (text.startsWith(session.text)) {
+    const lastLine = tokenizer.lineCount - 1;
+    const end = { character: tokenizer.getLineLength(lastLine), line: lastLine };
+    const update = tokenizer.applyEdits([
+      { newText: text.slice(session.text.length), range: { end, start: end } },
+    ]);
+    const firstChanged = update.lineChanges.reduce(
+      (min, change) => Math.min(min, change.newStartLine),
+      lastLine,
+    );
+    session.text = text;
+    readLines(session, firstChanged);
+  } else {
+    tokenizer.reset(text);
+    session.text = text;
+    readLines(session, 0);
+  }
+  return true;
 };
 
 export const useStreamHighlight = (
   text: string,
   {
     language,
-    theme: builtinTheme,
+    theme: themeId,
     streaming,
-  }: { enableTransformer?: boolean; language: string; streaming?: boolean; theme?: BuiltinTheme },
-) => {
-  // Safely handle language and text with boundary checks
+  }: { language: string; streaming?: boolean; theme?: string },
+): StreamingHighlightResult | undefined => {
   const safeText = text ?? '';
   const lang = (language ?? 'plaintext').toLowerCase();
-
-  // Match supported languages
   const matchedLanguage = useMemo(() => getCodeLanguageByInput(lang), [lang]);
+  const engine = useHighlighterEngine(themeId);
 
-  const effectiveTheme = builtinTheme || 'lobe-theme';
+  const sessionRef = useRef<StreamSession | null>(null);
+  const [result, setResult] = useState<StreamingHighlightResult>();
 
-  return useStreamingHighlighter(safeText, {
-    customThemes: {
-      'lobe-theme': lobeTheme,
+  useEffect(() => {
+    if (!streaming || !engine) {
+      sessionRef.current?.tokenizer.dispose();
+      sessionRef.current = null;
+      setResult(undefined);
+      return;
+    }
+
+    let session = sessionRef.current;
+    let changed: boolean;
+    if (!session || session.engine !== engine || session.language !== matchedLanguage) {
+      session?.tokenizer.dispose();
+      try {
+        session = createSession(engine, matchedLanguage, safeText);
+      } catch (error) {
+        console.error('Streaming highlighter initialization failed:', error);
+        sessionRef.current = null;
+        setResult(undefined);
+        return;
+      }
+      sessionRef.current = session;
+      changed = true;
+    } else {
+      try {
+        changed = updateSession(session, safeText);
+      } catch (error) {
+        console.error('Streaming highlighting failed:', error);
+        return;
+      }
+    }
+
+    if (changed) setResult({ lines: session.lines, preStyle: session.preStyle });
+  }, [engine, matchedLanguage, safeText, streaming]);
+
+  useEffect(
+    () => () => {
+      sessionRef.current?.tokenizer.dispose();
+      sessionRef.current = null;
     },
-    enabled: streaming,
-    language: matchedLanguage,
-    theme: effectiveTheme,
-  });
+    [],
+  );
+
+  return result;
 };
