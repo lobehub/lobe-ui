@@ -24,7 +24,7 @@ const ScaleRow = memo<IScaleRow>(({ name }) => {
       gap={2}
       {...toDataAttributes({ scale: 'css-var' })}
     >
-      <div {...styleProps(styles.scaleRowTitle, cssVarClasses('row-title'))} key={name}>
+      <div key={name} {...styleProps(styles.scaleRowTitle, cssVarClasses('row-title'))}>
         <div {...stylex.props(styles.text)}>cssVar</div>
       </div>
       {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((color) => {

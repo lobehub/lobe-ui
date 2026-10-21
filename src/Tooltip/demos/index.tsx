@@ -1,5 +1,4 @@
-import { Tooltip, type TooltipProps } from '@lobehub/ui';
-import { Button } from '@lobehub/ui';
+import { Button, Tooltip, type TooltipProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {

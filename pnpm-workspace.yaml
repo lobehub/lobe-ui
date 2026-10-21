@@ -27,6 +27,7 @@ patchedDependencies:
 
 allowBuilds:
   '@parcel/watcher': true
+  core-js: false
   esbuild: true
   node-pty: false
   unrs-resolver: true
@@ -45,3 +46,10 @@ minimumReleaseAgeExclude:
   - '@tanstack/react-virtual@3.14.18'
   - '@tanstack/virtual-core@3.19.3'
   - pele@1.6.0
+  - '@lobehub/commitlint-config@2.1.6'
+  - '@lobehub/eslint-config@2.1.6'
+  - '@lobehub/lint@2.1.6'
+  - '@lobehub/prettier-config@2.1.6'
+  - '@lobehub/remarklint-config@2.1.6'
+  - '@lobehub/semantic-release-config@2.1.6'
+  - '@lobehub/stylelint-config@2.1.6'

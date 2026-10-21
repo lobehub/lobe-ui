@@ -250,10 +250,10 @@ export const HeaderRows = <T,>({
         );
         return (
           <TableRow
+            key={rowIndex}
             {...rowProps}
             className={clsx(rowProps?.className, semanticClassNames.header.row)}
             component={components.headerRow}
-            key={rowIndex}
             style={{ ...rowProps?.style, ...semanticStyles.header.row }}
           >
             {cells.map((cell) => (

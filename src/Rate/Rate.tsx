@@ -113,10 +113,10 @@ const Rate = memo<RateProps>(
               {interactive &&
                 targets.map((target) => (
                   <span
+                    key={target}
                     {...stylex.props(styles.half, !allowHalf && styles.halfFull)}
                     data-half={target % 1 === 0 && allowHalf ? 'end' : 'start'}
                     data-value={target}
-                    key={target}
                     onClick={() => setMergedValue(target)}
                     onPointerEnter={() => setHoverValue(target)}
                   />

@@ -279,6 +279,7 @@ const Pagination = memo<PaginationProps>(
                 </button>
               ) : (
                 <button
+                  key={item}
                   {...styleProps(
                     [
                       paginationJumpMarker,
@@ -289,7 +290,6 @@ const Pagination = memo<PaginationProps>(
                   )}
                   data-pagination-jump={item === 'ellipsis-prev' ? 'prev' : 'next'}
                   disabled={disabled}
-                  key={item}
                   type="button"
                   title={title(
                     item === 'ellipsis-prev'

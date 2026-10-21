@@ -211,14 +211,14 @@ const EditorSlashMenu = memo<Props>(
                             ))
                           : null}
                         {entry.items.map((item: ItemType) => (
-                          <MenuItemRenderer {...menuItemProps} item={item} key={item.value} />
+                          <MenuItemRenderer key={item.value} {...menuItemProps} item={item} />
                         ))}
                       </EditorSlashMenuGroup>
                     );
                   }
 
                   const item = entry as ItemType;
-                  return <MenuItemRenderer {...menuItemProps} item={item} key={item.value} />;
+                  return <MenuItemRenderer key={item.value} {...menuItemProps} item={item} />;
                 }}
               </EditorSlashMenuList>
 

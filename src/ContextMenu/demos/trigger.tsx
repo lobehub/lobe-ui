@@ -3,9 +3,9 @@ import {
   ContextMenuHost,
   type ContextMenuItem,
   ContextMenuTrigger,
+  createStaticStyles,
   Text,
 } from '@lobehub/ui';
-import { createStaticStyles } from '@lobehub/ui';
 import { useMemo } from 'react';
 
 const styles = createStaticStyles(({ css, cssVar }) => ({

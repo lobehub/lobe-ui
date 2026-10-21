@@ -1,5 +1,10 @@
-import { Block, ContextMenuTrigger, type GenericItemType, Text } from '@lobehub/ui';
-import { createStaticStyles } from '@lobehub/ui';
+import {
+  Block,
+  ContextMenuTrigger,
+  createStaticStyles,
+  type GenericItemType,
+  Text,
+} from '@lobehub/ui';
 import { useMemo } from 'react';
 
 const styles = createStaticStyles(({ css, cssVar }) => ({

@@ -1,5 +1,12 @@
-import { Avatar, Button, DropdownMenu, type DropdownMenuProps, Flexbox, Icon } from '@lobehub/ui';
-import { cssVar } from '@lobehub/ui';
+import {
+  Avatar,
+  Button,
+  cssVar,
+  DropdownMenu,
+  type DropdownMenuProps,
+  Flexbox,
+  Icon,
+} from '@lobehub/ui';
 import {
   CreditCardIcon,
   LifeBuoyIcon,

@@ -1,5 +1,11 @@
-import { Block, DropdownMenu, type DropdownMenuProps, Icon, Text } from '@lobehub/ui';
-import { createStaticStyles } from '@lobehub/ui';
+import {
+  Block,
+  createStaticStyles,
+  DropdownMenu,
+  type DropdownMenuProps,
+  Icon,
+  Text,
+} from '@lobehub/ui';
 import { GlobeIcon, MoreHorizontal, PencilIcon, UploadIcon } from 'lucide-react';
 
 const triggerStyles = createStaticStyles(({ css, cssVar }) => ({

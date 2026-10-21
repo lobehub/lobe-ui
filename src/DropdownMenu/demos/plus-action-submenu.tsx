@@ -1,6 +1,7 @@
 import { Menu } from '@base-ui/react/menu';
 import {
   ActionIcon,
+  createStaticStyles,
   DropdownMenuPopup,
   DropdownMenuPortal,
   DropdownMenuPositioner,
@@ -11,7 +12,6 @@ import {
   Tooltip,
   TooltipGroup,
 } from '@lobehub/ui';
-import { createStaticStyles } from '@lobehub/ui';
 import { FileTextIcon, PlusIcon, StoreIcon, WrenchIcon } from 'lucide-react';
 import type { ReactNode } from 'react';
 import { useCallback, useMemo, useRef, useState } from 'react';

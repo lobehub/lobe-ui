@@ -1,5 +1,13 @@
-import { Avatar, cssVar, Flexbox, Tag, Text } from '@lobehub/ui';
-import { Button, FloatingSheet, type FloatingSheetProps } from '@lobehub/ui';
+import {
+  Avatar,
+  Button,
+  cssVar,
+  Flexbox,
+  FloatingSheet,
+  type FloatingSheetProps,
+  Tag,
+  Text,
+} from '@lobehub/ui';
 import { Bookmark, Heart, MessageCircle, Send, Share2 } from 'lucide-react';
 import { useState } from 'react';
 

@@ -1,7 +1,7 @@
-import { Flexbox } from '@lobehub/ui';
 import {
   Button,
   DayjsDatePicker as DatePicker,
+  Flexbox,
   type PickerPanelProps,
   Slider,
   Text,

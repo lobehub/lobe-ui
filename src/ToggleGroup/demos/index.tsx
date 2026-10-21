@@ -1,5 +1,4 @@
-import { Flexbox } from '@lobehub/ui';
-import { ToggleGroup, type ToggleGroupProps } from '@lobehub/ui';
+import { Flexbox, ToggleGroup, type ToggleGroupProps } from '@lobehub/ui';
 import { CodeIcon, EyeIcon } from 'lucide-react';
 import { useState } from 'react';
 

@@ -1,5 +1,12 @@
-import { toast, ToastHost } from '@lobehub/ui';
-import { Form, type FormGroupItemType, Input, Switch, TextArea } from '@lobehub/ui';
+import {
+  Form,
+  type FormGroupItemType,
+  Input,
+  Switch,
+  TextArea,
+  toast,
+  ToastHost,
+} from '@lobehub/ui';
 import { SettingsIcon, SparklesIcon } from 'lucide-react';
 
 const items: FormGroupItemType[] = [

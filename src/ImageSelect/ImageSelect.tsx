@@ -51,12 +51,12 @@ const ImageSelect = memo<ImageSelectProps>(
             <Flexbox
               align={'center'}
               gap={4}
+              key={item.value}
               {...toDataAttributes({ active: isActive })}
               {...styleProps(
                 [styles.container, isActive && styles.active],
                 imageSelectClasses('item'),
               )}
-              key={item.value}
               onClick={() => setCurrentValue(item.value)}
             >
               <Img

@@ -1,5 +1,4 @@
-import { Flexbox } from '@lobehub/ui';
-import { Button, Carousel, type CarouselRef } from '@lobehub/ui';
+import { Button, Carousel, type CarouselRef, Flexbox } from '@lobehub/ui';
 import { useRef, useState } from 'react';
 
 const slides = [

@@ -3,8 +3,7 @@
 import { mergeProps } from '@base-ui/react/merge-props';
 import { Popover as BasePopover } from '@base-ui/react/popover';
 import clsx from 'clsx';
-import { cloneElement, type FC, isValidElement, useMemo } from 'react';
-import { use } from 'react';
+import { cloneElement, type FC, isValidElement, use, useMemo } from 'react';
 
 import { useNativeButton } from '@/hooks/useNativeButton';
 import { getElementRef } from '@/utils/getElementRef';

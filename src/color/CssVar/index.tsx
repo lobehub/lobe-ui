@@ -56,8 +56,8 @@ const ColorScales = memo<ColorScalesProps>(({ className, name, scale, midHighLig
             <Flexbox
               horizontal
               align={'center'}
-              {...styleProps(styles.scaleRowTitle, cssVarClasses('row-title'))}
               key="scale-num"
+              {...styleProps(styles.scaleRowTitle, cssVarClasses('row-title'))}
             />
             {Array.from({ length: scale.light.length })
               .fill('')
@@ -67,7 +67,7 @@ const ColorScales = memo<ColorScalesProps>(({ className, name, scale, midHighLig
                 const isMidHighlight = midHighLight === index;
 
                 return (
-                  <div {...styleProps(styles.scaleBox, cssVarClasses('cell'))} key={`num${index}`}>
+                  <div key={`num${index}`} {...styleProps(styles.scaleBox, cssVarClasses('cell'))}>
                     <div {...stylex.props(styles.scaleBox)}>
                       <Flexbox
                         horizontal

@@ -1,5 +1,4 @@
-import { createStaticStyles } from '@lobehub/ui';
-import { ToggleGroup, type ToggleGroupProps } from '@lobehub/ui';
+import { createStaticStyles, ToggleGroup, type ToggleGroupProps } from '@lobehub/ui';
 import { CodeIcon, EyeIcon } from 'lucide-react';
 
 const styles = createStaticStyles(({ css, cssVar }) => ({

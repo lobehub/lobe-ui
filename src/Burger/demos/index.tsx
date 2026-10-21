@@ -1,5 +1,4 @@
-import { Flexbox } from '@lobehub/ui';
-import { Burger, Button, type ListItem } from '@lobehub/ui';
+import { Burger, Button, Flexbox, type ListItem } from '@lobehub/ui';
 import { BookOpen, Bot, House, MessageSquare } from 'lucide-react';
 import { type Key, useState } from 'react';
 

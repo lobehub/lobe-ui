@@ -1,5 +1,4 @@
-import { Button, DropdownMenu, type DropdownMenuProps } from '@lobehub/ui';
-import { cssVar } from '@lobehub/ui';
+import { Button, cssVar, DropdownMenu, type DropdownMenuProps } from '@lobehub/ui';
 
 const zones: [string, string][] = [
   ['Honolulu', 'GMT-10'],

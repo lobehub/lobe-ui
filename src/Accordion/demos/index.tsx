@@ -1,5 +1,4 @@
-import { Flexbox } from '@lobehub/ui';
-import { Accordion, type AccordionProps, ActionIcon } from '@lobehub/ui';
+import { Accordion, type AccordionProps, ActionIcon, Flexbox } from '@lobehub/ui';
 import { PencilIcon, Trash2Icon } from 'lucide-react';
 
 const items: AccordionProps['items'] = [

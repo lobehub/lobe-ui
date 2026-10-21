@@ -125,7 +125,7 @@ const FormList = memo<FormListProps>(({ addText, children, columns, emptyText, n
         style={{ gridTemplateColumns }}
       >
         {columns.map((column) => (
-          <div {...styleProps(listStyles.title, formKitClasses('list-title'))} key={column.name}>
+          <div key={column.name} {...styleProps(listStyles.title, formKitClasses('list-title'))}>
             {column.title}
           </div>
         ))}
@@ -139,8 +139,8 @@ const FormList = memo<FormListProps>(({ addText, children, columns, emptyText, n
         <>
           {fields.map((field) => (
             <div
-              {...styleProps(listStyles.row, formKitClasses('list-row'))}
               key={field.key}
+              {...styleProps(listStyles.row, formKitClasses('list-row'))}
               style={{ gridTemplateColumns }}
             >
               {columns.map((column) => (

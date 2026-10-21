@@ -1,5 +1,4 @@
-import { Flexbox } from '@lobehub/ui';
-import { Anchor, type AnchorItem } from '@lobehub/ui';
+import { Anchor, type AnchorItem, Flexbox } from '@lobehub/ui';
 import { useRef } from 'react';
 
 const sections = [

@@ -1,5 +1,4 @@
-import { EditorSlashMenu, type EditorSlashMenuOption } from '@lobehub/ui';
-import { createStaticStyles } from '@lobehub/ui';
+import { createStaticStyles, EditorSlashMenu, type EditorSlashMenuOption } from '@lobehub/ui';
 import { Code2, Heading1, Image, List, Quote, Table } from 'lucide-react';
 import { useMemo, useRef, useState } from 'react';
 

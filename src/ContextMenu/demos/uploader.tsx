@@ -5,11 +5,11 @@ import {
   closeContextMenu,
   type ContextMenuItem,
   ContextMenuTrigger,
+  createStaticStyles,
   Icon,
   Text,
   Upload,
 } from '@lobehub/ui';
-import { createStaticStyles } from '@lobehub/ui';
 import { FileIcon, UploadIcon, XIcon } from 'lucide-react';
 import { useMemo, useState } from 'react';
 

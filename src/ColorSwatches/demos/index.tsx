@@ -1,5 +1,4 @@
-import { ColorSwatches, type ColorSwatchesProps } from '@lobehub/ui';
-import { cssVar } from '@lobehub/ui';
+import { ColorSwatches, type ColorSwatchesProps, cssVar } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 
 export default () => {

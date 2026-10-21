@@ -1,5 +1,4 @@
-import { Flexbox, Popover, type PopoverProps, Tag } from '@lobehub/ui';
-import { Button,cssVar  } from '@lobehub/ui';
+import { Button, cssVar, Flexbox, Popover, type PopoverProps, Tag } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { Sliders } from 'lucide-react';
 

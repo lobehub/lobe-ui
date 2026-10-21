@@ -1,5 +1,4 @@
-import { Flexbox } from '@lobehub/ui';
-import { ToggleGroup, type ToggleGroupProps } from '@lobehub/ui';
+import { Flexbox, ToggleGroup, type ToggleGroupProps } from '@lobehub/ui';
 import { useState } from 'react';
 
 type Weekday = 'mon' | 'tue' | 'wed' | 'thu' | 'fri' | 'sat' | 'sun';

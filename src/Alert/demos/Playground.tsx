@@ -1,5 +1,4 @@
-import { Flexbox } from '@lobehub/ui';
-import { Alert, type AlertType, type AlertVariant, Button } from '@lobehub/ui';
+import { Alert, type AlertType, type AlertVariant, Button, Flexbox } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { SlidersHorizontal } from 'lucide-react';
 import { useState } from 'react';
@@ -70,11 +69,11 @@ export default () => {
         </Flexbox>
 
         <Alert
+          key={`${alertKey}-${detailsExpanded}`}
           {...alertProps}
           action={withAction ? <Button size="small">Review</Button> : undefined}
           closable={closable ? { 'aria-label': 'Dismiss playground alert' } : false}
           extraDefaultExpand={detailsExpanded}
-          key={`${alertKey}-${detailsExpanded}`}
           text={{ detail: 'Show technical details' }}
           extra={
             withDetails ? (

@@ -82,7 +82,7 @@ function TableSkeleton({
         ))}
       </div>
       {Array.from({ length: rows }, (_, index) => (
-        <div {...styleProps(styles.row, classes('row'))} key={index}>
+        <div key={index} {...styleProps(styles.row, classes('row'))}>
           {leading === 'avatar' ? (
             <Skeleton.Avatar className={classes('leading')} shape="circle" size={24} />
           ) : null}

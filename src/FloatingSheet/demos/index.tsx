@@ -1,5 +1,12 @@
-import { cssVar, Flexbox, Tag, Text } from '@lobehub/ui';
-import { Button, FloatingSheet, type FloatingSheetProps } from '@lobehub/ui';
+import {
+  Button,
+  cssVar,
+  Flexbox,
+  FloatingSheet,
+  type FloatingSheetProps,
+  Tag,
+  Text,
+} from '@lobehub/ui';
 import { ChevronUp, Database, FileText, GripHorizontal, Search, Sparkles, X } from 'lucide-react';
 import { type ReactNode, useState } from 'react';
 

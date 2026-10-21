@@ -1,7 +1,12 @@
 'use client';
 
-import { DropdownMenu, type DropdownMenuProps, Icon, Upload } from '@lobehub/ui';
-import { createStaticStyles } from '@lobehub/ui';
+import {
+  createStaticStyles,
+  DropdownMenu,
+  type DropdownMenuProps,
+  Icon,
+  Upload,
+} from '@lobehub/ui';
 import { FileIcon, MoreHorizontal, UploadIcon, XIcon } from 'lucide-react';
 import { useRef, useState } from 'react';
 

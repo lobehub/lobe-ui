@@ -48,15 +48,15 @@ const NetworkGlyph = memo<{ px: number }>(({ px }) => {
         </svg>
         {nodes.map(({ x, y }, index) => (
           <i
-            {...stylex.props(styles.networkNode)}
             key={`${x}-${y}`}
+            {...stylex.props(styles.networkNode)}
             style={{ animationDelay: `${index * 0.2}s`, left: x, top: y }}
           />
         ))}
         {particles.map((index) => (
           <i
-            {...stylex.props(styles.networkParticle)}
             key={index}
+            {...stylex.props(styles.networkParticle)}
             style={{ animationDelay: `${index * 0.6}s` }}
           />
         ))}

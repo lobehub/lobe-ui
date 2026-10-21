@@ -51,7 +51,7 @@ const DefaultFootnotes = memo<{ dataSource: any[] }>(({ dataSource }) => {
         const { node, href, ...rest } = props;
         const Container = href ? A : 'div';
         return (
-          <Container {...(href ? { href, ...rest } : rest)} key={index}>
+          <Container key={index} {...(href ? { href, ...rest } : rest)}>
             <Block
               horizontal
               align={'stretch'}

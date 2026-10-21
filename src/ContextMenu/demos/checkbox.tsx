@@ -2,10 +2,10 @@ import {
   Block,
   type ContextMenuItem,
   ContextMenuTrigger,
+  createStaticStyles,
   Text,
   updateContextMenuItems,
 } from '@lobehub/ui';
-import { createStaticStyles } from '@lobehub/ui';
 import { useCallback, useMemo, useState } from 'react';
 
 const styles = createStaticStyles(({ css, cssVar }) => ({

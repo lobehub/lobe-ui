@@ -41,9 +41,9 @@ const ActualSizeIcon = memo<ActualSizeIconProps>(
     >
       {CORNERS.map(({ d, origin }) => (
         <path
+          key={d}
           {...stylex.props(styles.actualSizeCorner)}
           d={d}
-          key={d}
           style={{ transformOrigin: origin }}
         />
       ))}

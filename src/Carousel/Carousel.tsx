@@ -140,9 +140,9 @@ const Carousel = memo<CarouselProps>(
                   aria-hidden={!active || undefined}
                   aria-label={`${slideIndex + 1} of ${count}`}
                   aria-roledescription="slide"
+                  key={keys[slideIndex]}
                   {...styleProps(styles.slide, carouselClasses('slide'))}
                   inert={!active}
-                  key={keys[slideIndex]}
                   role="group"
                   ref={(node) => {
                     slidesRef.current[slideIndex] = node;
@@ -182,8 +182,8 @@ const Carousel = memo<CarouselProps>(
               <button
                 aria-current={dotIndex === current || undefined}
                 aria-label={`Go to slide ${dotIndex + 1}`}
-                {...styleProps(styles.dot, carouselClasses('dot'))}
                 key={keys[dotIndex]}
+                {...styleProps(styles.dot, carouselClasses('dot'))}
                 type="button"
                 onClick={() => goTo(dotIndex)}
               />

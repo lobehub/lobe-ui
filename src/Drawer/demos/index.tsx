@@ -1,5 +1,4 @@
-import { cssVar, Flexbox, Text } from '@lobehub/ui';
-import { Button, Drawer, type DrawerPlacement } from '@lobehub/ui';
+import { Button, cssVar, Drawer, type DrawerPlacement, Flexbox, Text } from '@lobehub/ui';
 import { useState } from 'react';
 
 const PLACEMENTS: DrawerPlacement[] = ['left', 'right', 'top', 'bottom'];

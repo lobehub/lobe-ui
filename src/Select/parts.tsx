@@ -94,9 +94,9 @@ export function createTriggerValueRenderer({
             const content = labelRender ? labelRender(option) : (option.label ?? String(val));
             return (
               <span
+                key={`${String(val)}-${index}`}
                 {...stylex.props(styles.tag)}
                 data-role="lobe-select-tag"
-                key={`${String(val)}-${index}`}
               >
                 {content}
                 {isTags && (

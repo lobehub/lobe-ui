@@ -286,12 +286,12 @@ export const DrawerPopupImpl = ({
         <AnimatePresence onExitComplete={actions.onExitComplete}>
           {open ? (
             <Motion.div
+              key="drawer-popup-panel"
               {...motionConfig}
               {...motionProps}
               className={resolvedPanelClassName}
               data-drawer-placement={placement}
               data-placement={placement}
-              key="drawer-popup-panel"
               style={{ transition: 'none', ...panelStyle }}
             >
               {children}

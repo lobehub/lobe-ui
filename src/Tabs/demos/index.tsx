@@ -1,5 +1,4 @@
-import { Flexbox } from '@lobehub/ui';
-import { Tabs, type TabsProps } from '@lobehub/ui';
+import { Flexbox, Tabs, type TabsProps } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
 import { FlameIcon, HomeIcon, PaletteIcon, PuzzleIcon } from 'lucide-react';
 

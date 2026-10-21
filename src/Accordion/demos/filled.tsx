@@ -1,5 +1,4 @@
-import { Flexbox } from '@lobehub/ui';
-import { Accordion, type AccordionProps } from '@lobehub/ui';
+import { Accordion, type AccordionProps, Flexbox } from '@lobehub/ui';
 
 const items: AccordionProps['items'] = [
   {

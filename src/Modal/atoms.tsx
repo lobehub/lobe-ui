@@ -231,9 +231,9 @@ export const ModalPopupImpl = ({
         <AnimatePresence onExitComplete={actions.onExitComplete}>
           {open ? (
             <Motion.div
+              key="modal-popup-panel"
               {...modalMotionConfig}
               {...motionProps}
-              key="modal-popup-panel"
               {...panelData}
               style={{ maxWidth: width ?? undefined, transition: 'none', ...style }}
               className={clsx(

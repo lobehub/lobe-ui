@@ -1,5 +1,4 @@
-import { Flexbox } from '@lobehub/ui';
-import { Text, Tree, type TreeDataNode } from '@lobehub/ui';
+import { Flexbox, Text, Tree, type TreeDataNode } from '@lobehub/ui';
 
 const task = (id: string, name: string, children?: TreeDataNode[]): TreeDataNode => ({
   children,
