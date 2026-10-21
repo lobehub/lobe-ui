@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [6.1.0](https://github.com/lobehub/lobe-ui/compare/docs-kit@6.0.3...docs-kit@6.1.0) (2026-10-21)
+
+### ✨ Features
+
+- **docs-kit**: Support custom sidebar groups ([7c4ddb2](https://github.com/lobehub/lobe-ui/commit/7c4ddb2))
+
 ## [6.0.3](https://github.com/lobehub/lobe-ui/compare/docs-kit@6.0.2...docs-kit@6.0.3) (2026-10-21)
 
 ### 🐛 Bug Fixes
