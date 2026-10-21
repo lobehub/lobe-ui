@@ -37,6 +37,24 @@ const installUi = (root: string): string => {
   return join(uiRoot, 'es/style.css');
 };
 
+const resolveUiStyle = async (root: string) => {
+  const plugin = lobeDocsSiteConfigPlugin(root);
+  const resolveId =
+    typeof plugin.resolveId === 'function' ? plugin.resolveId : plugin.resolveId?.handler;
+  const resolved = await resolveId?.call(
+    {} as never,
+    'virtual:lobedocs/ui-style.css',
+    undefined,
+    {} as never,
+  );
+  const load = typeof plugin.load === 'function' ? plugin.load : plugin.load?.handler;
+  const emptyCode =
+    typeof resolved === 'string' && resolved.startsWith('\0')
+      ? await load?.call({} as never, resolved)
+      : undefined;
+  return { emptyCode, resolved };
+};
+
 const loadStylexModule = async (root: string, command: 'build' | 'serve' = 'build') => {
   const plugin = lobeDocsSiteConfigPlugin(root);
   const configResolved =
@@ -54,20 +72,30 @@ afterEach(() => {
   for (const root of temporaryRoots.splice(0)) rmSync(root, { force: true, recursive: true });
 });
 
-it('imports the consumer @lobehub/ui style.css when StyleX is not configured', async () => {
+it('resolves the consumer @lobehub/ui style.css to the real file when StyleX is not configured', async () => {
   const root = createFixtureConsumerRoot();
   const styleCss = installUi(root);
 
-  await expect(loadStylexModule(root)).resolves.toContain(`import ${JSON.stringify(styleCss)};`);
-  await expect(loadStylexModule(root, 'serve')).resolves.toContain(
-    `import ${JSON.stringify(styleCss)};`,
-  );
+  await expect(resolveUiStyle(root)).resolves.toEqual({ emptyCode: undefined, resolved: styleCss });
 });
 
-it('skips the @lobehub/ui import when the consumer has no style.css', async () => {
+it('never hides the @lobehub/ui import inside the virtual stylex module', async () => {
+  // React Router's dev critical-CSS walk cannot see CSS imported from a virtual module, so the
+  // SSR first paint lost every @lobehub/ui rule until the client bundle injected it.
   const root = createFixtureConsumerRoot();
+  installUi(root);
 
   await expect(loadStylexModule(root)).resolves.not.toContain('node_modules/@lobehub/ui');
+  await expect(loadStylexModule(root, 'serve')).resolves.not.toContain('node_modules/@lobehub/ui');
+});
+
+it('resolves to an empty stylesheet when the consumer has no style.css', async () => {
+  const root = createFixtureConsumerRoot();
+
+  await expect(resolveUiStyle(root)).resolves.toEqual({
+    emptyCode: '',
+    resolved: '\0virtual:lobedocs/ui-style.css',
+  });
 });
 
 it('always emits the docs-kit StyleX stylesheet and dev runtime', async () => {
@@ -78,11 +106,13 @@ it('always emits the docs-kit StyleX stylesheet and dev runtime', async () => {
   await expect(loadStylexModule(root, 'serve')).resolves.toContain('virtual:stylex:runtime');
 });
 
-it('drops the prebuilt @lobehub/ui stylesheet when StyleX compiles it from source', async () => {
+it('resolves to an empty stylesheet when StyleX compiles @lobehub/ui from source', async () => {
   const root = createFixtureConsumerRoot(`\n      stylex: {},`);
   installUi(root);
 
-  const code = await loadStylexModule(root);
-  expect(code).toContain('styles/stylex.css');
-  expect(code).not.toContain('node_modules/@lobehub/ui');
+  await expect(resolveUiStyle(root)).resolves.toEqual({
+    emptyCode: '',
+    resolved: '\0virtual:lobedocs/ui-style.css',
+  });
+  await expect(loadStylexModule(root)).resolves.toContain('styles/stylex.css');
 });
