@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [6.2.1](https://github.com/lobehub/lobe-ui/compare/docs-kit@6.2.0...docs-kit@6.2.1) (2026-10-21)
+
+### 🐛 Bug Fixes
+
+- **docs-kit**: Link @lobehub/ui style.css from a real module so dev SSR first paint is styled, closes [#755](https://github.com/lobehub/lobe-ui/issues/755) ([e7ee0cb](https://github.com/lobehub/lobe-ui/commit/e7ee0cb))
+
 # [6.2.0](https://github.com/lobehub/lobe-ui/compare/docs-kit@6.1.0...docs-kit@6.2.0) (2026-10-21)
 
 ### ✨ Features
