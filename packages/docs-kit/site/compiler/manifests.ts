@@ -16,6 +16,7 @@ export function getPrerenderPaths(): string[] {
     config.atomDirs ?? defaultAtomDirs,
     config.navSections ?? {},
     config.publicDocs ?? [],
+    config.themeConfig?.sidebarGroups ?? [],
   );
 
   return [

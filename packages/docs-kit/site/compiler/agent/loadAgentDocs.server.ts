@@ -25,6 +25,7 @@ export function loadAssembledAgentDocs(root: string = process.cwd()): AssembledA
     config.atomDirs ?? defaultAtomDirs,
     config.navSections ?? {},
     config.publicDocs ?? [],
+    config.themeConfig?.sidebarGroups ?? [],
   );
   return assembleAgentDocs({
     documents,

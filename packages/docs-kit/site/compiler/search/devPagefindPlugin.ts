@@ -270,6 +270,7 @@ export function devPagefindPlugin(options: DevPagefindPluginOptions = {}): Plugi
               docsConfig.atomDirs ?? defaultAtomDirs,
               docsConfig.navSections ?? {},
               docsConfig.publicDocs ?? [],
+              docsConfig.themeConfig?.sidebarGroups ?? [],
             ).documents.map(({ pathname }) => pathname);
           return buildDevPagefindFiles({
             api: await getApi(),

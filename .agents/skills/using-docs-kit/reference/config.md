@@ -36,7 +36,34 @@ Source of truth: `packages/docs-kit/src/config.ts` (`DocsConfig`). Loaded once p
 | `giscus`                   | `{ repo, repoId, category, categoryId }` comments at page end                                                                 |
 | `analytics.plausible`      | `{ domain, source }`                                                                                                          |
 | `metadata.openGraph.image` | Default OG image URL                                                                                                          |
+| `sidebarGroups`            | Custom sidebar sections for `docs/` pages (see below). Absent = docs/ pages stay out of the sidebar as today                  |
 | `home`                     | Default landing page content (ignored when `homePage` is set), see below                                                      |
+
+### `themeConfig.sidebarGroups`
+
+By default every page under `docs/` is published (via `publicDocs`) but kept out of the component
+sidebar. Declare groups to promote selected directories into their own sidebar sections:
+
+```ts
+themeConfig: {
+  sidebarGroups: [
+    { dir: 'docs/editor', title: 'Editor', icon: 'file-code', order: 1 },
+    { dir: 'docs/features', title: 'Features', icon: 'sparkles', order: 2 },
+  ],
+}
+```
+
+| Field   | Notes                                                                                                                 |
+| ------- | --------------------------------------------------------------------------------------------------------------------- |
+| `dir`   | Source-path prefix (`docs/features`). Longest match wins                                                              |
+| `title` | Sidebar section label                                                                                                 |
+| `icon`  | Optional Lucide icon name in kebab-case (e.g. `file-code`, `sparkles`; same as `navItems[].icon`)                     |
+| `order` | Optional sort key on the same number line as built-in sections (Components = 0). Lower first; unset = after built-ins |
+
+Pages in a group still need a `category` frontmatter field for nested categories; if it is omitted
+the group title is used and the section flattens to a flat page list. Frontmatter `order` still
+sorts pages within the group. Overview routes at `/sections/<title>` are generated like any other
+section. With no `sidebarGroups`, behavior is unchanged.
 
 ### `themeConfig.home`
 
@@ -77,12 +104,13 @@ Sidebar = **section → category → pages** (sorted by `order`, then `title`).
 
 Section is derived per page:
 
-1. `navSections[source]` if set.
-2. `atomDirs[].subType` if set (capitalized, e.g. `plugins` → `Plugins`).
-3. The second path segment when it is a lobe-ui namespace (`awesome`, `brand`, `chat`,
+1. A matching `themeConfig.sidebarGroups[].dir` (longest prefix wins).
+2. `navSections[source]` if set.
+3. `atomDirs[].subType` if set (capitalized, e.g. `plugins` → `Plugins`).
+4. The second path segment when it is a lobe-ui namespace (`awesome`, `brand`, `chat`,
    `dashboard`, `color`, `icons`, `mdx`, `mobile`, `storybook`; see
    `packages/docs-kit/src/packageNamespaces.ts`) — lobe-ui specific.
-4. Otherwise `Components`.
+5. Otherwise `Components`.
 
 Avoid naming your own folders after those namespaces unless you want that grouping. Each section
 and category also gets an overview page at `/sections/<section>` and

@@ -21,6 +21,7 @@ import {
   Webhook,
 } from 'lucide-react';
 
+import type { DocsSidebarGroupConfig } from '../../../src/config';
 import {
   categoryOverviewPathname,
   findOverview,
@@ -45,7 +46,14 @@ const sectionIcons: Record<string, LucideIcon> = {
   'StoryBook': BookOpen,
 };
 
-export const sectionIcon = (title: string): LucideIcon => sectionIcons[title] ?? Folder;
+export const sectionIcon = (
+  title: string,
+  sidebarGroups: readonly DocsSidebarGroupConfig[] = [],
+): LucideIcon => {
+  const configured = sidebarGroups.find((group) => group.title === title)?.icon;
+  if (configured) return namedIcon(configured);
+  return sectionIcons[title] ?? Folder;
+};
 
 export interface DocsNavItemConfig {
   external?: boolean;
@@ -134,11 +142,14 @@ const documentItems = (documents: readonly DocumentManifestEntry[]): ConsoleNavI
   documents.map((document) => ({ end: true, href: document.pathname, label: document.title }));
 
 /** Sections carry the icons; categories become nested groups when a section has several. */
-export function buildNavGroups(navigation: readonly NavigationSection[]): ConsoleNavGroup[] {
+export function buildNavGroups(
+  navigation: readonly NavigationSection[],
+  sidebarGroups: readonly DocsSidebarGroupConfig[] = [],
+): ConsoleNavGroup[] {
   return orderSections(navigation).map((section): ConsoleNavGroup => {
     const base = {
       href: sectionOverviewPathname(section),
-      icon: sectionIcon(section.title),
+      icon: sectionIcon(section.title, sidebarGroups),
       key: sectionKey(section),
       label: section.title,
     };

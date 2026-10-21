@@ -93,7 +93,7 @@ export function DocsShell({ children, documents, navigation, onSearchOpen }: Doc
   const nav = (
     <ConsoleNav
       defaultExpanded="active"
-      groups={buildNavGroups(navigation)}
+      groups={buildNavGroups(navigation, themeConfig?.sidebarGroups)}
       items={buildNavItems(themeConfig?.navItems)}
       label="Documentation"
       pathname={pathname}

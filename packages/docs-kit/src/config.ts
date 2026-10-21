@@ -58,6 +58,20 @@ export interface DocsHomeConfig {
   install?: string;
 }
 
+export interface DocsSidebarGroupConfig {
+  /**
+   * Source-path prefix for pages in this group, e.g. `docs/features`.
+   * Matches the directory itself and every file under it (forward slashes).
+   */
+  dir: string;
+  /** Lucide icon name, same convention as `navItems[].icon`. */
+  icon?: string;
+  /** Section sort key; lower comes first. Unset = after built-in sections. */
+  order?: number;
+  /** Sidebar section title. */
+  title: string;
+}
+
 export interface DocsMetadataConfig {
   openGraph?: {
     image?: string;
@@ -82,6 +96,7 @@ export interface DocsThemeConfig {
   metadata?: DocsMetadataConfig;
   navItems?: DocsNavItem[];
   prefersColor?: 'auto' | 'dark' | 'light';
+  sidebarGroups?: DocsSidebarGroupConfig[];
   socialLinks?: DocsSocialLink[];
 }
 

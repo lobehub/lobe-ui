@@ -3,7 +3,7 @@ import path from 'node:path';
 
 import { parse } from 'yaml';
 
-import type { AtomDirConfig } from '../../../src/config';
+import type { AtomDirConfig, DocsSidebarGroupConfig } from '../../../src/config';
 import { createNavigation } from '../../content/navigation';
 import { canonicalizePathname, validateExplicitPathname } from '../../content/pathname';
 import type {
@@ -96,6 +96,7 @@ export function createContentManifest(
   atomDirs: readonly AtomDirConfig[],
   navSections: Record<string, string>,
   publicDocs: readonly string[] = [],
+  sidebarGroups: readonly DocsSidebarGroupConfig[] = [],
 ): ContentManifest {
   const documents: DocumentManifestEntry[] = [];
   const diagnostics: string[] = [];
@@ -152,6 +153,6 @@ export function createContentManifest(
   const sortedDocuments = documents.toSorted(compareDocuments);
   return {
     documents: sortedDocuments,
-    navigation: createNavigation(sortedDocuments, navSections),
+    navigation: createNavigation(sortedDocuments, navSections, sidebarGroups),
   };
 }

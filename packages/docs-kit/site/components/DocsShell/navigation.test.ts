@@ -114,6 +114,14 @@ describe('buildNavGroups', () => {
   it('falls back to a folder icon for unknown sections', () => {
     expect(sectionIcon('Unknown')).toBe(Folder);
   });
+
+  it('uses a configured lucide icon name from sidebarGroups', () => {
+    const icon = sectionIcon('Features', [
+      { dir: 'docs/features', icon: 'sparkles', title: 'Features' },
+    ]);
+    expect(icon).not.toBe(Folder);
+    expect(icon.displayName).toBe('NamedIcon(sparkles)');
+  });
 });
 
 describe('findActiveLocation', () => {

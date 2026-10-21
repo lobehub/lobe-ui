@@ -147,6 +147,7 @@ export async function finalizeDocumentationBuild(
           docsConfig?.atomDirs ?? defaultAtomDirs,
           docsConfig?.navSections ?? {},
           docsConfig?.publicDocs ?? [],
+          docsConfig?.themeConfig?.sidebarGroups ?? [],
         );
     const documents = dependencies.documents ?? manifest?.documents ?? [];
     const navigation = dependencies.navigation ?? manifest?.navigation ?? [];

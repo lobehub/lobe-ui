@@ -104,6 +104,7 @@ export function lobeDocsSiteConfigPlugin(root: string = process.cwd()): Plugin {
           config.atomDirs ?? defaultAtomDirs,
           config.navSections ?? {},
           config.publicDocs ?? [],
+          config.themeConfig?.sidebarGroups ?? [],
         );
         const entries = readLegacyMap(
           config.legacyRedirects ?? emptyLegacyRedirects,
@@ -215,6 +216,7 @@ export function lobeDocs(root: string = process.cwd()): Plugin[] {
           docsConfig.atomDirs ?? defaultAtomDirs,
           docsConfig.navSections ?? {},
           docsConfig.publicDocs ?? [],
+          docsConfig.themeConfig?.sidebarGroups ?? [],
         ).documents[0];
         if (!document) throw new Error(`No public document metadata found for ${path}`);
 

@@ -29,7 +29,11 @@ const documents = [...Object.values(publicMetadata), ...Object.values(componentM
 
 export const contentManifest: ContentManifest = {
   documents,
-  navigation: createNavigation(documents, siteConfig.navSections),
+  navigation: createNavigation(
+    documents,
+    siteConfig.navSections,
+    siteConfig.themeConfig?.sidebarGroups,
+  ),
 };
 
 const entriesByPathname = new Map<string, DocumentManifestEntry>();
