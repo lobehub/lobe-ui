@@ -2,6 +2,12 @@
 
 # Changelog
 
+## [6.0.3](https://github.com/lobehub/lobe-ui/compare/docs-kit@6.0.2...docs-kit@6.0.3) (2026-10-21)
+
+### 🐛 Bug Fixes
+
+- **docs-kit**: Inherit primary text color in docs content, closes [#f4f4f5](https://github.com/lobehub/lobe-ui/issues/f4f4f5) [#b4b4bc](https://github.com/lobehub/lobe-ui/issues/b4b4bc) ([56ff04c](https://github.com/lobehub/lobe-ui/commit/56ff04c))
+
 ## [6.0.2](https://github.com/lobehub/lobe-ui/compare/docs-kit@6.0.1...docs-kit@6.0.2) (2026-10-16)
 
 ### ♻ Code Refactoring
