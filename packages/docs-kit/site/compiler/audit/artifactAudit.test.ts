@@ -43,16 +43,20 @@ const compatibility = (documents = [buttonCompatibility]): DocumentationInventor
   documents,
 });
 
+// Site-derived values come from the live docs config so the fixture tracks
+// title, origin and Open Graph image changes instead of pinning them.
+const buttonUrl = new URL('/components/button', siteMetadata.origin).href;
+
 const validDocumentHtml = () => `<!doctype html><html><head>
-<title>Button - Lobe UI</title>
+<title>Button - ${siteMetadata.name}</title>
 <meta name="description" content="Triggers an action.">
-<link rel="canonical" href="https://ui.lobehub.com/components/button">
+<link rel="canonical" href="${buttonUrl}">
 <meta property="og:type" content="website">
-<meta property="og:site_name" content="Lobe UI">
-<meta property="og:title" content="Button - Lobe UI">
+<meta property="og:site_name" content="${siteMetadata.name}">
+<meta property="og:title" content="Button - ${siteMetadata.name}">
 <meta property="og:description" content="Triggers an action.">
-<meta property="og:url" content="https://ui.lobehub.com/components/button">
-<meta property="og:image" content="https://repository-images.githubusercontent.com/643435168/789cab53-cae5-43fa-965d-5928c3c63c1c">
+<meta property="og:url" content="${buttonUrl}">
+<meta property="og:image" content="${siteMetadata.openGraphImage}">
 <meta name="twitter:card" content="summary_large_image">
 </head><body><article data-pagefind-body><h1 id="button">Button</h1><h2 id="usage">Usage</h2><a href="#usage">Usage</a></article></body></html>`;
 
@@ -72,7 +76,7 @@ const createValidFixture = (withData = false) => {
   write(
     outputDirectory,
     '404.html',
-    '<html><head><title>Documentation not found - Lobe UI</title><meta name="robots" content="noindex, nofollow"></head></html>',
+    `<html><head><title>Documentation not found - ${siteMetadata.name}</title><meta name="robots" content="noindex, nofollow"></head></html>`,
   );
   write(outputDirectory, '__spa-fallback.html', '<html><body>SPA fallback</body></html>');
   write(outputDirectory, 'pagefind/pagefind.js', 'export const search = true;');
