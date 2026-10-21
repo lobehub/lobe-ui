@@ -2,6 +2,12 @@
 
 # Changelog
 
+# [6.2.0](https://github.com/lobehub/lobe-ui/compare/docs-kit@6.1.0...docs-kit@6.2.0) (2026-10-21)
+
+### ✨ Features
+
+- **docs-kit**: Adaptive table of contents and scroll-area workspace ([40e324d](https://github.com/lobehub/lobe-ui/commit/40e324d))
+
 # [6.1.0](https://github.com/lobehub/lobe-ui/compare/docs-kit@6.0.3...docs-kit@6.1.0) (2026-10-21)
 
 ### ✨ Features
