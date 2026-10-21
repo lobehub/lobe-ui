@@ -1,7 +1,9 @@
+/* Primary so custom MDX components that paint with currentColor match the page text;
+   body typography opts into the secondary tone inside the docs-prose layer below. */
 .docs-content {
   font-size: 0.9688rem;
   line-height: 1.8;
-  color: var(--docs-text-secondary);
+  color: var(--docs-text-primary);
 }
 
 .docs-content > :first-child {
@@ -35,6 +37,20 @@
     font-size: 1.125rem;
     font-weight: 620;
     line-height: 1.35;
+  }
+
+  /* Body copy keeps the secondary tone it used to inherit from .docs-content.
+     h4-h6 have no prose styles of their own and stay on the body color. */
+  .docs-content p:not(:where([data-demo-layout] *)),
+  .docs-content li:not(:where([data-demo-layout] *)),
+  .docs-content blockquote:not(:where([data-demo-layout] *)),
+  .docs-content dl:not(:where([data-demo-layout] *)),
+  .docs-content figcaption:not(:where([data-demo-layout] *)),
+  .docs-content details:not(:where([data-demo-layout] *)),
+  .docs-content h4:not(:where([data-demo-layout] *)),
+  .docs-content h5:not(:where([data-demo-layout] *)),
+  .docs-content h6:not(:where([data-demo-layout] *)) {
+    color: var(--docs-text-secondary);
   }
 
   .docs-content p:not(:where([data-demo-layout] *)) {

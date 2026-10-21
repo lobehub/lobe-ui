@@ -8,11 +8,11 @@ Each was shown to the owner and rejected. Don't repeat them.
 
 | #   | Attempt                                                              | Result                                                               | Owner feedback                                                                                     |
 | --- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| 1   | Pick darker steps 10–11 from the existing hue scales for status Text | warning `#6a4900` muddy brown, error brick red, dark error pale pink | 「不太中性了」                                                                                     |
-| 2   | OKLCH: one hue per status, equal L and C for all four                | light near-gray, dark pinkish                                        | 「太接近灰阶… 暗色偏粉」                                                                           |
+| 1   | Pick darker steps 10–11 from the existing hue scales for status Text | warning `#6a4900` muddy brown, error brick red, dark error pale pink | "no longer neutral"                                                                                |
+| 2   | OKLCH: one hue per status, equal L and C for all four                | light near-gray, dark pinkish                                        | "too close to grayscale… dark is pinkish"                                                          |
 | 3   | Radix tomato/amber/blue/grass steps as-is                            | right direction, but foreign to lobe                                 | asked for HCT with Radix as a fallback                                                             |
-| 4   | Pure HCT: one tone/chroma ladder for all steps                       | consistent levels, but too dull                                      | 「饱和度可以再高一点，太大众化」                                                                   |
-| 5   | Pure HCT, vivid (+12–16 chroma on solid steps)                       | warning/orange muddy at shared tone 60                               | 「主色往回调一点点」: the 发黑 problem                                                             |
+| 4   | Pure HCT: one tone/chroma ladder for all steps                       | consistent levels, but too dull                                      | "saturation could be a bit higher, too generic"                                                    |
+| 5   | Pure HCT, vivid (+12–16 chroma on solid steps)                       | warning/orange muddy at shared tone 60                               | "pull the main color back a little": the "too dark / brownish" problem                             |
 | 6   | **Hybrid**: HCT ladder for structure, old seed for character         | accepted after two rounds of tuner feedback                          | light fills too faint → T98/96; light Text too dark → pulled to seed; yellow still dark → override |
 
 Boss's input (antd-color-editor author): a pure HCT ladder doesn't make every swatch good, so combine it with the old palette.

@@ -8,7 +8,9 @@
 
 <h1>Lobe UI</h1>
 
-Lobe UI is an open-source UI component library for building _AIGC_ web apps
+<h3>The React UI Kit for AI-Native Web Apps</h3>
+
+LobeHub's open-source React component library for building AI chat and AIGC web apps.
 
 [Documents](https://ui.lobehub.com) · [Changelog](./CHANGELOG.md) · [Report Bug][github-issues-link] · [Request Feature][github-issues-link]
 
@@ -36,51 +38,31 @@ Lobe UI is an open-source UI component library for building _AIGC_ web apps
 
 #### TOC
 
-- [📦 Installation](#-installation)
-  - [Compile with NextJS](#compile-with-nextjs)
-- [🤯 Usage](#-usage)
-  - [I18n](#i18n)
-  - [ConfigProvider (Motion)](#configprovider-motion)
+- [✨ Why Lobe UI?](#-why-lobe-ui)
+- [🚀 Getting Started](#-getting-started)
+- [🤖 AI-Powered Development](#-ai-powered-development)
+- [📦 Entry Points](#-entry-points)
+- [📖 Documentation](#-documentation)
+- [💬 Community](#-community)
 - [⌨️ Local Development](#️-local-development)
 - [🤝 Contributing](#-contributing)
 - [🩷 Sponsor](#-sponsor)
 - [🔗 Links](#-links)
-  - [More Products](#more-products)
-  - [Design Resources](#design-resources)
-  - [Development Resources](#development-resources)
 
 ####
 
 </details>
 
-## 📦 Installation
+## ✨ Why Lobe UI?
 
-> \[!IMPORTANT]\
-> This package is [ESM only](https://gist.github.com/sindresorhus/a39789f98801d908bbc7ff3ecc99d99c).
+Lobe UI is the React component library behind LobeHub, made for building AI chat and AIGC web apps.
 
-To install Lobe UI, run the following command:
-
-[![][pnpm-shield]][pnpm-link]
-
-```bash
-$ pnpm add @lobehub/ui
-```
-
-Upgrading from 5.x? Follow the [v6 migration guide](https://ui.lobehub.com/migration-v6) and run `npx @lobehub/ui-codemod@beta v6 .`.
-
-### Compile with NextJS
-
-> \[!NOTE]\
-> By work correct with nextjs page router SSR, add `transpilePackages: ['@lobehub/ui']` to `next.config.js`. For example:
-
-```js
-// next.config.js
-const nextConfig = {
-  // ...other config
-
-  transpilePackages: ['@lobehub/ui'],
-};
-```
+- **Built for AI apps**: render LLM output (Markdown, code, Mermaid diagrams, diffs, HTML previews) and ship chat interfaces without building them from scratch.
+- **From landing page to admin console**: one design language across chat, dashboards, data tables, forms and marketing pages.
+- **Theme in one line**: light and dark modes plus primary and neutral colors switch with a single attribute, with no flash on first load.
+- **Easy to restyle**: stable class names let you override any component with plain CSS or Tailwind.
+- **Ready for global users**: English and Simplified Chinese texts included.
+- **AI-native docs**: coding agents read every component's usage and props through [skills.md](https://ui.lobehub.com/skills.md) and [llms.txt](https://ui.lobehub.com/llms.txt).
 
 <div align="right">
 
@@ -88,105 +70,98 @@ const nextConfig = {
 
 </div>
 
-## 🤯 Usage
+## 🚀 Getting Started
 
-Import the theme stylesheet once, then wrap the app in `ConfigProvider`:
+[![][pnpm-shield]][pnpm-link]
+
+```bash
+$ pnpm add @lobehub/ui @lobehub/icons @lobehub/fluent-emoji motion
+```
+
+Lobe UI is ESM only and needs React 19, `motion` 13 or 14, `@lobehub/icons` 6 and `@lobehub/fluent-emoji` 5 as peer dependencies.
 
 ```tsx
 import '@lobehub/ui/theme.css';
 import '@lobehub/ui/style.css';
-// optional document resets (body font, background, scrollbars)
-import '@lobehub/ui/global.css';
 
 import { Button, ConfigProvider } from '@lobehub/ui';
 import { motion } from 'motion/react';
 
 export default () => (
   <ConfigProvider motion={motion}>
-    <Button>Hello AIGC</Button>
+    <Button type="primary">Hello AIGC</Button>
   </ConfigProvider>
 );
 ```
 
-Lobe UI CSS is emitted inside the `lobe-base`, `lobe-popup` and `lobe-ui` cascade layers, so unlayered CSS always wins over it. Put global resets (`button { font: inherit }`, normalize.css, ...) in a layer declared before them:
+Theming, i18n, CSS layers and framework setup are covered in the [documentation](https://ui.lobehub.com). Upgrading from 5.x? v6 drops Ant Design; follow the [v6 migration guide](https://ui.lobehub.com/migration-v6).
 
-```css
-@layer reset, lobe-base, lobe-popup, lobe-ui;
+<div align="right">
 
-@layer reset {
-  button {
-    font: inherit;
-  }
-}
+[![][back-to-top]](#readme-top)
+
+</div>
+
+## 🤖 AI-Powered Development
+
+Lobe UI's docs are generated for coding agents as well as people.
+
+| Resource                                                                                                 | What it does                                                                                                   |
+| -------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| [skills.md](https://ui.lobehub.com/skills.md)                                                            | Agent skill entry point with a Markdown reference (usage, props, API) for every component                      |
+| [llms.txt](https://ui.lobehub.com/llms.txt)                                                              | Page index with outlines for [llms.txt](https://llmstxt.org)-aware tools                                       |
+| [v6 migration skill](https://github.com/lobehub/lobe-ui/tree/master/.agents/skills/lobe-ui-v6-migration) | `npx skills add lobehub/lobe-ui`: lets your agent upgrade a 5.x app                                            |
+| [Codemod](https://github.com/lobehub/lobe-ui/tree/master/packages/codemod)                               | `npx @lobehub/ui-codemod@latest v6 . --dry`: rewrites v5 code and writes a JSON report agents can work through |
+
+Paste this into Cursor, Claude Code, Codex or any other coding agent:
+
+```text
+Read https://ui.lobehub.com/skills.md, then use @lobehub/ui to build a chat page with a message list and an input box. Only use components, props and imports documented there.
 ```
 
-This `@layer` statement must be the first CSS your app loads, before `theme.css` and `style.css`: the first declaration of a layer fixes its order and later order statements are ignored.
+Works with Cursor, Claude Code, Windsurf, GitHub Copilot and other llms.txt-aware tools.
 
-With Tailwind v4, use one merged statement as the very first CSS, before `@import 'tailwindcss'`, `theme.css` and `style.css`:
+<div align="right">
 
-```css
-@layer theme, base, lobe-base, lobe-popup, lobe-ui, components, utilities;
-```
+[![][back-to-top]](#readme-top)
 
-The lobe layers sit after Tailwind's `base` (preflight), so preflight loses to Lobe UI, and before `components` / `utilities`, so Tailwind utilities still beat Lobe UI.
+</div>
 
-### Theming
+## 📦 Entry Points
 
-Appearance and colors are plain attributes, read by `theme.css`:
+| Entry                                                                | Purpose                                    |
+| -------------------------------------------------------------------- | ------------------------------------------ |
+| `@lobehub/ui`                                                        | Core components, `ConfigProvider`, theming |
+| `@lobehub/ui/chat`, `@lobehub/ui/mobile`                             | Chat and mobile UI                         |
+| `@lobehub/ui/dashboard`, `@lobehub/ui/pro-table`, `@lobehub/ui/form` | Admin consoles, data tables, forms         |
+| `@lobehub/ui/awesome`, `@lobehub/ui/brand`, `@lobehub/ui/mdx`        | Landing pages, LobeHub brand, MDX docs     |
+| `@lobehub/ui/icons`, `@lobehub/ui/i18n`                              | Platform icons, locale bundles             |
 
-```html
-<html data-theme="dark" data-primary-color="blue" data-neutral-color="slate"></html>
-```
+<div align="right">
 
-- `setLobeTheme({ appearance, primaryColor, neutralColor })` updates them at runtime; `<LobeThemeScript appearance="system" />` sets them before first paint. With `next-themes`, use `attribute="data-theme"`.
-- `<ThemeScope appearance="dark">` themes a subtree (e.g. a dark island in a light page).
-- Style with `createStaticStyles` / `cssVar` / `cx` from `@lobehub/ui`; `useTheme()` / `useThemeMode()` return the current tokens when JS needs concrete values.
-- Apps that compile StyleX themselves can import the same tokens from `@lobehub/ui/stylex/cssVar.stylex` and `@lobehub/ui/stylex/media.stylex`. Those entries are uncompiled `stylex.defineConsts` modules, so the app compiler has to transform them in the same build.
+[![][back-to-top]](#readme-top)
 
-### I18n
+</div>
 
-Use the i18n provider with resource bundles. Component `texts` props always take priority.
+## 📖 Documentation
 
-```tsx
-import { I18nProvider } from '@lobehub/ui';
-import formMessages from '@lobehub/ui/i18n/resources/form';
-import hotkeyMessages from '@lobehub/ui/i18n/resources/hotkey';
+- **Docs and live demos**: [ui.lobehub.com](https://ui.lobehub.com)
+- **Migrating to v6**: [ui.lobehub.com/migration-v6](https://ui.lobehub.com/migration-v6)
+- **Changelog**: [CHANGELOG.md](./CHANGELOG.md)
 
-<I18nProvider resources={[formMessages, hotkeyMessages]}>
-  <App />
-</I18nProvider>;
-```
+<div align="right">
 
-### ConfigProvider (Motion)
+[![][back-to-top]](#readme-top)
 
-You must pass a motion component via `ConfigProvider`. It also loads the web fonts (`enableCustomFonts`, `customFonts`), sets `direction`, and hosts the portal container for popups.
+</div>
 
-```tsx
-import { ConfigProvider } from '@lobehub/ui';
-import { motion } from 'motion/react';
+## 💬 Community
 
-export default () => (
-  <ConfigProvider motion={motion}>
-    <App />
-  </ConfigProvider>
-);
-```
+Questions, ideas and showcases are all welcome:
 
-If your app uses `LazyMotion`, pass `m`:
-
-```tsx
-import { ConfigProvider } from '@lobehub/ui';
-import { LazyMotion, domAnimation } from 'motion/react';
-import * as m from 'motion/react-m';
-
-export default () => (
-  <LazyMotion features={domAnimation}>
-    <ConfigProvider motion={m}>
-      <App />
-    </ConfigProvider>
-  </LazyMotion>
-);
-```
+- [Discord][discord-link]
+- [GitHub Discussions](https://github.com/lobehub/lobe-ui/discussions)
+- [GitHub Issues][github-issues-link]
 
 <div align="right">
 
@@ -200,7 +175,7 @@ You can use Github Codespaces for online development:
 
 [![][codespaces-shield]][codespaces-link]
 
-Or clone it for local development:
+Or clone it for local development (Node.js >= 22.22 and pnpm):
 
 ```bash
 $ git clone https://github.com/lobehub/lobe-ui.git
@@ -248,24 +223,13 @@ Every bit counts and your one-time donation sparkles in our galaxy of support! Y
 
 ## 🔗 Links
 
-### More Products
-
-- **[🤯 Lobe Chat](https://github.com/lobehub/lobe-chat)** - An open-source, extensible (Function Calling), high-performance chatbot framework. It supports one-click free deployment of your private ChatGPT/LLM web application.
-- **[🅰️ Lobe Theme](https://github.com/lobehub/sd-webui-lobe-theme)** - The modern theme for stable diffusion webui, exquisite interface design, highly customizable UI, and efficiency boosting features.
-- **[🧸 Lobe Vidol](https://github.com/lobehub/lobe-vidol)** - Experience the magic of virtual idol creation with Lobe Vidol, enjoy the elegance of our Exquisite UI Design, dance along using MMD Dance Support, and engage in Smooth Conversations.
-
-### Design Resources
-
-- **[🍭 Lobe UI](https://ui.lobehub.com)** - An open-source UI component library for building AIGC web apps.
-- **[🥨 Lobe Icons](https://lobehub.com/icons)** - Popular AI / LLM Model Brand SVG Logo and Icon Collection.
-- **[📊 Lobe Charts](https://charts.lobehub.com)** - React modern charts components built on recharts
-
-### Development Resources
-
-- **[🎤 Lobe TTS](https://tts.lobehub.com)** - A high-quality & reliable TTS/STT library for Server and Browser
-- **[🌏 Lobe i18n](https://github.com/lobehub/lobe-cli-toolbox/blob/master/packages/lobe-i18n)** - Automation ai tool for the i18n (internationalization) translation process.
-
-[More Resources](https://lobehub.com/resources)
+- **[🤯 Lobe UI](https://github.com/lobehub/lobe-ui)** - React component library for AI apps
+- **[🌈 Lobe Icons](https://github.com/lobehub/lobe-icons)** - AI / LLM brand logos and icons
+- **[📊 Lobe Charts](https://github.com/lobehub/lobe-charts)** - React chart components
+- **[✒️ Lobe Editor](https://github.com/lobehub/lobe-editor)** - Lexical-based rich text editor for React, with Markdown, plugins and a chat composer
+- **[🗣️ Lobe TTS](https://github.com/lobehub/lobe-tts)** - TTS / STT speech library
+- **[📐 Lobe Lint](https://github.com/lobehub/lobe-lint)** - ESLint, Prettier, Stylelint, Commitlint and more lint configs
+- **[😊 Fluent Emoji](https://github.com/lobehub/fluent-emoji)** - Fluent Emoji assets
 
 <div align="right">
 
@@ -298,9 +262,9 @@ This project is [MIT](./LICENSE) licensed.
 [discord-shield]: https://img.shields.io/discord/1127171173982154893?color=5865F2&label=discord&labelColor=black&logo=discord&logoColor=white&style=flat-square
 [fossa-license-link]: https://app.fossa.com/projects/git%2Bgithub.com%2Flobehub%2Flobe-ui
 [fossa-license-shield]: https://app.fossa.com/api/projects/git%2Bgithub.com%2Flobehub%2Flobe-ui.svg?type=large
-[github-action-release-link]: https://github.com/actions/workflows/lobehub/lobe-ui/release.yml
+[github-action-release-link]: https://github.com/lobehub/lobe-ui/actions/workflows/release.yml
 [github-action-release-shield]: https://img.shields.io/github/actions/workflow/status/lobehub/lobe-ui/release.yml?label=release&labelColor=black&logo=githubactions&logoColor=white&style=flat-square
-[github-action-test-link]: https://github.com/actions/workflows/lobehub/lobe-ui/test.yml
+[github-action-test-link]: https://github.com/lobehub/lobe-ui/actions/workflows/test.yml
 [github-action-test-shield]: https://img.shields.io/github/actions/workflow/status/lobehub/lobe-ui/test.yml?label=test&labelColor=black&logo=githubactions&logoColor=white&style=flat-square
 [github-contributors-link]: https://github.com/lobehub/lobe-ui/graphs/contributors
 [github-contributors-shield]: https://img.shields.io/github/contributors/lobehub/lobe-ui?color=c4f042&labelColor=black&style=flat-square
@@ -312,13 +276,13 @@ This project is [MIT](./LICENSE) licensed.
 [github-license-shield]: https://img.shields.io/github/license/lobehub/lobe-ui?color=white&labelColor=black&style=flat-square
 [github-releasedate-link]: https://github.com/lobehub/lobe-ui/releases
 [github-releasedate-shield]: https://img.shields.io/github/release-date/lobehub/lobe-ui?labelColor=black&style=flat-square
-[github-stars-link]: https://github.com/lobehub/lobe-ui/network/stargazers
+[github-stars-link]: https://github.com/lobehub/lobe-ui/stargazers
 [github-stars-shield]: https://img.shields.io/github/stars/lobehub/lobe-ui?color=ffcb47&labelColor=black&style=flat-square
 [npm-downloads-link]: https://www.npmjs.com/package/@lobehub/ui
 [npm-downloads-shield]: https://img.shields.io/npm/dt/@lobehub/ui?labelColor=black&style=flat-square
 [npm-release-link]: https://www.npmjs.com/package/@lobehub/ui
 [npm-release-shield]: https://img.shields.io/npm/v/@lobehub/ui?color=369eff&labelColor=black&logo=npm&logoColor=white&style=flat-square
-[pr-welcome-link]: https://github.com/lobehub/lobe-chat/pulls
+[pr-welcome-link]: https://github.com/lobehub/lobe-ui/pulls
 [pr-welcome-shield]: https://img.shields.io/badge/🤯_pr_welcome-%E2%86%92-ffcb47?labelColor=black&style=for-the-badge
 [profile-link]: https://github.com/lobehub
 [vercel-link]: https://ui.lobehub.com

@@ -7,12 +7,12 @@ ESM only, from `src/**` to `es/**` via tsdown, and publishes nothing else.
 
 Repo layout that matters for testing:
 
-| Path                 | What it is                                                            |
-| -------------------- | --------------------------------------------------------------------- |
-| `src/<Component>/`   | One component: implementation, `style.ts`, `index.mdx`, `demos/`      |
-| `src/base-ui/`       | Components built on `@base-ui/react` — published as `@lobehub/ui`     |
-| `packages/docs-kit/` | `lobedocs`, the React Router + Vite toolkit that builds the docs site |
-| `es/`                | Build output; the only directory published to npm                     |
+| Path                           | What it is                                                                                              |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------- |
+| `src/<Component>/`             | One root component (`@lobehub/ui`): implementation, `style.ts`, `index.mdx`, `demos/`                   |
+| `src/<namespace>/<Component>/` | Subpath components (`chat`, `mobile`, `dashboard`, `awesome`, …) published as `@lobehub/ui/<namespace>` |
+| `packages/docs-kit/`           | `lobedocs`, the React Router + Vite toolkit that builds the docs site                                   |
+| `es/`                          | Build output; the only directory published to npm                                                       |
 
 A component change has two proving surfaces: the **docs site**, which renders every
 component's demos, and a **consuming app** running the built package. Library changes
@@ -79,12 +79,12 @@ the running instance is the working tree's code, and it is the only honest sourc
 
 ## 5. Project probes & quick navigation
 
-Component doc pages are at `/components/<namespace>/<kebab-name>` — `base-ui`
-components sit under `/components/base-ui/<name>`. A 404 still returns HTTP 200, so
-assert the document title, never the status code.
+Root component doc pages are at `/components/<kebab-name>`; subpath components sit under
+`/components/<namespace>/<kebab-name>` (e.g. `/components/chat/chat-item`). A 404 still
+returns HTTP 200, so assert the document title, never the status code.
 
 ```bash
-agent-browser open "$URL/components/base-ui/floating-panel"
+agent-browser open "$URL/components/floating-panel"
 agent-browser eval 'document.title' # "<Name> - Lobe UI" proves the route resolved
 ```
 
@@ -105,7 +105,7 @@ agent-browser eval '(function(){[...document.querySelectorAll("button")]
 
 ## 6. Known constraints
 
-- **Node >= 22, pnpm.** The workspace is root + `packages/*`.
+- **Node >= 22.22, pnpm.** The workspace is root + `packages/*`.
 - **Aliases point at source.** `docs.config.ts` and `vitest.config.ts` resolve
   `@lobehub/ui` back to `src/`, so a docs-site run proves the source, never the build.
   Only a consuming-app run proves `es/`.
@@ -113,6 +113,6 @@ agent-browser eval '(function(){[...document.querySelectorAll("button")]
   ResizeObserver must be measured in the foreground tab, or through headless
   Playwright.
 - **HMR invalidates element refs.** Re-snapshot after a hot reload before interacting.
-- **`//` is not a CSS comment.** Inside an `antd-style` css template it parses as
+- **`//` is not a CSS comment.** Inside a `createStaticStyles` / `css` template literal it parses as
   content, and an apostrophe in the text ends up an unclosed string that fails
   stylelint at commit time. Use `/* */`.

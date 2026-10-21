@@ -18,18 +18,17 @@ import '@lobehub/ui/style.css';
 // optional document resets (body font, background, scrollbars)
 import '@lobehub/ui/global.css';
 
-import { Button, ConfigProvider, I18nProvider } from '@lobehub/ui';
-import allResources from '@lobehub/ui/i18n/resources/all';
+import { Button, ConfigProvider } from '@lobehub/ui';
 import { motion } from 'motion/react';
 
 export default () => (
-  <I18nProvider resources={allResources}>
-    <ConfigProvider motion={motion}>
-      <Button>Hello AIGC</Button>
-    </ConfigProvider>
-  </I18nProvider>
+  <ConfigProvider motion={motion}>
+    <Button>Hello AIGC</Button>
+  </ConfigProvider>
 );
 ```
+
+Built-in texts are English. For another locale, pass `locale` and `resources` to `ConfigProvider`, e.g. `<ConfigProvider locale="zh-CN" motion={motion} resources={zhCn}>` with `import { zhCn } from '@lobehub/ui/i18n'`.
 
 Lobe UI CSS is emitted inside the `lobe-base`, `lobe-popup` and `lobe-ui` cascade layers, so unlayered CSS always wins over it. Put global resets (`button { font: inherit }`, normalize.css, ...) in a layer declared before them:
 

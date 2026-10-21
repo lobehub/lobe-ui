@@ -1,73 +1,84 @@
 # AGENTS.md
 
-This file provides guidance to coding agents when working with code in this repository.
+Guidance for coding agents working in this repository.
 
-## What this repo is
+## Overview
 
-`@lobehub/ui` — an open-source React component library for AIGC web apps, plus `@lobehub/docs-kit` (in `packages/docs-kit`), the React Router + Vite documentation-site toolkit that builds this repo's own docs site (https://ui.lobehub.com). ESM-only, React 19, no antd: components are built on `@base-ui/react` and styled with StyleX. Peers: `react`, `react-dom`, `motion`, `@lobehub/icons`, `@lobehub/fluent-emoji`.
+`@lobehub/ui` is an ESM-only React 19 component library for AIGC web apps (no antd: components are built on `@base-ui/react` and styled with StyleX). The repo also contains `@lobehub/docs-kit` (the `lobedocs` CLI that builds https://ui.lobehub.com) and `@lobehub/ui-codemod`. pnpm workspace, Node >= 22.22.
 
-Package manager is **pnpm** (workspace: root + `packages/*`). Node >= 22.
+| Path                                                                               | What it is                                                                                                                |
+| ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| `src/<Component>/`                                                                 | One root component (`@lobehub/ui`): implementation, `type.ts`, `style.ts`, `stable.ts`, `index.ts`, `index.mdx`, `demos/` |
+| `src/{chat,mobile,dashboard,awesome,brand,mdx,color,icons,i18n,spline,storybook}/` | Subpath entries `@lobehub/ui/<name>`; `src/FormKit` → `/form`, `src/ProTable` → `/pro-table`                              |
+| `src/styles/`, `src/internal/`, `src/utils/`, `src/hooks/`                         | Theme, shared internals (never an entry), helpers                                                                         |
+| `src/i18n/resources/{en,zhCn}/`                                                    | Built-in component texts                                                                                                  |
+| `docs/`                                                                            | Guide pages (`publicDocs` in `docs.config.ts`) and the home page (`docs/home/home.tsx`)                                   |
+| `docs.config.ts`                                                                   | Docs site config (`atomDirs`, aliases, nav, `publicDocs`)                                                                 |
+| `packages/docs-kit/`, `packages/codemod/`                                          | Docs toolkit and v5 → v6 codemod                                                                                          |
+| `tests/`                                                                           | Cross-cutting tests (stable class names, StyleX tokens, focus ring)                                                       |
+| `.agents/skills/`, `.agents/acceptance/`                                           | Agent skills and acceptance-testing notes for this repo                                                                   |
 
-## Commands
+## Using Skills
+
+Skills live in `.agents/skills/<name>/SKILL.md` (`.claude/skills/` symlinks to most of them). Read the matching `SKILL.md` and its `references/` before starting the task it covers.
+
+| Skill                   | Use when                                                                                                                                                        |
+| ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `using-docs-kit`        | Writing or fixing `index.mdx` pages, demos, `<Api>` tables, `docs.config.ts`, or a failing `lobedocs build` (`reference/validations.md` lists every build rule) |
+| `local-testing`         | Verifying a component, demo, theme state or layout in a browser against the docs dev server (`agent-browser`)                                                   |
+| `building-landing-home` | Composing a home or landing page from `@lobehub/ui/awesome` (`docs/home/home.tsx`)                                                                              |
+| `tuning-color-palettes` | Changing color tokens, status palettes or `scripts/generateColorTokens.ts` / `src/color/status`                                                                 |
+| `lobe-ui-v6-migration`  | Upgrading a downstream app from 5.x; also update it when an export is removed or renamed                                                                        |
+
+`.agents/acceptance/` (`PROJECT.md`, `common-mistakes.md`, `probe-mock-patterns.md`) holds project-specific traps for proving a change, e.g. docs dev and vitest alias `@lobehub/ui` to `src/`, so a claim about the shipped package needs `pnpm run build` and a consuming app.
+
+https://ui.lobehub.com/skills.md and https://ui.lobehub.com/llms.txt are generated by `lobedocs build` for downstream consumers of the library, not for working on this repo. Downstream users install the migration skill with `npx skills add lobehub/lobe-ui`.
+
+## Writing Docs
+
+- **Component pages**: `src/<Component>/index.mdx` (or `src/<namespace>/<Component>/index.mdx`). Only files named `index.mdx` under `src` become pages; the URL comes from the folder (`src/chat/ChatItem` → `/components/chat/chat-item`).
+- **Guide pages**: `docs/<name>.mdx` with `title` + `description`, listed in `publicDocs` and, if it needs a nav link, `themeConfig.navItems` in `docs.config.ts`.
+- **Frontmatter**: `title` (the export name, PascalCase), `description` (one or two plain sentences, feeds search and llms.txt), `category`, optional `order`. Reuse an existing `category` with the exact casing of sibling components (`Data Display`, `Data Entry`, `Feedback`, `General`, `Layout`, `Navigation`, ...); `group` / `nav` are ignored by docs-kit, so don't add them.
+- **Demos**: `demos/index.tsx` for the basic one, one idea per file named after it (`Variant.tsx`). Exactly one default export; import the library by package name (`@lobehub/ui`, `@lobehub/ui/chat`, ...) so the shown source is copy-pasteable. Embed with `import Basic from './demos/index.tsx?demo';` and `<Demo of={Basic} title="..." />`; playgrounds use `StoryBook` + `useControls` from `@lobehub/ui/storybook` with `layout="bare"`.
+- **API tables**: `<Api name="Button" />` resolves through the nearest `index.ts`. For an extra named export of the same folder, set `from="."` (e.g. `<Api name="AuthLayoutAside" from="." />`). Props come from TypeScript: write JSDoc on every prop, keep `@default` equal to the runtime default (the build fails otherwise), and avoid `any` / `unknown` props.
+- **Writing**: start sections at `##` (the title is the H1), short noun headings (`## Variants`, `## API`), no `:::` callouts; only `Demo` and `Api` are global in MDX, import everything else.
+- **Preview**: `pnpm dev` (docs dev server; read the port from the log). Restart after editing `docs.config.ts`. `pnpm run docs:build` runs every docs audit.
+
+## Adding a New Component
+
+Reference: `src/awesome/Grainient/` (added in `04f429b0 ✨ feat(grainient)`) has the full file set.
+
+1. Create `src/<Name>/` (or `src/<namespace>/<Name>/`):
+   - `<Name>.tsx`: implementation.
+   - `type.ts`: exported props with JSDoc and `@default`.
+   - `style.ts`: StyleX styles using `cssVar` from `@/styles/stylex/cssVar.stylex` (no hard-coded colors).
+   - `stable.ts`: stable class names via `stableClasses` from `@/utils/bem` (see `src/Skeleton/stable.ts`); `docs/styling-overrides.mdx` imports them for the Styling Overrides page.
+   - `index.ts`: `export { default } from './<Name>'` plus named exports and `export type * from './type'`.
+2. Export it: root components from `src/index.ts`; namespace components from `src/<namespace>/index.ts`. `tsdown.config.ts` picks up every `src/*/index.ts` automatically. A brand-new subpath entry also needs an `exports` entry in `package.json`, and an alias in `docs.config.ts` and `vitest.config.ts` only if the folder name differs from the subpath (as `FormKit` / `ProTable` do).
+3. Register every new public export in `tests/stableClasses.fixtures*.tsx` (`FIXTURES`, or `EXEMPT` with a reason); `tests/stableClasses.test.tsx` fails on any unclassified export.
+4. User-facing strings: add keys to both `src/i18n/resources/en/` and `zhCn/`, read them with `useTranslation`, and offer a `texts` prop override where the component already follows that pattern.
+5. Add `demos/` and `index.mdx` (see Writing Docs) and a colocated `<Name>.test.tsx` (or `__tests__/`).
+6. Run the checks below, then verify in the browser with the `local-testing` skill.
+7. Removing or renaming an export is a breaking change: update `docs/migration-v6.mdx`, `packages/codemod` and the `lobe-ui-v6-migration` skill together.
+
+## Conventions & Checks
 
 ```bash
-pnpm dev                  # docs dev server (lobedocs dev, from packages/docs-kit)
-pnpm build                # tsdown → es/ + build packages
-pnpm docs:build           # static docs site build
-
-pnpm lint                 # eslint --fix (includes type-aware rules)
-pnpm type-check           # lobedocs typegen + tsc --noEmit (lib + site tsconfigs)
-pnpm lint:circular        # dpdm circular-dependency check
-pnpm ci                   # lint:circular + lint + type-check
-
-pnpm test                 # vitest watch (jsdom, globals)
-pnpm vitest run <path>    # run a single test file
-pnpm test:update          # update snapshots
+pnpm dev                    # docs dev server (lobedocs dev)
+pnpm lint                   # eslint --fix on src/ and tests/
+pnpm run lint:style         # stylelint --fix
+pnpm run lint:circular      # dpdm circular-dependency check
+pnpm type-check             # lobedocs typegen + tsc (lib and site tsconfigs)
+pnpm exec vitest run <path> # one test file; `pnpm test` runs the suite in watch mode
+pnpm run build              # tsdown → es/ (+ theme.css, StyleX tokens, workspace packages)
+pnpm run docs:build         # full static docs build, what Vercel runs (vercel.json)
 ```
 
-Scope lint/type-check to changed files where possible; the full suite is slow.
-
-## Architecture
-
-### Component anatomy (`src/<ComponentName>/`)
-
-Every top-level directory in `src/` with an `index.ts` becomes both a build entry and a docs "atom". A typical component:
-
-```
-src/Button/
-  Button.tsx     # implementation
-  index.ts       # export { default } from './Button'; export type * from './type';
-  type.ts        # props types
-  style.ts       # StyleX styles (stylex.create on cssVar from @/styles/stylex)
-  index.mdx      # docs page (compiled by docs-kit)
-  demos/         # live demo components referenced from index.mdx
-```
-
-Tests are colocated as `*.test.ts(x)` next to source.
-
-### Subpath entries
-
-`src/` also holds namespace directories that map 1:1 to package exports (`@lobehub/ui/<name>`): `chat`, `dashboard`, `mdx`, `mobile`, `awesome`, `brand`, `color`, `icons`, `i18n`, `storybook`, `eslint`, plus `@lobehub/ui/form` → `src/FormKit`. Shared non-component modules live in `src/internal/` (never an entry). New components in a namespace must be re-exported from that namespace's `index.ts`. `tsdown.config.ts` auto-discovers `src/*/index.ts` as entries — no config edit needed for new dirs.
-
-### Styling & theming
-
-- Component styles are StyleX (`style.ts`), compiled at build time into `style.css` inside the `lobe-base` / `lobe-popup` / `lobe-ui` layers; tokens are `--lobe-*` variables from `theme.css`, switched by `data-theme` / `data-primary-color` / `data-neutral-color` (`setLobeTheme`, `ThemeScope`). See `docs/superpowers/specs/2026-10-07-stylex-core-design.md`.
-- `src/styles/` also exports the emotion-backed `createStaticStyles` / `cssVar` / `cx` API for downstream apps (the antd-style replacement).
-- Apps that compile StyleX themselves import `@lobehub/ui/stylex/cssVar.stylex` and `@lobehub/ui/stylex/media.stylex`. `scripts/publishStylexTokens.ts` copies those `defineConsts` sources into `es/stylex/` after tsdown. The compiled `es/styles/stylex/*.mjs` objects are not that API.
-- Motion via the `motion` package, gated through `MotionProvider`.
-
-### Docs site (`packages/docs-kit`)
-
-- `docs.config.ts` at the repo root (`defineDocsConfig`) drives everything: `atomDirs` (component docs from `src/**/index.mdx`), `compatibility.json` (legacy dumi-era URL redirects), `docs/` (standalone guide pages, `docs/home/home.tsx` is the landing page).
-- The `lobedocs` CLI keeps the repo root as the React Router/Vite root and injects its own react-router config; the consumer repo needs no vite/react-router config files.
-- Aliases in dev/test resolve `@lobehub/ui` and `@lobehub/ui/es/*` back to `src/` (see `docs.config.ts` and `vitest.config.ts`), so docs and tests run against source.
-
-### Build output
-
-`tsdown` emits unbundled ESM + `.d.mts` to `es/`; only `es/` is published. All runtime deps and peers are externalized.
-
-## Conventions
-
-- `packages/codemod` (`@lobehub/ui-codemod`) holds the major-version codemods; the v6 migration guide is `docs/migration-v6.mdx`. Keep both in sync when an export is removed or renamed.
-- Commit messages use gitmoji style (enforced by commitlint), e.g. `🐛 fix(docs-kit): ...`, `✨ feat(ui): ...`. Releases are automated via semantic-release — never bump versions manually.
-- The project `local-testing` skill covers browser verification of components/demos against the dev server.
+- Before pushing, run `pnpm run build` and the full `pnpm run docs:build` (Node >= 22.22 per engines; CI uses Node 22).
+- The pre-commit hook runs `type-check`, `lint:circular` and lint-staged (prettier, stylelint, eslint). If dependencies changed after a pull, run `pnpm install` first. Never use `--no-verify`.
+- Commits: gitmoji + conventional commit with a lowercase scope, enforced by commitlint, e.g. `✨ feat(dashboard): ...`, `🐛 fix(table): ...`, `📝 docs: ...`. Releases are automated by semantic-release; never bump versions by hand.
+- Design conventions (see `src/dashboard`):
+  - Card and panel borders / dividers use the translucent fill tokens via `var(--lobe-fill-border)` (`colorFill` in light, `colorFillSecondary` in dark) and `var(--lobe-fill-border-strong)` on hover / focus, not solid border tokens. Layout chrome such as `ConsoleShell` / `ConsoleNav` is the exception.
+  - Card surfaces reuse `useSurfaceCardClassName()` from `@lobehub/ui/dashboard` instead of restyling a container.
+  - Loading spinners are `<Spin variant="network" />`; content placeholders are skeletons (`Skeleton`, dashboard `*Skeleton` components).
+  - Controls in a card header (`extra`) use `size="small"` (`ActionIcon`, `Segmented`).

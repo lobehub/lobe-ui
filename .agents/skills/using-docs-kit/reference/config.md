@@ -79,8 +79,9 @@ Section is derived per page:
 
 1. `navSections[source]` if set.
 2. `atomDirs[].subType` if set (capitalized, e.g. `plugins` → `Plugins`).
-3. The second path segment when it is a lobe-ui namespace (`base-ui`, `chat`, `mobile`,
-   `awesome`, `brand`, `mdx`, `icons`, `color`, `dashboard`, `storybook`) — lobe-ui specific.
+3. The second path segment when it is a lobe-ui namespace (`awesome`, `brand`, `chat`,
+   `dashboard`, `color`, `icons`, `mdx`, `mobile`, `storybook`; see
+   `packages/docs-kit/src/packageNamespaces.ts`) — lobe-ui specific.
 4. Otherwise `Components`.
 
 Avoid naming your own folders after those namespaces unless you want that grouping. Each section
