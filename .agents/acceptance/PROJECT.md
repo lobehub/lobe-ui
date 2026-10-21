@@ -11,7 +11,7 @@ Repo layout that matters for testing:
 | ------------------------------ | ------------------------------------------------------------------------------------------------------- |
 | `src/<Component>/`             | One root component (`@lobehub/ui`): implementation, `style.ts`, `index.mdx`, `demos/`                   |
 | `src/<namespace>/<Component>/` | Subpath components (`chat`, `mobile`, `dashboard`, `awesome`, …) published as `@lobehub/ui/<namespace>` |
-| `packages/docs-kit/`           | `lobedocs`, the React Router + Vite toolkit that builds the docs site                                   |
+| `docs.config.ts`               | Config for `lobedocs` (`@lobehub/docs-kit` from npm), which builds the docs site                        |
 | `es/`                          | Build output; the only directory published to npm                                                       |
 
 A component change has two proving surfaces: the **docs site**, which renders every

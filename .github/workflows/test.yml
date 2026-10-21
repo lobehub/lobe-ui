@@ -29,9 +29,7 @@ jobs:
         run: pnpm run test:coverage
 
       - name: Documentation verification
-        run: |
-          pnpm exec vitest run packages/docs-kit/site
-          pnpm run docs:build
+        run: pnpm run docs:build
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v5

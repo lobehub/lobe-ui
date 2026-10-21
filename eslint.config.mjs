@@ -100,29 +100,15 @@ export default defineConfig(
     },
   },
   {
-    // React Router framework mode requires default exports from route modules,
-    // root, server entry, and the route config; the .d.ts mirrors a virtual
-    // module's default export shape; home page components must default-export
-    // to satisfy the virtual:lobedocs/home-page module contract.
-    files: [
-      'packages/docs-kit/site/app/routes/*.tsx',
-      'packages/docs-kit/site/root.tsx',
-      'packages/docs-kit/site/entry.server.tsx',
-      'packages/docs-kit/site/routes.ts',
-      'packages/docs-kit/site/types/*.d.ts',
-      'packages/docs-kit/site/components/Home/DefaultHome.tsx',
-      'docs/home/home.tsx',
-    ],
+    // Home page components must default-export to satisfy the
+    // virtual:lobedocs/home-page module contract.
+    files: ['docs/home/home.tsx'],
     rules: {
       'no-restricted-syntax': 'off',
     },
   },
   {
-    files: [
-      'src/**/style*.ts',
-      'src/styles/stylex/**',
-      'packages/docs-kit/site/**/*{style,Style}.ts',
-    ],
+    files: ['src/**/style*.ts', 'src/styles/stylex/**'],
     plugins: { '@stylexjs': stylex },
     rules: {
       '@stylexjs/no-unused': 'error',

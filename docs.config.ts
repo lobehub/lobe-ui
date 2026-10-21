@@ -1,5 +1,6 @@
+import { defineDocsConfig } from '@lobehub/docs-kit/src/config';
+
 import legacyRedirects from './compatibility.json';
-import { defineDocsConfig } from './packages/docs-kit/src/config';
 
 export default defineDocsConfig({
   alias: {

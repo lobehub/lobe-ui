@@ -88,14 +88,8 @@ jobs:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-  docs-kit:
-    name: Docs Kit
-    needs: release
-    uses: ./.github/workflows/release-docs-kit.yml
-    secrets: inherit
-
   codemod:
     name: Codemod
-    needs: docs-kit
+    needs: release
     uses: ./.github/workflows/release-codemod.yml
     secrets: inherit

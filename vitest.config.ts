@@ -5,12 +5,11 @@ import { defineConfig } from 'vitest/config';
 
 import { stylexOptions } from './config/stylex';
 import { name } from './package.json';
-import { lobeDocsSiteConfigPlugin } from './packages/docs-kit/site/compiler/vitePlugin';
 
 const srcPath = fileURLToPath(new URL('./src', import.meta.url));
 
 export default defineConfig({
-  plugins: [stylex({ ...stylexOptions, runtimeInjection: true }), lobeDocsSiteConfigPlugin()],
+  plugins: [stylex({ ...stylexOptions, runtimeInjection: true })],
   resolve: {
     alias: [
       { find: '@', replacement: srcPath },
@@ -22,15 +21,15 @@ export default defineConfig({
     ],
   },
   test: {
-    css: { include: [/packages\/docs-kit\/site\/.+\.css$/] },
     environment: 'jsdom',
     globals: true,
     hookTimeout: 30_000,
     server: {
       deps: {
         // Apply source aliases to @lobehub/ui imports inside the ESM icons package;
-        // material-color-utilities ships extensionless ESM imports Node can't resolve.
-        inline: ['@lobehub/icons', '@material/material-color-utilities'],
+        // material-color-utilities ships extensionless ESM imports Node can't resolve;
+        // docs-kit ships TypeScript source.
+        inline: ['@lobehub/docs-kit', '@lobehub/icons', '@material/material-color-utilities'],
       },
     },
     // Production Vite compiler integration can exceed one minute when the

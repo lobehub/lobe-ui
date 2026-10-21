@@ -92,7 +92,7 @@ export default {
 
 > The package's only stable JS entry is `@lobehub/docs-kit/react-router-config`; there is no
 > root export for `defineDocsConfig`. It is an identity function, so export a plain object.
-> (lobe-ui imports it from `./packages/docs-kit/src/config` only because it is the workspace.)
+> (lobe-ui imports it from `@lobehub/docs-kit/src/config`, an unstabilized deep import.)
 
 **Restart `lobedocs dev` after editing `docs.config.ts`** — config is cached per process.
 
