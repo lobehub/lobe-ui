@@ -4,6 +4,7 @@ import siteConfig from 'virtual:lobedocs/site-config';
 import { afterEach, expect, it, vi } from 'vitest';
 
 import { SiteProviders, THEME_STORAGE_KEY } from '../../app/providers/SiteProviders';
+import { getScrollContainer } from '../../lib/scroller';
 import type { DocumentManifestEntry, NavigationSection } from '../../types/content';
 import { DocsShell } from './DocsShell';
 
@@ -118,12 +119,31 @@ it('links the breadcrumb to overview pages and follows router navigation', async
   await waitFor(() => expect(screen.getByTestId('location').textContent).toBe(alpha.pathname));
 });
 
-it('resets the workspace scroll position on forward navigation', async () => {
+it('scrolls the page inside a scroll area viewport instead of the main landmark', () => {
   renderShell();
 
   const main = screen.getByRole('main');
+  const viewport = main.querySelector<HTMLElement>('[data-docs-scroll-viewport]');
+
+  expect(viewport?.textContent).toContain('Document content');
+  expect(getScrollContainer()).toBe(viewport);
+  expect(getComputedStyle(main).overflow).toBe('hidden');
+});
+
+it('hands skip-link focus to the scrolling viewport so the keyboard scrolls the page', () => {
+  renderShell();
+
+  fireEvent.click(screen.getByRole('link', { name: 'Skip to documentation' }));
+
+  expect(document.activeElement).toBe(getScrollContainer());
+});
+
+it('resets the workspace scroll position on forward navigation', async () => {
+  renderShell();
+
+  const viewport = getScrollContainer()!;
   let scrollTop = 320;
-  Object.defineProperty(main, 'scrollTop', {
+  Object.defineProperty(viewport, 'scrollTop', {
     configurable: true,
     get: () => scrollTop,
     set: (value: number) => {

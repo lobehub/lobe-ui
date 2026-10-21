@@ -33,7 +33,14 @@ export interface ContentManifest {
   navigation: NavigationSection[];
 }
 
+export interface DocumentHeading {
+  id: string;
+  level: 2 | 3;
+  title: string;
+}
+
 export interface MDXModule {
   default: ComponentType;
   frontmatter: ContentFrontmatter;
+  toc?: DocumentHeading[];
 }

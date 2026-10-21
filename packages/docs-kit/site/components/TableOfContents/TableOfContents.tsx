@@ -1,7 +1,5 @@
-import { ScrollArea, type ScrollAreaViewportProps } from '@lobehub/ui';
 import * as stylex from '@stylexjs/stylex';
-import type { MouseEvent as ReactMouseEvent } from 'react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import {
   getScrollContainer,
@@ -9,75 +7,51 @@ import {
   springScrollToElement,
 } from '../../lib/scroller';
 import { styles } from './style';
+import { TocBar } from './TocBar';
+import { TocOutline } from './TocOutline';
+import { TocRail } from './TocRail';
+import type { TocItem, TocViewProps } from './types';
 
 interface TableOfContentsProps {
   contentId: string;
+  headings?: TocItem[];
   scopeKey: string;
 }
 
-interface TableOfContentsItem {
-  id: string;
-  level: 2 | 3;
-  title: string;
+interface ScopedValue<T> {
+  scopeKey: string;
+  value: T;
 }
 
-interface TocListProps {
-  activeId: string | undefined;
-  items: TableOfContentsItem[];
-  onNavigate: (id: string) => void;
-}
+const NO_ITEMS: TocItem[] = [];
 
-function TocList({ activeId, items, onNavigate }: TocListProps) {
-  const handleClick = useCallback(
-    (event: ReactMouseEvent<HTMLAnchorElement>, id: string) => {
-      event.preventDefault();
-      const heading = document.getElementById(id);
-      if (heading) {
-        springScrollToElement(heading, HEADING_SCROLL_OFFSET);
-      }
-      onNavigate(id);
-    },
-    [onNavigate],
-  );
+const findParentId = (items: TocItem[], activeId: string | undefined) => {
+  const index = items.findIndex((item) => item.id === activeId);
+  if (index < 0 || items[index].level !== 3) return undefined;
+  for (let cursor = index - 1; cursor >= 0; cursor -= 1) {
+    if (items[cursor].level === 2) return items[cursor].id;
+  }
+  return undefined;
+};
 
-  return (
-    <ol {...stylex.props(styles.list)}>
-      {items.map((item) => (
-        <li data-level={item.level} key={item.id}>
-          <a
-            aria-current={item.id === activeId ? 'location' : undefined}
-            {...stylex.props(
-              styles.link,
-              item.level === 3 && styles.linkNested,
-              item.id === activeId && styles.linkActive,
-            )}
-            href={`#${item.id}`}
-            onClick={(event) => handleClick(event, item.id)}
-          >
-            {item.title}
-          </a>
-        </li>
-      ))}
-    </ol>
-  );
-}
+export function TableOfContents({ contentId, headings, scopeKey }: TableOfContentsProps) {
+  const [scanned, setScanned] = useState<ScopedValue<TocItem[]>>();
+  const [active, setActive] = useState<ScopedValue<string>>();
 
-export function TableOfContents({ contentId, scopeKey }: TableOfContentsProps) {
-  const [items, setItems] = useState<TableOfContentsItem[]>([]);
-  const [activeId, setActiveId] = useState<string | undefined>(undefined);
-  const viewportRef = useRef<HTMLDivElement>(null);
+  const items = scanned?.scopeKey === scopeKey ? scanned.value : (headings ?? NO_ITEMS);
+  const activeId =
+    active?.scopeKey === scopeKey && items.some((item) => item.id === active.value)
+      ? active.value
+      : items[0]?.id;
 
   useEffect(() => {
     const content = document.getElementById(contentId);
-    if (!content) {
-      setItems([]);
-      return;
-    }
+    if (!content) return;
 
-    const headings = Array.from(content.querySelectorAll<HTMLHeadingElement>('h2, h3')).filter(
+    const nodes = Array.from(content.querySelectorAll<HTMLHeadingElement>('h2, h3')).filter(
       (heading) => !heading.closest('[data-toc-ignore]'),
     );
-    const nextItems = headings.flatMap((heading) => {
+    const nextItems = nodes.flatMap((heading) => {
       const title = heading.textContent?.trim();
       if (!title || !heading.id) return [];
 
@@ -86,21 +60,20 @@ export function TableOfContents({ contentId, scopeKey }: TableOfContentsProps) {
           id: heading.id,
           level: heading.tagName === 'H3' ? 3 : 2,
           title,
-        } satisfies TableOfContentsItem,
+        } satisfies TocItem,
       ];
     });
-    setItems(nextItems);
-    setActiveId(nextItems[0]?.id);
+    setScanned({ scopeKey, value: nextItems });
   }, [contentId, scopeKey]);
 
   useEffect(() => {
     if (items.length === 0 || typeof IntersectionObserver === 'undefined') return;
 
-    const headings = items.flatMap((item) => {
+    const elements = items.flatMap((item) => {
       const heading = document.getElementById(item.id);
       return heading ? [heading] : [];
     });
-    if (headings.length === 0) return;
+    if (elements.length === 0) return;
 
     const visible = new Set<string>();
     const observer = new IntersectionObserver(
@@ -109,58 +82,47 @@ export function TableOfContents({ contentId, scopeKey }: TableOfContentsProps) {
           if (entry.isIntersecting) visible.add(entry.target.id);
           else visible.delete(entry.target.id);
         }
-        const first = headings.find((heading) => visible.has(heading.id));
-        if (first) setActiveId(first.id);
+        const first = elements.find((heading) => visible.has(heading.id));
+        if (first) setActive({ scopeKey, value: first.id });
       },
       {
         root: getScrollContainer(),
         rootMargin: '-96px 0px -66% 0px',
       },
     );
-    for (const heading of headings) observer.observe(heading);
+    for (const heading of elements) observer.observe(heading);
 
     return () => observer.disconnect();
-  }, [items]);
+  }, [items, scopeKey]);
 
-  useEffect(() => {
-    const viewport = viewportRef.current;
-    if (!viewport || !activeId) return;
+  const handleNavigate = useCallback(
+    (id: string) => {
+      const heading = document.getElementById(id);
+      if (heading) springScrollToElement(heading, HEADING_SCROLL_OFFSET);
+      setActive({ scopeKey, value: id });
+    },
+    [scopeKey],
+  );
 
-    const link = viewport.querySelector<HTMLElement>('a[aria-current]');
-    if (!link) return;
-
-    const viewportRect = viewport.getBoundingClientRect();
-    const linkRect = link.getBoundingClientRect();
-    if (linkRect.top < viewportRect.top) {
-      viewport.scrollTop += linkRect.top - viewportRect.top - 8;
-    } else if (linkRect.bottom > viewportRect.bottom) {
-      viewport.scrollTop += linkRect.bottom - viewportRect.bottom + 8;
-    }
-  }, [activeId]);
+  const viewProps = useMemo<TocViewProps>(
+    () => ({
+      activeId,
+      items,
+      onNavigate: handleNavigate,
+      parentId: findParentId(items, activeId),
+    }),
+    [activeId, handleNavigate, items],
+  );
 
   if (items.length === 0) return null;
 
   return (
-    <aside {...stylex.props(styles.root)}>
-      <nav aria-label="On this page">
-        <h2 {...stylex.props(styles.heading)}>On this page</h2>
-        <ScrollArea
-          disableContentFit
-          scrollFade
-          {...stylex.props(styles.scrollArea)}
-          contentProps={stylex.props(styles.scrollContent)}
-          scrollbarProps={stylex.props(styles.scrollbar)}
-          viewportProps={
-            {
-              ...stylex.props(styles.viewport),
-              'data-toc-viewport': '',
-              'ref': viewportRef,
-            } as ScrollAreaViewportProps
-          }
-        >
-          <TocList activeId={activeId} items={items} onNavigate={setActiveId} />
-        </ScrollArea>
-      </nav>
-    </aside>
+    <>
+      <TocBar {...viewProps} />
+      <aside data-docs-toc="" {...stylex.props(styles.aside)}>
+        <TocOutline {...viewProps} />
+        <TocRail {...viewProps} />
+      </aside>
+    </>
   );
 }

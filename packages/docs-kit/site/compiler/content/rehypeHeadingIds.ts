@@ -3,14 +3,14 @@ import type { Element, Nodes, Parent, Root } from 'hast';
 const headingTagPattern = /^h[1-6]$/;
 const reservedShellIds = new Set(['docs-content', 'docs-page-content']);
 
-const visitElements = (node: Nodes, visitor: (element: Element) => void): void => {
+export const visitElements = (node: Nodes, visitor: (element: Element) => void): void => {
   if (node.type === 'element') visitor(node);
   if ('children' in node) {
     for (const child of (node as Parent).children) visitElements(child, visitor);
   }
 };
 
-const readText = (node: Nodes): string => {
+export const readText = (node: Nodes): string => {
   if (node.type === 'text') return node.value;
   if (!('children' in node)) return '';
   return (node as Parent).children.map((child) => readText(child)).join('');

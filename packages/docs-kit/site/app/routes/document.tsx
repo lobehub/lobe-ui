@@ -7,15 +7,8 @@ import { DocsLayout } from '../../components/DocsLayout/DocsLayout';
 import { overviewMeta } from '../../components/SectionOverview/meta';
 import { SectionOverview } from '../../components/SectionOverview/SectionOverview';
 import { findOverview } from '../../content/sectionOverview';
-import type { DocumentManifestEntry } from '../../types/content';
 import { contentManifest, findDocument, loadDocument } from '../content/registry';
 import NotFound from './not-found';
-
-const DocumentContent = ({ document }: { document: DocumentManifestEntry }) => {
-  const module = use(loadDocument(document.pathname));
-  const Content = module.default;
-  return <Content />;
-};
 
 export const meta: MetaFunction = ({ location }) => {
   const overview = findOverview(contentManifest.navigation, location.pathname);
@@ -56,9 +49,12 @@ export default function DocumentRoute() {
   const document = findDocument(location.pathname);
   if (!document) return <NotFound />;
 
+  const module = use(loadDocument(document.pathname));
+  const Content = module.default;
+
   return (
-    <DocsLayout document={document} navigation={contentManifest.navigation}>
-      <DocumentContent document={document} />
+    <DocsLayout document={document} headings={module.toc} navigation={contentManifest.navigation}>
+      <Content />
     </DocsLayout>
   );
 }

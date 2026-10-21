@@ -1,8 +1,10 @@
 import * as stylex from '@stylexjs/stylex';
 
 import { headingMarker, paginationMarker } from './markers.stylex';
+import { tiers } from './tiers.stylex';
 
 const mobile = '@media (width <= 47.5rem)';
+const withToc = ':has([data-docs-toc])';
 
 export const styles = stylex.create({
   description: {
@@ -17,6 +19,7 @@ export const styles = stylex.create({
   },
   document: {
     gridColumn: 2,
+    gridRow: 2,
     paddingBlockStart: 'clamp(2.75rem, 6vw, 5rem)',
     minWidth: 0,
     width: '100%',
@@ -128,17 +131,27 @@ export const styles = stylex.create({
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
   },
-  root: {
-    marginBlock: 0,
-    paddingInline: 0,
+  grid: {
     alignItems: 'start',
-    containerName: 'docs',
-    containerType: 'inline-size',
     display: 'grid',
     gridTemplateColumns: {
       default: '1fr min(64rem, 100% - 3rem) 1fr',
       [mobile]: '1fr min(64rem, 100% - 2rem) 1fr',
+      [tiers.mid]: {
+        default: '1fr min(64rem, 100% - 3rem) 1fr',
+        [withToc]: '1fr min(64rem, 100% - 6rem) 3rem 1fr',
+      },
+      [tiers.wide]: {
+        default: '1fr min(64rem, 100% - 3rem) 1fr',
+        [withToc]: '1fr min(64rem, 100% - 18.5rem) 15.5rem 1fr',
+      },
     },
+  },
+  root: {
+    marginBlock: 0,
+    paddingInline: 0,
+    containerName: 'docs',
+    containerType: 'inline-size',
     paddingBlockEnd: {
       default: '7rem',
       [mobile]: '5rem',

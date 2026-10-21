@@ -19,7 +19,7 @@ export const HEADING_SCROLL_OFFSET = -48;
 export const getScrollContainer = (): HTMLElement | null =>
   typeof document === 'undefined'
     ? null
-    : document.querySelector<HTMLElement>('[data-console-shell] main');
+    : document.querySelector<HTMLElement>('[data-docs-scroll-viewport]');
 
 const readScrollTop = (container: HTMLElement | null) =>
   container

@@ -3,6 +3,7 @@ import * as stylex from '@stylexjs/stylex';
 import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { motion } from 'motion/react';
 import type { ReactElement } from 'react';
+import { renderToString } from 'react-dom/server';
 import { MemoryRouter, useLocation } from 'react-router';
 import siteConfig from 'virtual:lobedocs/site-config';
 
@@ -68,7 +69,7 @@ const TestPage = () => {
 };
 
 it('navigates with the memory router while preserving link semantics', async () => {
-  renderLayout(
+  const { container } = renderLayout(
     <MemoryRouter initialEntries={['/components/alpha']}>
       <TestPage />
     </MemoryRouter>,
@@ -85,9 +86,15 @@ it('navigates with the memory router while preserving link semantics', async () 
   await waitFor(() => expect(screen.getByTestId('location').textContent).toBe('/components/beta'));
 
   expect(screen.queryByRole('main')).toBeNull();
-  const tableOfContents = await screen.findByRole('navigation', { name: 'On this page' });
+  await waitFor(() => expect(container.querySelector('[data-toc-outline]')).not.toBeNull());
+  const tableOfContents = container.querySelector<HTMLElement>('[data-toc-outline]')!;
   expect(tableOfContents.textContent).toContain('Usage');
-  expect(screen.getByRole('link', { name: 'Usage' }).getAttribute('href')).toBe('#usage');
+  expect(
+    within(tableOfContents).getByRole('link', { hidden: true, name: 'Usage' }).getAttribute('href'),
+  ).toBe('#usage');
+  expect(
+    tableOfContents.closest('[data-docs-grid]')?.contains(container.querySelector('article')),
+  ).toBe(true);
 });
 
 it('derives the Source and Edit links from the real docs.config.ts apiHeader', () => {
@@ -166,4 +173,23 @@ it('does not override component typography inside an embedded demo', () => {
   expect(getComputedStyle(demoHeading).fontSize).toBe('14px');
   expect(getComputedStyle(demoHeading).fontWeight).toBe('600');
   expect(getComputedStyle(demoHeading).marginBlockStart).toBe('0');
+});
+
+it('prerenders the table of contents from compiled headings', () => {
+  const html = renderToString(
+    <ConfigProvider motion={motion}>
+      <MemoryRouter>
+        <DocsLayout
+          document={alphaDocument}
+          headings={[{ id: 'usage', level: 2, title: 'Usage' }]}
+          navigation={[]}
+        >
+          <h2 id="usage">Usage</h2>
+        </DocsLayout>
+      </MemoryRouter>
+    </ConfigProvider>,
+  );
+
+  expect(html).toContain('data-docs-toc');
+  expect(html).toContain('href="#usage"');
 });

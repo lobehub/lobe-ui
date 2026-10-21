@@ -9,6 +9,7 @@ import { normalizePath, type Plugin } from 'vite';
 
 import { remarkApi } from '../api/remarkApi';
 import { rehypeHeadingIds } from './rehypeHeadingIds';
+import { rehypeTocExport } from './rehypeTocExport';
 
 // Mirrors @mdx-js/mdx's internal `nodeTypes` (from `mdast-util-mdx`), which
 // it always passes through untouched from mdast to hast. rehype-raw must be
@@ -28,12 +29,13 @@ const mdxPassThroughNodeTypes = [
 // React Router's react-refresh boundary check (acceptExports = [] for
 // non-route modules) rejects every MDX hot update and falls back to a full
 // page reload. Frontmatter is consumed at build time by the content manifest,
-// never at runtime, so it is safe to let Fast Refresh ignore it: patch the
-// injected footer to accept it and MDX edits hot-swap in place.
+// and `toc` only seeds the prerendered outline before the client rescans the
+// DOM, so it is safe to let Fast Refresh ignore both: patch the injected
+// footer to accept them and MDX edits hot-swap in place.
 const refreshBoundaryCall =
   'validateRefreshBoundaryAndEnqueueUpdate(currentExports, nextExports, [])';
 const patchedRefreshBoundaryCall =
-  'validateRefreshBoundaryAndEnqueueUpdate(currentExports, nextExports, ["frontmatter"])';
+  'validateRefreshBoundaryAndEnqueueUpdate(currentExports, nextExports, ["frontmatter", "toc"])';
 
 function mdxHmrPlugin(): Plugin {
   return {
@@ -58,7 +60,11 @@ export function createMdxPlugin(): Plugin[] {
       // rehypeRemoveRaw silently drops that markup for `format: 'md'` files
       // such as the CHANGELOG.md fallback. It is a no-op for `.mdx` since
       // authored JSX never produces `raw` hast nodes.
-      rehypePlugins: [[rehypeRaw, { passThrough: mdxPassThroughNodeTypes }], rehypeHeadingIds],
+      rehypePlugins: [
+        [rehypeRaw, { passThrough: mdxPassThroughNodeTypes }],
+        rehypeHeadingIds,
+        rehypeTocExport,
+      ],
       remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter, remarkGfm, remarkApi],
     }),
     mdxHmrPlugin(),

@@ -46,6 +46,20 @@ export const styles = stylex.create({
     minWidth: '2rem',
     width: '2rem',
   },
+  scrollArea: {
+    flexBasis: '0%',
+    flexGrow: 1,
+    flexShrink: 1,
+    minHeight: 0,
+  },
+  scrollContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    minHeight: '100%',
+  },
+  scrollViewport: {
+    scrollPaddingBlockStart: '1.5rem',
+  },
   search: {
     font: 'inherit',
     borderColor: {

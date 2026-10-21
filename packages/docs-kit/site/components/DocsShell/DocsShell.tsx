@@ -1,6 +1,6 @@
 import './DocsShell.css';
 
-import { Hotkey } from '@lobehub/ui';
+import { Hotkey, ScrollArea, type ScrollAreaViewportProps } from '@lobehub/ui';
 import { LobeHub } from '@lobehub/ui/brand';
 import { Breadcrumb, ConsoleBrand, ConsoleNav, ConsoleShell } from '@lobehub/ui/dashboard';
 import { GithubIcon } from '@lobehub/ui/icons';
@@ -60,11 +60,26 @@ function useWorkspaceScrollRestoration() {
   }, [key, pathname]);
 }
 
+function useMainFocusForwarding() {
+  useEffect(() => {
+    const viewport = getScrollContainer();
+    const main = viewport?.closest('main');
+    if (!viewport || !main) return;
+
+    const forwardFocus = (event: FocusEvent) => {
+      if (event.target === main) viewport.focus({ preventScroll: true });
+    };
+    main.addEventListener('focus', forwardFocus);
+    return () => main.removeEventListener('focus', forwardFocus);
+  }, []);
+}
+
 export function DocsShell({ children, documents, navigation, onSearchOpen }: DocsShellProps) {
   const { pathname } = useLocation();
   const [isAppleShortcut, setIsAppleShortcut] = useState(false);
 
   useWorkspaceScrollRestoration();
+  useMainFocusForwarding();
 
   useEffect(() => {
     setIsAppleShortcut(/mac|iphone|ipod|ipad|ios/i.test(navigator.userAgent));
@@ -178,7 +193,20 @@ export function DocsShell({ children, documents, navigation, onSearchOpen }: Doc
       storageKey="lobedocs-sidebar-collapsed"
       tools={tools}
     >
-      {children}
+      <ScrollArea
+        disableContentFit
+        data-page-layout="flush"
+        {...stylex.props(styles.scrollArea)}
+        contentProps={stylex.props(styles.scrollContent)}
+        viewportProps={
+          {
+            ...stylex.props(styles.scrollViewport),
+            'data-docs-scroll-viewport': '',
+          } as ScrollAreaViewportProps
+        }
+      >
+        {children}
+      </ScrollArea>
     </ConsoleShell>
   );
 }
