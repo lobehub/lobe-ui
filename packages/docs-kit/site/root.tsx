@@ -1,6 +1,7 @@
 import './styles/global.css';
 // Demo frames are prerendered, so their CSS must be linked from the root route, not a lazy chunk.
 import './components/Demo/Demo.css';
+import 'virtual:lobedocs/ui-style.css';
 
 import { createHash } from 'node:crypto';
 

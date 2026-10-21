@@ -22,6 +22,8 @@ declare module 'virtual:lobedocs/site-config' {
   export default siteConfig;
 }
 
+declare module 'virtual:lobedocs/ui-style.css';
+
 declare module 'virtual:lobedocs/stylex' {
   export const stylexLinks: import('react-router').LinkDescriptor[];
   export const loadStylexRuntime: () => unknown;

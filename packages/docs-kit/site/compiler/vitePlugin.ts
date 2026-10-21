@@ -28,6 +28,8 @@ const resolvedDocumentModulesVirtualId = `\0${documentModulesVirtualId}`;
 const homePageVirtualId = 'virtual:lobedocs/home-page';
 const stylexVirtualId = 'virtual:lobedocs/stylex';
 const resolvedStylexVirtualId = `\0${stylexVirtualId}`;
+const uiStyleVirtualId = 'virtual:lobedocs/ui-style.css';
+const resolvedEmptyUiStyleId = `\0${uiStyleVirtualId}`;
 const stylexBuildCssPath = resolve(import.meta.dirname, '../styles/stylex.css');
 const defaultHomePagePath = resolve(import.meta.dirname, '../components/Home/DefaultHome.tsx');
 
@@ -56,11 +58,8 @@ const resolveUiStyleCss = (root: string): string | undefined => {
   }
 };
 
-const stylexModule = (command: 'build' | 'serve', uiStyleCss?: string) => {
-  const imports = [command === 'build' ? stylexBuildCssPath : undefined, uiStyleCss]
-    .filter(Boolean)
-    .map((cssPath) => `import ${JSON.stringify(cssPath)};\n`)
-    .join('');
+const stylexModule = (command: 'build' | 'serve') => {
+  const imports = command === 'build' ? `import ${JSON.stringify(stylexBuildCssPath)};\n` : '';
   if (command === 'serve') {
     return `${imports}export const stylexLinks = [{ href: '/virtual:stylex.css', rel: 'stylesheet' }];
 export const loadStylexRuntime = () => import('virtual:stylex:runtime');`;
@@ -77,9 +76,9 @@ export function lobeDocsSiteConfigPlugin(root: string = process.cwd()): Plugin {
     },
     load(id) {
       if (id === resolvedStylexVirtualId) {
-        const compilesUi = Boolean(getDocsConfig(root).stylex);
-        return stylexModule(command, compilesUi ? undefined : resolveUiStyleCss(root));
+        return stylexModule(command);
       }
+      if (id === resolvedEmptyUiStyleId) return '';
       if (id === resolvedSiteConfigVirtualId) {
         const config = getDocsConfig(root);
         const clientConfig: ClientSiteConfig = {
@@ -119,6 +118,14 @@ export function lobeDocsSiteConfigPlugin(root: string = process.cwd()): Plugin {
       if (source === compatibilityVirtualId) return resolvedCompatibilityVirtualId;
       if (source === standaloneDemosVirtualId) return resolvedStandaloneDemosVirtualId;
       if (source === stylexVirtualId) return resolvedStylexVirtualId;
+      if (source === uiStyleVirtualId) {
+        // Resolve to the real file instead of importing it from inside another virtual module:
+        // React Router's dev critical-CSS walk only finds CSS reachable through real modules, so
+        // an import hidden in `virtual:lobedocs/stylex` left every SSR first paint without the
+        // @lobehub/ui rules until the client bundle injected them.
+        const compilesUi = Boolean(getDocsConfig(root).stylex);
+        return (!compilesUi && resolveUiStyleCss(root)) || resolvedEmptyUiStyleId;
+      }
       if (source === homePageVirtualId) {
         const config = getDocsConfig(root);
         if (!config.homePage) return defaultHomePagePath;
