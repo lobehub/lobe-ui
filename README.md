@@ -2,9 +2,7 @@
 
 <div align="center">
 
-<img height="120" src="https://raw.githubusercontent.com/lobehub/lobe-assets/master/packages/assets-logo/assets/logo-3d.webp">
-<img height="120" src="https://raw.githubusercontent.com/lobehub/lobe-assets/master/packages/assets-logo/assets/split.svg">
-<img height="120" src="https://raw.githubusercontent.com/lobehub/lobe-assets/master/packages/assets-emoji/assets/lollipop.webp">
+![](https://github.com/user-attachments/assets/5b9a9b31-2560-4470-a80d-9dd5756b22e0)
 
 <h1>Lobe UI</h1>
 
@@ -28,8 +26,6 @@ LobeHub's open-source React component library for building AI chat and AIGC web 
 [![][github-stars-shield]][github-stars-link]
 [![][github-issues-shield]][github-issues-link]
 [![][github-license-shield]][github-license-link]
-
-[![][banner]][vercel-link]
 
 </div>
 
