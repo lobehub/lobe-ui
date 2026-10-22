@@ -78,6 +78,7 @@ const migrated = [
   'Layout',
   'List',
   'MaskShadow',
+  'ProgressiveBlur',
   'QRCode',
   'Result',
   'ScrollArea',
