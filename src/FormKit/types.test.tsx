@@ -28,15 +28,7 @@ export const typeContracts = () => {
     form.setValue('tags', 'not-an-array');
     const email: string = useWatch(form, 'email');
     return (
-      <Form
-        form={form}
-        itemsType="flat"
-        items={[
-          { children: <input />, name: 'email' },
-          // @ts-expect-error items names follow the form type
-          { children: <input />, name: 'missing' },
-        ]}
-      >
+      <Form form={form} items={[{ children: <input />, name: 'email' }]} itemsType="flat">
         <FormField<z.input<typeof schema>> name="tags">
           <input />
         </FormField>
@@ -49,7 +41,21 @@ export const typeContracts = () => {
     );
   };
 
-  return { badPath, model, paths, SchemaHost, wrongValue };
+  const InvalidItemsHost = () => {
+    const form = useForm({ schema });
+    return (
+      <Form
+        form={form}
+        itemsType="flat"
+        items={[
+          // @ts-expect-error items names follow the form type
+          { children: <input />, name: 'missing' },
+        ]}
+      />
+    );
+  };
+
+  return { badPath, InvalidItemsHost, model, paths, SchemaHost, wrongValue };
 };
 
 describe('type contracts', () => {

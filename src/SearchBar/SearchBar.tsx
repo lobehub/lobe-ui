@@ -39,10 +39,12 @@ const SearchBar = memo<SearchBarProps>(
     onBlur,
     onPressEnter,
     onFocus,
-    styles: { input: inputStyle, shortKey: shortKeyStyle } = {},
-    classNames: { input: inputClassName, shortKey: shortKeyClassName } = {},
+    styles: customStyles = {},
+    classNames: customClassNames = {},
     ...rest
   }) => {
+    const { input: inputStyle, shortKey: shortKeyStyle } = customStyles;
+    const { input: inputClassName, shortKey: shortKeyClassName } = customClassNames;
     const [inputValue, setInputValue] = useControlledState(defaultValue, {
       defaultValue,
       onChange: onInputChange,

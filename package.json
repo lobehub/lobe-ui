@@ -144,7 +144,7 @@
     "test": "vitest --passWithNoTests",
     "test:coverage": "vitest run --coverage  --passWithNoTests",
     "test:update": "vitest -u",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsrs --noEmit"
   },
   "lint-staged": {
     "*.{md,mdx}": [
@@ -279,6 +279,7 @@
     "stylelint": "^16.26.1",
     "svgo": "^4.1.0",
     "tsdown": "^0.23.1",
+    "tsrs": "0.18.0-ts7.1.0-dev.20260929",
     "tsx": "^4.23.15",
     "typescript": "^6.0.3",
     "unist-util-is": "^6.0.1",

@@ -1,6 +1,6 @@
 'use client';
 
-import { memo } from 'react';
+import { memo, type NamedExoticComponent } from 'react';
 import Markdown, { type Options } from 'react-markdown';
 
 import {
@@ -10,7 +10,7 @@ import {
   useMarkdownRemarkPlugins,
 } from '@/hooks/useMarkdown';
 
-const MarkdownRenderer = memo<Options>(
+const MarkdownRenderer: NamedExoticComponent<Options> = memo<Options>(
   ({ children, ...rest }) => {
     const escapedContent = useMarkdownContent(children || '');
     const components = useMarkdownComponents();
