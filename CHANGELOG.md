@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version&nbsp;6.6.0](https://github.com/lobehub/lobe-ui/compare/v6.5.1...v6.6.0)
+
+<sup>Released on **2026-10-22**</sup>
+
+#### ✨ Features
+
+- **highlighter**: Replace shiki with @pierre/highlights.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **highlighter**: Replace shiki with @pierre/highlights, closes [#757](https://github.com/lobehub/lobe-ui/issues/757) ([b1a22c6](https://github.com/lobehub/lobe-ui/commit/b1a22c6))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [6.5.1](https://github.com/lobehub/lobe-ui/compare/v6.5.0...v6.5.1) (2026-10-19)
 
 ### 🐛 Bug Fixes
