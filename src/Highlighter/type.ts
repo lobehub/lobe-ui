@@ -1,9 +1,10 @@
 import type { CSSProperties, ReactNode, Ref } from 'react';
-import type { BuiltinTheme } from 'shiki';
 
 import type { ActionIconProps } from '@/ActionIcon';
 import type { FlexboxProps } from '@/Flex';
 import type { DivProps } from '@/types';
+
+import type { BundledHighlighterTheme } from './const';
 
 export interface SyntaxHighlighterProps extends DivProps {
   animated?: boolean;
@@ -35,6 +36,9 @@ export interface HighlighterProps extends Omit<FlexboxProps, 'children' | 'wrap'
   };
   copyable?: boolean;
   defaultExpand?: boolean;
+  /**
+   * @deprecated Notation transformers (`// [!code ++]` etc.) are no longer supported; this prop has no effect.
+   */
   enableTransformer?: boolean;
   fileName?: string;
   fullFeatured?: boolean;
@@ -47,7 +51,7 @@ export interface HighlighterProps extends Omit<FlexboxProps, 'children' | 'wrap'
     content?: CSSProperties;
     header?: CSSProperties;
   };
-  theme?: 'lobe-theme' | BuiltinTheme;
+  theme?: 'lobe-theme' | BundledHighlighterTheme;
   variant?: 'filled' | 'outlined' | 'borderless';
   wrap?: boolean;
 }

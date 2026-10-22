@@ -36,59 +36,8 @@
     padding-inline: 16px;
   }
 
-  .lobe-syntax-highlighter-shiki pre.has-focused .line:not(.focused) {
-    opacity: 0.5;
-  }
-
-  .lobe-syntax-highlighter-shiki pre .highlighted {
-    background: var(--lobe-color-fill-tertiary);
-  }
-
-  .lobe-syntax-highlighter-shiki pre .highlighted.warning {
-    background: var(--lobe-color-warning-bg);
-  }
-
-  .lobe-syntax-highlighter-shiki pre .highlighted.error {
-    background: var(--lobe-color-error-bg);
-  }
-
-  .lobe-syntax-highlighter-shiki pre .highlighted-word {
-    padding-block: 0.1em;
-    padding-inline: 0.2em;
-    border: 1px solid var(--lobe-color-border-secondary);
-    border-radius: var(--lobe-border-radius);
-
-    background: var(--lobe-color-fill-tertiary);
-  }
-
-  .lobe-syntax-highlighter-shiki pre .diff.remove {
-    background: var(--lobe-color-error-bg);
-  }
-
-  .lobe-syntax-highlighter-shiki pre .diff.remove::before {
-    content: '-';
-
-    position: absolute;
-    inset-inline-start: 4px;
-
-    display: inline-block;
-
-    color: var(--lobe-color-error-text);
-  }
-
-  .lobe-syntax-highlighter-shiki pre .diff.add {
-    background: var(--lobe-color-success-bg);
-  }
-
-  .lobe-syntax-highlighter-shiki pre .diff.add::before {
-    content: '+';
-
-    position: absolute;
-    inset-inline-start: 4px;
-
-    display: inline-block;
-
-    color: var(--lobe-color-success-text);
+  .lobe-syntax-highlighter-shiki pre code .line:empty::before {
+    content: '\200B';
   }
 
   .lobe-syntax-highlighter-transparent pre {

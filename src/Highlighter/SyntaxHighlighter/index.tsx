@@ -17,17 +17,7 @@ type SyntaxHighlighterImplProps = SyntaxHighlighterProps & {
 };
 
 export const SyntaxHighlighterImpl = memo<SyntaxHighlighterImplProps>(
-  ({
-    animated,
-    children,
-    className,
-    enableTransformer,
-    language,
-    style,
-    theme,
-    variant = 'borderless',
-    xstyle,
-  }) => {
+  ({ animated, children, className, language, style, theme, variant = 'borderless', xstyle }) => {
     const isDefaultTheme = theme === 'lobe-theme' || !theme;
     const showBackground = !isDefaultTheme && variant === 'filled';
     const resolvedTheme = isDefaultTheme ? undefined : theme;
@@ -65,7 +55,6 @@ export const SyntaxHighlighterImpl = memo<SyntaxHighlighterImplProps>(
       <Renderer
         className={shiki.className}
         dataAttributes={dataAttributes}
-        enableTransformer={enableTransformer}
         fallbackClassName={fallback.className}
         language={language}
         style={shiki.style}
@@ -76,7 +65,11 @@ export const SyntaxHighlighterImpl = memo<SyntaxHighlighterImplProps>(
     );
   },
   (prevProps, nextProps) =>
-    prevProps.children === nextProps.children && prevProps.language === nextProps.language,
+    prevProps.children === nextProps.children &&
+    prevProps.language === nextProps.language &&
+    prevProps.theme === nextProps.theme &&
+    prevProps.variant === nextProps.variant &&
+    prevProps.animated === nextProps.animated,
 );
 
 const SyntaxHighlighter = memo<SyntaxHighlighterProps>((props) => (
