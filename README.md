@@ -226,6 +226,8 @@ Every bit counts and your one-time donation sparkles in our galaxy of support! Y
 - **[🎤 Lobe TTS](https://github.com/lobehub/lobe-tts)** - TTS / STT speech library
 - **[📐 Lobe Lint](https://github.com/lobehub/lobe-lint)** - ESLint, Prettier, Stylelint, Commitlint and more lint configs
 - **[😀 Fluent Emoji](https://github.com/lobehub/fluent-emoji)** - Fluent Emoji assets
+- **[📖 Docs Kit](https://github.com/lobehub/docs-kit)** - Reusable documentation toolkit and lobedocs CLI for LobeHub component libraries
+- **[🌊 Streamdown](https://github.com/lobehub/streamdown)** - Headless streaming markdown engine for React
 
 <div align="right">
 
