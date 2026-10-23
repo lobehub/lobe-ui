@@ -3,7 +3,7 @@ import { stableClasses } from '@/utils/bem';
 export const avatarClasses = stableClasses({
   block: 'avatar',
   dataAttributes: ['shape', 'variant', 'shadow'],
-  elements: ['loading', 'img', 'content'],
+  elements: ['loading', 'img', 'content', 'fallback'],
 });
 
 export const avatarGroupClasses = stableClasses({

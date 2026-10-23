@@ -1,6 +1,7 @@
 'use client';
 
 import { getEmoji } from '@lobehub/fluent-emoji';
+import BoringAvatar from 'boring-avatars';
 import clsx from 'clsx';
 import { Loader2 } from 'lucide-react';
 import { memo, type ReactNode, useMemo, useState } from 'react';
@@ -11,6 +12,7 @@ import Icon from '@/Icon';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import { styleProps } from '@/styles/stylex/props';
 import { stylish } from '@/styles/stylex/stylish';
+import { useTheme } from '@/styles/theme/scope';
 import { toDataAttributes } from '@/utils/bem';
 import { safeReadableColor } from '@/utils/safeReadableColor';
 
@@ -20,6 +22,8 @@ import { type AvatarProps } from './type';
 import {
   calculateEmojiSize,
   formatAvatarText,
+  getAvatarFallbackColors,
+  getAvatarFallbackSeed,
   hasValidBackground,
   isDefaultAntAvatar,
 } from './utils';
@@ -48,6 +52,8 @@ export const AvatarImpl = memo<AvatarImplProps>(
     crossOrigin,
     draggable = false,
     emojiScaleWithBackground = true,
+    fallbackColors,
+    fallbackVariant = 'marble',
     loading,
     ref,
     shadow,
@@ -84,6 +90,23 @@ export const AvatarImpl = memo<AvatarImplProps>(
     const showImage = isUrlOrElement && isStringAvatar && !isImgError;
     const showElement = isUrlOrElement && !isStringAvatar && !isImgError;
 
+    // An explicit text avatar (initials, `+N`, a label) is intentional content, never replaced.
+    const isExplicitText = isStringAvatar && !isUrlOrElement && !emoji && avatar.length > 0;
+    const fallbackSeed = getAvatarFallbackSeed(avatar, title, alt);
+    const showFallback =
+      fallbackVariant !== 'text' &&
+      !!fallbackSeed &&
+      !emoji &&
+      !showImage &&
+      !showElement &&
+      !isExplicitText;
+
+    const theme = useTheme();
+    const colors = useMemo(
+      () => (fallbackColors?.length ? fallbackColors : getAvatarFallbackColors(theme)),
+      [fallbackColors, theme],
+    );
+
     const customAvatar = useMemo(
       () =>
         emoji ? (
@@ -110,7 +133,8 @@ export const AvatarImpl = memo<AvatarImplProps>(
     );
 
     const customSize = sizeProp !== undefined;
-    const showDefaultBackground = !background && !((isUrlOrElement && !isImgError) || emoji);
+    const showDefaultBackground =
+      !background && !showFallback && !((isUrlOrElement && !isImgError) || emoji);
 
     return (
       <div
@@ -180,7 +204,22 @@ export const AvatarImpl = memo<AvatarImplProps>(
             onError={() => setIsImgError(true)}
           />
         )}
-        {!showImage && (
+        {showFallback && (
+          <BoringAvatar
+            square
+            aria-label={imgAlt}
+            colors={colors}
+            name={fallbackSeed}
+            size={'100%'}
+            variant={fallbackVariant}
+            {...styleProps(
+              styles.fallback,
+              clsx(avatarClasses('fallback'), classNames?.fallback),
+              customStyles?.fallback,
+            )}
+          />
+        )}
+        {!showImage && !showFallback && (
           <span
             {...styleProps(
               [styles.content, contentXstyle],

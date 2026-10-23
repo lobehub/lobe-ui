@@ -6,9 +6,11 @@ category: Data Display
 
 import DemoBordered from './demos/Bordered.tsx?demo';
 import DemoEmoji from './demos/Emoji.tsx?demo';
+import DemoFallback from './demos/Fallback.tsx?demo';
 import DemoGroup from './demos/Group.tsx?demo';
 import DemoImageFallback from './demos/ImageFallback.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
+import DemoPlayground from './demos/Playground.tsx?demo';
 import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
 import { avatarClasses, avatarGroupClasses } from './stable';
 
@@ -19,6 +21,18 @@ import { avatarClasses, avatarGroupClasses } from './stable';
 ## Emoji
 
 <Demo of={DemoEmoji} layout="bare" />
+
+## Playground
+
+<Demo of={DemoPlayground} layout="bare" />
+
+## Generated Fallback
+
+When there is no image, emoji, explicit text or custom node (for example only a `title`, or an image that failed to load), Avatar draws a generated [boring-avatars](https://boringavatars.com/) SVG. `fallbackVariant` picks the style: `marble` (default), `beam`, `pixel`, `sunset`, `ring`, `bauhaus`, or `text` to keep the uppercase initials.
+
+The shape is seeded by `title`, then `alt`, then the `avatar` string, so the same name always gets the same avatar. The palette is resolved from theme tokens for the current appearance and follows light / dark mode; pass `fallbackColors` with concrete color strings (not CSS variables) to override it. An explicit text or emoji `avatar` is always rendered as-is, and an Avatar with no seed at all keeps the plain placeholder background.
+
+<Demo of={DemoFallback} />
 
 ## Image with Fallback
 
@@ -39,7 +53,7 @@ import { avatarClasses, avatarGroupClasses } from './stable';
 | Property | Description | Type | Default |
 | --- | --- | --- | --- |
 | avatar | Image URL, emoji, or custom React node | `string \| ReactNode` | - |
-| title | Fallback text; also the default image `alt` | `string` | - |
+| title | Fallback seed / text; also the default image `alt` | `string` | - |
 | alt | Native `alt` attribute of the rendered image | `string` | `'avatar'` |
 | size | Width and height in pixels; drives font size | `number` | `48` |
 | shape | Avatar shape | `'circle' \| 'square'` | `'square'` |
@@ -51,20 +65,22 @@ import { avatarClasses, avatarGroupClasses } from './stable';
 | loading | Show a full-size spinning overlay | `boolean` | - |
 | animation | Use the animated emoji variant | `boolean` | - |
 | sliceText | Slice fallback text to its first two characters | `boolean` | `true` |
+| fallbackVariant | Fallback when there is no image, emoji, text or node | `'marble' \| 'beam' \| 'pixel' \| 'sunset' \| 'ring' \| 'bauhaus' \| 'text'` | `'marble'` |
+| fallbackColors | Palette of the generated fallback; concrete colors only | `string[]` | theme palette |
 | emojiScaleWithBackground | Scale the emoji down when a background is present | `boolean` | `true` |
 | crossOrigin | Native `crossOrigin` attribute of the image | `'' \| 'anonymous' \| 'use-credentials'` | - |
 | draggable | Native `draggable` attribute of the image | `boolean` | `false` |
 | unoptimized | Compatibility with next/image-based avatars; no effect | `boolean` | - |
 | tooltipProps | Reserved for tooltip integration; not rendered yet | `Record<string, unknown>` | - |
-| classNames | Semantic class names: `root`, `img`, `content`, `loading` | `AvatarClassNames` | - |
-| styles | Semantic styles: `root`, `img`, `content`, `loading` | `AvatarStyles` | - |
+| classNames | Semantic class names: `root`, `img`, `content`, `fallback`, `loading` | `AvatarClassNames` | - |
+| styles | Semantic styles: `root`, `img`, `content`, `fallback`, `loading` | `AvatarStyles` | - |
 | ref | Reference to the root element | `Ref<HTMLDivElement>` | - |
 
-Font size is derived from `size`: `size * 0.5` for text and `size * 0.7` for emoji. The border radius is `50%` for `circle`; for `square` it is `33%` below `24px` and `size / 6` (at least 2px) otherwise. When no valid `background` is given and the content is not an image or custom node, the background falls back to `colorBorder` with a contrast-safe text color.
+Font size is derived from `size`: `size * 0.5` for text and `size * 0.7` for emoji. The border radius is `50%` for `circle`; for `square` it is `33%` below `24px` and `size / 6` (at least 2px) otherwise. When no valid `background` is given and the content is text, the background falls back to `colorBorder` with a contrast-safe text color.
 
 ### AvatarGroup
 
-Also accepts all shared visual props of `Avatar` (`variant`, `bordered`, `shadow`, `size`, `background`, `animation`, `draggable`, `shape`) plus `Flexbox` props.
+Also accepts all shared visual props of `Avatar` (`variant`, `bordered`, `shadow`, `size`, `background`, `animation`, `draggable`, `shape`, `fallbackVariant`, `fallbackColors`) plus `Flexbox` props. Items may override `fallbackVariant`.
 
 | Property | Description | Type | Default |
 | --- | --- | --- | --- |
