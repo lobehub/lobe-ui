@@ -144,7 +144,7 @@ export const DISPLAY_FIXTURES: Record<string, StableFixture> = {
   Avatar: {
     classes: avatarClasses,
     conditional: ['loading', 'img', 'fallback'],
-    render: ({ className }) => <Avatar avatar="AB" className={className} />,
+    render: ({ className }) => <Avatar avatar="AB" className={className} fallbackVariant="text" />,
   },
   AvatarGroup: {
     classes: avatarGroupClasses,

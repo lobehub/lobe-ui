@@ -1,7 +1,5 @@
 import { isValidElement, type ReactNode } from 'react';
 
-import type { LobeTheme } from '@/styles/theme/scope';
-
 import type { AvatarGeneratedFallbackVariant } from './type';
 
 export const isDefaultAntAvatar = (avatar: ReactNode): boolean => {
@@ -51,25 +49,33 @@ export const AVATAR_GENERATED_FALLBACK_VARIANTS: readonly AvatarGeneratedFallbac
 ];
 
 /**
- * Resolves the generated-fallback palette from theme tokens. `boring-avatars` writes the colors
- * into SVG attributes and derives contrast from them, so they must be concrete values rather
- * than CSS variables. Step 7 of each scale is a mid tone in both appearances, so the palette
- * stays soft in light mode and keeps enough depth in dark mode.
+ * Default palette of the generated fallback: charcoal, violet, cream, yellow and orange.
+ * A charcoal anchor and a cream highlight give every variant contrast, a warm yellow / orange
+ * pair keeps it lively, and violet adds one cool accent. It is a fixed palette on purpose:
+ * the same name keeps the same avatar in light and dark mode. `boring-avatars` writes these into
+ * SVG attributes, so they must be concrete colors rather than CSS variables.
  */
-export const getAvatarFallbackColors = (theme: LobeTheme): string[] => [
-  theme.geekblue7,
-  theme.purple7,
-  theme.magenta7,
-  theme.gold7,
-  theme.cyan7,
+export const AVATAR_FALLBACK_COLORS: string[] = [
+  '#383838',
+  '#7858f9',
+  '#f8f7bf',
+  '#ffdd1f',
+  '#f88c13',
 ];
 
 /**
  * Stable seed for the generated fallback: `title`, then `alt`, then a string `avatar`
- * (e.g. the URL of an image that failed to load).
+ * (a name / initials, or the URL of an image that failed to load).
+ *
+ * `boring-avatars` embeds the name in SVG ids (`url(#gradient_..._<name>)` for `sunset`), so
+ * whitespace and URL-breaking characters are normalized to `_`; otherwise names such as
+ * `"Arvin Xu"` would produce an invalid paint reference and an empty avatar.
  */
 export const getAvatarFallbackSeed = (
   avatar: ReactNode,
   title?: string,
   alt?: string,
-): string | undefined => title || alt || (typeof avatar === 'string' && avatar) || undefined;
+): string | undefined => {
+  const seed = title || alt || (typeof avatar === 'string' && avatar) || undefined;
+  return seed?.trim().replaceAll(/[\s"'()#\\]+/g, '_') || undefined;
+};

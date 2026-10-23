@@ -92,6 +92,7 @@ const AvatarGroup = memo<AvatarGroupProps>(
             background={cssVar.colorText}
             className={clsx(avatarGroupClasses('count'), classNames?.count)}
             contentXstyle={styles.count}
+            fallbackVariant={'text'}
             sliceText={false}
             xstyle={styles.avatar}
             style={{

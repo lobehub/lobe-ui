@@ -12,7 +12,6 @@ import Icon from '@/Icon';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import { styleProps } from '@/styles/stylex/props';
 import { stylish } from '@/styles/stylex/stylish';
-import { useTheme } from '@/styles/theme/scope';
 import { toDataAttributes } from '@/utils/bem';
 import { safeReadableColor } from '@/utils/safeReadableColor';
 
@@ -20,9 +19,9 @@ import { avatarClasses } from './stable';
 import { styles } from './style';
 import { type AvatarProps } from './type';
 import {
+  AVATAR_FALLBACK_COLORS,
   calculateEmojiSize,
   formatAvatarText,
-  getAvatarFallbackColors,
   getAvatarFallbackSeed,
   hasValidBackground,
   isDefaultAntAvatar,
@@ -90,22 +89,12 @@ export const AvatarImpl = memo<AvatarImplProps>(
     const showImage = isUrlOrElement && isStringAvatar && !isImgError;
     const showElement = isUrlOrElement && !isStringAvatar && !isImgError;
 
-    // An explicit text avatar (initials, `+N`, a label) is intentional content, never replaced.
-    const isExplicitText = isStringAvatar && !isUrlOrElement && !emoji && avatar.length > 0;
+    // Plain text avatars (a name, initials) are treated as a seed like `title`; only
+    // `fallbackVariant="text"` renders them as uppercase text.
     const fallbackSeed = getAvatarFallbackSeed(avatar, title, alt);
     const showFallback =
-      fallbackVariant !== 'text' &&
-      !!fallbackSeed &&
-      !emoji &&
-      !showImage &&
-      !showElement &&
-      !isExplicitText;
-
-    const theme = useTheme();
-    const colors = useMemo(
-      () => (fallbackColors?.length ? fallbackColors : getAvatarFallbackColors(theme)),
-      [fallbackColors, theme],
-    );
+      fallbackVariant !== 'text' && !!fallbackSeed && !emoji && !showImage && !showElement;
+    const colors = fallbackColors?.length ? fallbackColors : AVATAR_FALLBACK_COLORS;
 
     const customAvatar = useMemo(
       () =>

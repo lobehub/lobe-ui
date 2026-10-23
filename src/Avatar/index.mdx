@@ -28,9 +28,9 @@ import { avatarClasses, avatarGroupClasses } from './stable';
 
 ## Generated Fallback
 
-When there is no image, emoji, explicit text or custom node (for example only a `title`, or an image that failed to load), Avatar draws a generated [boring-avatars](https://boringavatars.com/) SVG. `fallbackVariant` picks the style: `marble` (default), `beam`, `pixel`, `sunset`, `ring`, `bauhaus`, or `text` to keep the uppercase initials.
+When there is no image, emoji or custom node (a plain text `avatar` such as a name, only a `title`, or an image that failed to load), Avatar draws a generated [boring-avatars](https://boringavatars.com/) SVG. `fallbackVariant` picks the style: `marble` (default), `beam`, `pixel`, `sunset`, `ring`, `bauhaus`, or `text` to render the uppercase text instead (`sliceText` applies to this mode).
 
-The shape is seeded by `title`, then `alt`, then the `avatar` string, so the same name always gets the same avatar. The palette is resolved from theme tokens for the current appearance and follows light / dark mode; pass `fallbackColors` with concrete color strings (not CSS variables) to override it. An explicit text or emoji `avatar` is always rendered as-is, and an Avatar with no seed at all keeps the plain placeholder background.
+The shape is seeded by `title`, then `alt`, then the `avatar` string, so the same name always gets the same avatar. The default palette is a fixed charcoal / violet / cream / yellow / orange set (`#383838` `#7858f9` `#f8f7bf` `#ffdd1f` `#f88c13`), so an avatar looks the same in light and dark mode; pass `fallbackColors` with concrete color strings (not CSS variables) to use your own. Emoji avatars are always rendered as emoji, the `+N` count of `AvatarGroup` stays text, and an Avatar with no seed at all keeps the plain placeholder background.
 
 <Demo of={DemoFallback} />
 
@@ -64,9 +64,9 @@ The shape is seeded by `title`, then `alt`, then the `avatar` string, so the sam
 | borderedColor | Custom color for the outer ring | `string` | - |
 | loading | Show a full-size spinning overlay | `boolean` | - |
 | animation | Use the animated emoji variant | `boolean` | - |
-| sliceText | Slice fallback text to its first two characters | `boolean` | `true` |
-| fallbackVariant | Fallback when there is no image, emoji, text or node | `'marble' \| 'beam' \| 'pixel' \| 'sunset' \| 'ring' \| 'bauhaus' \| 'text'` | `'marble'` |
-| fallbackColors | Palette of the generated fallback; concrete colors only | `string[]` | theme palette |
+| sliceText | Slice text to its first two characters (`fallbackVariant="text"`) | `boolean` | `true` |
+| fallbackVariant | Rendering when there is no image, emoji or custom node | `'marble' \| 'beam' \| 'pixel' \| 'sunset' \| 'ring' \| 'bauhaus' \| 'text'` | `'marble'` |
+| fallbackColors | Palette of the generated fallback; concrete colors only | `string[]` | built-in palette |
 | emojiScaleWithBackground | Scale the emoji down when a background is present | `boolean` | `true` |
 | crossOrigin | Native `crossOrigin` attribute of the image | `'' \| 'anonymous' \| 'use-credentials'` | - |
 | draggable | Native `draggable` attribute of the image | `boolean` | `false` |

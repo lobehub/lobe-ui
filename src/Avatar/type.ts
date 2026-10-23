@@ -9,8 +9,8 @@ export type AvatarGeneratedFallbackVariant =
   'marble' | 'beam' | 'pixel' | 'sunset' | 'ring' | 'bauhaus';
 
 /**
- * How the avatar renders when there is no image, emoji, explicit text or custom node:
- * `text` keeps the uppercase initials, every other value draws a generated `boring-avatars` SVG.
+ * How the avatar renders when there is no image, emoji or custom node:
+ * `text` renders the uppercase initials, every other value draws a generated `boring-avatars` SVG.
  */
 export type AvatarFallbackVariant = 'text' | AvatarGeneratedFallbackVariant;
 
@@ -74,13 +74,14 @@ export interface AvatarProps extends ComponentProps<'div'> {
    */
   emojiScaleWithBackground?: boolean;
   /**
-   * Palette for the generated fallback; defaults to colors resolved from the current theme tokens.
+   * Palette for the generated fallback; defaults to a charcoal / violet / cream / yellow / orange set.
    * Must be concrete color strings (hex / rgb), not CSS variables.
    */
   fallbackColors?: string[];
   /**
-   * Fallback rendering when there is no image, emoji, explicit text or custom node.
-   * The generated variants are seeded by `title`, then `alt`, then the `avatar` string.
+   * Rendering when there is no image, emoji or custom node. A plain text `avatar` is treated as a
+   * name: the generated variants are seeded by `title`, then `alt`, then the `avatar` string;
+   * `text` renders the uppercase text instead.
    * @default 'marble'
    */
   fallbackVariant?: AvatarFallbackVariant;

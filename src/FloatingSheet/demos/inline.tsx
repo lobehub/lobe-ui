@@ -178,11 +178,7 @@ export default () => {
             <Flexbox gap={12} style={{ padding: '0 16px 16px' }}>
               {comments.map((comment) => (
                 <div key={comment.author} style={commentRowStyle}>
-                  <Avatar
-                    avatar={comment.author[0]}
-                    background={cssVar.colorFillTertiary}
-                    size={28}
-                  />
+                  <Avatar shape="circle" size={28} title={comment.author} />
                   <div style={commentBubbleStyle}>
                     <Flexbox horizontal align="center" gap={6} style={{ marginBottom: 2 }}>
                       <Text style={{ fontSize: 12, fontWeight: 600 }}>{comment.author}</Text>
