@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version&nbsp;6.9.0](https://github.com/lobehub/lobe-ui/compare/v6.8.0...v6.9.0)
+
+<sup>Released on **2026-10-23**</sup>
+
+#### ✨ Features
+
+- **code-diff**: Render with @pierre/highlights via diffs 1.6.1.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **code-diff**: Render with @pierre/highlights via diffs 1.6.1, closes [#761](https://github.com/lobehub/lobe-ui/issues/761) ([677bccf](https://github.com/lobehub/lobe-ui/commit/677bccf))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version&nbsp;6.8.0](https://github.com/lobehub/lobe-ui/compare/v6.7.0...v6.8.0)
 
 <sup>Released on **2026-10-23**</sup>
