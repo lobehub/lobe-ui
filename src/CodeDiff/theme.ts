@@ -1,6 +1,7 @@
 import type { FileDiffOptions } from '@pierre/diffs';
 import { registerCustomTheme, resolveTheme } from '@pierre/diffs';
 
+import lobeHighlightsTheme from '@/Highlighter/theme/lobe-highlights-theme';
 import lobeTheme from '@/Highlighter/theme/lobe-theme';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
@@ -11,8 +12,10 @@ let isLobeDiffThemeRegistered = false;
 export const registerLobeDiffThemes = () => {
   if (isLobeDiffThemeRegistered) return;
 
+  registerCustomTheme('lobe-theme', () => Promise.resolve(lobeHighlightsTheme), 'zed');
   registerCustomTheme('lobe-theme', () => Promise.resolve(lobeTheme as any));
-  void resolveTheme('lobe-theme');
+  // Without an explicit backend, resolveTheme falls back to shiki and pulls shiki/core in eagerly.
+  void resolveTheme('lobe-theme', 'highlights');
 
   isLobeDiffThemeRegistered = true;
 };
@@ -60,6 +63,7 @@ export const getLobeDiffOptions = ({
   themeType: isDarkMode ? 'dark' : 'light',
   diffStyle: viewMode,
   disableFileHeader: true,
+  preferredHighlighter: 'highlights',
   unsafeCSS: customSeparatorCSS,
   ...diffOptions,
 });
