@@ -2,6 +2,7 @@ import { Smile } from 'lucide-react';
 
 import { aClasses } from '@/A/stable';
 import { accordionClasses } from '@/Accordion/stable';
+import { agentAvatarClasses } from '@/AgentAvatar/stable';
 import { alertClasses } from '@/Alert/stable';
 import { anchorClasses } from '@/Anchor/stable';
 import { avatarClasses, avatarGroupClasses } from '@/Avatar/stable';
@@ -26,6 +27,7 @@ import { imageClasses } from '@/Image/stable';
 import {
   A,
   Accordion,
+  AgentAvatar,
   Alert,
   Anchor,
   Avatar,
@@ -118,6 +120,11 @@ export const DISPLAY_FIXTURES: Record<string, StableFixture> = {
         items={[{ children: 'Body', key: 'a', title: 'Title' }]}
       />
     ),
+  },
+  AgentAvatar: {
+    classes: agentAvatarClasses,
+    conditional: ['badge', 'thought'],
+    render: ({ className }) => <AgentAvatar className={className} seed="Writer" />,
   },
   Alert: {
     classes: alertClasses,

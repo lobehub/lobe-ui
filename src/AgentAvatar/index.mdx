@@ -1,0 +1,53 @@
+---
+title: AgentAvatar
+description: AgentAvatar draws a deterministic character for an AI agent from a seed, a flat silhouette with big logo-style eyes. Shape and color come from a stable hash and can be overridden, the color follows the theme in dark mode, and the activity state is shown through the eyes and an optional animation.
+category: Data Display
+---
+
+import DemoColors from './demos/Colors.tsx?demo';
+import DemoIndex from './demos/index.tsx?demo';
+import DemoPlayground from './demos/Playground.tsx?demo';
+import DemoShapes from './demos/Shapes.tsx?demo';
+import DemoStates from './demos/States.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { agentAvatarClasses } from './stable';
+
+## Default
+
+`seed` (or `name` when `seed` is omitted) is hashed into a shape and a color, so the same seed always draws the same avatar with no randomness. `name` is also the accessible label; without a name or `aria-label` the avatar is decorative.
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Playground
+
+<Demo of={DemoPlayground} layout="bare" />
+
+## Shapes
+
+Twelve silhouettes share one construction: a flat body, the big eyes with whites, no mouth and no backing plate. Only the shape and the color vary, so every shape stays recognizable at 24px. `shape` overrides the derived one.
+
+<Demo of={DemoShapes} />
+
+## Colors
+
+`color` overrides the derived color. Palette keys resolve to theme color scale steps, with lighter steps in dark mode so `ink` and `gray` keep their contrast against dark backgrounds. Any other string is used as a CSS color as is. The eyes keep the same warm white and near black in every color and appearance.
+
+<Demo of={DemoColors} />
+
+## States
+
+`state` is expressed only through the eyes and motion: `idle` wanders and blinks, `working` looks down and scans, `waiting` looks at you and sways, `blocked` widens the eyes and shows an error badge, `thinking` looks up with rising thought bubbles, and `done` closes the eyes into a smile. Motion is off by default; `animated` plays it, and `prefers-reduced-motion: reduce` always falls back to the still pose. Animations are offset per seed so a list of avatars does not blink in sync.
+
+<Demo of={DemoStates} />
+
+## APIs
+
+<Api name="AgentAvatar" />
+
+`AGENT_AVATAR_SHAPES`, `AGENT_AVATAR_COLORS` and `AGENT_AVATAR_STATES` list the accepted values, and `getAgentAvatarTraits(seed)` returns the derived `shape` and `color` without rendering.
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={agentAvatarClasses} />

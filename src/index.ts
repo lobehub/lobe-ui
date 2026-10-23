@@ -9,6 +9,8 @@ export {
   type ActionIconGroupItemType,
   type ActionIconGroupProps,
 } from './ActionIconGroup';
+export { default as AgentAvatar } from './AgentAvatar';
+export * from './AgentAvatar';
 export * from './Alert';
 export { default as Anchor } from './Anchor';
 export * from './Anchor';

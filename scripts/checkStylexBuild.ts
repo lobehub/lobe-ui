@@ -55,6 +55,7 @@ const migrated = [
   'Upload',
   'ActionIcon',
   'ActionIconGroup',
+  'AgentAvatar',
   'Avatar',
   'Block',
   'Burger',
