@@ -2,6 +2,33 @@
 
 # Changelog
 
+## [Version&nbsp;6.7.0](https://github.com/lobehub/lobe-ui/compare/v6.6.0...v6.7.0)
+
+<sup>Released on **2026-10-23**</sup>
+
+#### ✨ Features
+
+- **avatar**: Add boring-avatars fallback variants.
+- **progressive-blur**: Add ProgressiveBlur component.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **avatar**: Add boring-avatars fallback variants, closes [#759](https://github.com/lobehub/lobe-ui/issues/759) [#383838](https://github.com/lobehub/lobe-ui/issues/383838) [#7858f9](https://github.com/lobehub/lobe-ui/issues/7858f9) [#f8f7bf](https://github.com/lobehub/lobe-ui/issues/f8f7bf) [#ffdd1f](https://github.com/lobehub/lobe-ui/issues/ffdd1f) [#f88c13](https://github.com/lobehub/lobe-ui/issues/f88c13) ([d6bccbe](https://github.com/lobehub/lobe-ui/commit/d6bccbe))
+- **progressive-blur**: Add ProgressiveBlur component, closes [#758](https://github.com/lobehub/lobe-ui/issues/758) ([17cf057](https://github.com/lobehub/lobe-ui/commit/17cf057))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version&nbsp;6.6.0](https://github.com/lobehub/lobe-ui/compare/v6.5.1...v6.6.0)
 
 <sup>Released on **2026-10-22**</sup>
