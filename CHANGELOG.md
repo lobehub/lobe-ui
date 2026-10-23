@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version&nbsp;6.8.0](https://github.com/lobehub/lobe-ui/compare/v6.7.0...v6.8.0)
+
+<sup>Released on **2026-10-23**</sup>
+
+#### ✨ Features
+
+- **agent-avatar**: Add AgentAvatar component.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **agent-avatar**: Add AgentAvatar component, closes [#760](https://github.com/lobehub/lobe-ui/issues/760) ([6377837](https://github.com/lobehub/lobe-ui/commit/6377837))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version&nbsp;6.7.0](https://github.com/lobehub/lobe-ui/compare/v6.6.0...v6.7.0)
 
 <sup>Released on **2026-10-23**</sup>
