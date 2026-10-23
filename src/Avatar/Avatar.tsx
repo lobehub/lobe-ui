@@ -1,6 +1,7 @@
 'use client';
 
 import { getEmoji } from '@lobehub/fluent-emoji';
+import BoringAvatar from 'boring-avatars';
 import clsx from 'clsx';
 import { Loader2 } from 'lucide-react';
 import { memo, type ReactNode, useMemo, useState } from 'react';
@@ -18,8 +19,10 @@ import { avatarClasses } from './stable';
 import { styles } from './style';
 import { type AvatarProps } from './type';
 import {
+  AVATAR_FALLBACK_COLORS,
   calculateEmojiSize,
   formatAvatarText,
+  getAvatarFallbackSeed,
   hasValidBackground,
   isDefaultAntAvatar,
 } from './utils';
@@ -48,6 +51,8 @@ export const AvatarImpl = memo<AvatarImplProps>(
     crossOrigin,
     draggable = false,
     emojiScaleWithBackground = true,
+    fallbackColors,
+    fallbackVariant = 'marble',
     loading,
     ref,
     shadow,
@@ -84,6 +89,13 @@ export const AvatarImpl = memo<AvatarImplProps>(
     const showImage = isUrlOrElement && isStringAvatar && !isImgError;
     const showElement = isUrlOrElement && !isStringAvatar && !isImgError;
 
+    // Plain text avatars (a name, initials) are treated as a seed like `title`; only
+    // `fallbackVariant="text"` renders them as uppercase text.
+    const fallbackSeed = getAvatarFallbackSeed(avatar, title, alt);
+    const showFallback =
+      fallbackVariant !== 'text' && !!fallbackSeed && !emoji && !showImage && !showElement;
+    const colors = fallbackColors?.length ? fallbackColors : AVATAR_FALLBACK_COLORS;
+
     const customAvatar = useMemo(
       () =>
         emoji ? (
@@ -110,7 +122,8 @@ export const AvatarImpl = memo<AvatarImplProps>(
     );
 
     const customSize = sizeProp !== undefined;
-    const showDefaultBackground = !background && !((isUrlOrElement && !isImgError) || emoji);
+    const showDefaultBackground =
+      !background && !showFallback && !((isUrlOrElement && !isImgError) || emoji);
 
     return (
       <div
@@ -180,7 +193,22 @@ export const AvatarImpl = memo<AvatarImplProps>(
             onError={() => setIsImgError(true)}
           />
         )}
-        {!showImage && (
+        {showFallback && (
+          <BoringAvatar
+            square
+            aria-label={imgAlt}
+            colors={colors}
+            name={fallbackSeed}
+            size={'100%'}
+            variant={fallbackVariant}
+            {...styleProps(
+              styles.fallback,
+              clsx(avatarClasses('fallback'), classNames?.fallback),
+              customStyles?.fallback,
+            )}
+          />
+        )}
+        {!showImage && !showFallback && (
           <span
             {...styleProps(
               [styles.content, contentXstyle],

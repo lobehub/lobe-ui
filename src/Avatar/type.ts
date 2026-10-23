@@ -2,8 +2,21 @@ import type { ComponentProps, CSSProperties, ReactNode, Ref } from 'react';
 
 import type { FlexboxProps } from '@/Flex';
 
+/**
+ * Generated fallback styles rendered by `boring-avatars`.
+ */
+export type AvatarGeneratedFallbackVariant =
+  'marble' | 'beam' | 'pixel' | 'sunset' | 'ring' | 'bauhaus';
+
+/**
+ * How the avatar renders when there is no image, emoji or custom node:
+ * `text` renders the uppercase initials, every other value draws a generated `boring-avatars` SVG.
+ */
+export type AvatarFallbackVariant = 'text' | AvatarGeneratedFallbackVariant;
+
 export interface AvatarClassNames {
   content?: string;
+  fallback?: string;
   img?: string;
   loading?: string;
   root?: string;
@@ -11,6 +24,7 @@ export interface AvatarClassNames {
 
 export interface AvatarStyles {
   content?: CSSProperties;
+  fallback?: CSSProperties;
   img?: CSSProperties;
   loading?: CSSProperties;
   root?: CSSProperties;
@@ -60,6 +74,18 @@ export interface AvatarProps extends ComponentProps<'div'> {
    */
   emojiScaleWithBackground?: boolean;
   /**
+   * Palette for the generated fallback; defaults to a charcoal / violet / cream / yellow / orange set.
+   * Must be concrete color strings (hex / rgb), not CSS variables.
+   */
+  fallbackColors?: string[];
+  /**
+   * Rendering when there is no image, emoji or custom node. A plain text `avatar` is treated as a
+   * name: the generated variants are seeded by `title`, then `alt`, then the `avatar` string;
+   * `text` renders the uppercase text instead.
+   * @default 'marble'
+   */
+  fallbackVariant?: AvatarFallbackVariant;
+  /**
    * Show the full-size loading overlay
    */
   loading?: boolean;
@@ -107,7 +133,7 @@ export interface AvatarProps extends ComponentProps<'div'> {
 
 export interface AvatarGroupItemType extends Pick<
   AvatarProps,
-  'avatar' | 'title' | 'alt' | 'onClick' | 'style' | 'className' | 'loading'
+  'avatar' | 'title' | 'alt' | 'onClick' | 'style' | 'className' | 'loading' | 'fallbackVariant'
 > {
   key: string;
 }
@@ -124,6 +150,8 @@ export interface AvatarGroupProps
       | 'animation'
       | 'draggable'
       | 'shape'
+      | 'fallbackColors'
+      | 'fallbackVariant'
     >,
     Omit<FlexboxProps, 'children' | 'draggable' | 'onClick' | 'ref'> {
   classNames?: {

@@ -1,4 +1,16 @@
-import { Avatar, Button, createModalSystem, cssVar, Flexbox, Modal, Popover, Select,Tag, Text, Tooltip  } from '@lobehub/ui';
+import {
+  Avatar,
+  Button,
+  createModalSystem,
+  cssVar,
+  Flexbox,
+  Modal,
+  Popover,
+  Select,
+  Tag,
+  Text,
+  Tooltip,
+} from '@lobehub/ui';
 import { AlertTriangle, FileText, Share2 } from 'lucide-react';
 import { useState } from 'react';
 
@@ -124,7 +136,13 @@ const ProfileSetupDemo = () => {
           padding: '12px 16px',
         }}
       >
-        <Avatar avatar="?" background={cssVar.colorPrimary} size={36} style={{ flexShrink: 0 }} />
+        <Avatar
+          avatar="?"
+          background={cssVar.colorPrimary}
+          fallbackVariant="text"
+          size={36}
+          style={{ flexShrink: 0 }}
+        />
         <Flexbox flex={1} gap={1}>
           <Text style={{ fontWeight: 600 }}>Complete your profile</Text>
           <Text style={{ fontSize: 12, opacity: 0.6 }}>

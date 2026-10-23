@@ -39,6 +39,12 @@ export const styles = stylex.create({
     height: '100%',
     width: '100%',
   },
+  fallback: {
+    flex: 'none',
+    display: 'block',
+    height: '100%',
+    width: '100%',
+  },
   img: {
     flex: 'none',
     objectFit: 'cover',
