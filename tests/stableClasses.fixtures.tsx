@@ -510,6 +510,7 @@ export const EXEMPT: Record<string, string> = {
   'SelectSeparator': 'atom of Select',
   'SelectTrigger': 'atom of Select',
   'SelectValue': 'atom of Select',
+  'LobeHighlightsTheme': 'not a component',
   'ShikiLobeTheme': 'not a component',
   'SwitchIcon': 'atom of Switch',
   'SwitchRoot': 'atom of Switch',

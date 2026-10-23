@@ -328,6 +328,7 @@ export {
   type VideoSection,
   type VideoState,
 } from './Video';
+export { default as LobeHighlightsTheme } from '@/Highlighter/theme/lobe-highlights-theme';
 export { default as ShikiLobeTheme } from '@/Highlighter/theme/lobe-theme';
 export { rehypeStreamAnimated } from '@lobehub/streamdown';
 export { ErrorBoundary, type ErrorBoundaryProps } from 'react-error-boundary';
