@@ -55,6 +55,7 @@ import {
   MaterialFileTypeIcon,
   Pagination,
   Progress,
+  ProgressiveBlur,
   QRCode,
   Result,
   ScrollArea,
@@ -78,6 +79,7 @@ import { maskShadowClasses } from '@/MaskShadow/stable';
 import { materialFileTypeIconClasses } from '@/MaterialFileTypeIcon/stable';
 import { paginationClasses } from '@/Pagination/stable';
 import { progressClasses } from '@/Progress/stable';
+import { progressiveBlurClasses } from '@/ProgressiveBlur/stable';
 import { qrCodeClasses } from '@/QRCode/stable';
 import { resultClasses } from '@/Result/stable';
 import { scrollAreaClasses } from '@/ScrollArea/stable';
@@ -342,6 +344,14 @@ export const DISPLAY_FIXTURES: Record<string, StableFixture> = {
     classes: progressClasses,
     conditional: ['segment', 'rest'],
     render: ({ className }) => <Progress className={className} label="Label" percent={40} />,
+  },
+  ProgressiveBlur: {
+    classes: progressiveBlurClasses,
+    render: ({ className }) => (
+      <ProgressiveBlur className={className}>
+        <div>Body</div>
+      </ProgressiveBlur>
+    ),
   },
   QRCode: {
     classes: qrCodeClasses,

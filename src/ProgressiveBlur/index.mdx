@@ -1,0 +1,46 @@
+---
+title: ProgressiveBlur
+description: ProgressiveBlur fades the edge of an overflowing area with stacked backdrop blur layers that ramp from sharp to blurred, plus a theme-tinted gradient for text contrast. It falls back to the gradient alone when transparency is reduced or backdrop-filter is unsupported.
+category: Layout
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoWrapper from './demos/Wrapper.tsx?demo';
+import DemoPosition from './demos/Position.tsx?demo';
+import DemoMode from './demos/Mode.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { progressiveBlurClasses } from './stable';
+
+## Default
+
+Without children, `ProgressiveBlur` is an absolutely positioned, `pointer-events: none` overlay. Place it next to the scroller inside a positioned container, so it stays on the edge while the content scrolls underneath.
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Wrapper
+
+With children it renders a relative container, makes the content scrollable and lays the blur band over its edge.
+
+<Demo of={DemoWrapper} />
+
+## Position
+
+`position` picks the edge. For `left` and `right`, `height` is the width of the band.
+
+<Demo of={DemoPosition} />
+
+## Mode
+
+`auto` renders the blur layers and drops them under `prefers-reduced-transparency: reduce` or when `backdrop-filter` is unsupported, keeping a stronger gradient so text stays readable. `blur` always renders the layers; `gradient` never does, which is the cheap option for long lists or low-end devices.
+
+<Demo of={DemoMode} />
+
+## APIs
+
+<Api name="ProgressiveBlur" />
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={progressiveBlurClasses} />

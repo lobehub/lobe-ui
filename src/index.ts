@@ -246,6 +246,8 @@ export { default as Popover } from './Popover';
 export * from './Popover';
 export { default as Progress } from './Progress';
 export * from './Progress';
+export { default as ProgressiveBlur } from './ProgressiveBlur';
+export * from './ProgressiveBlur';
 export { I18nProvider, type I18nProviderProps, LobeUIProvider, useTranslation } from './Provider';
 export { default as QRCode } from './QRCode';
 export * from './QRCode';
