@@ -13,6 +13,46 @@ const renderButton = (children: ReactNode) =>
   render(<ConfigProvider motion={motion}>{children}</ConfigProvider>);
 
 describe('Button', () => {
+  test.each([undefined, false])('does not mount an idle spinner when loading is %s', (loading) => {
+    renderButton(<Button loading={loading}>Save</Button>);
+
+    const slot = screen
+      .getByRole('button', { name: 'Save' })
+      .querySelector('.lobe-button__spinner');
+
+    expect(slot).not.toBeNull();
+    expect(slot?.getAttribute('aria-hidden')).toBe('true');
+    expect(slot?.firstElementChild).toBeNull();
+  });
+
+  test('mounts the spinner only while loading and restores the icon across repeated changes', () => {
+    const content = (loading: boolean) => (
+      <ConfigProvider motion={motion}>
+        <Button icon={<span data-testid={'button-icon'} />} loading={loading}>
+          Save
+        </Button>
+      </ConfigProvider>
+    );
+    const { rerender } = render(content(false));
+    const slot = screen
+      .getByRole('button', { name: 'Save' })
+      .querySelector('.lobe-button__spinner');
+
+    for (const loading of [false, true, false, true]) {
+      rerender(content(loading));
+
+      expect(
+        screen.getByRole('button', { name: 'Save' }).querySelector('.lobe-button__spinner'),
+      ).toBe(slot);
+      expect(slot?.getAttribute('aria-hidden')).toBe(String(!loading));
+      expect(Boolean(slot?.firstElementChild)).toBe(loading);
+      expect(Boolean(screen.queryByTestId('button-icon'))).toBe(!loading);
+      expect(screen.getByRole('button', { name: 'Save' }).getAttribute('aria-busy')).toBe(
+        loading ? 'true' : null,
+      );
+    }
+  });
+
   test('exports buttonStyles as StyleX class strings', () => {
     expect(typeof buttonStyles.base).toBe('string');
     expect(buttonStyles.base).toMatch(/(^|\s)lb\w+/);
@@ -94,6 +134,9 @@ describe('Button', () => {
     expect(link.getAttribute('href')).toBe('/docs');
     expect(link.getAttribute('aria-busy')).toBe('true');
     expect(link.getAttribute('aria-disabled')).toBe('true');
+    expect(link.querySelector('.lobe-button__spinner')?.firstElementChild).toBeInstanceOf(
+      HTMLElement,
+    );
     expect(fireEvent.click(link)).toBe(false);
     expect(handleClick).not.toHaveBeenCalled();
   });
@@ -119,6 +162,7 @@ describe('Button', () => {
     fireEvent.click(button);
 
     expect(button.disabled).toBe(true);
+    expect(button.querySelector('.lobe-button__spinner')?.firstElementChild).toBeNull();
     expect(handleSubmit).not.toHaveBeenCalled();
   });
 

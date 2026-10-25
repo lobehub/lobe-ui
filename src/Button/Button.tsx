@@ -172,7 +172,7 @@ const ButtonImpl = ({
         userStyles?.icon,
       )}
     >
-      <span {...stylex.props(styles.spinner)} />
+      {loading && <span {...stylex.props(styles.spinner)} />}
     </span>
   );
 
