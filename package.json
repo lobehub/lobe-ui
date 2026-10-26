@@ -224,7 +224,7 @@
     "@lobehub/lint": "^2.1.6",
     "@material/material-color-utilities": "0.4.0",
     "@mdx-js/rollup": "3.1.1",
-    "@playwright/test": "1.64.0",
+    "@playwright/test": "1.64.1",
     "@react-router/dev": "8.4.0",
     "@splinetool/runtime": "1.12.98",
     "@stylexjs/eslint-plugin": "0.19.1",
