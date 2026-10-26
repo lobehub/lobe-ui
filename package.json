@@ -219,7 +219,7 @@
     "@commitlint/cli": "^21.2.3",
     "@lobehub/docs-kit": "^6.2.1",
     "@lobehub/eslint-config": "2.1.6",
-    "@lobehub/fluent-emoji": "^4.1.0",
+    "@lobehub/fluent-emoji": "^5.0.0",
     "@lobehub/icons": "^5.10.1",
     "@lobehub/lint": "^2.1.6",
     "@material/material-color-utilities": "0.4.0",
