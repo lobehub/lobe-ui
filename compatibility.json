@@ -25,6 +25,18 @@
       "source": "src/ActionIconGroup/demos/index.tsx"
     },
     {
+      "document": "src/AutoComplete/index.mdx",
+      "legacyId": "src-auto-complete-demo-demos",
+      "legacyRouteId": "components/AutoComplete/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/auto-complete",
+      "source": "src/AutoComplete/demos/index.tsx"
+    },
+    {
       "document": "src/Block/index.mdx",
       "legacyId": "src-block-demo-demos",
       "legacyRouteId": "components/Block/index",
@@ -35,6 +47,18 @@
       },
       "pathname": "/components/block",
       "source": "src/Block/demos/index.tsx"
+    },
+    {
+      "document": "src/Checkbox/index.mdx",
+      "legacyId": "src-checkbox-demo-demos",
+      "legacyRouteId": "components/Checkbox/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/checkbox",
+      "source": "src/Checkbox/demos/index.tsx"
     },
     {
       "document": "src/CodeDiff/index.mdx",
@@ -865,6 +889,78 @@
       "source": "src/FluentEmoji/demos/index.tsx"
     },
     {
+      "document": "src/Form/index.mdx",
+      "legacyId": "src-form-demo-demos",
+      "legacyRouteId": "components/Form/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/form",
+      "source": "src/Form/demos/index.tsx"
+    },
+    {
+      "document": "src/Form/index.mdx",
+      "legacyId": "src-form-demo-compound",
+      "legacyRouteId": "components/Form/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/form",
+      "source": "src/Form/demos/compound.tsx"
+    },
+    {
+      "document": "src/Form/index.mdx",
+      "legacyId": "src-form-demo-controls",
+      "legacyRouteId": "components/Form/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/form",
+      "source": "src/Form/demos/controls.tsx"
+    },
+    {
+      "document": "src/Form/index.mdx",
+      "legacyId": "src-form-demo-zod",
+      "legacyRouteId": "components/Form/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/form",
+      "source": "src/Form/demos/zod.tsx"
+    },
+    {
+      "document": "src/Form/index.mdx",
+      "legacyId": "src-form-demo-float",
+      "legacyRouteId": "components/Form/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/form",
+      "source": "src/Form/demos/float.tsx"
+    },
+    {
+      "document": "src/Form/index.mdx",
+      "legacyId": "src-form-demo-compact",
+      "legacyRouteId": "components/Form/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/form",
+      "source": "src/Form/demos/compact.tsx"
+    },
+    {
       "document": "src/Freeze/index.mdx",
       "legacyId": "src-freeze-demo-demos",
       "legacyRouteId": "components/Freeze/index",
@@ -1247,6 +1343,30 @@
       },
       "pathname": "/components/image-select",
       "source": "src/ImageSelect/demos/index.tsx"
+    },
+    {
+      "document": "src/Input/index.mdx",
+      "legacyId": "src-input-demo-demos",
+      "legacyRouteId": "components/Input/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/input",
+      "source": "src/Input/demos/index.tsx"
+    },
+    {
+      "document": "src/Input/index.mdx",
+      "legacyId": "src-input-demo-family",
+      "legacyRouteId": "components/Input/index",
+      "options": {
+        "inline": false,
+        "isolated": false,
+        "layout": "bare"
+      },
+      "pathname": "/components/input",
+      "source": "src/Input/demos/family.tsx"
     },
     {
       "document": "src/Layout/index.mdx",
@@ -5475,12 +5595,30 @@
       "title": "ActionIconGroup"
     },
     {
+      "category": "Data Entry",
+      "description": "Base UI-powered AutoComplete input with filtered suggestions.",
+      "legacyRouteId": "components/AutoComplete/index",
+      "pathname": "/components/auto-complete",
+      "section": "Components",
+      "source": "src/AutoComplete/index.mdx",
+      "title": "AutoComplete"
+    },
+    {
       "category": "General",
       "legacyRouteId": "components/Block/index",
       "pathname": "/components/block",
       "section": "Components",
       "source": "src/Block/index.mdx",
       "title": "Block"
+    },
+    {
+      "category": "Data Entry",
+      "description": "Base UI-powered Checkbox and CheckboxGroup with lobe visual style.",
+      "legacyRouteId": "components/Checkbox/index",
+      "pathname": "/components/checkbox",
+      "section": "Components",
+      "source": "src/Checkbox/index.mdx",
+      "title": "Checkbox"
     },
     {
       "category": "Data Display",
@@ -5633,6 +5771,15 @@
       "title": "FontLoader"
     },
     {
+      "category": "Data Entry",
+      "description": "Base UI-powered Form with settings-style groups, fields and submit footer.",
+      "legacyRouteId": "components/Form/index",
+      "pathname": "/components/form",
+      "section": "Components",
+      "source": "src/Form/index.mdx",
+      "title": "Form"
+    },
+    {
       "category": "General",
       "legacyRouteId": "components/Freeze/index",
       "pathname": "/components/freeze",
@@ -5738,6 +5885,15 @@
       "section": "Components",
       "source": "src/ImageSelect/index.mdx",
       "title": "ImageSelect"
+    },
+    {
+      "category": "Data Entry",
+      "description": "Base UI-powered Input and TextArea components.",
+      "legacyRouteId": "components/Input/index",
+      "pathname": "/components/input",
+      "section": "Components",
+      "source": "src/Input/index.mdx",
+      "title": "Input"
     },
     {
       "category": "Layout",
