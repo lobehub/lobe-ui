@@ -1,0 +1,36 @@
+---
+title: AutoComplete
+description: Base UI-powered AutoComplete input that filters its own suggestion list as you type.
+category: Data Entry
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { autoCompleteClasses } from './stable';
+
+## Default
+
+Filtering is built into Base UI Autocomplete; items are matched against the typed value automatically, so `options` only supplies the candidate list.
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| options | Suggestion list | `(string \| { value; label?; disabled? })[]` | `[]` |
+| value | Controlled input value | `string` | - |
+| onChange | Fires on typing or item pick | `(value: string) => void` | - |
+| onSearch | Alias fired together with onChange | `(value: string) => void` | - |
+| allowClear | Show clear button | `boolean` | - |
+| emptyText | Content when nothing matches | `ReactNode` | - |
+| variant | Input visual variant | `'filled' \| 'outlined' \| 'borderless'` | auto |
+| size | Input size | `'small' \| 'middle' \| 'large'` | `middle` |
+| shadow | Apply lobe shadow style | `boolean` | - |
+| prefix / suffix | Input slots | `ReactNode` | - |
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={autoCompleteClasses} />
