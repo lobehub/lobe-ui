@@ -6,6 +6,7 @@ import stylex from '@stylexjs/unplugin/rolldown';
 import { defineConfig, type Rolldown } from 'tsdown';
 
 import { layerComponentCss } from './config/componentCss.ts';
+import { stripDeadTokenInterpolationsPlugin } from './config/stripDeadTokenInterpolations.ts';
 import { stylexOptions } from './config/stylex.ts';
 
 const root = fileURLToPath(new URL('.', import.meta.url));
@@ -78,7 +79,11 @@ export default defineConfig({
   outputOptions: { assetFileNames: '[name][extname]' },
   // componentCss must emit style.css before StyleX's generateBundle appends to the first CSS asset;
   // StyleX re-emits that asset by name, so an unhashed assetFileNames keeps it at es/style.css.
-  plugins: [componentCss(), stylex({ ...stylexOptions, dev: false })],
+  plugins: [
+    componentCss(),
+    stylex({ ...stylexOptions, dev: false }),
+    stripDeadTokenInterpolationsPlugin(),
+  ],
 
   sourcemap: true,
   unbundle: true,
