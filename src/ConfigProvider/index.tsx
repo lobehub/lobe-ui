@@ -25,7 +25,7 @@ import { MotionComponent, type MotionComponentType } from '@/MotionProvider';
 import { type CDN, type CdnApi, genCdnUrl } from '@/utils/genCdnUrl';
 
 import AppElementContext from './AppElementContext';
-import { KATEX_CSS_VERSION } from './cdnAssets';
+import { DEFAULT_WEB_FONTS } from './cdnAssets';
 
 export const LOBE_THEME_APP_ID = 'lobe-ui-theme-app';
 
@@ -168,21 +168,7 @@ const portalHostStyle: CSSProperties = {
 const WebFonts = ({ customFonts }: { customFonts?: string[] }) => {
   const genCdnUrl = useCdnFn();
   const urls = useMemo(
-    () =>
-      customFonts || [
-        genCdnUrl({ path: 'css/index.css', pkg: '@lobehub/webfont-mono', version: '1.0.0' }),
-        genCdnUrl({
-          path: 'css/index-full.css',
-          pkg: '@lobehub/webfont-harmony-sans',
-          version: '1.0.0',
-        }),
-        genCdnUrl({
-          path: 'css/index.css',
-          pkg: '@lobehub/webfont-harmony-sans-sc',
-          version: '1.0.0',
-        }),
-        genCdnUrl({ path: 'dist/katex.min.css', pkg: 'katex', version: KATEX_CSS_VERSION }),
-      ],
+    () => customFonts || DEFAULT_WEB_FONTS.map((asset) => genCdnUrl(asset)),
     [customFonts, genCdnUrl],
   );
 

@@ -36,6 +36,20 @@ At the same time, it provides custom CDN configuration, set `proxy` to `custom` 
 
 Theme appearance and colors are not configured here: import `@lobehub/ui/theme.css` and `@lobehub/ui/style.css`, and set `data-theme` / `data-primary-color` / `data-neutral-color` on `<html>` (or wrap a subtree in `ThemeScope`).
 
+## Font stack by language
+
+`theme.css` picks `--lobe-font-family` and `--lobe-font-family-code` from the document language, so set `lang` on `<html>` before first paint. Han characters are shared across Chinese, Japanese and Korean, and the first CJK family in the stack decides their glyph shapes, so each locale puts its own families ahead of the Simplified Chinese fallback:
+
+| `lang`                                 | Latin          | CJK / script                   |
+| -------------------------------------- | -------------- | ------------------------------ |
+| unset or unlisted                      | Geist          | HarmonyOS Sans SC → system SC  |
+| `zh` (Simplified)                      | HarmonyOS Sans | HarmonyOS Sans SC → system SC  |
+| `zh-TW`, `zh-Hant`, `zh-HK`, `zh-MO`   | system         | system TC / HK, then system SC |
+| `ja`, `ko`                             | Geist          | system JP / KR                 |
+| `ar`, `fa`, `he`, `th`, `hi`/`mr`/`ne` | Geist          | system script families         |
+
+Traditional Chinese stays on system fonts because HarmonyOS Sans SC draws traditional characters with mainland glyph shapes. To put a user-chosen font in front, compose the full stack with `genFontFamily({ locale, prepend: [font] })` (or `genFontFamilyCode`) and set it as the CSS variable.
+
 ## Custom primary colour
 
 `primaryColor` also takes any 6-digit hex (`setLobeTheme`, `ThemeScope`, `LobeThemeScript`). Lobe UI builds the 13-step light and dark scale from the preset nearest in hue and lightness: the picked colour becomes the light `colorPrimary`, neighbouring steps follow its lightness on a taper so the ramp stays in order, and backgrounds and borders keep the preset's lightness with the new hue. In dark mode, a colour below 4.5:1 on the dark container is lifted (same hue and chroma) until it reaches 4.5:1, so deep brand colours stay readable. The generated rules are injected once per colour under `[data-primary-color='#rrggbb']`, so light / dark switching and nested scopes keep working. For server rendering, `getCustomPrimaryCss(hex)` returns the same CSS.
