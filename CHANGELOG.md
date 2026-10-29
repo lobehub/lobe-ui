@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version&nbsp;6.10.0](https://github.com/lobehub/lobe-ui/compare/v6.9.1...v6.10.0)
+
+<sup>Released on **2026-10-29**</sup>
+
+#### ✨ Features
+
+- **theme**: Pick the font stack from the document language.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **theme**: Pick the font stack from the document language, closes [#768](https://github.com/lobehub/lobe-ui/issues/768) ([7392b8a](https://github.com/lobehub/lobe-ui/commit/7392b8a))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version&nbsp;6.9.1](https://github.com/lobehub/lobe-ui/compare/v6.9.0...v6.9.1)
 
 <sup>Released on **2026-10-29**</sup>
