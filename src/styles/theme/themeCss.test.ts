@@ -2,6 +2,7 @@ import { toCssVariables } from '../css';
 import { neutralColors, primaryColors } from '../customTheme';
 import { createLobeToken, type CreateLobeTokenParams } from './createLobeToken';
 import { getGlobalCss, getThemeCss } from './themeCss';
+import { genFontFamily, genFontFamilyCode } from './token/font';
 
 const SURFACE_VARS = [
   '--lobe-fill-border',
@@ -69,6 +70,31 @@ describe('getThemeCss', () => {
     expect(dark['--lobe-fill-border-strong']).toBe('var(--lobe-color-fill)');
     expect(dark['--lobe-table-surface']).toBe('var(--lobe-color-fill-quaternary)');
     expect(dark['--lobe-table-cell-bg']).toBe('transparent');
+  });
+
+  it('defaults the font stacks to the language-neutral ones', () => {
+    const light = rules.get(":root, [data-theme='light']")!;
+
+    expect(light['--lobe-font-family']).toBe(genFontFamily());
+    expect(light['--lobe-font-family-code']).toBe(genFontFamilyCode());
+  });
+
+  it('switches the font stacks by document language on the root and theme scopes', () => {
+    const findRule = (lang: string) =>
+      [...rules].find(([selector]) =>
+        selector.split(/, (?=:is\()/).includes(`:is(:root, [data-theme]):lang(${lang})`),
+      );
+
+    for (const lang of ['zh', 'zh-TW', 'zh-HK', 'zh-MO', 'zh-Hant', 'ja', 'ko', 'ar', 'fa']) {
+      const [, vars] = findRule(lang)!;
+
+      expect(vars['--lobe-font-family']).toBe(genFontFamily({ locale: lang }));
+      expect(vars['--lobe-font-family-code']).toBe(genFontFamilyCode({ locale: lang }));
+    }
+
+    const css = getThemeCss();
+    expect(css.indexOf(':lang(zh)')).toBeLessThan(css.indexOf(':lang(zh-TW)'));
+    expect(css.indexOf(':lang(zh-Hant)')).toBeLessThan(css.indexOf(':lang(zh-HK)'));
   });
 
   it('keeps document resets out of theme.css', () => {

@@ -5,6 +5,7 @@ import { isCustomNeutral } from './customNeutral';
 import { isRegisteredPalette } from './customPalette';
 import type { CustomPrimaryColor } from './customPrimary';
 import type { LobeAppearance } from './scope';
+import { genFontFamily, genFontFamilyCode, LOCALE_FONTS } from './token/font';
 
 const v = (key: string) => `var(${toCssVarName(key)})`;
 
@@ -67,6 +68,14 @@ const colorRules = (appearance: LobeAppearance) => [
     ),
   ),
 ];
+
+const localeFontRules = () =>
+  LOCALE_FONTS.map(({ langs }) =>
+    rule(langs.map((lang) => `:is(:root, [data-theme]):lang(${lang})`).join(', '), {
+      [toCssVarName('fontFamily')]: genFontFamily({ locale: langs[0] }),
+      [toCssVarName('fontFamilyCode')]: genFontFamilyCode({ locale: langs[0] }),
+    }),
+  );
 
 export const getCustomPrimaryCss = (color: CustomPrimaryColor) => {
   const hex = color.toLowerCase();
@@ -415,6 +424,7 @@ export const getThemeCss = () =>
     appearanceRule("[data-theme='dark']", 'dark'),
     ...colorRules('light'),
     ...colorRules('dark'),
+    ...localeFontRules(),
     essentialCss,
   ].join('\n\n'));
 

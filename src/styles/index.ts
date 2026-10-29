@@ -55,3 +55,4 @@ export {
   getGlobalCss,
   getThemeCss,
 } from './theme/themeCss';
+export { genFontFamily, genFontFamilyCode, type GenFontFamilyOptions } from './theme/token/font';
