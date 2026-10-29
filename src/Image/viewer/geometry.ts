@@ -173,18 +173,24 @@ export const naturalScale = (natural: Size, fitRect: Rect, rotate: Rotation): nu
 // relative to the fit rect, so MIN_SCALE is always still fit. Opening above
 // MIN_SCALE is what makes a screenshot legible on open and — because the image
 // then overflows the viewport — what gives panBounds something to work with.
+//
+// `pixelRatio` is how many image pixels made one CSS pixel when the image was
+// captured. Up to that ratio fit still shows the image at least at its captured
+// size with every pixel intact — a 2x screenshot fitted on a 2x screen looks as
+// it did on screen — so auto stays at fit, where 100% would only double it.
 export const resolveInitialScale = (
   policy: ZoomPolicy,
   natural: Size,
   fitRect: Rect,
   rotate: Rotation,
   threshold: number = DEFAULT_AUTO_ZOOM_THRESHOLD,
+  pixelRatio: number = 1,
 ): number => {
   if (policy === 'fit') return MIN_SCALE;
 
   const target = naturalScale(natural, fitRect, rotate);
   if (!Number.isFinite(target) || target <= 0) return MIN_SCALE;
-  if (policy === 'auto' && target > threshold) return MIN_SCALE;
+  if (policy === 'auto' && (target <= pixelRatio || target > threshold)) return MIN_SCALE;
 
   // fillViewport drops computeFit's no-upscale cap, so the fit rect can be
   // larger than the image and target can land below the zoom floor.

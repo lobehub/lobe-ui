@@ -62,6 +62,8 @@ const MermaidSvg = memo<MermaidSvgProps>(({ className, dataAttributes, ref, styl
         autoZoomThreshold: DEFAULT_AUTO_ZOOM_THRESHOLD,
         defaultZoom: 'auto',
         maxScale: DEFAULT_MAX_SCALE,
+        // The SVG's natural size is already in CSS pixels on any screen.
+        pixelRatio: 1,
       },
       src: url,
     });

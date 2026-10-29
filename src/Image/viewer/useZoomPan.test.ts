@@ -710,6 +710,29 @@ describe('defaultZoom', () => {
     expect(result.current.scale.get()).toBeCloseTo(MODEST_ACTUAL, 10);
   });
 
+  describe('on a 2x screen', () => {
+    beforeEach(() => vi.stubGlobal('devicePixelRatio', 2));
+    afterEach(() => vi.unstubAllGlobals());
+
+    it('opens a modestly oversized image at fit under auto', () => {
+      // Read as a 2x capture, MODEST was 800px wide on screen: fitting it to
+      // 1152px shows it larger than that, so 100% would only double it.
+      const { result } = setup({ defaultZoom: 'auto', natural: MODEST });
+      expect(result.current.scale.get()).toBe(1);
+      expect(result.current.isClean).toBe(true);
+    });
+
+    it('still opens at natural size under auto when fit would drop pixels', () => {
+      const { result } = setup({ autoZoomThreshold: 4, defaultZoom: 'auto', natural: NATURAL });
+      expect(result.current.scale.get()).toBeCloseTo(NATURAL_ACTUAL, 10);
+    });
+
+    it('prefers a caller-supplied pixel ratio over the screen one', () => {
+      const { result } = setup({ defaultZoom: 'auto', natural: MODEST, pixelRatio: 1 });
+      expect(result.current.scale.get()).toBeCloseTo(MODEST_ACTUAL, 10);
+    });
+  });
+
   // The whole dismiss system keys off isClean. Opening above the zoom floor
   // must not read as "the user changed something", or Esc stops closing on the
   // first press, clicking the image stops closing, and the close animation

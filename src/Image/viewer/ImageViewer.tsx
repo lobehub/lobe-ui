@@ -114,6 +114,7 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
     maxScale: currentEntry.options.maxScale,
     natural,
     onCloseRequest: requestClose,
+    pixelRatio: currentEntry.options.pixelRatio,
     viewport,
   });
 

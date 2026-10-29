@@ -6,7 +6,7 @@ const MODEST = 'https://picsum.photos/id/1067/1600/1067';
 const HUGE = 'https://picsum.photos/id/1024/4000/2667';
 
 const samples: { caption: string; preview?: ImagePreviewOptions; src: string }[] = [
-  { caption: '1600 × 1067 — auto opens it at 100%', src: MODEST },
+  { caption: '1600 × 1067 — auto opens it at 100% on a 1x screen', src: MODEST },
   { caption: '4000 × 2667 — auto falls back to fitted', src: HUGE },
   {
     caption: '1600 × 1067 — fit forces fitted',

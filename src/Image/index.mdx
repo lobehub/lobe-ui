@@ -49,6 +49,8 @@ Ctrl/Cmd + wheel, double-click, or the toolbar's zoom buttons zoom in past the f
 
 `preview.defaultZoom` picks the scale the viewer opens at. The default, `auto`, opens an image at its natural size when it is at most `preview.autoZoomThreshold` times the fitted size, and falls back to the fitted size beyond that. This keeps screenshots and text-bearing images legible on open — fitting a 2560px-wide screenshot into a 1400px viewport halves its text — while a photo many times the viewport still opens whole rather than showing a corner of itself.
 
+`auto` reads a raster image as captured at the screen's `devicePixelRatio` and stays fitted while the image is at most that many times the fitted size. The same 2560px screenshot taken on a 2x screen was 1280px wide there, so fitting it already shows it at its captured size with every pixel intact, and 100% would double it. With the default threshold of 2, a 2x screen therefore opens every image fitted.
+
 Opening above the fitted size also means the image overflows the viewport, so it is immediately pannable. Scrolling down zooms back out to the fitted size before the next scroll dismisses the viewer.
 
 <Demo of={DemoDefaultZoom} layout="center" />
@@ -119,7 +121,7 @@ The preview viewer was rewritten from scratch on top of a Base UI dialog and no 
 | Property | Description | Type | Default |
 | --- | --- | --- | --- |
 | src | Higher-resolution source swapped in after the viewer opens with `src` | `string` | - |
-| defaultZoom | Scale the viewer opens at. `fit` always shows the whole frame, `actual` always opens at 100%, and `auto` opens at 100% only when the image is within `autoZoomThreshold` of the fitted size | `'auto' \| 'actual' \| 'fit'` | `'auto'` |
+| defaultZoom | Scale the viewer opens at. `fit` always shows the whole frame, `actual` always opens at 100%, and `auto` opens at 100% only when the image is more than `devicePixelRatio` and at most `autoZoomThreshold` times the fitted size | `'auto' \| 'actual' \| 'fit'` | `'auto'` |
 | autoZoomThreshold | How many times the fitted size an image may be and still open at 100% under `defaultZoom: 'auto'`. Ignored by the other policies | `number` | `2` |
 | maxScale | Maximum zoom scale relative to the fitted size. Raised automatically when `defaultZoom` resolves above it, so the opening scale is always reachable | `number` | `8` |
 | fetchImage | Resolve the previewed source to a `Blob` for copy and the default download. Use this to fetch through a CORS-safe proxy or signed URL. Thrown errors surface as copy/download failure toasts; the default CORS `window.open` fallback is not used | `(source: string) => Promise<Blob>` | - |
