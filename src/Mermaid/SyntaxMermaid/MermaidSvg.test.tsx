@@ -25,5 +25,7 @@ describe('MermaidSvg', () => {
     const entry = openPreview.mock.calls[0][0];
     expect(entry.src).toBe('blob:mermaid');
     expect(entry.element).toBe(container.querySelector('img'));
+    // An SVG's natural size is already in CSS pixels, whatever the screen density.
+    expect(entry.options.pixelRatio).toBe(1);
   });
 });

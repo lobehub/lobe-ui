@@ -27,6 +27,8 @@ const ZOOM_STEP = 1.5;
 const RESET_TRANSITION = { damping: 30, stiffness: 300, type: 'spring' as const };
 const CLEAN_EPSILON = 0.01;
 
+const screenPixelRatio = () => (typeof window === 'undefined' ? 1 : window.devicePixelRatio || 1);
+
 export interface WheelLikeEvent {
   clientX: number;
   clientY: number;
@@ -46,6 +48,12 @@ export interface UseZoomPanOptions {
   maxScale?: number;
   natural: Size;
   onCloseRequest?: () => void;
+  /**
+   * Image pixels per CSS pixel at the size the source was captured, read by
+   * `defaultZoom: 'auto'`. Defaults to the screen's devicePixelRatio, the best
+   * guess for a raster screenshot; vector sources pass 1.
+   */
+  pixelRatio?: number;
   viewport: Size;
 }
 
@@ -98,6 +106,7 @@ export const useZoomPan = ({
   fillViewport,
   defaultZoom,
   autoZoomThreshold,
+  pixelRatio,
 }: UseZoomPanOptions): UseZoomPanResult => {
   const naturalRef = useRef(natural);
   const viewportRef = useRef(viewport);
@@ -109,6 +118,8 @@ export const useZoomPan = ({
   policyRef.current = defaultZoom ?? 'auto';
   const thresholdRef = useRef(autoZoomThreshold ?? DEFAULT_AUTO_ZOOM_THRESHOLD);
   thresholdRef.current = autoZoomThreshold ?? DEFAULT_AUTO_ZOOM_THRESHOLD;
+  const pixelRatioRef = useRef(pixelRatio);
+  pixelRatioRef.current = pixelRatio;
 
   const computeInitialScale = useCallback((rotation: Rotation = 0) => {
     const fitRect = computeFit(
@@ -123,6 +134,7 @@ export const useZoomPan = ({
       fitRect,
       rotation,
       thresholdRef.current,
+      pixelRatioRef.current ?? screenPixelRatio(),
     );
   }, []);
 

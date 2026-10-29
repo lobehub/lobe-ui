@@ -350,6 +350,25 @@ describe('resolveInitialScale', () => {
     expect(resolveInitialScale('auto', small, fitRect, 0, 2)).toBe(1);
   });
 
+  it('keeps fit under auto while fit still shows the image at its captured size', () => {
+    // On a 2x screen a 1600px capture was 800px wide; fitting it to 1152px
+    // already draws it larger than that, every pixel intact.
+    expect(resolveInitialScale('auto', natural, fitRect, 0, 2, 2)).toBe(1);
+  });
+
+  it('opens at natural size under auto once fit would shrink past the pixel ratio', () => {
+    expect(resolveInitialScale('auto', natural, fitRect, 0, 2, 1.25)).toBeCloseTo(1600 / 1152, 10);
+  });
+
+  it('treats the pixel ratio as inclusive', () => {
+    const exact = { height: 1152, width: 2304 };
+    expect(resolveInitialScale('auto', exact, fitRect, 0, 2, 2)).toBe(1);
+  });
+
+  it('ignores the pixel ratio under the actual policy', () => {
+    expect(resolveInitialScale('actual', natural, fitRect, 0, 2, 2)).toBeCloseTo(1600 / 1152, 10);
+  });
+
   it('measures the rotated edge against the fit rect', () => {
     const portrait = { height: 1600, width: 800 };
     expect(resolveInitialScale('actual', portrait, fitRect, 90)).toBeCloseTo(1600 / 1152, 10);

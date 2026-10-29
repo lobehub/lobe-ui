@@ -10,6 +10,12 @@ export interface ResolvedPreviewOptions extends Omit<
   autoZoomThreshold: number;
   defaultZoom: ZoomPolicy;
   maxScale: number;
+  /**
+   * Image pixels per CSS pixel at the size the source was captured. Raster
+   * previews leave it unset and the viewer assumes the screen's
+   * devicePixelRatio; vector sources pass 1.
+   */
+  pixelRatio?: number;
 }
 
 export interface PreviewEntry {
