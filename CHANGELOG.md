@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version&nbsp;6.10.1](https://github.com/lobehub/lobe-ui/compare/v6.10.0...v6.10.1)
+
+<sup>Released on **2026-10-29**</sup>
+
+#### 🐛 Bug Fixes
+
+- **button**: Stop animating hidden loading spinners.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **button**: Stop animating hidden loading spinners, closes [#766](https://github.com/lobehub/lobe-ui/issues/766) ([3f1a369](https://github.com/lobehub/lobe-ui/commit/3f1a369))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version&nbsp;6.10.0](https://github.com/lobehub/lobe-ui/compare/v6.9.1...v6.10.0)
 
 <sup>Released on **2026-10-29**</sup>
