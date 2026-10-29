@@ -132,10 +132,12 @@ export const styles = stylex.create({
   },
 
   spinnerSlot: {
-    overflow: 'hidden',
-    transition: `width 380ms ${slotEase}, margin 380ms ${slotEase}, opacity 260ms ${slotEase}`,
+    overflow: 'visible',
+    transition: `width 300ms ${slotEase}, margin 300ms ${slotEase}`,
+    flexShrink: 0,
     marginInlineEnd: -6,
-    opacity: 0,
+    position: 'relative',
+    height: 12,
     width: 0,
   },
 
@@ -147,8 +149,24 @@ export const styles = stylex.create({
   spinnerSlotShow: {
     marginInlineEnd: 0,
     marginInlineStart: 0,
-    opacity: 1,
     width: 12,
+  },
+
+  spinnerVisual: {
+    transition: `transform 180ms ${slotEase}, opacity 180ms ease-out`,
+    insetBlockStart: 0,
+    insetInlineStart: 0,
+    opacity: 0,
+    position: 'absolute',
+    transform: 'scale(0.5)',
+    transformOrigin: 'center',
+    height: 12,
+    width: 12,
+  },
+
+  spinnerVisualShow: {
+    opacity: 1,
+    transform: 'scale(1)',
   },
 
   variantDefault: {
@@ -307,7 +325,9 @@ export const styles = stylex.create({
     animationName: spin,
     animationTimingFunction: 'linear',
     borderBlockStartColor: 'transparent',
+    boxSizing: 'border-box',
     display: 'inline-block',
+    flexShrink: 0,
     height: 12,
     width: 12,
   },
