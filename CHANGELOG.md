@@ -2,6 +2,39 @@
 
 # Changelog
 
+### [Version&nbsp;6.9.1](https://github.com/lobehub/lobe-ui/compare/v6.9.0...v6.9.1)
+
+<sup>Released on **2026-10-29**</sup>
+
+#### ⚡ Performance Improvements
+
+- **build**: Stop shipping the cssVar token table to consumers.
+
+#### 🐛 Bug Fixes
+
+- **styles**: Replace a global style's rules when the theme changes.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Performance improvements
+
+- **build**: Stop shipping the cssVar token table to consumers, closes [#767](https://github.com/lobehub/lobe-ui/issues/767) ([a544142](https://github.com/lobehub/lobe-ui/commit/a544142))
+
+#### What's fixed
+
+- **styles**: Replace a global style's rules when the theme changes, closes [#769](https://github.com/lobehub/lobe-ui/issues/769) ([5a2e7c6](https://github.com/lobehub/lobe-ui/commit/5a2e7c6))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version&nbsp;6.9.0](https://github.com/lobehub/lobe-ui/compare/v6.8.0...v6.9.0)
 
 <sup>Released on **2026-10-23**</sup>
