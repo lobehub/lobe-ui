@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version&nbsp;6.10.2](https://github.com/lobehub/lobe-ui/compare/v6.10.1...v6.10.2)
+
+<sup>Released on **2026-10-29**</sup>
+
+#### 🐛 Bug Fixes
+
+- **image**: Open fitted on 2x screens when fit already shows the captured size.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **image**: Open fitted on 2x screens when fit already shows the captured size, closes [#770](https://github.com/lobehub/lobe-ui/issues/770) ([022d591](https://github.com/lobehub/lobe-ui/commit/022d591))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version&nbsp;6.10.1](https://github.com/lobehub/lobe-ui/compare/v6.10.0...v6.10.1)
 
 <sup>Released on **2026-10-29**</sup>
