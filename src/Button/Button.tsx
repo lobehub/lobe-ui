@@ -8,6 +8,9 @@ import {
   type ReactElement,
   type ReactNode,
   type Ref,
+  useLayoutEffect,
+  useRef,
+  useState,
 } from 'react';
 
 import Icon, { type IconProps } from '@/Icon';
@@ -120,6 +123,29 @@ const ButtonImpl = ({
   ...rest
 }: ButtonImplProps) => {
   const Motion = useMotionComponent();
+  const spinnerRef = useRef<HTMLSpanElement>(null);
+  const spinnerVisualRef = useRef<HTMLSpanElement>(null);
+  const [spinnerPresent, setSpinnerPresent] = useState(!!loading);
+
+  if (loading && !spinnerPresent) setSpinnerPresent(true);
+
+  useLayoutEffect(() => {
+    if (loading || !spinnerPresent) return;
+
+    // Wait for both exit layers, never the child's infinite rotation.
+    const exits = [
+      ...(spinnerRef.current?.getAnimations?.() ?? []),
+      ...(spinnerVisualRef.current?.getAnimations?.() ?? []),
+    ].filter((animation) => 'transitionProperty' in animation);
+    let canceled = false;
+    Promise.allSettled(exits.map((animation) => animation.finished)).then(() => {
+      if (!canceled) setSpinnerPresent(false);
+    });
+    return () => {
+      canceled = true;
+    };
+  }, [loading, spinnerPresent]);
+
   const isInteractionDisabled = disabled || loading;
   const sizeCls = resolveSizeCls(size);
   const variantCls = resolveVariantCls({ danger, ghost, type });
@@ -161,6 +187,7 @@ const ButtonImpl = ({
   const spinnerNode = (
     <span
       aria-hidden={!loading}
+      ref={spinnerRef}
       {...styleProps(
         [
           styles.iconBox,
@@ -172,7 +199,12 @@ const ButtonImpl = ({
         userStyles?.icon,
       )}
     >
-      {loading && <span {...stylex.props(styles.spinner)} />}
+      <span
+        ref={spinnerVisualRef}
+        {...stylex.props(styles.spinnerVisual, loading && styles.spinnerVisualShow)}
+      >
+        {(loading || spinnerPresent) && <span {...stylex.props(styles.spinner)} />}
+      </span>
     </span>
   );
 

@@ -1,4 +1,4 @@
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { motion } from 'motion/react';
 import { type ReactNode, useState } from 'react';
 
@@ -8,6 +8,8 @@ import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import Button from '../Button';
 import { buttonPaddingInline, buttonStyles } from '../index';
 import type { ButtonProps } from '../type';
+
+const getSpinner = (slot: Element | null) => slot?.firstElementChild?.firstElementChild ?? null;
 
 const renderButton = (children: ReactNode) =>
   render(<ConfigProvider motion={motion}>{children}</ConfigProvider>);
@@ -22,10 +24,10 @@ describe('Button', () => {
 
     expect(slot).not.toBeNull();
     expect(slot?.getAttribute('aria-hidden')).toBe('true');
-    expect(slot?.firstElementChild).toBeNull();
+    expect(getSpinner(slot)).toBeNull();
   });
 
-  test('mounts the spinner only while loading and restores the icon across repeated changes', () => {
+  test('cleans up without a width transition and restores the icon across repeated changes', async () => {
     const content = (loading: boolean) => (
       <ConfigProvider motion={motion}>
         <Button icon={<span data-testid={'button-icon'} />} loading={loading}>
@@ -39,18 +41,137 @@ describe('Button', () => {
       .querySelector('.lobe-button__spinner');
 
     for (const loading of [false, true, false, true]) {
-      rerender(content(loading));
+      await act(async () => rerender(content(loading)));
 
       expect(
         screen.getByRole('button', { name: 'Save' }).querySelector('.lobe-button__spinner'),
       ).toBe(slot);
       expect(slot?.getAttribute('aria-hidden')).toBe(String(!loading));
-      expect(Boolean(slot?.firstElementChild)).toBe(loading);
+      expect(Boolean(getSpinner(slot))).toBe(loading);
       expect(Boolean(screen.queryByTestId('button-icon'))).toBe(!loading);
       expect(screen.getByRole('button', { name: 'Save' }).getAttribute('aria-busy')).toBe(
         loading ? 'true' : null,
       );
     }
+  });
+
+  test('keeps the same spinner through its exit until the width transition finishes', async () => {
+    const handleClick = vi.fn();
+    const content = (loading: boolean) => (
+      <ConfigProvider motion={motion}>
+        <Button icon={<span data-testid={'exit-icon'} />} loading={loading} onClick={handleClick}>
+          Save
+        </Button>
+      </ConfigProvider>
+    );
+    const { rerender } = render(content(true));
+    const button = screen.getByRole('button', { name: 'Save' });
+    const slot = button.querySelector('.lobe-button__spinner')!;
+    const spinner = getSpinner(slot);
+    const width = Promise.withResolvers<void>();
+    const opacity = Promise.withResolvers<void>();
+    Object.defineProperty(slot, 'getAnimations', {
+      value: () => [
+        { finished: width.promise, transitionProperty: 'width' },
+        { finished: opacity.promise, transitionProperty: 'opacity' },
+      ],
+    });
+
+    rerender(content(false));
+
+    expect(getSpinner(slot)).toBe(spinner);
+    expect(button.getAttribute('aria-busy')).toBeNull();
+    expect(screen.queryByTestId('exit-icon')).not.toBeNull();
+    fireEvent.click(button);
+    expect(handleClick).toHaveBeenCalledOnce();
+
+    await act(async () => opacity.resolve());
+    expect(getSpinner(slot)).toBe(spinner);
+
+    await act(async () => width.resolve());
+    expect(getSpinner(slot)).toBeNull();
+  });
+
+  test('ignores an earlier exit when loading restarts and a new exit begins', async () => {
+    const content = (loading: boolean) => (
+      <ConfigProvider motion={motion}>
+        <Button loading={loading}>Save</Button>
+      </ConfigProvider>
+    );
+    const { rerender } = render(content(true));
+    const slot = screen
+      .getByRole('button', { name: 'Save' })
+      .querySelector('.lobe-button__spinner')!;
+    const spinner = getSpinner(slot);
+    const firstExit = Promise.withResolvers<void>();
+    const secondExit = Promise.withResolvers<void>();
+    let exit = firstExit;
+    Object.defineProperty(slot, 'getAnimations', {
+      value: () => [{ finished: exit.promise, transitionProperty: 'width' }],
+    });
+
+    rerender(content(false));
+    rerender(content(true));
+    expect(getSpinner(slot)).toBe(spinner);
+
+    exit = secondExit;
+    rerender(content(false));
+    await act(async () => firstExit.resolve());
+    expect(getSpinner(slot)).toBe(spinner);
+
+    await act(async () => secondExit.resolve());
+    expect(getSpinner(slot)).toBeNull();
+  });
+
+  test('keeps the spinner until its visual exit finishes after the slot collapses', async () => {
+    const content = (loading: boolean) => (
+      <ConfigProvider motion={motion}>
+        <Button loading={loading}>Save</Button>
+      </ConfigProvider>
+    );
+    const { rerender } = render(content(true));
+    const slot = screen
+      .getByRole('button', { name: 'Save' })
+      .querySelector('.lobe-button__spinner')!;
+    const spinner = getSpinner(slot);
+    const width = Promise.withResolvers<void>();
+    const fade = Promise.withResolvers<void>();
+    Object.defineProperty(slot, 'getAnimations', {
+      value: () => [{ finished: width.promise, transitionProperty: 'width' }],
+    });
+    Object.defineProperty(slot.firstElementChild, 'getAnimations', {
+      value: () => [{ finished: fade.promise, transitionProperty: 'opacity' }],
+    });
+
+    rerender(content(false));
+    await act(async () => width.resolve());
+    expect(getSpinner(slot)).toBe(spinner);
+
+    await act(async () => fade.resolve());
+    expect(getSpinner(slot)).toBeNull();
+  });
+
+  test('removes the exiting spinner when its width transition is canceled', async () => {
+    const content = (loading: boolean) => (
+      <ConfigProvider motion={motion}>
+        <Button loading={loading}>Save</Button>
+      </ConfigProvider>
+    );
+    const { rerender } = render(content(true));
+    const slot = screen
+      .getByRole('button', { name: 'Save' })
+      .querySelector('.lobe-button__spinner')!;
+    const spinner = getSpinner(slot);
+    const width = Promise.withResolvers<void>();
+    Object.defineProperty(slot, 'getAnimations', {
+      value: () => [{ finished: width.promise, transitionProperty: 'width' }],
+    });
+
+    rerender(content(false));
+    expect(getSpinner(slot)).toBe(spinner);
+
+    await act(async () => width.reject(new DOMException('Canceled', 'AbortError')));
+    expect(getSpinner(slot)).toBeNull();
   });
 
   test('exports buttonStyles as StyleX class strings', () => {
@@ -162,7 +283,7 @@ describe('Button', () => {
     fireEvent.click(button);
 
     expect(button.disabled).toBe(true);
-    expect(button.querySelector('.lobe-button__spinner')?.firstElementChild).toBeNull();
+    expect(getSpinner(button.querySelector('.lobe-button__spinner'))).toBeNull();
     expect(handleSubmit).not.toHaveBeenCalled();
   });
 
