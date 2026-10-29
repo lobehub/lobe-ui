@@ -95,6 +95,31 @@ export const cx = (...classNames: unknown[]): string =>
 
 export const { injectGlobal, keyframes } = emotion;
 
+type EmotionSheet = Parameters<typeof emotion.cache.insert>[2];
+
+const compileGlobal = (styles: CSSInterpolation): string => {
+  let rules = '';
+  const collector = { insert: (rule: string) => (rules += rule) } as unknown as EmotionSheet;
+  emotion.cache.insert('', serializeStyles([styles], emotion.cache.registered), collector, false);
+  return rules;
+};
+
+// Owns its rules instead of going through `injectGlobal`, whose per-hash dedupe never
+// re-inserts a style it has seen: switching A → B → A would leave B's rules last and winning.
+export const createGlobalSheet = () => {
+  const element = document.createElement('style');
+  element.dataset.emotion = `${emotion.cache.key}-global`;
+  const { container, tags } = emotion.sheet as unknown as { container: Node; tags: Node[] };
+  container.insertBefore(element, tags[0] ?? null);
+
+  return {
+    remove: () => element.remove(),
+    update: (styles: CSSInterpolation) => {
+      element.textContent = compileGlobal(styles);
+    },
+  };
+};
+
 const staticCss: StaticStyleUtils['css'] = (template, ...args) => emotion.css(template, ...args);
 
 export const createStaticStyles = <T>(stylesFn: (utils: StaticStyleUtils) => T): T =>

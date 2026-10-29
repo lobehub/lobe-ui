@@ -1,5 +1,9 @@
 // @vitest-environment node
 
+import { createElement } from 'react';
+import { renderToString } from 'react-dom/server';
+
+import { createGlobalStyle } from './createGlobalStyle';
 import { css, cx, extractStaticStyle, injectGlobal } from './css';
 
 describe('extractStaticStyle', () => {
@@ -29,5 +33,16 @@ describe('extractStaticStyle', () => {
 
     expect(style.css).toContain('order:101');
     expect(style.css).toContain('order:102');
+  });
+
+  it('ships global styles rendered on the server', () => {
+    const ServerGlobalStyle = createGlobalStyle`
+      .server-global-probe {
+        order: 104;
+      }
+    `;
+    renderToString(createElement(ServerGlobalStyle));
+
+    expect(extractStaticStyle()[0].css).toContain('order:104');
   });
 });
