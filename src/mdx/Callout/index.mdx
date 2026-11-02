@@ -23,6 +23,14 @@ import { mdxCalloutClasses } from './stable';
 
 _Note: The component also accepts all props from Flexbox_
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `Callout`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/mdx/Callout.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

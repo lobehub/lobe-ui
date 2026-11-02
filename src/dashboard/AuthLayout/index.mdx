@@ -35,6 +35,14 @@ The page grows to at least the viewport height (`min-block-size: 100dvh`) and sc
 
 <Api name="AuthLayoutAside" from="." />
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `AuthLayout`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/dashboard/AuthLayout.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

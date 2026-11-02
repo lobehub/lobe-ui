@@ -25,6 +25,14 @@ import { downloadButtonClasses } from './stable';
 
 Additionally, DownloadButton inherits all properties from [ActionIcon](/components/action-icon) component except for those specified above. When clicked, it automatically changes the icon to a checkmark for 2 seconds to indicate successful download initiation.
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `DownloadButton`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/DownloadButton.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

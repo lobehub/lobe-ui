@@ -23,6 +23,14 @@ The active item is the last target whose top has passed `offset` pixels below th
 - `affix`, `bounds`, `showInkInFixed`, `targetOffset`, `replace` and `direction` are not supported; the list is always vertical with no ink bar.
 - `onChange` receives the item `key` (not the `href`); `activeKey` controls the highlight.
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `Anchor`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/Anchor.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

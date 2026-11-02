@@ -286,6 +286,14 @@ A small rectangular area that appears at the intersection of horizontal and vert
 | style | `CSSProperties \| ((state: ScrollArea.Corner.State) => CSSProperties \| undefined)` | - | Inline styles for the corner element. |
 | render | `ReactElement \| ((props: HTMLProps, state: ScrollArea.Corner.State) => ReactElement)` | - | Replace the component element with a different tag or compose it with another component. |
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `ScrollArea`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/ScrollArea.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

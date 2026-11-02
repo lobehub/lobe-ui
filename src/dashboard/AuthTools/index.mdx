@@ -21,6 +21,14 @@ Put both in `AuthLayout`'s `tools` slot. The theme switch shows icons only; `lab
 
 <Api name="AuthLocaleSwitch" from="." />
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `AuthThemeSwitch`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/dashboard/AuthTools.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

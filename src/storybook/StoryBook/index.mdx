@@ -13,3 +13,11 @@ import DemoIndex from './demos/index.tsx?demo';
 ## APIs
 
 <Api name="StoryBook" from=".." />
+
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `StoryBook`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/storybook/StoryBook.css';
+```

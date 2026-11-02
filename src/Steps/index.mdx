@@ -24,6 +24,14 @@ With `current`, steps before it are `finish`, it is `process`, later ones are `w
 - Replace `current={null as any}` / `current={-1}` with no `current`.
 - Clickable steps (`onChange`), `percent`, `labelPlacement` and `type="navigation" | "inline"` are not supported.
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `Steps`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/Steps.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

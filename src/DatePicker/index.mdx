@@ -588,6 +588,14 @@ The default `DatePicker` / `DateRangePicker` keep the previous lobe API built on
 
 For the antd-aligned `Dayjs` API (values and callbacks are `Dayjs`, a cleared range emits `null`), use `DayjsDatePicker` / `DayjsDateRangePicker` with `DayjsDatePickerProps`, `DayjsDateRangePickerProps` and `DayjsDateRangeValue`; the demos above use them. Any other date library works through `DatePicker.generatePicker(generateConfig)`.
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `DatePicker`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/DatePicker.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

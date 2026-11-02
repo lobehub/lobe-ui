@@ -72,6 +72,14 @@ The antd-shaped API is gone. `active` is now `animated`, defaults to `'fade'`, a
 | `<Skeleton.Title fontSize={20} width="30%" />` | `<Skeleton.Text fontSize={20} width="30%" />` |
 | `<Skeleton.Tags count={2} />` | two `<Skeleton />` in a `<Flexbox horizontal />` |
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `Skeleton`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/Skeleton.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

@@ -31,6 +31,14 @@ Additionally, the component accepts all standard HTML div properties like `class
 - `mono`: Monochrome/outline style
 - `raw`: Displays the native emoji character from the system font
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `FluentEmoji`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/FluentEmoji.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

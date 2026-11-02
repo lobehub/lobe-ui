@@ -22,6 +22,14 @@ import { floatingSheetClasses } from './stable';
 
 <Demo of={DemoInline} layout="bare" />
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `FloatingSheet`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/FloatingSheet.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

@@ -23,6 +23,14 @@ Numbers format through `Intl.NumberFormat('en-US')`: thousands separators always
 - `valueStyle` → `styles.value`.
 - `groupSeparator`, `decimalSeparator`, `Statistic.Countdown` and `Statistic.Timer` are not supported.
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `Statistic`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/Statistic.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

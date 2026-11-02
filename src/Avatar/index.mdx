@@ -95,6 +95,14 @@ Also accepts all shared visual props of `Avatar` (`variant`, `bordered`, `shadow
 
 `Avatar.Group` is also attached as a static property of the default export, so `<Avatar.Group />` and `<AvatarGroup />` are interchangeable.
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `Avatar`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/Avatar.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

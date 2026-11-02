@@ -96,6 +96,7 @@
     "./global.css": "./es/global.css",
     "./theme.css": "./es/theme.css",
     "./style.css": "./es/style.css",
+    "./css/*": "./es/css/*",
     "./stylex/cssVar.stylex": {
       "types": "./es/stylex/cssVar.stylex.ts",
       "import": "./es/stylex/cssVar.stylex.js",
@@ -216,6 +217,7 @@
     "virtua": "^0.53.5"
   },
   "devDependencies": {
+    "@bramus/specificity": "2.4.3",
     "@commitlint/cli": "^21.2.3",
     "@lobehub/docs-kit": "^6.2.1",
     "@lobehub/eslint-config": "2.1.6",

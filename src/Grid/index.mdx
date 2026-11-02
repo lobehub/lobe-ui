@@ -20,6 +20,14 @@ import { gridClasses } from './stable';
 
 Additionally, Grid inherits all properties from the Flexbox component (from react-layout-kit) except for 'gap', which has been enhanced with additional functionality.
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `Grid`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/Grid.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

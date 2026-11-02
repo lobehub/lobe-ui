@@ -29,6 +29,14 @@ Set `loading` for a pre-session or hydrate fallback. The shell keeps `brand`, `t
 
 <Api name="ConsoleBrand" from="." />
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `ConsoleShell`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/dashboard/ConsoleShell.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

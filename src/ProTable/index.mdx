@@ -255,6 +255,14 @@ The Form instance — `getValue`, `getValues`, `setValue`, `setValues`, `reset`,
 - **`valueType: 'progress'`** renders a `size="small"` `Progress variant="inset"` — a one-line meter with the percentage at the trailing edge, so rows keep their height. For another shape (`line`, `segments`) use the column `render`.
 - The toolbar icons are one small outlined `ActionIconGroup` (`size="small"`, `variant="outlined"`) (every icon gets a tooltip). The group only renders plain buttons, so the density menu and the column setting panel are controlled popovers anchored to the clicked icon rather than `DropdownMenu` / `Popover` triggers.
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `ProTable`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/pro-table.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

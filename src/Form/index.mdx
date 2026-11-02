@@ -111,6 +111,14 @@ Wraps Base UI `Field.Root`; any `Field`-aware control (base-ui `Input`, `TextAre
 | onReset | Called after native `form.reset()` | `() => void` | - |
 | texts | Override submit/reset/unsaved texts | `{ submit?; reset?; unSaved?; unSavedWarning? }` | i18n |
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `Form`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/Form.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

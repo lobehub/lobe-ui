@@ -27,6 +27,14 @@ import { mdxCardsClasses } from './stable';
 
 <Api name="Card" from=".." migrationKey="heading:%5B%22Card%22%5D:0" />
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `Cards`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/mdx/Cards.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
