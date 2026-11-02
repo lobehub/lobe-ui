@@ -52,6 +52,15 @@ export const styles = stylex.create({
   },
 });
 
-export const actionIconStyles = Object.fromEntries(
-  Object.entries(styles).map(([key, value]) => [key, stylex.props(value).className ?? '']),
-) as Record<keyof typeof styles, string>;
+export const actionIconStyles = {
+  active: stylex.props(styles.active).className ?? '',
+  activeFill: stylex.props(styles.activeFill).className ?? '',
+  activeOutlined: stylex.props(styles.activeOutlined).className ?? '',
+  dangerRoot: stylex.props(styles.dangerRoot).className ?? '',
+  glass: stylex.props(styles.glass).className ?? '',
+  root: stylex.props(styles.root).className ?? '',
+  sizeLarge: stylex.props(styles.sizeLarge).className ?? '',
+  sizeMiddle: stylex.props(styles.sizeMiddle).className ?? '',
+  sizeSmall: stylex.props(styles.sizeSmall).className ?? '',
+  shadow: stylex.props(styles.shadow).className ?? '',
+} satisfies Record<keyof typeof styles, string>;

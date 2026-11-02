@@ -2,7 +2,6 @@
 
 import { Toggle as BaseUIToggle } from '@base-ui/react/toggle';
 import { ToggleGroup as BaseUIToggleGroup } from '@base-ui/react/toggle-group';
-import * as stylex from '@stylexjs/stylex';
 import clsx from 'clsx';
 import { type ComponentProps, type CSSProperties, type FC, type ReactNode } from 'react';
 
@@ -118,6 +117,4 @@ export const ToggleGroupItemLabel: FC<SimpleSpanProps> = ({ children, className,
 );
 ToggleGroupItemLabel.displayName = 'ToggleGroupItemLabel';
 
-export const toggleGroupStyles = Object.fromEntries(
-  Object.entries(styles).map(([key, value]) => [key, stylex.props(value).className ?? '']),
-) as Record<keyof typeof styles, string>;
+export { toggleGroupStyles } from './style';

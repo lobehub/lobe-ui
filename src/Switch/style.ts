@@ -140,3 +140,23 @@ export const styles = stylex.create({
     width: 12,
   },
 });
+
+export const switchStyles = {
+  icon: stylex.props(styles.icon).className ?? '',
+  iconLeft: stylex.props(styles.iconLeft).className ?? '',
+  iconRight: stylex.props(styles.iconRight).className ?? '',
+  iconThumb: stylex.props(styles.iconThumb).className ?? '',
+  loading: stylex.props(styles.loading).className ?? '',
+  root: stylex.props(styles.root).className ?? '',
+  rootDefault: stylex.props(styles.rootDefault).className ?? '',
+  rootSmall: stylex.props(styles.rootSmall).className ?? '',
+  rootText: stylex.props(styles.rootText).className ?? '',
+  rootTextSmall: stylex.props(styles.rootTextSmall).className ?? '',
+  textSizer: stylex.props(styles.textSizer).className ?? '',
+  textSizerSmall: stylex.props(styles.textSizerSmall).className ?? '',
+  thumb: stylex.props(styles.thumb).className ?? '',
+  thumbDefault: stylex.props(styles.thumbDefault).className ?? '',
+  thumbSmall: stylex.props(styles.thumbSmall).className ?? '',
+  iconLeftSmall: stylex.props(styles.iconLeft).className ?? '',
+  iconRightSmall: stylex.props(styles.iconRight).className ?? '',
+} satisfies Record<keyof typeof styles | 'iconLeftSmall' | 'iconRightSmall', string>;

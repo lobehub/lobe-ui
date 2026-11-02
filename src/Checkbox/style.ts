@@ -72,6 +72,15 @@ export const styles = stylex.create({
   },
 });
 
-export const checkboxStyles = Object.fromEntries(
-  Object.entries(styles).map(([key, value]) => [key, stylex.props(value).className ?? '']),
-) as Record<keyof typeof styles, string>;
+export const checkboxStyles = {
+  circle: stylex.props(styles.circle).className ?? '',
+  defaultSize: stylex.props(styles.defaultSize).className ?? '',
+  defaultSquare: stylex.props(styles.defaultSquare).className ?? '',
+  group: stylex.props(styles.group).className ?? '',
+  groupVertical: stylex.props(styles.groupVertical).className ?? '',
+  iconCircle: stylex.props(styles.iconCircle).className ?? '',
+  iconSquare: stylex.props(styles.iconSquare).className ?? '',
+  indicator: stylex.props(styles.indicator).className ?? '',
+  label: stylex.props(styles.label).className ?? '',
+  root: stylex.props(styles.root).className ?? '',
+} satisfies Record<keyof typeof styles, string>;
