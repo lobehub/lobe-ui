@@ -68,6 +68,14 @@ The tree is a [FocusScope](/components/focus-scope): after pointing into it once
 | checkable  | Whether the row renders a checkbox           | `boolean`        | `true`  |
 | isLeaf     | Force leaf rendering even with `children`    | `boolean`        | `false` |
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `Tree`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/Tree.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

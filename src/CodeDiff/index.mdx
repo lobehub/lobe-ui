@@ -64,6 +64,14 @@ Render from a unified diff patch string.
 | styles | Custom inline styles for different parts | `{ header?: CSSProperties; body?: CSSProperties }` | - |
 | actionsRender | Custom render function for header actions | `(props: { patch: string; originalNode: ReactNode }) => ReactNode` | - |
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `CodeDiff`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/CodeDiff.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

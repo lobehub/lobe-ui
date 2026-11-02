@@ -44,6 +44,14 @@ import { UploadDragger } from '@lobehub/ui';
 <UploadDragger accept="image/*" description="Support for a single upload" onFiles={console.log} />;
 ```
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `Upload`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/Upload.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

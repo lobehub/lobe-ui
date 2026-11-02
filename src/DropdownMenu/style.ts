@@ -226,3 +226,27 @@ export const menuStyles = stylex.create({
     width: 16,
   },
 });
+
+export const menuSharedClassNames = {
+  danger: stylex.props(menuStyles.danger).className ?? '',
+  empty: stylex.props(menuStyles.empty).className ?? '',
+  extra: stylex.props(menuStyles.extra).className ?? '',
+  footer: stylex.props(menuStyles.footer).className ?? '',
+  groupLabel: stylex.props(menuStyles.groupLabel).className ?? '',
+  header: stylex.props(menuStyles.header).className ?? '',
+  icon: `${stylex.props(menuStyles.icon).className ?? ''} ${menuClassNames.icon}`,
+  iconAlignStart: stylex.props(menuStyles.iconAlignStart).className ?? '',
+  item: stylex.props(menuStyles.item).className ?? '',
+  itemContent: stylex.props(menuStyles.itemContent).className ?? '',
+  itemContentAlignStart: stylex.props(menuStyles.itemContentAlignStart).className ?? '',
+  label: `${stylex.props(menuStyles.label).className ?? ''} ${menuClassNames.label}`,
+  labelGroup: stylex.props(menuStyles.labelGroup).className ?? '',
+  desc: stylex.props(menuStyles.desc).className ?? '',
+  popup: `${stylex.props(menuStyles.popup).className ?? ''} ${menuClassNames.popup}`,
+  popupWithSlots: stylex.props(menuStyles.popupWithSlots).className ?? '',
+  slotViewport: stylex.props(menuStyles.slotViewport).className ?? '',
+  positioner: `${stylex.props(menuStyles.positioner).className ?? ''} ${menuClassNames.positioner}`,
+  separator: stylex.props(menuStyles.separator).className ?? '',
+  switchWrap: stylex.props(menuStyles.switchWrap).className ?? '',
+  submenuArrow: `${stylex.props(menuStyles.submenuArrow).className ?? ''} ${menuClassNames.submenuArrow}`,
+} satisfies Record<keyof typeof menuStyles, string>;

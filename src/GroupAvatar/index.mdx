@@ -54,6 +54,14 @@ The `grid` property controls how avatars are arranged in the group:
   - Uses 2x2 grid for 4 or fewer avatars
   - Uses 3x3 grid for more than 4 avatars
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `GroupAvatar`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/GroupAvatar.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

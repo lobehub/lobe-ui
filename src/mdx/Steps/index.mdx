@@ -18,6 +18,14 @@ import { mdxStepsClasses } from './stable';
 
 _Note: Steps works best with ordered lists `<ol>` in MDX content, styling them with proper numbering and visual hierarchy._
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `Steps`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/mdx/Steps.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

@@ -114,11 +114,29 @@ const shinyClassName = 'lobe-text-shiny';
 const classNameOf = (style: Parameters<typeof styleProps>[0]) => styleProps(style).className;
 
 export const textStyles = {
-  ...(Object.fromEntries(
-    Object.entries(styles).map(([key, value]) => [key, classNameOf(value)]),
-  ) as Record<keyof typeof styles, string>),
+  code: stylex.props(styles.code).className ?? '',
+  danger: stylex.props(styles.danger).className ?? '',
+  delete: stylex.props(styles.delete).className ?? '',
+  disabled: stylex.props(styles.disabled).className ?? '',
+  ellipsis: stylex.props(styles.ellipsis).className ?? '',
+  ellipsisMulti: stylex.props(styles.ellipsisMulti).className ?? '',
+  h1: stylex.props(styles.h1).className ?? '',
+  h2: stylex.props(styles.h2).className ?? '',
+  h3: stylex.props(styles.h3).className ?? '',
+  h4: stylex.props(styles.h4).className ?? '',
+  h5: stylex.props(styles.h5).className ?? '',
+  info: stylex.props(styles.info).className ?? '',
+  italic: stylex.props(styles.italic).className ?? '',
+  mark: stylex.props(styles.mark).className ?? '',
+  p: stylex.props(styles.p).className ?? '',
+  secondary: stylex.props(styles.secondary).className ?? '',
+  strong: stylex.props(styles.strong).className ?? '',
+  success: stylex.props(styles.success).className ?? '',
+  text: stylex.props(styles.text).className ?? '',
+  underline: stylex.props(styles.underline).className ?? '',
+  warning: stylex.props(styles.warning).className ?? '',
   shiny: clsx(classNameOf(styles.shiny), shinyClassName),
-};
+} satisfies Record<keyof typeof styles, string>;
 
 export const groupStyles = {
   shinyGroup: 'lobe-text-shiny-group',

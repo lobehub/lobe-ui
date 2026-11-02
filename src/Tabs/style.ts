@@ -173,9 +173,19 @@ export const listStyles = (variant: TabsVariant) => [styles.list, listVariantSty
 export const panelStyles = [styles.panel, focusRing.info];
 
 export const tabsStyles = {
-  ...(Object.fromEntries(
-    Object.entries(styles).map(([key, value]) => [key, stylex.props(value).className ?? '']),
-  ) as Record<keyof typeof styles, string>),
+  indicator: stylex.props(styles.indicator).className ?? '',
+  indicatorPoint: stylex.props(styles.indicatorPoint).className ?? '',
+  indicatorRounded: stylex.props(styles.indicatorRounded).className ?? '',
+  indicatorSquare: stylex.props(styles.indicatorSquare).className ?? '',
+  list: stylex.props(styles.list).className ?? '',
+  listRounded: stylex.props(styles.listRounded).className ?? '',
+  listSquare: stylex.props(styles.listSquare).className ?? '',
+  root: stylex.props(styles.root).className ?? '',
+  tabLarge: stylex.props(styles.tabLarge).className ?? '',
+  tabMiddle: stylex.props(styles.tabMiddle).className ?? '',
+  tabPoint: stylex.props(styles.tabPoint).className ?? '',
+  tabSmall: stylex.props(styles.tabSmall).className ?? '',
+  tabSquare: stylex.props(styles.tabSquare).className ?? '',
   panel: stylex.props(panelStyles).className ?? '',
   tab: stylex.props(styles.tab, focusRing.info).className ?? '',
-};
+} satisfies Record<keyof typeof styles, string>;

@@ -26,6 +26,14 @@ import { chatChatHeaderClasses } from './stable';
 | tag      | Tag element shown next to title | `ReactNode`           | -       |
 | title    | Main title content (required)   | `string \| ReactNode` | -       |
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `ChatHeader`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/chat/ChatHeader.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

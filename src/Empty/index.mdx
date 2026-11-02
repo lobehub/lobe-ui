@@ -45,6 +45,14 @@ import { emptyClasses } from './stable';
 
 `Empty` renders a native `<div>`. All standard div HTML attributes including `onClick`, `aria-*`, `data-*`, `style`, and `ref` are forwarded to the root element.
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `Empty`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/Empty.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

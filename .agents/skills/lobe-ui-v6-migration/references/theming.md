@@ -46,6 +46,8 @@ Theme switch handler: `setLobeTheme({ appearance: next })` and persist `next` yo
 
 To avoid a flash on reload in a CSR app, put the same logic in an inline script in `index.html` before the bundle, or render `<LobeThemeScript appearance="system" />` from the server shell.
 
+To load only the components the app uses, replace `@lobehub/ui/style.css` with one `@lobehub/ui/css/<Component>.css` import per component (listed under Styles on each component page). Use one approach or the other, not both.
+
 ## Next.js app router with next-themes
 
 ```tsx

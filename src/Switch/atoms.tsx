@@ -3,7 +3,7 @@
 import './style.css';
 
 import { Switch } from '@base-ui/react/switch';
-import * as stylex from '@stylexjs/stylex';
+import type * as stylex from '@stylexjs/stylex';
 import clsx from 'clsx';
 import { animate, motionValue } from 'motion';
 import type { CSSProperties, KeyboardEvent, MouseEvent, PointerEvent } from 'react';
@@ -315,12 +315,4 @@ export const SwitchIcon = ({
 
 SwitchIcon.displayName = 'SwitchIcon';
 
-const switchClassNames = Object.fromEntries(
-  Object.entries(styles).map(([key, value]) => [key, stylex.props(value).className ?? '']),
-) as Record<keyof typeof styles, string>;
-
-export const switchStyles = {
-  ...switchClassNames,
-  iconLeftSmall: switchClassNames.iconLeft,
-  iconRightSmall: switchClassNames.iconRight,
-};
+export { switchStyles } from './style';

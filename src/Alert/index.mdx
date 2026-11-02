@@ -60,6 +60,14 @@ import { Alert } from '@lobehub/ui';
 
 `extra` adds a compact disclosure for diagnostics. Set `extraIsolate` when the detail is an independent block that should remain visible instead of participating in the disclosure.
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `Alert`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/Alert.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

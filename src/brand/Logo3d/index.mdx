@@ -18,6 +18,14 @@ import { brandLogo3dClasses } from './stable';
 
 Additionally, this component accepts most properties from the Img and Ant Design's Image components, except for `width`, `height`, and `src`.
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `Logo3d`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/brand/Logo3d.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

@@ -69,6 +69,14 @@ Some notable keys in KeyMapEnum:
 | `LeftDoubleClick`             | Left mouse button double click         |
 | `Up`, `Down`, `Left`, `Right` | Arrow keys                             |
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `Hotkey`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/Hotkey.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

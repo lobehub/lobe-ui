@@ -24,6 +24,14 @@ import { floatingPanelClasses } from './stable';
 - Use `resizable={false}` for fixed auxiliary panels.
 - A `bottomRight` panel moves the bottom-right toast viewport out of its way while it is open, and restores it on close. The verdict is left shift, then up shift, then a narrowed toast, and finally the panel lifting its own bottom edge — so a toast never renders inside the panel.
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `FloatingPanel`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/FloatingPanel.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

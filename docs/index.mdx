@@ -28,6 +28,8 @@ export default () => (
 );
 ```
 
+`@lobehub/ui/style.css` holds the styles of every component. To load only the components you use, import `@lobehub/ui/css/<Component>.css` for each of them instead, e.g. `@lobehub/ui/css/Alert.css` or `@lobehub/ui/css/chat/ChatItem.css`. Each file holds everything that component renders, so `css/chat/ChatItem.css` already covers the `Markdown` it renders and importing `css/Markdown.css` as well only repeats rules. Every component page lists its file under Styles. Import either `style.css` or the per-component files, not both.
+
 Built-in texts are English. For another locale, pass `locale` and `resources` to `ConfigProvider`, e.g. `<ConfigProvider locale="zh-CN" motion={motion} resources={zhCn}>` with `import { zhCn } from '@lobehub/ui/i18n'`.
 
 Lobe UI CSS is emitted inside the `lobe-base`, `lobe-popup` and `lobe-ui` cascade layers, so unlayered CSS always wins over it. Put global resets (`button { font: inherit }`, normalize.css, ...) in a layer declared before them:

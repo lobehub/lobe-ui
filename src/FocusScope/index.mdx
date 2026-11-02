@@ -49,3 +49,11 @@ Every other `div` prop passes through (`role`, `className`, `style`, `onKeyDown`
 ### Store
 
 `getActiveScopeId()`, `setActiveScope(id | null)`, `useActiveScopeId()`, `useFocusScopeActive(id)`, `getLastFocusedItem(scopeId)`, `setLastFocusedItem(scopeId, id | null)`, `registerScope(id)`.
+
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `FocusScope`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/FocusScope.css';
+```

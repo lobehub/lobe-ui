@@ -125,3 +125,21 @@ export const styles = stylex.create({
     display: 'inline-flex',
   },
 });
+
+export const toggleGroupStyles = {
+  item: stylex.props(styles.item).className ?? '',
+  itemIcon: stylex.props(styles.itemIcon).className ?? '',
+  itemLabel: stylex.props(styles.itemLabel).className ?? '',
+  itemMiddle: stylex.props(styles.itemMiddle).className ?? '',
+  itemOutlined: stylex.props(styles.itemOutlined).className ?? '',
+  itemSegmented: stylex.props(styles.itemSegmented).className ?? '',
+  itemSegmentedMiddle: stylex.props(styles.itemSegmentedMiddle).className ?? '',
+  itemSegmentedSmall: stylex.props(styles.itemSegmentedSmall).className ?? '',
+  itemSegmentedTone: stylex.props(styles.itemSegmentedTone).className ?? '',
+  itemSmall: stylex.props(styles.itemSmall).className ?? '',
+  itemTone: stylex.props(styles.itemTone).className ?? '',
+  root: stylex.props(styles.root).className ?? '',
+  rootBorderless: stylex.props(styles.rootBorderless).className ?? '',
+  rootOutlined: stylex.props(styles.rootOutlined).className ?? '',
+  rootSegmented: stylex.props(styles.rootSegmented).className ?? '',
+} satisfies Record<keyof typeof styles, string>;

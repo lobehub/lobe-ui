@@ -18,6 +18,14 @@ The remaining tokens are calculated based on the `maxValue` and `value` props. T
 
 <Api name="TokenTag" from=".." />
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `TokenTag`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/chat/TokenTag.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

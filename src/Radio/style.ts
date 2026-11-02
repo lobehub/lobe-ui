@@ -66,6 +66,12 @@ export const styles = stylex.create({
   },
 });
 
-export const radioStyles = Object.fromEntries(
-  Object.entries(styles).map(([key, value]) => [key, stylex.props(value).className ?? '']),
-) as Record<keyof typeof styles, string>;
+export const radioStyles = {
+  defaultIndicator: stylex.props(styles.defaultIndicator).className ?? '',
+  defaultSize: stylex.props(styles.defaultSize).className ?? '',
+  group: stylex.props(styles.group).className ?? '',
+  groupVertical: stylex.props(styles.groupVertical).className ?? '',
+  indicator: stylex.props(styles.indicator).className ?? '',
+  label: stylex.props(styles.label).className ?? '',
+  root: stylex.props(styles.root).className ?? '',
+} satisfies Record<keyof typeof styles, string>;

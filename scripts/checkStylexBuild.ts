@@ -1,6 +1,7 @@
 import { existsSync, globSync, readFileSync } from 'node:fs';
 import path from 'node:path';
 
+import { componentStylesheets } from '../config/componentStylesheets';
 import { unscopedSelectors } from '../config/selectorPrefix';
 
 const es = path.resolve(import.meta.dirname, '../es');
@@ -149,6 +150,21 @@ for (const file of globSync('**/*.mjs', { cwd: es })) {
   if (file.startsWith('ScrollArea/') && code.includes('createGlobalStyle')) {
     fail(`${file} injects global styles at runtime`);
   }
+}
+
+for (const file of globSync('css/**/*.css', { cwd: es })) {
+  const css = readFileSync(path.join(es, file), 'utf8');
+  if (!css.startsWith('@layer lobe-base, lobe-popup, lobe-ui;')) {
+    fail(`es/${file} must start with the root layer order`);
+  }
+}
+
+for (const { fileName, page, specifier } of componentStylesheets(path.resolve(es, '../src'))) {
+  const built = existsSync(path.join(es, fileName));
+  const documented = readFileSync(page, 'utf8').includes(`import '${specifier}';`);
+  const pageName = path.relative(path.resolve(es, '..'), page);
+  if (built && !documented) fail(`${pageName} does not show import '${specifier}'`);
+  if (!built && documented) fail(`${pageName} shows ${specifier}, which the build does not emit`);
 }
 
 const pkg = JSON.parse(

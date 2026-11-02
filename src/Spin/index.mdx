@@ -65,6 +65,14 @@ import { Spin } from '@lobehub/ui';
 
 antd's `size="default"` becomes `size="middle"`.
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `Spin`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/Spin.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

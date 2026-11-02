@@ -37,6 +37,14 @@ import { highlighterClasses, syntaxHighlighterClasses } from './stable';
 | theme | Syntax highlighting theme | `'lobe-theme' \| BundledHighlighterTheme` | - |
 | variant | Visual style variant | `'filled' \| 'outlined' \| 'borderless'` | - |
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `Highlighter`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/Highlighter.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

@@ -225,11 +225,32 @@ export const styles = stylex.create({
   },
 });
 
-const classNames = Object.fromEntries(
-  Object.entries(styles).map(([key, value]) => [key, stylex.props(value).className ?? '']),
-) as Record<keyof typeof styles, string>;
-
 export const accordionStyles = {
-  ...classNames,
+  action: stylex.props(styles.action).className ?? '',
+  actionAlwaysVisible: stylex.props(styles.actionAlwaysVisible).className ?? '',
+  actionBorderless: stylex.props(styles.actionBorderless).className ?? '',
+  actionOutlined: stylex.props(styles.actionOutlined).className ?? '',
+  content: stylex.props(styles.content).className ?? '',
+  contentBorderless: stylex.props(styles.contentBorderless).className ?? '',
+  contentIndent: stylex.props(styles.contentIndent).className ?? '',
+  contentIndentOutlined: stylex.props(styles.contentIndentOutlined).className ?? '',
+  contentInline: stylex.props(styles.contentInline).className ?? '',
+  contentOutlined: stylex.props(styles.contentOutlined).className ?? '',
+  header: stylex.props(styles.header).className ?? '',
+  headerBorderless: stylex.props(styles.headerBorderless).className ?? '',
+  headerFilled: stylex.props(styles.headerFilled).className ?? '',
+  headerInline: stylex.props(styles.headerInline).className ?? '',
+  indicator: stylex.props(styles.indicator).className ?? '',
+  indicatorEnd: stylex.props(styles.indicatorEnd).className ?? '',
+  indicatorInline: stylex.props(styles.indicatorInline).className ?? '',
+  indicatorStart: stylex.props(styles.indicatorStart).className ?? '',
+  item: stylex.props(styles.item).className ?? '',
+  itemOutlined: stylex.props(styles.itemOutlined).className ?? '',
+  root: stylex.props(styles.root).className ?? '',
+  rootOutlined: stylex.props(styles.rootOutlined).className ?? '',
+  trigger: stylex.props(styles.trigger).className ?? '',
+  triggerBorderless: stylex.props(styles.triggerBorderless).className ?? '',
+  triggerFilled: stylex.props(styles.triggerFilled).className ?? '',
+  triggerOutlined: stylex.props(styles.triggerOutlined).className ?? '',
   panel: stylex.props(accordionPanelMarker, styles.panel).className ?? '',
-};
+} satisfies Record<keyof typeof styles, string>;

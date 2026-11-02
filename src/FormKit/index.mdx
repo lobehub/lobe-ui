@@ -125,6 +125,14 @@ Pass `columns` for the built-in table, or a render function as `children` for yo
 | `Form.useWatch('a', form)` | `useWatch(form, 'a')` |
 | `Form.Provider` | `form.subscribe(selector, callback)` |
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `Form`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/form.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

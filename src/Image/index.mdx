@@ -153,6 +153,14 @@ return (
 | open | Opens the viewer; does nothing until `elementRef` has an element | `() => void` |
 | outlet | Render it once next to the image; the viewer mounts there while open | `ReactNode` |
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `Image`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/Image.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

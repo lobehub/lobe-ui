@@ -57,6 +57,14 @@ A plain string option is shorthand for `{ value: option }`.
 - `borderless` — detached action buttons with a `2px` gap, for flush toolbar scenarios.
 - `segmented` — Segmented-like filled container with detached pill items. Each item carries its own pressed background (`colorBgElevated`) instead of a sliding indicator, so multiple items can be active at once.
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `ToggleGroup`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/ToggleGroup.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

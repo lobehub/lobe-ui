@@ -43,6 +43,14 @@ The panel keeps the colour it opened with in the compare swatch: click its top h
 - `format` / `defaultFormat` → `defaultFormat` only; values are always hex, the format only changes the panel inputs.
 - Gradients are not supported.
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `ColorPicker`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/ColorPicker.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

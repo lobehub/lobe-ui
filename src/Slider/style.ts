@@ -64,6 +64,11 @@ export const styles = stylex.create({
   },
 });
 
-export const sliderStyles = Object.fromEntries(
-  Object.entries(styles).map(([key, value]) => [key, stylex.props(value).className ?? '']),
-) as Record<keyof typeof styles, string>;
+export const sliderStyles = {
+  withInputSlider: stylex.props(styles.withInputSlider).className ?? '',
+  control: stylex.props(styles.control).className ?? '',
+  indicator: stylex.props(styles.indicator).className ?? '',
+  root: stylex.props(styles.root).className ?? '',
+  thumb: stylex.props(styles.thumb).className ?? '',
+  track: stylex.props(styles.track).className ?? '',
+} satisfies Record<keyof typeof styles, string>;

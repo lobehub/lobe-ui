@@ -42,6 +42,14 @@ import { segmentedClasses } from './stable';
 
 `options` also accepts an array of plain strings as shorthand: `['Light', 'Dark']` is equivalent to `[{ value: 'Light', label: 'Light' }, ...]`.
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `Segmented`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/Segmented.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).

@@ -18,6 +18,14 @@ import { mdxMdxClasses } from './stable';
 
 _Note: The component also accepts typography-related props from the Typography component._
 
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `Mdx`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/mdx/Mdx.css';
+```
+
 ## Class names
 
 These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
