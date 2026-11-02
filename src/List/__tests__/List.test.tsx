@@ -21,6 +21,45 @@ describe('List', () => {
     expect(screen.getByRole('separator')).toBeTruthy();
   });
 
+  test.each([false, true])('row slots target the outer li when compact=%s', (compact) => {
+    const { container } = render(
+      <List
+        classNames={{ item: 'custom-item', row: 'custom-row' }}
+        compact={compact}
+        styles={{ item: { marginInline: 8 }, row: { marginInline: 4 } }}
+        items={[
+          {
+            actions: <span>Actions</span>,
+            key: 'button',
+            label: 'Button',
+            style: { marginInline: 12 },
+          },
+          { href: '/docs', key: 'link', label: 'Link' },
+          { disabled: true, key: 'disabled', label: 'Disabled' },
+          { type: 'divider' },
+        ]}
+      />,
+    );
+
+    const rows = container.querySelectorAll<HTMLLIElement>('li:not([role="separator"])');
+    expect(rows).toHaveLength(3);
+    for (const row of rows) {
+      expect(row.classList.contains('lobe-list__row')).toBe(true);
+      expect(row.classList.contains('custom-row')).toBe(true);
+      expect(row.style.marginInline).toBe('4px');
+      expect(row.querySelector('.custom-row')).toBeNull();
+    }
+    for (const name of ['Button', 'Link', 'Disabled']) {
+      const control = screen.getByRole(name === 'Link' ? 'link' : 'button', { name });
+      expect(control.classList.contains('custom-item')).toBe(true);
+      expect(control.style.marginInline).toBe(name === 'Button' ? '12px' : '8px');
+    }
+    expect(screen.getByRole('separator').classList.contains('custom-row')).toBe(false);
+    expect(screen.getByRole('separator').getAttribute('style')).toBeNull();
+    expect(screen.getByText('Actions').closest('li')).toBe(rows[0]);
+    expect(screen.getByRole('list').classList.contains('custom-row')).toBe(false);
+  });
+
   test('selectable + uncontrolled: click marks the row current and reports it', () => {
     const onActiveChange = vi.fn();
     render(<List selectable items={items} onActiveChange={onActiveChange} />);

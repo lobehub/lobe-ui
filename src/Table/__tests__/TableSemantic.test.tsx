@@ -1,9 +1,10 @@
 import { cleanup, render as rtlRender } from '@testing-library/react';
 import { motion } from 'motion/react';
-import type { ReactNode } from 'react';
+import type { HTMLAttributes, ReactNode, TdHTMLAttributes } from 'react';
 
 import ConfigProvider from '@/ConfigProvider';
 
+import { TableExpandedRow } from '../atoms';
 import { resolveSemantic } from '../semantic';
 import Table from '../Table';
 import type { TableClassNames, TableColumn, TableProps } from '../type';
@@ -117,6 +118,112 @@ describe('Table semantic classNames / styles', () => {
     expect(styleOf(container.querySelector('nav button[aria-current="page"]'))).toContain(
       'color: orange',
     );
+  });
+
+  test.each([undefined, { x: 480, y: 200 }])(
+    'empty rows and cells receive the body slots with scroll=%j',
+    (scroll) => {
+      const { container } = renderTable({
+        classNames: nestedClassNames,
+        dataSource: [],
+        locale: { emptyText: 'No records' },
+        pagination: false,
+        rowSelection: {},
+        scroll,
+        styles: {
+          body: {
+            cell: { borderWidth: 0, paddingInline: 24 },
+            row: { color: 'blue' },
+          },
+        },
+      });
+      const placeholder = container.querySelector<HTMLTableRowElement>(
+        'tr.lobe-table-placeholder',
+      )!;
+      const cell = placeholder.querySelector<HTMLTableCellElement>('td')!;
+
+      expect(placeholder.classList.contains('b-row')).toBe(true);
+      expect(placeholder.classList.contains('lobe-table__body-row')).toBe(true);
+      expect(placeholder.style.color).toBe('blue');
+      expect(cell.classList.contains('b-cell')).toBe(true);
+      expect(cell.classList.contains('lobe-table__body-cell')).toBe(true);
+      expect(cell.style.borderWidth).toBe('0px');
+      expect(cell.style.paddingInline).toBe('24px');
+      expect(cell.colSpan).toBe(3);
+      expect(cell.textContent).toBe('No records');
+      expect(container.querySelector('.lobe-table-measure-row .b-cell')).toBeNull();
+    },
+  );
+
+  test('custom body components and function-form slots survive empty/data transitions', () => {
+    const BodyRow = (props: HTMLAttributes<HTMLTableRowElement>) => (
+      <tr data-custom-row="" {...props} />
+    );
+    const BodyCell = (props: TdHTMLAttributes<HTMLTableCellElement>) => (
+      <td data-custom-cell="" {...props} />
+    );
+    const props: TableProps<Row> = {
+      classNames: ({ props }) => ({
+        body: { cell: props.dataSource?.length ? 'data-cell' : 'empty-cell', row: 'custom-row' },
+      }),
+      columns,
+      components: { body: { cell: BodyCell, row: BodyRow } },
+      locale: { emptyText: 'No records' },
+      pagination: false,
+      rowKey: 'id',
+      styles: ({ props }) => ({
+        body: { cell: { paddingInline: props.dataSource?.length ? 8 : 24 } },
+      }),
+    };
+    const { container, rerender } = render(<Table {...props} dataSource={[]} />);
+    const expectCell = (className: string, padding: string) => {
+      const cell = container.querySelector<HTMLTableCellElement>(`.${className}`)!;
+      expect(cell.hasAttribute('data-custom-cell')).toBe(true);
+      expect(cell.style.paddingInline).toBe(padding);
+      expect(cell.parentElement!.classList.contains('custom-row')).toBe(true);
+      expect(cell.parentElement!.hasAttribute('data-custom-row')).toBe(true);
+      return cell;
+    };
+
+    expect(expectCell('empty-cell', '24px').textContent).toBe('No records');
+    rerender(<Table {...props} dataSource={rows.slice(0, 1)} />);
+    expect(expectCell('data-cell', '8px').textContent).toBe('m-0');
+    expect(container.querySelector('.lobe-table-placeholder')).toBeNull();
+    rerender(<Table {...props} dataSource={[]} />);
+    expect(expectCell('empty-cell', '24px').colSpan).toBe(2);
+  });
+
+  test('expanded-row cell slots do not override collapsed visibility', () => {
+    const { container, rerender } = render(
+      <table>
+        <tbody>
+          <TableExpandedRow
+            cellClassName="expanded-cell"
+            cellStyle={{ paddingInline: 24 }}
+            colSpan={2}
+            expanded={false}
+            style={{ color: 'blue', display: 'table-row' }}
+          >
+            Expanded content
+          </TableExpandedRow>
+        </tbody>
+      </table>,
+    );
+    expect(container.querySelector('tr')!.style.display).toBe('none');
+    expect(container.querySelector('tr')!.style.color).toBe('blue');
+    expect(
+      container.querySelector<HTMLTableCellElement>('.expanded-cell')!.style.paddingInline,
+    ).toBe('24px');
+    rerender(
+      <table>
+        <tbody>
+          <TableExpandedRow colSpan={2} style={{ display: 'table-row' }}>
+            Expanded content
+          </TableExpandedRow>
+        </tbody>
+      </table>,
+    );
+    expect(container.querySelector('tr')!.style.display).toBe('table-row');
   });
 
   test('function forms receive the table props', () => {

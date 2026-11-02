@@ -99,7 +99,13 @@ const ListRow = memo<ListRowProps>(
     );
 
     return (
-      <li {...styleProps([styles.item, listItemMarker], listClasses('row'))}>
+      <li
+        {...styleProps(
+          [styles.item, listItemMarker],
+          clsx(listClasses('row'), classNames?.row),
+          customStyles?.row,
+        )}
+      >
         {href && !disabled ? (
           <A
             aria-current={active ? 'page' : undefined}
