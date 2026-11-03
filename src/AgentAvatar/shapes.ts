@@ -115,16 +115,25 @@ const ghostPath = () => {
 
 export interface AgentAvatarShapeGeometry {
   /**
-   * Centre of the `blocked` badge. Picked per shape so the badge never sits on a feature
-   * (cat ears, star points) and stays inside the 100×100 canvas.
+   * Centre of the `blocked` badge. The badge does not tilt; the position is picked per shape so
+   * it never covers a feature (cat ears, star points) at any seeded tilt and stays inside the
+   * 100×100 canvas. On shapes that fill their corners the background ring may cut into a plain
+   * edge.
    */
   badge: Point;
   /** Silhouette path. */
   d: string;
   /** Eyes: center height, sclera radius and the distance between the two eye centers. */
   eyes: { gap: number; r: number; y: number };
-  /** Anchor of the `thinking` thought bubbles (bottom-left dot). */
+  /** Anchor of the `thinking` thought bubbles (center of the largest bubble, minus its drop). */
   thought: Point;
+  /** Rise towards the top-left instead of the top-right. */
+  thoughtFlip?: boolean;
+  /**
+   * Outline the bubbles with the background color where they cross the silhouette.
+   * @default true
+   */
+  thoughtHalo?: boolean;
 }
 
 export const SHAPE_GEOMETRY: Record<AgentAvatarShape, AgentAvatarShapeGeometry> = {
@@ -136,10 +145,12 @@ export const SHAPE_GEOMETRY: Record<AgentAvatarShape, AgentAvatarShapeGeometry> 
     thought: [70, 2],
   },
   cat: {
-    badge: [91, 26],
+    badge: [91, 91],
     d: 'M12 57A38 38 0 1 1 88 57A38 38 0 1 1 12 57ZM19 40L17 12Q17 6 22.5 8.5L44 21ZM56 21L77.5 8.5Q83 6 83 12L81 40Z',
     eyes: { gap: 30, r: 14, y: 56 },
-    thought: [70, 2],
+    thought: [48, 0],
+    thoughtFlip: true,
+    thoughtHalo: false,
   },
   cloud: { badge: [88, 14], d: cloudPath(), eyes: { gap: 34, r: 16, y: 52 }, thought: [70, 2] },
   cookie: {
@@ -149,16 +160,16 @@ export const SHAPE_GEOMETRY: Record<AgentAvatarShape, AgentAvatarShapeGeometry> 
     thought: [70, 2],
   },
   face: { badge: [91, 9], d: facePath(), eyes: { gap: 34, r: 16, y: 42 }, thought: [70, 2] },
-  ghost: { badge: [90, 13], d: ghostPath(), eyes: { gap: 29, r: 13.5, y: 46 }, thought: [70, 2] },
+  ghost: { badge: [91, 9], d: ghostPath(), eyes: { gap: 29, r: 13.5, y: 46 }, thought: [70, 2] },
   hex: { badge: [89, 13], d: hexPath(), eyes: { gap: 27, r: 12.5, y: 47 }, thought: [70, 2] },
   pudding: {
-    badge: [91, 12],
+    badge: [91, 9],
     d: 'M30 14H70Q79 14 81 23Q87 50 93 80Q95 92 83 92H17Q5 92 7 80Q13 50 19 23Q21 14 30 14Z',
     eyes: { gap: 29, r: 13.5, y: 52 },
     thought: [70, 2],
   },
   shield: {
-    badge: [91, 12],
+    badge: [91, 9],
     d: 'M18 18Q18 8 28 8H72Q82 8 82 18L88 48Q90 72 50 94Q10 72 12 48Z',
     eyes: { gap: 26, r: 12, y: 42 },
     thought: [70, 2],

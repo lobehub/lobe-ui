@@ -1,9 +1,11 @@
+import * as stylex from '@stylexjs/stylex';
 import { render } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import AgentAvatar from '../AgentAvatar';
 import { SHAPE_GEOMETRY } from '../shapes';
 import { agentAvatarClasses } from '../stable';
+import { styles } from '../style';
 import {
   AGENT_AVATAR_COLORS,
   AGENT_AVATAR_SHAPES,
@@ -212,11 +214,83 @@ describe('AgentAvatar', () => {
     }
   });
 
+  it('derives a stable tilt from the seed', () => {
+    const seeds = Array.from({ length: 400 }, (_, index) => `agent-${index}`);
+    const tilts = new Set(seeds.map((seed) => getAgentAvatarTraits(seed).tilt));
+    expect([...tilts].sort((a, b) => a - b)).toEqual([-3, -2, -1, 0, 1, 2, 3]);
+
+    const seed = seeds.find((item) => getAgentAvatarTraits(item).tilt !== 0)!;
+    const { tilt } = getAgentAvatarTraits(seed);
+    const first = render(<AgentAvatar seed={seed} />);
+    const second = render(<AgentAvatar seed={seed} />);
+    const lean = (container: HTMLElement) =>
+      root(container).querySelector(':scope > g[transform]')?.getAttribute('transform');
+
+    expect(lean(first.container)).toBe(`rotate(${tilt} 50 94)`);
+    expect(lean(second.container)).toBe(lean(first.container));
+  });
+
+  it('does not tilt when tilt is false or the seeded tilt is zero', () => {
+    const tilted = Array.from({ length: 50 }, (_, index) => `agent-${index}`).find(
+      (seed) => getAgentAvatarTraits(seed).tilt !== 0,
+    )!;
+    const upright = Array.from({ length: 50 }, (_, index) => `agent-${index}`).find(
+      (seed) => getAgentAvatarTraits(seed).tilt === 0,
+    )!;
+
+    for (const element of [
+      <AgentAvatar key="off" seed={tilted} tilt={false} />,
+      <AgentAvatar key="zero" seed={upright} />,
+    ]) {
+      const { container } = render(element);
+      expect(container.querySelector('[transform]')).toBeNull();
+    }
+  });
+
+  it('keeps the badge and thought bubbles upright', () => {
+    const seed = Array.from({ length: 50 }, (_, index) => `agent-${index}`).find(
+      (item) => getAgentAvatarTraits(item).tilt !== 0,
+    )!;
+    for (const state of ['blocked', 'thinking'] as const) {
+      const { container } = render(<AgentAvatar seed={seed} state={state} />);
+      const part = container.querySelector(
+        `.${agentAvatarClasses(state === 'blocked' ? 'badge' : 'thought')}`,
+      )!;
+      expect(part.parentElement).toBe(root(container));
+      expect(part.closest('[transform]')).toBeNull();
+    }
+  });
+
+  it('raises the cat thought bubbles to the top-left without a halo', () => {
+    const halo = stylex.props(styles.thoughtHalo).className!.split(' ');
+    const dots = (shape: 'cat' | 'face') => {
+      const { container } = render(<AgentAvatar seed="Writer" shape={shape} state="thinking" />);
+      return [
+        ...container.querySelectorAll<SVGCircleElement>(`.${agentAvatarClasses('thought')} circle`),
+      ];
+    };
+
+    const cat = dots('cat');
+    const catX = cat.map((dot) => Number(dot.getAttribute('cx')));
+    expect(catX[1]).toBeLessThan(catX[0]);
+    expect(catX[2]).toBeLessThan(catX[1]);
+    for (const dot of cat)
+      for (const name of halo) expect(dot.classList.contains(name)).toBe(false);
+
+    const face = dots('face');
+    const faceX = face.map((dot) => Number(dot.getAttribute('cx')));
+    expect(faceX[1]).toBeGreaterThan(faceX[0]);
+    for (const dot of face)
+      for (const name of halo) expect(dot.classList.contains(name)).toBe(true);
+  });
+
   it('places the blocked badge inside the canvas for every shape', () => {
     for (const shape of AGENT_AVATAR_SHAPES) {
       const [x, y] = SHAPE_GEOMETRY[shape].badge;
+      expect(x - 9).toBeGreaterThanOrEqual(0);
       expect(x + 9).toBeLessThanOrEqual(100);
       expect(y - 9).toBeGreaterThanOrEqual(0);
+      expect(y + 9).toBeLessThanOrEqual(100);
     }
   });
 });

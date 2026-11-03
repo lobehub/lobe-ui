@@ -73,6 +73,7 @@ const AgentAvatar = memo<AgentAvatarProps>(
     state = 'idle',
     style,
     'styles': customStyles,
+    tilt = true,
     ...rest
   }) => {
     const id = useId().replaceAll(/[^\w-]/g, '');
@@ -184,6 +185,10 @@ const AgentAvatar = memo<AgentAvatarProps>(
 
     const [badgeX, badgeY] = geometry.badge;
     const [thoughtX, thoughtY] = geometry.thought;
+    const thoughtDirection = geometry.thoughtFlip ? -1 : 1;
+    const thoughtHalo = geometry.thoughtHalo ?? true;
+    // Only the body and eyes lean; the badge and thought bubbles stay upright and in place.
+    const lean = tilt ? traits.tilt : 0;
 
     return (
       <svg
@@ -207,19 +212,21 @@ const AgentAvatar = memo<AgentAvatarProps>(
           ...style,
         } as CSSProperties)}
       >
-        <g
-          className={styleProps([styles.bodyMotion, motion(BODY_MOTION[state])]).className}
-          style={state === 'waiting' ? { transform: 'rotate(-3deg)' } : undefined}
-        >
-          <path
-            d={geometry.d}
-            style={customStyles?.body}
-            className={
-              styleProps([styles.body], clsx(agentAvatarClasses('body'), classNames?.body))
-                .className
-            }
-          />
-          {eyeLayer}
+        <g transform={lean ? `rotate(${lean} 50 94)` : undefined}>
+          <g
+            className={styleProps([styles.bodyMotion, motion(BODY_MOTION[state])]).className}
+            style={state === 'waiting' ? { transform: 'rotate(-3deg)' } : undefined}
+          >
+            <path
+              d={geometry.d}
+              style={customStyles?.body}
+              className={
+                styleProps([styles.body], clsx(agentAvatarClasses('body'), classNames?.body))
+                  .className
+              }
+            />
+            {eyeLayer}
+          </g>
         </g>
         {state === 'thinking' && (
           <g
@@ -228,12 +235,18 @@ const AgentAvatar = memo<AgentAvatarProps>(
           >
             {THOUGHT_DOTS.map(([dx, dy, r], index) => (
               <circle
-                className={styleProps([styles.thoughtDot, motion(styles.thoughtRise)]).className}
-                cx={thoughtX + dx}
+                cx={thoughtX + dx * thoughtDirection}
                 cy={thoughtY + dy}
                 key={r}
                 opacity={round(0.9 - index * 0.15)}
                 r={r}
+                className={
+                  styleProps([
+                    styles.thoughtDot,
+                    thoughtHalo && styles.thoughtHalo,
+                    motion(styles.thoughtRise),
+                  ]).className
+                }
                 style={
                   animated
                     ? {

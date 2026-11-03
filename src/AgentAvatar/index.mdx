@@ -14,9 +14,11 @@ import { agentAvatarClasses } from './stable';
 
 ## Default
 
-`seed` (or `name` when `seed` is omitted) is hashed into a shape and a color, so the same seed always draws the same avatar with no randomness. `name` is also the accessible label; without a name or `aria-label` the avatar is decorative.
+`seed` (or `name` when `seed` is omitted) is hashed into a shape, a color and a slight lean, so the same seed always draws the same avatar with no randomness. `name` is also the accessible label; without a name or `aria-label` the avatar is decorative.
 
 <Demo of={DemoIndex} layout="bare" />
+
+The lean is a resting tilt of -3° to 3° on the body and eyes, so a row of avatars feels less rigid. The badge and thought bubbles stay upright. Set `tilt={false}` for a straight pose, for example in dense grids.
 
 ## Playground
 
@@ -44,7 +46,7 @@ Twelve silhouettes share one construction: a flat body, the big eyes with whites
 
 <Api name="AgentAvatar" />
 
-`AGENT_AVATAR_SHAPES`, `AGENT_AVATAR_COLORS` and `AGENT_AVATAR_STATES` list the accepted values, and `getAgentAvatarTraits(seed)` returns the derived `shape` and `color` without rendering.
+`AGENT_AVATAR_SHAPES`, `AGENT_AVATAR_COLORS` and `AGENT_AVATAR_STATES` list the accepted values, and `getAgentAvatarTraits(seed)` returns the derived `shape`, `color`, `tilt` and animation `phase` without rendering.
 
 ## Styles
 

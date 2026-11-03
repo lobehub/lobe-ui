@@ -17,6 +17,7 @@ export default () => {
       shape: { options: ['auto', ...AGENT_AVATAR_SHAPES], value: 'auto' },
       size: { max: 160, min: 16, step: 1, value: 96 },
       state: { options: [...AGENT_AVATAR_STATES], value: 'idle' },
+      tilt: true,
     },
     { store },
   ) as Omit<AgentAvatarProps, 'color' | 'shape'> & { color: string; shape: string };
