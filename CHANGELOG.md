@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version&nbsp;6.15.1](https://github.com/lobehub/lobe-ui/compare/v6.15.0...v6.15.1)
+
+<sup>Released on **2026-11-03**</sup>
+
+#### 🐛 Bug Fixes
+
+- **ime**: Keep Select search and EditableText from acting on keys that end an IME composition.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **ime**: Keep Select search and EditableText from acting on keys that end an IME composition, closes [#781](https://github.com/lobehub/lobe-ui/issues/781) ([b1bd4b8](https://github.com/lobehub/lobe-ui/commit/b1bd4b8))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version&nbsp;6.15.0](https://github.com/lobehub/lobe-ui/compare/v6.14.0...v6.15.0)
 
 <sup>Released on **2026-11-03**</sup>
