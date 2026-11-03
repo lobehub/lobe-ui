@@ -80,15 +80,18 @@ export interface AgentAvatarTraits {
   /** Animation offset in seconds (negative), so a list of avatars does not blink in sync. */
   phase: number;
   shape: AgentAvatarShape;
+  /** Resting lean in degrees, an integer from -3 to 3, rotated around the bottom center. */
+  tilt: number;
 }
 
-/** Shape, color and animation phase derived from a seed. Pure and deterministic. */
+/** Shape, color, tilt and animation phase derived from a seed. Pure and deterministic. */
 export const getAgentAvatarTraits = (seed: string): AgentAvatarTraits => {
   const hash = hashSeed(`${SEED_SALT}${seed}`);
   return {
     color: AGENT_AVATAR_COLORS[(hash >>> 3) % AGENT_AVATAR_COLORS.length],
     phase: -(((hash >>> 7) % 3000) / 1000),
     shape: AGENT_AVATAR_SHAPES[hash % AGENT_AVATAR_SHAPES.length],
+    tilt: ((hash >>> 11) % 7) - 3,
   };
 };
 

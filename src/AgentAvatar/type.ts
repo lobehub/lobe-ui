@@ -93,4 +93,10 @@ export interface AgentAvatarProps extends Omit<
   state?: AgentAvatarState;
   /** Inline styles of the semantic parts. */
   styles?: AgentAvatarStyles;
+  /**
+   * Lean the body a few degrees (-3° to 3°), derived from the seed like the shape and color, so a
+   * group of avatars feels less rigid. The badge and thought bubbles stay upright.
+   * @default true
+   */
+  tilt?: boolean;
 }
