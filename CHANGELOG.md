@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version&nbsp;6.13.0](https://github.com/lobehub/lobe-ui/compare/v6.12.0...v6.13.0)
+
+<sup>Released on **2026-11-03**</sup>
+
+#### ✨ Features
+
+- **components**: Expose list row and table placeholder style slots.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **components**: Expose list row and table placeholder style slots, closes [#775](https://github.com/lobehub/lobe-ui/issues/775) ([cbd8257](https://github.com/lobehub/lobe-ui/commit/cbd8257))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version&nbsp;6.12.0](https://github.com/lobehub/lobe-ui/compare/v6.11.0...v6.12.0)
 
 <sup>Released on **2026-11-03**</sup>
