@@ -42,8 +42,6 @@
     "ThemeProviderProps": null,
     "ThemeSwitch": null,
     "ThemeSwitchProps": null,
-    "Toc": null,
-    "TocProps": null,
     "createRawModal": "createModal",
     "lobeCustomStylish": "plain css fragments on cssVar (lobeStaticStylish still exists)",
     "lobeCustomToken": "cssVar / useTheme()"

@@ -73,6 +73,7 @@ import {
   Tabs,
   Tag,
   Text,
+  Toc,
   Video,
 } from '@/index';
 import { layoutClasses } from '@/Layout/stable';
@@ -95,6 +96,7 @@ import { stepsClasses } from '@/Steps/stable';
 import { tabsClasses } from '@/Tabs/stable';
 import { tagClasses } from '@/Tag/stable';
 import { textClasses } from '@/Text/stable';
+import { tocClasses } from '@/Toc/stable';
 import { videoClasses } from '@/Video/stable';
 
 import type { StableFixture } from './stableClasses.fixtures';
@@ -462,6 +464,18 @@ export const DISPLAY_FIXTURES: Record<string, StableFixture> = {
   Text: {
     classes: textClasses,
     render: ({ className }) => <Text className={className}>Text</Text>,
+  },
+  Toc: {
+    classes: tocClasses,
+    render: ({ className }) => (
+      <Toc
+        className={className}
+        items={[
+          { href: '#one', level: 2, title: 'One' },
+          { href: '#two', level: 3, title: 'Two' },
+        ]}
+      />
+    ),
   },
   Video: {
     classes: videoClasses,
