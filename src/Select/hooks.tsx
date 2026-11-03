@@ -11,6 +11,7 @@ import {
 } from 'react';
 
 import { useAppElement } from '@/ConfigProvider/AppElementContext';
+import { isComposingKey } from '@/utils/isComposingKey';
 
 import {
   countVirtualItems,
@@ -286,6 +287,7 @@ export function useSelectSearch({
   const handleSearchKeyDown = useCallback(
     (event: KeyboardEvent<HTMLInputElement>) => {
       event.stopPropagation();
+      if (isComposingKey(event)) return;
 
       if (event.key === 'Escape') {
         handleOpenChange(false);
