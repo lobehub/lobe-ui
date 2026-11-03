@@ -10,6 +10,7 @@ import { useControlledState } from '@/hooks/useControlledState';
 import { cx } from '@/styles';
 import { styleProps } from '@/styles/stylex/props';
 import { toDataAttributes } from '@/utils/bem';
+import { isComposingKey } from '@/utils/isComposingKey';
 
 import ControlInput from './ControlInput';
 import { editableTextClasses } from './stable';
@@ -50,6 +51,7 @@ const EditableText = memo<EditableTextProps>(
       {
         enableOnFormTags: true,
         enabled: edited,
+        ignoreEventWhen: isComposingKey,
         preventDefault: true,
       },
     );
