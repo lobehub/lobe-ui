@@ -1,11 +1,11 @@
-import type { ComponentProps } from 'react';
+import type { ComponentProps, ReactNode } from 'react';
 
 import type { AnchorItem } from '../Anchor';
 
 export interface TocItem {
   href: string;
   level: 2 | 3;
-  title: string;
+  title: ReactNode;
 }
 
 /**
@@ -17,7 +17,7 @@ export interface TocProps extends Omit<ComponentProps<'nav'>, 'children' | 'onCh
    */
   activeKey?: string | null;
   /**
-   * Returns the scroll container (default document.body)
+   * Returns the scroll container (default `window`; `document.body` / `document.documentElement` are normalized to `window`)
    */
   getContainer?: () => HTMLElement | Window | null | undefined;
   /**
@@ -38,6 +38,6 @@ export interface TocProps extends Omit<ComponentProps<'nav'>, 'children' | 'onCh
    */
   onClick?: (
     event: React.MouseEvent<HTMLAnchorElement>,
-    item: { href: string; key: string; title: string },
+    item: { href: string; key: string; title: ReactNode },
   ) => void;
 }

@@ -137,4 +137,31 @@ describe('Toc', () => {
 
     expect(container.firstChild).toBeNull();
   });
+
+  test('preserves ReactNode titles from Anchor items', () => {
+    render(
+      <Toc
+        getContainer={() => scroller}
+        items={[
+          {
+            children: [{ href: '#child', key: '1-1', title: <em>Nested</em> }],
+            href: '#parent',
+            key: '1',
+            title: <strong>Parent</strong>,
+          },
+        ]}
+      />,
+    );
+
+    expect(screen.getByRole('link', { name: 'Parent' }).querySelector('strong')).toBeTruthy();
+    expect(screen.getByRole('link', { name: 'Nested' }).querySelector('em')).toBeTruthy();
+  });
+
+  test('uses localized aria-label and allows override', () => {
+    const { rerender } = render(<Toc getContainer={() => scroller} items={items} />);
+    expect(screen.getByRole('navigation').getAttribute('aria-label')).toBe('On this page');
+
+    rerender(<Toc aria-label="Custom toc" getContainer={() => scroller} items={items} />);
+    expect(screen.getByRole('navigation').getAttribute('aria-label')).toBe('Custom toc');
+  });
 });

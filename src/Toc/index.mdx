@@ -24,7 +24,7 @@ import { tocClasses } from './stable';
 
 <Api name="Toc" />
 
-The active item is the last target whose top has passed `offset` pixels below the top of the container. `getContainer` returns the scroll element (default `document.body`) and is only called in effects, so it is SSR-safe.
+The active item is the last target whose top has passed `offset` pixels below the top of the container. `getContainer` returns the scroll element (default `window`; `document.body` / `document.documentElement` are treated as window scroll) and is only called in effects, so it is SSR-safe.
 
 Clicking a link smooth-scrolls (instant under reduced motion) and keeps that link active until the scroll ends. Call `event.preventDefault()` in `onClick` to handle navigation yourself.
 

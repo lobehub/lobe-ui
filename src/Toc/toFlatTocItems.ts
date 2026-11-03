@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 import type { AnchorItem } from '../Anchor';
 import type { TocItem } from './type';
 
@@ -6,7 +8,7 @@ export interface FlatTocItem {
   id: string;
   key: string;
   level: 2 | 3;
-  title: string;
+  title: ReactNode;
 }
 
 const hrefToId = (href: string) => {
@@ -29,14 +31,14 @@ export const toFlatTocItems = (items: AnchorItem[] | TocItem[] = []): FlatTocIte
   if (typeof first.level === 'number') {
     return (items as TocItem[]).flatMap((item, index) => {
       const id = hrefToId(item.href);
-      if (!id || !item.title) return [];
+      if (!id || item.title == null || item.title === false || item.title === '') return [];
       return [
         {
           href: item.href.startsWith('#') ? item.href : `#${id}`,
           id,
           key: String(index + 1),
           level: item.level === 3 ? 3 : 2,
-          title: String(item.title),
+          title: item.title,
         } satisfies FlatTocItem,
       ];
     });
@@ -51,7 +53,7 @@ export const toFlatTocItems = (items: AnchorItem[] | TocItem[] = []): FlatTocIte
             id,
             key: item.key ?? String(index + 1),
             level: 2,
-            title: String(item.title ?? ''),
+            title: item.title ?? '',
           },
         ]
       : [];
@@ -64,7 +66,7 @@ export const toFlatTocItems = (items: AnchorItem[] | TocItem[] = []): FlatTocIte
           id: childId,
           key: child.key ?? `${item.key ?? index}-${childIndex}`,
           level: 3 as const,
-          title: String(child.title ?? ''),
+          title: child.title ?? '',
         },
       ];
     });

@@ -4,6 +4,8 @@ import clsx from 'clsx';
 import type { MouseEvent as ReactMouseEvent } from 'react';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
+import tocMessages from '@/i18n/resources/en/toc';
+import { useTranslation } from '@/i18n/useTranslation';
 import { styleProps } from '@/styles/stylex/props';
 
 import { tocClasses } from './stable';
@@ -82,6 +84,7 @@ const Toc = ({
   style,
   ...rest
 }: TocProps) => {
+  const { t } = useTranslation(tocMessages);
   const flatItems = useMemo(() => toFlatTocItems(items), [items]);
   const listRef = useRef<HTMLOListElement>(null);
   const scrollLockRef = useRef(false);
@@ -91,7 +94,15 @@ const Toc = ({
 
   const resolveContainer = useCallback((): ScrollContainer => {
     const container = getContainer?.();
-    return container ?? document.body;
+    if (
+      !container ||
+      container === window ||
+      container === document.body ||
+      container === document.documentElement
+    ) {
+      return window;
+    }
+    return container;
   }, [getContainer]);
 
   const controlledId =
@@ -147,15 +158,9 @@ const Toc = ({
     };
     spy();
     container.addEventListener('scroll', handleScroll, { passive: true });
-    if (container === document.body || container === document.documentElement) {
-      window.addEventListener('scroll', handleScroll, { passive: true });
-    }
     return () => {
       cancelAnimationFrame(frame);
       container.removeEventListener('scroll', handleScroll);
-      if (container === document.body || container === document.documentElement) {
-        window.removeEventListener('scroll', handleScroll);
-      }
     };
   }, [flatItems, offset, onChange, resolveContainer]);
 
@@ -188,9 +193,7 @@ const Toc = ({
     lockTimerRef.current = setTimeout(release, SCROLL_LOCK_FALLBACK_MS);
     container.addEventListener('scrollend', release, { once: true });
 
-    const scrollTarget =
-      container === document.body || container === document.documentElement ? window : container;
-    scrollTarget.scrollTo({
+    container.scrollTo({
       behavior: reduceMotion ? 'auto' : 'smooth',
       top,
     });
@@ -200,7 +203,7 @@ const Toc = ({
 
   return (
     <nav
-      aria-label="On this page"
+      aria-label={t('toc.onThisPage')}
       data-docs-toc=""
       {...rest}
       {...styleProps(styles.root, clsx(tocClasses(), className), style)}
