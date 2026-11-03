@@ -253,12 +253,14 @@ export const styles = stylex.create({
   },
   thoughtDot: {
     fill: 'var(--lobe-agent-avatar-color)',
-    stroke: cssVar.colorBgContainer,
-    strokeWidth: 2.5,
-    // A background halo keeps the bubbles readable where they cross ears or corners.
-    paintOrder: 'stroke',
     transformBox: 'fill-box',
     transformOrigin: 'center',
+  },
+  // A background halo keeps the bubbles readable where they cross the silhouette.
+  thoughtHalo: {
+    stroke: cssVar.colorBgContainer,
+    strokeWidth: 2.5,
+    paintOrder: 'stroke',
   },
   thoughtRise: {
     animationDelay: 'var(--lobe-agent-avatar-delay, 0s)',
