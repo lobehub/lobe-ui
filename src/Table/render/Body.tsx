@@ -226,10 +226,14 @@ export const Body = <T,>({ emptyNode, measure, onColumnResize, rows }: BodyProps
         ))
       ) : (
         <TableExpandedRow
-          className={`${prefixCls}-placeholder`}
+          cellClassName={semanticClassNames.body.cell}
+          cellComponent={components.bodyCell}
+          cellStyle={semanticStyles.body.cell}
+          className={clsx(`${prefixCls}-placeholder`, semanticClassNames.body.row)}
           colSpan={leafColumns.length}
           component={components.bodyRow}
           fixed={horizonScroll}
+          style={semanticStyles.body.row}
         >
           {emptyNode}
         </TableExpandedRow>

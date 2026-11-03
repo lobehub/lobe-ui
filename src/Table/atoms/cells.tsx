@@ -140,28 +140,42 @@ export const TableRow = ({
   });
 
 export interface TableExpandedRowProps {
+  /** Class name of the spanning cell. */
+  cellClassName?: string;
   cellComponent?: TableCustomizeComponent;
+  /** Inline styles of the spanning cell. */
+  cellStyle?: CSSProperties;
   children?: ReactNode;
   className?: string;
   colSpan: number;
   component?: TableCustomizeComponent;
   expanded?: boolean;
   fixed?: boolean;
+  /** Inline row styles; `expanded={false}` always hides the row. */
+  style?: CSSProperties;
 }
 
 export const TableExpandedRow = ({
+  cellClassName,
   cellComponent,
+  cellStyle,
   children,
   className,
   colSpan,
   component = 'tr',
   expanded = true,
   fixed,
+  style,
 }: TableExpandedRowProps) =>
   createElement(
     component,
-    { className, style: { display: expanded ? undefined : 'none' } },
-    <TableCell colSpan={colSpan} component={cellComponent}>
+    { className, style: { ...style, display: expanded ? style?.display : 'none' } },
+    <TableCell
+      className={cellClassName}
+      colSpan={colSpan}
+      component={cellComponent}
+      style={cellStyle}
+    >
       {fixed ? (
         <div
           className={`${PREFIX_CLS}-expanded-row-fixed`}

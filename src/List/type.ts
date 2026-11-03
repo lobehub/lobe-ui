@@ -33,7 +33,8 @@ export interface ListDividerType {
 
 export type ListItem = ListItemType | ListDividerType;
 
-export type ListSemanticName = 'actions' | 'description' | 'extra' | 'item' | 'label';
+/** `row` is the outer li (excluding dividers); `item` is its button or link. */
+export type ListSemanticName = 'actions' | 'description' | 'extra' | 'item' | 'label' | 'row';
 
 export interface ListProps extends Omit<ComponentProps<'ul'>, 'onClick'> {
   activeKey?: Key | null;

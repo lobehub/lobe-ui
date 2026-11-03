@@ -379,6 +379,7 @@ export type TableSemanticName =
  * `content` the scroll box, `title` / `footer` the title and footer bars.
  */
 export interface TableClassNames {
+  /** Body parts, including the placeholder row and cell in non-virtual tables. */
   body?: Partial<Record<TableComponentsSemanticName, string>>;
   content?: string;
   footer?: string;
