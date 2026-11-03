@@ -98,6 +98,25 @@ describe('ConsoleNav', () => {
     expect(header('Docs').getAttribute('aria-expanded')).toBe('true');
   });
 
+  it('applies object overrides from storage and keeps toggling persisted', () => {
+    window.localStorage.setItem('nav', JSON.stringify({ guides: false }));
+    render(<ConsoleNav groups={groups} pathname="/" storageKey="nav" />);
+
+    expect(header('Guides').getAttribute('aria-expanded')).toBe('false');
+    expect(header('Docs').getAttribute('aria-expanded')).toBe('true');
+
+    fireEvent.click(header('Guides'));
+    expect(header('Guides').getAttribute('aria-expanded')).toBe('true');
+    expect(JSON.parse(window.localStorage.getItem('nav')!)).toEqual({ guides: true });
+  });
+
+  it('marks group panels instant on the initial commit', () => {
+    const { container } = render(<ConsoleNav groups={groups} pathname="/" storageKey="nav" />);
+    const panel = container.querySelector('[id$="-guides"]');
+    // requestAnimationFrame arms transitions after paint; the first commit stays instant.
+    expect(panel?.getAttribute('data-instant')).toBe('true');
+  });
+
   it('shows only icon groups on the rail, linked to their overview', () => {
     render(<ConsoleNav collapsed groups={groups} items={items} pathname="/docs/button" />);
 
