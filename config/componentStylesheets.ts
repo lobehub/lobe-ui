@@ -1,8 +1,6 @@
 import { existsSync, globSync } from 'node:fs';
 import path from 'node:path';
 
-const subpathOf: Record<string, string> = { FormKit: 'form', ProTable: 'pro-table' };
-
 export const componentStylesheets = (srcDir: string) => {
   const sheets = globSync('**/index.mdx', { cwd: srcDir })
     .map((page) => path.dirname(page).split(path.sep).join('/'))
@@ -12,17 +10,13 @@ export const componentStylesheets = (srcDir: string) => {
         .map((file) => path.join(srcDir, dir, file))
         .find((file) => existsSync(file));
       if (!entry) return [];
-      const [head, ...rest] = dir.split('/');
-      const publicFileName = `css/${[subpathOf[head] ?? head, ...rest].join('/')}.css`;
-      // The public form.css import is aliased in package.json: Form.css and form.css
-      // cannot coexist on case-insensitive filesystems.
-      const fileName = dir === 'FormKit' ? 'css/FormKit.css' : publicFileName;
+      const fileName = `css/${dir}.css`;
       return [
         {
           entry,
           fileName,
           page: path.join(srcDir, dir, 'index.mdx'),
-          specifier: `@lobehub/ui/${publicFileName}`,
+          specifier: `@lobehub/ui/${fileName}`,
         },
       ];
     });
