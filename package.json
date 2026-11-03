@@ -96,6 +96,7 @@
     "./global.css": "./es/global.css",
     "./theme.css": "./es/theme.css",
     "./style.css": "./es/style.css",
+    "./css/form.css": "./es/css/FormKit.css",
     "./css/*": "./es/css/*",
     "./stylex/cssVar.stylex": {
       "types": "./es/stylex/cssVar.stylex.ts",
