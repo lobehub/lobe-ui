@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version&nbsp;6.15.0](https://github.com/lobehub/lobe-ui/compare/v6.14.0...v6.15.0)
+
+<sup>Released on **2026-11-03**</sup>
+
+#### ✨ Features
+
+- **toc**: Add Toc component with SVG outline rail and scroll spy.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **toc**: Add Toc component with SVG outline rail and scroll spy, closes [#779](https://github.com/lobehub/lobe-ui/issues/779) ([34d2b82](https://github.com/lobehub/lobe-ui/commit/34d2b82))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version&nbsp;6.14.0](https://github.com/lobehub/lobe-ui/compare/v6.13.1...v6.14.0)
 
 <sup>Released on **2026-11-03**</sup>
