@@ -40,13 +40,13 @@ describe('v6Rules', () => {
 
   it('R4 flags removed exports with their replacement', () => {
     const items = collectReport(
-      `import { Dropdown, Toc, Flexbox } from '@lobehub/ui';`,
+      `import { Dropdown, Footer, Flexbox } from '@lobehub/ui';`,
       'a.tsx',
       v6Rules,
     );
     expect(items.map((i) => [i.rule, i.message])).toEqual([
       ['R4', '`Dropdown` was removed from @lobehub/ui. Use DropdownMenu.'],
-      ['R4', '`Toc` was removed from @lobehub/ui and has no successor.'],
+      ['R4', '`Footer` was removed from @lobehub/ui and has no successor.'],
     ]);
   });
 
