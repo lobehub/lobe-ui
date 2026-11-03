@@ -303,6 +303,8 @@ export {
   type ToastType,
   useToast,
 } from './Toast';
+export { default as Toc } from './Toc';
+export * from './Toc';
 export { default as ToggleGroup } from './ToggleGroup';
 export * from './ToggleGroup';
 export { default as Tooltip } from './Tooltip';

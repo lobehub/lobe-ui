@@ -1,0 +1,73 @@
+---
+title: Toc
+description: Scroll-spy table of contents with an animated SVG outline rail that highlights the active section.
+category: Navigation
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { tocClasses } from './stable';
+
+## Basic
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Features
+
+- **SVG Outline Rail**: A dynamic SVG path that adapts to nested heading levels (h2/h3) with smooth bends at transitions
+- **Active Stroke Animation**: Animated highlight stroke that follows the active section using `stroke-dasharray`
+- **Scroll Spy**: Automatically tracks which heading is at the top of the viewport
+- **Smooth Navigation**: Click-to-scroll with smooth scrolling (instant under reduced motion)
+- **Nested Support**: Handles both h2 and h3 headings, marking parent h2 when a child h3 is active
+
+## APIs
+
+<Api name="Toc" />
+
+The active item is the last target whose top has passed `offset` pixels below the top of the container. `getContainer` returns the scroll element (default `document.body`) and is only called in effects, so it is SSR-safe.
+
+Clicking a link smooth-scrolls (instant under reduced motion) and keeps that link active until the scroll ends. Call `event.preventDefault()` in `onClick` to handle navigation yourself.
+
+### Item Format
+
+`items` accepts two formats:
+
+1. **Flat array** with `TocItem[]`:
+
+```tsx
+const items = [
+  { href: '#intro', level: 2, title: 'Introduction' },
+  { href: '#features', level: 3, title: 'Features' },
+];
+```
+
+2. **Anchor tree** with `AnchorItem[]` (compatible with the `Anchor` component):
+
+```tsx
+const items = [
+  {
+    href: '#intro',
+    key: '1',
+    title: 'Introduction',
+    children: [{ href: '#features', key: '1-1', title: 'Features' }],
+  },
+];
+```
+
+## Relationship to Anchor
+
+The `Toc` component is designed for document outlines with the distinctive SVG rail and nested heading support, while [`Anchor`](/components/anchor) provides a simpler list-based navigation with a sliding marker. Choose `Toc` for documentation sidebars where the visual outline rail enhances readability, and `Anchor` for general in-page navigation.
+
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `Toc`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/Toc.css';
+```
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={tocClasses} />
