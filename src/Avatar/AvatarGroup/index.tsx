@@ -66,6 +66,7 @@ const AvatarGroup = memo<AvatarGroupProps>(
             key,
             style: avatarStyle,
             className: avatarClassName,
+            ringColor,
             ...restAvatarProps
           } = avatar;
           return (
@@ -76,6 +77,7 @@ const AvatarGroup = memo<AvatarGroupProps>(
               style={{
                 marginLeft: index === 0 ? 0 : gapValue,
                 zIndex: zIndexReverse ? items.length - index : index,
+                ...(ringColor && { boxShadow: `0 0 0 2px ${ringColor}` }),
                 ...customStyles?.avatar,
                 ...avatarStyle,
               }}

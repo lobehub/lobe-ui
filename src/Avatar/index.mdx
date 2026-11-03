@@ -8,6 +8,7 @@ import DemoBordered from './demos/Bordered.tsx?demo';
 import DemoEmoji from './demos/Emoji.tsx?demo';
 import DemoFallback from './demos/Fallback.tsx?demo';
 import DemoGroup from './demos/Group.tsx?demo';
+import DemoGroupRing from './demos/GroupRing.tsx?demo';
 import DemoImageFallback from './demos/ImageFallback.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 import DemoPlayground from './demos/Playground.tsx?demo';
@@ -45,6 +46,12 @@ The shape is seeded by `title`, then `alt`, then the `avatar` string, so the sam
 ## Group
 
 <Demo of={DemoGroup} />
+
+## Group with Rings
+
+Give an item a `ringColor` to draw a 2px ring outside its separator border, for example the live cursor color of a collaborator. An item `style.boxShadow` overrides the ring.
+
+<Demo of={DemoGroupRing} />
 
 ## APIs
 
@@ -84,7 +91,7 @@ Also accepts all shared visual props of `Avatar` (`variant`, `bordered`, `shadow
 
 | Property | Description | Type | Default |
 | --- | --- | --- | --- |
-| items | Avatar list with a required `key` per item | `AvatarGroupItemType[]` | - |
+| items | Avatar list with a required `key` per item; an item may set `ringColor` | `AvatarGroupItemType[]` | - |
 | max | Render at most `max` avatars and a `+N` count | `number` | - |
 | gap | Overlap between avatars in pixels | `number` | `-size / 4` |
 | zIndexReverse | Reverse the stacking order | `boolean` | - |

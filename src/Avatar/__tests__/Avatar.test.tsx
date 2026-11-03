@@ -247,6 +247,36 @@ describe('AvatarGroup', () => {
     expect(onClick).toHaveBeenCalledWith({ item: items[0], key: 'a' });
   });
 
+  test('draws a ring in the item ringColor outside the separator border', () => {
+    const { container } = renderWithProvider(
+      <AvatarGroup
+        items={[
+          { avatar: 'Lo', key: 'a', ringColor: '#4f7cff' },
+          { avatar: 'Ch', key: 'b' },
+        ]}
+      />,
+    );
+    const [ringed, plain] = (container.firstChild as HTMLElement).children as unknown as [
+      HTMLElement,
+      HTMLElement,
+    ];
+
+    expect(ringed.style.boxShadow).toBe('0 0 0 2px #4f7cff');
+    expect(plain.style.boxShadow).toBe('');
+  });
+
+  test('lets an item style override the ring', () => {
+    const { container } = renderWithProvider(
+      <AvatarGroup
+        items={[{ avatar: 'Lo', key: 'a', ringColor: '#4f7cff', style: { boxShadow: 'none' } }]}
+      />,
+    );
+
+    expect(((container.firstChild as HTMLElement).firstChild as HTMLElement).style.boxShadow).toBe(
+      'none',
+    );
+  });
+
   test('reverses stacking order with zIndexReverse', () => {
     const { container } = renderWithProvider(<AvatarGroup zIndexReverse items={items} size={48} />);
     const avatars = (container.firstChild as HTMLElement).children;

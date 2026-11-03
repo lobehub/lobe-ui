@@ -136,6 +136,10 @@ export interface AvatarGroupItemType extends Pick<
   'avatar' | 'title' | 'alt' | 'onClick' | 'style' | 'className' | 'loading' | 'fallbackVariant'
 > {
   key: string;
+  /**
+   * Draws a 2px ring in this color outside the separator border, e.g. a presence or status color
+   */
+  ringColor?: string;
 }
 
 export interface AvatarGroupProps
