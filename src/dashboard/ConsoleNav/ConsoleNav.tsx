@@ -223,6 +223,14 @@ function ConsoleNav({
   const reducedMotion = usePrefersReducedMotion();
   const [storedOverrides, setStoredOverrides] = useLocalStorage<unknown>(storageKey, {});
   const overrides = readOverrides(storedOverrides);
+  // Skip expand/collapse transitions until after the first paint so a storage
+  // re-sync (e.g. SSR hydration) snaps instead of animating open → closed.
+  const [transitionsReady, setTransitionsReady] = useState(false);
+  useEffect(() => {
+    const frame = window.requestAnimationFrame(() => setTransitionsReady(true));
+    return () => window.cancelAnimationFrame(frame);
+  }, []);
+  const instant = reducedMotion || !transitionsReady;
   const context: LinkContext = { onNavigate, renderLink };
 
   const activeHref = resolveActiveHref(pathname, [...items, ...collectNavItems(groups)]);
@@ -376,7 +384,12 @@ function ConsoleNav({
             className={clsx(
               headerIconClassName,
               styleProps(
-                [styles.chevron, !expanded && styles.chevronFolded, collapsed && styles.railFaded],
+                [
+                  styles.chevron,
+                  !expanded && styles.chevronFolded,
+                  collapsed && styles.railFaded,
+                  instant && styles.transitionInstant,
+                ],
                 dashboardConsoleNavClasses('chevron'),
               ).className,
             )}
@@ -385,7 +398,11 @@ function ConsoleNav({
           <span
             data-expanded={expanded}
             {...styleProps(
-              [styles.indicator, expanded && styles.indicatorExpanded],
+              [
+                styles.indicator,
+                expanded && styles.indicatorExpanded,
+                instant && styles.transitionInstant,
+              ],
               dashboardConsoleNavClasses('indicator'),
             )}
           >
@@ -437,14 +454,14 @@ function ConsoleNav({
         <div
           aria-hidden={!open}
           data-expanded={open}
-          data-instant={reducedMotion}
+          data-instant={instant}
           id={panelId}
           inert={open ? undefined : true}
           {...styleProps(
             [
               styles.groupPanel,
               !open && styles.groupPanelCollapsed,
-              reducedMotion && styles.groupPanelInstant,
+              instant && styles.groupPanelInstant,
             ],
             dashboardConsoleNavClasses('group-panel'),
           )}

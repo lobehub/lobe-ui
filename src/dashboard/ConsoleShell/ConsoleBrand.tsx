@@ -18,12 +18,17 @@ function ConsoleBrand({
   title,
 }: ConsoleBrandProps) {
   const shell = useConsoleShellState();
+  // Keep the mark at its natural size on the rail. Without flex:none the
+  // lockup (logo + title) shrinks with the sidebar and the SVG becomes a speck.
+  const mark = (
+    <span {...styleProps(styles.brandMark, dashboardConsoleBrandClasses('mark'))}>{logo}</span>
+  );
   const content =
     title == null || title === false || title === '' ? (
-      logo
+      mark
     ) : (
       <span {...styleProps(styles.brandLockup, dashboardConsoleBrandClasses('lockup'))}>
-        {logo}
+        {mark}
         <span {...styleProps(styles.brandName, dashboardConsoleBrandClasses('name'))}>{title}</span>
       </span>
     );

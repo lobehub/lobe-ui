@@ -42,12 +42,24 @@ export function usePrefersReducedMotion() {
   return useMediaQuery('(prefers-reduced-motion: reduce)');
 }
 
+function readLocalStorageValue<T>(key: string | undefined, defaultValue: T): T {
+  if (!key || typeof window === 'undefined') return defaultValue;
+  try {
+    const raw = window.localStorage.getItem(key);
+    if (raw !== null) return JSON.parse(raw) as T;
+  } catch {
+    // Ignore unreadable storage and keep the default.
+  }
+  return defaultValue;
+}
+
 /**
- * Reads storage after mount so the first render matches the server.
- * Omit `key` to keep the value in memory only.
+ * Lazily reads storage on the client so the first paint matches persisted state.
+ * On the server (no `window`) the default is used; a mount effect re-syncs when
+ * `key` changes or after hydration. Omit `key` to keep the value in memory only.
  */
 export function useLocalStorage<T>(key: string | undefined, defaultValue: T) {
-  const [value, setValue] = useState<T>(defaultValue);
+  const [value, setValue] = useState<T>(() => readLocalStorageValue(key, defaultValue));
 
   useEffect(() => {
     if (!key) return;
@@ -55,7 +67,7 @@ export function useLocalStorage<T>(key: string | undefined, defaultValue: T) {
       const raw = window.localStorage.getItem(key);
       if (raw !== null) setValue(JSON.parse(raw) as T);
     } catch {
-      // Ignore unreadable storage and keep the default.
+      // Ignore unreadable storage and keep the current value.
     }
   }, [key]);
 

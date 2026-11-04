@@ -163,6 +163,9 @@ export const styles = stylex.create({
   groupPanelInstant: {
     transition: 'none',
   },
+  transitionInstant: {
+    transition: 'none',
+  },
   groupRailEmpty: {
     marginBlockStart: 0,
   },

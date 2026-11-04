@@ -43,8 +43,17 @@ export const styles = stylex.create({
     inlineSize: '100%',
     minInlineSize: 0,
   },
+  /** Mark stays natural size on the rail; never flex-shrink with the title. */
+  brandMark: {
+    flex: 'none',
+    alignItems: 'center',
+    display: 'flex',
+  },
   brandLockup: {
-    gap: 10,
+    gap: {
+      default: 10,
+      [stylex.when.ancestor('[data-collapsed="true"]', consoleBrandMarker)]: 0,
+    },
     alignItems: 'center',
     display: 'flex',
     minInlineSize: 0,
@@ -55,6 +64,11 @@ export const styles = stylex.create({
     color: cssVar.colorText,
     fontSize: 14,
     fontWeight: 600,
+    // Collapse width with the rail so the mark is not squeezed by the faded title.
+    inlineSize: {
+      default: null,
+      [stylex.when.ancestor('[data-collapsed="true"]', consoleBrandMarker)]: 0,
+    },
     lineHeight: 1.3,
     opacity: {
       default: null,
