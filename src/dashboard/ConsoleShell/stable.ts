@@ -22,5 +22,5 @@ export const dashboardConsoleShellClasses = stableClasses({
 
 export const dashboardConsoleBrandClasses = stableClasses({
   block: 'dashboard-console-brand',
-  elements: ['lockup', 'name'],
+  elements: ['lockup', 'mark', 'name'],
 });
