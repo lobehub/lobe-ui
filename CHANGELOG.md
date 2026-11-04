@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version&nbsp;6.15.2](https://github.com/lobehub/lobe-ui/compare/v6.15.1...v6.15.2)
+
+<sup>Released on **2026-11-04**</sup>
+
+#### 🐛 Bug Fixes
+
+- **console-nav**: Lazy-read storage to avoid refresh expand flash.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **console-nav**: Lazy-read storage to avoid refresh expand flash, closes [#780](https://github.com/lobehub/lobe-ui/issues/780) ([b00463e](https://github.com/lobehub/lobe-ui/commit/b00463e))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version&nbsp;6.15.1](https://github.com/lobehub/lobe-ui/compare/v6.15.0...v6.15.1)
 
 <sup>Released on **2026-11-03**</sup>
