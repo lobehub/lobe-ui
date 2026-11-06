@@ -220,7 +220,7 @@
     "@bramus/specificity": "2.4.3",
     "@commitlint/cli": "^21.2.3",
     "@lobehub/docs-kit": "^6.2.1",
-    "@lobehub/eslint-config": "2.1.6",
+    "@lobehub/eslint-config": "2.1.7",
     "@lobehub/fluent-emoji": "^4.1.0",
     "@lobehub/icons": "^5.10.1",
     "@lobehub/lint": "^2.1.6",
