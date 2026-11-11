@@ -135,6 +135,13 @@ describe('getThemeCss', () => {
     expect(globalCss).toMatch(/\[hidden\] \{\s*display: none !important;/);
   });
 
+  it('smooths text with the system default instead of grayscale antialiasing', () => {
+    const body = getGlobalCss().match(/\n {2}body \{([^}]*)\}/)?.[1];
+
+    expect(body).toMatch(/-webkit-font-smoothing: subpixel-antialiased;/);
+    expect(body).toMatch(/-moz-osx-font-smoothing: auto;/);
+  });
+
   it('orders the lobe layers so components beat popup and base helpers', () => {
     const order = '@layer lobe-base, lobe-popup, lobe-ui;';
     expect(getThemeCss().startsWith(order)).toBe(true);
