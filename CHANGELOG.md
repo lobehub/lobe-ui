@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version&nbsp;6.15.3](https://github.com/lobehub/lobe-ui/compare/v6.15.2...v6.15.3)
+
+<sup>Released on **2026-11-11**</sup>
+
+#### 💄 Styles
+
+- **styles**: Default to system font smoothing instead of grayscale antialiasing.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **styles**: Default to system font smoothing instead of grayscale antialiasing, closes [#789](https://github.com/lobehub/lobe-ui/issues/789) ([8b4b7b7](https://github.com/lobehub/lobe-ui/commit/8b4b7b7))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version&nbsp;6.15.2](https://github.com/lobehub/lobe-ui/compare/v6.15.1...v6.15.2)
 
 <sup>Released on **2026-11-04**</sup>
