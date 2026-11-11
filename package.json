@@ -259,7 +259,7 @@
     "lint-staged": "^17.6.0",
     "mdast-util-to-markdown": "^2.2.0",
     "next-themes": "^0.4.6",
-    "pagefind": "1.5.2",
+    "pagefind": "1.6.0",
     "prettier": "^3.9.10",
     "prettier-plugin-packagejson": "^3.0.2",
     "prettier-plugin-sh": "^0.20.2",
