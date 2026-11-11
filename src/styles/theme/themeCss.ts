@@ -283,8 +283,8 @@ const globalCss = `@layer lobe-base {
     font-variant-ligatures: common-ligatures contextual;
     font-variant-numeric: tabular-nums;
     font-size-adjust: from-font;
-    -webkit-font-smoothing: subpixel-antialiased;
-    -moz-osx-font-smoothing: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     text-wrap: pretty;
     text-size-adjust: 100%;
     text-rendering: optimizelegibility;
