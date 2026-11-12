@@ -67,8 +67,6 @@ export default defineConfig(
               '@mdx-js/react',
               '@radix-ui/react-slot',
               'class-variance-authority',
-              'hast-util-to-jsx-runtime',
-              'html-url-attributes',
               'marked',
               'query-string',
               'react-rnd',
