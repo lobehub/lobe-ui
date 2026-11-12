@@ -42,31 +42,30 @@
 
   /* A table inside a padded card body meets the card's left, right, and bottom edges. A table
      that is the only body content also meets the header. A table nested in a cell keeps the
-     cell's own inset. */
-  .lobe-surface-table-bleed :has(> [data-table-wrapper]):not(td :has(> [data-table-wrapper])) {
+     cell's own inset. The Table root is matched by class: a :has() here restyles the whole
+     page on every DOM insertion anywhere, including popups mounted into body. */
+  .lobe-surface-table-bleed .lobe-table-wrapper:not(td .lobe-table-wrapper) {
     width: calc(100% + 2 * var(--surface-pad-inline, 16px));
     margin-inline: calc(-1 * var(--surface-pad-inline, 16px));
   }
 
-  .lobe-surface-table-bleed
-    :has(> [data-table-wrapper]):not(td :has(> [data-table-wrapper])):last-child {
+  .lobe-surface-table-bleed .lobe-table-wrapper:not(td .lobe-table-wrapper):last-child {
     margin-block-end: calc(-1 * var(--surface-pad-block, 16px));
   }
 
-  .lobe-surface-table-bleed
-    :has(> [data-table-wrapper]):not(td :has(> [data-table-wrapper])):first-child:last-child {
+  .lobe-surface-table-bleed .lobe-table-wrapper:not(td .lobe-table-wrapper):first-child:last-child {
     margin-block-start: calc(-1 * var(--surface-pad-block, 16px));
   }
 
-  .lobe-surface-table-bleed :has(> [data-table-wrapper]):not(td :has(> [data-table-wrapper])) th,
-  .lobe-surface-table-bleed :has(> [data-table-wrapper]):not(td :has(> [data-table-wrapper])) td {
+  .lobe-surface-table-bleed .lobe-table-wrapper:not(td .lobe-table-wrapper) th,
+  .lobe-surface-table-bleed .lobe-table-wrapper:not(td .lobe-table-wrapper) td {
     padding-inline: var(--surface-pad-inline, 16px);
   }
 
   /* The root's negative bottom margin includes this sibling. Without block padding the pager
      sits on the card edge. */
   .lobe-surface-table-bleed
-    :has(> [data-table-wrapper]):not(td :has(> [data-table-wrapper]))
+    .lobe-table-wrapper:not(td .lobe-table-wrapper)
     > :not([data-table-wrapper]) {
     margin-block: 0;
     padding-block: 12px;
