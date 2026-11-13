@@ -12,7 +12,7 @@ export default () => {
   const [index, setIndex] = useState(0);
 
   return (
-    <Flexbox gap={16} padding={16} style={{ maxWidth: 420 }}>
+    <Flexbox gap={16} padding={16} style={{ marginInline: 'auto', maxWidth: 420 }}>
       <Carousel adaptiveHeight arrows autoplay={4000} ref={ref} onIndexChange={setIndex}>
         {slides.map(({ background, height, title }) => (
           <Flexbox

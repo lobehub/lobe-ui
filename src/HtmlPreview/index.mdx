@@ -41,13 +41,13 @@ The `streamingMode` prop controls how the iframe behaves while content is still 
 - `'live'` — always mount immediately. Scripts re-run on every chunk; only use for pure markup.
 - `'defer'` — always wait for the closing tag. Safest for `p5.js` / `three.js` style demos where `setup()` must run once.
 
-<Demo of={DemoStreaming} layout="bare" />
+<Demo of={DemoStreaming} />
 
 ### Slow-model progress signal
 
 Phase 1 of streaming (before `</head>` arrives) renders the raw source through a dimmed highlighter rather than a static spinner. Tail-follow keeps the visible region anchored to the latest tokens, so on a slow model (e.g. DeepSeek at ~30 tps, where a 4 KB inline `<style>` block takes 25+ seconds to fully arrive) the user can see real progress instead of waiting on what looks like a frozen loader. Once `</head>` or `</style>` lands the iframe takes over.
 
-<Demo of={DemoSlowStream} layout="bare" />
+<Demo of={DemoSlowStream} />
 
 ## Inside Markdown
 
