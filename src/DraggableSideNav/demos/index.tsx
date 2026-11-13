@@ -1,8 +1,8 @@
-import { DraggableSideNav } from '@lobehub/ui';
+import { Button, DraggableSideNav, Flexbox, Text } from '@lobehub/ui';
 import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 
-import { Flexbox } from '@/Flex';
+import { useSize } from '@/hooks/useSize';
 import sideNavMessages from '@/i18n/resources/en/sideNav';
 import { useTranslation } from '@/i18n/useTranslation';
 
@@ -14,6 +14,8 @@ export default () => {
   const [width, setWidth] = useState(300);
   const [expand, setExpand] = useState(true);
   const [activeKey, setActiveKey] = useState<string>('home');
+  const previewRef = useRef<HTMLDivElement>(null);
+  const previewSize = useSize(previewRef);
   const store = useCreateStore();
   const { t } = useTranslation(sideNavMessages);
 
@@ -41,19 +43,24 @@ export default () => {
     { store },
   );
 
-  // Type-safe props
-  const sideNavProps = {
-    ...control,
-    placement: 'left' as const,
-  };
+  const compact = previewSize !== undefined && previewSize.width < 480;
+  // Keep room for the main pane when the docs toolbar constrains the preview width.
+  const maxWidth = previewSize
+    ? Math.max(48, Math.min(control.maxWidth, Math.floor(previewSize.width * 0.55)))
+    : control.maxWidth;
+  const minWidth = Math.min(control.minWidth, maxWidth);
 
   return (
     <StoryBook noPadding levaStore={store}>
-      <Flexbox horizontal height={'100%'} width={'100%'}>
+      <Flexbox horizontal height={'100%'} ref={previewRef} width={'100%'}>
         <DraggableSideNav
+          {...control}
           expand={expand}
           footer={(expand) => <DemoFooter expand={expand} />}
-          width={width}
+          maxWidth={maxWidth}
+          minWidth={minWidth}
+          placement="left"
+          width={Math.max(minWidth, Math.min(width, maxWidth))}
           body={(expand) => (
             <DemoBody activeKey={activeKey} expand={expand} onSelect={setActiveKey} />
           )}
@@ -62,10 +69,15 @@ export default () => {
           )}
           onExpandChange={setExpand}
           onWidthChange={(_, width) => setWidth(width)}
-          {...sideNavProps}
         />
 
-        <Flexbox flex={1} gap={16} padding={24}>
+        <Flexbox
+          allowShrink
+          flex={1}
+          gap={16}
+          padding={compact ? 12 : 24}
+          style={{ overflowWrap: 'anywhere' }}
+        >
           <div>
             <h2 style={{ marginBottom: '8px' }}>{t('sideNav.demoTitle')}</h2>
             <p style={{ fontSize: '14px', margin: 0 }}>{t('sideNav.demoSubtitle')}</p>
@@ -76,21 +88,9 @@ export default () => {
               <strong>{t('sideNav.demoActiveLabel')}:</strong> {activeKey}
             </div>
             <div>
-              <button
-                type="button"
-                style={{
-                  background: expand ? '#1890ff' : '#52c41a',
-                  border: 'none',
-                  borderRadius: '4px',
-                  color: 'white',
-                  cursor: 'pointer',
-                  fontSize: '14px',
-                  padding: '8px 16px',
-                }}
-                onClick={() => setExpand(!expand)}
-              >
+              <Button type="primary" onClick={() => setExpand((expanded) => !expanded)}>
                 {expand ? t('sideNav.collapse') : t('sideNav.expand')}
-              </button>
+              </Button>
             </div>
             <div style={{ fontSize: '13px' }}>
               <strong>{t('sideNav.demoFeaturesTitle')}:</strong>
@@ -115,7 +115,9 @@ export default () => {
             </div>
           </Flexbox>
 
-          <div style={{ color: '#999', fontSize: '12px' }}>{t('sideNav.demoHint')}</div>
+          <Text fontSize={12} type="secondary">
+            {t('sideNav.demoHint')}
+          </Text>
         </Flexbox>
       </Flexbox>
     </StoryBook>

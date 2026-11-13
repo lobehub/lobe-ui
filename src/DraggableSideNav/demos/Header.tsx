@@ -1,8 +1,10 @@
-import { ActionIcon, Avatar, List, type ListItemType, Text } from '@lobehub/ui';
+import { ActionIcon, Avatar, type ListItemType, Text } from '@lobehub/ui';
 import { ChevronDown, Home, SquareDashedBottom, Users } from 'lucide-react';
 import type { FC } from 'react';
 
 import { Flexbox } from '@/Flex';
+
+import { DemoNavList } from './NavList';
 
 export const DemoHeader: FC<{
   activeKey: string;
@@ -33,16 +35,14 @@ export const DemoHeader: FC<{
         horizontal
         align={'center'}
         gap={8}
-        justify={'flex-start'}
-        padding={4}
-        style={{
-          margin: 4,
-        }}
+        justify={expand ? 'flex-start' : 'center'}
+        paddingBlock={8}
+        paddingInline={expand ? 12 : 6}
       >
         <Avatar
           avatar={'https://avatars.githubusercontent.com/u/17870709?v=4'}
           shape="square"
-          size={36}
+          size={expand ? 36 : 32}
         />
         {expand && (
           <>
@@ -58,9 +58,11 @@ export const DemoHeader: FC<{
           </>
         )}
       </Flexbox>
-      <List
+      <DemoNavList
         activeKey={activeKey}
-        items={mainItems.map((item) => (expand ? item : { ...item, label: null }))}
+        expand={expand}
+        items={mainItems}
+        style={{ marginBlockEnd: 8 }}
         onClick={({ key }) => onSelect(String(key))}
       />
     </Flexbox>

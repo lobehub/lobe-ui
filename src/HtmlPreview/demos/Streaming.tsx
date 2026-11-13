@@ -45,7 +45,7 @@ export default () => {
 
   return (
     <Flexbox gap={12} style={{ width: '100%' }}>
-      <Flexbox horizontal align={'center'} gap={8} justify={'space-between'}>
+      <Flexbox horizontal align={'center'} gap={8} justify={'space-between'} wrap={'wrap'}>
         <Flexbox horizontal gap={8}>
           <Button loading={isStreaming} type={'primary'} onClick={start}>
             {isStreaming ? 'Streaming…' : 'Restart streaming'}

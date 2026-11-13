@@ -3,7 +3,13 @@ import { Activity } from 'lucide-react';
 
 export default () => {
   return (
-    <div style={{ display: 'grid', gap: 12, gridTemplateColumns: 'repeat(3, minmax(0, 1fr))' }}>
+    <div
+      style={{
+        display: 'grid',
+        gap: 12,
+        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 160px), 1fr))',
+      }}
+    >
       <StatCard
         delta="+12%"
         direction="up"

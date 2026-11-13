@@ -19,19 +19,19 @@ import {
 
 The list highlights the longest matching path. Fold a group to hide its items, or switch to the icon rail. A badge becomes a dot on the rail. Inside [ConsoleShell](/components/dashboard/console-shell) the rail follows the shell unless `collapsed` is set.
 
-<Demo of={DemoIndex} layout="bare" />
+<Demo of={DemoIndex} />
 
 ## Tree
 
 Use `items` for top-level links and nested `groups` for a second level. Icons are optional: a group with an `icon` becomes a single rail button that links to its `href` (or its first item), and items without an icon are left off the rail. With `defaultExpanded="active"` every group starts folded and the branch holding the current page opens on navigation, then scrolls into view.
 
-<Demo of={DemoTree} layout="bare" />
+<Demo of={DemoTree} />
 
 ## Skeleton
 
 `ConsoleNavSkeleton` draws placeholder rows with the nav's own row heights and indents, so the real nav replaces it without a shift. Pass `groups` as row counts or as the real `ConsoleNavGroup[]`. `ConsoleShell loading` uses it automatically.
 
-<Demo of={DemoSkeleton} layout="bare" />
+<Demo of={DemoSkeleton} />
 
 ## APIs
 
