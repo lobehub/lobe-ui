@@ -64,6 +64,7 @@ export const installGlobalFocusRing = (doc: Document = document): (() => void) =
       next.namespaceURI !== 'http://www.w3.org/1999/xhtml' ||
       next.shadowRoot ||
       next.closest('[data-lobe-focus-ring="off"]') ||
+      next.matches('[data-lobe-focus-ring="self-off"]') ||
       next.matches('textarea') ||
       (next as HTMLElement).isContentEditable ||
       (next.matches('input') &&

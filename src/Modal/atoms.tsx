@@ -26,6 +26,7 @@ import { styleProps } from '@/styles/stylex/props';
 import { getElementRef } from '@/utils/getElementRef';
 import { mergeRefs, useMergeRefs } from '@/utils/mergeRefs';
 
+import { useDialogInitialFocus } from '../internal/dialogFocus';
 import { useLayerZIndex } from '../internal/zIndex';
 import { backdropTransition, modalMotionConfig } from './constants';
 import { ModalLayerProvider, useModalLayer } from './ModalLayerContext';
@@ -198,6 +199,7 @@ export type ModalPopupProps = React.ComponentProps<typeof Dialog.Popup> & {
 export const ModalPopupImpl = ({
   className,
   children,
+  initialFocus: initialFocusProp,
   width,
   style,
   motionProps,
@@ -214,12 +216,15 @@ export const ModalPopupImpl = ({
   const layer = useModalLayer();
   const Motion = useMotionComponent();
   const popupZIndexStyle = layer?.zIndex !== undefined ? { zIndex: layer.zIndex + 1 } : undefined;
-  const composedRef = useMergeRefs([forwardedRef, layer?.popupRef]);
+  const { focusRingProps, initialFocus, popupRef } = useDialogInitialFocus(initialFocusProp);
+  const composedRef = useMergeRefs([forwardedRef, layer?.popupRef, popupRef]);
 
   if (open !== null && actions) {
     return (
       <Dialog.Popup
+        {...focusRingProps}
         {...rest}
+        initialFocus={initialFocus}
         ref={composedRef as any}
         style={{ ...popupZIndexStyle, ...popupStyle }}
         className={clsx(
@@ -252,7 +257,9 @@ export const ModalPopupImpl = ({
 
   return (
     <Dialog.Popup
+      {...focusRingProps}
       {...rest}
+      initialFocus={initialFocus}
       ref={composedRef as any}
       style={{ ...popupZIndexStyle, ...popupStyle }}
       className={
