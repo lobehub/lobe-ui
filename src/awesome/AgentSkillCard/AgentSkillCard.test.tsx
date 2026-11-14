@@ -17,8 +17,9 @@ it('shows the agent prompt with the default agent logos, then the human command'
 
   expect(screen.getByText(agent.code)).toBeTruthy();
   expect(screen.getAllByTitle('Claude Code').length).toBeGreaterThan(0);
+  expect(screen.getByRole('button', { name: /Use with AI Agent/ })).toBeTruthy();
 
-  fireEvent.click(screen.getByRole('button', { name: /I'm a Human/ }));
+  fireEvent.click(screen.getByRole('button', { name: /Install Manually/ }));
 
   expect(screen.getByText(/\$\s*npx skills add example\/kit/)).toBeTruthy();
   expect(screen.getByText('Install the skills')).toBeTruthy();
@@ -28,7 +29,7 @@ it('shows the agent prompt with the default agent logos, then the human command'
 it('renders only the prompt without tabs when no human panel is given', () => {
   render(<AgentSkillCard agent={agent} agents={[]} />);
 
-  expect(screen.queryByRole('button', { name: /I'm a Human/ })).toBeNull();
+  expect(screen.queryByRole('button', { name: /Install Manually/ })).toBeNull();
   expect(screen.queryAllByTitle('Claude Code')).toHaveLength(0);
   expect(screen.getByText(agent.code)).toBeTruthy();
 });

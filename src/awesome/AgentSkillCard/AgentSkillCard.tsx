@@ -53,12 +53,12 @@ const AgentSkillCard = memo<AgentSkillCardProps>(
             options={[
               {
                 icon: <Icon icon={Bot} size={16} />,
-                label: agent.label ?? "I'm an Agent",
+                label: agent.label ?? 'Use with AI Agent',
                 value: 'agent',
               },
               {
                 icon: <Icon icon={UserRound} size={16} />,
-                label: human.label ?? "I'm a Human",
+                label: human.label ?? 'Install Manually',
                 value: 'human',
               },
             ]}

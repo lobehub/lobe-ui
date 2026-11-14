@@ -15,7 +15,7 @@ export interface AgentSkillCardPanel {
   code: string;
   /** One-line instruction above the code block. */
   description?: ReactNode;
-  /** Tab label. Defaults to "I'm an Agent" / "I'm a Human". */
+  /** Tab label. Defaults to "Use with AI Agent" / "Install Manually". */
   label?: ReactNode;
   /** Renders the code with a `$` shell prompt. Defaults to true for the human panel. */
   shell?: boolean;
