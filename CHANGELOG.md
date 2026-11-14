@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version&nbsp;6.15.4](https://github.com/lobehub/lobe-ui/compare/v6.15.3...v6.15.4)
+
+<sup>Released on **2026-11-14**</sup>
+
+#### 💄 Styles
+
+- **misc**: Clarify AgentSkillCard tab labels.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Clarify AgentSkillCard tab labels, closes [#796](https://github.com/lobehub/lobe-ui/issues/796) [lobehub/lobe-icons#474](https://github.com/lobehub/lobe-icons/issues/474) ([4c1af05](https://github.com/lobehub/lobe-ui/commit/4c1af05))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version&nbsp;6.15.3](https://github.com/lobehub/lobe-ui/compare/v6.15.2...v6.15.3)
 
 <sup>Released on **2026-11-11**</sup>
