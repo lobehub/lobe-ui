@@ -39,6 +39,7 @@ const Drawer = memo<DrawerProps>(
     placement = 'right',
     width,
     height,
+    initialFocus,
     mask = true,
     maskClosable = true,
     keyboard = true,
@@ -176,6 +177,7 @@ const Drawer = memo<DrawerProps>(
             className={classNames?.popup}
             flush={isFlush}
             height={height}
+            initialFocus={initialFocus}
             motionProps={{ onAnimationComplete: handleAnimationComplete }}
             panelClassName={clsx(className, classNames?.panel)}
             panelStyle={{ ...style, ...semanticStyles?.panel }}

@@ -27,6 +27,7 @@ import { styleProps } from '@/styles/stylex/props';
 import { getElementRef } from '@/utils/getElementRef';
 import { mergeRefs, useMergeRefs } from '@/utils/mergeRefs';
 
+import { useDialogInitialFocus } from '../internal/dialogFocus';
 import { useLayerZIndex } from '../internal/zIndex';
 import { drawerBackdropTransition, getDrawerMotionConfig, pushAxis } from './constants';
 import { DrawerLayerProvider, useDrawerLayer } from './DrawerLayerContext';
@@ -208,6 +209,7 @@ export type DrawerPopupProps = React.ComponentProps<typeof Dialog.Popup> & {
 export const DrawerPopupImpl = ({
   className,
   children,
+  initialFocus: initialFocusProp,
   placement: placementProp = 'right',
   width: widthProp,
   height: heightProp,
@@ -226,7 +228,8 @@ export const DrawerPopupImpl = ({
   const actions = useDrawerActions();
   const layer = useDrawerLayer();
   const Motion = useMotionComponent();
-  const composedRef = useMergeRefs([forwardedRef, layer?.popupRef]);
+  const { focusRingProps, initialFocus, popupRef } = useDialogInitialFocus(initialFocusProp);
+  const composedRef = useMergeRefs([forwardedRef, layer?.popupRef, popupRef]);
 
   // The exiting panel lives inside AnimatePresence and keeps the props it had while open,
   // but this popup re-renders with whatever the consumer passes now. Freezing the geometry
@@ -272,9 +275,11 @@ export const DrawerPopupImpl = ({
     const motionConfig = getDrawerMotionConfig(placement, pushOffset);
     return (
       <Dialog.Popup
+        {...focusRingProps}
         {...rest}
         data-drawer-anchor={placement}
         data-placement={placement}
+        initialFocus={initialFocus}
         ref={composedRef as any}
         style={resolvedPopupStyle}
         className={clsx(
@@ -309,10 +314,12 @@ export const DrawerPopupImpl = ({
 
   return (
     <Dialog.Popup
+      {...focusRingProps}
       {...rest}
       className={mergeStateClassName(popupXstyle, className as any, drawerClasses('popup')) as any}
       data-drawer-anchor={placement}
       data-placement={placement}
+      initialFocus={initialFocus}
       ref={composedRef as any}
       style={resolvedPopupStyle}
     >

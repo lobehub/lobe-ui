@@ -26,6 +26,8 @@ export const styles = stylex.create({
   },
 
   popup: {
+    /* Focused on open as the dialog focus anchor; a ring around the whole dialog helps no one. */
+    outline: 'none',
     display: 'flex',
     pointerEvents: 'none',
     position: 'fixed',
