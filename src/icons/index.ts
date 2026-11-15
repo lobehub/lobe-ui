@@ -24,6 +24,7 @@ export { default as QQ, type CompoundedIcon as QQProps } from './QQ';
 export { default as Slack, type CompoundedIcon as SlackProps } from './Slack';
 export { default as Telegram, type CompoundedIcon as TelegramProps } from './Telegram';
 export { default as WeChat, type CompoundedIcon as WeChatProps } from './WeChat';
+export { default as WeCom, type CompoundedIcon as WeComProps } from './WeCom';
 export { default as WhatsApp, type CompoundedIcon as WhatsAppProps } from './WhatsApp';
 export { default as Zitadel, type CompoundedIcon as ZitadelProps } from './Zitadel';
 export { Cloudflare, type CloudflareProps, Github, type GithubProps } from '@lobehub/icons';
