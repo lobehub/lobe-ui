@@ -5,6 +5,8 @@ import { memo } from 'react';
 
 import { TITLE } from '../style';
 
+// Glyph from TDesign Icons' `logo-wecom` (MIT); notice in THIRD_PARTY_NOTICES.md.
+
 const Icon: IconType = memo(({ size = '1em', style, ...rest }) => {
   return (
     <svg

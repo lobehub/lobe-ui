@@ -116,7 +116,8 @@
   "module": "es/index.mjs",
   "types": "es/index.d.mts",
   "files": [
-    "es"
+    "es",
+    "THIRD_PARTY_NOTICES.md"
   ],
   "scripts": {
     "build": "tsdown && tsx ./scripts/buildThemeCss.ts && tsx ./scripts/publishStylexTokens.ts && tsx ./scripts/checkStylexBuild.ts && npm run build:packages",
