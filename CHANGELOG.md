@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version&nbsp;6.16.0](https://github.com/lobehub/lobe-ui/compare/v6.15.4...v6.16.0)
+
+<sup>Released on **2026-11-15**</sup>
+
+#### ✨ Features
+
+- **icons**: Add the WeCom channel icon.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **icons**: Add the WeCom channel icon, closes [#0082EF](https://github.com/lobehub/lobe-ui/issues/0082EF) ([df347a9](https://github.com/lobehub/lobe-ui/commit/df347a9))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version&nbsp;6.15.4](https://github.com/lobehub/lobe-ui/compare/v6.15.3...v6.15.4)
 
 <sup>Released on **2026-11-14**</sup>
