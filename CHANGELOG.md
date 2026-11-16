@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version&nbsp;6.16.1](https://github.com/lobehub/lobe-ui/compare/v6.16.0...v6.16.1)
+
+<sup>Released on **2026-11-16**</sup>
+
+#### 🐛 Bug Fixes
+
+- **icons**: Color the WeCom petals green, blue, orange and yellow.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **icons**: Color the WeCom petals green, blue, orange and yellow, closes [#0082EF](https://github.com/lobehub/lobe-ui/issues/0082EF) [#2DBC00](https://github.com/lobehub/lobe-ui/issues/2DBC00) [#0082EF](https://github.com/lobehub/lobe-ui/issues/0082EF) [#FB6500](https://github.com/lobehub/lobe-ui/issues/FB6500) [#FFCC00](https://github.com/lobehub/lobe-ui/issues/FFCC00) ([143ca22](https://github.com/lobehub/lobe-ui/commit/143ca22))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version&nbsp;6.16.0](https://github.com/lobehub/lobe-ui/compare/v6.15.4...v6.16.0)
 
 <sup>Released on **2026-11-15**</sup>
