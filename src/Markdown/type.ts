@@ -43,6 +43,13 @@ export interface SyntaxMarkdownProps {
   enableHtmlPreview?: boolean;
   enableLatex?: boolean;
   enableMermaid?: boolean;
+  /**
+   * Reuse the parsed tree across mounts of the same content and plugins (non-streaming
+   * render only). Remark/rehype plugins must be pure for a given identity and options, and
+   * custom components must not mutate `node`, since cached trees are shared.
+   * @default false
+   */
+  enableParseCache?: boolean;
   enableStream?: boolean;
   fullFeaturedCodeBlock?: boolean;
   reactMarkdownProps?: Omit<
