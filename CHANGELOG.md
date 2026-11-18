@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version&nbsp;6.16.2](https://github.com/lobehub/lobe-ui/compare/v6.16.1...v6.16.2)
+
+<sup>Released on **2026-11-18**</sup>
+
+#### ⚡ Performance Improvements
+
+- **markdown**: Opt-in enableParseCache reuses parsed hast across mounts.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Performance improvements
+
+- **markdown**: Opt-in enableParseCache reuses parsed hast across mounts, closes [#792](https://github.com/lobehub/lobe-ui/issues/792) ([fc6c566](https://github.com/lobehub/lobe-ui/commit/fc6c566))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version&nbsp;6.16.1](https://github.com/lobehub/lobe-ui/compare/v6.16.0...v6.16.1)
 
 <sup>Released on **2026-11-16**</sup>
