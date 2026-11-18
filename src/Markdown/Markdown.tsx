@@ -30,6 +30,7 @@ const Markdown = memo<MarkdownProps>((props) => {
     enableImageGallery,
     enableCustomFootnotes,
     enableGithubAlert,
+    enableParseCache = false,
     enableStream = true,
     componentProps,
     rehypePluginsAhead,
@@ -113,6 +114,7 @@ const Markdown = memo<MarkdownProps>((props) => {
           enableHtmlPreview={enableHtmlPreview}
           enableLatex={enableLatex}
           enableMermaid={enableMermaid}
+          enableParseCache={enableParseCache}
           fullFeaturedCodeBlock={fullFeaturedCodeBlock}
           rehypePlugins={rehypePlugins}
           rehypePluginsAhead={rehypePluginsAhead}

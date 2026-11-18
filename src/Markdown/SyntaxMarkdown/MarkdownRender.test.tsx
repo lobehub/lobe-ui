@@ -3,6 +3,7 @@ import type { ComponentProps, ReactNode } from 'react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
 import { MarkdownProvider } from '../components/MarkdownProvider';
+import Markdown from '../Markdown';
 import MarkdownRender from './MarkdownRender';
 import { clearParseCache } from './parseCache';
 import StreamdownRender from './StreamdownRender';
@@ -60,10 +61,22 @@ describe('MarkdownRender parse cache', () => {
     options: ComponentProps<typeof MarkdownRender> = {},
   ) =>
     render(
-      <MarkdownProvider enableLatex={false} remarkPlugins={remarkPlugins} {...providerProps}>
+      <MarkdownProvider
+        enableParseCache
+        enableLatex={false}
+        remarkPlugins={remarkPlugins}
+        {...providerProps}
+      >
         <MarkdownRender {...options}>{markdown}</MarkdownRender>
       </MarkdownProvider>,
     );
+
+  it('parses on every mount when the parse cache is not enabled', () => {
+    mount('**uncached** content', { enableParseCache: false }).unmount();
+    mount('**uncached** content', { enableParseCache: false }).unmount();
+
+    expect(parseSpy).toHaveBeenCalledTimes(2);
+  });
 
   it('reuses the parsed tree when the same content is mounted again', () => {
     mount('**cached** content').unmount();
@@ -118,6 +131,20 @@ describe('MarkdownRender parse cache', () => {
 
     expect(parseSpy).toHaveBeenCalledTimes(2);
     expect(container.querySelector('strong')).toBeNull();
+  });
+
+  it('turns the cache on from the Markdown enableParseCache prop', () => {
+    const mountMarkdown = () =>
+      render(
+        <Markdown enableParseCache enableLatex={false} remarkPlugins={remarkPlugins}>
+          {'**from markdown** prop'}
+        </Markdown>,
+      );
+
+    mountMarkdown().unmount();
+    mountMarkdown().unmount();
+
+    expect(parseSpy).toHaveBeenCalledTimes(1);
   });
 
   it('keeps unsafe URLs stripped on a cache hit', () => {

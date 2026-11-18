@@ -12,6 +12,7 @@ import {
   useMarkdownRemarkPlugins,
 } from '@/hooks/useMarkdown';
 
+import { useMarkdownContext } from '../components/MarkdownProvider';
 import { canUseParseCache, getParsedHast, getPipelineKey } from './parseCache';
 
 const MarkdownRenderer: NamedExoticComponent<Options> = memo<Options>(
@@ -21,7 +22,8 @@ const MarkdownRenderer: NamedExoticComponent<Options> = memo<Options>(
     const rehypePluginsList = useMarkdownRehypePlugins();
     const remarkPluginsList = useMarkdownRemarkPlugins();
 
-    const cacheable = canUseParseCache(rest);
+    const { enableParseCache } = useMarkdownContext();
+    const cacheable = !!enableParseCache && canUseParseCache(rest);
     const { remarkRehypeOptions } = rest;
 
     const pipeline = useMemo(
