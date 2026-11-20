@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version&nbsp;6.16.3](https://github.com/lobehub/lobe-ui/compare/v6.16.2...v6.16.3)
+
+<sup>Released on **2026-11-20**</sup>
+
+#### 🐛 Bug Fixes
+
+- **video**: Keep hover preview thumbnail in the video aspect ratio.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **video**: Keep hover preview thumbnail in the video aspect ratio, closes [#803](https://github.com/lobehub/lobe-ui/issues/803) ([c58c626](https://github.com/lobehub/lobe-ui/commit/c58c626))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version&nbsp;6.16.2](https://github.com/lobehub/lobe-ui/compare/v6.16.1...v6.16.2)
 
 <sup>Released on **2026-11-18**</sup>
