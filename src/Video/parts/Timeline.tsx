@@ -43,6 +43,7 @@ const Timeline = ({ children, className, style, thumbnails = true }: VideoTimeli
   const { config, media, store } = useVideoContext();
   const { t } = useTranslation(videoMessages);
   const duration = useVideo((state) => (Number.isFinite(state.duration) ? state.duration : 0));
+  const size = useVideo((state) => state.size);
   const trackRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(0);
   const [hover, setHover] = useState<Hover | null>(null);
@@ -137,6 +138,7 @@ const Timeline = ({ children, className, style, thumbnails = true }: VideoTimeli
         <HoverPreview
           marker={hover.marker}
           section={sectionAt(config.sections, hover.time)}
+          size={size}
           src={media.src}
           thumbnail={thumbnails}
           time={hover.time}
