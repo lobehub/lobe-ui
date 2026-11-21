@@ -79,6 +79,27 @@ describe('Accordion', () => {
     );
   });
 
+  // The trigger resizes instantly on click while the panel height animates, so any open-state
+  // trigger padding change makes the title row jump before the expand animation starts.
+  test.each(['borderless', 'filled', 'outlined'] as const)(
+    '%s trigger keeps the same block padding when expanded',
+    (variant) => {
+      render(<Accordion items={items} variant={variant} />);
+
+      const trigger = screen.getByRole('button', { name: 'Item A' });
+      // jsdom only resolves physical padding longhands, not `padding-block-*`.
+      const readPadding = () => {
+        const style = getComputedStyle(trigger);
+        return [style.paddingTop, style.paddingBottom];
+      };
+      const collapsed = readPadding();
+
+      fireEvent.click(trigger);
+      expect(trigger.hasAttribute('data-panel-open')).toBe(true);
+      expect(readPadding()).toEqual(collapsed);
+    },
+  );
+
   test('default-open panel skips the enter animation', () => {
     render(<Accordion defaultValue={['a']} items={items} />);
 

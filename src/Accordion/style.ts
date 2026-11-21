@@ -84,10 +84,14 @@ export const styles = stylex.create({
     paddingBlockEnd: 0,
     paddingBlockStart: 0,
   },
+  /**
+   * No top padding: the 12px gap between the title and the content comes entirely from
+   * `triggerOutlined`'s bottom padding, so the trigger keeps one height in both states.
+   */
   contentOutlined: {
     paddingInline: 16,
     paddingBlockEnd: 14,
-    paddingBlockStart: 4,
+    paddingBlockStart: 0,
   },
   header: {
     margin: 0,
@@ -218,10 +222,14 @@ export const styles = stylex.create({
     paddingBlock: 8,
     paddingInline: 16,
   },
+  /**
+   * Trigger box metrics must not depend on `[data-panel-open]`: the trigger resizes instantly on
+   * click while the panel height animates, so any open-state padding change makes the title row
+   * jump before the expand animation (and shifts the page when scrolled to the bottom).
+   */
   triggerOutlined: {
     paddingBlock: 12,
     paddingInline: 16,
-    paddingBlockEnd: { 'default': null, ':is([data-panel-open])': 8 },
   },
 });
 
