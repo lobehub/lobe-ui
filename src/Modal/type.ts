@@ -1,6 +1,7 @@
 import type { CSSProperties, MouseEvent, ReactNode } from 'react';
 
 import type { ButtonProps as BaseButtonProps } from '../Button';
+import type { DialogInitialFocus } from '../internal/dialogFocus';
 
 export interface BaseModalProps {
   children?: ReactNode;
@@ -14,6 +15,13 @@ export interface BaseModalProps {
     popup?: string;
     title?: string;
   };
+  /**
+   * Element to focus when the dialog opens. Defaults to the popup itself, so the close button only
+   * receives focus (and a focus ring) once the user presses Tab. Pass a ref to focus e.g. the first
+   * input of a form. Same contract as Base UI `Dialog.Popup` `initialFocus`.
+   * @see https://base-ui.com/react/components/dialog#popup
+   */
+  initialFocus?: DialogInitialFocus;
   maskClosable?: boolean;
   onOpenChange?: (open: boolean) => void;
   onOpenChangeComplete?: (open: boolean) => void;
@@ -77,6 +85,13 @@ export interface ModalComponentProps {
     | ((originNode: ReactNode, extra: { CancelBtn: React.FC; OkBtn: React.FC }) => ReactNode);
   getContainer?: HTMLElement | false | null;
   height?: number | string;
+  /**
+   * Element to focus when the dialog opens. Defaults to the popup itself, so the close button only
+   * receives focus (and a focus ring) once the user presses Tab. Pass a ref to focus e.g. the first
+   * input of a form. Same contract as Base UI `Dialog.Popup` `initialFocus`.
+   * @see https://base-ui.com/react/components/dialog#popup
+   */
+  initialFocus?: DialogInitialFocus;
   keyboard?: boolean;
   loading?: boolean;
   mask?: boolean;

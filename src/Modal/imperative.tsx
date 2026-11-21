@@ -151,6 +151,7 @@ export function createModalSystem(): ModalSystem {
       classNames,
       content,
       footer,
+      initialFocus,
       maskClosable,
       onOpenChange,
       onOpenChangeComplete,
@@ -195,6 +196,7 @@ export function createModalSystem(): ModalSystem {
             <ModalBackdrop className={classNames?.backdrop} style={semanticStyles?.backdrop} />
             <ModalPopup
               className={classNames?.popup}
+              initialFocus={initialFocus}
               popupStyle={semanticStyles?.popup}
               width={width}
             >

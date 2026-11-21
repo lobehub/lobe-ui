@@ -138,6 +138,8 @@ export const styles = stylex.create({
   },
   popup: {
     inset: 0,
+    /* Focused on open as the dialog focus anchor; a ring around the whole dialog helps no one. */
+    outline: 'none',
     alignItems: 'center',
     display: 'flex',
     justifyContent: 'center',
