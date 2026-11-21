@@ -372,6 +372,23 @@ describe('AvatarGroup', () => {
     expect(count.getAttribute('aria-label')).toBe('Sora, Maya');
   });
 
+  test('the count names hidden people by title before an action label', () => {
+    renderWithProvider(
+      <AvatarGroup
+        fallbackVariant="text"
+        max={1}
+        items={[
+          { avatar: 'Lo', key: 'a', label: 'Follow Lin', title: 'Lin' },
+          { avatar: 'Ch', key: 'b', label: 'Follow Sora', title: 'Sora' },
+          { avatar: 'Ai', key: 'c', label: 'Maya' },
+        ]}
+      />,
+    );
+    const count = screen.getByText('+2').closest('.lobe-avatar-group__count') as HTMLElement;
+
+    expect(count.getAttribute('title')).toBe('Sora, Maya');
+  });
+
   test('reverses stacking order with zIndexReverse', () => {
     const { container } = renderWithProvider(<AvatarGroup zIndexReverse items={items} size={48} />);
     const avatars = (container.firstChild as HTMLElement).children;

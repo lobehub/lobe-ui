@@ -56,7 +56,7 @@ Give an item a `ringColor` to draw a 2px ring outside its separator border, for 
 
 ## Interactive Group
 
-With `onClick`, every item is a button: focusable, pressed with Enter or Space, named by its `label`, which is also its tooltip. `pressed` announces the active item, `disabled` takes an item out of the tab order and ignores clicks. A `badge` sits at the bottom end of the avatar, outside its clipping, and lifts the item above its neighbours. The `+N` count lists the labels of the people it hides.
+With `onClick`, every item is a button: focusable, pressed with Enter or Space, named by its `label`, which is also its tooltip. `pressed` announces the active item, `disabled` takes an item out of the tab order and ignores clicks. A `badge` sits at the bottom end of the avatar, outside its clipping, and lifts the item above its neighbours. The `+N` count lists the people it hides, by `title` first and then `label`, so an action label such as "Follow Lin" does not end up in it.
 
 <Demo of={DemoGroupInteractive} />
 

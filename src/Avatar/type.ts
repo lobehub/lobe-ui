@@ -145,7 +145,7 @@ export interface AvatarGroupItemType extends Pick<
   disabled?: boolean;
   key: string;
   /**
-   * Accessible name and native tooltip of the avatar; also names the item in the `+N` count tooltip
+   * Accessible name and native tooltip of the avatar; the `+N` count tooltip names hidden items by `title` first, then `label`
    */
   label?: string;
   /**

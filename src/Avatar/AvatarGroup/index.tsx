@@ -46,7 +46,7 @@ const AvatarGroup = memo<AvatarGroupProps>(
     const restAvatars = items.slice(max, items.length);
     const gapValue = gap ?? Math.floor(-size / 4);
     const hiddenNames = restAvatars
-      .map((item) => item.label ?? item.title ?? item.alt)
+      .map((item) => item.title ?? item.label ?? item.alt)
       .filter(Boolean)
       .join(', ');
 
