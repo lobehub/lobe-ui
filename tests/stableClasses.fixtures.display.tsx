@@ -162,7 +162,7 @@ export const DISPLAY_FIXTURES: Record<string, StableFixture> = {
         className={className}
         max={1}
         items={[
-          { avatar: 'A', key: 'a' },
+          { avatar: 'A', badge: <span>v1</span>, key: 'a' },
           { avatar: 'B', key: 'b' },
         ]}
       />

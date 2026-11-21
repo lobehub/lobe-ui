@@ -135,7 +135,23 @@ export interface AvatarGroupItemType extends Pick<
   AvatarProps,
   'avatar' | 'title' | 'alt' | 'onClick' | 'style' | 'className' | 'loading' | 'fallbackVariant'
 > {
+  /**
+   * Shown at the bottom end of the avatar, outside its clipping; the item is lifted above its neighbours
+   */
+  badge?: ReactNode;
+  /**
+   * Not clickable, not focusable, announced as disabled
+   */
+  disabled?: boolean;
   key: string;
+  /**
+   * Accessible name and native tooltip of the avatar; also names the item in the `+N` count tooltip
+   */
+  label?: string;
+  /**
+   * Announces a clickable item as pressed, e.g. the person being followed
+   */
+  pressed?: boolean;
   /**
    * Draws a 2px ring in this color outside the separator border, e.g. a presence or status color
    */

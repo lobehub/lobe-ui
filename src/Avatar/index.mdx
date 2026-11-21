@@ -8,6 +8,7 @@ import DemoBordered from './demos/Bordered.tsx?demo';
 import DemoEmoji from './demos/Emoji.tsx?demo';
 import DemoFallback from './demos/Fallback.tsx?demo';
 import DemoGroup from './demos/Group.tsx?demo';
+import DemoGroupInteractive from './demos/GroupInteractive.tsx?demo';
 import DemoGroupRing from './demos/GroupRing.tsx?demo';
 import DemoImageFallback from './demos/ImageFallback.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
@@ -53,6 +54,12 @@ Give an item a `ringColor` to draw a 2px ring outside its separator border, for 
 
 <Demo of={DemoGroupRing} />
 
+## Interactive Group
+
+With `onClick`, every item is a button: focusable, pressed with Enter or Space, named by its `label`, which is also its tooltip. `pressed` announces the active item, `disabled` takes an item out of the tab order and ignores clicks. A `badge` sits at the bottom end of the avatar, outside its clipping, and lifts the item above its neighbours. The `+N` count lists the labels of the people it hides.
+
+<Demo of={DemoGroupInteractive} />
+
 ## APIs
 
 ### Avatar
@@ -91,11 +98,11 @@ Also accepts all shared visual props of `Avatar` (`variant`, `bordered`, `shadow
 
 | Property | Description | Type | Default |
 | --- | --- | --- | --- |
-| items | Avatar list with a required `key` per item; an item may set `ringColor` | `AvatarGroupItemType[]` | - |
+| items | Avatar list with a required `key` per item; an item may set `ringColor`, `label`, `pressed`, `disabled` and `badge` | `AvatarGroupItemType[]` | - |
 | max | Render at most `max` avatars and a `+N` count | `number` | - |
 | gap | Overlap between avatars in pixels | `number` | `-size / 4` |
 | zIndexReverse | Reverse the stacking order | `boolean` | - |
-| onClick | Called with the clicked item and its key | `({ item, key }) => void` | - |
+| onClick | Called with the clicked item and its key; makes every item that is not `disabled` a button | `({ item, key }) => void` | - |
 | classNames | `avatar` and `count` class names | `{ avatar?: string; count?: string }` | - |
 | styles | `avatar` and `count` styles | `{ avatar?: CSSProperties; count?: CSSProperties }` | - |
 | ref | Reference to the container element | `Ref<HTMLDivElement>` | - |
