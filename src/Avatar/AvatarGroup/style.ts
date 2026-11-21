@@ -15,4 +15,17 @@ export const styles = stylex.create({
     color: cssVar.colorBgLayout,
     fontSize: '0.8em',
   },
+  item: {
+    flex: 'none',
+    display: 'inline-flex',
+    position: 'relative',
+  },
+  badge: {
+    display: 'flex',
+    insetInlineEnd: 0,
+    pointerEvents: 'none',
+    position: 'absolute',
+    transform: 'translate(40%, 30%)',
+    bottom: 0,
+  },
 });
