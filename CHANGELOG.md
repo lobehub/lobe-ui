@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version&nbsp;6.17.0](https://github.com/lobehub/lobe-ui/compare/v6.16.3...v6.17.0)
+
+<sup>Released on **2026-11-21**</sup>
+
+#### ✨ Features
+
+- **avatar**: AvatarGroup items are buttons with labels, pressed and disabled states, badges and a count that names who it hides.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **avatar**: AvatarGroup items are buttons with labels, pressed and disabled states, badges and a count that names who it hides, closes [#804](https://github.com/lobehub/lobe-ui/issues/804) ([680f939](https://github.com/lobehub/lobe-ui/commit/680f939))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version&nbsp;6.16.3](https://github.com/lobehub/lobe-ui/compare/v6.16.2...v6.16.3)
 
 <sup>Released on **2026-11-20**</sup>
