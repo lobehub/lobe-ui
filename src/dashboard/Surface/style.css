@@ -64,9 +64,15 @@
   }
 
   /* The root's negative bottom margin includes this sibling. Without block padding the pager
-     sits on the card edge. */
+     sits on the card edge.
+     Do not write this as `:has(> [data-table-wrapper]) > :not(...)`. Blink shares one invalidation
+     set across all `:has()` rules, and a near-universal compound to the right of `:has()` marks it
+     "all descendants might be invalid". Any `:has()` argument change anywhere on the page (for
+     example inserting Markdown) then recalculates style for every ancestor's entire subtree, even
+     on pages without a Surface. `.lobe-table-wrapper` is always the Table root that `:has()`
+     anchored on. */
   .lobe-surface-table-bleed
-    :has(> [data-table-wrapper]):not(td :has(> [data-table-wrapper]))
+    .lobe-table-wrapper:not(td .lobe-table-wrapper)
     > :not([data-table-wrapper]) {
     margin-block: 0;
     padding-block: 12px;
