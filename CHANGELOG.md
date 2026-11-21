@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version&nbsp;6.17.1](https://github.com/lobehub/lobe-ui/compare/v6.17.0...v6.17.1)
+
+<sup>Released on **2026-11-21**</sup>
+
+#### 🐛 Bug Fixes
+
+- **avatar**: The AvatarGroup +N count names hidden people by title before an action label.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **avatar**: The AvatarGroup +N count names hidden people by title before an action label, closes [#805](https://github.com/lobehub/lobe-ui/issues/805) ([120077b](https://github.com/lobehub/lobe-ui/commit/120077b))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version&nbsp;6.17.0](https://github.com/lobehub/lobe-ui/compare/v6.16.3...v6.17.0)
 
 <sup>Released on **2026-11-21**</sup>
