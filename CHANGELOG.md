@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version&nbsp;6.18.0](https://github.com/lobehub/lobe-ui/compare/v6.17.1...v6.18.0)
+
+<sup>Released on **2026-11-22**</sup>
+
+#### ✨ Features
+
+- **agent-avatar**: Redesign with Lobot eyes, soft volume and an EmojiPicker panel.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **agent-avatar**: Redesign with Lobot eyes, soft volume and an EmojiPicker panel, closes [#807](https://github.com/lobehub/lobe-ui/issues/807) ([fe028dd](https://github.com/lobehub/lobe-ui/commit/fe028dd))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version&nbsp;6.17.1](https://github.com/lobehub/lobe-ui/compare/v6.17.0...v6.17.1)
 
 <sup>Released on **2026-11-21**</sup>
