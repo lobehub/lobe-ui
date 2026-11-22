@@ -1,31 +1,44 @@
 import gray from '@/color/colors/gray';
-import orange from '@/color/colors/orange';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
 import type { AgentAvatarColor, AgentAvatarShape, AgentAvatarState } from './type';
 
 export const AGENT_AVATAR_SHAPES = [
+  'lobot',
   'face',
-  'bowl',
   'cloud',
-  'tile',
-  'hex',
-  'shield',
-  'pudding',
-  'cookie',
-  'star',
-  'capsule',
   'ghost',
   'cat',
+  'bear',
+  'bunny',
+  'frog',
+  'robot',
+  'star',
+  'cookie',
+  'pudding',
+  'bowl',
+  'mug',
+  'sprout',
+  'bulb',
+  'chat',
+  'book',
+  'magnifier',
+  'rocket',
+  'shield',
+  'tile',
+  'hex',
+  'capsule',
 ] as const satisfies readonly AgentAvatarShape[];
 
 export const AGENT_AVATAR_COLORS = [
-  'purple',
-  'orange',
-  'geekblue',
+  'red',
   'volcano',
+  'orange',
+  'green',
+  'cyan',
+  'geekblue',
+  'purple',
   'magenta',
-  'ink',
   'gray',
 ] as const satisfies readonly AgentAvatarColor[];
 
@@ -39,23 +52,26 @@ export const AGENT_AVATAR_STATES = [
 ] as const satisfies readonly AgentAvatarState[];
 
 /**
- * Theme color per palette key, one scale step per appearance. The dark steps are lifted so the
- * body keeps at least 3:1 against the dark container background; `ink` and `gray` cannot reuse
- * their light step there because the neutral scale flips to near-white in dark mode.
+ * Theme color per palette key: the scale step perceptually closest (OKLab) to a bright, saturated
+ * mascot palette, one step per appearance. `ink` is the logo's near black: it is still accepted
+ * but left out of `AGENT_AVATAR_COLORS`, so the picker and seeds never offer it.
  */
 export const AGENT_AVATAR_COLOR_TOKENS: Record<AgentAvatarColor, { dark: string; light: string }> =
   {
-    geekblue: { dark: cssVar.geekblue9, light: cssVar.geekblue8 },
-    gray: { dark: cssVar.gray10, light: cssVar.gray9 },
+    cyan: { dark: cssVar.cyan6, light: cssVar.cyan10 },
+    geekblue: { dark: cssVar.geekblue9, light: cssVar.geekblue9 },
+    gray: { dark: cssVar.gray9, light: cssVar.gray9 },
+    green: { dark: cssVar.green9, light: cssVar.green9 },
     ink: { dark: cssVar.gray7, light: cssVar.gray11 },
-    magenta: { dark: cssVar.magenta9, light: cssVar.magenta8 },
+    magenta: { dark: cssVar.magenta9, light: cssVar.magenta9 },
     orange: { dark: cssVar.orange9, light: cssVar.orange9 },
-    purple: { dark: cssVar.purple9, light: cssVar.purple8 },
-    volcano: { dark: cssVar.volcano9, light: cssVar.volcano8 },
+    purple: { dark: cssVar.purple9, light: cssVar.purple9 },
+    red: { dark: cssVar.red8, light: cssVar.red9 },
+    volcano: { dark: cssVar.volcano9, light: cssVar.volcano9 },
   };
 
-/** Logo eyes: warm white and near black, identical for every color and appearance. */
-export const SCLERA_COLOR = orange.light[2];
+/** Logo eyes: white and near black, identical for every color and appearance. */
+export const SCLERA_COLOR = cssVar.colorWhite;
 export const PUPIL_COLOR = gray.light[12];
 
 const SEED_SALT = 'lh3174:';
@@ -96,30 +112,4 @@ export const getAgentAvatarTraits = (seed: string): AgentAvatarTraits => {
 };
 
 export const isAgentAvatarColor = (color: string): color is AgentAvatarColor =>
-  (AGENT_AVATAR_COLORS as readonly string[]).includes(color);
-
-/** Pupil / sclera radius ratio. */
-export const PUPIL_RATIO = 0.6;
-/** Smaller pupils at sidebar sizes keep a visible ring of white. */
-export const PUPIL_RATIO_SMALL = 0.5;
-export const SMALL_SIZE = 24;
-
-/** Motion values are authored for a sclera radius of 14.5 and scaled per shape. */
-export const GAZE_UNIT_RADIUS = 14.5;
-
-/**
- * Still pose of the pupils per state, in gaze units. `thinking` looks up but keeps a band of
- * white above the pupil (the keyframes in `style.ts` use the same bound).
- */
-export const STILL_GAZE: Record<AgentAvatarState, [number, number]> = {
-  blocked: [0, 0],
-  done: [0, 0],
-  idle: [0, 1.6],
-  thinking: [1.8, -3.1],
-  waiting: [0, 1.4],
-  working: [-2, 3.4],
-};
-
-/** `blocked` widens the eyes and shrinks the pupils. */
-export const BLOCKED_SCLERA_SCALE = 1.1;
-export const BLOCKED_PUPIL_RATIO = 0.36;
+  Object.hasOwn(AGENT_AVATAR_COLOR_TOKENS, color);

@@ -1,3 +1,4 @@
+export { default as agentAvatar } from './agentAvatar';
 export { default as burger } from './burger';
 export { default as chat } from './chat';
 export { default as colorPicker } from './colorPicker';

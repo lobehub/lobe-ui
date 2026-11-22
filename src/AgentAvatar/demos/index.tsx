@@ -12,10 +12,10 @@ const names = [
 ];
 
 export default () => (
-  <Flexbox horizontal gap={24} padding={24} wrap={'wrap'}>
+  <Flexbox horizontal gap={24} justify="center" padding={24} wrap="wrap">
     {names.map((name) => (
       <Flexbox align="center" gap={8} key={name}>
-        <AgentAvatar name={name} size={48} />
+        <AgentAvatar animated name={name} size={64} />
         <Text style={{ fontSize: 12 }} type="secondary">
           {name}
         </Text>

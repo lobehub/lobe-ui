@@ -5,3 +5,8 @@ export const agentAvatarClasses = stableClasses({
   dataAttributes: ['shape', 'color', 'state', 'animated'],
   elements: ['body', 'eyes', 'badge', 'thought'],
 });
+
+export const agentAvatarPickerClasses = stableClasses({
+  block: 'agent-avatar-picker',
+  elements: ['preview', 'shapes', 'shape', 'colors', 'color'],
+});

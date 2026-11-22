@@ -1,39 +1,60 @@
-import type { CSSProperties, Ref, SVGProps } from 'react';
+import type { CSSProperties, HTMLAttributes, ReactNode, Ref, SVGProps } from 'react';
 
-/** Silhouettes. Every shape shares the same flat body + big-eyes construction. */
+/** Silhouettes. Every shape shares the same soft volume and the big Lobot logo eyes. */
 export type AgentAvatarShape =
+  | 'lobot'
   | 'face'
-  | 'bowl'
   | 'cloud'
+  | 'ghost'
+  | 'cat'
+  | 'bear'
+  | 'bunny'
+  | 'frog'
+  | 'robot'
+  | 'star'
+  | 'cookie'
+  | 'pudding'
+  | 'bowl'
+  | 'mug'
+  | 'sprout'
+  | 'bulb'
+  | 'chat'
+  | 'book'
+  | 'magnifier'
+  | 'rocket'
+  | 'shield'
   | 'tile'
   | 'hex'
-  | 'shield'
-  | 'pudding'
-  | 'cookie'
-  | 'star'
-  | 'capsule'
-  | 'ghost'
-  | 'cat';
+  | 'capsule';
 
 /** Body colors, resolved from the theme color scales so they adapt to dark mode. */
 export type AgentAvatarColor =
-  'purple' | 'orange' | 'geekblue' | 'volcano' | 'magenta' | 'ink' | 'gray';
+  | 'red'
+  | 'volcano'
+  | 'orange'
+  | 'green'
+  | 'cyan'
+  | 'geekblue'
+  | 'purple'
+  | 'magenta'
+  | 'gray'
+  | 'ink';
 
 /**
- * Activity state, expressed through the eyes and motion only:
- * - `idle`: wandering gaze and blinks
- * - `working`: looking down, scanning
- * - `waiting`: looking at you, slight sway
- * - `blocked`: wide eyes, small pupils and an error badge
- * - `thinking`: looking up with rising thought bubbles
- * - `done`: closed smiling eyes and a small hop
+ * Activity state, shown on the avatar itself and always inside its box:
+ * - `idle`: looks around and blinks
+ * - `working`: eyes scan across the work with a quick bob
+ * - `waiting`: heavy lids and a slight lean
+ * - `blocked`: wide eyes, small pupils, a short shake and an error badge
+ * - `thinking`: looks up and away with small thought bubbles
+ * - `done`: closed smiling eyes and two small hops
  */
 export type AgentAvatarState = 'idle' | 'working' | 'waiting' | 'blocked' | 'thinking' | 'done';
 
 export interface AgentAvatarClassNames {
   /** The `blocked` error badge. */
   badge?: string;
-  /** The silhouette path. */
+  /** The body group (the cross-sections of the silhouette). */
   body?: string;
   /** The eyes group (eye whites and pupils, or the closed eyes of `done`). */
   eyes?: string;
@@ -68,6 +89,11 @@ export interface AgentAvatarProps extends Omit<
    */
   color?: AgentAvatarColor | (string & {});
   /**
+   * Turn the eyes and body toward the pointer. Only applies while the avatar is `animated`.
+   * @default false
+   */
+  followPointer?: boolean;
+  /**
    * Accessible name (`aria-label`); also the seed when `seed` is omitted. Without a name or
    * `aria-label` the avatar is decorative and hidden from assistive technology.
    */
@@ -81,8 +107,7 @@ export interface AgentAvatarProps extends Omit<
   /** Silhouette. Derived from the seed when omitted. */
   shape?: AgentAvatarShape;
   /**
-   * Width and height in pixels. At 24px and below the pupils shrink a bit so the eye whites
-   * stay visible.
+   * Width and height in pixels.
    * @default 40
    */
   size?: number;
@@ -99,4 +124,55 @@ export interface AgentAvatarProps extends Omit<
    * @default true
    */
   tilt?: boolean;
+}
+
+/** A choice made in `AgentAvatarPicker`. */
+export interface AgentAvatarValue {
+  color: AgentAvatarColor;
+  shape: AgentAvatarShape;
+}
+
+export interface AgentAvatarPickerTexts {
+  /** Accessible name of the color group. */
+  colors?: string;
+  /** Accessible name of the shape group. */
+  shapes?: string;
+}
+
+export interface AgentAvatarPickerProps extends Omit<
+  HTMLAttributes<HTMLDivElement>,
+  'children' | 'defaultValue' | 'onChange'
+> {
+  /** Initial choice when uncontrolled. */
+  defaultValue?: Partial<AgentAvatarValue>;
+  /** Called on every change of shape or color. */
+  onChange?: (value: AgentAvatarValue) => void;
+  /**
+   * Show a live preview above the options.
+   * @default true
+   */
+  preview?: boolean;
+  ref?: Ref<HTMLDivElement>;
+  /** Overrides of the built-in texts. */
+  texts?: AgentAvatarPickerTexts;
+  /** The current choice, for a controlled picker. */
+  value?: AgentAvatarValue;
+}
+
+export interface CreateAgentAvatarTabOptions {
+  /** Tab label. Defaults to a small Lobot with a tooltip. */
+  label?: ReactNode;
+  /**
+   * Where the tab sits among the built-in tabs. `start` makes it the first tab and the one the
+   * picker opens on.
+   * @default 'start'
+   */
+  placement?: 'start' | 'end';
+  /** Overrides of the picker texts, plus `tab` for the default tooltip. */
+  texts?: AgentAvatarPickerTexts & { tab?: string };
+  /**
+   * Tab key.
+   * @default 'agent-avatar'
+   */
+  value?: string;
 }

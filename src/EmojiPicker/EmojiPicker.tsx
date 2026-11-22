@@ -25,10 +25,15 @@ import AvatarUploader from './AvatarUploader';
 import { loadEmojiData } from './loadEmojiData';
 import { emojiPickerClasses } from './stable';
 import { styles } from './style';
-import { type EmojiPickerProps } from './type';
+import {
+  type EmojiPickerAvatarChange,
+  type EmojiPickerCustomTab,
+  type EmojiPickerProps,
+} from './type';
 import { useEmojiMartI18n } from './useEmojiMartI18n';
 
 const DEFAULT_AVATAR = '🤖';
+const AVATAR_SIZE = 40;
 
 const EmojiPicker = memo<EmojiPickerProps>(
   ({
@@ -38,6 +43,7 @@ const EmojiPicker = memo<EmojiPickerProps>(
     locale = 'en-US',
     allowUpload,
     allowDelete,
+    allowEmoji = true,
     allowModelAvatar,
     texts,
     onDelete,
@@ -65,8 +71,6 @@ const EmojiPicker = memo<EmojiPickerProps>(
       onChange: onOpenChange,
       value: open,
     });
-    const [tab, setTab] = useState<'emoji' | 'upload'>('emoji');
-
     const theme = useTheme();
     const pickerCssVariables = useMemo<Record<string, string>>(
       () => ({
@@ -84,9 +88,19 @@ const EmojiPicker = memo<EmojiPickerProps>(
       value,
     });
 
-    const handleAvatarChange = (emoji: string) => {
+    const [tab, setTab] = useState<string>(
+      () =>
+        customTabs.find((item) => item.renderValue?.(ava, AVATAR_SIZE))?.value ??
+        customTabs.find((item) => item.placement === 'start')?.value ??
+        'emoji',
+    );
+    const customAvatar = customTabs
+      .map((item) => item.renderValue?.(ava, rest.size ?? AVATAR_SIZE))
+      .find(Boolean);
+
+    const handleAvatarChange: EmojiPickerAvatarChange = (emoji, options) => {
       setAva(emoji);
-      setVisible(false);
+      if (!options?.keepOpen) setVisible(false);
     };
 
     // Generate model avatars from @lobehub/icons when allowModelAvatar is enabled
@@ -113,9 +127,15 @@ const EmojiPicker = memo<EmojiPickerProps>(
     const uploadText = texts?.upload ?? t('emojiPicker.upload');
     const deleteText = texts?.delete ?? t('emojiPicker.delete');
 
-    const hideEmojiTab = typeof allowUpload === 'object' && allowUpload?.enableEmoji === false;
+    // The emoji grid stays as a fallback when hiding it would leave the picker with nothing.
+    const hasOtherTab = !!allowUpload || customTabs.length > 0;
+    const hideEmojiTab =
+      hasOtherTab &&
+      (!allowEmoji || (typeof allowUpload === 'object' && allowUpload?.enableEmoji === false));
 
+    const toTabItem = (item: EmojiPickerCustomTab) => ({ key: item.value, label: item.label });
     const items: TabsProps['items'] = [
+      ...customTabs.filter((item) => item.placement === 'start').map(toTabItem),
       !hideEmojiTab && {
         key: 'emoji',
         label: (
@@ -132,10 +152,13 @@ const EmojiPicker = memo<EmojiPickerProps>(
           </Tooltip>
         ),
       },
-      ...customTabs.map((tab) => ({ key: tab.value, label: tab.label })),
+      ...customTabs.filter((item) => item.placement !== 'start').map(toTabItem),
     ].filter(Boolean) as TabsProps['items'];
 
-    const showTabs = allowDelete || (items && items.length > 1);
+    const tabCount = items?.length ?? 0;
+    const showTabList = tabCount > 1;
+    const showTabs = allowDelete || showTabList;
+    const activeTab = items?.some((item) => item.key === tab) ? tab : items?.[0]?.key;
 
     const content = (
       <Flexbox
@@ -155,21 +178,23 @@ const EmojiPicker = memo<EmojiPickerProps>(
             horizontal
             align={'center'}
             {...styleProps(styles.tabs, emojiPickerClasses('tabs'))}
-            justify={'space-between'}
+            justify={showTabList ? 'space-between' : 'flex-end'}
             paddingInline={10}
           >
-            <Tabs
-              activeKey={tab}
-              items={items}
-              variant={'square'}
-              classNames={{
-                indicator: 'lobe-emoji-picker-tabs-indicator',
-                list: 'lobe-emoji-picker-tabs-list',
-                root: 'lobe-emoji-picker-tabs-root',
-                tab: 'lobe-emoji-picker-tab',
-              }}
-              onChange={(key) => setTab(key as any)}
-            />
+            {showTabList && (
+              <Tabs
+                activeKey={activeTab}
+                items={items}
+                variant={'square'}
+                classNames={{
+                  indicator: 'lobe-emoji-picker-tabs-indicator',
+                  list: 'lobe-emoji-picker-tabs-list',
+                  root: 'lobe-emoji-picker-tabs-root',
+                  tab: 'lobe-emoji-picker-tab',
+                }}
+                onChange={(key) => setTab(key)}
+              />
+            )}
             {allowDelete && (
               <ActionIcon
                 className={emojiPickerClasses('delete')}
@@ -187,7 +212,7 @@ const EmojiPicker = memo<EmojiPickerProps>(
             )}
           </Flexbox>
         )}
-        {tab === 'emoji' && (
+        {activeTab === 'emoji' && (
           <Picker
             custom={mergedCustomEmojis}
             data={loadEmojiData}
@@ -201,20 +226,20 @@ const EmojiPicker = memo<EmojiPickerProps>(
             onEmojiSelect={(e: any) => handleAvatarChange(e.src || e.native)}
           />
         )}
-        {tab === 'upload' && (
+        {activeTab === 'upload' && (
           <AvatarUploader
             compressSize={compressSize}
             shape={shape}
             texts={texts}
-            onChange={handleAvatarChange}
+            onChange={(avatar) => handleAvatarChange(avatar)}
             onUpload={onUpload}
           />
         )}
         {customTabs.map(
           (item) =>
-            tab === item.value && (
+            activeTab === item.value && (
               <Flexbox className={emojiPickerClasses('custom-tab')} key={item.value} padding={10}>
-                {item.render(handleAvatarChange)}
+                {item.render(handleAvatarChange, ava)}
               </Flexbox>
             ),
         )}
@@ -243,7 +268,8 @@ const EmojiPicker = memo<EmojiPickerProps>(
           customRender(ava)
         ) : (
           <Avatar
-            avatar={ava}
+            avatar={customAvatar ?? ava}
+            background={customAvatar ? 'transparent' : undefined}
             className={clsx('lobe-emoji-picker-avatar', emojiPickerClasses('trigger'), className)}
             loading={loading}
             shape={shape}

@@ -31,14 +31,36 @@ export interface EmojiPickerCustomEmoji {
   name: string;
 }
 
+/** Sets the avatar and closes the picker, unless `keepOpen` is set. */
+export type EmojiPickerAvatarChange = (avatar: string, options?: { keepOpen?: boolean }) => void;
+
 export interface EmojiPickerCustomTab {
   label: ReactNode;
-  render: (handleAvatarChange: (avatar: string) => void) => ReactNode;
+  /**
+   * Where the tab sits among the built-in tabs. A `start` tab comes before them and is the one
+   * the picker opens on.
+   * @default 'end'
+   */
+  placement?: 'start' | 'end';
+  /** Tab content. Receives the change handler and the current avatar value. */
+  render: (handleAvatarChange: EmojiPickerAvatarChange, avatar: string) => ReactNode;
+  /**
+   * Draw a value this tab produced in the trigger, for values that are not an emoji or image.
+   * Return `undefined` for any other value. A value it recognizes also opens the picker on this
+   * tab.
+   */
+  renderValue?: (avatar: string, size: number) => ReactNode;
   value: string;
 }
 
 export interface EmojiPickerProps extends Omit<AvatarProps, 'onChange' | 'avatar'> {
   allowDelete?: boolean;
+  /**
+   * Show the emoji tab. Ignored when there is no upload or custom tab to show instead. When one
+   * tab is left, the tab bar is hidden.
+   * @default true
+   */
+  allowEmoji?: boolean;
   allowModelAvatar?: boolean;
   allowUpload?:
     | boolean

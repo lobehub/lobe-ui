@@ -1,50 +1,92 @@
 ---
 title: AgentAvatar
-description: AgentAvatar draws a deterministic character for an AI agent from a seed, a flat silhouette with big logo-style eyes. Shape and color come from a stable hash and can be overridden, the color follows the theme in dark mode, and the activity state is shown through the eyes and an optional animation.
+description: AgentAvatar gives an AI agent a small character with the big eyes of the Lobot logo. A seed picks a stable shape and color, the body has soft 3D volume, and the state shows what the agent is doing.
 category: Data Display
 ---
 
 import DemoColors from './demos/Colors.tsx?demo';
+import DemoFollowPointer from './demos/FollowPointer.tsx?demo';
+import DemoInEmojiPicker from './demos/InEmojiPicker.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
+import DemoPicker from './demos/Picker.tsx?demo';
 import DemoPlayground from './demos/Playground.tsx?demo';
 import DemoShapes from './demos/Shapes.tsx?demo';
+import DemoSizes from './demos/Sizes.tsx?demo';
 import DemoStates from './demos/States.tsx?demo';
 import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
 import { agentAvatarClasses } from './stable';
 
-## Default
-
-`seed` (or `name` when `seed` is omitted) is hashed into a shape, a color and a slight lean, so the same seed always draws the same avatar with no randomness. `name` is also the accessible label; without a name or `aria-label` the avatar is decorative.
-
-<Demo of={DemoIndex} layout="bare" />
-
-The lean is a resting tilt of -3° to 3° on the body and eyes, so a row of avatars feels less rigid. The badge and thought bubbles stay upright. Set `tilt={false}` for a straight pose, for example in dense grids.
-
 ## Playground
+
+Pick a shape, a color and a state. The avatar looks toward your pointer.
 
 <Demo of={DemoPlayground} layout="bare" />
 
+## Usage
+
+Pass a stable `seed`, or a `name` that doubles as the accessible label. The same seed always draws the same avatar, with no randomness and no stored image.
+
+```tsx
+import { AgentAvatar } from '@lobehub/ui';
+
+<AgentAvatar animated name="Writer" size={48} state="working" />;
+```
+
+<Demo of={DemoIndex} layout="bare" />
+
+Without a `name` or `aria-label` the avatar is decorative and hidden from assistive technology. A seeded lean of -3° to 3° keeps a row of avatars from looking rigid; set `tilt={false}` for a straight pose.
+
 ## Shapes
 
-Twelve silhouettes share one construction: a flat body, the big eyes with whites, no mouth and no backing plate. Only the shape and the color vary, so every shape stays recognizable at 24px. `shape` overrides the derived one.
+Every shape is one soft outline with a dominant face, so it stays recognizable at sidebar size. `lobot` is the logo itself. `shape` overrides the one derived from the seed.
 
-<Demo of={DemoShapes} />
+<Demo of={DemoShapes} layout="bare" />
 
 ## Colors
 
-`color` overrides the derived color. Palette keys resolve to theme color scale steps, with lighter steps in dark mode so `ink` and `gray` keep their contrast against dark backgrounds. Any other string is used as a CSS color as is. The eyes keep the same warm white and near black in every color and appearance.
+`color` overrides the derived color. Palette keys resolve to theme color tokens and adapt to dark mode, and any other string is used as a CSS color. The eyes stay white and near black in every color.
 
-<Demo of={DemoColors} />
+<Demo of={DemoColors} layout="bare" />
 
 ## States
 
-`state` is expressed only through the eyes and motion: `idle` wanders and blinks, `working` looks down and scans, `waiting` looks at you and sways, `blocked` widens the eyes and shows an error badge, `thinking` looks up with rising thought bubbles, and `done` closes the eyes into a smile. Motion is off by default; `animated` plays it, and `prefers-reduced-motion: reduce` always falls back to the still pose. Animations are offset per seed so a list of avatars does not blink in sync.
+`state` tells what the agent is doing, on the avatar itself: `idle` looks around and blinks, `working` scans across its work, `waiting` lowers its lids, `thinking` looks up with small thought bubbles, `blocked` goes wide-eyed with an error badge, and `done` closes its eyes in a smile and gives two small hops. Every state stays inside the avatar's box, so it never needs extra room in a layout.
 
-<Demo of={DemoStates} />
+<Demo of={DemoStates} layout="bare" />
 
-## APIs
+Motion is off by default. `animated` plays it, and `prefers-reduced-motion: reduce` always falls back to the still pose. Animated avatars share one frame loop, pause outside the viewport and draw at 30 fps below 128px.
+
+## Follow pointer
+
+With `animated`, `followPointer` turns the eyes and body toward the mouse, pen or finger.
+
+<Demo of={DemoFollowPointer} layout="bare" />
+
+## Sizes
+
+`size` sets the width and height in pixels. The eyes keep their proportions down to 16px.
+
+<Demo of={DemoSizes} layout="bare" />
+
+## Picker
+
+`AgentAvatarPicker` is a panel for choosing a shape and a color.
+
+<Demo of={DemoPicker} layout="bare" />
+
+## In EmojiPicker
+
+`createAgentAvatarTab` adds the panel to `EmojiPicker` as a custom tab. The value is a plain string such as `agent-avatar:rocket:volcano`, so it fits an existing avatar field. `parseAgentAvatar` reads it back into props for `AgentAvatar`, and `stringifyAgentAvatar` writes it.
+
+<Demo of={DemoInEmojiPicker} layout="bare" />
+
+## API
 
 <Api name="AgentAvatar" />
+
+### AgentAvatarPicker
+
+<Api name="AgentAvatarPicker" from="." />
 
 `AGENT_AVATAR_SHAPES`, `AGENT_AVATAR_COLORS` and `AGENT_AVATAR_STATES` list the accepted values, and `getAgentAvatarTraits(seed)` returns the derived `shape`, `color`, `tilt` and animation `phase` without rendering.
 
