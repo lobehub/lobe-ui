@@ -8,6 +8,8 @@ import DemoIndex from './demos/index.tsx?demo';
 import DemoUpload from './demos/Upload.tsx?demo';
 import DemoCustomEmoji from './demos/CustomEmoji.tsx?demo';
 import DemoCustomTabs from './demos/CustomTabs.tsx?demo';
+import DemoAgentAvatar from './demos/AgentAvatar.tsx?demo';
+import DemoAgentAvatarOnly from './demos/AgentAvatarOnly.tsx?demo';
 import DemoModelAvatar from './demos/ModelAvatar.tsx?demo';
 import DemoControl from './demos/Control.tsx?demo';
 import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
@@ -28,6 +30,16 @@ import { emojiPickerClasses } from './stable';
 ## Custom Tabs
 
 <Demo of={DemoCustomTabs} layout="center" />
+
+## Agent Avatar
+
+`createAgentAvatarTab` adds an [AgentAvatar](/components/agent-avatar) panel as the first tab. The value is a string such as `agent-avatar:lobot:geekblue`, which the trigger draws as the avatar. Read it back with `parseAgentAvatar`.
+
+<Demo of={DemoAgentAvatar} layout="center" />
+
+Set `allowEmoji={false}` to offer only the agent avatars. With a single tab left, the tab bar is hidden.
+
+<Demo of={DemoAgentAvatarOnly} layout="center" />
 
 ## Model Avatar
 
@@ -55,7 +67,9 @@ import { emojiPickerClasses } from './stable';
 | --- | --- | --- | --- |
 | value | Unique identifier for the tab | `string` | - |
 | label | Label to display for the tab | `ReactNode` | - |
-| render | Render function for the tab content | `(handleAvatarChange: (avatar: string) => void) => ReactNode` | - |
+| placement | Where the tab sits; a `start` tab comes first and is the one the picker opens on | `'start' \| 'end'` | `'end'` |
+| render | Render function for the tab content | `(handleAvatarChange: (avatar: string, options?: { keepOpen?: boolean }) => void, avatar: string) => ReactNode` | - |
+| renderValue | Draws a value this tab produced in the trigger; return `undefined` for other values | `(avatar: string, size: number) => ReactNode` | - |
 
 ## Styles
 

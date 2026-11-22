@@ -1,21 +1,27 @@
-import { AGENT_AVATAR_SHAPES, AgentAvatar, Flexbox, Text } from '@lobehub/ui';
+import { AGENT_AVATAR_COLORS, AGENT_AVATAR_SHAPES, AgentAvatar, Text } from '@lobehub/ui';
+
+const bright = AGENT_AVATAR_COLORS.filter((color) => color !== 'gray');
 
 export default () => (
-  <Flexbox gap={24} padding={24}>
-    <Flexbox horizontal gap={20} wrap={'wrap'}>
-      {AGENT_AVATAR_SHAPES.map((shape) => (
-        <Flexbox align="center" gap={8} key={shape}>
-          <AgentAvatar seed={shape} shape={shape} size={64} />
-          <Text style={{ fontSize: 12 }} type="secondary">
-            {shape}
-          </Text>
-        </Flexbox>
-      ))}
-    </Flexbox>
-    <Flexbox horizontal align="center" gap={20} wrap={'wrap'}>
-      {AGENT_AVATAR_SHAPES.map((shape) => (
-        <AgentAvatar key={shape} seed={shape} shape={shape} size={24} />
-      ))}
-    </Flexbox>
-  </Flexbox>
+  <div
+    style={{
+      display: 'grid',
+      gap: 20,
+      gridTemplateColumns: 'repeat(auto-fill, minmax(84px, 1fr))',
+      padding: 24,
+      width: '100%',
+    }}
+  >
+    {AGENT_AVATAR_SHAPES.map((shape, index) => (
+      <div
+        key={shape}
+        style={{ alignItems: 'center', display: 'flex', flexDirection: 'column', gap: 8 }}
+      >
+        <AgentAvatar color={bright[index % bright.length]} shape={shape} size={64} tilt={false} />
+        <Text style={{ fontSize: 12 }} type="secondary">
+          {shape}
+        </Text>
+      </div>
+    ))}
+  </div>
 );

@@ -1,34 +1,48 @@
 import {
-  AGENT_AVATAR_COLORS,
-  AGENT_AVATAR_SHAPES,
   AGENT_AVATAR_STATES,
   AgentAvatar,
-  type AgentAvatarProps,
+  AgentAvatarPicker,
+  type AgentAvatarState,
+  type AgentAvatarValue,
+  Flexbox,
+  Segmented,
 } from '@lobehub/ui';
-import { StoryBook, useControls, useCreateStore } from '@lobehub/ui/storybook';
+import { useState } from 'react';
 
 export default () => {
-  const store = useCreateStore();
-  const { color, shape, ...control } = useControls(
-    {
-      animated: true,
-      color: { options: ['auto', ...AGENT_AVATAR_COLORS], value: 'auto' },
-      seed: 'Writer',
-      shape: { options: ['auto', ...AGENT_AVATAR_SHAPES], value: 'auto' },
-      size: { max: 160, min: 16, step: 1, value: 96 },
-      state: { options: [...AGENT_AVATAR_STATES], value: 'idle' },
-      tilt: true,
-    },
-    { store },
-  ) as Omit<AgentAvatarProps, 'color' | 'shape'> & { color: string; shape: string };
+  const [value, setValue] = useState<AgentAvatarValue>({ color: 'geekblue', shape: 'lobot' });
+  const [state, setState] = useState<AgentAvatarState>('idle');
 
   return (
-    <StoryBook levaStore={store}>
-      <AgentAvatar
-        {...control}
-        color={color === 'auto' ? undefined : color}
-        shape={shape === 'auto' ? undefined : (shape as AgentAvatarProps['shape'])}
-      />
-    </StoryBook>
+    <Flexbox horizontal align="center" gap={32} justify="center" padding={32} wrap="wrap">
+      <Flexbox align="center" flex="1 1 280px" gap={32}>
+        <AgentAvatar
+          animated
+          followPointer
+          {...value}
+          name={value.shape}
+          size={220}
+          state={state}
+        />
+        <Segmented
+          size="small"
+          value={state}
+          variant="filled"
+          options={AGENT_AVATAR_STATES.map((item) => ({
+            label: item[0].toUpperCase() + item.slice(1),
+            value: item,
+          }))}
+          onChange={setState}
+        />
+      </Flexbox>
+      <Flexbox
+        align="center"
+        flex="1 1 320px"
+        padding={16}
+        style={{ border: '1px solid var(--lobe-fill-border)', borderRadius: 16, maxWidth: 360 }}
+      >
+        <AgentAvatarPicker preview={false} value={value} onChange={setValue} />
+      </Flexbox>
+    </Flexbox>
   );
 };

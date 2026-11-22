@@ -1,25 +1,29 @@
-import * as stylex from '@stylexjs/stylex';
-import { render } from '@testing-library/react';
+import { fireEvent, render, waitFor } from '@testing-library/react';
+import { avatarFrame, computePose, validateAvatar } from 'open-bot-avatar';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import AgentAvatar from '../AgentAvatar';
-import { SHAPE_GEOMETRY } from '../shapes';
+import AgentAvatarPicker from '../AgentAvatarPicker';
+import { createAgentAvatarTab } from '../createAgentAvatarTab';
+import { drawEye, ellipsePath, LOGO_EYE } from '../eyes';
+import { REST_YAW, stateLook } from '../look';
+import { buildAgentAvatarScene, engineSeed } from '../scene';
+import { getShapeDefinition, SHAPE_GEOMETRY } from '../shapes';
 import { agentAvatarClasses } from '../stable';
-import { styles } from '../style';
+import { buildStillScene } from '../still';
+import { stillKey } from '../stillKey';
+import { AGENT_AVATAR_STILLS } from '../stills.generated';
 import {
   AGENT_AVATAR_COLORS,
   AGENT_AVATAR_SHAPES,
   AGENT_AVATAR_STATES,
-  GAZE_UNIT_RADIUS,
   getAgentAvatarTraits,
-  PUPIL_RATIO,
-  PUPIL_RATIO_SMALL,
-  STILL_GAZE,
 } from '../utils';
+import { parseAgentAvatar, stringifyAgentAvatar } from '../value';
 
 const root = (container: HTMLElement) => container.firstElementChild as SVGSVGElement;
-const body = (container: HTMLElement) =>
-  container.querySelector<SVGPathElement>(`.${agentAvatarClasses('body')}`)!;
+const part = (container: HTMLElement, name: 'badge' | 'body' | 'eyes' | 'thought') =>
+  container.querySelector<SVGGElement>(`.${agentAvatarClasses(name)}`);
 
 const mockReducedMotion = (matches: boolean) => {
   const original = window.matchMedia;
@@ -38,6 +42,15 @@ const mockReducedMotion = (matches: boolean) => {
   };
 };
 
+/** First point of an ellipse path, which is its leftmost point. */
+const leftOf = (d: string) =>
+  d
+    .match(/^M(-?[\d.]+) (-?[\d.]+)/)!
+    .slice(1)
+    .map(Number);
+
+const open = { arc: 0, blink: 0, gazeX: 0, gazeY: 0, slit: 0, squint: 0 };
+
 describe('AgentAvatar', () => {
   let restore: (() => void) | undefined;
   afterEach(() => {
@@ -45,7 +58,7 @@ describe('AgentAvatar', () => {
     restore = undefined;
   });
 
-  it('derives the same shape and color from the same seed', () => {
+  it('derives the same avatar from the same seed', () => {
     const first = render(<AgentAvatar seed="Writer" />);
     const second = render(<AgentAvatar seed="Writer" />);
     const a = root(first.container);
@@ -53,7 +66,9 @@ describe('AgentAvatar', () => {
 
     expect(a.dataset.shape).toBe(b.dataset.shape);
     expect(a.dataset.color).toBe(b.dataset.color);
-    expect(body(first.container).getAttribute('d')).toBe(body(second.container).getAttribute('d'));
+    expect(part(first.container, 'body')!.children.length).toBe(
+      part(second.container, 'body')!.children.length,
+    );
     expect(getAgentAvatarTraits('Writer')).toEqual(getAgentAvatarTraits('Writer'));
   });
 
@@ -77,7 +92,7 @@ describe('AgentAvatar', () => {
   it('spreads seeds over every shape and color', () => {
     const shapes = new Set<string>();
     const colors = new Set<string>();
-    for (let index = 0; index < 400; index++) {
+    for (let index = 0; index < 800; index++) {
       const traits = getAgentAvatarTraits(`agent-${index}`);
       shapes.add(traits.shape);
       colors.add(traits.color);
@@ -86,13 +101,23 @@ describe('AgentAvatar', () => {
     expect([...colors].sort()).toEqual([...AGENT_AVATAR_COLORS].sort());
   });
 
+  it('has valid single-outline geometry for every shape', () => {
+    expect(Object.keys(SHAPE_GEOMETRY).sort()).toEqual([...AGENT_AVATAR_SHAPES].sort());
+    for (const shape of AGENT_AVATAR_SHAPES) {
+      const result = validateAvatar(getShapeDefinition(shape));
+      expect(result.ok, `${shape}: ${result.ok ? '' : result.errors.join('; ')}`).toBe(true);
+      // Separate parts turn like cylinders and would carry the large eyes off their edge.
+      const subpaths = SHAPE_GEOMETRY[shape].d.match(/M/g)!.length;
+      expect(subpaths, shape).toBeLessThanOrEqual(shape === 'mug' ? 2 : 1);
+    }
+  });
+
   it('applies shape and color overrides', () => {
     const { container } = render(<AgentAvatar color="ink" seed="Writer" shape="cat" />);
     const svg = root(container);
 
     expect(svg.dataset.shape).toBe('cat');
     expect(svg.dataset.color).toBe('ink');
-    expect(body(container).getAttribute('d')).toBe(SHAPE_GEOMETRY.cat.d);
     expect(svg.style.getPropertyValue('--lobe-agent-avatar-color')).toBe('var(--lobe-gray-11)');
   });
 
@@ -112,75 +137,218 @@ describe('AgentAvatar', () => {
     expect(root(container).style.height).toBe('24px');
   });
 
-  it('shrinks the pupils at 24px and below', () => {
-    const { container, rerender } = render(<AgentAvatar seed="a" shape="face" size={64} />);
-    const pupilRadius = () => Number(container.querySelector('circle')!.getAttribute('r'));
-    const r = SHAPE_GEOMETRY.face.eyes.r;
-
-    expect(pupilRadius()).toBeCloseTo(r * PUPIL_RATIO, 1);
-    rerender(<AgentAvatar seed="a" shape="face" size={24} />);
-    expect(pupilRadius()).toBeCloseTo(r * PUPIL_RATIO_SMALL, 1);
-  });
-
-  it.each(AGENT_AVATAR_STATES)('renders the %s state', (state) => {
+  it.each(AGENT_AVATAR_STATES)('renders the %s state on the avatar itself', (state) => {
     const { container } = render(<AgentAvatar seed="Writer" state={state} />);
-    const svg = root(container);
 
-    expect(svg.dataset.state).toBe(state);
-    expect(container.querySelector(`.${agentAvatarClasses('eyes')}`)).not.toBeNull();
-    expect(container.querySelector(`.${agentAvatarClasses('badge')}`) !== null).toBe(
-      state === 'blocked',
-    );
-    expect(container.querySelector(`.${agentAvatarClasses('thought')}`) !== null).toBe(
-      state === 'thinking',
-    );
-    // `done` closes the eyes into arcs; every other state keeps the pupils.
-    expect(container.querySelectorAll('clipPath').length).toBe(state === 'done' ? 0 : 1);
+    expect(root(container).dataset.state).toBe(state);
+    expect(part(container, 'badge') !== null).toBe(state === 'blocked');
+    expect(part(container, 'thought') !== null).toBe(state === 'thinking');
+    expect(part(container, 'eyes')!.children.length).toBe(2);
+    expect(part(container, 'body')!.children.length).toBeGreaterThan(0);
   });
 
-  it('keeps the thinking pupils clear of the top of the eye whites', () => {
-    const [x, y] = STILL_GAZE.thinking;
-    for (const ratio of [PUPIL_RATIO, PUPIL_RATIO_SMALL]) {
-      // Distance between the pupil edge and the sclera edge, as a share of the sclera radius.
-      const clearance = 1 - ratio - Math.hypot(x, y) / GAZE_UNIT_RADIUS;
-      expect(clearance).toBeGreaterThanOrEqual(0.15);
+  it('never draws effects around the body', () => {
+    for (const state of AGENT_AVATAR_STATES) {
+      for (const time of [0, 1.3, 2.7, 5.1]) {
+        const scene = buildAgentAvatarScene('face', { look: stateLook(state, time), time });
+        expect(scene).not.toHaveProperty('back');
+        expect(scene).not.toHaveProperty('front');
+        expect(scene.body.length).toBeGreaterThan(0);
+        expect(scene.eyes).toHaveLength(2);
+      }
     }
+  });
+
+  it('faces right at rest', () => {
+    const definition = getShapeDefinition('face');
+    const eye = avatarFrame(definition, {
+      reducedMotion: true,
+      view: { pitch: 0, yaw: REST_YAW },
+    }).shapes.find((item) => item.key === 'eye-0')!;
+    // The face plane sits in front of the body, so a right turn moves it right.
+    expect(eye.matrix[4]).toBeGreaterThan(0);
+  });
+
+  it('widens the eyes and shrinks the pupils when blocked', () => {
+    const calm = drawEye(50, 50, 12, -1, open);
+    const wide = drawEye(50, 50, 12, -1, { ...open, wide: 1 });
+    expect(leftOf(wide.sclera!)[0]).toBeLessThan(leftOf(calm.sclera!)[0]);
+    const pupilWidth = (d: string) => Number(d.match(/A([\d.]+)/)![1]);
+    expect(pupilWidth(wide.pupil!)).toBeLessThan(pupilWidth(calm.pupil!));
+  });
+
+  it('draws the logo eye proportions with the pupils toward the nose', () => {
+    const rx = 12;
+    const left = drawEye(30, 50, rx, -1, open);
+    const right = drawEye(70, 50, rx, 1, open);
+    const [scleraX] = leftOf(left.sclera!);
+    const [leftPupilX, leftPupilY] = leftOf(left.pupil!);
+    const [rightPupilX] = leftOf(right.pupil!);
+    const pupilRx = rx * LOGO_EYE.pupilX;
+
+    expect(scleraX).toBeCloseTo(30 - rx, 1);
+    expect(leftPupilX + pupilRx).toBeCloseTo(30 + rx * LOGO_EYE.lookIn, 1);
+    expect(rightPupilX + pupilRx).toBeCloseTo(70 - rx * LOGO_EYE.lookIn, 1);
+    expect(leftPupilY).toBeCloseTo(50 + rx * LOGO_EYE.aspect * LOGO_EYE.lookDown, 1);
+  });
+
+  it('keeps the pupil inside the eye white at any gaze', () => {
+    const rx = 12;
+    const ry = rx * LOGO_EYE.aspect;
+    for (let index = 0; index < 32; index++) {
+      const angle = (index / 32) * Math.PI * 2;
+      for (const side of [-1, 1] as const) {
+        const eye = drawEye(50, 50, rx, side, {
+          ...open,
+          gazeX: Math.cos(angle),
+          gazeY: Math.sin(angle),
+        });
+        const [x, y] = leftOf(eye.pupil!);
+        const cx = x + rx * LOGO_EYE.pupilX - 50;
+        const cy = y - 50;
+        const reach = Math.hypot(
+          cx / (rx - rx * LOGO_EYE.pupilX),
+          cy / (ry - ry * LOGO_EYE.pupilY),
+        );
+        expect(reach).toBeLessThanOrEqual(0.95);
+      }
+    }
+  });
+
+  it('closes into a smile and lowers a flat lid', () => {
+    const happy = drawEye(50, 50, 12, -1, { ...open, arc: 1 });
+    expect(happy.sclera).toBeNull();
+    expect(happy.pupil).toBeNull();
+    expect(happy.smile).toContain('Q');
+
+    const lidded = drawEye(50, 50, 12, -1, { ...open, slit: 1 });
+    expect(lidded.sclera).not.toBe(drawEye(50, 50, 12, -1, open).sclera);
+    expect(ellipsePath(50, 50, 10, 10, 70)).toBeNull();
+  });
+
+  it('follows the pose of the engine for the blink', () => {
+    const definition = getShapeDefinition('face');
+    const seed = engineSeed(definition.id);
+    const height = (time: number) => {
+      const eye = avatarFrame(definition, { time }).shapes.find((item) => item.kind === 'eye')!;
+      return eye.kind === 'eye' && eye.mark.shape === 'pill' ? eye.mark.height : 0;
+    };
+    let rest = 0;
+    let blinks = 0;
+    for (let time = 0; time < 20; time += 0.02) {
+      if (computePose({ reducedMotion: false, seed, time }).blink === 0)
+        rest = Math.max(rest, height(time));
+    }
+    for (let time = 0; time < 20; time += 0.02) {
+      const { blink } = computePose({ reducedMotion: false, seed, time });
+      if (blink > 0.6) {
+        blinks++;
+        expect(height(time)).toBeLessThan(rest * 0.75);
+      }
+    }
+    expect(blinks).toBeGreaterThan(0);
+  });
+
+  it('draws the detached logo dots with the face', () => {
+    expect(buildStillScene('lobot', 'idle').extra).not.toBeNull();
+    expect(buildStillScene('lobot', 'blocked').extra).not.toBeNull();
+    expect(buildStillScene('face', 'idle').extra).toBeNull();
+    expect(
+      buildAgentAvatarScene('lobot', { look: stateLook('idle', 0, true), reducedMotion: true })
+        .extra,
+    ).not.toBeNull();
+  });
+
+  it('has a baked still in sync with every shape and the engine', () => {
+    for (const shape of AGENT_AVATAR_SHAPES) {
+      const still = AGENT_AVATAR_STILLS[shape];
+      expect(still.key, `${shape}: run pnpm run generate:agent-avatar`).toBe(stillKey(shape));
+      const scene = buildAgentAvatarScene(shape, {
+        look: stateLook('idle', 0, true),
+        reducedMotion: true,
+      });
+      expect(
+        scene.eyes.map((eye) => eye.transform),
+        shape,
+      ).toEqual(still.eyes);
+    }
+  });
+
+  it('keeps ink usable but out of the palette', () => {
+    expect(AGENT_AVATAR_COLORS).not.toContain('ink');
+    expect(parseAgentAvatar('agent-avatar:lobot:ink')).toEqual({ color: 'ink', shape: 'lobot' });
+  });
+
+  it('round-trips the string value', () => {
+    const value = { color: 'volcano', shape: 'rocket' } as const;
+    expect(stringifyAgentAvatar(value)).toBe('agent-avatar:rocket:volcano');
+    expect(parseAgentAvatar('agent-avatar:rocket:volcano')).toEqual(value);
+    for (const other of ['🤖', 'https://a.b/c.png', 'agent-avatar:nope:ink', 'agent-avatar:cat']) {
+      expect(parseAgentAvatar(other)).toBeUndefined();
+    }
+    expect(parseAgentAvatar()).toBeUndefined();
+  });
+
+  it('picks a shape and a color', () => {
+    const onChange = vi.fn();
+    const { getByRole, queryByRole } = render(
+      <AgentAvatarPicker preview={false} onChange={onChange} />,
+    );
+
+    fireEvent.click(getByRole('button', { name: 'Rocket' }));
+    expect(onChange).toHaveBeenLastCalledWith({ color: 'geekblue', shape: 'rocket' });
+    fireEvent.click(getByRole('button', { name: 'Teal' }));
+    expect(onChange).toHaveBeenLastCalledWith({ color: 'cyan', shape: 'rocket' });
+    expect(getByRole('button', { name: 'Rocket' }).getAttribute('aria-pressed')).toBe('true');
+    expect(queryByRole('button', { name: /use this/i })).toBeNull();
+  });
+
+  it('builds an EmojiPicker tab that applies each pick and stays open', () => {
+    const tab = createAgentAvatarTab();
+    const onPick = vi.fn();
+    const { getByRole } = render(<>{tab.render(onPick, 'agent-avatar:cat:green')}</>);
+
+    expect(getByRole('button', { name: 'Cat' }).getAttribute('aria-pressed')).toBe('true');
+    fireEvent.click(getByRole('button', { name: 'Rocket' }));
+    expect(onPick).toHaveBeenLastCalledWith('agent-avatar:rocket:green', { keepOpen: true });
+    expect(tab.renderValue?.('🤖', 40)).toBeUndefined();
+    expect(tab.renderValue?.('agent-avatar:cat:green', 40)).toBeTruthy();
   });
 
   it('is still when animated is false', () => {
     const { container } = render(<AgentAvatar seed="Writer" shape="cookie" state="working" />);
-    const svg = root(container);
-
-    expect(svg.dataset.animated).toBeUndefined();
-    expect(svg.style.getPropertyValue('--lobe-agent-avatar-delay')).toBe('');
-    const pupils = container.querySelector('circle')!.parentElement!;
-    // Cookie eyes use the reference radius, so the gaze is not rescaled.
-    expect(pupils.style.transform).toBe('translate(-2px, 3.4px)');
+    expect(root(container).dataset.animated).toBeUndefined();
+    expect(part(container, 'body')!.querySelector('path')).not.toBeNull();
+    expect(container.querySelector('use')).toBeNull();
   });
 
-  it('animates when animated is set and motion is allowed', () => {
+  it('shows the still pose first, then hands the layers to the painter and back', async () => {
     restore = mockReducedMotion(false);
-    const { container } = render(<AgentAvatar animated seed="Writer" state="thinking" />);
-    const svg = root(container);
-
-    expect(svg.dataset.animated).toBe('');
-    expect(svg.style.getPropertyValue('--lobe-agent-avatar-delay')).toMatch(/^-?[\d.]+s$/);
-    const dots = container.querySelectorAll<SVGCircleElement>(
-      `.${agentAvatarClasses('thought')} circle`,
+    const { container, rerender, unmount } = render(
+      <AgentAvatar animated seed="Writer" shape="face" />,
     );
-    expect(dots).toHaveLength(3);
-    expect(dots[1].style.animationDelay).toContain('0.35s');
+    const body = part(container, 'body')!;
+
+    expect(root(container).dataset.animated).toBe('');
+    expect(body.querySelector('path')).not.toBeNull();
+    await waitFor(() => expect(body.querySelectorAll('use').length).toBeGreaterThan(0));
+    expect(body.querySelector(':scope > path')).toBeNull();
+    expect(part(container, 'eyes')!.querySelectorAll('path').length).toBeGreaterThanOrEqual(4);
+
+    rerender(<AgentAvatar seed="Writer" shape="face" />);
+    expect(root(container).dataset.animated).toBeUndefined();
+    expect(body.querySelectorAll('use')).toHaveLength(0);
+    expect(body.querySelectorAll('path')).toHaveLength(1);
+    expect(container.querySelectorAll('defs path')).toHaveLength(0);
+    unmount();
   });
 
   it('respects prefers-reduced-motion', () => {
     restore = mockReducedMotion(true);
-    const { container } = render(<AgentAvatar animated seed="Writer" state="done" />);
-    const svg = root(container);
+    const { container } = render(<AgentAvatar animated followPointer seed="Writer" state="done" />);
 
-    expect(svg.dataset.animated).toBeUndefined();
-    expect(svg.style.getPropertyValue('--lobe-agent-avatar-delay')).toBe('');
-    // Only the closed-eye still pose is rendered, without the open eyes it animates from.
-    expect(container.querySelectorAll('clipPath')).toHaveLength(0);
+    expect(root(container).dataset.animated).toBeUndefined();
+    expect(part(container, 'eyes')!.querySelector('[stroke-linecap="round"]')).not.toBeNull();
   });
 
   it('forwards class names and styles to the semantic parts', () => {
@@ -196,8 +364,8 @@ describe('AgentAvatar', () => {
 
     expect(root(container).classList.contains(agentAvatarClasses.block)).toBe(true);
     expect(root(container).classList.contains('root-x')).toBe(true);
-    expect(body(container).classList.contains('body-x')).toBe(true);
-    expect(body(container).style.opacity).toBe('0.5');
+    expect(part(container, 'body')!.classList.contains('body-x')).toBe(true);
+    expect(part(container, 'body')!.style.opacity).toBe('0.5');
     expect(container.querySelector('.eyes-x')).not.toBeNull();
     expect(container.querySelector('.badge-x')).not.toBeNull();
   });
@@ -221,29 +389,23 @@ describe('AgentAvatar', () => {
 
     const seed = seeds.find((item) => getAgentAvatarTraits(item).tilt !== 0)!;
     const { tilt } = getAgentAvatarTraits(seed);
-    const first = render(<AgentAvatar seed={seed} />);
-    const second = render(<AgentAvatar seed={seed} />);
-    const lean = (container: HTMLElement) =>
-      root(container).querySelector(':scope > g[transform]')?.getAttribute('transform');
-
-    expect(lean(first.container)).toBe(`rotate(${tilt} 50 94)`);
-    expect(lean(second.container)).toBe(lean(first.container));
+    const { container } = render(<AgentAvatar seed={seed} />);
+    expect(root(container).querySelector(':scope > g[transform]')?.getAttribute('transform')).toBe(
+      `rotate(${tilt} 50 50)`,
+    );
   });
 
   it('does not tilt when tilt is false or the seeded tilt is zero', () => {
-    const tilted = Array.from({ length: 50 }, (_, index) => `agent-${index}`).find(
-      (seed) => getAgentAvatarTraits(seed).tilt !== 0,
-    )!;
-    const upright = Array.from({ length: 50 }, (_, index) => `agent-${index}`).find(
-      (seed) => getAgentAvatarTraits(seed).tilt === 0,
-    )!;
+    const seeds = Array.from({ length: 50 }, (_, index) => `agent-${index}`);
+    const tilted = seeds.find((seed) => getAgentAvatarTraits(seed).tilt !== 0)!;
+    const upright = seeds.find((seed) => getAgentAvatarTraits(seed).tilt === 0)!;
 
     for (const element of [
       <AgentAvatar key="off" seed={tilted} tilt={false} />,
       <AgentAvatar key="zero" seed={upright} />,
     ]) {
       const { container } = render(element);
-      expect(container.querySelector('[transform]')).toBeNull();
+      expect(root(container).querySelector(':scope > g[transform]')).toBeNull();
     }
   });
 
@@ -253,44 +415,9 @@ describe('AgentAvatar', () => {
     )!;
     for (const state of ['blocked', 'thinking'] as const) {
       const { container } = render(<AgentAvatar seed={seed} state={state} />);
-      const part = container.querySelector(
-        `.${agentAvatarClasses(state === 'blocked' ? 'badge' : 'thought')}`,
-      )!;
-      expect(part.parentElement).toBe(root(container));
-      expect(part.closest('[transform]')).toBeNull();
-    }
-  });
-
-  it('raises the cat thought bubbles to the top-left without a halo', () => {
-    const halo = stylex.props(styles.thoughtHalo).className!.split(' ');
-    const dots = (shape: 'cat' | 'face') => {
-      const { container } = render(<AgentAvatar seed="Writer" shape={shape} state="thinking" />);
-      return [
-        ...container.querySelectorAll<SVGCircleElement>(`.${agentAvatarClasses('thought')} circle`),
-      ];
-    };
-
-    const cat = dots('cat');
-    const catX = cat.map((dot) => Number(dot.getAttribute('cx')));
-    expect(catX[1]).toBeLessThan(catX[0]);
-    expect(catX[2]).toBeLessThan(catX[1]);
-    for (const dot of cat)
-      for (const name of halo) expect(dot.classList.contains(name)).toBe(false);
-
-    const face = dots('face');
-    const faceX = face.map((dot) => Number(dot.getAttribute('cx')));
-    expect(faceX[1]).toBeGreaterThan(faceX[0]);
-    for (const dot of face)
-      for (const name of halo) expect(dot.classList.contains(name)).toBe(true);
-  });
-
-  it('places the blocked badge inside the canvas for every shape', () => {
-    for (const shape of AGENT_AVATAR_SHAPES) {
-      const [x, y] = SHAPE_GEOMETRY[shape].badge;
-      expect(x - 9).toBeGreaterThanOrEqual(0);
-      expect(x + 9).toBeLessThanOrEqual(100);
-      expect(y - 9).toBeGreaterThanOrEqual(0);
-      expect(y + 9).toBeLessThanOrEqual(100);
+      const mark = part(container, state === 'blocked' ? 'badge' : 'thought')!;
+      expect(mark.parentElement).toBe(root(container));
+      expect(mark.querySelector('circle')).not.toBeNull();
     }
   });
 });
