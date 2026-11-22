@@ -31,6 +31,8 @@ export interface AgentAvatarScene {
 }
 
 export interface SceneOptions {
+  /** Volume amount, 0..14. The engine's default of 6 is the depth the stills are baked at. */
+  depth?: number;
   /** Look target from the pointer, with how strongly it applies. */
   gaze?: { weight?: number; x: number; y: number };
   look: AvatarLook;
@@ -59,14 +61,14 @@ const multiply = (m: readonly number[], n: readonly number[]): Matrix => [
 
 export const buildAgentAvatarScene = (
   shape: AgentAvatarShape,
-  { gaze, look, reducedMotion = false, time = 0 }: SceneOptions,
+  { depth, gaze, look, reducedMotion = false, time = 0 }: SceneOptions,
 ): AgentAvatarScene => {
   const definition = getShapeDefinition(shape);
   const { extra, eyes: placement } = SHAPE_GEOMETRY[shape];
   const follow = gaze?.weight ?? (gaze ? 1 : 0);
   // The engine drops its resting turn while following, so ours fades out with it.
   const view = { pitch: look.pitch, yaw: (1 - follow) * REST_YAW + look.yaw };
-  const input = { gaze, reducedMotion, state: 'idle', time, view } as const;
+  const input = { depth, gaze, reducedMotion, state: 'idle', time, view } as const;
   const frame = avatarFrame(definition, input);
   const pose = computePose({ ...input, seed: engineSeed(definition.id) });
   const root = multiply(lookMatrix(look), frame.root);
