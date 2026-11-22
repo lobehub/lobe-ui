@@ -47,12 +47,29 @@ import { awesomeLogoMarqueeClasses } from '@/awesome/LogoMarquee/stable';
 import { awesomeSpotlightClasses } from '@/awesome/Spotlight/stable';
 import { awesomeSpotlightCardClasses } from '@/awesome/SpotlightCard/stable';
 import { awesomeTypewriterEffectClasses } from '@/awesome/TypewriterEffect/stable';
-import { BrandLoading, LobeChat, LobeChatText, LobeHub, LobeHubText, Logo3d } from '@/brand';
+import {
+  BrandLoading,
+  LobeChat,
+  LobeChatText,
+  LobeHub,
+  LobeHubText,
+  Lobot,
+  LobotBrandLoading,
+  LobotBrandLoading3d,
+  LobotMono,
+  LobotText,
+  Logo3d,
+} from '@/brand';
 import { brandBrandLoadingClasses } from '@/brand/BrandLoading/stable';
 import { brandLobeChatClasses } from '@/brand/LobeChat/stable';
 import { brandLobeChatTextClasses } from '@/brand/LobeChatText/stable';
 import { brandLobeHubClasses } from '@/brand/LobeHub/stable';
 import { brandLobeHubTextClasses } from '@/brand/LobeHubText/stable';
+import { brandLobotClasses } from '@/brand/Lobot/stable';
+import { brandLobotBrandLoadingClasses } from '@/brand/LobotBrandLoading/stable';
+import { brandLobotBrandLoading3dClasses } from '@/brand/LobotBrandLoading3d/stable';
+import { brandLobotMonoClasses } from '@/brand/LobotMono/stable';
+import { brandLobotTextClasses } from '@/brand/LobotText/stable';
 import { brandLogo3dClasses } from '@/brand/Logo3d/stable';
 import {
   BackBottom,
@@ -436,6 +453,26 @@ export const SUBPATH_FIXTURES: Record<string, StableFixture> = {
   'brand/LobeHubText': {
     classes: brandLobeHubTextClasses,
     render: ({ className }) => <LobeHubText className={className} />,
+  },
+  'brand/Lobot': {
+    classes: brandLobotClasses,
+    render: ({ className }) => <Lobot className={className} extra="UI" type="combine" />,
+  },
+  'brand/LobotBrandLoading': {
+    classes: brandLobotBrandLoadingClasses,
+    render: ({ className }) => <LobotBrandLoading className={className} />,
+  },
+  'brand/LobotBrandLoading3d': {
+    classes: brandLobotBrandLoading3dClasses,
+    render: ({ className }) => <LobotBrandLoading3d className={className} />,
+  },
+  'brand/LobotMono': {
+    classes: brandLobotMonoClasses,
+    render: ({ className }) => <LobotMono className={className} />,
+  },
+  'brand/LobotText': {
+    classes: brandLobotTextClasses,
+    render: ({ className }) => <LobotText className={className} />,
   },
   'brand/Logo3d': {
     classes: brandLogo3dClasses,

@@ -1,0 +1,44 @@
+---
+title: LobotBrandLoading3d
+description: A faint gray Lobot loader with implied volume. It jumps with a full turn of the head, lands into a smile and looks around while its bubbles circle above, as a quiet placeholder for content that is on its way.
+category: Components
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoSizes from './demos/Sizes.tsx?demo';
+import { StableClassTable } from '../../../docs/stable-classes/StableClassTable';
+import { brandLobotBrandLoading3dClasses } from './stable';
+
+## Example
+
+Every part is a gray close to the page, in the light and the dark theme, so the loader sits in an empty area like a watermark. Use [LobotBrandLoading](/components/brand/lobot-brand-loading) when the brand mark itself should show.
+
+<Demo of={DemoIndex} />
+
+## Sizes
+
+`size` is the box. The mark rests in its lower part, and the jump and the bubbles stay inside it.
+
+<Demo of={DemoSizes} />
+
+## Motion
+
+The still mark renders first, also on the server. The volume engine of [AgentAvatar](/components/agent-avatar) loads on demand and takes over from it, and the loader stays still when reduced motion is preferred.
+
+## API
+
+<Api name="LobotBrandLoading3d" from=".." />
+
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `LobotBrandLoading3d`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/brand/LobotBrandLoading3d.css';
+```
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={brandLobotBrandLoading3dClasses} />

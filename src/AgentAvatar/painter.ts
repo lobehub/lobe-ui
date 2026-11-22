@@ -45,7 +45,16 @@ interface EyeNodes {
   smile: SVGPathElement;
 }
 
-export const createPainter = (layers: AgentAvatarLayers, idPrefix: string) => {
+export interface PainterEyeColors {
+  pupil: string;
+  sclera: string;
+}
+
+export const createPainter = (
+  layers: AgentAvatarLayers,
+  idPrefix: string,
+  eyeColors: PainterEyeColors = { pupil: PUPIL_COLOR, sclera: SCLERA_COLOR },
+) => {
   const defined = new Map<string, SVGPathElement>();
   const slices: SVGUseElement[] = [];
   const eyes: EyeNodes[] = [];
@@ -71,12 +80,12 @@ export const createPainter = (layers: AgentAvatarLayers, idPrefix: string) => {
     const group = create('g', layers.eyes);
     owned.push(group);
     const sclera = create('path', group);
-    sclera.setAttribute('fill', SCLERA_COLOR);
+    sclera.setAttribute('fill', eyeColors.sclera);
     const pupil = create('path', group);
-    pupil.setAttribute('fill', PUPIL_COLOR);
+    pupil.setAttribute('fill', eyeColors.pupil);
     const smile = create('path', group);
     smile.setAttribute('fill', 'none');
-    smile.setAttribute('stroke', SCLERA_COLOR);
+    smile.setAttribute('stroke', eyeColors.sclera);
     smile.setAttribute('stroke-linecap', 'round');
     return { group, pupil, sclera, smile };
   };

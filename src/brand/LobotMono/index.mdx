@@ -1,0 +1,31 @@
+---
+title: LobotMono
+description: Renders the Lobot mark, a black body with a white outline that stays readable on light and dark backgrounds.
+category: Components
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import { StableClassTable } from '../../../docs/stable-classes/StableClassTable';
+import { brandLobotMonoClasses } from './stable';
+
+## Example
+
+<Demo of={DemoIndex} />
+
+## API
+
+<Api name="LobotMono" from=".." />
+
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `LobotMono`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/brand/LobotMono.css';
+```
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={brandLobotMonoClasses} />
