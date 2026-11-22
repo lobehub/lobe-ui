@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version&nbsp;6.19.1](https://github.com/lobehub/lobe-ui/compare/v6.19.0...v6.19.1)
+
+<sup>Released on **2026-11-22**</sup>
+
+#### 💄 Styles
+
+- **modal**: The footer's cancel button is a fill button.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **modal**: The footer's cancel button is a fill button, closes [#809](https://github.com/lobehub/lobe-ui/issues/809) ([98450d6](https://github.com/lobehub/lobe-ui/commit/98450d6))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version&nbsp;6.19.0](https://github.com/lobehub/lobe-ui/compare/v6.18.0...v6.19.0)
 
 <sup>Released on **2026-11-22**</sup>
