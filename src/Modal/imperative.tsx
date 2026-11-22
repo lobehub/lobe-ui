@@ -77,7 +77,9 @@ const ConfirmBody = ({ config }: { config: ModalConfirmConfig }) => {
     <>
       {content && <div style={{ padding: '12px 16px' }}>{content}</div>}
       <ModalFooter>
-        <Button onClick={handleCancel}>{cancelText}</Button>
+        <Button type="fill" onClick={handleCancel}>
+          {cancelText}
+        </Button>
         <Button loading={loading} type="primary" {...okButtonProps} onClick={handleOk}>
           {okText}
         </Button>
