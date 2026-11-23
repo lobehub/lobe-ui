@@ -269,12 +269,14 @@ export type SelectItemIndicatorProps = ComponentProps<typeof Select.ItemIndicato
 export const SelectItemIndicator = ({ className, ...rest }: SelectItemIndicatorProps) => {
   return (
     <Select.ItemIndicator
-      className={
-        mergeStateClassName(
-          [styles.itemIndicator],
-          className,
-          selectClasses('item-indicator'),
-        ) as any
+      className={(state) =>
+        clsx(
+          styleProps(
+            [styles.itemIndicator, !state.selected && styles.itemIndicatorUnselected],
+            selectClasses('item-indicator'),
+          ).className,
+          typeof className === 'function' ? className(state) : className,
+        )
       }
       {...rest}
     />
