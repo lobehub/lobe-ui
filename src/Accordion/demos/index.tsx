@@ -1,5 +1,5 @@
-import { Accordion, type AccordionProps, ActionIcon, Flexbox } from '@lobehub/ui';
-import { PencilIcon, Trash2Icon } from 'lucide-react';
+import { Accordion, type AccordionProps, ActionIcon, DropdownMenu, Flexbox } from '@lobehub/ui';
+import { MoreHorizontalIcon, PencilIcon, Trash2Icon } from 'lucide-react';
 
 const items: AccordionProps['items'] = [
   {
@@ -13,9 +13,18 @@ const items: AccordionProps['items'] = [
       <>
         <ActionIcon icon={PencilIcon} size="small" title="Edit" />
         <ActionIcon icon={Trash2Icon} size="small" title="Delete" />
+        <DropdownMenu
+          items={[
+            { key: 'duplicate', label: 'Duplicate' },
+            { key: 'archive', label: 'Archive' },
+          ]}
+        >
+          <ActionIcon icon={MoreHorizontalIcon} size="small" title="More" />
+        </DropdownMenu>
       </>
     ),
-    children: 'Hover the header to reveal the actions on the right.',
+    children:
+      'Hover the header or focus it with the keyboard to reveal the actions on the right. They stay visible while the More menu is open, and hide once the pointer leaves after a click.',
     key: 'publish',
     title: 'Publish settings',
   },
