@@ -2,6 +2,39 @@
 
 # Changelog
 
+### [Version&nbsp;6.19.2](https://github.com/lobehub/lobe-ui/compare/v6.19.1...v6.19.2)
+
+<sup>Released on **2026-11-23**</sup>
+
+#### 🐛 Bug Fixes
+
+- **accordion**: Hide header actions after a mouse click moves away.
+
+#### 💄 Styles
+
+- **select**: Reserve the item indicator slot so trailing text aligns.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **accordion**: Hide header actions after a mouse click moves away, closes [#810](https://github.com/lobehub/lobe-ui/issues/810) ([3d51229](https://github.com/lobehub/lobe-ui/commit/3d51229))
+
+#### Styles
+
+- **select**: Reserve the item indicator slot so trailing text aligns ([f0bab08](https://github.com/lobehub/lobe-ui/commit/f0bab08))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version&nbsp;6.19.1](https://github.com/lobehub/lobe-ui/compare/v6.19.0...v6.19.1)
 
 <sup>Released on **2026-11-22**</sup>
