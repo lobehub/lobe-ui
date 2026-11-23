@@ -16,6 +16,18 @@ const endingStyle =
   ':is([data-ending-style]):not([style*="animation-name: none"], [style*="animation-name:none"])';
 const startingAnimationNone =
   ':is([data-starting-style]):is([style*="animation-name: none"], [style*="animation-name:none"])';
+/**
+ * Keep header actions visible while one of them owns an open popup (base-ui Menu, Popover and Select
+ * triggers set `aria-expanded="true"`), so the menu anchor never fades out. `data-popup-open` is not
+ * used because base-ui Tooltip triggers set it too. Scoped to the action container itself because the
+ * accordion trigger also carries `aria-expanded`.
+ */
+const actionPopupOpen = ':has([aria-expanded="true"])';
+/**
+ * `:focus-within` would also match the focus a mouse click leaves on an action button, pinning the
+ * actions visible after the pointer leaves. Only keyboard focus (`:focus-visible`) reveals them.
+ */
+const headerFocusVisible = ':has(:focus-visible)';
 const enabledHover = ':hover:not(:has([data-disabled]))';
 
 export const styles = stylex.create({
@@ -26,9 +38,10 @@ export const styles = stylex.create({
     display: 'flex',
     flexShrink: 0,
     opacity: {
+      [actionPopupOpen]: 1,
       default: 0,
-      [stylex.when.ancestor(':focus-within', accordionHeaderMarker)]: 1,
       [stylex.when.ancestor(':hover', accordionHeaderMarker)]: 1,
+      [stylex.when.ancestor(headerFocusVisible, accordionHeaderMarker)]: 1,
     },
   },
   actionAlwaysVisible: {

@@ -113,4 +113,45 @@ describe('Accordion', () => {
     expect(screen.getByText('Panel A')).toBeTruthy();
     expect(screen.getByText('Panel B')).toBeTruthy();
   });
+
+  describe('header action visibility', () => {
+    const renderWithAction = (action: React.ReactNode) =>
+      render(<Accordion items={[{ action, children: 'Panel', key: 'a', title: 'Item A' }]} />);
+    const opacityOf = (el: HTMLElement) =>
+      getComputedStyle(el.closest('.accordion-action')!).opacity;
+
+    test('stays visible while an action opens a popup', () => {
+      renderWithAction(
+        <button aria-expanded="true" aria-haspopup="menu" type="button">
+          Menu
+        </button>,
+      );
+
+      expect(opacityOf(screen.getByRole('button', { name: 'Menu' }))).toBe('1');
+    });
+
+    test('an open tooltip on an action does not pin the actions', () => {
+      renderWithAction(
+        <button data-popup-open="" type="button">
+          Edit
+        </button>,
+      );
+
+      expect(opacityOf(screen.getByRole('button', { name: 'Edit' }))).toBe('0');
+    });
+
+    test('expanded accordion trigger alone does not reveal actions', () => {
+      render(
+        <Accordion
+          defaultValue={['a']}
+          items={[{ action: <button type="button">More</button>, key: 'a', title: 'Item A' }]}
+        />,
+      );
+
+      expect(screen.getByRole('button', { name: 'Item A' }).getAttribute('aria-expanded')).toBe(
+        'true',
+      );
+      expect(opacityOf(screen.getByRole('button', { name: 'More' }))).toBe('0');
+    });
+  });
 });
