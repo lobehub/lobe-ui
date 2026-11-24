@@ -157,4 +157,13 @@ describe('Text', () => {
 
     expect(el.style.getPropertyValue('--shiny-duration')).toBe('3s');
   });
+
+  test('--shiny-rest-color replaces the dimmed resting color', () => {
+    renderText('Dimmed', { shiny: true });
+    expect(getComputedStyle(screen.getByText('Dimmed')).color).toContain('--shiny-rest-color');
+
+    renderText('Steady', { shiny: true, style: { '--shiny-rest-color': 'rgb(1, 2, 3)' } as any });
+    const steady = screen.getByText('Steady');
+    expect(steady.style.getPropertyValue('--shiny-rest-color')).toBe('rgb(1, 2, 3)');
+  });
 });
