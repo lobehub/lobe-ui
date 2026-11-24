@@ -14,6 +14,7 @@ export * from './AgentAvatar';
 export * from './Alert';
 export { default as Anchor } from './Anchor';
 export * from './Anchor';
+export { default as AnimatedNumber, type AnimatedNumberProps } from './AnimatedNumber';
 export * from './AutoComplete';
 export { default as Avatar } from './Avatar';
 export * from './Avatar';
@@ -68,6 +69,7 @@ export { default as CopyButton, type CopyButtonProps } from './CopyButton';
 export * from './DatePicker';
 export { default as Descriptions } from './Descriptions';
 export * from './Descriptions';
+export { default as DiffStat, type DiffStatKind, type DiffStatProps } from './DiffStat';
 export { default as Divider } from './Divider';
 export * from './Divider';
 export { default as DownloadButton, type DownloadButtonProps } from './DownloadButton';
@@ -128,8 +130,18 @@ export {
   type EditorSlashMenuItems,
   type EditorSlashMenuOption,
 } from './EditorSlashMenu';
+export {
+  default as ElapsedTime,
+  type ElapsedTimeFormat,
+  type ElapsedTimeProps,
+  type ElapsedTimeValue,
+  formatElapsed,
+  useElapsed,
+  type UseElapsedOptions,
+} from './ElapsedTime';
 export { default as EmojiPicker, type EmojiPickerProps } from './EmojiPicker';
 export { default as Empty, type EmptyProps } from './Empty';
+export { default as Favicon, type FaviconProps, getFaviconHost } from './Favicon';
 export { default as FileTypeIcon, type FileTypeIconProps } from './FileTypeIcon';
 export {
   Center,
@@ -146,6 +158,14 @@ export * from './FocusScope';
 export { default as FontLoader, type FontLoaderProps } from './FontLoader';
 export * from './Form';
 export { default as Freeze, type FreezeProps } from './Freeze';
+export {
+  default as GlideHighlight,
+  type GlideHighlightBox,
+  type GlideHighlightProps,
+  useGlideHighlight,
+  type UseGlideHighlightOptions,
+  type UseGlideHighlightResult,
+} from './GlideHighlight';
 export { installGlobalFocusRing } from './GlobalFocusRing';
 export { default as Grid, type GridProps } from './Grid';
 export { default as GroupAvatar, type GroupAvatarProps } from './GroupAvatar';

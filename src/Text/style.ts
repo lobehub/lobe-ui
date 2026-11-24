@@ -78,6 +78,8 @@ export const styles = stylex.create({
   // The sweep peaks at --shiny-color. Override it to match the static text the
   // shimmering label sits next to. currentColor cannot serve here: the dimmed
   // color declared below would feed back into the sweep overlay.
+  // --shiny-rest-color replaces the dimmed color between sweeps, for a label that
+  // has to keep the weight of the static text around it.
   shiny: {
     '--shiny-color': cssVar.colorText,
     '--shiny-duration': '1.5s',
@@ -89,7 +91,7 @@ export const styles = stylex.create({
     'backgroundImage':
       'linear-gradient(120deg, transparent 25%, var(--shiny-color) 50%, transparent 75%)',
     'backgroundSize': '200% 100%',
-    'color': 'color-mix(in srgb, var(--shiny-color) 28%, transparent)',
+    'color': 'var(--shiny-rest-color, color-mix(in srgb, var(--shiny-color) 28%, transparent))',
     'userSelect': 'none',
   },
   strong: {

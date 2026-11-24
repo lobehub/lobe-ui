@@ -3,8 +3,12 @@
 import clsx from 'clsx';
 import { type Key, memo, type MouseEvent, type NamedExoticComponent, useState } from 'react';
 
+import { styles as glideStyles } from '@/GlideHighlight/style';
+import { useGlideHighlight } from '@/GlideHighlight/useGlideHighlight';
 import { styleProps } from '@/styles/stylex/props';
 import { toDataAttributes } from '@/utils/bem';
+import { composeEventHandlers } from '@/utils/composeEventHandlers';
+import { useMergeRefs } from '@/utils/mergeRefs';
 
 import ListRow, { type ListRowXstyle } from './ListRow';
 import { listClasses } from './stable';
@@ -26,9 +30,14 @@ export const ListImpl = memo<ListProps & { itemXstyle?: ListRowXstyle }>(
     classNames,
     compact = false,
     defaultActiveKey,
+    glide = false,
     items,
     onActiveChange,
+    onBlurCapture,
     onClick,
+    onFocusCapture,
+    onMouseLeave,
+    onMouseOver,
     ref,
     selectable = false,
     styles: customStyles,
@@ -38,6 +47,22 @@ export const ListImpl = memo<ListProps & { itemXstyle?: ListRowXstyle }>(
   }) => {
     const [innerKey, setInnerKey] = useState<Key | undefined>(defaultActiveKey);
     const currentKey = activeKey === undefined ? innerKey : activeKey;
+
+    const glideState = useGlideHighlight<HTMLUListElement>({
+      disabled: !glide,
+      rowSelector: `.${listClasses('item')}`,
+    });
+    const mergedRef = useMergeRefs([glideState.containerRef, ref]);
+    // Without `glide` the caller's handlers pass through untouched.
+    const { containerProps } = glideState;
+    const glideHandlers = glide
+      ? {
+          onBlurCapture: composeEventHandlers(onBlurCapture, containerProps.onBlurCapture),
+          onFocusCapture: composeEventHandlers(onFocusCapture, containerProps.onFocusCapture),
+          onMouseLeave: composeEventHandlers(onMouseLeave, containerProps.onMouseLeave),
+          onMouseOver: composeEventHandlers(onMouseOver, containerProps.onMouseOver),
+        }
+      : { onBlurCapture, onFocusCapture, onMouseLeave, onMouseOver };
 
     const handleSelect = (item: ListItemType, domEvent: MouseEvent<HTMLElement>) => {
       const info = { domEvent, item, key: item.key };
@@ -51,15 +76,33 @@ export const ListImpl = memo<ListProps & { itemXstyle?: ListRowXstyle }>(
 
     return (
       <ul
-        ref={ref}
+        ref={mergedRef}
         role="list"
         className={
-          styleProps([styles.root, variantStyles[variant]], clsx(listClasses(), className))
-            .className
+          styleProps(
+            [styles.root, variantStyles[variant], glide && styles.glideRoot],
+            clsx(listClasses(), className),
+          ).className
         }
-        {...toDataAttributes({ compact, selectable, variant })}
+        {...toDataAttributes({ compact, glide, selectable, variant })}
         {...rest}
+        {...glideHandlers}
       >
+        {glide && (
+          <li
+            aria-hidden
+            role="presentation"
+            {...styleProps(
+              [
+                glideStyles.highlight,
+                glideState.gliding && glideStyles.gliding,
+                glideState.visible && glideStyles.visible,
+              ],
+              listClasses('glide'),
+              glideState.highlightStyle,
+            )}
+          />
+        )}
         {items.map((item, index) =>
           isDivider(item) ? (
             <li
@@ -72,6 +115,7 @@ export const ListImpl = memo<ListProps & { itemXstyle?: ListRowXstyle }>(
               active={currentKey !== undefined && currentKey !== null && item.key === currentKey}
               classNames={classNames}
               compact={compact}
+              glide={glide}
               item={item}
               key={item.key}
               styles={customStyles}

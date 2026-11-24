@@ -7,8 +7,8 @@ import { memo, type Ref, useMemo } from 'react';
 
 import A from '@/A';
 import Block from '@/Block';
+import Favicon from '@/Favicon';
 import { Flexbox } from '@/Flex';
-import Img from '@/Img';
 import Text from '@/Text';
 import { type AProps } from '@/types';
 
@@ -56,12 +56,11 @@ const SearchResultCard = memo<SearchResultCardProps>(({ ref, url, title, alt, ..
           {displayTitle}
         </Text>
         <Flexbox horizontal align={'center'} gap={4}>
-          <Img
+          <Favicon
             alt={alt || title || url}
-            className={searchResultCardsClasses('favicon')}
-            height={14}
-            src={`https://icons.duckduckgo.com/ip3/${host}.ico`}
-            width={14}
+            classNames={{ image: searchResultCardsClasses('favicon') }}
+            host={host}
+            size={14}
           />
           <Text
             ellipsis

@@ -66,6 +66,10 @@ export const styles = stylex.create({
     borderRadius: cssVar.borderRadiusLG,
     backgroundColor: cssVar.colorFillQuaternary,
   },
+  glideRoot: {
+    isolation: 'isolate',
+    position: 'relative',
+  },
   item: {
     position: 'relative',
   },
@@ -109,6 +113,10 @@ export const styles = stylex.create({
     textAlign: 'start',
     minHeight: 32,
     width: '100%',
+  },
+  // The shared glide layer draws the hover wash, so the row itself stays clear.
+  rowGlide: {
+    backgroundColor: { 'default': 'transparent', ':hover': 'transparent' },
   },
   showAction: {
     display: 'inline-flex',

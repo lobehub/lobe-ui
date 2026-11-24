@@ -12,12 +12,16 @@ import { breadcrumbClasses } from '@/Breadcrumb/stable';
 import { carouselClasses } from '@/Carousel/stable';
 import { collapsibleClasses } from '@/Collapsible/stable';
 import { descriptionsClasses } from '@/Descriptions/stable';
+import { diffStatClasses } from '@/DiffStat/stable';
 import { dividerClasses } from '@/Divider/stable';
 import { draggableSideNavClasses } from '@/DraggableSideNav/stable';
+import { elapsedTimeClasses } from '@/ElapsedTime/stable';
 import { emptyClasses } from '@/Empty/stable';
+import { faviconClasses } from '@/Favicon/stable';
 import { fileTypeIconClasses } from '@/FileTypeIcon/stable';
 import { centerClasses, flexClasses } from '@/Flex/stable';
 import { fluentEmojiClasses } from '@/FluentEmoji/stable';
+import { glideHighlightClasses } from '@/GlideHighlight/stable';
 import { gridClasses } from '@/Grid/stable';
 import { groupAvatarClasses } from '@/GroupAvatar/stable';
 import { guideCardClasses } from '@/GuideCard/stable';
@@ -40,12 +44,16 @@ import {
   Center,
   Collapsible,
   Descriptions,
+  DiffStat,
   Divider,
   DraggableSideNav,
+  ElapsedTime,
   Empty,
+  Favicon,
   FileTypeIcon,
   Flexbox,
   FluentEmoji,
+  GlideHighlight,
   Grid,
   GroupAvatar,
   GuideCard,
@@ -246,6 +254,16 @@ export const DISPLAY_FIXTURES: Record<string, StableFixture> = {
       />
     ),
   },
+  DiffStat: {
+    classes: diffStatClasses,
+    render: ({ className }) => (
+      <DiffStat additions={2} className={className} deletions={1} kind="modified" />
+    ),
+  },
+  ElapsedTime: {
+    classes: elapsedTimeClasses,
+    render: ({ className }) => <ElapsedTime className={className} />,
+  },
   Empty: {
     classes: emptyClasses,
     render: ({ className }) => (
@@ -257,6 +275,10 @@ export const DISPLAY_FIXTURES: Record<string, StableFixture> = {
         title="Title"
       />
     ),
+  },
+  Favicon: {
+    classes: faviconClasses,
+    render: ({ className }) => <Favicon className={className} host="example.com" />,
   },
   FileTypeIcon: {
     classes: fileTypeIconClasses,
@@ -270,6 +292,16 @@ export const DISPLAY_FIXTURES: Record<string, StableFixture> = {
   FluentEmoji: {
     classes: fluentEmojiClasses,
     render: ({ className }) => <FluentEmoji className={className} emoji="😀" type="raw" />,
+  },
+  GlideHighlight: {
+    classes: glideHighlightClasses,
+    render: ({ className }) => (
+      <GlideHighlight className={className}>
+        <button data-glide-row type="button">
+          Row
+        </button>
+      </GlideHighlight>
+    ),
   },
   Grid: {
     classes: gridClasses,
@@ -317,6 +349,7 @@ export const DISPLAY_FIXTURES: Record<string, StableFixture> = {
     classes: listClasses,
     render: ({ className }) => (
       <List
+        glide
         className={className}
         items={[
           {
