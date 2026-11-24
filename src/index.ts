@@ -146,6 +146,14 @@ export * from './FocusScope';
 export { default as FontLoader, type FontLoaderProps } from './FontLoader';
 export * from './Form';
 export { default as Freeze, type FreezeProps } from './Freeze';
+export {
+  default as GlideHighlight,
+  type GlideHighlightBox,
+  type GlideHighlightProps,
+  useGlideHighlight,
+  type UseGlideHighlightOptions,
+  type UseGlideHighlightResult,
+} from './GlideHighlight';
 export { installGlobalFocusRing } from './GlobalFocusRing';
 export { default as Grid, type GridProps } from './Grid';
 export { default as GroupAvatar, type GroupAvatarProps } from './GroupAvatar';

@@ -1,0 +1,42 @@
+---
+title: GlideHighlight
+description: A single hover layer that glides between the rows of a menu, list or tab strip instead of blinking on each one. It follows the pointer and keyboard focus.
+category: General
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import DemoHorizontal from './demos/horizontal.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { glideHighlightClasses } from './stable';
+
+## Basic
+
+Mark each row with `data-glide-row`. The highlight fades in on the first row it meets, then slides to the next one; rows need no hover background of their own.
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Horizontal
+
+The layer tracks position and size on both axes, so the same wrapper works for a row of tabs. Shape it through `styles.highlight` or the `--lobe-glide-highlight-radius` and `--lobe-glide-highlight-color` variables.
+
+<Demo of={DemoHorizontal} layout="bare" />
+
+## APIs
+
+<Api name="GlideHighlight" />
+
+`useGlideHighlight` returns the same tracking for a container you render yourself, such as a `ul`. Spread `containerProps` on the container, attach `containerRef`, and apply `highlightStyle` to an absolutely positioned layer.
+
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `GlideHighlight`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/GlideHighlight.css';
+```
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={glideHighlightClasses} />

@@ -18,6 +18,7 @@ import { emptyClasses } from '@/Empty/stable';
 import { fileTypeIconClasses } from '@/FileTypeIcon/stable';
 import { centerClasses, flexClasses } from '@/Flex/stable';
 import { fluentEmojiClasses } from '@/FluentEmoji/stable';
+import { glideHighlightClasses } from '@/GlideHighlight/stable';
 import { gridClasses } from '@/Grid/stable';
 import { groupAvatarClasses } from '@/GroupAvatar/stable';
 import { guideCardClasses } from '@/GuideCard/stable';
@@ -46,6 +47,7 @@ import {
   FileTypeIcon,
   Flexbox,
   FluentEmoji,
+  GlideHighlight,
   Grid,
   GroupAvatar,
   GuideCard,
@@ -271,6 +273,16 @@ export const DISPLAY_FIXTURES: Record<string, StableFixture> = {
     classes: fluentEmojiClasses,
     render: ({ className }) => <FluentEmoji className={className} emoji="😀" type="raw" />,
   },
+  GlideHighlight: {
+    classes: glideHighlightClasses,
+    render: ({ className }) => (
+      <GlideHighlight className={className}>
+        <button data-glide-row type="button">
+          Row
+        </button>
+      </GlideHighlight>
+    ),
+  },
   Grid: {
     classes: gridClasses,
     render: ({ className }) => (
@@ -317,6 +329,7 @@ export const DISPLAY_FIXTURES: Record<string, StableFixture> = {
     classes: listClasses,
     render: ({ className }) => (
       <List
+        glide
         className={className}
         items={[
           {

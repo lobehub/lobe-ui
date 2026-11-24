@@ -25,6 +25,7 @@ interface ListRowProps {
   active: boolean;
   classNames?: ListProps['classNames'];
   compact: boolean;
+  glide?: boolean;
   item: ListItemType;
   onSelect: (item: ListItemType, event: MouseEvent<HTMLElement>) => void;
   styles?: ListProps['styles'];
@@ -32,7 +33,7 @@ interface ListRowProps {
 }
 
 const ListRow = memo<ListRowProps>(
-  ({ active, classNames, compact, item, onSelect, styles: customStyles, xstyle }) => {
+  ({ active, classNames, compact, glide, item, onSelect, styles: customStyles, xstyle }) => {
     const { actions, avatar, danger, description, disabled, extra, href, icon, label, showAction } =
       item;
 
@@ -49,6 +50,7 @@ const ListRow = memo<ListRowProps>(
         focusRing.info,
         styles.row,
         compact && styles.compactRow,
+        glide && styles.rowGlide,
         active && styles.active,
         danger && styles.danger,
         disabled && styles.disabled,
