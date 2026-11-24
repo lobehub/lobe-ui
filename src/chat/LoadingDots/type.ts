@@ -13,6 +13,11 @@ export interface LoadingDotsProps {
    */
   color?: string;
   /**
+   * Space between two dots, in pixels. Has no effect on the `orbit` and `pulse` variants.
+   * @default 6
+   */
+  gap?: number;
+  /**
    * 点的大小（直径）
    * @default 8
    */

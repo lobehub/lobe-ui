@@ -8,6 +8,12 @@ export default () => {
       color: {
         value: '#1677ff',
       },
+      gap: {
+        max: 16,
+        min: 0,
+        step: 1,
+        value: 6,
+      },
       size: {
         max: 20,
         min: 4,
