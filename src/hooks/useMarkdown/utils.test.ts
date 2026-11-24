@@ -91,6 +91,39 @@ describe('transformCitations', () => {
       'Example `array[1]` $[2]$. This is a reference [#citation-3](citation-3)',
     );
   });
+
+  it('should not insert spaces into adjacent brackets inside inline code', () => {
+    const content = 'See `a[i][j]` and `matrix[0][1]` for indexing [1]';
+    expect(transformCitations(content, 1)).toBe(
+      'See `a[i][j]` and `matrix[0][1]` for indexing [#citation-1](citation-1)',
+    );
+  });
+
+  it('should not insert spaces into adjacent brackets inside fenced code blocks', () => {
+    const content = '```ts\nconst x = matrix[0][1];\n```\nCitation [1]';
+    expect(transformCitations(content, 1)).toBe(
+      '```ts\nconst x = matrix[0][1];\n```\nCitation [#citation-1](citation-1)',
+    );
+  });
+
+  it('should not split reference-style links', () => {
+    const content = 'See [docs][ref] and [1].\n\n[ref]: /docs';
+    expect(transformCitations(content, 1)).toBe(
+      'See [docs][ref] and [#citation-1](citation-1).\n\n[ref]: /docs',
+    );
+  });
+
+  it('should not split adjacent untransformed brackets', () => {
+    const content = 'Indexes [8][9] stay, citation [1]';
+    expect(transformCitations(content, 1)).toBe(
+      'Indexes [8][9] stay, citation [#citation-1](citation-1)',
+    );
+  });
+
+  it('should still separate an untransformed bracket directly before a generated citation link', () => {
+    const content = 'Values [9][1]';
+    expect(transformCitations(content, 1)).toBe('Values [9] [#citation-1](citation-1)');
+  });
 });
 
 describe('preprocessMarkdownContent', () => {
