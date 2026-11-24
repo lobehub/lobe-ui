@@ -5,6 +5,8 @@ import type { SpanProps } from '@/types';
 export interface FaviconProps extends Omit<SpanProps, 'children'> {
   /** Alternative text of the image. Empty by default, since a favicon is decoration next to a label. */
   alt?: string;
+  /** Class names of the inner parts. */
+  classNames?: { image?: string };
   /**
    * Shown when there is no usable host or the icon fails to load. Defaults to a globe.
    */

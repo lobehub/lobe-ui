@@ -20,6 +20,7 @@ import { defaultFaviconUrl, getFaviconHost } from './utils';
 const Favicon: FC<FaviconProps> = ({
   alt = '',
   className,
+  classNames,
   fallback,
   getIconUrl = defaultFaviconUrl,
   host,
@@ -63,7 +64,7 @@ const Favicon: FC<FaviconProps> = ({
           loading="lazy"
           src={iconUrl}
           width={size}
-          {...styleProps(styles.image, faviconClasses('image'))}
+          {...styleProps(styles.image, clsx(faviconClasses('image'), classNames?.image))}
           onError={() => setFailedUrl(iconUrl)}
         />
       )}
