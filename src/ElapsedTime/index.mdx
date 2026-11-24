@@ -1,0 +1,35 @@
+---
+title: ElapsedTime
+description: A live duration label for running work such as tool calls, tasks and generations. It ticks from a start time, freezes on an end time, and keeps a steady width.
+category: Data Display
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { elapsedTimeClasses } from './stable';
+
+## Basic
+
+Pass `startTime` so a remount does not restart the clock, and `endTime` once the work is done to show the final duration. `format="clock"` suits longer runs.
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+<Api name="ElapsedTime" />
+
+`useElapsed(startTime, { enabled, interval })` returns the elapsed milliseconds for a label you render yourself, and `formatElapsed(milliseconds, format)` formats them the same way the component does.
+
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `ElapsedTime`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/ElapsedTime.css';
+```
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={elapsedTimeClasses} />

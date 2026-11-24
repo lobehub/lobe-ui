@@ -387,6 +387,7 @@ export const EXEMPT: Record<string, string> = {
   'form/FormField': 'atom of form/Form',
   'form/FormList': 'atom of form/Form',
   'form/FormSubmitFooter': 'atom of form/Form',
+  'AnimatedNumber': 'renders a text node, no element',
   'AccordionHeader': 'atom of Accordion',
   'AccordionItem': 'atom of Accordion',
   'AccordionPanel': 'atom of Accordion',

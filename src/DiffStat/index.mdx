@@ -1,0 +1,33 @@
+---
+title: DiffStat
+description: A git-style line stat showing added and removed lines in green and red, optionally led by a dot for the kind of change. Use it on file rows, edit summaries and pull request lists.
+category: Data Display
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { diffStatClasses } from './stable';
+
+## Basic
+
+`hideZero` drops a side that is zero. `kind` adds a color-coded dot, which still shows when both counts are zero, as for a rename. With no counts and no kind, nothing renders.
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+<Api name="DiffStat" />
+
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `DiffStat`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/DiffStat.css';
+```
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={diffStatClasses} />

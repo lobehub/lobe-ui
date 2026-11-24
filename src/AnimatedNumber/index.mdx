@@ -1,0 +1,19 @@
+---
+title: AnimatedNumber
+description: A number that counts up or down to its new value whenever it changes, for token totals, costs and other live counters. It renders plain text and inherits the surrounding typography.
+category: Data Display
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+
+## Basic
+
+The first render shows the value as is; later changes ease to the new value. A change that lands mid-flight continues from the number on screen. `formatter` receives the in-flight value, which is fractional while it moves.
+
+<Demo of={DemoIndex} layout="bare" />
+
+## APIs
+
+<Api name="AnimatedNumber" />
+
+`AnimatedNumber` renders a text node with no wrapper, so it has no class names or styles of its own. With reduced motion preferred, the value updates without the transition.
