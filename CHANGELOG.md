@@ -2,6 +2,39 @@
 
 # Changelog
 
+### [Version&nbsp;6.21.1](https://github.com/lobehub/lobe-ui/compare/v6.21.0...v6.21.1)
+
+<sup>Released on **2026-11-25**</sup>
+
+#### 🐛 Bug Fixes
+
+- **accordion**: Keep outlined trigger height stable on expand.
+- **image**: Keep gallery arrows centered after clicking.
+- **markdown**: Keep adjacent brackets outside citation links intact.
+- **surface**: Match the table root by class instead of :has() in table bleed.
+- **misc**: Keep MarkdownTable copy button from jumping on press.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **accordion**: Keep outlined trigger height stable on expand, closes [#795](https://github.com/lobehub/lobe-ui/issues/795) ([d30317b](https://github.com/lobehub/lobe-ui/commit/d30317b))
+- **image**: Keep gallery arrows centered after clicking, closes [#816](https://github.com/lobehub/lobe-ui/issues/816) ([9de9ccf](https://github.com/lobehub/lobe-ui/commit/9de9ccf))
+- **markdown**: Keep adjacent brackets outside citation links intact, closes [#814](https://github.com/lobehub/lobe-ui/issues/814) ([ee4c8f9](https://github.com/lobehub/lobe-ui/commit/ee4c8f9))
+- **surface**: Match the table root by class instead of :has() in table bleed, closes [#791](https://github.com/lobehub/lobe-ui/issues/791) ([6cc82c1](https://github.com/lobehub/lobe-ui/commit/6cc82c1))
+- **misc**: Keep MarkdownTable copy button from jumping on press, closes [#658](https://github.com/lobehub/lobe-ui/issues/658) ([abf4417](https://github.com/lobehub/lobe-ui/commit/abf4417))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version&nbsp;6.21.0](https://github.com/lobehub/lobe-ui/compare/v6.20.0...v6.21.0)
 
 <sup>Released on **2026-11-25**</sup>
