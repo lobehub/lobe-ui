@@ -13,7 +13,7 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/create-github-app-token@v2
+      - uses: actions/create-github-app-token@v3
         id: app-token
         with:
           app-id: ${{ vars.LOBEHUB_BOT_APP_ID }}
@@ -21,7 +21,7 @@ jobs:
 
       # Earlier jobs have already pushed their release commits, so check out the
       # branch tip rather than the SHA that triggered the run.
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           token: ${{ steps.app-token.outputs.token }}
           fetch-depth: 0
@@ -31,9 +31,9 @@ jobs:
         uses: pnpm/action-setup@v6
 
       - name: Setup Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
-          node-version: 22
+          node-version: 26
 
       - name: Install deps
         run: pnpm install
