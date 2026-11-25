@@ -3,7 +3,7 @@ import { stableClasses } from '@/utils/bem';
 export const checkboxClasses = stableClasses({
   block: 'checkbox',
   dataAttributes: ['shape'],
-  elements: ['checkbox', 'indicator', 'text'],
+  elements: ['checkbox', 'control', 'indicator', 'text'],
 });
 
 export const checkboxGroupClasses = stableClasses({

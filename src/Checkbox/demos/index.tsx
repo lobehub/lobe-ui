@@ -1,4 +1,4 @@
-import { Checkbox, CheckboxGroup,Flexbox  } from '@lobehub/ui';
+import { Checkbox, CheckboxGroup, Flexbox } from '@lobehub/ui';
 import { useState } from 'react';
 
 export default () => {
@@ -16,6 +16,9 @@ export default () => {
         Disabled
       </Checkbox>
       <Checkbox size={20}>Bigger box</Checkbox>
+      <Checkbox style={{ maxWidth: 320 }}>
+        A long label wraps onto several lines while the box stays centred on the first line
+      </Checkbox>
       <CheckboxGroup options={['apple', 'banana', 'cherry']} value={fruits} onChange={setFruits} />
     </Flexbox>
   );
