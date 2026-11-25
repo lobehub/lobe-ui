@@ -49,7 +49,7 @@ export interface UseFlipTransitionResult {
   imageRef: (node: HTMLImageElement | null) => void;
   isClosing: () => boolean;
   isTransitioning: () => boolean;
-  switchTo: (apply: () => void, direction?: 1 | -1) => void;
+  switchTo: (apply: () => void, direction?: 1 | -1 | 'instant') => void;
 }
 
 const measureSource = (element: HTMLImageElement): DOMRect | null => {
@@ -333,10 +333,18 @@ export const useFlipTransition = ({
   );
 
   const switchTo = useCallback(
-    (apply: () => void, direction?: 1 | -1) => {
+    (apply: () => void, direction?: 1 | -1 | 'instant') => {
       if (closingRef.current) return;
       stopAll();
       removeGhost();
+      if (direction === 'instant') {
+        apply();
+        opacity.image.jump(1);
+        opacity.backdrop.jump(1);
+        opacity.chrome.jump(1);
+        transitioningRef.current = false;
+        return;
+      }
       transitioningRef.current = true;
 
       const markSettled = () => {

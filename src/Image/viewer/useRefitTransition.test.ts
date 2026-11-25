@@ -25,6 +25,7 @@ const setup = (overrides: Partial<UseRefitTransitionOptions> = {}) => {
   const y = motionValue(0);
   const options: UseRefitTransitionOptions = {
     animated: true,
+    imageIndex: 0,
     isTransitioning: () => false,
     natural: { height: 320, width: 480 },
     rotation: 0,

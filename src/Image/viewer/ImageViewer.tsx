@@ -55,8 +55,20 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
   currentEntryRef.current = currentEntry;
 
   const [source, setSource] = useState(openerEntry.src);
-  const [natural, setNatural] = useState<Size>(() => readNatural(openerEntry.element));
+  const [{ animateRefit, natural }, setNaturalState] = useState(() => ({
+    animateRefit: true,
+    natural: readNatural(openerEntry.element),
+  }));
   const [viewport, setViewport] = useState<Size>(readViewport);
+
+  const pendingKeyboardLoad = useRef<number | null>(null);
+  const selectGalleryImage = useCallback((nextIndex: number, snapFirstLoad: boolean) => {
+    pendingKeyboardLoad.current = snapFirstLoad ? nextIndex : null;
+    setCurrentIndex(nextIndex);
+  }, []);
+  const setNatural = useCallback((next: Size) => {
+    setNaturalState({ animateRefit: true, natural: next });
+  }, []);
 
   const closeRef = useRef<(() => void) | null>(null);
   const requestClose = useCallback(() => closeRef.current?.(), []);
@@ -162,8 +174,9 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
   isTransitioningIndirectRef.current = isTransitioning;
 
   useRefitTransition({
-    animated,
+    animated: animated && animateRefit,
     fillViewport,
+    imageIndex: currentIndex,
     isTransitioning,
     natural,
     rotation,
@@ -215,7 +228,7 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
     zoomOut,
   });
 
-  const { hasNext, hasPrev, next, prev } = useGalleryNav({
+  const { handleKeyDown, hasNext, hasPrev, next, prev } = useGalleryNav({
     cancelPendingClose: gestures.cancelPendingClose,
     currentIndex,
     entries,
@@ -225,7 +238,7 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
     resetCloseTracking,
     rotate,
     scale,
-    setCurrentIndex,
+    setCurrentIndex: selectGalleryImage,
     setNatural,
     setSource,
     switchTo,
@@ -243,12 +256,18 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
       const loaded = event.currentTarget;
       if (!loaded.naturalWidth || !loaded.naturalHeight) return;
       const next = { height: loaded.naturalHeight, width: loaded.naturalWidth };
-      setNatural((prev) =>
-        prev.width === next.width && prev.height === next.height ? prev : next,
+      // A keyboard switch can use a fallback size until the image loads.
+      // Snap this first fit and let subsequent preview upgrades refit normally.
+      const firstKeyboardLoad = pendingKeyboardLoad.current === currentIndex;
+      if (firstKeyboardLoad) pendingKeyboardLoad.current = null;
+      setNaturalState((prev) =>
+        prev.natural.width === next.width && prev.natural.height === next.height
+          ? prev
+          : { animateRefit: !firstKeyboardLoad, natural: next },
       );
       syncZoomNatural(next);
     },
-    [syncZoomNatural],
+    [currentIndex, syncZoomNatural],
   );
 
   useEffect(() => {
@@ -311,6 +330,8 @@ const ImageViewer = memo<ImageViewerProps>(({ entries, index, openerFocusElement
           style={zIndex === undefined ? undefined : { zIndex: zIndex + 1 }}
           tabIndex={-1}
           onClick={gestures.onSurfaceClick}
+          // Base UI stops the arrow keys here before they can reach document.
+          onKeyDown={handleKeyDown}
           onPointerCancel={gestures.onPointerFinish}
           onPointerDown={gestures.onPointerDown}
           onPointerMove={gestures.onPointerMove}
