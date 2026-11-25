@@ -44,6 +44,35 @@ describe('dialog initial focus', () => {
     await waitFor(() => expect(document.activeElement).toBe(screen.getByLabelText('Name')));
   });
 
+  // Without a close button ahead of it, the field was the first tabbable element and got focus
+  // on open; a rename or prompt dialog has to stay ready to type into.
+  test('Modal without a close button still focuses its leading text field', async () => {
+    renderWithProvider(
+      <Modal open closable={false} footer={null} title="Rename">
+        <input aria-label="Name" />
+      </Modal>,
+    );
+    await waitFor(() => expect(document.activeElement).toBe(screen.getByLabelText('Name')));
+  });
+
+  test('Modal with a close button ahead of a text field focuses the popup', async () => {
+    renderWithProvider(
+      <Modal open footer={null} title="Rename">
+        <input aria-label="Name" />
+      </Modal>,
+    );
+    await expectPopupFocused();
+  });
+
+  test('Modal without a close button does not focus a leading action button', async () => {
+    renderWithProvider(
+      <Modal open closable={false} title="Confirm">
+        Body
+      </Modal>,
+    );
+    await waitFor(() => expect(document.activeElement).toBe(getPopup()));
+  });
+
   test('Drawer focuses the popup instead of the close button on open', async () => {
     renderWithProvider(<Drawer open title="Settings" />);
     await expectPopupFocused();
