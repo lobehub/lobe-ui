@@ -31,6 +31,9 @@ export const styles = stylex.create({
     paddingInline: 16,
     alignItems: 'center',
     cursor: 'grab',
+    /* Stops the browser claiming the vertical gesture as a scroll, which would fire
+       pointercancel and kill the drag. */
+    touchAction: 'none',
     display: 'flex',
     flexDirection: 'column',
     flexShrink: 0,
