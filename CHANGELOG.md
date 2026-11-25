@@ -2,6 +2,43 @@
 
 # Changelog
 
+## [Version&nbsp;6.22.0](https://github.com/lobehub/lobe-ui/compare/v6.21.1...v6.22.0)
+
+<sup>Released on **2026-11-25**</sup>
+
+#### ✨ Features
+
+- **image**: Switch gallery images instantly with arrow keys.
+
+#### 🐛 Bug Fixes
+
+- **floating-sheet**: Make FloatingSheet draggable by touch.
+- **mobile**: Size ChatHeader to its container instead of the viewport.
+- **modal**: Focus the dialog popup on open instead of the close button.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **image**: Switch gallery images instantly with arrow keys, closes [#815](https://github.com/lobehub/lobe-ui/issues/815) ([4681ae3](https://github.com/lobehub/lobe-ui/commit/4681ae3))
+
+#### What's fixed
+
+- **floating-sheet**: Make FloatingSheet draggable by touch, closes [#597](https://github.com/lobehub/lobe-ui/issues/597) ([c65590e](https://github.com/lobehub/lobe-ui/commit/c65590e))
+- **mobile**: Size ChatHeader to its container instead of the viewport, closes [#617](https://github.com/lobehub/lobe-ui/issues/617) ([94ee32e](https://github.com/lobehub/lobe-ui/commit/94ee32e))
+- **modal**: Focus the dialog popup on open instead of the close button, closes [#794](https://github.com/lobehub/lobe-ui/issues/794) ([bffc9e8](https://github.com/lobehub/lobe-ui/commit/bffc9e8))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version&nbsp;6.21.1](https://github.com/lobehub/lobe-ui/compare/v6.21.0...v6.21.1)
 
 <sup>Released on **2026-11-25**</sup>
