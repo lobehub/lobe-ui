@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version&nbsp;6.22.1](https://github.com/lobehub/lobe-ui/compare/v6.22.0...v6.22.1)
+
+<sup>Released on **2026-11-25**</sup>
+
+#### 🐛 Bug Fixes
+
+- **checkbox**: Centre the box on the first line of a wrapped label.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **checkbox**: Centre the box on the first line of a wrapped label, closes [#819](https://github.com/lobehub/lobe-ui/issues/819) ([807e64e](https://github.com/lobehub/lobe-ui/commit/807e64e))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version&nbsp;6.22.0](https://github.com/lobehub/lobe-ui/compare/v6.21.1...v6.22.0)
 
 <sup>Released on **2026-11-25**</sup>
