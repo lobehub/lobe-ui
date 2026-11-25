@@ -88,7 +88,14 @@ const Checkbox = memo<CheckboxProps>(
           ...customStyles?.wrapper,
         })}
       >
-        {box}
+        <span
+          {...styleProps(styles.control, checkboxClasses('control'), {
+            fontSize: customStyles?.text?.fontSize ?? textProps?.fontSize,
+            lineHeight: customStyles?.text?.lineHeight ?? textProps?.lineHeight,
+          })}
+        >
+          {box}
+        </span>
         <Text
           as={'span'}
           className={clsx(checkboxClasses('text'), classNames?.text)}

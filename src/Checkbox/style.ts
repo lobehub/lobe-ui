@@ -37,9 +37,16 @@ export const styles = stylex.create({
     display: 'flex',
     justifyContent: 'center',
   },
+  // Sized to the text's first line (`1lh`) so the box centres on that line, not the whole label.
+  control: {
+    flex: 'none',
+    alignItems: 'center',
+    display: 'inline-flex',
+    minHeight: '1lh',
+  },
   label: {
     gap: 8,
-    alignItems: 'center',
+    alignItems: 'flex-start',
     cursor: { 'default': 'pointer', ':has([data-disabled])': 'not-allowed' },
     display: 'inline-flex',
     userSelect: 'none',
@@ -74,6 +81,7 @@ export const styles = stylex.create({
 
 export const checkboxStyles = {
   circle: stylex.props(styles.circle).className ?? '',
+  control: stylex.props(styles.control).className ?? '',
   defaultSize: stylex.props(styles.defaultSize).className ?? '',
   defaultSquare: stylex.props(styles.defaultSquare).className ?? '',
   group: stylex.props(styles.group).className ?? '',
