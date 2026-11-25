@@ -244,11 +244,167 @@ describe('gallery navigation', () => {
     expect(getCounter()?.textContent).toBe('2 / 3');
   });
 
-  it('navigates with ArrowLeft/ArrowRight and stops at the ends', () => {
+  it('navigates with ArrowLeft/ArrowRight immediately, including across different image sizes', () => {
     renderWithMotion(
       <PreviewGroup>
         <ImageComponent alt="a" src="https://example.com/a.png" />
         <ImageComponent alt="b" src="https://example.com/b.png" />
+      </PreviewGroup>,
+    );
+    stubThumbnail('a');
+    stubThumbnail('b', { height: 600, width: 300 });
+
+    clickThumbnail('a');
+    settle();
+
+    fireEvent.keyDown(document, { key: 'ArrowRight' });
+    expect(getCounter()?.textContent).toBe('1 / 2');
+    fireEvent.keyDown(getPopup() as HTMLElement, { ctrlKey: true, key: 'ArrowRight' });
+    expect(getCounter()?.textContent).toBe('1 / 2');
+    fireEvent.keyDown(getPopup() as HTMLElement, { key: 'ArrowLeft' });
+    expect(getCounter()?.textContent).toBe('1 / 2');
+
+    fireEvent.keyDown(getPopup() as HTMLElement, { key: 'ArrowRight' });
+    expect(getCounter()?.textContent).toBe('2 / 2');
+    expect(document.querySelector('[data-ghost]')).toBeNull();
+    expect(getViewerImage()?.getAttribute('src')).toBe('https://example.com/b.png');
+    expect(getViewerImage()?.style.transform).toBe(
+      'translate3d(0px, 0px, 0) scale(1) rotate(0deg) scaleX(1) scaleY(1)',
+    );
+    expect(getViewerImage()?.style.width).toBe('300px');
+    expect(motionMock.pending.filter(({ stopped }) => !stopped)).toHaveLength(0);
+
+    fireEvent.keyDown(getPopup() as HTMLElement, { key: 'ArrowRight' });
+    expect(getCounter()?.textContent).toBe('2 / 2');
+    fireEvent.keyDown(getPopup() as HTMLElement, { key: 'ArrowLeft' });
+    expect(getViewerImage()?.getAttribute('src')).toBe('https://example.com/a.png');
+  });
+
+  it('removes a running mouse slide immediately when a keyboard switch takes over', () => {
+    renderWithMotion(
+      <PreviewGroup>
+        <ImageComponent alt="a" src="https://example.com/a.png" />
+        <ImageComponent alt="b" src="https://example.com/b.png" />
+        <ImageComponent alt="c" src="https://example.com/c.png" />
+      </PreviewGroup>,
+    );
+    stubThumbnail('a');
+    stubThumbnail('b');
+    stubThumbnail('c');
+
+    clickThumbnail('a');
+    settle();
+
+    fireEvent.click(getNextButton() as HTMLElement);
+    expect(document.querySelectorAll('[data-ghost]')).toHaveLength(1);
+
+    fireEvent.keyDown(getPopup() as HTMLElement, { key: 'ArrowRight' });
+    expect(getCounter()?.textContent).toBe('3 / 3');
+    expect(document.querySelector('[data-ghost]')).toBeNull();
+    expect(getViewerImage()?.getAttribute('src')).toBe('https://example.com/c.png');
+    expect(motionMock.pending.filter(({ stopped }) => !stopped)).toHaveLength(0);
+  });
+
+  it('keeps the current image while the More menu handles arrow keys', () => {
+    renderWithMotion(
+      <PreviewGroup>
+        <ImageComponent alt="a" src="https://example.com/a.png" />
+        <ImageComponent alt="b" src="https://example.com/b.png" />
+        <ImageComponent alt="c" src="https://example.com/c.png" />
+      </PreviewGroup>,
+    );
+    for (const alt of ['a', 'b', 'c']) stubThumbnail(alt);
+
+    clickThumbnail('b');
+    settle();
+
+    const popup = getPopup() as HTMLElement;
+    const trigger = popup.querySelector<HTMLButtonElement>('[aria-haspopup="menu"]')!;
+    fireEvent.click(trigger);
+    expect(trigger.getAttribute('aria-expanded')).toBe('true');
+    const item = screen.getAllByRole('menuitem')[0];
+    expect(popup.contains(item)).toBe(true);
+
+    fireEvent.keyDown(trigger, { key: 'ArrowRight' });
+    expect(getCounter()?.textContent).toBe('2 / 3');
+    fireEvent.keyDown(item, { key: 'ArrowRight' });
+    expect(getCounter()?.textContent).toBe('2 / 3');
+    fireEvent.keyDown(item, { key: 'ArrowLeft' });
+    expect(getCounter()?.textContent).toBe('2 / 3');
+  });
+
+  it.each([
+    ['ArrowLeft', '2 / 4', 'b'],
+    ['ArrowRight', '4 / 4', 'd'],
+  ])('handles %s immediately during a reduced-motion pointer fade', (key, count, alt) => {
+    vi.stubGlobal(
+      'matchMedia',
+      vi.fn(() => ({ matches: true })),
+    );
+    renderWithMotion(
+      <PreviewGroup>
+        <ImageComponent alt="a" src="https://example.com/a.png" />
+        <ImageComponent alt="b" src="https://example.com/b.png" />
+        <ImageComponent alt="c" src="https://example.com/c.png" />
+        <ImageComponent alt="d" src="https://example.com/d.png" />
+      </PreviewGroup>,
+    );
+    for (const alt of ['a', 'b', 'c', 'd']) stubThumbnail(alt);
+
+    clickThumbnail('b');
+    settle();
+
+    fireEvent.click(getNextButton() as HTMLElement);
+    expect(getCounter()?.textContent).toBe('2 / 4');
+
+    fireEvent.keyDown(getPopup() as HTMLElement, { key });
+    expect(getCounter()?.textContent).toBe(count);
+    expect(getViewerImage()?.alt).toBe(alt);
+    expect(motionMock.pending.filter(({ stopped }) => !stopped)).toHaveLength(0);
+
+    settle();
+    expect(getCounter()?.textContent).toBe(count);
+  });
+
+  it('fits a keyboard-selected image on its first load and animates a later preview upgrade', () => {
+    renderWithMotion(
+      <PreviewGroup>
+        <ImageComponent alt="a" src="https://example.com/a.png" />
+        <ImageComponent
+          alt="b"
+          preview={{ src: 'https://example.com/b-hd.png' }}
+          src="https://example.com/b.png"
+        />
+      </PreviewGroup>,
+    );
+    stubThumbnail('a');
+    stubThumbnail('b', { height: 0, width: 0 });
+
+    clickThumbnail('a');
+    settle();
+
+    fireEvent.keyDown(getPopup() as HTMLElement, { key: 'ArrowRight' });
+    const image = getViewerImage() as HTMLImageElement;
+    expect(image.getAttribute('src')).toBe('https://example.com/b.png');
+
+    stubNatural(image, 1200, 675);
+    fireEvent.load(image);
+    expect(image.style.width).toBe('976px');
+    expect(motionMock.pending.filter(({ stopped }) => !stopped)).toHaveLength(0);
+
+    FakePreloader.instances[0].emit('load');
+    expect(image.getAttribute('src')).toBe('https://example.com/b-hd.png');
+    stubNatural(image, 900, 1200);
+    fireEvent.load(image);
+    expect(motionMock.pending.some(({ stopped }) => !stopped)).toBe(true);
+  });
+
+  it('animates a preview upgrade after selecting an already loaded shared thumbnail', () => {
+    const thumbnail = 'https://example.com/shared.png';
+    renderWithMotion(
+      <PreviewGroup>
+        <ImageComponent alt="a" src={thumbnail} />
+        <ImageComponent alt="b" preview={{ src: 'https://example.com/b-hd.png' }} src={thumbnail} />
       </PreviewGroup>,
     );
     stubThumbnail('a');
@@ -257,18 +413,17 @@ describe('gallery navigation', () => {
     clickThumbnail('a');
     settle();
 
-    fireEvent.keyDown(document, { key: 'ArrowLeft' });
-    settle();
-    expect(getCounter()?.textContent).toBe('1 / 2');
+    fireEvent.keyDown(getPopup() as HTMLElement, { key: 'ArrowRight' });
+    const image = getViewerImage() as HTMLImageElement;
+    expect(image.alt).toBe('b');
+    expect(image.getAttribute('src')).toBe(thumbnail);
 
-    fireEvent.keyDown(document, { key: 'ArrowRight' });
-    settle();
-    expect(getCounter()?.textContent).toBe('2 / 2');
-    expect(getViewerImage()?.getAttribute('src')).toBe('https://example.com/b.png');
-
-    fireEvent.keyDown(document, { key: 'ArrowRight' });
-    settle();
-    expect(getCounter()?.textContent).toBe('2 / 2');
+    // The same loaded src is reused, so the first new load is the upgrade.
+    FakePreloader.instances[0].emit('load');
+    expect(image.getAttribute('src')).toBe('https://example.com/b-hd.png');
+    stubNatural(image, 900, 1200);
+    fireEvent.load(image);
+    expect(motionMock.pending.some(({ stopped }) => !stopped)).toBe(true);
   });
 
   it('slides the switch: outgoing ghost exits while the incoming image pushes in from the side', () => {
@@ -502,7 +657,7 @@ describe('gallery navigation', () => {
       vi.advanceTimersByTime(100);
     });
 
-    fireEvent.keyDown(document, { key: 'ArrowRight' });
+    fireEvent.keyDown(getPopup() as HTMLElement, { key: 'ArrowRight' });
     settle();
 
     act(() => {

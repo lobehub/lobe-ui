@@ -8,6 +8,7 @@ import { OPEN_SPRING } from './useFlipTransition';
 export interface UseRefitTransitionOptions {
   animated: boolean;
   fillViewport?: boolean;
+  imageIndex: number;
   isTransitioning: () => boolean;
   natural: Size;
   rotation: Rotation;
@@ -20,6 +21,7 @@ export interface UseRefitTransitionOptions {
 export const useRefitTransition = ({
   animated,
   fillViewport,
+  imageIndex,
   isTransitioning,
   natural,
   rotation,
@@ -28,11 +30,12 @@ export const useRefitTransition = ({
   x,
   y,
 }: UseRefitTransitionOptions): void => {
-  const naturalRef = useRef(natural);
+  const previous = useRef({ imageIndex, natural });
 
   useLayoutEffect(() => {
-    const previousNatural = naturalRef.current;
-    naturalRef.current = natural;
+    const { imageIndex: previousIndex, natural: previousNatural } = previous.current;
+    previous.current = { imageIndex, natural };
+    if (previousIndex !== imageIndex) return;
     if (previousNatural.width === natural.width && previousNatural.height === natural.height)
       return;
     if (!animated) return;
@@ -75,5 +78,16 @@ export const useRefitTransition = ({
     animate(scale, targetScale, OPEN_SPRING);
     animate(x, targetX, OPEN_SPRING);
     animate(y, targetY, OPEN_SPRING);
-  }, [animated, fillViewport, isTransitioning, natural, rotation, scale, viewport, x, y]);
+  }, [
+    animated,
+    fillViewport,
+    imageIndex,
+    isTransitioning,
+    natural,
+    rotation,
+    scale,
+    viewport,
+    x,
+    y,
+  ]);
 };
