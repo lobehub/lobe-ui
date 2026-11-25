@@ -42,16 +42,27 @@ export const styles = stylex.create({
   filled: {
     backgroundColor: cssVar.colorFillQuaternary,
   },
+  /* Sticky so the copy button stays reachable while a long block scrolls past. */
   header: {
     cursor: 'pointer',
-    position: 'relative',
+    insetBlockStart: 0,
+    position: 'sticky',
+    zIndex: 3,
   },
+  /* Opaque: code scrolls underneath a stuck header. The fill is layered over the container
+     colour so the header still reads as part of the filled block. */
   headerFilled: {
-    backgroundColor: 'transparent',
+    backgroundColor: cssVar.colorBgContainer,
+    backgroundImage: `linear-gradient(${cssVar.colorFillQuaternary}, ${cssVar.colorFillQuaternary})`,
   },
+  headerOpaque: {
+    backgroundColor: cssVar.colorBgContainer,
+  },
+  /* `clip` rather than `hidden`: a hidden root is a scroll container, which would pin the
+     sticky header to the block itself instead of the page scroller. */
   root: {
     borderRadius: cssVar.borderRadius,
-    overflow: 'hidden',
+    overflow: 'clip',
     transition: `background-color 100ms ${cssVar.motionEaseOut}`,
     position: 'relative',
     width: '100%',
@@ -82,7 +93,7 @@ export const rootClassName = (wrap?: boolean, className?: string) =>
 
 export const headerStyles = (variant: Variant = 'filled') => [
   styles.header,
-  variant === 'filled' && styles.headerFilled,
+  variant === 'filled' ? styles.headerFilled : styles.headerOpaque,
 ];
 
 export const headerFlexProps = (variant: Variant = 'filled') => ({
