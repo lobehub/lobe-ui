@@ -1,21 +1,25 @@
-import { AGENT_AVATAR_COLORS, AgentAvatar, Flexbox, Text } from '@lobehub/ui';
-
-const shapes = ['face', 'cloud', 'cat'] as const;
+import { AGENT_AVATAR_COLORS, AgentAvatar, Text } from '@lobehub/ui';
 
 export default () => (
-  <Flexbox gap={16} padding={24}>
+  <div
+    style={{
+      display: 'grid',
+      gap: 20,
+      gridTemplateColumns: 'repeat(auto-fill, minmax(84px, 1fr))',
+      padding: 24,
+      width: '100%',
+    }}
+  >
     {AGENT_AVATAR_COLORS.map((color) => (
-      <Flexbox horizontal align="center" gap={16} key={color}>
-        <Text style={{ width: 72 }} type="secondary">
+      <div
+        key={color}
+        style={{ alignItems: 'center', display: 'flex', flexDirection: 'column', gap: 8 }}
+      >
+        <AgentAvatar color={color} shape="lobot" size={64} tilt={false} />
+        <Text style={{ fontSize: 12 }} type="secondary">
           {color}
         </Text>
-        {shapes.map((shape) => (
-          <AgentAvatar color={color} key={shape} shape={shape} size={48} />
-        ))}
-        {shapes.map((shape) => (
-          <AgentAvatar color={color} key={`${shape}-small`} shape={shape} size={24} />
-        ))}
-      </Flexbox>
+      </div>
     ))}
-  </Flexbox>
+  </div>
 );

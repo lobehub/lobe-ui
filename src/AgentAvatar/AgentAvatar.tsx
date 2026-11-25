@@ -1,62 +1,34 @@
 'use client';
 
 import clsx from 'clsx';
-import { type CSSProperties, memo, type ReactNode, useId } from 'react';
+import { type CSSProperties, memo, useId, useMemo } from 'react';
 
 import { styleProps } from '@/styles/stylex/props';
 import { useThemeMode } from '@/styles/theme/scope';
 import { toDataAttributes } from '@/utils/bem';
 
-import { happyEyePath, scleraPath, SHAPE_GEOMETRY } from './shapes';
 import { agentAvatarClasses } from './stable';
+import { buildStillScene } from './still';
 import { styles } from './style';
-import type { AgentAvatarProps, AgentAvatarState } from './type';
+import type { AgentAvatarProps } from './type';
+import { useLiveAvatar } from './useLiveAvatar';
 import { useReducedMotion } from './useReducedMotion';
 import {
   AGENT_AVATAR_COLOR_TOKENS,
-  BLOCKED_PUPIL_RATIO,
-  BLOCKED_SCLERA_SCALE,
-  GAZE_UNIT_RADIUS,
   getAgentAvatarTraits,
   isAgentAvatarColor,
   PUPIL_COLOR,
-  PUPIL_RATIO,
-  PUPIL_RATIO_SMALL,
   SCLERA_COLOR,
-  SMALL_SIZE,
-  STILL_GAZE,
 } from './utils';
 
-const round = (value: number) => Math.round(value * 100) / 100;
-
-const BODY_MOTION = {
-  blocked: styles.bodyBlocked,
-  done: styles.bodyDone,
-  idle: styles.bodyIdle,
-  thinking: styles.bodyThinking,
-  waiting: styles.bodyWaiting,
-  working: styles.bodyWorking,
-} satisfies Record<AgentAvatarState, unknown>;
-
-const BLINK_MOTION = {
-  idle: styles.blinkIdle,
-  thinking: styles.blinkThinking,
-  waiting: styles.blinkWaiting,
-  working: styles.blinkWorking,
-} satisfies Partial<Record<AgentAvatarState, unknown>>;
-
-const GAZE_MOTION = {
-  idle: styles.gazeIdle,
-  thinking: styles.gazeThinking,
-  working: styles.gazeWorking,
-} satisfies Partial<Record<AgentAvatarState, unknown>>;
-
-/** Thought bubbles: offset from the anchor and radius, smallest last. */
-const THOUGHT_DOTS: [number, number, number][] = [
-  [0, 8, 8.5],
-  [12, 2, 6.5],
-  [20, -5, 4.5],
-];
+/** Center of the `blocked` badge: the bottom-right corner, clear of ears and antennas. */
+const BADGE = [86, 86] as const;
+/** Thought bubbles in the top-right corner of the box: center and radius, largest first. */
+const THOUGHT_DOTS = [
+  [73, 17, 6],
+  [84, 10, 4.4],
+  [92.5, 5.5, 3],
+] as const;
 
 const AgentAvatar = memo<AgentAvatarProps>(
   ({
@@ -65,6 +37,7 @@ const AgentAvatar = memo<AgentAvatarProps>(
     className,
     classNames,
     'color': colorProp,
+    followPointer = false,
     name,
     ref,
     seed,
@@ -76,7 +49,7 @@ const AgentAvatar = memo<AgentAvatarProps>(
     tilt = true,
     ...rest
   }) => {
-    const id = useId().replaceAll(/[^\w-]/g, '');
+    const idPrefix = `${useId().replaceAll(/[^\w-]/g, '')}-`;
     const { isDarkMode } = useThemeMode();
     const reducedMotion = useReducedMotion();
     const animated = animatedProp && !reducedMotion;
@@ -89,106 +62,24 @@ const AgentAvatar = memo<AgentAvatarProps>(
       ? AGENT_AVATAR_COLOR_TOKENS[colorKey][isDarkMode ? 'dark' : 'light']
       : colorKey;
 
-    const geometry = SHAPE_GEOMETRY[shape];
-    const { gap, r: baseRadius, y: eyeY } = geometry.eyes;
-    const eyeXs = [50 - gap / 2, 50 + gap / 2];
-    const gazeScale = baseRadius / GAZE_UNIT_RADIUS;
-    const blocked = state === 'blocked';
-    const radius = blocked ? baseRadius * BLOCKED_SCLERA_SCALE : baseRadius;
-    const small = size !== undefined && size <= SMALL_SIZE;
-    const pupilRadius =
-      baseRadius * (blocked ? BLOCKED_PUPIL_RATIO : small ? PUPIL_RATIO_SMALL : PUPIL_RATIO);
-    const [gazeX, gazeY] = STILL_GAZE[state];
+    const layers = useLiveAvatar({
+      enabled: animated,
+      followPointer,
+      idPrefix,
+      phase: -traits.phase,
+      shape,
+      state,
+    });
+
+    const still = useMemo(
+      () => (layers.live ? null : buildStillScene(shape, state)),
+      [layers.live, shape, state],
+    );
 
     const label = ariaLabel ?? name;
-    const motion = <T,>(value: T) => (animated ? value : undefined);
-
-    const eyes = (
-      <>
-        <defs>
-          <clipPath id={`${id}-eyes`}>
-            {eyeXs.map((x) => (
-              <path d={scleraPath(x, eyeY, radius)} key={x} />
-            ))}
-          </clipPath>
-        </defs>
-        {eyeXs.map((x) => (
-          <path d={scleraPath(x, eyeY, radius)} fill={SCLERA_COLOR} key={x} />
-        ))}
-        <g clipPath={`url(#${id}-eyes)`}>
-          <g
-            className={
-              styleProps([styles.pupils, motion(GAZE_MOTION[state as keyof typeof GAZE_MOTION])])
-                .className
-            }
-            style={
-              {
-                '--lobe-agent-avatar-gaze': String(round(gazeScale)),
-                'transform': `translate(${round(gazeX * gazeScale)}px, ${round(gazeY * gazeScale)}px)`,
-              } as CSSProperties
-            }
-          >
-            {eyeXs.map((x) => (
-              <circle cx={x} cy={eyeY} fill={PUPIL_COLOR} key={x} r={round(pupilRadius)} />
-            ))}
-          </g>
-        </g>
-      </>
-    );
-
-    const closedEyes = (
-      <g
-        fill="none"
-        stroke={SCLERA_COLOR}
-        strokeLinecap="round"
-        strokeWidth={round((small ? 7.5 : 6.5) * gazeScale)}
-      >
-        {eyeXs.map((x) => (
-          <path d={happyEyePath(x, eyeY, baseRadius)} key={x} />
-        ))}
-      </g>
-    );
-
-    const eyesClassName = clsx(agentAvatarClasses('eyes'), classNames?.eyes);
-    let eyeLayer: ReactNode;
-    if (state === 'done') {
-      eyeLayer = (
-        <g
-          className={styleProps([styles.eyes], eyesClassName).className}
-          style={customStyles?.eyes}
-        >
-          {animated && (
-            <g className={styleProps([styles.eyesOpenLate]).className} opacity={0}>
-              {eyes}
-            </g>
-          )}
-          <g className={styleProps([motion(styles.eyesClosedEarly)]).className || undefined}>
-            {closedEyes}
-          </g>
-        </g>
-      );
-    } else {
-      eyeLayer = (
-        <g
-          style={{ transformOrigin: `50px ${eyeY}px`, ...customStyles?.eyes }}
-          className={
-            styleProps(
-              [styles.eyes, motion(BLINK_MOTION[state as keyof typeof BLINK_MOTION])],
-              eyesClassName,
-            ).className
-          }
-        >
-          {eyes}
-        </g>
-      );
-    }
-
-    const [badgeX, badgeY] = geometry.badge;
-    const [thoughtX, thoughtY] = geometry.thought;
-    const thoughtDirection = geometry.thoughtFlip ? -1 : 1;
-    const thoughtHalo = geometry.thoughtHalo ?? true;
-    // Only the body and eyes lean; the badge and thought bubbles stay upright and in place.
+    // Only the body and eyes lean; the badge and thought bubbles stay upright.
     const lean = tilt ? traits.tilt : 0;
+    const motion = <T,>(value: T) => (animated ? value : undefined);
 
     return (
       <svg
@@ -206,26 +97,46 @@ const AgentAvatar = memo<AgentAvatarProps>(
         {...rest}
         {...styleProps([styles.root], clsx(agentAvatarClasses(), className, classNames?.root), {
           '--lobe-agent-avatar-color': color,
-          ...(animated && { '--lobe-agent-avatar-delay': `${traits.phase}s` }),
           ...(size !== undefined && { height: size, width: size }),
           ...customStyles?.root,
           ...style,
         } as CSSProperties)}
       >
-        <g transform={lean ? `rotate(${lean} 50 94)` : undefined}>
-          <g
-            className={styleProps([styles.bodyMotion, motion(BODY_MOTION[state])]).className}
-            style={state === 'waiting' ? { transform: 'rotate(-3deg)' } : undefined}
-          >
-            <path
-              d={geometry.d}
+        <defs ref={layers.defs} />
+        <g transform={lean ? `rotate(${lean} 50 50)` : undefined}>
+          <g transform={still?.stage}>
+            <g
+              ref={layers.body}
               style={customStyles?.body}
               className={
                 styleProps([styles.body], clsx(agentAvatarClasses('body'), classNames?.body))
                   .className
               }
-            />
-            {eyeLayer}
+            >
+              {still && <path d={still.body} />}
+              {still?.extra && <path d={still.extra.d} transform={still.extra.transform} />}
+            </g>
+            <g
+              className={clsx(agentAvatarClasses('eyes'), classNames?.eyes)}
+              ref={layers.eyes}
+              style={customStyles?.eyes}
+            >
+              {still?.eyes.map(({ pupil, sclera, smile, smileWidth, transform }, index) => (
+                <g key={index} transform={transform}>
+                  {sclera && <path d={sclera} fill={SCLERA_COLOR} />}
+                  {pupil && <path d={pupil} fill={PUPIL_COLOR} />}
+                  {smile && (
+                    <path
+                      d={smile}
+                      fill="none"
+                      stroke={SCLERA_COLOR}
+                      strokeLinecap="round"
+                      strokeWidth={smileWidth}
+                    />
+                  )}
+                </g>
+              ))}
+            </g>
           </g>
         </g>
         {state === 'thinking' && (
@@ -233,66 +144,53 @@ const AgentAvatar = memo<AgentAvatarProps>(
             className={clsx(agentAvatarClasses('thought'), classNames?.thought)}
             style={customStyles?.thought}
           >
-            {THOUGHT_DOTS.map(([dx, dy, r], index) => (
+            {THOUGHT_DOTS.map(([cx, cy, r], index) => (
               <circle
-                cx={thoughtX + dx * thoughtDirection}
-                cy={thoughtY + dy}
+                className={styleProps([styles.thoughtDot, motion(styles.thoughtMotion)]).className}
+                cx={cx}
+                cy={cy}
                 key={r}
-                opacity={round(0.9 - index * 0.15)}
                 r={r}
-                className={
-                  styleProps([
-                    styles.thoughtDot,
-                    thoughtHalo && styles.thoughtHalo,
-                    motion(styles.thoughtRise),
-                  ]).className
-                }
-                style={
-                  animated
-                    ? {
-                        animationDelay: `calc(var(--lobe-agent-avatar-delay, 0s) + ${round(index * 0.35)}s)`,
-                      }
-                    : undefined
-                }
+                style={animated ? { animationDelay: `${index * 0.22}s` } : undefined}
               />
             ))}
           </g>
         )}
-        {blocked && (
+        {state === 'blocked' && (
           <g
             style={customStyles?.badge}
             className={
               styleProps(
-                [motion(styles.badgeMotion)],
+                [styles.badge, motion(styles.badgeMotion)],
                 clsx(agentAvatarClasses('badge'), classNames?.badge),
               ).className
             }
           >
             <circle
               className={styleProps([styles.badgeRing]).className}
-              cx={badgeX}
-              cy={badgeY}
-              r={11.5}
+              cx={BADGE[0]}
+              cy={BADGE[1]}
+              r={13}
             />
             <circle
               className={styleProps([styles.badgeDot]).className}
-              cx={badgeX}
-              cy={badgeY}
-              r={9}
+              cx={BADGE[0]}
+              cy={BADGE[1]}
+              r={10.5}
             />
             <rect
               className={styleProps([styles.badgeMark]).className}
-              height={6.8}
-              rx={1.25}
-              width={2.5}
-              x={badgeX - 1.25}
-              y={badgeY - 6.2}
+              height={8}
+              rx={1.4}
+              width={2.8}
+              x={BADGE[0] - 1.4}
+              y={BADGE[1] - 7}
             />
             <circle
               className={styleProps([styles.badgeMark]).className}
-              cx={badgeX}
-              cy={badgeY + 4.4}
-              r={1.45}
+              cx={BADGE[0]}
+              cy={BADGE[1] + 5}
+              r={1.7}
             />
           </g>
         )}

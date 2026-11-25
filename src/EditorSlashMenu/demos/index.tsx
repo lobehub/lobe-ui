@@ -9,6 +9,7 @@ type VirtualElementLike = {
 const styles = createStaticStyles(({ css, cssVar }) => ({
   container: css`
     width: min(760px, 100%);
+    margin-inline: auto;
     padding: 24px;
     border: 1px solid ${cssVar.colorBorderSecondary};
     border-radius: 16px;

@@ -79,6 +79,27 @@ describe('Accordion', () => {
     );
   });
 
+  // The trigger resizes instantly on click while the panel height animates, so any open-state
+  // trigger padding change makes the title row jump before the expand animation starts.
+  test.each(['borderless', 'filled', 'outlined'] as const)(
+    '%s trigger keeps the same block padding when expanded',
+    (variant) => {
+      render(<Accordion items={items} variant={variant} />);
+
+      const trigger = screen.getByRole('button', { name: 'Item A' });
+      // jsdom only resolves physical padding longhands, not `padding-block-*`.
+      const readPadding = () => {
+        const style = getComputedStyle(trigger);
+        return [style.paddingTop, style.paddingBottom];
+      };
+      const collapsed = readPadding();
+
+      fireEvent.click(trigger);
+      expect(trigger.hasAttribute('data-panel-open')).toBe(true);
+      expect(readPadding()).toEqual(collapsed);
+    },
+  );
+
   test('default-open panel skips the enter animation', () => {
     render(<Accordion defaultValue={['a']} items={items} />);
 
@@ -112,5 +133,46 @@ describe('Accordion', () => {
     fireEvent.click(screen.getByRole('button', { name: 'Item B' }));
     expect(screen.getByText('Panel A')).toBeTruthy();
     expect(screen.getByText('Panel B')).toBeTruthy();
+  });
+
+  describe('header action visibility', () => {
+    const renderWithAction = (action: React.ReactNode) =>
+      render(<Accordion items={[{ action, children: 'Panel', key: 'a', title: 'Item A' }]} />);
+    const opacityOf = (el: HTMLElement) =>
+      getComputedStyle(el.closest('.accordion-action')!).opacity;
+
+    test('stays visible while an action opens a popup', () => {
+      renderWithAction(
+        <button aria-expanded="true" aria-haspopup="menu" type="button">
+          Menu
+        </button>,
+      );
+
+      expect(opacityOf(screen.getByRole('button', { name: 'Menu' }))).toBe('1');
+    });
+
+    test('an open tooltip on an action does not pin the actions', () => {
+      renderWithAction(
+        <button data-popup-open="" type="button">
+          Edit
+        </button>,
+      );
+
+      expect(opacityOf(screen.getByRole('button', { name: 'Edit' }))).toBe('0');
+    });
+
+    test('expanded accordion trigger alone does not reveal actions', () => {
+      render(
+        <Accordion
+          defaultValue={['a']}
+          items={[{ action: <button type="button">More</button>, key: 'a', title: 'Item A' }]}
+        />,
+      );
+
+      expect(screen.getByRole('button', { name: 'Item A' }).getAttribute('aria-expanded')).toBe(
+        'true',
+      );
+      expect(opacityOf(screen.getByRole('button', { name: 'More' }))).toBe('0');
+    });
   });
 });

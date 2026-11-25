@@ -14,6 +14,7 @@ import type { LoadingDotsProps } from './type';
 const LoadingDots: FC<LoadingDotsProps> = ({
   size = 8,
   color,
+  gap,
   variant = 'dots',
   className,
   style,
@@ -25,8 +26,11 @@ const LoadingDots: FC<LoadingDotsProps> = ({
     if (color) {
       vars['--loading-dots-color'] = color;
     }
+    if (gap !== undefined) {
+      vars['--loading-dots-gap'] = `${gap}px`;
+    }
     return vars;
-  }, [color, size]);
+  }, [color, gap, size]);
 
   const dot = (variantStyle: StyleXStyles, delay: keyof typeof delays) => (
     <div

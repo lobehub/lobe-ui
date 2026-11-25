@@ -1,5 +1,14 @@
-import { createStaticStyles, cssVar, cx, Flexbox, Text, textGroupStyles, textStyles  } from '@lobehub/ui';
+import {
+  createStaticStyles,
+  cssVar,
+  cx,
+  Flexbox,
+  Text,
+  textGroupStyles,
+  textStyles,
+} from '@lobehub/ui';
 import { Check, SquareChevronRight } from 'lucide-react';
+import type { CSSProperties } from 'react';
 
 const styles = createStaticStyles(({ css, cssVar }) => ({
   chip: css`
@@ -26,6 +35,10 @@ const styles = createStaticStyles(({ css, cssVar }) => ({
 export default () => (
   <Flexbox gap={12} padding={16}>
     <Text shiny>Plain shiny text</Text>
+
+    <Text shiny style={{ '--shiny-rest-color': cssVar.colorTextSecondary } as CSSProperties}>
+      Resting at the secondary text color
+    </Text>
 
     <Text shiny className={styles.row}>
       <span>Bash:</span>

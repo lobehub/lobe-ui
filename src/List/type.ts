@@ -41,6 +41,12 @@ export interface ListProps extends Omit<ComponentProps<'ul'>, 'onClick'> {
   classNames?: Partial<Record<ListSemanticName, string>>;
   compact?: boolean;
   defaultActiveKey?: Key;
+  /**
+   * Share one hover layer across the rows, so the highlight glides from row to row
+   * instead of switching on and off on each one.
+   * @default false
+   */
+  glide?: boolean;
   items: ListItem[];
   onActiveChange?: (key: Key) => void;
   onClick?: (info: ListClickInfo) => void;

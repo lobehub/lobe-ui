@@ -109,6 +109,17 @@ describe('Video.Timeline', () => {
     expect(screen.getAllByText('Agent created').length).toBeGreaterThan(0);
   });
 
+  it('keeps the hover thumbnail in the video aspect ratio', () => {
+    const { container, video, slider } = setup();
+    act(() => video.setMeta({ duration: 134, height: 1920, width: 1080 }));
+    fireEvent.pointerMove(slider, { clientX: 300, pointerType: 'mouse' });
+    const canvas = container.querySelector('canvas')!;
+    expect(canvas.style.width).toBe('56px');
+    expect(canvas.style.height).toBe('99px');
+    expect(canvas.getAttribute('width')).toBe('112');
+    expect(canvas.getAttribute('height')).toBe('198');
+  });
+
   it('creates the probe video only on hover', () => {
     const { container, slider } = setup();
     expect(container.querySelectorAll('video')).toHaveLength(1);

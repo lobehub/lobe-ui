@@ -3,6 +3,14 @@ export { default as LobeChat, type LobeChatProps } from './LobeChat';
 export { default as LobeChatText } from './LobeChatText';
 export { default as LobeHub, type LobeHubProps } from './LobeHub';
 export { default as LobeHubText } from './LobeHubText';
+export { default as Lobot, type LobotProps } from './Lobot';
+export { default as LobotBrandLoading, type LobotBrandLoadingProps } from './LobotBrandLoading';
+export {
+  default as LobotBrandLoading3d,
+  type LobotBrandLoading3dProps,
+} from './LobotBrandLoading3d';
+export { default as LobotMono, type LobotMonoProps } from './LobotMono';
+export { default as LobotText, type LobotTextProps } from './LobotText';
 export { default as Logo3d } from './Logo3d';
 export { default as LogoFlat } from './LogoFlat';
 export { default as LogoMono } from './LogoMono';

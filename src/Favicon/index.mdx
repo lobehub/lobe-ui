@@ -1,0 +1,37 @@
+---
+title: Favicon
+description: The icon of a website, looked up by host name or URL, for search results, citations and link previews. A site that cannot be resolved shows a globe instead of a broken image.
+category: Data Display
+---
+
+import DemoIndex from './demos/index.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { faviconClasses } from './stable';
+
+## Basic
+
+Pass a `url` or a `host`. An invalid URL, an empty one, or an icon that fails to load falls back to a globe; `fallback` replaces it.
+
+<Demo of={DemoIndex} layout="bare" />
+
+## Icon source
+
+Icons come from the DuckDuckGo icon service by default, so the visitor's browser requests it for every host shown. Pass `getIconUrl` to use a proxy or another provider, or `src` when you already have the icon URL.
+
+## APIs
+
+<Api name="Favicon" />
+
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `Favicon`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/Favicon.css';
+```
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={faviconClasses} />

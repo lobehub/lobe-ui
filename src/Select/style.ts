@@ -86,6 +86,9 @@ export const styles = stylex.create({
     marginInlineStart: 'auto',
     paddingInlineStart: 8,
   },
+  itemIndicatorUnselected: {
+    visibility: 'hidden',
+  },
   list: {
     flex: '1',
     paddingBlockEnd: 0,

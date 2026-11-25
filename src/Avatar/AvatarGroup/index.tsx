@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { memo } from 'react';
+import { type KeyboardEvent, memo } from 'react';
 
 import { Flexbox } from '@/Flex';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
@@ -11,6 +11,12 @@ import { AvatarImpl as Avatar } from '../Avatar';
 import { avatarGroupClasses } from '../stable';
 import type { AvatarGroupProps } from '../type';
 import { styles } from './style';
+
+const pressOnKey = (event: KeyboardEvent<HTMLDivElement>) => {
+  if (event.key !== 'Enter' && event.key !== ' ') return;
+  event.preventDefault();
+  event.currentTarget.click();
+};
 
 const AvatarGroup = memo<AvatarGroupProps>(
   ({
@@ -39,6 +45,10 @@ const AvatarGroup = memo<AvatarGroupProps>(
     const avatars = max ? items.slice(0, max) : items;
     const restAvatars = items.slice(max, items.length);
     const gapValue = gap ?? Math.floor(-size / 4);
+    const hiddenNames = restAvatars
+      .map((item) => item.title ?? item.label ?? item.alt)
+      .filter(Boolean)
+      .join(', ');
 
     const avatarProps = {
       animation,
@@ -67,34 +77,62 @@ const AvatarGroup = memo<AvatarGroupProps>(
             style: avatarStyle,
             className: avatarClassName,
             ringColor,
+            label,
+            pressed,
+            disabled,
+            badge,
+            onClick: itemClick,
             ...restAvatarProps
           } = avatar;
-          return (
+          const interactive = !disabled && (!!onClick || !!itemClick);
+          const stacking = {
+            marginLeft: index === 0 ? 0 : gapValue,
+            zIndex: badge ? items.length + 1 : zIndexReverse ? items.length - index : index,
+          };
+          const node = (
             <Avatar
+              aria-disabled={disabled || undefined}
+              aria-label={label}
+              aria-pressed={interactive ? !!pressed : undefined}
               className={clsx(avatarGroupClasses('avatar'), classNames?.avatar, avatarClassName)}
-              key={key}
+              key={badge ? undefined : key}
+              nativeTitle={label}
+              role={interactive ? 'button' : undefined}
+              tabIndex={interactive ? 0 : undefined}
               xstyle={styles.avatar}
               style={{
-                marginLeft: index === 0 ? 0 : gapValue,
-                zIndex: zIndexReverse ? items.length - index : index,
+                ...(!badge && stacking),
                 ...(ringColor && { boxShadow: `0 0 0 2px ${ringColor}` }),
                 ...customStyles?.avatar,
                 ...avatarStyle,
               }}
-              onClick={() => onClick?.({ item: avatar, key })}
+              onKeyDown={interactive ? pressOnKey : undefined}
+              onClick={
+                interactive ? (itemClick ?? (() => onClick?.({ item: avatar, key }))) : undefined
+              }
               {...avatarProps}
               {...restAvatarProps}
             />
+          );
+          if (!badge) return node;
+          const item = styleProps(styles.item, avatarGroupClasses('item'));
+          return (
+            <span className={item.className} key={key} style={{ ...item.style, ...stacking }}>
+              {node}
+              <span {...styleProps(styles.badge, avatarGroupClasses('badge'))}>{badge}</span>
+            </span>
           );
         })}
         {max && restAvatars.length > 0 && (
           <Avatar
             {...avatarProps}
+            aria-label={hiddenNames || undefined}
             avatar={`+${restAvatars.length}`}
             background={cssVar.colorText}
             className={clsx(avatarGroupClasses('count'), classNames?.count)}
             contentXstyle={styles.count}
             fallbackVariant={'text'}
+            nativeTitle={hiddenNames || undefined}
             sliceText={false}
             xstyle={styles.avatar}
             style={{

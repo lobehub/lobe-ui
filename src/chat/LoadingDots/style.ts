@@ -35,7 +35,7 @@ const wave = stylex.keyframes({
 export const styles = stylex.create({
   container: {
     padding: cssVar.paddingXS,
-    gap: 6,
+    gap: 'var(--loading-dots-gap, 6px)',
     alignItems: 'center',
     display: 'flex',
     flexDirection: 'row',

@@ -8,5 +8,5 @@ export const avatarClasses = stableClasses({
 
 export const avatarGroupClasses = stableClasses({
   block: 'avatar-group',
-  elements: ['avatar', 'count'],
+  elements: ['avatar', 'count', 'item', 'badge'],
 });

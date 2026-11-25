@@ -35,6 +35,7 @@ const variantStyles = {
 
 type AvatarImplProps = AvatarProps & {
   contentXstyle?: Parameters<typeof styleProps>[0];
+  nativeTitle?: string;
   xstyle?: Parameters<typeof styleProps>[0];
 };
 
@@ -67,6 +68,7 @@ export const AvatarImpl = memo<AvatarImplProps>(
     variant = 'borderless',
     xstyle,
     contentXstyle,
+    nativeTitle,
     ...rest
   }) => {
     const size = sizeProp ?? 48;
@@ -130,6 +132,7 @@ export const AvatarImpl = memo<AvatarImplProps>(
         {...toDataAttributes({ shadow, shape, variant })}
         {...rest}
         ref={ref}
+        title={nativeTitle}
         className={
           styleProps(
             [

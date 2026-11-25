@@ -51,10 +51,13 @@ function renderItem(
       </BaseSelect.ItemText>
       {!isBoldIndicator && (
         <BaseSelect.ItemIndicator
-          {...styleProps(
-            styles.itemIndicator,
-            clsx(selectClasses('item-indicator'), classNames?.itemIndicator),
-          )}
+          keepMounted
+          className={({ selected }) =>
+            styleProps(
+              [styles.itemIndicator, !selected && styles.itemIndicatorUnselected],
+              clsx(selectClasses('item-indicator'), classNames?.itemIndicator),
+            ).className
+          }
         >
           <Icon icon={Check} size={'small'} />
         </BaseSelect.ItemIndicator>

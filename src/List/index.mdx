@@ -4,6 +4,7 @@ description: A vertical list of selectable rows with icons or avatars, descripti
 category: Navigation
 ---
 
+import DemoGlide from './demos/glide.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
 import { listClasses } from './stable';
@@ -11,6 +12,12 @@ import { listClasses } from './stable';
 ## Basic
 
 <Demo of={DemoIndex} layout="bare" />
+
+## Gliding hover
+
+With `glide`, the rows share one hover layer that slides from row to row and follows keyboard focus. It is off by default, so existing lists keep their per-row hover.
+
+<Demo of={DemoGlide} layout="bare" />
 
 ## APIs
 

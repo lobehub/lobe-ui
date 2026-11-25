@@ -251,8 +251,6 @@ export const styles = stylex.create({
     borderWidth: 1,
     backgroundColor: '#000',
     display: 'block',
-    height: 99,
-    width: 176,
   },
   previewLabel: {
     borderRadius: 6,

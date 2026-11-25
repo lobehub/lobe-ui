@@ -2,6 +2,380 @@
 
 # Changelog
 
+### [Version&nbsp;6.21.1](https://github.com/lobehub/lobe-ui/compare/v6.21.0...v6.21.1)
+
+<sup>Released on **2026-11-25**</sup>
+
+#### 🐛 Bug Fixes
+
+- **accordion**: Keep outlined trigger height stable on expand.
+- **image**: Keep gallery arrows centered after clicking.
+- **markdown**: Keep adjacent brackets outside citation links intact.
+- **surface**: Match the table root by class instead of :has() in table bleed.
+- **misc**: Keep MarkdownTable copy button from jumping on press.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **accordion**: Keep outlined trigger height stable on expand, closes [#795](https://github.com/lobehub/lobe-ui/issues/795) ([d30317b](https://github.com/lobehub/lobe-ui/commit/d30317b))
+- **image**: Keep gallery arrows centered after clicking, closes [#816](https://github.com/lobehub/lobe-ui/issues/816) ([9de9ccf](https://github.com/lobehub/lobe-ui/commit/9de9ccf))
+- **markdown**: Keep adjacent brackets outside citation links intact, closes [#814](https://github.com/lobehub/lobe-ui/issues/814) ([ee4c8f9](https://github.com/lobehub/lobe-ui/commit/ee4c8f9))
+- **surface**: Match the table root by class instead of :has() in table bleed, closes [#791](https://github.com/lobehub/lobe-ui/issues/791) ([6cc82c1](https://github.com/lobehub/lobe-ui/commit/6cc82c1))
+- **misc**: Keep MarkdownTable copy button from jumping on press, closes [#658](https://github.com/lobehub/lobe-ui/issues/658) ([abf4417](https://github.com/lobehub/lobe-ui/commit/abf4417))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+## [Version&nbsp;6.21.0](https://github.com/lobehub/lobe-ui/compare/v6.20.0...v6.21.0)
+
+<sup>Released on **2026-11-25**</sup>
+
+#### ✨ Features
+
+- **MetricStrip**: Add compact size and fixed columns.
+
+#### 🐛 Bug Fixes
+
+- **scroll-area**: Drop stale scrollFade once the viewport stops overflowing.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **MetricStrip**: Add compact size and fixed columns, closes [#817](https://github.com/lobehub/lobe-ui/issues/817) ([baa781a](https://github.com/lobehub/lobe-ui/commit/baa781a))
+
+#### What's fixed
+
+- **scroll-area**: Drop stale scrollFade once the viewport stops overflowing, closes [#813](https://github.com/lobehub/lobe-ui/issues/813) ([a54fab9](https://github.com/lobehub/lobe-ui/commit/a54fab9))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+## [Version&nbsp;6.20.0](https://github.com/lobehub/lobe-ui/compare/v6.19.2...v6.20.0)
+
+<sup>Released on **2026-11-24**</sup>
+
+#### ✨ Features
+
+- **misc**: Add AnimatedNumber, ElapsedTime, DiffStat, Favicon and GlideHighlight; additive upgrades to Text, LoadingDots and List.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **misc**: Add AnimatedNumber, ElapsedTime, DiffStat, Favicon and GlideHighlight; additive upgrades to Text, LoadingDots and List, closes [#812](https://github.com/lobehub/lobe-ui/issues/812) ([29472c8](https://github.com/lobehub/lobe-ui/commit/29472c8))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### [Version&nbsp;6.19.2](https://github.com/lobehub/lobe-ui/compare/v6.19.1...v6.19.2)
+
+<sup>Released on **2026-11-23**</sup>
+
+#### 🐛 Bug Fixes
+
+- **accordion**: Hide header actions after a mouse click moves away.
+
+#### 💄 Styles
+
+- **select**: Reserve the item indicator slot so trailing text aligns.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **accordion**: Hide header actions after a mouse click moves away, closes [#810](https://github.com/lobehub/lobe-ui/issues/810) ([3d51229](https://github.com/lobehub/lobe-ui/commit/3d51229))
+
+#### Styles
+
+- **select**: Reserve the item indicator slot so trailing text aligns ([f0bab08](https://github.com/lobehub/lobe-ui/commit/f0bab08))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### [Version&nbsp;6.19.1](https://github.com/lobehub/lobe-ui/compare/v6.19.0...v6.19.1)
+
+<sup>Released on **2026-11-22**</sup>
+
+#### 💄 Styles
+
+- **modal**: The footer's cancel button is a fill button.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **modal**: The footer's cancel button is a fill button, closes [#809](https://github.com/lobehub/lobe-ui/issues/809) ([98450d6](https://github.com/lobehub/lobe-ui/commit/98450d6))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+## [Version&nbsp;6.19.0](https://github.com/lobehub/lobe-ui/compare/v6.18.0...v6.19.0)
+
+<sup>Released on **2026-11-22**</sup>
+
+#### ✨ Features
+
+- **brand**: Add Lobot brand components and two Lobot loaders.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **brand**: Add Lobot brand components and two Lobot loaders, closes [#808](https://github.com/lobehub/lobe-ui/issues/808) ([eecc4cc](https://github.com/lobehub/lobe-ui/commit/eecc4cc))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+## [Version&nbsp;6.18.0](https://github.com/lobehub/lobe-ui/compare/v6.17.1...v6.18.0)
+
+<sup>Released on **2026-11-22**</sup>
+
+#### ✨ Features
+
+- **agent-avatar**: Redesign with Lobot eyes, soft volume and an EmojiPicker panel.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **agent-avatar**: Redesign with Lobot eyes, soft volume and an EmojiPicker panel, closes [#807](https://github.com/lobehub/lobe-ui/issues/807) ([fe028dd](https://github.com/lobehub/lobe-ui/commit/fe028dd))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### [Version&nbsp;6.17.1](https://github.com/lobehub/lobe-ui/compare/v6.17.0...v6.17.1)
+
+<sup>Released on **2026-11-21**</sup>
+
+#### 🐛 Bug Fixes
+
+- **avatar**: The AvatarGroup +N count names hidden people by title before an action label.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **avatar**: The AvatarGroup +N count names hidden people by title before an action label, closes [#805](https://github.com/lobehub/lobe-ui/issues/805) ([120077b](https://github.com/lobehub/lobe-ui/commit/120077b))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+## [Version&nbsp;6.17.0](https://github.com/lobehub/lobe-ui/compare/v6.16.3...v6.17.0)
+
+<sup>Released on **2026-11-21**</sup>
+
+#### ✨ Features
+
+- **avatar**: AvatarGroup items are buttons with labels, pressed and disabled states, badges and a count that names who it hides.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **avatar**: AvatarGroup items are buttons with labels, pressed and disabled states, badges and a count that names who it hides, closes [#804](https://github.com/lobehub/lobe-ui/issues/804) ([680f939](https://github.com/lobehub/lobe-ui/commit/680f939))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### [Version&nbsp;6.16.3](https://github.com/lobehub/lobe-ui/compare/v6.16.2...v6.16.3)
+
+<sup>Released on **2026-11-20**</sup>
+
+#### 🐛 Bug Fixes
+
+- **video**: Keep hover preview thumbnail in the video aspect ratio.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **video**: Keep hover preview thumbnail in the video aspect ratio, closes [#803](https://github.com/lobehub/lobe-ui/issues/803) ([c58c626](https://github.com/lobehub/lobe-ui/commit/c58c626))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### [Version&nbsp;6.16.2](https://github.com/lobehub/lobe-ui/compare/v6.16.1...v6.16.2)
+
+<sup>Released on **2026-11-18**</sup>
+
+#### ⚡ Performance Improvements
+
+- **markdown**: Opt-in enableParseCache reuses parsed hast across mounts.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Performance improvements
+
+- **markdown**: Opt-in enableParseCache reuses parsed hast across mounts, closes [#792](https://github.com/lobehub/lobe-ui/issues/792) ([fc6c566](https://github.com/lobehub/lobe-ui/commit/fc6c566))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### [Version&nbsp;6.16.1](https://github.com/lobehub/lobe-ui/compare/v6.16.0...v6.16.1)
+
+<sup>Released on **2026-11-16**</sup>
+
+#### 🐛 Bug Fixes
+
+- **icons**: Color the WeCom petals green, blue, orange and yellow.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **icons**: Color the WeCom petals green, blue, orange and yellow, closes [#0082EF](https://github.com/lobehub/lobe-ui/issues/0082EF) [#2DBC00](https://github.com/lobehub/lobe-ui/issues/2DBC00) [#0082EF](https://github.com/lobehub/lobe-ui/issues/0082EF) [#FB6500](https://github.com/lobehub/lobe-ui/issues/FB6500) [#FFCC00](https://github.com/lobehub/lobe-ui/issues/FFCC00) ([143ca22](https://github.com/lobehub/lobe-ui/commit/143ca22))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+## [Version&nbsp;6.16.0](https://github.com/lobehub/lobe-ui/compare/v6.15.4...v6.16.0)
+
+<sup>Released on **2026-11-15**</sup>
+
+#### ✨ Features
+
+- **icons**: Add the WeCom channel icon.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **icons**: Add the WeCom channel icon, closes [#0082EF](https://github.com/lobehub/lobe-ui/issues/0082EF) ([df347a9](https://github.com/lobehub/lobe-ui/commit/df347a9))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
+### [Version&nbsp;6.15.4](https://github.com/lobehub/lobe-ui/compare/v6.15.3...v6.15.4)
+
+<sup>Released on **2026-11-14**</sup>
+
+#### 💄 Styles
+
+- **misc**: Clarify AgentSkillCard tab labels.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### Styles
+
+- **misc**: Clarify AgentSkillCard tab labels, closes [#796](https://github.com/lobehub/lobe-ui/issues/796) [lobehub/lobe-icons#474](https://github.com/lobehub/lobe-icons/issues/474) ([4c1af05](https://github.com/lobehub/lobe-ui/commit/4c1af05))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version&nbsp;6.15.3](https://github.com/lobehub/lobe-ui/compare/v6.15.2...v6.15.3)
 
 <sup>Released on **2026-11-11**</sup>

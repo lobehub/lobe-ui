@@ -25,6 +25,15 @@ The shimmer sweeps the text only — icons, chips, and other non-text children k
 
 <Demo of={DemoShiny} layout="bare" />
 
+The sweep peaks at `--shiny-color` (the text color by default) and rests at a dimmed mix of it. Set `--shiny-rest-color` when the label has to keep the weight of the static text around it, such as a secondary-colored status line:
+
+```css
+.status {
+  --shiny-color: var(--lobe-color-text);
+  --shiny-rest-color: var(--lobe-color-text-secondary);
+}
+```
+
 ## APIs
 
 ### Text

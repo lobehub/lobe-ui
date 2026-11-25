@@ -8,6 +8,7 @@ import DemoIndex from './demos/index.tsx?demo';
 import DemoAtoms from './demos/atoms.tsx?demo';
 import DemoRender from './demos/render.tsx?demo';
 import DemoIndicator from './demos/indicator.tsx?demo';
+import DemoTrailingDescription from './demos/trailingDescription.tsx?demo';
 import DemoVirtual from './demos/virtual.tsx?demo';
 import DemoClearValue from './demos/clearValue.tsx?demo';
 import DemoSearchKeepsValue from './demos/searchKeepsValue.tsx?demo';
@@ -44,6 +45,12 @@ import { selectClasses } from './stable';
 ## Custom Render
 
 <Demo of={DemoRender} />
+
+## Trailing Description
+
+Every option keeps the check indicator's slot, so trailing text lines up whether or not the option is selected.
+
+<Demo of={DemoTrailingDescription} />
 
 ## Selected Indicator Variant
 

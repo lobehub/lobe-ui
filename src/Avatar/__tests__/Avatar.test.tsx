@@ -277,6 +277,118 @@ describe('AvatarGroup', () => {
     );
   });
 
+  test('clickable items are buttons named by their label, pressed when marked, and work from the keyboard', () => {
+    const onClick = vi.fn();
+    renderWithProvider(
+      <AvatarGroup
+        fallbackVariant="text"
+        items={[
+          { avatar: 'Lo', key: 'a', label: 'Follow Lin', pressed: true },
+          { avatar: 'Ch', key: 'b', label: 'Follow Sora' },
+        ]}
+        onClick={onClick}
+      />,
+    );
+    const lin = screen.getByRole('button', { name: 'Follow Lin' });
+    const sora = screen.getByRole('button', { name: 'Follow Sora' });
+
+    expect(lin.getAttribute('aria-pressed')).toBe('true');
+    expect(lin.getAttribute('title')).toBe('Follow Lin');
+    expect(lin.tabIndex).toBe(0);
+    expect(sora.getAttribute('aria-pressed')).toBe('false');
+
+    fireEvent.keyDown(sora, { key: 'Enter' });
+    fireEvent.keyDown(lin, { key: ' ' });
+
+    expect(onClick.mock.calls.map(([{ key }]) => key)).toEqual(['b', 'a']);
+  });
+
+  test('items without a click handler stay plain, and a disabled item ignores clicks', () => {
+    const onClick = vi.fn();
+    const { rerender } = renderWithProvider(
+      <AvatarGroup fallbackVariant="text" items={[{ avatar: 'Lo', key: 'a', label: 'Lin' }]} />,
+    );
+
+    expect(screen.queryByRole('button')).toBeNull();
+    expect(screen.getByLabelText('Lin').getAttribute('aria-pressed')).toBeNull();
+
+    rerender(
+      <ConfigProvider motion={motion}>
+        <AvatarGroup
+          fallbackVariant="text"
+          items={[{ avatar: 'Lo', key: 'a', label: 'Lin', disabled: true }]}
+          onClick={onClick}
+        />
+      </ConfigProvider>,
+    );
+    const lin = screen.getByLabelText('Lin');
+    fireEvent.click(lin);
+    fireEvent.keyDown(lin, { key: 'Enter' });
+
+    expect(screen.queryByRole('button')).toBeNull();
+    expect(lin.getAttribute('aria-disabled')).toBe('true');
+    expect(onClick).not.toHaveBeenCalled();
+  });
+
+  test('a badge sits outside the clipped avatar, above its neighbours', () => {
+    const { container } = renderWithProvider(
+      <AvatarGroup
+        fallbackVariant="text"
+        size={24}
+        items={[
+          { avatar: 'Lo', key: 'a', badge: <span data-testid="badge">v1.2</span>, label: 'Lin' },
+          { avatar: 'Ch', key: 'b' },
+        ]}
+      />,
+    );
+    const [first, second] = (container.firstChild as HTMLElement).children as unknown as [
+      HTMLElement,
+      HTMLElement,
+    ];
+    const badge = screen.getByTestId('badge');
+
+    expect(first.classList.contains('lobe-avatar-group__item')).toBe(true);
+    expect(screen.getByLabelText('Lin').contains(badge)).toBe(false);
+    expect(first.contains(badge)).toBe(true);
+    expect(Number(first.style.zIndex)).toBeGreaterThan(Number(second.style.zIndex));
+    expect(second.style.marginLeft).toBe('-6px');
+  });
+
+  test('the count names the people it hides', () => {
+    renderWithProvider(
+      <AvatarGroup
+        fallbackVariant="text"
+        max={1}
+        items={[
+          { avatar: 'Lo', key: 'a', label: 'Lin' },
+          { avatar: 'Ch', key: 'b', label: 'Sora' },
+          { avatar: 'Ai', key: 'c', title: 'Maya' },
+        ]}
+      />,
+    );
+    const count = screen.getByText('+2').closest('.lobe-avatar-group__count') as HTMLElement;
+
+    expect(count.getAttribute('title')).toBe('Sora, Maya');
+    expect(count.getAttribute('aria-label')).toBe('Sora, Maya');
+  });
+
+  test('the count names hidden people by title before an action label', () => {
+    renderWithProvider(
+      <AvatarGroup
+        fallbackVariant="text"
+        max={1}
+        items={[
+          { avatar: 'Lo', key: 'a', label: 'Follow Lin', title: 'Lin' },
+          { avatar: 'Ch', key: 'b', label: 'Follow Sora', title: 'Sora' },
+          { avatar: 'Ai', key: 'c', label: 'Maya' },
+        ]}
+      />,
+    );
+    const count = screen.getByText('+2').closest('.lobe-avatar-group__count') as HTMLElement;
+
+    expect(count.getAttribute('title')).toBe('Sora, Maya');
+  });
+
   test('reverses stacking order with zIndexReverse', () => {
     const { container } = renderWithProvider(<AvatarGroup zIndexReverse items={items} size={48} />);
     const avatars = (container.firstChild as HTMLElement).children;
