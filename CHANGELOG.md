@@ -2,6 +2,39 @@
 
 # Changelog
 
+## [Version&nbsp;6.21.0](https://github.com/lobehub/lobe-ui/compare/v6.20.0...v6.21.0)
+
+<sup>Released on **2026-11-25**</sup>
+
+#### ✨ Features
+
+- **MetricStrip**: Add compact size and fixed columns.
+
+#### 🐛 Bug Fixes
+
+- **scroll-area**: Drop stale scrollFade once the viewport stops overflowing.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **MetricStrip**: Add compact size and fixed columns, closes [#817](https://github.com/lobehub/lobe-ui/issues/817) ([baa781a](https://github.com/lobehub/lobe-ui/commit/baa781a))
+
+#### What's fixed
+
+- **scroll-area**: Drop stale scrollFade once the viewport stops overflowing, closes [#813](https://github.com/lobehub/lobe-ui/issues/813) ([a54fab9](https://github.com/lobehub/lobe-ui/commit/a54fab9))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version&nbsp;6.20.0](https://github.com/lobehub/lobe-ui/compare/v6.19.2...v6.20.0)
 
 <sup>Released on **2026-11-24**</sup>
