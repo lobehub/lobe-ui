@@ -32,4 +32,20 @@ describe('MetricStrip', () => {
       stripItem,
     );
   });
+
+  test('size="small" marks the strip and columns fix the count', () => {
+    const { container } = render(<MetricStrip columns={4.6} items={items} size="small" />);
+    const strip = container.firstElementChild as HTMLElement;
+    expect(strip.dataset.size).toBe('small');
+    const grid = container.querySelector<HTMLElement>('.lobe-dashboard-metric-strip__grid')!;
+    expect(grid.style.getPropertyValue('--metric-columns')).toBe('4');
+  });
+
+  test('a default strip keeps fitting columns and carries no size attribute', () => {
+    const { container } = render(<MetricStrip items={items} />);
+    expect((container.firstElementChild as HTMLElement).dataset.size).toBeUndefined();
+    const grid = container.querySelector<HTMLElement>('.lobe-dashboard-metric-strip__grid')!;
+    expect(grid.style.getPropertyValue('--metric-columns')).toBe('');
+  });
 });
+

@@ -2,6 +2,7 @@
 
 import * as stylex from '@stylexjs/stylex';
 import clsx from 'clsx';
+import type { CSSProperties } from 'react';
 
 import { styleProps } from '@/styles/stylex/props';
 import { toDataAttributes } from '@/utils/bem';
@@ -20,18 +21,29 @@ import type { MetricStripProps } from './type';
  */
 const MetricStrip = ({
   className,
+  columns,
   items,
   loading,
   renderLink,
+  size = 'default',
   variant = 'joined',
 }: MetricStripProps) => {
   const cardStyles = useSurfaceCardStyles();
+  const fixed = columns !== undefined && columns > 0;
+  const columnStyle = fixed
+    ? ({ '--metric-columns': Math.floor(columns) } as CSSProperties)
+    : undefined;
+  const dataAttributes = toDataAttributes({ size: size === 'default' ? undefined : size, variant });
 
   if (variant === 'split') {
     return (
       <div
-        {...styleProps(styles.split, clsx(dashboardMetricStripClasses(), className))}
-        {...toDataAttributes({ variant })}
+        {...styleProps(
+          [styles.split, fixed && styles.columnsFixed],
+          clsx(dashboardMetricStripClasses(), className),
+          columnStyle,
+        )}
+        {...dataAttributes}
       >
         {items.map((item, index) => (
           <div
@@ -46,6 +58,7 @@ const MetricStrip = ({
               item={item}
               loading={loading}
               renderLink={renderLink}
+              size={size}
             />
           </div>
         ))}
@@ -60,10 +73,16 @@ const MetricStrip = ({
         stylex.props(surfaceStyles.clip).className,
         className,
       )}
-      {...toDataAttributes({ variant })}
+      {...dataAttributes}
     >
       <div {...styleProps(styles.frame, dashboardMetricStripClasses('frame'))}>
-        <div {...styleProps(styles.grid, dashboardMetricStripClasses('grid'))}>
+        <div
+          {...styleProps(
+            [styles.grid, fixed && styles.columnsFixed],
+            dashboardMetricStripClasses('grid'),
+            columnStyle,
+          )}
+        >
           {items.map((item, index) => (
             <MetricCell
               seam
@@ -72,6 +91,7 @@ const MetricStrip = ({
               key={index}
               loading={loading}
               renderLink={renderLink}
+              size={size}
             />
           ))}
         </div>

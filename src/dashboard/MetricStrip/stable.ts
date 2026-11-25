@@ -2,7 +2,7 @@ import { stableClasses } from '@/utils/bem';
 
 export const dashboardMetricStripClasses = stableClasses({
   block: 'dashboard-metric-strip',
-  dataAttributes: ['variant', 'direction', 'tone'],
+  dataAttributes: ['variant', 'size', 'direction', 'tone'],
   elements: [
     'card',
     'frame',

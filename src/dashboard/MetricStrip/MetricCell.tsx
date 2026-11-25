@@ -10,7 +10,7 @@ import { toDataAttributes } from '@/utils/bem';
 import { useSurfaceLink } from '../Surface/link';
 import type { SurfaceRenderLink } from '../Surface/type';
 import { styles } from './style';
-import type { MetricItem } from './type';
+import type { MetricItem, MetricStripSize } from './type';
 
 const deltaStyles = {
   down: styles.deltaDown,
@@ -37,15 +37,19 @@ const MetricBody = ({
   classes,
   item,
   loading,
+  small,
 }: {
   classes: MetricClasses;
   item: MetricItem;
   loading?: boolean;
+  small: boolean;
 }) => (
   <>
-    <div {...styleProps(styles.head, classes('head'))}>
+    <div {...styleProps([styles.head, small && styles.headSmall], classes('head'))}>
       <div {...stylex.props(styles.headCopy)}>
-        <div {...styleProps(styles.label, classes('label'))}>{item.label}</div>
+        <div {...styleProps([styles.label, small && styles.labelSmall], classes('label'))}>
+          {item.label}
+        </div>
       </div>
       {item.action ? (
         <div {...styleProps(styles.headAction, classes('action'))}>{item.action}</div>
@@ -57,12 +61,18 @@ const MetricBody = ({
       ) : null}
     </div>
     {loading ? (
-      <Skeleton className={classes('skeleton')} height={28} radius={6} width={88} />
+      <Skeleton
+        className={classes('skeleton')}
+        height={small ? 20 : 28}
+        radius={6}
+        width={small ? 64 : 88}
+      />
     ) : (
       <div
         {...styleProps(
           [
             styles.value,
+            small && styles.valueSmall,
             item.valueTone === 'danger' && styles.valueDanger,
             item.valueTone === 'warning' && styles.valueWarning,
           ],
@@ -74,16 +84,23 @@ const MetricBody = ({
       </div>
     )}
     {!loading && (item.delta || item.hint) ? (
-      <div {...styleProps(styles.foot, classes('foot'))}>
+      <div {...styleProps([styles.foot, small && styles.footSmall], classes('foot'))}>
         {item.delta ? (
           <span
-            {...styleProps([styles.delta, deltaStyles[item.direction ?? 'flat']], classes('delta'))}
+            {...styleProps(
+              [styles.delta, deltaStyles[item.direction ?? 'flat'], small && styles.lineSmall],
+              classes('delta'),
+            )}
             {...toDataAttributes({ direction: item.direction ?? 'flat' })}
           >
             {item.delta}
           </span>
         ) : null}
-        {item.hint ? <span {...styleProps(styles.hint, classes('hint'))}>{item.hint}</span> : null}
+        {item.hint ? (
+          <span {...styleProps([styles.hint, small && styles.lineSmall], classes('hint'))}>
+            {item.hint}
+          </span>
+        ) : null}
       </div>
     ) : null}
     {!loading && item.chart ? (
@@ -99,13 +116,24 @@ export interface MetricCellProps {
   renderLink?: SurfaceRenderLink;
   /** Draw the joined-strip divider on the trailing and bottom edges. */
   seam?: boolean;
+  size?: MetricStripSize;
 }
 
 /** One metric: label row, figure, delta and hint. Shared by MetricStrip and StatCard. */
-const MetricCell = ({ classes, item, loading, renderLink, seam = false }: MetricCellProps) => {
+const MetricCell = ({
+  classes,
+  item,
+  loading,
+  renderLink,
+  seam = false,
+  size = 'default',
+}: MetricCellProps) => {
   const link = useSurfaceLink(renderLink);
-  const body = <MetricBody classes={classes} item={item} loading={item.loading ?? loading} />;
-  const cell = [styles.cell, seam && styles.cellSeam];
+  const small = size === 'small';
+  const body = (
+    <MetricBody classes={classes} item={item} loading={item.loading ?? loading} small={small} />
+  );
+  const cell = [styles.cell, small && styles.cellSmall, seam && styles.cellSeam];
 
   if (item.href) {
     return (

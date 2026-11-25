@@ -146,6 +146,40 @@ export const styles = stylex.create({
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
   },
+  /** `columns`: a fixed count, read from `--metric-columns`. */
+  columnsFixed: {
+    gridTemplateColumns: 'repeat(var(--metric-columns), minmax(0, 1fr))',
+  },
+  /* size="small": a compact cell for narrow containers. */
+  cellSmall: {
+    gap: 2,
+    paddingBlock: 10,
+    paddingInline: 12,
+  },
+  headSmall: {
+    blockSize: 'auto',
+    minBlockSize: 20,
+  },
+  labelSmall: {
+    fontSize: 12,
+  },
+  valueSmall: {
+    fontSize: 18,
+    lineHeight: 1.4,
+  },
+  footSmall: {
+    gap: 4,
+    flexWrap: 'nowrap',
+    minInlineSize: 0,
+  },
+  /** One line, cut rather than stacked under the figure. */
+  lineSmall: {
+    overflow: 'hidden',
+    fontSize: 12,
+    minInlineSize: 0,
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+  },
   valueDanger: {
     color: cssVar.colorError,
   },

@@ -24,12 +24,25 @@ export interface MetricItem {
   valueTone?: 'danger' | 'warning';
 }
 
+export type MetricStripSize = 'default' | 'small';
+
 export interface MetricStripProps {
   className?: string;
+  /**
+   * Fixed number of columns. Unset, the strip fits as many 180px columns as the width allows.
+   * Set it to choose the rows yourself, e.g. every figure on one row in a narrow container.
+   */
+  columns?: number;
   items: MetricItem[];
   /** First load only: values become placeholders, labels stay. */
   loading?: boolean;
   renderLink?: SurfaceRenderLink;
+  /**
+   * `small`: compact cells for narrow containers (chat cards, side panels): tighter padding, a
+   * smaller figure, and a delta and hint that stay on one line, cut with an ellipsis.
+   * @default 'default'
+   */
+  size?: MetricStripSize;
   /**
    * `joined`: one card divided into cells. `split`: every item is its own card (the StatCard look)
    * on a responsive grid with a gap.

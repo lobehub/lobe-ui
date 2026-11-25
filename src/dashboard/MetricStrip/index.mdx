@@ -6,6 +6,7 @@ order: 5
 ---
 
 import DemoIndex from './demos/index.tsx?demo';
+import DemoCompact from './demos/compact.tsx?demo';
 import DemoSplit from './demos/split.tsx?demo';
 import { StableClassTable } from '../../../docs/stable-classes/StableClassTable';
 import { dashboardMetricStripClasses } from './stable';
@@ -19,6 +20,12 @@ import { dashboardMetricStripClasses } from './stable';
 `variant="split"` gives every item its own card on the same responsive grid, with a gap. Each card is identical to `StatCard`.
 
 <Demo of={DemoSplit} />
+
+## Compact
+
+`size="small"` tightens the cells for narrow containers such as chat cards and side panels: less padding, a smaller figure, and a delta and hint that stay on one line. `columns` fixes the column count instead of fitting 180px columns, so peers can share one row; pick it from the container width to wrap into balanced rows when one row would not read.
+
+<Demo of={DemoCompact} />
 
 ## APIs
 
