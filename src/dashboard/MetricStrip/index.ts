@@ -1,2 +1,2 @@
 export { default, default as MetricStrip } from './MetricStrip';
-export type { MetricItem, MetricStripProps } from './type';
+export type { MetricItem, MetricStripProps, MetricStripSize } from './type';
