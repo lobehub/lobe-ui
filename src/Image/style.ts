@@ -148,7 +148,7 @@ export const styles = stylex.create({
     insetBlockStart: '50%',
     pointerEvents: 'auto',
     position: 'absolute',
-    transform: 'translateY(-50%)',
+    translate: '0 -50%',
   },
   viewerNavNext: {
     insetInlineEnd: 16,
