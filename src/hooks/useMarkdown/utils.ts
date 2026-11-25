@@ -98,17 +98,24 @@ export const transformCitations = (rawContent: string, length: number = 0) => {
     );
   });
 
+  // 记录每个有效引用的结束位置，用于区分紧邻的 `]` 是否属于待替换的引用
+  const matchEndPositions = new Set(
+    validMatches.map((citation) => citation.index + citation.length),
+  );
+
   // 从后向前替换，避免索引变化问题
   let result = rawContent;
   for (let i = validMatches.length - 1; i >= 0; i--) {
     const citation = validMatches[i];
     const before = result.slice(0, Math.max(0, citation.index));
     const after = result.slice(Math.max(0, citation.index + citation.length));
-    result = before + `[#citation-${citation.id}](citation-${citation.id})` + after;
+    // 未转换的 `]` 紧邻生成的引用链接时，`][` 会被解析为引用式链接，需要插入空格分隔；
+    // 其余位置的 `][`（如代码、引用式链接、未转换的连续标号）保持原样
+    const separator = before.endsWith(']') && !matchEndPositions.has(citation.index) ? ' ' : '';
+    result = before + separator + `[#citation-${citation.id}](citation-${citation.id})` + after;
   }
 
-  // 处理连续引用
-  return result.replaceAll('][', '] [');
+  return result;
 };
 
 /**
