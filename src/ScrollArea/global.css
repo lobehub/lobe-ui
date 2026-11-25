@@ -156,7 +156,18 @@
       }
     }
 
-    .lobe-scroll-area-fade {
+    /*
+     * Only attach the animations while the axis actually overflows. When a
+     * scrolled viewport stops overflowing (content shrinks or the viewport
+     * grows), Chromium (152-158 verified) keeps the now-inactive scroll
+     * timeline at its last progress, so `fade-top` stays pinned at 40px and the
+     * first item looks disabled. Without the animation the static fallback
+     * above (`min(fade-size, --scroll-area-overflow-*)`) resolves to 0px.
+     * Base UI sets `data-has-overflow-*` on the viewport only while that axis
+     * can scroll.
+     */
+    .lobe-scroll-area-fade[data-has-overflow-y],
+    .lobe-scroll-area-fade-both[data-has-overflow-y]:not([data-has-overflow-x]) {
       animation-name: lobe-scroll-area-fade-top-in, lobe-scroll-area-fade-bottom-out;
       animation-duration: 1ms, 1ms;
       animation-timing-function: linear, linear;
@@ -168,7 +179,8 @@
         calc(100% - var(--lobe-scroll-area-fade-size)) 100%;
     }
 
-    .lobe-scroll-area-fade-horizontal {
+    .lobe-scroll-area-fade-horizontal[data-has-overflow-x],
+    .lobe-scroll-area-fade-both[data-has-overflow-x]:not([data-has-overflow-y]) {
       animation-name: lobe-scroll-area-fade-left-in, lobe-scroll-area-fade-right-out;
       animation-duration: 1ms, 1ms;
       animation-timing-function: linear, linear;
@@ -180,7 +192,7 @@
         calc(100% - var(--lobe-scroll-area-fade-size)) 100%;
     }
 
-    .lobe-scroll-area-fade-both {
+    .lobe-scroll-area-fade-both[data-has-overflow-x][data-has-overflow-y] {
       animation-name:
         lobe-scroll-area-fade-top-in, lobe-scroll-area-fade-bottom-out,
         lobe-scroll-area-fade-left-in, lobe-scroll-area-fade-right-out;
