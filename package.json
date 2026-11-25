@@ -282,7 +282,7 @@
     "remark-frontmatter": "^5.0.0",
     "remark-mdx-frontmatter": "^6.0.0",
     "rollup-plugin-visualizer": "7.1.1",
-    "semantic-release": "^25.0.9",
+    "semantic-release": "^26.0.0",
     "stylelint": "^16.26.1",
     "svgo": "^4.1.0",
     "tsdown": "^0.23.1",
