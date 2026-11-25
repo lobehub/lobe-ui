@@ -86,6 +86,7 @@ const Modal = memo<ModalComponentProps>(
     footer,
     width,
     height,
+    initialFocus,
     maskClosable = true,
     closable = true,
     closeIcon,
@@ -253,6 +254,7 @@ const Modal = memo<ModalComponentProps>(
           )}
           <ModalPopupImpl
             className={classNames?.wrapper}
+            initialFocus={initialFocus}
             panelClassName={className}
             panelData={dataAttributes}
             {...dataAttributes}
