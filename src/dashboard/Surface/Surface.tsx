@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import { ArrowUpRight } from 'lucide-react';
 import type { ReactNode } from 'react';
 
+import { a2uiStyles } from '@/internal/a2ui/styles';
 import Skeleton from '@/Skeleton';
 import Spin from '@/Spin';
 import { styleProps } from '@/styles/stylex/props';
@@ -37,8 +38,10 @@ function Surface({
   renderLink,
   style,
   title,
+  variant = 'default',
   ...rest
 }: SurfaceProps) {
+  const isA2ui = variant === 'a2ui';
   const depth = useSurfaceDepth();
   const link = useSurfaceLink(renderLink);
   const cardStyles = useSurfaceCardStyles();
@@ -50,10 +53,21 @@ function Surface({
   const heading = (
     <div {...styleProps(styles.heading, dashboardSurfaceClasses('heading'))}>
       {defined(title) ? (
-        <div {...styleProps(styles.title, dashboardSurfaceClasses('title'))}>{title}</div>
+        <div
+          {...styleProps(
+            [styles.title, isA2ui && [a2uiStyles.title, styles.a2uiTitle]],
+            dashboardSurfaceClasses('title'),
+          )}
+        >
+          {title}
+        </div>
       ) : null}
       {defined(description) ? (
-        <div {...styleProps(styles.desc, dashboardSurfaceClasses('desc'))}>{description}</div>
+        <div
+          {...styleProps([styles.desc, isA2ui && styles.a2uiDesc], dashboardSurfaceClasses('desc'))}
+        >
+          {description}
+        </div>
       ) : null}
     </div>
   );
@@ -84,7 +98,7 @@ function Surface({
       <div
         {...styleProps(
           [
-            cardStyles,
+            isA2ui ? [a2uiStyles.base, a2uiStyles.card] : cardStyles,
             styles.content,
             styles.clip,
             Boolean(href) && [styles.cardLinked, surfaceMarker],
@@ -97,11 +111,20 @@ function Surface({
           ),
           style,
         )}
-        {...toDataAttributes({ bleed, linked: Boolean(href) })}
+        {...toDataAttributes({
+          bleed,
+          linked: Boolean(href),
+          variant: isA2ui ? variant : undefined,
+        })}
         {...rest}
       >
         {hasHeader ? (
-          <div {...styleProps(styles.header, dashboardSurfaceClasses('header'))}>
+          <div
+            {...styleProps(
+              [styles.header, isA2ui && styles.a2uiHeader],
+              dashboardSurfaceClasses('header'),
+            )}
+          >
             {href
               ? link({
                   children: (
@@ -138,7 +161,7 @@ function Surface({
         {pad ? (
           <div
             {...styleProps(
-              styles.body,
+              [styles.body, isA2ui && styles.a2uiBody],
               clsx(dashboardSurfaceClasses('body'), surfaceClassNames.tableBleed),
             )}
           >

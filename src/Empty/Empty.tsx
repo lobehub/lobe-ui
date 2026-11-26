@@ -2,16 +2,20 @@
 
 import * as stylex from '@stylexjs/stylex';
 import clsx from 'clsx';
-import { Plus } from 'lucide-react';
-import { type KeyboardEvent, memo, useMemo } from 'react';
+import { Inbox, Plus } from 'lucide-react';
+import { type KeyboardEvent, memo, type ReactNode, useMemo } from 'react';
 
+import Button, { type ButtonProps } from '@/Button';
 import FluentEmoji from '@/FluentEmoji';
 import Icon from '@/Icon';
+import A2uiButton, { isA2uiActionConfig } from '@/internal/a2ui/A2uiButton';
+import { a2uiStyles } from '@/internal/a2ui/styles';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import { styleProps } from '@/styles/stylex/props';
 import Text from '@/Text';
 import { toDataAttributes } from '@/utils/bem';
 
+import { a2uiEmptyStyles } from './a2uiStyle';
 import { emptyClasses } from './stable';
 import { styles } from './style';
 import type { EmptyProps } from './type';
@@ -40,6 +44,24 @@ const Empty = memo<EmptyProps>(
     style,
     ...rest
   }) => {
+    const isA2ui = variant === 'a2ui';
+    const actionNode: ReactNode = isA2uiActionConfig(action) ? (
+      isA2ui ? (
+        <A2uiButton disabled={action.disabled} tone="primary" onClick={action.onClick}>
+          {action.label}
+        </A2uiButton>
+      ) : (
+        <Button
+          disabled={action.disabled}
+          type="primary"
+          onClick={action.onClick as ButtonProps['onClick']}
+        >
+          {action.label}
+        </Button>
+      )
+    ) : (
+      action
+    );
     const isPage = type === 'page';
     const alignValue = align || (isPage ? 'flex-start' : 'center');
     const isCenter = alignValue === 'center';
@@ -83,6 +105,70 @@ const Empty = memo<EmptyProps>(
 
     const rootStyle: EmptyProps['style'] = style;
     const dataAttributes = toDataAttributes({ type, variant });
+
+    if (isA2ui) {
+      // Adapted from CopilotKit a2ui-playground (MIT): `renderers/feedback.tsx` EmptyState.
+      const a2uiCover =
+        image ??
+        (emoji ? (
+          <FluentEmoji emoji={emoji} size={imageSize} type={'anim'} />
+        ) : (
+          <div {...styleProps(a2uiEmptyStyles.icon)}>
+            <Icon color={iconColor} icon={icon ?? Inbox} size={18} />
+          </div>
+        ));
+      return (
+        <div
+          {...dataAttributes}
+          ref={ref}
+          onClick={onClick}
+          {...rest}
+          {...styleProps([a2uiStyles.base, a2uiEmptyStyles.root], clsx(emptyClasses(), className), {
+            alignItems: align,
+            ...rootStyle,
+          })}
+        >
+          <div {...imageProps} className={clsx(emptyClasses('cover'), imageProps?.className)}>
+            {a2uiCover}
+          </div>
+          {title && (
+            <p
+              {...styleProps(
+                a2uiEmptyStyles.title,
+                clsx(emptyClasses('title'), titleProps?.className),
+                titleProps?.style,
+              )}
+            >
+              {title}
+            </p>
+          )}
+          {description && (
+            <p
+              {...styleProps(
+                a2uiEmptyStyles.description,
+                clsx(emptyClasses('description'), descriptionProps?.className),
+                descriptionProps?.style,
+              )}
+            >
+              {description}
+            </p>
+          )}
+          {children}
+          {actionNode && (
+            <div
+              {...actionProps}
+              {...styleProps(
+                a2uiEmptyStyles.action,
+                clsx(emptyClasses('action'), actionProps?.className),
+                actionProps?.style,
+              )}
+            >
+              {actionNode}
+            </div>
+          )}
+        </div>
+      );
+    }
 
     const titleNode = title && (
       <Text
@@ -139,7 +225,7 @@ const Empty = memo<EmptyProps>(
             {titleNode}
             {descriptionNode}
             {children}
-            {action && (
+            {actionNode && (
               <div
                 {...actionProps}
                 {...styleProps(
@@ -147,7 +233,7 @@ const Empty = memo<EmptyProps>(
                   clsx(emptyClasses('action'), actionProps?.className),
                 )}
               >
-                {action}
+                {actionNode}
               </div>
             )}
           </div>
@@ -175,12 +261,12 @@ const Empty = memo<EmptyProps>(
         {titleNode}
         {descriptionNode}
         {children}
-        {action && (
+        {actionNode && (
           <div
             {...actionProps}
             {...styleProps(styles.action, clsx(emptyClasses('action'), actionProps?.className))}
           >
-            {action}
+            {actionNode}
           </div>
         )}
       </div>

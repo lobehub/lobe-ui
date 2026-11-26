@@ -5,6 +5,7 @@ category: Data Display
 order: 0
 ---
 
+import DemoA2ui from './demos/a2ui.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 import DemoAligned from './demos/aligned.tsx?demo';
 import { StableClassTable } from '../../../docs/stable-classes/StableClassTable';
@@ -23,6 +24,12 @@ import { dashboardStatCardClasses } from './stable';
 The label row has a fixed height. A `Segmented` or `ActionIcon` in `action` sits centered on the label and never makes its card taller, so values, previous-period lines and charts line up across a row whether or not a card has a control. The control sits on the trailing edge of the label row, and `chart` renders a sparkline or area chart at full card width under the delta and hint. Use compact controls there: `Segmented size="small"` and `ActionIcon size="small"`. `Surface` headers follow the same rule for `extra`.
 
 <Demo of={DemoAligned} />
+
+## A2UI
+
+`variant="a2ui"` is the [A2UI playground](https://a2ui.open.bot/components/Stat) `Stat`: the label with a 24px icon tile (`mark`), a figure that scales with the card width, a delta with a trend arrow and `hint` as a muted caption. Without `direction` the delta's sign picks the arrow and colour (`-` is down); `valueTone` tints the figure and the icon tile.
+
+<Demo of={DemoA2ui} layout="bare" />
 
 ## APIs
 

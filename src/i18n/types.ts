@@ -1,18 +1,23 @@
 export type Locale = string;
 
-type BuiltinTranslationResources = typeof import('./resources/en/agentAvatar').default &
+type BuiltinTranslationResources = typeof import('./resources/en/agenda').default &
+  typeof import('./resources/en/agentAvatar').default &
   typeof import('./resources/en/burger').default &
   typeof import('./resources/en/chat').default &
   typeof import('./resources/en/colorPicker').default &
   typeof import('./resources/en/common').default &
+  typeof import('./resources/en/comparisonTable').default &
   typeof import('./resources/en/datePicker').default &
   typeof import('./resources/en/editableMessage').default &
   typeof import('./resources/en/emojiPicker').default &
   typeof import('./resources/en/form').default &
+  typeof import('./resources/en/highlighter').default &
   typeof import('./resources/en/hotkey').default &
   typeof import('./resources/en/image').default &
   typeof import('./resources/en/messageModal').default &
+  typeof import('./resources/en/progress').default &
   typeof import('./resources/en/qrCode').default &
+  typeof import('./resources/en/rate').default &
   typeof import('./resources/en/sideNav').default &
   typeof import('./resources/en/table').default &
   typeof import('./resources/en/toc').default &

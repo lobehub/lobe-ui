@@ -3,13 +3,27 @@
 import './style.css';
 
 import clsx from 'clsx';
-import { AlertTriangle, CheckCircle, ChevronRight, Info, X, XCircle } from 'lucide-react';
-import { memo, useEffect, useRef, useState } from 'react';
+import {
+  AlertTriangle,
+  CheckCircle,
+  ChevronRight,
+  CircleCheck,
+  CircleX,
+  Info,
+  Lightbulb,
+  X,
+  XCircle,
+} from 'lucide-react';
+import { memo, type ReactNode, useEffect, useRef, useState } from 'react';
 
+import Button, { type ButtonProps } from '@/Button';
 import Icon from '@/Icon';
+import A2uiButton, { isA2uiActionConfig } from '@/internal/a2ui/A2uiButton';
+import { a2uiStyles } from '@/internal/a2ui/styles';
 import { focusRing } from '@/styles/stylex/focusRing';
 import { styleProps } from '@/styles/stylex/props';
 
+import { a2uiAlertIconTone, a2uiAlertStyles, a2uiAlertTone } from './a2uiStyle';
 import { alertSummaryMarker } from './marker.stylex';
 import { alertClasses } from './stable';
 import { styles } from './style';
@@ -23,6 +37,15 @@ const typeIcons = {
   warning: AlertTriangle,
 } satisfies Record<AlertType, typeof Info>;
 
+// The playground's Alert icons (CopilotKit a2ui-playground, MIT).
+const a2uiTypeIcons = {
+  error: CircleX,
+  info: Info,
+  secondary: Info,
+  success: CircleCheck,
+  warning: AlertTriangle,
+} satisfies Record<AlertType, typeof Info>;
+
 const toneStyles = {
   error: styles.toneError,
   info: styles.toneInfo,
@@ -32,19 +55,23 @@ const toneStyles = {
 } satisfies Record<AlertType, unknown>;
 
 const rootVariantStyles = {
-  borderless: styles.plain,
-  filled: styles.soft,
-  outlined: styles.outlined,
-  plain: styles.plain,
-  soft: styles.soft,
+  'borderless': styles.plain,
+  'filled': styles.soft,
+  'outlined': styles.outlined,
+  'plain': styles.plain,
+  'soft': styles.soft,
+  'a2ui': styles.soft,
+  'a2ui-callout': styles.soft,
 } satisfies Record<AlertVariant, unknown>;
 
 const integratedVariantStyles = {
-  borderless: styles.extraPlain,
-  filled: styles.soft,
-  outlined: styles.outlined,
-  plain: styles.extraPlain,
-  soft: styles.soft,
+  'borderless': styles.extraPlain,
+  'filled': styles.soft,
+  'outlined': styles.outlined,
+  'plain': styles.extraPlain,
+  'soft': styles.soft,
+  'a2ui': styles.soft,
+  'a2ui-callout': styles.soft,
 } satisfies Record<AlertVariant, unknown>;
 
 const isPlainVariant = (variant: AlertVariant) => variant === 'borderless' || variant === 'plain';
@@ -110,6 +137,125 @@ const Alert = memo<AlertProps>(
       (configuredOnClose ?? onClose)?.(event);
       setClosed(true);
     };
+
+    const isA2ui = variant === 'a2ui' || variant === 'a2ui-callout';
+    const actionNode: ReactNode = isA2uiActionConfig(action) ? (
+      isA2ui ? (
+        <A2uiButton disabled={action.disabled} onClick={action.onClick}>
+          {action.label}
+        </A2uiButton>
+      ) : (
+        <Button
+          disabled={action.disabled}
+          size="small"
+          onClick={action.onClick as ButtonProps['onClick']}
+        >
+          {action.label}
+        </Button>
+      )
+    ) : (
+      action
+    );
+
+    const closeNode = isClosable && (
+      <button
+        {...closeButtonProps}
+        aria-label={closeButtonProps['aria-label'] ?? 'Close alert'}
+        disabled={closeDisabled}
+        {...styleProps(
+          [focusRing.info, styles.close],
+          clsx(alertClasses('close'), classNames?.close, closeClassName),
+          { ...customStyles?.close, ...closeStyle },
+        )}
+        type="button"
+        onClick={handleClose}
+      >
+        {configuredCloseIcon ?? closeIcon ?? closeText ?? <X size={14} />}
+      </button>
+    );
+
+    if (isA2ui) {
+      // Adapted from CopilotKit a2ui-playground (MIT): `renderers/feedback.tsx` Alert / Callout.
+      const isCallout = variant === 'a2ui-callout';
+      const hasTitle = resolvedTitle !== undefined && resolvedTitle !== null;
+      return (
+        <div
+          {...rest}
+          data-alert-type={type}
+          data-alert-variant={variant}
+          ref={ref}
+          role={role}
+          {...styleProps(
+            isCallout
+              ? [a2uiStyles.base, a2uiAlertStyles.callout]
+              : [a2uiStyles.base, a2uiAlertStyles.alert, a2uiAlertTone[type]],
+            clsx(alertClasses(), classNames?.root, classNames?.alert, rootClassName, className),
+            { ...style, ...customStyles?.root, ...customStyles?.alert },
+          )}
+        >
+          {showIcon && (
+            <span
+              aria-hidden="true"
+              {...styleProps(
+                isCallout
+                  ? [a2uiAlertStyles.calloutIcon]
+                  : [a2uiAlertStyles.alertIcon, a2uiAlertIconTone[type]],
+                clsx(alertClasses('icon'), classNames?.icon),
+                customStyles?.icon,
+              )}
+            >
+              <Icon
+                icon={icon ?? (isCallout ? Lightbulb : a2uiTypeIcons[type])}
+                size={16}
+                {...iconProps}
+              />
+            </span>
+          )}
+          <div
+            {...styleProps(
+              [isCallout ? a2uiAlertStyles.calloutContent : a2uiAlertStyles.alertContent],
+              clsx(alertClasses('content'), classNames?.section, classNames?.content),
+              { ...customStyles?.section, ...customStyles?.content },
+            )}
+          >
+            {hasTitle && (
+              <p
+                {...styleProps(
+                  [isCallout ? a2uiAlertStyles.calloutTitle : a2uiAlertStyles.title],
+                  clsx(alertClasses('title'), classNames?.title),
+                  customStyles?.title,
+                )}
+              >
+                {resolvedTitle}
+              </p>
+            )}
+            {hasDescription && (
+              <p
+                {...styleProps(
+                  [isCallout ? a2uiAlertStyles.calloutText : a2uiAlertStyles.message],
+                  clsx(alertClasses('description'), classNames?.description),
+                  customStyles?.description,
+                )}
+              >
+                {description}
+              </p>
+            )}
+          </div>
+          {actionNode && (
+            <div
+              {...styleProps(
+                [a2uiAlertStyles.action],
+                clsx(alertClasses('action'), classNames?.action),
+                customStyles?.action,
+              )}
+            >
+              {actionNode}
+            </div>
+          )}
+          {closeNode}
+        </div>
+      );
+    }
 
     const root = (
       <div
@@ -182,7 +328,7 @@ const Alert = memo<AlertProps>(
             </div>
           )}
         </div>
-        {action && (
+        {actionNode && (
           <div
             {...styleProps(
               [styles.action, styles.wrappedAction],
@@ -190,25 +336,10 @@ const Alert = memo<AlertProps>(
               customStyles?.action,
             )}
           >
-            {action}
+            {actionNode}
           </div>
         )}
-        {isClosable && (
-          <button
-            {...closeButtonProps}
-            aria-label={closeButtonProps['aria-label'] ?? 'Close alert'}
-            disabled={closeDisabled}
-            {...styleProps(
-              [focusRing.info, styles.close],
-              clsx(alertClasses('close'), classNames?.close, closeClassName),
-              { ...customStyles?.close, ...closeStyle },
-            )}
-            type="button"
-            onClick={handleClose}
-          >
-            {configuredCloseIcon ?? closeIcon ?? closeText ?? <X size={14} />}
-          </button>
-        )}
+        {closeNode}
       </div>
     );
 

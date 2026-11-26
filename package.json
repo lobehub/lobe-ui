@@ -156,14 +156,15 @@
     "*.json": [
       "prettier --write --no-error-on-unmatched-pattern"
     ],
+    "*.css": [
+      "stylelint --fix"
+    ],
     "*.{js,jsx}": [
       "prettier --write",
-      "stylelint --fix",
       "eslint --fix"
     ],
     "*.{ts,tsx}": [
       "prettier --parser=typescript --write",
-      "stylelint --fix",
       "eslint --fix"
     ]
   },

@@ -4,6 +4,7 @@ description: Label and value pairs laid out in one or more columns, with an opti
 category: Data Display
 ---
 
+import DemoA2ui from './demos/a2ui.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
 import { descriptionsClasses } from './stable';
@@ -11,6 +12,12 @@ import { descriptionsClasses } from './stable';
 ## Basic
 
 <Demo of={DemoIndex} layout="bare" />
+
+## A2UI
+
+`variant="a2ui"` takes the look of the [A2UI playground](https://a2ui.open.bot/components/KeyValueList) key-value list: a card with the `title`, then label / value rows split by dashed hairlines. Values sit on the right with an optional `hint` under them; numbers are formatted. `column` (1 to 3) splits rows into columns once the card is wide enough, and narrow cards stack each label above its value.
+
+<Demo of={DemoA2ui} layout="bare" />
 
 ## APIs
 

@@ -4,6 +4,7 @@ description: Data table with antd-shaped columns, local or server sorting, heade
 category: Data Display
 ---
 
+import DemoA2ui from './demos/a2ui.tsx?demo';
 import DemoBasic from './demos/basic.tsx?demo';
 import DemoRowSelection from './demos/row-selection.tsx?demo';
 import DemoFilterSorter from './demos/filter-sorter.tsx?demo';
@@ -223,6 +224,12 @@ Not an antd demo: switches between the English defaults, `ConfigProvider` with t
 | `TableHeaderCell` / `TableCell` | `th` / `td` | `align`, `ellipsis`, `fixStart` / `fixEnd` (sticky offsets), `shadowStart` / `shadowEnd`, `zIndex`, `hovered`, `component` |
 | `TableExpandedRow` | `tr` with one spanning cell | `colSpan`, `expanded`, `fixed` (stick to the viewport), `component`, `cellComponent` |
 
+## A2UI
+
+`variant="a2ui"` takes the look of the [A2UI playground](https://a2ui.open.bot/components/DataTable) data table: the table sits in a card whose header carries the `title` and the row count, hairline rows under a tinted header row, and a compact pager footer (`1-5 of 8  ‹ 1 / 2 ›`) driven by `pagination` that appears once the rows outnumber `pagination.pageSize`. `searchable` adds a search box that filters rows by any text or number value. Cells never wrap: a table wider than its card scrolls inside it and fades the edge that still hides columns, and sort icons stay hidden until the header is hovered. Give numeric columns `align: 'right'` (their values then read at full contrast) and render status columns with `Tag variant="a2ui" shape="round" size="small"`.
+
+<Demo of={DemoA2ui} layout="bare" />
+
 ## API
 
 <Api name="Table" from=".." />
@@ -231,7 +238,7 @@ Not an antd demo: switches between the English defaults, `ConfigProvider` with t
 
 | Property | Description | Type | Default |
 | --- | --- | --- | --- |
-| variant | Visual style | `filled` \| `outlined` \| `borderless` | `borderless` |
+| variant | Visual style; `a2ui` is the A2UI playground data table card (see [A2UI](#a2ui)) | `filled` \| `outlined` \| `borderless` \| `a2ui` | `borderless` |
 | children | `Table.Column` / `Table.ColumnGroup` elements, used when `columns` is not set | `ReactNode` | - |
 | classNames | Class per semantic part; object or function of `{ props }`. See [Semantic DOM](#semantic-dom) | `TableClassNames \| (info: { props }) => TableClassNames` | - |
 | column | Props merged under every column and group (a column's own fields win) | `Partial<TableColumnType>` | - |
@@ -249,7 +256,8 @@ Not an antd demo: switches between the English defaults, `ConfigProvider` with t
 | rowHoverable | Highlight the hovered row | `boolean` | `true` |
 | rowKey | Row key: a field name or a function | `string \| (record, index?) => Key` | `'key'` |
 | rowSelection | Row selection, see [rowSelection](#rowselection) | `TableRowSelection` | - |
-| scroll | Scroll area, see [scroll](#scroll) | `{ x?, y?, scrollToFirstRowOnChange? }` | - |
+| scroll | Scroll area, see [scroll](#scroll); `a2ui` defaults to `{ x: 'max-content' }` | `{ x?, y?, scrollToFirstRowOnChange? }` | - |
+| searchable | `a2ui` only: a search box in the card header that filters rows by any text or number value | `boolean` | `false` |
 | showHeader | Show the header | `boolean` | `true` |
 | showSorterTooltip | Tooltip on sortable headers telling what the next click does; an object goes to `Tooltip` | `boolean \| TooltipProps & { target?: 'full-header' \| 'sorter-icon' }` | `{ target: 'full-header' }` |
 | size | Size of the table | `'large' \| 'middle' \| 'small'` | `'middle'` |

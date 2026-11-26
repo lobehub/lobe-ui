@@ -4,6 +4,7 @@ description: Empty component displays an empty state with customizable icon, emo
 category: Data Display
 ---
 
+import DemoA2ui from './demos/A2ui.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 import DemoWithIcon from './demos/WithIcon.tsx?demo';
 import DemoWithEmoji from './demos/WithEmoji.tsx?demo';
@@ -36,6 +37,12 @@ import { emptyClasses } from './stable';
 ## Page
 
 <Demo of={DemoPage} />
+
+## A2UI
+
+`variant="a2ui"` takes the look of the [A2UI playground](https://a2ui.open.bot/components/EmptyState) empty state: a dashed 14px frame, the icon in a round well (an inbox by default), a 14px title, a muted hint and a primary action. Pass `action={{ label, onClick }}` to get the playground's button; any other node renders as is.
+
+<Demo of={DemoA2ui} layout="bare" />
 
 ## APIs
 

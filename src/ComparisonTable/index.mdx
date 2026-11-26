@@ -1,0 +1,42 @@
+---
+title: ComparisonTable
+description: Feature matrix that compares options side by side, with check and cross cells and one highlighted, badged recommended column.
+category: Data Display
+---
+
+import A2ui from './demos/a2ui.tsx?demo';
+import Basic from './demos/index.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { comparisonTableClasses } from './stable';
+
+## Usage
+
+Options are the columns and each row is a feature with one value per option. `true` draws a check, `false` a cross, an empty value a dash, and anything else (text, numbers, nodes) is shown as is. `highlight` picks the recommended option: its column is tinted, ruled in the primary colour and badged. The default variant is a plain lobe-ui card with body-size type; the card scrolls sideways when the options do not fit, fading the edge that still hides columns.
+
+<Demo of={Basic} layout="bare" />
+
+## A2UI
+
+`variant="a2ui"` takes the layout of the [A2UI playground](https://a2ui.open.bot/components/ComparisonTable) comparison table: a 14px card with a soft shadow, compact 12.5 to 13px type and hairline rules. Colours stay the lobe-ui theme's in both variants.
+
+<Demo of={A2ui} layout="bare" />
+
+## API
+
+<Api name="ComparisonTable" />
+
+The feature header and the badge read the `comparisonTable.feature` and `comparisonTable.recommended` texts of `@lobehub/ui/i18n`; `featureLabel` and `recommendedLabel` override them.
+
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `ComparisonTable`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/ComparisonTable.css';
+```
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={comparisonTableClasses} />

@@ -6,6 +6,8 @@ import clsx from 'clsx';
 import { X } from 'lucide-react';
 import { memo, useMemo, useState } from 'react';
 
+import { a2uiStyles, a2uiToneSoft } from '@/internal/a2ui/styles';
+import { toA2uiTone } from '@/internal/a2ui/utils';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import { styleProps } from '@/styles/stylex/props';
 import { stylish } from '@/styles/stylex/stylish';
@@ -22,6 +24,13 @@ const variantStyles = {
   filled: stylish.variantFilledWithoutHover,
   outlined: stylish.variantOutlinedWithoutHover,
   solid: stylish.variantFilledWithoutHover,
+  a2ui: null,
+};
+
+const a2uiSizeStyles = {
+  large: styles.a2uiLarge,
+  middle: styles.a2uiMiddle,
+  small: styles.a2uiSmall,
 };
 
 const roundSizeStyles = {
@@ -51,7 +60,18 @@ const Tag = memo<TagProps>(
   }) => {
     const [visible, setVisible] = useState(true);
 
+    const isA2ui = variant === 'a2ui';
+
     const colors = useMemo(() => {
+      if (variant === 'a2ui') {
+        // A hex colour tints like a tone: 13% wash, 24% hairline, the colour as text.
+        if (!color?.startsWith('#')) return {};
+        return {
+          backgroundColor: `color-mix(in oklch, ${color} 13%, transparent)`,
+          borderColor: `color-mix(in oklch, ${color} 24%, transparent)`,
+          textColor: color,
+        };
+      }
       let textColor: string | undefined;
       let backgroundColor;
       let borderColor;
@@ -112,9 +132,19 @@ const Tag = memo<TagProps>(
           [
             styles.root,
             variantStyles[variant],
-            styles[size],
-            shape === 'round' && [styles.round, roundSizeStyles[size]],
-            !colors.textColor && styles.defaultColor,
+            isA2ui
+              ? [
+                  a2uiStyles.base,
+                  styles.a2ui,
+                  a2uiToneSoft[toA2uiTone(color)],
+                  a2uiSizeStyles[size],
+                  shape === 'round' && styles.a2uiRound,
+                ]
+              : [
+                  styles[size],
+                  shape === 'round' && [styles.round, roundSizeStyles[size]],
+                  !colors.textColor && styles.defaultColor,
+                ],
             !!onClick && styles.clickable,
           ],
           clsx('lobe-tag', className, classNames?.root),
@@ -131,7 +161,11 @@ const Tag = memo<TagProps>(
         {...rest}
       >
         {icon}
-        {children}
+        {isA2ui && children != null ? (
+          <span {...styleProps(styles.a2uiText)}>{children}</span>
+        ) : (
+          children
+        )}
         {closable && (
           <button
             aria-label="Close"

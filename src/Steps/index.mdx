@@ -4,6 +4,7 @@ description: A numbered sequence for multi-step flows, or a neutral vertical gui
 category: Navigation
 ---
 
+import DemoA2ui from './demos/a2ui.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
 import { stepsClasses } from './stable';
@@ -11,6 +12,12 @@ import { stepsClasses } from './stable';
 ## Basic
 
 <Demo of={DemoIndex} layout="bare" />
+
+## A2UI
+
+`variant="a2ui"` takes the look of the [A2UI playground](https://a2ui.open.bot/components/Timeline) timeline: a vertical card where finished steps get a check, the current step a ringed accent dot and waiting steps a hollow dot. Each item's `time` sits at the end of its title row; `icon` replaces the marker glyph. Without `status` or `current`, every step counts as finished.
+
+<Demo of={DemoA2ui} layout="bare" />
 
 ## APIs
 

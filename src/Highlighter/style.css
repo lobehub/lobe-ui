@@ -59,3 +59,20 @@
     transition: opacity 0.1s;
   }
 }
+
+/* a2ui: the A2UI playground code block (adapted from CopilotKit a2ui-playground, MIT). */
+@layer lobe-ui {
+  .lobe-highlighter-a2ui pre {
+    height: auto;
+    font-size: inherit;
+  }
+
+  .lobe-highlighter-a2ui .lobe-syntax-highlighter pre {
+    padding-block: 12px;
+    padding-inline: 16px;
+  }
+
+  .lobe-highlighter-a2ui .lobe-syntax-highlighter-shiki pre code {
+    gap: 0;
+  }
+}

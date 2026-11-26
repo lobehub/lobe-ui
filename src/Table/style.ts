@@ -1,5 +1,6 @@
 import * as stylex from '@stylexjs/stylex';
 
+import { a2ui } from '@/internal/a2ui/tokens.stylex';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
 export const styles = stylex.create({
@@ -213,5 +214,151 @@ export const styles = stylex.create({
   },
   spinContainer: {
     position: 'relative',
+  },
+});
+
+// a2ui variant chrome: adapted from CopilotKit a2ui-playground (MIT), `DataTableView`.
+export const a2uiChrome = stylex.create({
+  card: {
+    overflow: 'hidden',
+    display: 'flex',
+    flexDirection: 'column',
+    minWidth: 0,
+    width: '100%',
+  },
+  count: {
+    color: a2ui.fgMuted,
+    fontSize: 11,
+    fontVariantNumeric: 'tabular-nums',
+    whiteSpace: 'nowrap',
+  },
+  empty: {
+    paddingBlock: 0,
+    color: a2ui.fgMuted,
+    fontSize: 12.5,
+    textAlign: 'center',
+    height: 80,
+  },
+  footer: {
+    gap: 12,
+    paddingBlock: 8,
+    paddingInline: 16,
+    alignItems: 'center',
+    borderBlockStartColor: a2ui.line,
+    borderBlockStartStyle: 'solid',
+    borderBlockStartWidth: 1,
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  footerText: {
+    color: a2ui.fgMuted,
+    fontSize: 11,
+    fontVariantNumeric: 'tabular-nums',
+  },
+  header: {
+    paddingInline: 16,
+    alignItems: 'center',
+    columnGap: 12,
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    paddingBlockEnd: 12,
+    paddingBlockStart: 14,
+    rowGap: 8,
+    minWidth: 0,
+  },
+  headerTitle: {
+    gap: 8,
+    alignItems: 'baseline',
+    display: 'flex',
+    minWidth: 0,
+  },
+  pageButton: {
+    padding: 0,
+    borderColor: 'transparent',
+    borderRadius: 8,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    outline: 'none',
+    alignItems: 'center',
+    backgroundColor: {
+      'default': 'transparent',
+      ':hover:not(:disabled)': a2ui.overlay6,
+    },
+    boxShadow: { 'default': null, ':focus-visible': `0 0 0 3px ${a2ui.ring}` },
+    color: 'inherit',
+    cursor: { 'default': 'pointer', ':disabled': 'default' },
+    display: 'inline-flex',
+    flexShrink: 0,
+    justifyContent: 'center',
+    opacity: { 'default': 1, ':disabled': 0.5 },
+    pointerEvents: { 'default': 'auto', ':disabled': 'none' },
+    height: 24,
+    width: 24,
+  },
+  pageIndex: {
+    color: a2ui.fgMuted,
+    fontSize: 11,
+    fontVariantNumeric: 'tabular-nums',
+    textAlign: 'center',
+    minWidth: 48,
+  },
+  pager: {
+    gap: 4,
+    alignItems: 'center',
+    display: 'flex',
+  },
+  search: {
+    position: 'relative',
+    maxWidth: 224,
+    minWidth: 0,
+    width: '100%',
+  },
+  searchIcon: {
+    color: a2ui.fgMuted,
+    insetInlineStart: 10,
+    pointerEvents: 'none',
+    position: 'absolute',
+    transform: 'translateY(-50%)',
+    top: '50%',
+  },
+  searchInput: {
+    'margin': 0,
+    'borderColor': { 'default': a2ui.input, ':focus-visible': a2ui.ring },
+    'borderRadius': 10,
+    'borderStyle': 'solid',
+    'borderWidth': 1,
+    'outline': 'none',
+    'paddingBlock': 4,
+    'transition': 'border-color 150ms, box-shadow 150ms',
+    'backgroundColor': a2ui.inputBg,
+    'boxShadow': { 'default': null, ':focus-visible': `0 0 0 3px ${a2ui.ring}` },
+    'boxSizing': 'border-box',
+    'color': a2ui.fg,
+    'fontFamily': 'inherit',
+    'fontSize': 12.5,
+    'lineHeight': 1.5,
+    'paddingInlineEnd': 10,
+    'paddingInlineStart': 32,
+    'height': 30,
+    'width': '100%',
+    '::placeholder': { color: a2ui.fgMuted },
+  },
+  table: {
+    minWidth: 0,
+  },
+  tableRuled: {
+    borderBlockStartColor: a2ui.line,
+    borderBlockStartStyle: 'solid',
+    borderBlockStartWidth: 1,
+  },
+  title: {
+    margin: 0,
+    overflow: 'hidden',
+    fontSize: 13,
+    fontWeight: 600,
+    letterSpacing: '-0.025em',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
   },
 });

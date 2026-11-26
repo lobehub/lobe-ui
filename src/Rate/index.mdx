@@ -4,6 +4,7 @@ description: Star rating that displays any fractional score read-only, or lets u
 category: Data Entry
 ---
 
+import DemoA2ui from './demos/a2ui.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
 import { rateClasses } from './stable';
@@ -11,6 +12,12 @@ import { rateClasses } from './stable';
 ## Basic
 
 <Demo of={DemoIndex} layout="bare" />
+
+## A2UI
+
+`variant="a2ui"` takes the look of the [A2UI playground](https://a2ui.open.bot/components/Rating) rating: a read-only row of 16px stars, the value to one decimal and an optional `reviewCount`, under an optional `label`.
+
+<Demo of={DemoA2ui} layout="bare" />
 
 ## APIs
 

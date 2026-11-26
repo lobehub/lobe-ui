@@ -1,5 +1,6 @@
 import * as stylex from '@stylexjs/stylex';
 
+import { a2ui } from '@/internal/a2ui/tokens.stylex';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
 import { surfaceMarker } from './marker.stylex';
@@ -30,6 +31,28 @@ import { surfaceMarker } from './marker.stylex';
  * `surfaceStyles.card` is the light look. Table rules for consumer markup live in `style.css`.
  */
 export const styles = stylex.create({
+  // `variant="a2ui"`: adapted from CopilotKit a2ui-playground (MIT), the `.a2-card` header and body.
+  a2uiBody: {
+    '--surface-pad-block': '14px',
+    'padding': null,
+    'paddingBlock': 14,
+    'paddingInline': 16,
+  },
+  a2uiDesc: {
+    color: a2ui.fgMuted,
+    fontSize: 12.5,
+    lineHeight: 1.625,
+    marginBlockStart: 0,
+  },
+  a2uiHeader: {
+    paddingBlock: 12,
+    alignItems: 'center',
+    borderBlockEndColor: a2ui.line,
+    minBlockSize: 0,
+  },
+  a2uiTitle: {
+    lineHeight: 1.5,
+  },
   arrow: {
     flex: 'none',
     transition: 'color 150ms ease-out, transform 150ms ease-out',

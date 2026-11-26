@@ -7,6 +7,8 @@ export interface StepItem {
   icon?: ReactNode;
   key?: Key;
   status?: StepStatus;
+  /** Time or date shown at the end of the title row (`variant="a2ui"`). */
+  time?: ReactNode;
   title?: ReactNode;
 }
 
@@ -22,5 +24,11 @@ export interface StepsProps extends Omit<ComponentProps<'ol'>, 'children'> {
     item?: CSSProperties;
     title?: CSSProperties;
   };
-  variant?: 'default' | 'dot';
+  /**
+   * `a2ui`: the A2UI playground timeline, always vertical, in a card: a check on finished
+   * steps, a ringed accent dot on the current one, a hollow dot on waiting ones, each item's
+   * `time` at the end of its title row.
+   * @default 'default'
+   */
+  variant?: 'default' | 'dot' | 'a2ui';
 }

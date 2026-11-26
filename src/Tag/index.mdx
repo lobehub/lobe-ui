@@ -4,6 +4,8 @@ description: Standalone colored tag for statuses and categorization, with preset
 category: Data Display
 ---
 
+import DemoA2ui from './demos/a2ui.tsx?demo';
+import DemoA2uiTones from './demos/a2uiTones.tsx?demo';
 import DemoClosable from './demos/closable.tsx?demo';
 import DemoHex from './demos/hex.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
@@ -28,6 +30,16 @@ import { tagClasses } from './stable';
 
 <Demo of={DemoSizes} layout="bare" />
 
+## A2UI
+
+`variant="a2ui"` takes the look of the [A2UI playground](https://a2ui.open.bot/components/TagList) tag list: a soft tinted chip with a hairline. With `shape="round"` it is the playground's badge pill.
+
+<Demo of={DemoA2ui} layout="bare" />
+
+`color` picks the tone: `success` / `green` positive, `error` / `red` negative, `warning` / `gold` / `orange` warning, `info` / `processing` / `blue` info, `purple` / `discovery` accent; anything else is neutral, and a hex colour tints with that colour.
+
+<Demo of={DemoA2uiTones} layout="bare" />
+
 ## Closable
 
 <Demo of={DemoClosable} layout="bare" />
@@ -48,6 +60,7 @@ import { tagClasses } from './stable';
 - `outlined`: transparent background with a colored border.
 - `borderless`: transparent background without a border.
 - `solid`: solid background with an auto-computed readable text color.
+- `a2ui`: the A2UI playground chip, a soft tone tint with a hairline border (see [A2UI](#a2ui)).
 
 ### Migrating from antd Tag
 

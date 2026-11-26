@@ -1,4 +1,4 @@
-import { Avatar,Flexbox  } from '@lobehub/ui';
+import { Avatar, Flexbox } from '@lobehub/ui';
 
 export default () => (
   <Flexbox horizontal gap={16} padding={16}>

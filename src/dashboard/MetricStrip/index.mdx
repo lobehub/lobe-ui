@@ -5,6 +5,7 @@ category: Data Display
 order: 5
 ---
 
+import DemoA2ui from './demos/a2ui.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 import DemoCompact from './demos/compact.tsx?demo';
 import DemoSplit from './demos/split.tsx?demo';
@@ -26,6 +27,12 @@ import { dashboardMetricStripClasses } from './stable';
 `size="small"` tightens the cells for narrow containers such as chat cards and side panels: less padding, a smaller figure, and a delta and hint that stay on one line. `columns` fixes the column count instead of fitting 180px columns, so peers can share one row; pick it from the container width to wrap into balanced rows when one row would not read.
 
 <Demo of={DemoCompact} />
+
+## A2UI
+
+`variant="a2ui"` is the [A2UI playground](https://a2ui.open.bot/components/StatGroup) `StatGroup`: one card whose cells are divided by hairlines, each with a label, a figure that scales with its cell and a delta whose arrow follows `direction` (or the delta's sign). `hint` becomes a caption under the delta.
+
+<Demo of={DemoA2ui} layout="bare" />
 
 ## APIs
 

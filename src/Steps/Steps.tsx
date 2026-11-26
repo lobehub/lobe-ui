@@ -8,6 +8,7 @@ import Icon from '@/Icon';
 import { styleProps } from '@/styles/stylex/props';
 import { toDataAttributes } from '@/utils/bem';
 
+import A2uiSteps from './A2uiSteps';
 import { stepsClasses } from './stable';
 import { indicatorStatusStyles, styles, titleStatusStyles } from './style';
 import type { StepItem, StepsProps, StepStatus } from './type';
@@ -36,7 +37,11 @@ const renderIndicator = (
   return index + 1;
 };
 
-const Steps = memo<StepsProps>(
+const Steps = memo<StepsProps>((props) =>
+  props.variant === 'a2ui' ? <A2uiSteps {...props} /> : <DefaultSteps {...props} />,
+);
+
+const DefaultSteps = memo<StepsProps>(
   ({
     className,
     classNames,
@@ -148,6 +153,7 @@ const Steps = memo<StepsProps>(
   },
 );
 
+DefaultSteps.displayName = 'DefaultSteps';
 Steps.displayName = 'Steps';
 
 export default Steps;

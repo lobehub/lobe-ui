@@ -4,6 +4,7 @@ description: Base UI-powered Accordion with borderless, filled-header and outlin
 category: Data Display
 ---
 
+import DemoA2ui from './demos/a2ui.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 import DemoFilled from './demos/filled.tsx?demo';
 import DemoInline from './demos/inline.tsx?demo';
@@ -44,6 +45,12 @@ Sections that start expanded should paint fully open — no height or fade enter
 ## Atom Components
 
 <Demo of={DemoAtoms} layout="bare" />
+
+## A2UI
+
+`variant="a2ui"` takes the look of the [A2UI playground](https://a2ui.open.bot/components/Accordion) accordion: the items share one card, divided by hairlines, with a chevron at the end that points down when closed and up when open. `indicatorPlacement` does not apply to it.
+
+<Demo of={DemoA2ui} layout="bare" />
 
 ## APIs
 

@@ -4,6 +4,8 @@ description: Line, segmented, inset, and circular progress indicators with statu
 category: Feedback
 ---
 
+import DemoA2ui from './demos/a2ui.tsx?demo';
+import DemoA2uiCircle from './demos/a2uiCircle.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
 import { progressClasses } from './stable';
@@ -11,6 +13,16 @@ import { progressClasses } from './stable';
 ## Basic
 
 <Demo of={DemoIndex} layout="bare" />
+
+## A2UI
+
+`variant="a2ui"` takes the look of the [A2UI playground](https://a2ui.open.bot/components/Progress) progress bar: a label and percent row over a 6px bar, with an optional `caption` under it. `status` picks the tone (`normal` accent, `success` positive, `exception` negative, `active` info) and `strokeColor` overrides it.
+
+<Demo of={DemoA2ui} layout="bare" />
+
+With `type="circle"` it is the playground's [radial progress](https://a2ui.open.bot/components/RadialProgress) card: a 76px ring with the value inside, and `label` and `caption` (by default "68 of 100") beside it.
+
+<Demo of={DemoA2uiCircle} layout="bare" />
 
 ## APIs
 

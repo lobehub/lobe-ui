@@ -10,6 +10,7 @@ import { cssVar } from '@/styles/stylex/cssVar.stylex';
 import { styleProps } from '@/styles/stylex/props';
 import { toDataAttributes } from '@/utils/bem';
 
+import A2uiProgress from './A2uiProgress';
 import { progressClasses } from './stable';
 import { styles } from './style';
 import type { ProgressProps } from './type';
@@ -57,6 +58,7 @@ const circleInfoStyles = {
 
 const Progress = memo<ProgressProps>(
   ({
+    caption,
     className,
     format,
     label,
@@ -121,6 +123,25 @@ const Progress = memo<ProgressProps>(
       ...rest,
     };
     const rootClassName = clsx(progressClasses(), className);
+
+    if (variant === 'a2ui') {
+      return (
+        <A2uiProgress
+          caption={caption}
+          clamped={clamped}
+          className={className}
+          info={format ? format(clamped) : `${Math.round(clamped)}%`}
+          label={label}
+          rootProps={{ ...rootProps, ...toDataAttributes({ variant }) }}
+          showInfo={showInfo}
+          size={size}
+          status={status}
+          strokeColor={strokeColor}
+          style={style}
+          type={type}
+        />
+      );
+    }
 
     if (type === 'circle') {
       const isPreset = typeof size === 'string';

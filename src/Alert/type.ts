@@ -8,6 +8,7 @@ import type {
 } from 'react';
 
 import type { IconProps } from '@/Icon';
+import type { A2uiActionConfig } from '@/internal/a2ui/A2uiButton';
 
 export type AlertType = 'success' | 'info' | 'warning' | 'error' | 'secondary';
 export type AlertVariant =
@@ -17,7 +18,14 @@ export type AlertVariant =
   /** @deprecated Use `soft` instead. */
   | 'filled'
   /** @deprecated Use `plain` instead. */
-  | 'borderless';
+  | 'borderless'
+  /** The A2UI playground alert: a tinted, hairline-bordered notice per `type`. */
+  | 'a2ui'
+  /** The A2UI playground callout: a primary-tinted tip with an icon tile and an optional action. */
+  | 'a2ui-callout';
+
+/** An action drawn as the variant's own small button: a secondary button in `a2ui-callout`. */
+export type AlertActionConfig = A2uiActionConfig;
 export type AlertRef = HTMLDivElement;
 
 export interface AlertCloseConfig extends Omit<
@@ -71,8 +79,11 @@ export interface AlertStyles {
 }
 
 interface AlertOwnProps {
-  /** Optional action rendered after the message content. */
-  action?: ReactNode;
+  /**
+   * Optional action rendered after the message content. Pass `{ label, onClick }` to get a small
+   * button matching the variant (the playground button in the `a2ui` variants).
+   */
+  action?: ReactNode | AlertActionConfig;
   /** @deprecated Use `closable.afterClose` instead. */
   afterClose?: () => void;
   /** Removes the side border and radius for full-width notices. */

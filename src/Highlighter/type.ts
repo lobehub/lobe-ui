@@ -52,6 +52,11 @@ export interface HighlighterProps extends Omit<FlexboxProps, 'children' | 'wrap'
     header?: CSSProperties;
   };
   theme?: 'lobe-theme' | BundledHighlighterTheme;
-  variant?: 'filled' | 'outlined' | 'borderless';
+  /**
+   * `a2ui`: the A2UI playground code block, a card with mac dots, the file name (or language) and
+   * a Copy button over the code, in the lobe-ui syntax colours.
+   * @default 'filled'
+   */
+  variant?: 'filled' | 'outlined' | 'borderless' | 'a2ui';
   wrap?: boolean;
 }

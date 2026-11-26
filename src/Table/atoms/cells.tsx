@@ -87,7 +87,7 @@ export const TableCell = ({
     component,
     {
       ...rest,
-      className: clsx(
+      'className': clsx(
         CELL,
         className,
         (isFixStart || isFixEnd) && `${CELL}-fix`,
@@ -100,10 +100,11 @@ export const TableCell = ({
         (isFixStart || isFixEnd) && sticky && `${CELL}-fix-sticky`,
         hovered && `${CELL}-row-hover`,
       ),
-      colSpan: colSpan !== undefined && colSpan !== 1 ? colSpan : undefined,
-      rowSpan: rowSpan !== undefined && rowSpan !== 1 ? rowSpan : undefined,
-      style: { ...fixedStyle, ...(align && { textAlign: align }), ...style },
-      title: title ?? getEllipsisTitle(ellipsis, rowType, children),
+      'data-align': align,
+      'colSpan': colSpan !== undefined && colSpan !== 1 ? colSpan : undefined,
+      'rowSpan': rowSpan !== undefined && rowSpan !== 1 ? rowSpan : undefined,
+      'style': { ...fixedStyle, ...(align && { textAlign: align }), ...style },
+      'title': title ?? getEllipsisTitle(ellipsis, rowType, children),
     },
     appendNode,
     content,
