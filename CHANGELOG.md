@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version&nbsp;6.23.0](https://github.com/lobehub/lobe-ui/compare/v6.22.1...v6.23.0)
+
+<sup>Released on **2026-11-26**</sup>
+
+#### ✨ Features
+
+- **a2ui**: A2UI playground look as an a2ui variant, plus ComparisonTable and Agenda.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **a2ui**: A2UI playground look as an a2ui variant, plus ComparisonTable and Agenda, closes [#820](https://github.com/lobehub/lobe-ui/issues/820) [#818](https://github.com/lobehub/lobe-ui/issues/818) ([4712c16](https://github.com/lobehub/lobe-ui/commit/4712c16))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version&nbsp;6.22.1](https://github.com/lobehub/lobe-ui/compare/v6.22.0...v6.22.1)
 
 <sup>Released on **2026-11-25**</sup>
