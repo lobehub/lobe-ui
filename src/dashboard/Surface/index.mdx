@@ -5,6 +5,7 @@ category: Layout
 order: 2
 ---
 
+import DemoA2ui from './demos/a2ui.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 import DemoHeader from './demos/header.tsx?demo';
 import DemoLoading from './demos/loading.tsx?demo';
@@ -29,6 +30,12 @@ import { dashboardSurfaceClasses } from './stable';
 The header is one 32px control row plus 8px above and below, with or without `extra`, so a row of cards lines up. Controls in `extra` sit centered on the title line; use compact ones (`Segmented size="small"`, `ActionIcon size="small"`). A `description` adds its own line under the title and leaves `extra` on the title line, so cards with a description share one taller height.
 
 <Demo of={DemoHeaderAlignment} />
+
+## A2UI
+
+`variant="a2ui"` is the A2UI playground card: surface fill, a 1px hairline, 14px radius and a soft two-layer shadow (an inner top highlight and a faint sheen in dark mode). A `title` sits in a 13px semibold row with a hairline under it and the body is padded 14px / 16px. The other a2ui variants (`StatCard`, `MetricStrip`, `Agenda`, ...) use the same card.
+
+<Demo of={DemoA2ui} layout="bare" />
 
 ## APIs
 

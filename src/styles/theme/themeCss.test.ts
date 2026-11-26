@@ -34,6 +34,7 @@ const resolve = (
     ...(neutralColor ? rules.get(`[data-neutral-color='${neutralColor}']${mode}`) : {}),
   };
   for (const name of ['--lobe-ring', ...SURFACE_VARS]) delete vars[name];
+  for (const name of Object.keys(vars)) if (name.startsWith('--lobe-a2ui-')) delete vars[name];
   return vars;
 };
 

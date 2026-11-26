@@ -777,7 +777,7 @@ export const SUBPATH_FIXTURES: Record<string, StableFixture> = {
   },
   'dashboard/Section': {
     classes: dashboardSectionClasses,
-    conditional: ['body'],
+    conditional: ['eyebrow', 'body'],
     render: ({ className }) => (
       <Section
         className={className}

@@ -32,4 +32,11 @@ export interface SurfaceProps extends Omit<HTMLAttributes<HTMLDivElement>, 'titl
   renderLink?: SurfaceRenderLink;
   /** Visible heading. */
   title?: ReactNode;
+  /**
+   * `a2ui`: the A2UI playground card (`.a2-card`): surface with a hairline, 14px radius and a soft
+   * shadow (an inner highlight and top sheen in dark), a 13px semibold title row with a hairline
+   * under it, and 14px / 16px body padding.
+   * @default 'default'
+   */
+  variant?: 'default' | 'a2ui';
 }

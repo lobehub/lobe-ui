@@ -4,9 +4,10 @@ import './style.css';
 
 import { Accordion as BaseUIAccordion } from '@base-ui/react/accordion';
 import clsx from 'clsx';
-import { ChevronDown, ChevronRight, Play } from 'lucide-react';
+import { ChevronDown, ChevronRight, ChevronUp, Play } from 'lucide-react';
 import { createContext, type FC, use, useMemo } from 'react';
 
+import { a2uiStyles } from '@/internal/a2ui/styles';
 import { focusRing } from '@/styles/stylex/focusRing';
 import { styleProps } from '@/styles/stylex/props';
 import { toDataAttributes } from '@/utils/bem';
@@ -17,7 +18,7 @@ import {
   accordionTriggerMarker,
 } from './marker.stylex';
 import { accordionClasses } from './stable';
-import { styles } from './style';
+import { a2uiAccordionStyles, styles } from './style';
 import type {
   AccordionHeaderProps,
   AccordionIndicatorPlacement,
@@ -35,6 +36,7 @@ interface AccordionContextValue {
 }
 
 const triggerVariantStyles = {
+  a2ui: a2uiAccordionStyles.trigger,
   borderless: styles.triggerBorderless,
   filled: styles.triggerFilled,
   outlined: styles.triggerOutlined,
@@ -47,6 +49,7 @@ const indicatorPlacementStyles = {
 };
 
 const contentVariantStyles = {
+  a2ui: a2uiAccordionStyles.content,
   borderless: styles.contentBorderless,
   filled: styles.contentBorderless,
   outlined: styles.contentOutlined,
@@ -81,7 +84,11 @@ export const AccordionRoot: FC<AccordionRootProps> = ({
         {...toDataAttributes({ indicatorPlacement, variant })}
         className={
           styleProps(
-            [styles.root, variant === 'outlined' && styles.rootOutlined],
+            [
+              styles.root,
+              variant === 'outlined' && styles.rootOutlined,
+              variant === 'a2ui' && [a2uiStyles.base, a2uiStyles.card, a2uiAccordionStyles.root],
+            ],
             clsx(accordionClasses(), className),
           ).className
         }
@@ -107,7 +114,11 @@ export const AccordionItem: FC<AccordionItemProps> = ({
     <BaseUIAccordion.Item
       className={
         styleProps(
-          [styles.item, variant === 'outlined' && styles.itemOutlined],
+          [
+            styles.item,
+            variant === 'outlined' && styles.itemOutlined,
+            variant === 'a2ui' && a2uiAccordionStyles.item,
+          ],
           clsx(accordionClasses('item'), className),
         ).className
       }
@@ -134,7 +145,7 @@ export const AccordionHeader: FC<AccordionHeaderProps> = ({
         styleProps(
           [
             accordionHeaderMarker,
-            styles.header,
+            variant === 'a2ui' ? a2uiAccordionStyles.header : styles.header,
             variant === 'borderless' && styles.headerBorderless,
             variant === 'filled' && styles.headerFilled,
             inline && styles.headerInline,
@@ -162,7 +173,28 @@ export const AccordionTrigger: FC<AccordionTriggerProps> = ({
   const hideIndicator = hideIndicatorProp ?? ctx.hideIndicator;
   const placement = placementProp ?? ctx.indicatorPlacement;
 
-  const indicator = !hideIndicator && (
+  const a2uiIndicator = !hideIndicator && variant === 'a2ui' && (
+    <>
+      <span
+        {...styleProps(
+          [a2uiAccordionStyles.indicator, a2uiAccordionStyles.indicatorClosed],
+          accordionClasses('indicator'),
+        )}
+      >
+        <ChevronDown size={16} />
+      </span>
+      <span
+        {...styleProps(
+          [a2uiAccordionStyles.indicator, a2uiAccordionStyles.indicatorOpen],
+          accordionClasses('indicator'),
+        )}
+      >
+        <ChevronUp size={16} />
+      </span>
+    </>
+  );
+
+  const indicator = !hideIndicator && variant !== 'a2ui' && (
     <span
       {...styleProps(
         [styles.indicator, indicatorPlacementStyles[placement]],
@@ -188,6 +220,7 @@ export const AccordionTrigger: FC<AccordionTriggerProps> = ({
       {placement === 'start' && indicator}
       {children}
       {placement !== 'start' && indicator}
+      {a2uiIndicator}
     </BaseUIAccordion.Trigger>
   );
 };
@@ -208,7 +241,7 @@ export const AccordionPanel: FC<AccordionPanelProps> = ({
   const variant = variantProp ?? ctx.variant;
   const hideIndicator = hideIndicatorProp ?? ctx.hideIndicator;
   const placement = placementProp ?? ctx.indicatorPlacement;
-  const indent = !hideIndicator && placement === 'start';
+  const indent = !hideIndicator && placement === 'start' && variant !== 'a2ui';
   const inline = placement === 'inline';
 
   return (

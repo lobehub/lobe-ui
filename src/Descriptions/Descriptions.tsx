@@ -6,11 +6,16 @@ import { Fragment, memo } from 'react';
 import { styleProps } from '@/styles/stylex/props';
 import { toDataAttributes } from '@/utils/bem';
 
+import A2uiDescriptions from './A2uiDescriptions';
 import { descriptionsClasses } from './stable';
 import { styles } from './style';
 import type { DescriptionsProps } from './type';
 
-const Descriptions = memo<DescriptionsProps>(
+const Descriptions = memo<DescriptionsProps>((props) =>
+  props.variant === 'a2ui' ? <A2uiDescriptions {...props} /> : <DefaultDescriptions {...props} />,
+);
+
+const DefaultDescriptions = memo<DescriptionsProps>(
   ({
     bordered = false,
     className,
@@ -23,6 +28,7 @@ const Descriptions = memo<DescriptionsProps>(
     styles: customStyles,
     style,
     title,
+    variant: _variant,
     ...rest
   }) => {
     const columnCount = Math.max(1, Math.floor(column));
@@ -94,6 +100,7 @@ const Descriptions = memo<DescriptionsProps>(
   },
 );
 
+DefaultDescriptions.displayName = 'DefaultDescriptions';
 Descriptions.displayName = 'Descriptions';
 
 export default Descriptions;

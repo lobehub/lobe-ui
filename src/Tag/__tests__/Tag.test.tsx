@@ -144,3 +144,24 @@ describe('Tag', () => {
     expect((spanRef.current as HTMLSpanElement | null)?.textContent).toContain('ref');
   });
 });
+
+describe('Tag a2ui variant', () => {
+  afterEach(cleanup);
+
+  test('renders a soft tone chip without preset inline colours', () => {
+    renderTag('Active', { color: 'success', variant: 'a2ui' });
+
+    const tag = screen.getByText('Active').parentElement!;
+    expect(tag.dataset.variant).toBe('a2ui');
+    expect(tag.className).toContain('lobe-tag');
+    expect(tag.style.background).toBe('');
+    expect(tag.style.color).toBe('');
+  });
+
+  test('tints with a hex colour', () => {
+    renderTag('Hex', { color: '#ff0000', variant: 'a2ui' });
+
+    const tag = screen.getByText('Hex').parentElement!;
+    expect(tag.style.color).toBe('rgb(255, 0, 0)');
+  });
+});

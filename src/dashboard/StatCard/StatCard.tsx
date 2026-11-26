@@ -9,11 +9,17 @@ import MetricCell from '../MetricStrip/MetricCell';
 import { styles as metricStyles } from '../MetricStrip/style';
 import { useSurfaceCardStyles } from '../Surface/link';
 import { styles as surfaceStyles } from '../Surface/style';
+import A2uiStatCard from './A2uiStatCard';
 import { dashboardStatCardClasses } from './stable';
 import type { StatCardProps } from './type';
 
 /** One metric in its own card: the same item as a `split` MetricStrip. */
-function StatCard({
+function StatCard({ variant = 'default', ...props }: StatCardProps) {
+  if (variant === 'a2ui') return <A2uiStatCard {...props} />;
+  return <DefaultStatCard {...props} />;
+}
+
+function DefaultStatCard({
   action,
   chart,
   className,

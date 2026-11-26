@@ -64,6 +64,7 @@ export const styles = stylex.create({
 type Variant = NonNullable<HighlighterProps['variant']>;
 
 const variantStyles = {
+  a2ui: stylish.variantBorderlessWithoutHover,
   borderless: stylish.variantBorderlessWithoutHover,
   filled: [stylish.variantFilledWithoutHover, styles.filled],
   outlined: stylish.variantOutlinedWithoutHover,

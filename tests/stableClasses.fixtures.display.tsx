@@ -2,6 +2,7 @@ import { Smile } from 'lucide-react';
 
 import { aClasses } from '@/A/stable';
 import { accordionClasses } from '@/Accordion/stable';
+import { agendaClasses } from '@/Agenda/stable';
 import { agentAvatarClasses, agentAvatarPickerClasses } from '@/AgentAvatar/stable';
 import { alertClasses } from '@/Alert/stable';
 import { anchorClasses } from '@/Anchor/stable';
@@ -11,6 +12,7 @@ import { blockClasses } from '@/Block/stable';
 import { breadcrumbClasses } from '@/Breadcrumb/stable';
 import { carouselClasses } from '@/Carousel/stable';
 import { collapsibleClasses } from '@/Collapsible/stable';
+import { comparisonTableClasses } from '@/ComparisonTable/stable';
 import { descriptionsClasses } from '@/Descriptions/stable';
 import { diffStatClasses } from '@/DiffStat/stable';
 import { dividerClasses } from '@/Divider/stable';
@@ -31,6 +33,7 @@ import { imageClasses } from '@/Image/stable';
 import {
   A,
   Accordion,
+  Agenda,
   AgentAvatar,
   AgentAvatarPicker,
   Alert,
@@ -43,6 +46,7 @@ import {
   Carousel,
   Center,
   Collapsible,
+  ComparisonTable,
   Descriptions,
   DiffStat,
   Divider,
@@ -132,6 +136,30 @@ export const DISPLAY_FIXTURES: Record<string, StableFixture> = {
       />
     ),
   },
+  Agenda: {
+    classes: agendaClasses,
+    render: ({ className }) => (
+      <Agenda
+        className={className}
+        title="This week"
+        days={[
+          {
+            date: '2026-10-15',
+            events: [
+              {
+                description: 'Notes',
+                location: 'Room 4B',
+                speaker: 'Leo',
+                time: '9:30 AM',
+                title: 'Review',
+              },
+            ],
+          },
+          { date: '2026-10-16', events: [] },
+        ]}
+      />
+    ),
+  },
   AgentAvatar: {
     classes: agentAvatarClasses,
     conditional: ['badge', 'thought'],
@@ -170,6 +198,7 @@ export const DISPLAY_FIXTURES: Record<string, StableFixture> = {
   },
   AvatarGroup: {
     classes: avatarGroupClasses,
+    conditional: ['label'],
     render: ({ className }) => (
       <AvatarGroup
         className={className}
@@ -226,8 +255,21 @@ export const DISPLAY_FIXTURES: Record<string, StableFixture> = {
       </Collapsible>
     ),
   },
+  ComparisonTable: {
+    classes: comparisonTableClasses,
+    render: ({ className }) => (
+      <ComparisonTable
+        className={className}
+        highlight={1}
+        options={['Starter', 'Pro']}
+        rows={[{ feature: 'SSO', values: [false, true] }]}
+        title="Pick a plan"
+      />
+    ),
+  },
   Descriptions: {
     classes: descriptionsClasses,
+    conditional: ['item', 'hint'],
     render: ({ className }) => (
       <Descriptions
         className={className}
@@ -389,7 +431,7 @@ export const DISPLAY_FIXTURES: Record<string, StableFixture> = {
   },
   Progress: {
     classes: progressClasses,
-    conditional: ['segment', 'rest'],
+    conditional: ['caption', 'segment', 'rest'],
     render: ({ className }) => <Progress className={className} label="Label" percent={40} />,
   },
   ProgressiveBlur: {
@@ -477,6 +519,7 @@ export const DISPLAY_FIXTURES: Record<string, StableFixture> = {
   },
   Steps: {
     classes: stepsClasses,
+    conditional: ['time'],
     render: ({ className }) => (
       <Steps
         className={className}

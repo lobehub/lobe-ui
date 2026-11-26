@@ -9,6 +9,8 @@ export {
   type ActionIconGroupItemType,
   type ActionIconGroupProps,
 } from './ActionIconGroup';
+export { default as Agenda } from './Agenda';
+export * from './Agenda';
 export { default as AgentAvatar } from './AgentAvatar';
 export * from './AgentAvatar';
 export * from './Alert';
@@ -42,6 +44,8 @@ export { default as Collapsible } from './Collapsible';
 export * from './Collapsible';
 export * from './ColorPicker';
 export { default as ColorSwatches, type ColorSwatchesProps } from './ColorSwatches';
+export { default as ComparisonTable } from './ComparisonTable';
+export * from './ComparisonTable';
 export {
   type Config,
   default as ConfigProvider,
@@ -140,7 +144,7 @@ export {
   type UseElapsedOptions,
 } from './ElapsedTime';
 export { default as EmojiPicker, type EmojiPickerProps } from './EmojiPicker';
-export { default as Empty, type EmptyProps } from './Empty';
+export { default as Empty, type EmptyActionConfig, type EmptyProps } from './Empty';
 export { default as Favicon, type FaviconProps, getFaviconHost } from './Favicon';
 export { default as FileTypeIcon, type FileTypeIconProps } from './FileTypeIcon';
 export {

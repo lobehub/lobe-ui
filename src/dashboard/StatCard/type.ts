@@ -34,6 +34,13 @@ export interface StatCardProps {
   value: ReactNode;
   /** Color the figure when the number itself is the thing to act on. */
   valueTone?: 'danger' | 'warning';
+  /**
+   * `a2ui`: the A2UI playground `Stat` card (label and icon tile, a figure that scales with the
+   * card, a delta with a trend arrow, `hint` as the caption). Without `direction` the delta's sign
+   * picks the arrow.
+   * @default 'default'
+   */
+  variant?: 'default' | 'a2ui';
   /** @deprecated Ignored. StatCard renders as a MetricStrip item without a wash. */
   wash?: StatWash;
 }

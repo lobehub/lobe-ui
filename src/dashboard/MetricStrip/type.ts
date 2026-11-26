@@ -45,8 +45,10 @@ export interface MetricStripProps {
   size?: MetricStripSize;
   /**
    * `joined`: one card divided into cells. `split`: every item is its own card (the StatCard look)
-   * on a responsive grid with a gap.
+   * on a responsive grid with a gap. `a2ui`: the A2UI playground `StatGroup`, one card of
+   * hairline-divided cells with a figure that scales with its cell and a delta whose arrow
+   * follows `direction` (or the delta's sign); `hint` becomes a caption.
    * @default 'joined'
    */
-  variant?: 'joined' | 'split';
+  variant?: 'joined' | 'split' | 'a2ui';
 }

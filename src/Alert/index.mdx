@@ -4,6 +4,8 @@ description: Neutral-first inline feedback with restrained semantic color, actio
 category: Feedback
 ---
 
+import DemoA2ui from './demos/A2ui.tsx?demo';
+import DemoA2uiCallout from './demos/A2uiCallout.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 import DemoExtra from './demos/Extra.tsx?demo';
 import DemoPlayground from './demos/Playground.tsx?demo';
@@ -21,6 +23,16 @@ import { alertClasses } from './stable';
 ## Diagnostic detail
 
 <Demo of={DemoExtra} layout="bare" />
+
+## A2UI
+
+`variant="a2ui"` takes the look of the [A2UI playground](https://a2ui.open.bot/components/Alert) alert: a tinted, hairline-bordered notice per `type` with a 13px title and a softer message.
+
+<Demo of={DemoA2ui} layout="bare" />
+
+`variant="a2ui-callout"` is the playground's [callout](https://a2ui.open.bot/components/Callout): a tip washed in the primary colour, with an icon tile (a light bulb by default) and an action. Pass `action={{ label, onClick }}` to get the playground's small button; any other node renders as is.
+
+<Demo of={DemoA2uiCallout} layout="bare" />
 
 ## API
 

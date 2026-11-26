@@ -10,6 +10,7 @@ import { styleProps } from '@/styles/stylex/props';
 import { AvatarImpl as Avatar } from '../Avatar';
 import { avatarGroupClasses } from '../stable';
 import type { AvatarGroupProps } from '../type';
+import A2uiAvatarGroup from './A2uiAvatarGroup';
 import { styles } from './style';
 
 const pressOnKey = (event: KeyboardEvent<HTMLDivElement>) => {
@@ -18,9 +19,22 @@ const pressOnKey = (event: KeyboardEvent<HTMLDivElement>) => {
   event.currentTarget.click();
 };
 
-const AvatarGroup = memo<AvatarGroupProps>(
+type DefaultAvatarGroupProps = Omit<AvatarGroupProps, 'variant'> & {
+  variant?: Exclude<AvatarGroupProps['variant'], 'a2ui'>;
+};
+
+const AvatarGroup = memo<AvatarGroupProps>(({ variant, ...props }) =>
+  variant === 'a2ui' ? (
+    <A2uiAvatarGroup {...props} variant={variant} />
+  ) : (
+    <DefaultAvatarGroup {...props} variant={variant} />
+  ),
+);
+
+const DefaultAvatarGroup = memo<DefaultAvatarGroupProps>(
   ({
     items,
+    label: _label,
     max,
     gap,
     variant = 'borderless',
@@ -147,6 +161,7 @@ const AvatarGroup = memo<AvatarGroupProps>(
   },
 );
 
+DefaultAvatarGroup.displayName = 'DefaultAvatarGroup';
 AvatarGroup.displayName = 'AvatarGroup';
 
 export default AvatarGroup;

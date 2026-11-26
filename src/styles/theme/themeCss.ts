@@ -1,5 +1,6 @@
 import { toCssVariables, toCssVarName } from '../css';
 import { neutralColors, primaryColors } from '../customTheme';
+import { a2uiTokens } from './a2ui';
 import { createLobeTokenGroups } from './createLobeToken';
 import { isCustomNeutral } from './customNeutral';
 import { isRegisteredPalette } from './customPalette';
@@ -47,6 +48,7 @@ const appearanceRule = (selector: string, appearance: LobeAppearance) => {
     ...toCssVariables(token),
     '--lobe-ring': ring[appearance],
     ...surface[appearance],
+    ...a2uiTokens[appearance],
     'color-scheme': appearance,
   });
 };

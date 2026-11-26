@@ -176,6 +176,7 @@ export const FIXTURES: Record<string, StableFixture> = {
   },
   Rate: {
     classes: rateClasses,
+    conditional: ['label', 'value', 'count'],
     render: ({ className }) => <Rate className={className} defaultValue={2.5} />,
   },
   Segmented: {

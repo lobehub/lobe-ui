@@ -10,6 +10,7 @@ import { toDataAttributes } from '@/utils/bem';
 import { useSurfaceCardStyles } from '../Surface/link';
 import { styles as surfaceStyles } from '../Surface/style';
 import Surface from '../Surface/Surface';
+import A2uiMetricStrip from './A2uiMetricStrip';
 import MetricCell from './MetricCell';
 import { dashboardMetricStripClasses } from './stable';
 import { styles } from './style';
@@ -17,9 +18,16 @@ import type { MetricStripProps } from './type';
 
 /**
  * Peer metrics. `joined` shares one card divided into cells; `split` gives each item its own card,
- * identical to StatCard.
+ * identical to StatCard; `a2ui` is the A2UI playground StatGroup.
  */
-const MetricStrip = ({
+const MetricStrip = ({ variant = 'joined', ...props }: MetricStripProps) =>
+  variant === 'a2ui' ? (
+    <A2uiMetricStrip {...props} />
+  ) : (
+    <DefaultMetricStrip {...props} variant={variant} />
+  );
+
+const DefaultMetricStrip = ({
   className,
   columns,
   items,

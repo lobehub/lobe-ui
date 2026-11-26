@@ -10,6 +10,8 @@ import { styleProps } from '@/styles/stylex/props';
 import Tag from '@/Tag';
 import { toDataAttributes } from '@/utils/bem';
 
+import A2uiCodeBlock, { A2uiCopyButton } from './A2uiCodeBlock';
+import { a2uiCodeStyles } from './a2uiStyle';
 import FullFeatured from './FullFeatured';
 import { highlighterClasses } from './stable';
 import { actionsHoverCls, langHoverCls, rootClassName, rootStyles, styles } from './style';
@@ -61,8 +63,11 @@ export const Highlighter = memo<HighlighterProps>(
 
     const getCopyContent = useCallback(() => copyContentRef.current, []);
 
+    const isA2ui = variant === 'a2ui';
+
     const originalActions = useMemo(() => {
       if (!copyable) return null;
+      if (isA2ui) return <A2uiCopyButton getContent={getCopyContent} />;
       return (
         <CopyButton
           glass
@@ -70,7 +75,7 @@ export const Highlighter = memo<HighlighterProps>(
           size={actionIconSize || { blockSize: 28, size: 16 }}
         />
       );
-    }, [actionIconSize, copyable, getCopyContent]);
+    }, [actionIconSize, copyable, getCopyContent, isA2ui]);
 
     const actions = useMemo(() => {
       if (!actionsRender) return originalActions;
@@ -91,13 +96,22 @@ export const Highlighter = memo<HighlighterProps>(
           language={lang?.toLowerCase()}
           style={customStyles?.content}
           theme={theme}
-          variant={variant}
-          xstyle={styles.content}
+          variant={isA2ui ? 'outlined' : variant}
+          xstyle={isA2ui ? [styles.content, a2uiCodeStyles.content] : styles.content}
         >
           {tirmedChildren}
         </SyntaxHighlighterImpl>
       ),
-      [animated, lang, theme, tirmedChildren, variant, classNames?.content, customStyles?.content],
+      [
+        animated,
+        lang,
+        theme,
+        tirmedChildren,
+        variant,
+        isA2ui,
+        classNames?.content,
+        customStyles?.content,
+      ],
     );
 
     const displayName = useMemo(() => {
@@ -109,6 +123,19 @@ export const Highlighter = memo<HighlighterProps>(
       if (!bodyRender) return originalBody;
       return bodyRender({ content: tirmedChildren, language: lang, originalNode: originalBody });
     }, [bodyRender, lang, originalBody, tirmedChildren]);
+
+    if (isA2ui)
+      return (
+        <A2uiCodeBlock
+          actions={actions}
+          body={body}
+          className={rootClassName(wrap, className)}
+          classNames={classNames}
+          label={showLanguage ? (fileName ?? language ?? 'code') : fileName}
+          style={rest.style}
+          styles={customStyles}
+        />
+      );
 
     if (fullFeatured)
       return (

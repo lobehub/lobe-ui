@@ -88,3 +88,13 @@ Twelve accent hues for tags, avatars, charts and syntax highlighting. Each also 
 The three springs are CSS `linear()` curves normalized to their settle time: pair one with any duration, and that duration becomes the spring's settle time. Press play to run every curve over the same 600ms.
 
 <MotionBoard />
+
+## A2UI
+
+The `a2ui` variants (`Tag`, `Table`, `Progress`, `Alert`, `Descriptions`, `Steps`, `AvatarGroup`, `Rate`, `Empty`, `Highlighter`, `Accordion`, the dashboard `StatCard`, `MetricStrip`, `Surface` and `Section`, plus `ComparisonTable` and `Agenda`) take the layout of the [A2UI playground](https://a2ui.open.bot/components) but keep this page's colours: surfaces are `colorBgContainer`, hairlines `colorBorderSecondary`, text `colorText` / `colorTextSecondary`, washes the fill tokens, tones `colorSuccess` / `colorError` / `colorWarning` / `colorInfo`, the accent `colorPrimary`, and avatar tints the preset palettes. Only the card geometry has its own variables, set in `theme.css` for light and dark (source: `src/styles/theme/a2ui.ts`):
+
+| Variable | Role |
+| --- | --- |
+| `--lobe-a2ui-radius` | Card radius (14px) |
+| `--lobe-a2ui-card-shadow` | Soft two-layer shadow in light; inset top highlight in dark (mixed from `--lobe-color-text`) |
+| `--lobe-a2ui-card-sheen` | 2.2% top sheen on dark cards; transparent in light |

@@ -3,6 +3,43 @@ import * as stylex from '@stylexjs/stylex';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
 export const styles = stylex.create({
+  // a2ui: adapted from CopilotKit a2ui-playground (MIT), `TagList` and the table `Badge`.
+  a2ui: {
+    borderStyle: 'solid',
+    borderWidth: 1,
+    gap: 4,
+    paddingBlock: 2,
+    fontWeight: 400,
+    maxWidth: '100%',
+  },
+  a2uiLarge: {
+    borderRadius: 9,
+    paddingInline: 10,
+    fontSize: 13,
+    height: 28,
+  },
+  a2uiMiddle: {
+    borderRadius: 8,
+    paddingInline: 8,
+    fontSize: 12,
+    height: 24,
+  },
+  a2uiText: {
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    minWidth: 0,
+  },
+  a2uiRound: {
+    borderRadius: 999,
+    fontWeight: 500,
+  },
+  a2uiSmall: {
+    borderRadius: 7,
+    paddingInline: 8,
+    fontSize: 11,
+    height: 20,
+  },
   clickable: {
     cursor: 'pointer',
   },

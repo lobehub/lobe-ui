@@ -162,7 +162,6 @@ export interface AvatarGroupProps
   extends
     Pick<
       AvatarProps,
-      | 'variant'
       | 'bordered'
       | 'shadow'
       | 'size'
@@ -179,6 +178,8 @@ export interface AvatarGroupProps
     count?: string;
   };
   items: AvatarGroupItemType[];
+  /** Muted text after the stack, e.g. "9 reviewers on this PR" (`variant="a2ui"`). */
+  label?: ReactNode;
   max?: number;
   onClick?: (props: { item: AvatarGroupItemType; key: string }) => void;
   ref?: Ref<HTMLDivElement>;
@@ -186,5 +187,11 @@ export interface AvatarGroupProps
     avatar?: CSSProperties;
     count?: CSSProperties;
   };
+  /**
+   * Avatar variant; `a2ui` draws the A2UI playground group instead: initials tinted by the
+   * name's hue (`title`, then `label`, `alt`), a 2px ring, a `+N` count and `label`.
+   * @default 'borderless'
+   */
+  variant?: AvatarProps['variant'] | 'a2ui';
   zIndexReverse?: boolean;
 }

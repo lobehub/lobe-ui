@@ -1,5 +1,6 @@
 import * as stylex from '@stylexjs/stylex';
 
+import { a2ui } from '@/internal/a2ui/tokens.stylex';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
 import {
@@ -243,6 +244,68 @@ export const styles = stylex.create({
   triggerOutlined: {
     paddingBlock: 12,
     paddingInline: 16,
+  },
+});
+
+// Adapted from CopilotKit a2ui-playground (MIT): `renderers/layout.tsx` Accordion and the shadcn
+// accordion it is built on.
+export const a2uiAccordionStyles = stylex.create({
+  content: {
+    color: a2ui.fgMuted,
+    fontSize: 12.5,
+    lineHeight: 1.625,
+    paddingBlockEnd: 10,
+    paddingBlockStart: 0,
+  },
+  header: {
+    margin: 0,
+    display: 'flex',
+    fontSize: 'inherit',
+    fontWeight: 'inherit',
+  },
+  indicator: {
+    color: a2ui.fgMuted,
+    display: 'flex',
+    flexShrink: 0,
+    marginInlineStart: 'auto',
+    pointerEvents: 'none',
+  },
+  indicatorClosed: {
+    display: {
+      default: 'flex',
+      [stylex.when.ancestor('[data-panel-open]', accordionTriggerMarker)]: 'none',
+    },
+  },
+  indicatorOpen: {
+    display: {
+      default: 'none',
+      [stylex.when.ancestor('[data-panel-open]', accordionTriggerMarker)]: 'flex',
+    },
+  },
+  item: {
+    paddingInline: 16,
+    borderBlockEndColor: a2ui.line,
+    borderBlockEndStyle: { 'default': 'solid', ':last-child': 'none' },
+    borderBlockEndWidth: { 'default': 1, ':last-child': 0 },
+  },
+  root: {
+    minWidth: 0,
+  },
+  trigger: {
+    borderColor: { 'default': 'transparent', ':focus-visible': a2ui.ring },
+    borderRadius: 10,
+    borderStyle: 'solid',
+    borderWidth: 1,
+    paddingBlock: 10,
+    paddingInline: 0,
+    alignItems: 'flex-start',
+    boxShadow: { 'default': null, ':focus-visible': `0 0 0 3px ${a2ui.ring}` },
+    color: a2ui.fg,
+    fontSize: 13,
+    fontWeight: 500,
+    justifyContent: 'space-between',
+    lineHeight: 1.5,
+    opacity: { 'default': null, ':is([data-disabled])': 0.5 },
   },
 });
 

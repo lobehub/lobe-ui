@@ -717,6 +717,146 @@
     }
   }
 
+  /* a2ui: adapted from CopilotKit a2ui-playground (MIT), `DataTableView` and its shadcn table. */
+  .lobe-table.lobe-table-a2ui {
+    --lobe-table-border-color: var(--lobe-color-border-secondary);
+    --lobe-table-cell: transparent;
+    --lobe-table-hover-bg: var(--lobe-color-fill-quaternary);
+    --lobe-table-padding-block: 8px;
+    --lobe-table-padding-inline: 16px;
+
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--lobe-color-text);
+    background: transparent;
+
+    & .lobe-table-thead > tr > th,
+    & .lobe-table-thead > tr > td {
+      height: 36px;
+      padding-block: 0;
+
+      font-size: 11.5px;
+      font-weight: 500;
+      color: var(--lobe-color-text-secondary);
+      white-space: nowrap;
+
+      background: var(--lobe-color-fill-quaternary);
+      box-shadow: inset 0 -1px 0 var(--lobe-color-border-secondary);
+    }
+
+    & .lobe-table-tbody > tr > td,
+    & .lobe-table-tbody > tr > th {
+      height: 40px;
+
+      /* The playground's collapsed row rule sits half outside the cell; keep its centre line. */
+      padding-block: 8.5px 7.5px;
+
+      color: color-mix(in srgb, var(--lobe-color-text) 90%, transparent);
+      white-space: nowrap;
+
+      background: transparent;
+    }
+
+    & .lobe-table-tbody > tr > td:first-child {
+      font-weight: 500;
+      color: var(--lobe-color-text);
+    }
+
+    & .lobe-table-tbody > tr > td[data-align='right'] {
+      color: var(--lobe-color-text);
+    }
+
+    & .lobe-table-tbody > tr:last-child > td,
+    & .lobe-table-tbody > tr:last-child > th {
+      border-block-end: 0;
+    }
+
+    & .lobe-table-tbody > tr.lobe-table-placeholder > td {
+      padding-block: 0;
+    }
+
+    /* The width-measure row sizes columns by the header title; keep it at header type so it
+       does not widen columns past the header and cells. */
+    & .lobe-table-measure-row > td > div {
+      font-size: 11.5px;
+      font-weight: 500 !important;
+    }
+
+    /* Sort affordance: hidden until the header is hovered, as in the playground. */
+    & .lobe-table-column-sorters {
+      gap: 4px;
+    }
+
+    & th[data-align='right'] .lobe-table-column-sorters {
+      flex-direction: row-reverse;
+    }
+
+    & .lobe-table-column-sorter {
+      width: 12px;
+      min-width: 12px;
+      height: 12px;
+      margin: 0;
+      padding: 0;
+
+      color: inherit;
+
+      opacity: 0;
+      background: transparent;
+
+      transition: opacity var(--lobe-motion-duration-mid);
+
+      & svg {
+        width: 12px;
+        height: 12px;
+      }
+    }
+
+    & th:hover .lobe-table-column-sorter {
+      opacity: 0.5;
+    }
+
+    & th.lobe-table-column-sort {
+      color: var(--lobe-color-text);
+
+      & .lobe-table-column-sorter {
+        opacity: 0.9;
+      }
+    }
+
+    & .lobe-table-tbody > tr > td.lobe-table-column-sort {
+      background: transparent;
+    }
+
+    /* Wide tables scroll inside the card; fade the edge that still hides columns. */
+    & > .lobe-table-container::before,
+    & > .lobe-table-container::after {
+      display: none;
+    }
+
+    & .lobe-table-content,
+    & .lobe-table-body {
+      scrollbar-width: thin;
+    }
+
+    &.lobe-table-fix-end-shadow-show:not(.lobe-table-fix-start-shadow-show) .lobe-table-content {
+      mask-image: linear-gradient(to right, #000 calc(100% - 36px), transparent);
+    }
+
+    &.lobe-table-fix-start-shadow-show:not(.lobe-table-fix-end-shadow-show) .lobe-table-content {
+      mask-image: linear-gradient(to left, #000 calc(100% - 36px), transparent);
+    }
+
+    &.lobe-table-fix-start-shadow-show.lobe-table-fix-end-shadow-show .lobe-table-content {
+      mask-image: linear-gradient(
+        to right,
+        transparent,
+        #000 36px,
+        #000 calc(100% - 36px),
+        transparent
+      );
+    }
+  }
+
   .lobe-table.lobe-table-grouped {
     & > .lobe-table-container > * > table > * > tr > th,
     & > .lobe-table-container > * > table > * > tr > td {

@@ -4,6 +4,7 @@ description: The Highlighter component is used to display syntax-highlighted cod
 category: Data Display
 ---
 
+import DemoA2ui from './demos/A2ui.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 import DemoFullFeatured from './demos/FullFeatured.tsx?demo';
 import DemoActionsRender from './demos/ActionsRender.tsx?demo';
@@ -22,6 +23,12 @@ import { highlighterClasses, syntaxHighlighterClasses } from './stable';
 
 <Demo of={DemoActionsRender} />
 
+## A2UI
+
+`variant="a2ui"` takes the look of the [A2UI playground](https://a2ui.open.bot/components/CodeBlock) code block: a card with three dots, the `fileName` (or the language) and a Copy button over the code, highlighted with the same lobe-ui syntax theme as the other variants, so it follows light and dark; pass `theme` to use another highlighter theme inside the same frame.
+
+<Demo of={DemoA2ui} layout="bare" />
+
 ## APIs
 
 ### Highlighter
@@ -35,7 +42,7 @@ import { highlighterClasses, syntaxHighlighterClasses } from './stable';
 | children | Code content to highlight | `string` | - |
 | language | Programming language for syntax highlighting | `string` | - |
 | theme | Syntax highlighting theme | `'lobe-theme' \| BundledHighlighterTheme` | - |
-| variant | Visual style variant | `'filled' \| 'outlined' \| 'borderless'` | - |
+| variant | Visual style variant | `'filled' \| 'outlined' \| 'borderless' \| 'a2ui'` | - |
 
 ## Styles
 

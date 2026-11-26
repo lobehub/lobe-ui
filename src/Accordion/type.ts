@@ -1,7 +1,11 @@
 import { type Accordion as BaseUIAccordion } from '@base-ui/react/accordion';
 import { type ComponentProps, type CSSProperties, type ReactNode, type Ref } from 'react';
 
-export type AccordionVariant = 'borderless' | 'filled' | 'outlined';
+/**
+ * `a2ui`: the A2UI playground accordion, items on one card divided by hairlines, a chevron that
+ * points down when closed and up when open (the indicator always sits at the end).
+ */
+export type AccordionVariant = 'borderless' | 'filled' | 'outlined' | 'a2ui';
 export type AccordionIndicatorPlacement = 'end' | 'inline' | 'start';
 
 export interface AccordionClassNames {

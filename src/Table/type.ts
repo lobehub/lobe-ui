@@ -19,7 +19,11 @@ import type { SpinProps } from '@/Spin/type';
 import type { TooltipProps } from '@/Tooltip/type';
 
 /** `null` (or `undefined`) means unsorted. */
-export type TableVariant = 'filled' | 'outlined' | 'borderless';
+/**
+ * `a2ui`: the A2UI playground data table, a card with a title / row count / search header,
+ * hairline rows and a compact pager footer.
+ */
+export type TableVariant = 'filled' | 'outlined' | 'borderless' | 'a2ui';
 
 export type SortOrder = 'ascend' | 'descend' | null;
 
@@ -545,6 +549,12 @@ export interface TableProps<T> {
    * `scrollToFirstRowOnChange` (default on) scrolls the body back to the top on paginate / sort / filter.
    */
   scroll?: { scrollToFirstRowOnChange?: boolean; x?: number | string | true; y?: number | string };
+  /**
+   * Search box in the card header that filters rows by any of their text or number values
+   * (case-insensitive). Only the `a2ui` variant renders it.
+   * @default false
+   */
+  searchable?: boolean;
   /** @default true */
   showHeader?: boolean;
   /** Tooltip on sortable headers telling what the next click does. @default { target: 'full-header' } */
@@ -565,7 +575,9 @@ export interface TableProps<T> {
   title?: (currentPageData: readonly T[]) => ReactNode;
   /**
    * Visual style: `borderless` (default) has no cell grid; `outlined` draws cell borders
-   * like antd `bordered`; `filled` uses a fill background without the grid.
+   * like antd `bordered`; `filled` uses a fill background without the grid; `a2ui` is the A2UI
+   * playground data table card (title, row count and `searchable` box in its header, a compact
+   * pager footer, and a horizontal scroll that fades the hidden edge).
    */
   variant?: TableVariant;
   /** Virtual scrolling; needs numeric `scroll.y`, and numeric `scroll.x` with fixed columns. */

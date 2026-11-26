@@ -5,6 +5,7 @@ category: Layout
 order: 7
 ---
 
+import DemoA2ui from './demos/a2ui.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 import { StableClassTable } from '../../../docs/stable-classes/StableClassTable';
 import { dashboardSectionClasses } from './stable';
@@ -12,6 +13,12 @@ import { dashboardSectionClasses } from './stable';
 ## Default
 
 <Demo of={DemoIndex} />
+
+## A2UI
+
+`variant="a2ui"` is the [A2UI playground](https://a2ui.open.bot/components/Section) `Section`: a 15px semibold title with its context (`eyebrow`) after it on the same baseline, a muted description, and the children 12px apart. The context is a sentence-case label, never an uppercase kicker above the title.
+
+<Demo of={DemoA2ui} layout="bare" />
 
 ## APIs
 

@@ -1,10 +1,12 @@
 'use client';
 
+import * as stylex from '@stylexjs/stylex';
 import clsx from 'clsx';
 import { ChevronRight } from 'lucide-react';
 
 import { Flexbox } from '@/Flex';
 import Icon from '@/Icon';
+import { a2uiStyles } from '@/internal/a2ui/styles';
 import { styleProps } from '@/styles/stylex/props';
 import { toDataAttributes } from '@/utils/bem';
 
@@ -25,6 +27,7 @@ const Section = ({
   icon,
   children,
   desc,
+  eyebrow,
   extra,
   gap,
   padded,
@@ -53,6 +56,58 @@ const Section = ({
         {moreNode}
       </Flexbox>
     ) : undefined;
+
+  if (variant === 'a2ui') {
+    return (
+      <section
+        {...styleProps(
+          [a2uiStyles.base, styles.a2ui],
+          clsx(dashboardSectionClasses(), className),
+          rest.style,
+        )}
+        {...toDataAttributes({ variant })}
+      >
+        {title || eyebrow || desc || actions ? (
+          <div {...styleProps(styles.a2uiHeaderRow, dashboardSectionClasses('header'))}>
+            <header {...styleProps(styles.a2uiHeader, dashboardSectionClasses('heading'))}>
+              <div {...stylex.props(styles.a2uiTitleRow)}>
+                {icon}
+                {title ? (
+                  <h3
+                    {...styleProps(
+                      styles.a2uiTitle,
+                      dashboardSectionClasses('title'),
+                      fontSize ? { fontSize } : undefined,
+                    )}
+                  >
+                    {title}
+                  </h3>
+                ) : null}
+                {eyebrow ? (
+                  <span {...styleProps(a2uiStyles.label, dashboardSectionClasses('eyebrow'))}>
+                    {eyebrow}
+                  </span>
+                ) : null}
+              </div>
+              {desc ? (
+                <p {...styleProps(styles.a2uiDesc, dashboardSectionClasses('desc'))}>{desc}</p>
+              ) : null}
+            </header>
+            {actions ?? null}
+          </div>
+        ) : null}
+        <div
+          {...styleProps(
+            styles.a2uiBody,
+            dashboardSectionClasses('body'),
+            gap === undefined ? undefined : { gap },
+          )}
+        >
+          {children}
+        </div>
+      </section>
+    );
+  }
 
   if (variant === 'card') {
     return (
