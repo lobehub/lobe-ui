@@ -240,7 +240,7 @@ export const DISPLAY_FIXTURES: Record<string, StableFixture> = {
   },
   Carousel: {
     classes: carouselClasses,
-    conditional: ['prev', 'next'],
+    conditional: ['prev', 'next', 'scroller'],
     render: ({ className }) => (
       <Carousel className={className}>
         <div>One</div>
