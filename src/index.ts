@@ -29,9 +29,13 @@ export { default as Burger } from './Burger';
 export * from './Burger';
 export { default as Button } from './Button';
 export * from './Button';
+export { default as ButtonGroup } from './ButtonGroup';
+export * from './ButtonGroup';
 export { default as Carousel } from './Carousel';
 export * from './Carousel';
 export * from './Checkbox';
+export { default as ChipSelect } from './ChipSelect';
+export * from './ChipSelect';
 export { default as Citation } from './Citation';
 export * from './Citation';
 export {

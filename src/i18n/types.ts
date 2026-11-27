@@ -4,6 +4,7 @@ type BuiltinTranslationResources = typeof import('./resources/en/agenda').defaul
   typeof import('./resources/en/agentAvatar').default &
   typeof import('./resources/en/burger').default &
   typeof import('./resources/en/chat').default &
+  typeof import('./resources/en/chipSelect').default &
   typeof import('./resources/en/citation').default &
   typeof import('./resources/en/colorPicker').default &
   typeof import('./resources/en/common').default &

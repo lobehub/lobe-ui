@@ -1,0 +1,40 @@
+---
+title: ButtonGroup
+description: A single choice shown as a row of joined buttons under a label, such as a billing period or a view mode.
+category: Data Entry
+---
+
+import A2ui from './demos/a2ui.tsx?demo';
+import Basic from './demos/index.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { buttonGroupClasses } from './stable';
+
+## Usage
+
+A radio group drawn as joined buttons: `value` (or `defaultValue`) is the picked option, `onChange` receives a new pick, and picking the current one again does nothing. Arrow keys move the pick. The default variant uses lobe-ui buttons in a filled track.
+
+<Demo of={Basic} />
+
+## A2UI
+
+`variant="a2ui"` takes the look of the [A2UI playground](https://a2ui.open.bot/components/ButtonGroup) button group: 28px buttons with 12.5px type in a hairline box, the picked one raised on the surface colour. Colours stay the lobe-ui theme's.
+
+<Demo of={A2ui} />
+
+## APIs
+
+<Api name="ButtonGroup" />
+
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `ButtonGroup`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/ButtonGroup.css';
+```
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={buttonGroupClasses} />
