@@ -33,8 +33,9 @@ const error18 = `color-mix(in srgb, ${cssVar.colorError} 18%, transparent)`;
 const error22 = `color-mix(in srgb, ${cssVar.colorError} 22%, transparent)`;
 const error40 = `color-mix(in srgb, ${cssVar.colorError} 40%, transparent)`;
 const error65 = `color-mix(in srgb, ${cssVar.colorError} 65%, transparent)`;
-const errorOnContainer8 = `color-mix(in srgb, ${cssVar.colorError} 8%, ${cssVar.colorBgContainer})`;
-const errorOnContainer14 = `color-mix(in srgb, ${cssVar.colorError} 14%, ${cssVar.colorBgContainer})`;
+const outlinedBg = `var(--lobe-outlined-bg, ${cssVar.colorBgContainer})`;
+const errorOnContainer8 = `color-mix(in srgb, ${cssVar.colorError} 8%, ${outlinedBg})`;
+const errorOnContainer14 = `color-mix(in srgb, ${cssVar.colorError} 14%, ${outlinedBg})`;
 const slotEase = 'cubic-bezier(0.22, 1, 0.36, 1)';
 
 export const styles = stylex.create({
@@ -171,7 +172,7 @@ export const styles = stylex.create({
 
   variantDefault: {
     borderColor: { default: cssVar.colorBorder, [hover]: borderHover },
-    backgroundColor: cssVar.colorBgContainer,
+    backgroundColor: outlinedBg,
     backgroundImage: {
       [active]: neutralWashActive,
       default: null,
@@ -199,7 +200,7 @@ export const styles = stylex.create({
   variantDashed: {
     borderColor: { default: cssVar.colorBorder, [hover]: borderHover },
     borderStyle: 'dashed',
-    backgroundColor: cssVar.colorBgContainer,
+    backgroundColor: outlinedBg,
     backgroundImage: {
       [active]: neutralWashActive,
       default: null,
@@ -235,7 +236,7 @@ export const styles = stylex.create({
     borderColor: { default: error40, [hover]: error65 },
     backgroundColor: {
       [active]: errorOnContainer14,
-      default: cssVar.colorBgContainer,
+      default: outlinedBg,
       [hoverIdle]: errorOnContainer8,
     },
     backgroundImage: null,

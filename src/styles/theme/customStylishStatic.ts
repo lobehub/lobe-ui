@@ -162,11 +162,11 @@ const createStylish = (): LobeCustomStylish => {
 
     variantOutlined: css`
       border: 1px solid ${cssVar.colorBorderSecondary};
-      background: ${cssVar.colorBgContainer};
+      background: var(--lobe-outlined-bg, ${cssVar.colorBgContainer});
 
       &:hover {
         border: 1px solid ${cssVar.colorBorder};
-        background: ${cssVar.colorBgContainer};
+        background: var(--lobe-outlined-bg, ${cssVar.colorBgContainer});
       }
     `,
 
@@ -180,7 +180,7 @@ const createStylish = (): LobeCustomStylish => {
 
     variantOutlinedWithoutHover: css`
       border: 1px solid ${cssVar.colorBorderSecondary};
-      background: ${cssVar.colorBgContainer};
+      background: var(--lobe-outlined-bg, ${cssVar.colorBgContainer});
     `,
   })) as LobeCustomStylish;
 };

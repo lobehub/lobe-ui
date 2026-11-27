@@ -17,6 +17,7 @@ const startingOrEnding = ':is([data-starting-style], [data-ending-style])';
 const openBg = `var(--lobe-select-open-bg, ${cssVar.colorFillTertiary})`;
 const disabledBg = 'var(--lobe-select-disabled-bg, transparent)';
 const readonlyBg = 'var(--lobe-select-readonly-bg, transparent)';
+const outlinedBg = `var(--lobe-outlined-bg, ${cssVar.colorBgContainer})`;
 
 export const styles = stylex.create({
   arrow: {
@@ -100,14 +101,14 @@ export const styles = stylex.create({
     paddingBlockStart: 4,
   },
   outlined: {
-    '--lobe-select-disabled-bg': `color-mix(in srgb, ${cssVar.colorBgContainer} 60%, transparent)`,
+    '--lobe-select-disabled-bg': `color-mix(in srgb, ${outlinedBg} 60%, transparent)`,
     '--lobe-select-open-bg': cssVar.colorFillTertiary,
-    '--lobe-select-readonly-bg': `color-mix(in srgb, ${cssVar.colorBgContainer} 75%, transparent)`,
+    '--lobe-select-readonly-bg': `color-mix(in srgb, ${outlinedBg} 75%, transparent)`,
     'borderColor': { 'default': cssVar.colorBorderSecondary, ':hover': cssVar.colorBorder },
     'borderStyle': 'solid',
     'borderWidth': 1,
     'backgroundColor': {
-      default: cssVar.colorBgContainer,
+      default: outlinedBg,
       [disabled]: disabledBg,
       [open]: openBg,
       [readonly]: readonlyBg,

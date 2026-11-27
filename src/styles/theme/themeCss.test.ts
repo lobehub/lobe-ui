@@ -9,6 +9,7 @@ const SURFACE_VARS = [
   '--lobe-fill-border-strong',
   '--lobe-table-surface',
   '--lobe-table-cell-bg',
+  '--lobe-outlined-bg',
 ];
 
 const parseRules = () => {
@@ -66,11 +67,13 @@ describe('getThemeCss', () => {
     );
     expect(light['--lobe-table-surface']).toBe('initial');
     expect(light['--lobe-table-cell-bg']).toBe('initial');
+    expect(light['--lobe-outlined-bg']).toBe('var(--lobe-color-bg-container)');
 
     expect(dark['--lobe-fill-border']).toBe('var(--lobe-color-fill-secondary)');
     expect(dark['--lobe-fill-border-strong']).toBe('var(--lobe-color-fill)');
     expect(dark['--lobe-table-surface']).toBe('var(--lobe-color-fill-quaternary)');
     expect(dark['--lobe-table-cell-bg']).toBe('transparent');
+    expect(dark['--lobe-outlined-bg']).toBe('var(--lobe-color-fill-tertiary)');
   });
 
   it('defaults the font stacks to the language-neutral ones', () => {

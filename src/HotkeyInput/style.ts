@@ -2,6 +2,8 @@ import * as stylex from '@stylexjs/stylex';
 
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
+const outlinedBg = `var(--lobe-outlined-bg, ${cssVar.colorBgContainer})`;
+
 export const styles = stylex.create({
   borderless: {
     borderColor: 'currentcolor',
@@ -47,7 +49,7 @@ export const styles = stylex.create({
     borderColor: { 'default': cssVar.colorBorderSecondary, ':hover': cssVar.colorBorder },
     borderStyle: 'solid',
     borderWidth: 1,
-    backgroundColor: cssVar.colorBgContainer,
+    backgroundColor: outlinedBg,
   },
   value: {
     pointerEvents: 'none',
