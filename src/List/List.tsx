@@ -10,20 +10,27 @@ import { toDataAttributes } from '@/utils/bem';
 import { composeEventHandlers } from '@/utils/composeEventHandlers';
 import { useMergeRefs } from '@/utils/mergeRefs';
 
+import A2uiList from './A2uiList';
 import ListRow, { type ListRowXstyle } from './ListRow';
 import { listClasses } from './stable';
 import { styles } from './style';
 import type { ListDividerType, ListItem, ListItemType, ListProps } from './type';
+import { normalizeListItem } from './utils';
 
 const isDivider = (item: ListItem): item is ListDividerType => item.type === 'divider';
 
 const variantStyles = {
+  a2ui: undefined,
   borderless: undefined,
   filled: styles.filled,
   outlined: styles.outlined,
 };
 
-export const ListImpl = memo<ListProps & { itemXstyle?: ListRowXstyle }>(
+export const ListImpl = memo<ListProps & { itemXstyle?: ListRowXstyle }>((props) =>
+  props.variant === 'a2ui' ? <A2uiList {...props} /> : <MenuList {...props} />,
+);
+
+const MenuList = memo<ListProps & { itemXstyle?: ListRowXstyle }>(
   ({
     activeKey,
     className,
@@ -103,32 +110,35 @@ export const ListImpl = memo<ListProps & { itemXstyle?: ListRowXstyle }>(
             )}
           />
         )}
-        {items.map((item, index) =>
-          isDivider(item) ? (
-            <li
-              key={item.key ?? `divider-${index}`}
-              role="separator"
-              {...styleProps(styles.divider, listClasses('divider'))}
-            />
-          ) : (
-            <ListRow
-              active={currentKey !== undefined && currentKey !== null && item.key === currentKey}
-              classNames={classNames}
-              compact={compact}
-              glide={glide}
-              item={item}
-              key={item.key}
-              styles={customStyles}
-              xstyle={itemXstyle}
-              onSelect={handleSelect}
-            />
-          ),
-        )}
+        {items
+          .map(normalizeListItem)
+          .map((item, index) =>
+            isDivider(item) ? (
+              <li
+                key={item.key ?? `divider-${index}`}
+                role="separator"
+                {...styleProps(styles.divider, listClasses('divider'))}
+              />
+            ) : (
+              <ListRow
+                active={currentKey !== undefined && currentKey !== null && item.key === currentKey}
+                classNames={classNames}
+                compact={compact}
+                glide={glide}
+                item={item}
+                key={item.key}
+                styles={customStyles}
+                xstyle={itemXstyle}
+                onSelect={handleSelect}
+              />
+            ),
+          )}
       </ul>
     );
   },
 );
 
+MenuList.displayName = 'MenuList';
 ListImpl.displayName = 'List';
 
 const List = ListImpl as NamedExoticComponent<ListProps>;

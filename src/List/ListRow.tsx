@@ -34,8 +34,20 @@ interface ListRowProps {
 
 const ListRow = memo<ListRowProps>(
   ({ active, classNames, compact, glide, item, onSelect, styles: customStyles, xstyle }) => {
-    const { actions, avatar, danger, description, disabled, extra, href, icon, label, showAction } =
-      item;
+    const {
+      actions,
+      avatar,
+      children,
+      danger,
+      description,
+      disabled,
+      href,
+      icon,
+      label,
+      showAction,
+      value,
+    } = item;
+    const extra = item.extra ?? value;
 
     const handleClick = (event: MouseEvent<HTMLElement>) => {
       if (disabled) {
@@ -85,6 +97,7 @@ const ListRow = memo<ListRowProps>(
               {description}
             </span>
           )}
+          {children}
         </span>
         {extra != null && (
           <span
