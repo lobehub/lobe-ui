@@ -80,6 +80,10 @@ export interface SelectProps<Value = string> extends Pick<
    */
   filterOption?: boolean | ((input: string, option: SelectOption<Value>) => boolean);
   id?: string;
+  /**
+   * Field label above the control, in the A2UI standard field look (`variant="a2ui"` only).
+   */
+  label?: ReactNode;
   labelRender?: (option: SelectOption<Value>) => ReactNode;
   /**
    * 设置弹窗滚动高度
@@ -121,5 +125,10 @@ export interface SelectProps<Value = string> extends Pick<
   suffixIconProps?: Omit<IconProps, 'icon'>;
   tokenSeparators?: string[];
   value?: Value | Value[] | null;
-  variant?: SelectVariant;
+  /**
+   * Trigger look; defaults to `filled` in dark mode and `outlined` in light mode.
+   * `a2ui`: the A2UI standard `Select`, a 40px pill with the value in the surrounding font size
+   * and a small chevron, under an optional `label`; the popup takes the standard panel look.
+   */
+  variant?: SelectVariant | 'a2ui';
 }

@@ -4,6 +4,7 @@ description: Base UI-powered Slider and SliderWithInput components.
 category: Data Entry
 ---
 
+import DemoA2ui from './demos/a2ui.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
 import { sliderClasses, sliderWithInputClasses } from './stable';
@@ -11,6 +12,12 @@ import { sliderClasses, sliderWithInputClasses } from './stable';
 ## Default
 
 <Demo of={DemoIndex} layout="bare" />
+
+## A2UI
+
+`variant="a2ui"` takes the look of the A2UI playground's standard [Slider](https://a2ui.open.bot/components/Slider) (CopilotKit Gen UI 2.0): a 24px pill track with a 20px thumb and no filled range, under a row with the `label` and the current value (shown when there is a `label` or a `unit`, e.g. `%`). Type follows the surrounding font size; colours stay the lobe-ui theme's.
+
+<Demo of={DemoA2ui} layout="bare" />
 
 ## APIs
 

@@ -174,6 +174,8 @@ export const FIXTURES: Record<string, StableFixture> = {
   },
   RadioGroup: {
     classes: radioGroupClasses,
+    // a2ui-only parts (`variant="a2ui"`).
+    conditional: ['label', 'options', 'description'],
     render: ({ className }) => <RadioGroup className={className} options={['a', 'b']} />,
   },
   Rate: {
@@ -213,6 +215,8 @@ export const FIXTURES: Record<string, StableFixture> = {
   },
   Slider: {
     classes: sliderClasses,
+    // a2ui-only parts (`variant="a2ui"`).
+    conditional: ['header', 'label', 'value'],
     render: ({ className }) => <Slider className={className} defaultValue={20} />,
   },
   SliderWithInput: {

@@ -4,6 +4,8 @@ description: Base UI-powered text input with variants, sizes, clear button and s
 category: Data Entry
 ---
 
+import DemoA2ui from './demos/a2ui.tsx?demo';
+import DemoA2uiTextArea from './demos/a2uiTextArea.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 import DemoFamily from './demos/family.tsx?demo';
 import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
@@ -31,6 +33,14 @@ import {
 - `onPressEnter` fires on Enter, but not while an IME is composing, so confirming a Chinese or Japanese candidate never submits.
 - `InputNumber` formats through `format` (`Intl.NumberFormatOptions`); `precision` fixes the fraction digits; `prefix` / `suffix` hold units.
 - `TextArea` `showCount` renders the character count (emoji count as one), `used / maxLength` when `maxLength` is set.
+
+## A2UI
+
+`variant="a2ui"` takes the look of the A2UI playground's standard [TextField](https://a2ui.open.bot/components/TextField) and [TextArea](https://a2ui.open.bot/components/TextArea) (CopilotKit Gen UI 2.0): a 40px pill with 18px side padding (an 8px-radius box of three rows for `TextArea`), type that follows the surrounding font size, and an optional `label` above the control. `label` only applies to the `a2ui` variant. Colours stay the lobe-ui theme's.
+
+<Demo of={DemoA2ui} layout="bare" />
+
+<Demo of={DemoA2uiTextArea} layout="bare" />
 
 ## APIs
 

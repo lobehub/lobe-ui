@@ -2,7 +2,7 @@ import { stableClasses } from '@/utils/bem';
 
 export const checkboxClasses = stableClasses({
   block: 'checkbox',
-  dataAttributes: ['shape'],
+  dataAttributes: ['shape', 'variant'],
   elements: ['checkbox', 'control', 'indicator', 'text'],
 });
 

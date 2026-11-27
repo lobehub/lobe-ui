@@ -4,6 +4,8 @@ description: Controlled form from @lobehub/ui/form — a form instance, schema-f
 category: Data Entry
 ---
 
+import DemoA2ui from './demos/a2ui.tsx?demo';
+import DemoA2uiFull from './demos/a2uiFull.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 import DemoJsx from './demos/jsx.tsx?demo';
 import DemoList from './demos/list.tsx?demo';
@@ -32,6 +34,14 @@ import { Form, useForm, useWatch } from '@lobehub/ui/form';
 ## Auto-save with onValuesChange
 
 <Demo of={DemoAutosave} />
+
+## A2UI
+
+`variant="a2ui"` takes the layout of the A2UI playground's standard [Form](https://a2ui.open.bot/components/Form) (CopilotKit Gen UI 2.0): fields stacked 16px apart, each with its label above the control, in the surrounding font size. Groups render their fields without group chrome. `Form.SubmitFooter` becomes the submit row: an outlined reset (`texts.reset`) and a primary submit (`texts.submit`) as 36px pills at the end, or, with `enableReset={false}`, one submit button across the form. Use the controls' own `variant="a2ui"` inside (`Input`, `TextArea`, `Select`, `Checkbox`, `RadioGroup`, `Segmented`, `Slider`).
+
+<Demo of={DemoA2ui} layout="bare" />
+
+<Demo of={DemoA2uiFull} layout="bare" />
 
 ## Rules of thumb
 

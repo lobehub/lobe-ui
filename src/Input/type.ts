@@ -30,6 +30,10 @@ export interface InputProps extends BaseInputProps {
    * Custom class names for each part
    */
   classNames?: InputClassNames;
+  /**
+   * Field label above the control, in the A2UI standard field look (`variant="a2ui"` only).
+   */
+  label?: ReactNode;
   onClear?: () => void;
   onPressEnter?: (event: KeyboardEvent<HTMLInputElement>) => void;
   /**
@@ -59,9 +63,11 @@ export interface InputProps extends BaseInputProps {
    */
   suffix?: ReactNode;
   /**
-   * Visual variant, defaults to `filled` in dark mode and `outlined` in light mode
+   * Visual variant, defaults to `filled` in dark mode and `outlined` in light mode.
+   * `a2ui`: the A2UI standard `TextField`, a 40px pill with 18px side padding in the surrounding
+   * font size, under an optional `label`.
    */
-  variant?: InputVariant;
+  variant?: InputVariant | 'a2ui';
 }
 
 export interface InputPasswordProps extends Omit<InputProps, 'type'> {
@@ -143,13 +149,17 @@ export interface InputOTPProps extends BaseOTPFieldProps {
 export type TextAreaAutoSize = boolean | { maxRows?: number; minRows?: number };
 
 export interface TextAreaProps
-  extends Omit<ComponentProps<'textarea'>, 'prefix'>, Pick<InputProps, 'shadow' | 'variant'> {
+  extends Omit<ComponentProps<'textarea'>, 'prefix'>, Pick<InputProps, 'shadow'> {
   allowClear?: boolean;
   /**
    * Auto grow with content, optionally bounded by minRows/maxRows
    */
   autoSize?: TextAreaAutoSize;
   classNames?: Pick<InputClassNames, 'input'>;
+  /**
+   * Field label above the control, in the A2UI standard field look (`variant="a2ui"` only).
+   */
+  label?: ReactNode;
   onClear?: () => void;
   onPressEnter?: (event: KeyboardEvent<HTMLTextAreaElement>) => void;
   ref?: Ref<HTMLTextAreaElement>;
@@ -160,4 +170,10 @@ export interface TextAreaProps
   resize?: boolean;
   showCount?: boolean;
   styles?: Pick<InputStyles, 'input'>;
+  /**
+   * Visual variant, defaults to `filled` in dark mode and `outlined` in light mode.
+   * `a2ui`: the A2UI standard `TextArea`, an 8px-radius box with 18px side padding in the
+   * surrounding font size (3 rows by default), under an optional `label`.
+   */
+  variant?: InputVariant | 'a2ui';
 }

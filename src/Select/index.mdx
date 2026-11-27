@@ -4,6 +4,7 @@ description: Base UI-powered Select component.
 category: Data Entry
 ---
 
+import DemoA2ui from './demos/a2ui.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 import DemoAtoms from './demos/atoms.tsx?demo';
 import DemoRender from './demos/render.tsx?demo';
@@ -37,6 +38,12 @@ import { selectClasses } from './stable';
 ## Tags with Closed Popup
 
 <Demo of={DemoClosedTags} />
+
+## A2UI
+
+`variant="a2ui"` takes the look of the A2UI playground's standard [Select](https://a2ui.open.bot/components/Select) (CopilotKit Gen UI 2.0): a 40px pill with the value in the surrounding font size and a small chevron, under an optional `label` (which only applies to this variant). The official option list is the browser's native one; here the popup keeps lobe-ui's list in the standard panel look. Colours stay the lobe-ui theme's.
+
+<Demo of={DemoA2ui} layout="bare" />
 
 ## Atom Components
 

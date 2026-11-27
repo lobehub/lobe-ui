@@ -4,6 +4,7 @@ description: Base UI-powered Segmented control — toggle-group semantics with a
 category: Data Entry
 ---
 
+import DemoA2ui from './demos/a2ui.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 import DemoAtoms from './demos/atoms.tsx?demo';
 import DemoSemantic from './demos/semantic.tsx?demo';
@@ -19,6 +20,12 @@ import { segmentedClasses } from './stable';
 `classNames` and `styles` target each part: `root` (the toggle group; `list` is an alias), `indicator` (the sliding active background), `item` (each option button), `itemIcon` and `itemLabel`. For a compact control on mobile, set `height` / `paddingInline` on `item`; the indicator follows the measured item size.
 
 <Demo of={DemoSemantic} />
+
+## A2UI
+
+`variant="a2ui"` takes the look of the A2UI playground's standard [SegmentedControl](https://a2ui.open.bot/components/SegmentedControl) (CopilotKit Gen UI 2.0): a pill well of 32px segments in the surrounding font size, where the chosen segment is a raised surface, under an optional `label` (which only applies to this variant). `block` stretches the segments; `size`, `glass`, `shadow` and `vertical` do not apply. Colours stay the lobe-ui theme's.
+
+<Demo of={DemoA2ui} layout="bare" />
 
 ## Atom Components
 

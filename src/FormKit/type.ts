@@ -6,6 +6,9 @@ import type { FormLayout, FormVariant } from '../Form/type';
 import type { ValidateOn } from './engine/types';
 import type { FieldValidate, StandardSchema } from './schema';
 
+/** Form look: the settings-form variants, or the A2UI standard form (`a2ui`). */
+export type FormKitVariant = FormVariant | 'a2ui';
+
 type Depth = [never, 0, 1, 2, 3, 4, 5];
 
 type IsAny<T> = 0 extends 1 & T ? true : false;
@@ -136,7 +139,15 @@ export interface FormProps<T extends FormValues = FormValues> extends Omit<
   ref?: Ref<HTMLFormElement>;
   style?: CSSProperties;
   styles?: { group?: CSSProperties; item?: CSSProperties };
-  variant?: FormVariant;
+  /**
+   * `borderless`, `filled` and `outlined` are the settings-form looks. `a2ui` is the A2UI
+   * playground's standard `Form`: fields stacked 16px apart, each label above its control, in
+   * the surrounding font size; groups render their fields without group chrome, and
+   * `Form.SubmitFooter` becomes a right-aligned row of pill buttons. Pair it with the controls'
+   * own `variant="a2ui"`.
+   * @default 'borderless'
+   */
+  variant?: FormKitVariant;
 }
 
 export interface FormFieldProps<T extends FormValues = FormValues> extends FieldBinding {
@@ -160,5 +171,5 @@ export interface FormFieldProps<T extends FormValues = FormValues> extends Field
   validate?: FieldValidate;
   validateDebounce?: number;
   validateOn?: ValidateOn;
-  variant?: FormVariant;
+  variant?: FormKitVariant;
 }

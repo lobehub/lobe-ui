@@ -4,6 +4,7 @@ description: Base UI-powered Checkbox and CheckboxGroup with the lobe visual sty
 category: Data Entry
 ---
 
+import DemoA2ui from './demos/a2ui.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
 import { checkboxClasses, checkboxGroupClasses } from './stable';
@@ -11,6 +12,12 @@ import { checkboxClasses, checkboxGroupClasses } from './stable';
 ## Default
 
 <Demo of={DemoIndex} layout="bare" />
+
+## A2UI
+
+`variant="a2ui"` takes the look of the A2UI playground's standard [CheckBox](https://a2ui.open.bot/components/CheckBox) (CopilotKit Gen UI 2.0): a 20px box, round unless `shape="square"`, filled with the primary colour and a check when on, next to a label in the surrounding font size. `size` and `textProps` do not apply. Colours stay the lobe-ui theme's.
+
+<Demo of={DemoA2ui} layout="bare" />
 
 ## APIs
 
