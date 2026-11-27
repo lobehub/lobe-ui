@@ -8,6 +8,9 @@ import type { LobeAppearance } from './scope';
  *
  * Geometry and shadow structure adapted from CopilotKit a2ui-playground (MIT), `.a2-card`: a
  * 14px radius, a soft two-layer shadow in light, an inset top highlight and a 2.2% sheen in dark.
+ * `shadow-sm` / `shadow-md` are the standard catalog's floating shadows (carousel arrows, popovers,
+ * tooltips) and `shadow-xs` its control shadow (slider thumb, selected segment): black at 12% / 8% /
+ * 12% in light, 50% / 40% / 50% in dark.
  */
 export const a2uiTokens: Record<LobeAppearance, Record<string, string>> = {
   dark: {
@@ -15,11 +18,23 @@ export const a2uiTokens: Record<LobeAppearance, Record<string, string>> = {
       'inset 0 1px 0 color-mix(in srgb, var(--lobe-color-text) 4%, transparent), 0 1px 2px color-mix(in srgb, var(--lobe-color-bg-layout) 30%, transparent)',
     '--lobe-a2ui-card-sheen': 'color-mix(in srgb, var(--lobe-color-text) 2.2%, transparent)',
     '--lobe-a2ui-radius': '14px',
+    '--lobe-a2ui-shadow-md':
+      '0 4px 12px color-mix(in srgb, var(--lobe-color-bg-layout) 40%, transparent)',
+    '--lobe-a2ui-shadow-sm':
+      '0 1px 3px color-mix(in srgb, var(--lobe-color-bg-layout) 50%, transparent)',
+    '--lobe-a2ui-shadow-xs':
+      '0 1px 2px color-mix(in srgb, var(--lobe-color-bg-layout) 50%, transparent)',
   },
   light: {
     '--lobe-a2ui-card-shadow':
       '0 1px 2px color-mix(in srgb, var(--lobe-color-text) 6%, transparent), 0 1px 3px color-mix(in srgb, var(--lobe-color-text) 4%, transparent)',
     '--lobe-a2ui-card-sheen': 'transparent',
     '--lobe-a2ui-radius': '14px',
+    '--lobe-a2ui-shadow-md':
+      '0 4px 12px color-mix(in srgb, var(--lobe-color-text) 8%, transparent)',
+    '--lobe-a2ui-shadow-sm':
+      '0 1px 3px color-mix(in srgb, var(--lobe-color-text) 12%, transparent)',
+    '--lobe-a2ui-shadow-xs':
+      '0 1px 2px color-mix(in srgb, var(--lobe-color-text) 12%, transparent)',
   },
 };

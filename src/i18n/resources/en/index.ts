@@ -2,6 +2,7 @@ export { default as agenda } from './agenda';
 export { default as agentAvatar } from './agentAvatar';
 export { default as burger } from './burger';
 export { default as chat } from './chat';
+export { default as citation } from './citation';
 export { default as colorPicker } from './colorPicker';
 export { default as common } from './common';
 export { default as comparisonTable } from './comparisonTable';
