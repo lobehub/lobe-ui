@@ -14,7 +14,8 @@ export const Tooltip: FC<TooltipProps> = (props) => {
     Boolean(group) &&
     props.open === undefined &&
     props.defaultOpen === undefined &&
-    !props.standalone;
+    !props.standalone &&
+    props.variant !== 'a2ui';
 
   return canUseGroup ? <TooltipInGroup {...props} /> : <TooltipStandalone {...props} />;
 };

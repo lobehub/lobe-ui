@@ -40,6 +40,7 @@ export const TooltipInGroup: FC<TooltipProps> = ({
   portalProps,
   positionerProps,
   standalone: _standalone,
+  variant: _variant,
   styles,
   title,
   triggerProps: triggerPropsProp,
