@@ -50,6 +50,8 @@ export { default as Collapsible } from './Collapsible';
 export * from './Collapsible';
 export * from './ColorPicker';
 export { default as ColorSwatches, type ColorSwatchesProps } from './ColorSwatches';
+export { default as Combobox } from './Combobox';
+export * from './Combobox';
 export { default as ComparisonTable } from './ComparisonTable';
 export * from './ComparisonTable';
 export {

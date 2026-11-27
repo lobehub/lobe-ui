@@ -1,0 +1,42 @@
+---
+title: Combobox
+description: A searchable single choice for long option lists such as countries, cities or timezones; the trigger opens a search field over a filtered list.
+category: Data Entry
+---
+
+import A2ui from './demos/a2ui.tsx?demo';
+import Basic from './demos/index.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { comboboxClasses } from './stable';
+
+## Usage
+
+The trigger shows the picked option's label (or `placeholder`). It opens a search field over the options; typing filters them by label, value and `keywords`, arrow keys move the highlight and Enter picks it. `onChange` receives the value and the option. The default variant is a lobe-ui select-like trigger and popup.
+
+<Demo of={Basic} />
+
+## A2UI
+
+`variant="a2ui"` takes the look of the [A2UI playground](https://a2ui.open.bot/components/Combobox) combobox: a 34px outline trigger with an up-down chevron, and a command list (a rounded search field, 13px items, a check on the picked one) in a 10px popover as wide as the trigger. Colours stay the lobe-ui theme's.
+
+<Demo of={A2ui} />
+
+## APIs
+
+<Api name="Combobox" />
+
+The `combobox.search`, `combobox.empty` and `combobox.placeholder` texts come from `@lobehub/ui/i18n`; `texts` overrides them.
+
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `Combobox`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/Combobox.css';
+```
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={comboboxClasses} />

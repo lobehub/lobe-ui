@@ -11,6 +11,7 @@ import { checkboxClasses, checkboxGroupClasses } from '@/Checkbox/stable';
 import { chipSelectClasses } from '@/ChipSelect/stable';
 import { colorPickerClasses } from '@/ColorPicker/stable';
 import { colorSwatchesClasses } from '@/ColorSwatches/stable';
+import { comboboxClasses } from '@/Combobox/stable';
 import { copyButtonClasses } from '@/CopyButton/stable';
 import { datePickerClasses, dateRangePickerClasses } from '@/DatePicker/stable';
 import { downloadButtonClasses } from '@/DownloadButton/stable';
@@ -31,6 +32,7 @@ import {
   ChipSelect,
   ColorPicker,
   ColorSwatches,
+  Combobox,
   CopyButton,
   DatePicker,
   DateRangePicker,
@@ -351,6 +353,14 @@ export const FIXTURES: Record<string, StableFixture> = {
       <Button className={className} icon={Copy}>
         Button
       </Button>
+    ),
+  },
+  Combobox: {
+    classes: comboboxClasses,
+    // The popup parts render only while the list is open.
+    conditional: ['popup', 'search', 'list', 'item', 'check', 'empty'],
+    render: ({ className }) => (
+      <Combobox className={className} defaultValue="a" label="Pick" options={['a', 'b']} />
     ),
   },
   CopyButton: {
