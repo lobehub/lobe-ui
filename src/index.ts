@@ -211,6 +211,10 @@ export {
   useImagePreview,
   type UseImagePreviewResult,
 } from './Image';
+export { default as ImageGallery } from './ImageGallery';
+export * from './ImageGallery';
+export { default as ImageGrid } from './ImageGrid';
+export * from './ImageGrid';
 export { default as ImageSelect, type ImageSelectItem, type ImageSelectProps } from './ImageSelect';
 export type { InputProps, TextAreaProps } from './Input';
 export * from './Input';
@@ -258,6 +262,8 @@ export {
   default as MaterialFileTypeIcon,
   type MaterialFileTypeIconProps,
 } from './MaterialFileTypeIcon';
+export { default as MathFormula } from './MathFormula';
+export * from './MathFormula';
 export {
   default as Mermaid,
   type MermaidProps,
@@ -366,6 +372,8 @@ export {
   type VideoSection,
   type VideoState,
 } from './Video';
+export { default as VideoEmbed } from './VideoEmbed';
+export * from './VideoEmbed';
 export { default as WeatherCard } from './WeatherCard';
 export * from './WeatherCard';
 export { default as LobeHighlightsTheme } from '@/Highlighter/theme/lobe-highlights-theme';

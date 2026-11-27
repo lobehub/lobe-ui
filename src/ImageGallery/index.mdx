@@ -1,0 +1,42 @@
+---
+title: ImageGallery
+description: A grid of captioned images that open in the lobe-ui image viewer, as lobe-ui tiles or in the A2UI playground layout.
+category: Data Display
+---
+
+import A2ui from './demos/a2ui.tsx?demo';
+import Basic from './demos/index.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { imageGalleryClasses } from './stable';
+
+## Usage
+
+`columns` sets 2 to 4 columns (default 3). With more than three images, the first takes a 2×2 feature tile when that leaves the last row full (six images in three columns, for example). A click opens the lobe-ui image viewer with the rest of the gallery a swipe away; `preview={false}` turns it off. The default variant shows lobe-ui image tiles with the caption below.
+
+<Demo of={Basic} layout="bare" />
+
+## A2UI
+
+`variant="a2ui"` takes the layout of the [A2UI playground](https://a2ui.open.bot/components/ImageGallery) gallery: 12px hairline tiles, the caption on a dark fade over the bottom of the image and a slow zoom on hover. Colours stay the lobe-ui theme's.
+
+<Demo of={A2ui} layout="bare" />
+
+## APIs
+
+<Api name="ImageGallery" />
+
+Each image is `{ url, caption?, alt? }`; `alt` falls back to the caption.
+
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `ImageGallery`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/ImageGallery.css';
+```
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={imageGalleryClasses} />

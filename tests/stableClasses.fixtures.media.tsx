@@ -1,8 +1,22 @@
 import { eventCardClasses } from '@/EventCard/stable';
-import { EventCard, ProfileCard, ReceiptCard, RecipeCard, WeatherCard } from '@/index';
+import { imageGalleryClasses } from '@/ImageGallery/stable';
+import { imageGridClasses } from '@/ImageGrid/stable';
+import {
+  EventCard,
+  ImageGallery,
+  ImageGrid,
+  MathFormula,
+  ProfileCard,
+  ReceiptCard,
+  RecipeCard,
+  VideoEmbed,
+  WeatherCard,
+} from '@/index';
+import { mathFormulaClasses } from '@/MathFormula/stable';
 import { profileCardClasses } from '@/ProfileCard/stable';
 import { receiptCardClasses } from '@/ReceiptCard/stable';
 import { recipeCardClasses } from '@/RecipeCard/stable';
+import { videoEmbedClasses } from '@/VideoEmbed/stable';
 import { weatherCardClasses } from '@/WeatherCard/stable';
 
 import type { StableFixture } from './stableClasses.fixtures';
@@ -26,6 +40,28 @@ export const MEDIA_FIXTURES: Record<string, StableFixture> = {
         onAction={() => {}}
       />
     ),
+  },
+  ImageGallery: {
+    classes: imageGalleryClasses,
+    render: ({ className }) => (
+      <ImageGallery
+        className={className}
+        images={[{ caption: 'A', url: 'https://example.com/a.jpg' }]}
+      />
+    ),
+  },
+  ImageGrid: {
+    classes: imageGridClasses,
+    render: ({ className }) => (
+      <ImageGrid
+        className={className}
+        images={[{ caption: 'A', url: 'https://example.com/a.jpg' }]}
+      />
+    ),
+  },
+  MathFormula: {
+    classes: mathFormulaClasses,
+    render: ({ className }) => <MathFormula className={className} value="x^2" />,
   },
   ProfileCard: {
     classes: profileCardClasses,
@@ -69,6 +105,13 @@ export const MEDIA_FIXTURES: Record<string, StableFixture> = {
         time="25 min"
         title="Pesto"
       />
+    ),
+  },
+  VideoEmbed: {
+    classes: videoEmbedClasses,
+    conditional: ['unsupported'],
+    render: ({ className }) => (
+      <VideoEmbed className={className} title="Clip" url="https://youtu.be/aircAruvnKk" />
     ),
   },
   WeatherCard: {
