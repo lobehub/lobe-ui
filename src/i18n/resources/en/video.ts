@@ -2,6 +2,8 @@ export default {
   'video.captionsHide': 'Hide captions',
   'video.captionsShow': 'Show captions',
   'video.download': 'Download',
+  'video.embedTitle': 'Video',
+  'video.embedUnsupported': 'Unsupported video URL',
   'video.exitFullscreen': 'Exit fullscreen',
   'video.frame': 'Frame',
   'video.fullscreen': 'Fullscreen',

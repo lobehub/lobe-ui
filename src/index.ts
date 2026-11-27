@@ -270,6 +270,8 @@ export { default as Pagination } from './Pagination';
 export * from './Pagination';
 export { default as Popover } from './Popover';
 export * from './Popover';
+export { default as ProfileCard } from './ProfileCard';
+export * from './ProfileCard';
 export { default as Progress } from './Progress';
 export * from './Progress';
 export { default as ProgressiveBlur } from './ProgressiveBlur';
@@ -280,6 +282,8 @@ export * from './QRCode';
 export * from './Radio';
 export { default as Rate } from './Rate';
 export * from './Rate';
+export { default as ReceiptCard } from './ReceiptCard';
+export * from './ReceiptCard';
 export { default as Result } from './Result';
 export * from './Result';
 export * from './ScrollArea';
@@ -358,6 +362,8 @@ export {
   type VideoSection,
   type VideoState,
 } from './Video';
+export { default as WeatherCard } from './WeatherCard';
+export * from './WeatherCard';
 export { default as LobeHighlightsTheme } from '@/Highlighter/theme/lobe-highlights-theme';
 export { default as ShikiLobeTheme } from '@/Highlighter/theme/lobe-theme';
 export { rehypeStreamAnimated } from '@lobehub/streamdown';

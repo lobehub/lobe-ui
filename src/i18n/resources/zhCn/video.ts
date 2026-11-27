@@ -2,6 +2,8 @@ export default {
   'video.captionsHide': '隐藏字幕',
   'video.captionsShow': '显示字幕',
   'video.download': '下载',
+  'video.embedTitle': '视频',
+  'video.embedUnsupported': '不支持的视频链接',
   'video.exitFullscreen': '退出全屏',
   'video.frame': '帧',
   'video.fullscreen': '全屏',

@@ -1,0 +1,42 @@
+---
+title: ReceiptCard
+description: An order receipt with the merchant, order id and date, a status badge, line items, subtotal, shipping, discount, tax, total and the payment method, as a plain lobe-ui card or in the A2UI playground layout.
+category: Data Display
+---
+
+import A2ui from './demos/a2ui.tsx?demo';
+import Basic from './demos/index.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { receiptCardClasses } from './stable';
+
+## Usage
+
+Each item shows its quantity, name, optional note and line amount (`price × qty`). The card adds up the subtotal and the total itself: subtotal, plus `shipping` (`0` reads "Free") and `tax`, minus `discount`. The status badge is tinted from its text (paid or delivered is positive, refunded or cancelled negative, anything else a warning) unless `statusTone` sets it. With no items, two placeholder rows show. The default variant is a plain lobe-ui card with body-size type and a `Tag` status.
+
+<Demo of={Basic} layout="bare" />
+
+## A2UI
+
+`variant="a2ui"` takes the layout of the [A2UI playground](https://a2ui.open.bot/components/ReceiptCard) receipt: a 14px card, quantity chips, a dashed rule above the totals and a footer strip for the payment method. Colours stay the lobe-ui theme's in both variants.
+
+<Demo of={A2ui} layout="bare" />
+
+## APIs
+
+<Api name="ReceiptCard" />
+
+Amounts are formatted with `Intl.NumberFormat` in `currency` (default `USD`) and `locale` (default `en-US`). The `receiptCard.*` texts come from `@lobehub/ui/i18n`; `texts` overrides them (`order` keeps an `{id}` placeholder).
+
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `ReceiptCard`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/ReceiptCard.css';
+```
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={receiptCardClasses} />
