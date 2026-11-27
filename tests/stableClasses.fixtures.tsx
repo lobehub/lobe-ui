@@ -6,7 +6,9 @@ import { actionIconGroupClasses } from '@/ActionIconGroup/stable';
 import { autoCompleteClasses } from '@/AutoComplete/stable';
 import { burgerClasses } from '@/Burger/stable';
 import { buttonClasses, splitButtonClasses } from '@/Button/stable';
+import { buttonGroupClasses } from '@/ButtonGroup/stable';
 import { checkboxClasses, checkboxGroupClasses } from '@/Checkbox/stable';
+import { chipSelectClasses } from '@/ChipSelect/stable';
 import { colorPickerClasses } from '@/ColorPicker/stable';
 import { colorSwatchesClasses } from '@/ColorSwatches/stable';
 import { copyButtonClasses } from '@/CopyButton/stable';
@@ -23,8 +25,10 @@ import {
   AutoComplete,
   Burger,
   Button,
+  ButtonGroup,
   Checkbox,
   CheckboxGroup,
+  ChipSelect,
   ColorPicker,
   ColorSwatches,
   CopyButton,
@@ -100,6 +104,12 @@ export const FIXTURES: Record<string, StableFixture> = {
   ...MEDIA_FIXTURES,
   ...OVERLAY_FIXTURES,
   ...SUBPATH_FIXTURES,
+  ButtonGroup: {
+    classes: buttonGroupClasses,
+    render: ({ className }) => (
+      <ButtonGroup className={className} defaultValue="a" label="Period" options={['a', 'b']} />
+    ),
+  },
   Checkbox: {
     classes: checkboxClasses,
     render: ({ className }) => (
@@ -111,6 +121,12 @@ export const FIXTURES: Record<string, StableFixture> = {
   CheckboxGroup: {
     classes: checkboxGroupClasses,
     render: ({ className }) => <CheckboxGroup className={className} options={['a', 'b']} />,
+  },
+  ChipSelect: {
+    classes: chipSelectClasses,
+    render: ({ className }) => (
+      <ChipSelect className={className} defaultValue={['a']} label="Topics" options={['a', 'b']} />
+    ),
   },
   ColorPicker: {
     classes: colorPickerClasses,
