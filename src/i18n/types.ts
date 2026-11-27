@@ -7,6 +7,7 @@ type BuiltinTranslationResources = typeof import('./resources/en/agenda').defaul
   typeof import('./resources/en/chipSelect').default &
   typeof import('./resources/en/citation').default &
   typeof import('./resources/en/colorPicker').default &
+  typeof import('./resources/en/combobox').default &
   typeof import('./resources/en/common').default &
   typeof import('./resources/en/comparisonTable').default &
   typeof import('./resources/en/datePicker').default &
