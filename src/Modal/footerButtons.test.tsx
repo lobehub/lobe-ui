@@ -15,7 +15,7 @@ const renderUi = (node: ReactElement) => render(node, { wrapper: Wrapper });
 
 afterEach(cleanup);
 
-describe('modal footer: the secondary button is a fill button', () => {
+describe('modal footer: the secondary button is an outlined button on the footer band', () => {
   it('Modal built-in footer', () => {
     renderUi(
       <Modal open cancelText="Cancel" okText="OK" title="Title" onCancel={() => {}} onOk={() => {}}>
@@ -23,7 +23,7 @@ describe('modal footer: the secondary button is a fill button', () => {
       </Modal>,
     );
 
-    expect(screen.getByRole('button', { name: 'Cancel' }).dataset.type).toBe('fill');
+    expect(screen.getByRole('button', { name: 'Cancel' }).dataset.type).toBe('default');
     expect(screen.getByRole('button', { name: 'OK' }).dataset.type).toBe('primary');
   });
 
@@ -50,7 +50,7 @@ describe('modal footer: the secondary button is a fill button', () => {
       confirmModal({ cancelText: 'Cancel', content: 'Sure?', okText: 'OK', title: 'Confirm' });
     });
 
-    expect((await screen.findByRole('button', { name: 'Cancel' })).dataset.type).toBe('fill');
+    expect((await screen.findByRole('button', { name: 'Cancel' })).dataset.type).toBe('default');
     expect(screen.getByRole('button', { name: 'OK' }).dataset.type).toBe('primary');
   });
 });

@@ -71,7 +71,6 @@ const MessageModal = memo<MessageModalProps>(
         </Button>
         <Button
           className={chatMessageModalClasses('cancel')}
-          type="fill"
           onClick={() => {
             setTyping(false);
             setMessage(value);

@@ -59,7 +59,6 @@ const CancelBtn: React.FC<CancelBtnProps> = ({ cancelButtonProps, cancelText, on
   const { onClick: userOnClick, ...restCancel } = cancelButtonProps ?? {};
   return (
     <Button
-      type="fill"
       {...restCancel}
       onClick={(e) => {
         onCancel(e as MouseEvent<HTMLButtonElement>);
