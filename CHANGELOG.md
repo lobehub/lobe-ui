@@ -2,6 +2,31 @@
 
 # Changelog
 
+## [Version&nbsp;6.24.0](https://github.com/lobehub/lobe-ui/compare/v6.23.1...v6.24.0)
+
+<sup>Released on **2026-11-27**</sup>
+
+#### ✨ Features
+
+- **modal**: Footer band with footerVariant, and lift dark outlined controls with fill-series background and borders.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's improved
+
+- **modal**: Footer band with footerVariant, and lift dark outlined controls with fill-series background and borders, closes [#823](https://github.com/lobehub/lobe-ui/issues/823) [#809](https://github.com/lobehub/lobe-ui/issues/809) ([191503c](https://github.com/lobehub/lobe-ui/commit/191503c))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ### [Version&nbsp;6.23.1](https://github.com/lobehub/lobe-ui/compare/v6.23.0...v6.23.1)
 
 <sup>Released on **2026-11-27**</sup>
