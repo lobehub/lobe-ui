@@ -1,12 +1,32 @@
-import { ProfileCard, ReceiptCard, WeatherCard } from '@/index';
+import { eventCardClasses } from '@/EventCard/stable';
+import { EventCard, ProfileCard, ReceiptCard, RecipeCard, WeatherCard } from '@/index';
 import { profileCardClasses } from '@/ProfileCard/stable';
 import { receiptCardClasses } from '@/ReceiptCard/stable';
+import { recipeCardClasses } from '@/RecipeCard/stable';
 import { weatherCardClasses } from '@/WeatherCard/stable';
 
 import type { StableFixture } from './stableClasses.fixtures';
 
 /** The A2UI media and domain cards (ProfileCard, ReceiptCard, WeatherCard, ...). */
 export const MEDIA_FIXTURES: Record<string, StableFixture> = {
+  EventCard: {
+    classes: eventCardClasses,
+    render: ({ className }) => (
+      <EventCard
+        attendees={12}
+        className={className}
+        date="2026-11-14"
+        description="Talks"
+        host="Builders"
+        image="https://example.com/cover.jpg"
+        tags={['Free']}
+        time="6:30 PM"
+        title="Meetup"
+        venue="The Foundry"
+        onAction={() => {}}
+      />
+    ),
+  },
   ProfileCard: {
     classes: profileCardClasses,
     render: ({ className }) => (
@@ -34,6 +54,20 @@ export const MEDIA_FIXTURES: Record<string, StableFixture> = {
         orderId="#1"
         payment="Visa ending 4242"
         status="Paid"
+      />
+    ),
+  },
+  RecipeCard: {
+    classes: recipeCardClasses,
+    render: ({ className }) => (
+      <RecipeCard
+        className={className}
+        image="https://example.com/cover.jpg"
+        ingredients={['Pasta']}
+        steps={['Cook']}
+        tags={['Vegetarian']}
+        time="25 min"
+        title="Pesto"
       />
     ),
   },
