@@ -1,0 +1,40 @@
+---
+title: FollowUp
+description: Suggested next prompts shown as pills under an answer; clicking one hands its message back so it can be sent as the next turn.
+category: General
+---
+
+import A2ui from './demos/a2ui.tsx?demo';
+import Basic from './demos/index.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { followUpClasses } from './stable';
+
+## Usage
+
+Put two to four short follow-ups at the end of an answer. A string item is both the pill text and the message; an object can send a longer `message` than its `label`. `onFollowUp` receives the message, the item and its index. The default variant uses lobe-ui pills.
+
+<Demo of={Basic} layout="bare" />
+
+## A2UI
+
+`variant="a2ui"` takes the look of the [A2UI playground](https://a2ui.open.bot/components/FollowUp) follow-ups (the CopilotKit standard `FollowUp`): a muted caption and bordered pills whose type follows the surrounding font size. Colours stay the lobe-ui theme's.
+
+<Demo of={A2ui} layout="bare" />
+
+## APIs
+
+<Api name="FollowUp" />
+
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `FollowUp`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/FollowUp.css';
+```
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={followUpClasses} />

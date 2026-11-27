@@ -32,6 +32,8 @@ export * from './Button';
 export { default as Carousel } from './Carousel';
 export * from './Carousel';
 export * from './Checkbox';
+export { default as Citation } from './Citation';
+export * from './Citation';
 export {
   CodeDiff,
   type CodeDiffProps,
@@ -163,6 +165,8 @@ export * from './FloatingPanel';
 export * from './FloatingSheet';
 export { default as FluentEmoji, type FluentEmojiProps } from './FluentEmoji';
 export * from './FocusScope';
+export { default as FollowUp } from './FollowUp';
+export * from './FollowUp';
 export { default as FontLoader, type FontLoaderProps } from './FontLoader';
 export * from './Form';
 export { default as Freeze, type FreezeProps } from './Freeze';

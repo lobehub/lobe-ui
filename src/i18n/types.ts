@@ -5,6 +5,7 @@ type BuiltinTranslationResources = typeof import('./resources/en/agenda').defaul
   typeof import('./resources/en/burger').default &
   typeof import('./resources/en/cards').default &
   typeof import('./resources/en/chat').default &
+  typeof import('./resources/en/citation').default &
   typeof import('./resources/en/colorPicker').default &
   typeof import('./resources/en/common').default &
   typeof import('./resources/en/comparisonTable').default &
