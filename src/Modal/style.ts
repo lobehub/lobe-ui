@@ -66,6 +66,10 @@ export const styles = stylex.create({
     paddingBlockStart: 16,
   },
 
+  contentWithFooter: {
+    paddingBlockEnd: 24,
+  },
+
   denyAnimation: {
     animationDuration: '280ms',
     animationName: deny,
@@ -79,6 +83,13 @@ export const styles = stylex.create({
     alignItems: 'center',
     display: 'flex',
     justifyContent: 'flex-end',
+  },
+
+  footerFilled: {
+    backgroundColor: cssVar.colorFillQuaternary,
+    borderBlockStartColor: `var(--lobe-fill-border, ${cssVar.colorFill})`,
+    borderBlockStartStyle: 'solid',
+    borderBlockStartWidth: 1,
   },
 
   fullscreenPopupInner: {

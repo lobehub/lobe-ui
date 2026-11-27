@@ -32,6 +32,7 @@ import { backdropTransition, modalMotionConfig } from './constants';
 import { ModalLayerProvider, useModalLayer } from './ModalLayerContext';
 import { modalClasses } from './stable';
 import { styles } from './style';
+import type { ModalFooterVariant } from './type';
 
 type XStyle = Parameters<typeof styleProps>[0];
 
@@ -347,16 +348,27 @@ export const ModalContent: React.FC<ModalContentProps> = ModalContentImpl;
 // --- Footer ---
 export type ModalFooterProps = React.HTMLAttributes<HTMLDivElement> & {
   ref?: React.Ref<HTMLDivElement>;
+  /**
+   * `filled` sets the footer on a tinted band with a top rule; `borderless` keeps it plain.
+   * @default 'filled'
+   */
+  variant?: ModalFooterVariant;
 };
 export const ModalFooterImpl = ({
   className,
   style,
+  variant = 'filled',
   xstyle,
   ...rest
 }: ModalFooterProps & { xstyle?: XStyle }) => (
   <div
     {...rest}
-    {...styleProps([styles.footer, xstyle], clsx(modalClasses('footer'), className), style)}
+    data-variant={variant}
+    {...styleProps(
+      [styles.footer, variant === 'filled' && styles.footerFilled, xstyle],
+      clsx(modalClasses('footer'), className),
+      style,
+    )}
   />
 );
 export const ModalFooter: React.FC<ModalFooterProps> = ModalFooterImpl;

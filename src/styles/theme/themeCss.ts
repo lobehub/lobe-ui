@@ -21,12 +21,14 @@ const surface: Record<LobeAppearance, Record<string, string>> = {
   dark: {
     '--lobe-fill-border': v('colorFillSecondary'),
     '--lobe-fill-border-strong': v('colorFill'),
+    '--lobe-outlined-bg': v('colorFillTertiary'),
     '--lobe-table-cell-bg': 'transparent',
     '--lobe-table-surface': v('colorFillQuaternary'),
   },
   light: {
     '--lobe-fill-border': v('colorFill'),
     '--lobe-fill-border-strong': `color-mix(in srgb, ${v('colorFill')}, ${v('colorText')} 15%)`,
+    '--lobe-outlined-bg': v('colorBgContainer'),
     '--lobe-table-cell-bg': 'initial',
     '--lobe-table-surface': 'initial',
   },

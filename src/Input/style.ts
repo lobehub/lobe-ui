@@ -19,6 +19,7 @@ const validFocus = ":focus-within:not(:has([data-invalid], [aria-invalid='true']
 const lobeShadow = `0 1px 0 -1px ${cssVar.colorBorder}, 0 1px 2px -0.5px ${cssVar.colorBorder}, 0 2px 2px -1px ${cssVar.colorBorderSecondary}, 0 3px 6px -4px ${cssVar.colorBorderSecondary}`;
 const primaryRing = `0 0 0 2px ${cssVar.colorPrimaryBg}`;
 const errorRing = `0 0 0 2px ${cssVar.colorErrorBg}`;
+const outlinedBg = `var(--lobe-outlined-bg, ${cssVar.colorBgContainer})`;
 
 export const styles = stylex.create({
   borderless: {
@@ -163,14 +164,14 @@ export const styles = stylex.create({
   },
   outlined: {
     borderColor: {
-      default: cssVar.colorBorderSecondary,
-      [hover]: cssVar.colorBorder,
+      default: cssVar.colorFillSecondary,
+      [hover]: cssVar.colorFill,
       [invalidIdle]: cssVar.colorError,
       [validFocus]: cssVar.colorPrimary,
     },
     borderStyle: 'solid',
     borderWidth: 1,
-    backgroundColor: cssVar.colorBgContainer,
+    backgroundColor: outlinedBg,
     boxShadow: { default: null, [invalidFocus]: errorRing, [validFocus]: primaryRing },
   },
   passwordToggle: {

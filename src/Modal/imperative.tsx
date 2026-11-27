@@ -49,7 +49,15 @@ const ConfirmBody = ({ config }: { config: ModalConfirmConfig }) => {
   const { close } = useModalContext();
   const [loading, setLoading] = useState(false);
 
-  const { cancelText = 'Cancel', content, okButtonProps, okText = 'OK', onCancel, onOk } = config;
+  const {
+    cancelText = 'Cancel',
+    content,
+    footerVariant = 'filled',
+    okButtonProps,
+    okText = 'OK',
+    onCancel,
+    onOk,
+  } = config;
 
   const handleCancel = useCallback(() => {
     close();
@@ -75,11 +83,13 @@ const ConfirmBody = ({ config }: { config: ModalConfirmConfig }) => {
 
   return (
     <>
-      {content && <div style={{ padding: '12px 16px' }}>{content}</div>}
-      <ModalFooter>
-        <Button type="fill" onClick={handleCancel}>
-          {cancelText}
-        </Button>
+      {content && (
+        <div style={{ padding: footerVariant === 'filled' ? '12px 16px 24px' : '12px 16px' }}>
+          {content}
+        </div>
+      )}
+      <ModalFooter variant={footerVariant}>
+        <Button onClick={handleCancel}>{cancelText}</Button>
         <Button loading={loading} type="primary" {...okButtonProps} onClick={handleOk}>
           {okText}
         </Button>
@@ -153,6 +163,7 @@ export function createModalSystem(): ModalSystem {
       classNames,
       content,
       footer,
+      footerVariant = 'filled',
       initialFocus,
       maskClosable,
       onOpenChange,
@@ -213,7 +224,10 @@ export function createModalSystem(): ModalSystem {
               <ModalContentImpl
                 className={classNames?.content}
                 style={semanticStyles?.content}
-                xstyle={!showTitle && styles.contentNoHeader}
+                xstyle={[
+                  !showTitle && styles.contentNoHeader,
+                  footer != null && footerVariant === 'filled' && styles.contentWithFooter,
+                ]}
               >
                 {content ?? children}
               </ModalContentImpl>

@@ -23,7 +23,7 @@ const ease = 'cubic-bezier(0.32, 0.72, 0, 1)';
 
 const errorHover = `color-mix(in srgb, ${cssVar.colorError} 88%, white)`;
 const errorActive = `color-mix(in srgb, ${cssVar.colorError} 88%, black)`;
-const borderHover = `color-mix(in srgb, ${cssVar.colorText} 8%, ${cssVar.colorBorder})`;
+const borderHover = `color-mix(in srgb, ${cssVar.colorText} 8%, ${cssVar.colorFill})`;
 const neutralWash = `linear-gradient(${cssVar.colorFillTertiary}, ${cssVar.colorFillTertiary})`;
 const neutralWashActive = `linear-gradient(${cssVar.colorFillSecondary}, ${cssVar.colorFillSecondary})`;
 const error10 = `color-mix(in srgb, ${cssVar.colorError} 10%, transparent)`;
@@ -33,8 +33,9 @@ const error18 = `color-mix(in srgb, ${cssVar.colorError} 18%, transparent)`;
 const error22 = `color-mix(in srgb, ${cssVar.colorError} 22%, transparent)`;
 const error40 = `color-mix(in srgb, ${cssVar.colorError} 40%, transparent)`;
 const error65 = `color-mix(in srgb, ${cssVar.colorError} 65%, transparent)`;
-const errorOnContainer8 = `color-mix(in srgb, ${cssVar.colorError} 8%, ${cssVar.colorBgContainer})`;
-const errorOnContainer14 = `color-mix(in srgb, ${cssVar.colorError} 14%, ${cssVar.colorBgContainer})`;
+const outlinedBg = `var(--lobe-outlined-bg, ${cssVar.colorBgContainer})`;
+const errorOnContainer8 = `color-mix(in srgb, ${cssVar.colorError} 8%, ${outlinedBg})`;
+const errorOnContainer14 = `color-mix(in srgb, ${cssVar.colorError} 14%, ${outlinedBg})`;
 const slotEase = 'cubic-bezier(0.22, 1, 0.36, 1)';
 
 export const styles = stylex.create({
@@ -170,8 +171,8 @@ export const styles = stylex.create({
   },
 
   variantDefault: {
-    borderColor: { default: cssVar.colorBorder, [hover]: borderHover },
-    backgroundColor: cssVar.colorBgContainer,
+    borderColor: { default: cssVar.colorFill, [hover]: borderHover },
+    backgroundColor: outlinedBg,
     backgroundImage: {
       [active]: neutralWashActive,
       default: null,
@@ -197,9 +198,9 @@ export const styles = stylex.create({
   },
 
   variantDashed: {
-    borderColor: { default: cssVar.colorBorder, [hover]: borderHover },
+    borderColor: { default: cssVar.colorFill, [hover]: borderHover },
     borderStyle: 'dashed',
-    backgroundColor: cssVar.colorBgContainer,
+    backgroundColor: outlinedBg,
     backgroundImage: {
       [active]: neutralWashActive,
       default: null,
@@ -235,7 +236,7 @@ export const styles = stylex.create({
     borderColor: { default: error40, [hover]: error65 },
     backgroundColor: {
       [active]: errorOnContainer14,
-      default: cssVar.colorBgContainer,
+      default: outlinedBg,
       [hoverIdle]: errorOnContainer8,
     },
     backgroundImage: null,

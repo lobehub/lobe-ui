@@ -59,7 +59,6 @@ const CancelBtn: React.FC<CancelBtnProps> = ({ cancelButtonProps, cancelText, on
   const { onClick: userOnClick, ...restCancel } = cancelButtonProps ?? {};
   return (
     <Button
-      type="fill"
       {...restCancel}
       onClick={(e) => {
         onCancel(e as MouseEvent<HTMLButtonElement>);
@@ -84,6 +83,7 @@ const Modal = memo<ModalComponentProps>(
     cancelButtonProps,
     confirmLoading,
     footer,
+    footerVariant = 'filled',
     width,
     height,
     initialFocus,
@@ -322,11 +322,14 @@ const Modal = memo<ModalComponentProps>(
             )}
             <ModalContentImpl
               className={classNames?.body}
-              xstyle={!showHeader && styles.contentNoHeader}
               style={{
                 ...(hasHeight || isFullscreen ? { flex: 1 } : {}),
                 ...semanticStyles?.body,
               }}
+              xstyle={[
+                !showHeader && styles.contentNoHeader,
+                footerNode !== null && footerVariant === 'filled' && styles.contentWithFooter,
+              ]}
             >
               {loading ? (
                 <div {...styleProps(styles.loading, modalClasses('loading'))}>
@@ -337,7 +340,11 @@ const Modal = memo<ModalComponentProps>(
               )}
             </ModalContentImpl>
             {footerNode !== null && (
-              <ModalFooter className={classNames?.footer} style={semanticStyles?.footer}>
+              <ModalFooter
+                className={classNames?.footer}
+                style={semanticStyles?.footer}
+                variant={footerVariant}
+              >
                 {footerNode}
               </ModalFooter>
             )}
