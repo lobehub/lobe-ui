@@ -231,9 +231,11 @@ export type PickerPropsWithMultiple<DateType, InnerPickerProps, ValueType = Date
 export interface DatePickerBaseProps<DateType extends object = Date>
   extends
     Omit<RcPickerProps<DateType>, InternalRcProps | MultipleRcProps | ValueRcProps>,
-    LobePickerProps {
+    Omit<LobePickerProps, 'variant'> {
   /** Semantic DOM class names: `root` / `prefix` / `input` / `suffix` and `popup.*`. */
   classNames?: PickerClassNames<DatePickerBaseProps<DateType>>;
+  /** Field label above the trigger (`variant="a2ui"`). */
+  label?: ReactNode;
   /**
    * antd `PickerLocale`: `lang` texts and formats (`fieldDateFormat`, `yearFormat`,
    * `shortWeekDays`, …) and `timePickerLocale`. Defaults to the locale generated from the
@@ -265,6 +267,16 @@ export interface DatePickerBaseProps<DateType extends object = Date>
   styles?: PickerStyles<DatePickerBaseProps<DateType>>;
   /** `multiple`: render each picked date's tag, e.g. with base-ui `Tag`. */
   tagRender?: (props: PickerTagProps<DateType>) => ReactNode;
+  /**
+   * @default 'outlined' (light) / 'filled' (dark)
+   *
+   * `a2ui`: the A2UI playground date picker on a single-date picker (not `multiple`, not the
+   * week / month / quarter / year / time pickers): an outline trigger with a calendar icon and the
+   * date as "Thu, Nov 12, 2026", under an optional `label`, opening a one-month calendar with
+   * 28px day cells. Supports `value` / `defaultValue` / `onChange`, `open`, `disabled`,
+   * `disabledDate`, `minDate` / `maxDate` and `placeholder`.
+   */
+  variant?: PickerVariant | 'a2ui';
 }
 
 /**

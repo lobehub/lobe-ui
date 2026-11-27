@@ -5,6 +5,7 @@ import { X } from 'lucide-react';
 
 import Icon from '@/Icon';
 
+import A2uiDatePicker from './A2uiDatePicker';
 import RcPicker from './core';
 import type { GenerateConfig } from './core/generate';
 import type { PickerMode } from './core/interface';
@@ -23,7 +24,7 @@ const generateSinglePicker = <DateType extends object>(
   generateConfig: GenerateConfig<DateType>,
 ) => {
   const getPicker = (presetPicker?: PickerMode, displayName = 'DatePicker') => {
-    const Picker = (rawProps: PickerProps<DateType, any>) => {
+    const DefaultPicker = (rawProps: PickerProps<DateType, any>) => {
       const props = normalizeLegacyDateProps(rawProps, generateConfig);
       const {
         allowClear,
@@ -76,6 +77,8 @@ const generateSinglePicker = <DateType extends object>(
         superPrevIcon,
         value,
         variant,
+        // `label` is the a2ui field label; the default picker has none.
+        label: _label,
         ...rest
       } = props;
       const picker = presetPicker ?? pickerProp ?? 'date';
@@ -132,7 +135,7 @@ const generateSinglePicker = <DateType extends object>(
         suffixIcon,
         superNextIcon,
         superPrevIcon,
-        variant,
+        variant: variant as Exclude<typeof variant, 'a2ui'>,
       });
 
       const presetActive = usePresetActive(
@@ -185,6 +188,35 @@ const generateSinglePicker = <DateType extends object>(
             presetActive.track(args[0]);
             (keyboard.onChange as any)(...args);
           }}
+        />
+      );
+    };
+    // `variant="a2ui"` on a single-date picker: the A2UI playground trigger and calendar.
+    const Picker = (rawProps: PickerProps<DateType, any>) => {
+      const picker = presetPicker ?? rawProps.picker ?? 'date';
+      if (rawProps.variant !== 'a2ui' || picker !== 'date' || rawProps.multiple)
+        return <DefaultPicker {...rawProps} />;
+      const props = normalizeLegacyDateProps(rawProps, generateConfig);
+      return (
+        <A2uiDatePicker<DateType>
+          className={clsx(props.className, props.rootClassName)}
+          defaultOpen={props.defaultOpen}
+          defaultValue={props.defaultValue as DateType | null | undefined}
+          disabled={props.disabled as boolean | undefined}
+          disabledDate={props.disabledDate as ((date: DateType) => boolean) | undefined}
+          generateConfig={generateConfig}
+          id={props.id}
+          label={props.label}
+          maxDate={props.maxDate}
+          minDate={props.minDate}
+          open={props.open}
+          placeholder={props.placeholder as string | undefined}
+          style={props.style}
+          value={props.value as DateType | null | undefined}
+          onOpenChange={props.onOpenChange}
+          onChange={
+            props.onChange as ((date: DateType | null, dateString: string) => void) | undefined
+          }
         />
       );
     };
