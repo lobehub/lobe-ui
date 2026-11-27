@@ -164,8 +164,8 @@ export const styles = stylex.create({
   },
   outlined: {
     borderColor: {
-      default: cssVar.colorBorderSecondary,
-      [hover]: cssVar.colorBorder,
+      default: cssVar.colorFillSecondary,
+      [hover]: cssVar.colorFill,
       [invalidIdle]: cssVar.colorError,
       [validFocus]: cssVar.colorPrimary,
     },

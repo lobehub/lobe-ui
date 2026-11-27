@@ -104,7 +104,7 @@ export const styles = stylex.create({
     '--lobe-select-disabled-bg': `color-mix(in srgb, ${outlinedBg} 60%, transparent)`,
     '--lobe-select-open-bg': cssVar.colorFillTertiary,
     '--lobe-select-readonly-bg': `color-mix(in srgb, ${outlinedBg} 75%, transparent)`,
-    'borderColor': { 'default': cssVar.colorBorderSecondary, ':hover': cssVar.colorBorder },
+    'borderColor': { 'default': cssVar.colorFillSecondary, ':hover': cssVar.colorFill },
     'borderStyle': 'solid',
     'borderWidth': 1,
     'backgroundColor': {

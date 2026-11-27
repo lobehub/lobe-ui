@@ -16,7 +16,7 @@ export const stylish = stylex.create({
     backgroundColor: cssVar.colorFillTertiary,
   },
   variantOutlinedWithoutHover: {
-    borderColor: cssVar.colorBorderSecondary,
+    borderColor: cssVar.colorFillSecondary,
     borderStyle: 'solid',
     borderWidth: 1,
     backgroundColor: outlinedBg,

@@ -23,7 +23,7 @@ const ease = 'cubic-bezier(0.32, 0.72, 0, 1)';
 
 const errorHover = `color-mix(in srgb, ${cssVar.colorError} 88%, white)`;
 const errorActive = `color-mix(in srgb, ${cssVar.colorError} 88%, black)`;
-const borderHover = `color-mix(in srgb, ${cssVar.colorText} 8%, ${cssVar.colorBorder})`;
+const borderHover = `color-mix(in srgb, ${cssVar.colorText} 8%, ${cssVar.colorFill})`;
 const neutralWash = `linear-gradient(${cssVar.colorFillTertiary}, ${cssVar.colorFillTertiary})`;
 const neutralWashActive = `linear-gradient(${cssVar.colorFillSecondary}, ${cssVar.colorFillSecondary})`;
 const error10 = `color-mix(in srgb, ${cssVar.colorError} 10%, transparent)`;
@@ -171,7 +171,7 @@ export const styles = stylex.create({
   },
 
   variantDefault: {
-    borderColor: { default: cssVar.colorBorder, [hover]: borderHover },
+    borderColor: { default: cssVar.colorFill, [hover]: borderHover },
     backgroundColor: outlinedBg,
     backgroundImage: {
       [active]: neutralWashActive,
@@ -198,7 +198,7 @@ export const styles = stylex.create({
   },
 
   variantDashed: {
-    borderColor: { default: cssVar.colorBorder, [hover]: borderHover },
+    borderColor: { default: cssVar.colorFill, [hover]: borderHover },
     borderStyle: 'dashed',
     backgroundColor: outlinedBg,
     backgroundImage: {

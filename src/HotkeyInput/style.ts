@@ -22,7 +22,7 @@ export const styles = stylex.create({
     borderWidth: 1,
   },
   errorOutlined: {
-    borderColor: { 'default': cssVar.colorError, ':hover': cssVar.colorBorder },
+    borderColor: { 'default': cssVar.colorError, ':hover': cssVar.colorFill },
   },
   errorText: {
     color: cssVar.colorError,
@@ -46,7 +46,7 @@ export const styles = stylex.create({
     width: '100%',
   },
   outlined: {
-    borderColor: { 'default': cssVar.colorBorderSecondary, ':hover': cssVar.colorBorder },
+    borderColor: { 'default': cssVar.colorFillSecondary, ':hover': cssVar.colorFill },
     borderStyle: 'solid',
     borderWidth: 1,
     backgroundColor: outlinedBg,

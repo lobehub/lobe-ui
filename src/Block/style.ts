@@ -16,7 +16,7 @@ export const styles = stylex.create({
     backgroundColor: { 'default': cssVar.colorFillTertiary, ':hover': cssVar.colorFillSecondary },
   },
   clickableOutlined: {
-    borderColor: { 'default': cssVar.colorBorderSecondary, ':hover': cssVar.colorBorder },
+    borderColor: { 'default': cssVar.colorFillSecondary, ':hover': cssVar.colorFill },
     borderStyle: 'solid',
     borderWidth: 1,
     backgroundColor: outlinedBg,
