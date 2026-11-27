@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version&nbsp;6.23.1](https://github.com/lobehub/lobe-ui/compare/v6.23.0...v6.23.1)
+
+<sup>Released on **2026-11-27**</sup>
+
+#### 🐛 Bug Fixes
+
+- **highlighter**: Refold streamed code token fades once they finish.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **highlighter**: Refold streamed code token fades once they finish ([eb151cc](https://github.com/lobehub/lobe-ui/commit/eb151cc))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version&nbsp;6.23.0](https://github.com/lobehub/lobe-ui/compare/v6.22.1...v6.23.0)
 
 <sup>Released on **2026-11-26**</sup>
