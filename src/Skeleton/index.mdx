@@ -8,6 +8,7 @@ import DemoIndex from './demos/index.tsx?demo';
 import DemoText from './demos/Text.tsx?demo';
 import DemoAvatar from './demos/Avatar.tsx?demo';
 import DemoComposed from './demos/Composed.tsx?demo';
+import DemoA2ui from './demos/a2ui.tsx?demo';
 import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
 import { skeletonClasses, skeletonAvatarClasses, skeletonTextClasses } from './stable';
 
@@ -26,6 +27,12 @@ import { skeletonClasses, skeletonAvatarClasses, skeletonTextClasses } from './s
 ## Composed
 
 <Demo of={DemoComposed} />
+
+## A2UI
+
+`variant="a2ui"` takes the look of the [A2UI playground](https://a2ui.open.bot/components/Skeleton) skeleton: `type="text"` draws `lines` pulsing 12px lines (the last one 60% wide), `type="card"` an avatar and three lines in a 14px card, `type="chart"` seven bars in a 192px card. The fill is `colorFill` and pulses once a second; it stops under `prefers-reduced-motion`.
+
+<Demo of={DemoA2ui} layout="bare" />
 
 ## APIs
 
