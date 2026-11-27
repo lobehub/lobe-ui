@@ -321,11 +321,14 @@ const Modal = memo<ModalComponentProps>(
             )}
             <ModalContentImpl
               className={classNames?.body}
-              xstyle={!showHeader && styles.contentNoHeader}
               style={{
                 ...(hasHeight || isFullscreen ? { flex: 1 } : {}),
                 ...semanticStyles?.body,
               }}
+              xstyle={[
+                !showHeader && styles.contentNoHeader,
+                footerNode !== null && styles.contentWithFooter,
+              ]}
             >
               {loading ? (
                 <div {...styleProps(styles.loading, modalClasses('loading'))}>

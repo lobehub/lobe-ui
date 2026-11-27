@@ -75,7 +75,7 @@ const ConfirmBody = ({ config }: { config: ModalConfirmConfig }) => {
 
   return (
     <>
-      {content && <div style={{ padding: '12px 16px' }}>{content}</div>}
+      {content && <div style={{ padding: '12px 16px 24px' }}>{content}</div>}
       <ModalFooter>
         <Button onClick={handleCancel}>{cancelText}</Button>
         <Button loading={loading} type="primary" {...okButtonProps} onClick={handleOk}>
@@ -211,7 +211,10 @@ export function createModalSystem(): ModalSystem {
               <ModalContentImpl
                 className={classNames?.content}
                 style={semanticStyles?.content}
-                xstyle={!showTitle && styles.contentNoHeader}
+                xstyle={[
+                  !showTitle && styles.contentNoHeader,
+                  footer != null && styles.contentWithFooter,
+                ]}
               >
                 {content ?? children}
               </ModalContentImpl>

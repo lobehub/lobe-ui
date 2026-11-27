@@ -66,6 +66,10 @@ export const styles = stylex.create({
     paddingBlockStart: 16,
   },
 
+  contentWithFooter: {
+    paddingBlockEnd: 24,
+  },
+
   denyAnimation: {
     animationDuration: '280ms',
     animationName: deny,
