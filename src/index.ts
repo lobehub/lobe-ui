@@ -145,6 +145,8 @@ export {
 } from './ElapsedTime';
 export { default as EmojiPicker, type EmojiPickerProps } from './EmojiPicker';
 export { default as Empty, type EmptyActionConfig, type EmptyProps } from './Empty';
+export { default as EntityCard } from './EntityCard';
+export * from './EntityCard';
 export { default as EventCard } from './EventCard';
 export * from './EventCard';
 export { default as Favicon, type FaviconProps, getFaviconHost } from './Favicon';

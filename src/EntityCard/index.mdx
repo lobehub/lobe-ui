@@ -1,0 +1,52 @@
+---
+title: EntityCard
+description: A card for one product, place, person or listing with an image, title, subtitle, badge, rating, description, a meta line and up to three actions.
+category: Data Display
+---
+
+import A2ui from './demos/a2ui.tsx?demo';
+import A2uiHorizontal from './demos/a2uiHorizontal.tsx?demo';
+import A2uiImage from './demos/a2uiImage.tsx?demo';
+import Basic from './demos/index.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { entityCardClasses } from './stable';
+
+## Usage
+
+The subtitle and badge sit above the title, then the rating, a description clamped to three lines, a meta line such as a price, and up to three actions. `layout="horizontal"` puts a square image on the left. With `href` or `onClick` the whole card is a link-like control; actions stop the click from reaching it. The default variant is a lobe-ui card with lobe-ui `Tag` and `Button`.
+
+<Demo of={Basic} layout="bare" />
+
+## A2UI
+
+`variant="a2ui"` takes the look of the [A2UI playground](https://a2ui.open.bot/components/EntityCard) entity card (the CopilotKit standard `EntityCard`): a 16px card, compact type that follows the surrounding font size, a soft badge pill, text stars and pill buttons. Colours stay the lobe-ui theme's.
+
+<Demo of={A2ui} layout="bare" />
+
+With images and actions, side by side at a fixed `width`:
+
+<Demo of={A2uiImage} layout="bare" />
+
+`layout="horizontal"`, with and without an image:
+
+<Demo of={A2uiHorizontal} layout="bare" />
+
+## APIs
+
+<Api name="EntityCard" />
+
+An action's `variant` is `solid` (primary), `soft` (filled), `outline` or `ghost`; without one, an action with `href` (or any action when the card has `onAction`) is `outline`, else `ghost`. An action runs its own `onClick`, else opens its `href` in a new tab, else calls the card's `onAction`. `badge` takes `{ label, color }` (`default`, `secondary`, `success`, `danger`, `warning`, `info`, `discovery`) or any node.
+
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `EntityCard`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/EntityCard.css';
+```
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={entityCardClasses} />

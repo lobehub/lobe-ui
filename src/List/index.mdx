@@ -4,6 +4,10 @@ description: A vertical list of selectable rows with icons or avatars, descripti
 category: Navigation
 ---
 
+import DemoA2ui from './demos/a2ui.tsx?demo';
+import DemoA2uiMarker from './demos/a2uiMarker.tsx?demo';
+import DemoA2uiPick from './demos/a2uiPick.tsx?demo';
+import DemoA2uiRich from './demos/a2uiRich.tsx?demo';
 import DemoGlide from './demos/glide.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
@@ -18,6 +22,24 @@ import { listClasses } from './stable';
 With `glide`, the rows share one hover layer that slides from row to row and follows keyboard focus. It is off by default, so existing lists keep their per-row hover.
 
 <Demo of={DemoGlide} layout="bare" />
+
+## A2UI
+
+`variant="a2ui"` takes the look of the [A2UI playground](https://a2ui.open.bot/components/List) list (the CopilotKit standard `List` and `ListItem`): a content list rather than a menu. `marker` draws native bullets (`bullet`, the default) or numbers (`number`, from `start`), or none (`rich`, `none`) so each row shows its own `icon` or `marker` text. A row is a label with an optional `value` on the right, a `description` under it and any `children` below; `disabled` greys it out. Like the official list it follows the font size of the text around it. Items can be plain strings.
+
+<Demo of={DemoA2ui} layout="bare" />
+
+Descriptions and values make key and value rows; `connector="solid"` joins the rows with a line, for steps or a history.
+
+<Demo of={DemoA2uiRich} layout="bare" />
+
+With `onClick` (on the list or an item) or `href`, rows become pickable buttons or links, and the `value` becomes the payload of the pick instead of being shown. `direction="horizontal"` lays the rows out in a row that scrolls sideways.
+
+<Demo of={DemoA2uiPick} layout="bare" />
+
+A row's own `marker` replaces the bullet or number; `markerSize` (or the list's `maxMarkerSize`) sets the marker column width.
+
+<Demo of={DemoA2uiMarker} layout="bare" />
 
 ## APIs
 

@@ -19,6 +19,7 @@ import { dividerClasses } from '@/Divider/stable';
 import { draggableSideNavClasses } from '@/DraggableSideNav/stable';
 import { elapsedTimeClasses } from '@/ElapsedTime/stable';
 import { emptyClasses } from '@/Empty/stable';
+import { entityCardClasses } from '@/EntityCard/stable';
 import { faviconClasses } from '@/Favicon/stable';
 import { fileTypeIconClasses } from '@/FileTypeIcon/stable';
 import { centerClasses, flexClasses } from '@/Flex/stable';
@@ -53,6 +54,7 @@ import {
   DraggableSideNav,
   ElapsedTime,
   Empty,
+  EntityCard,
   Favicon,
   FileTypeIcon,
   Flexbox,
@@ -318,6 +320,23 @@ export const DISPLAY_FIXTURES: Record<string, StableFixture> = {
       />
     ),
   },
+  EntityCard: {
+    classes: entityCardClasses,
+    render: ({ className }) => (
+      <EntityCard
+        actions={[{ label: 'Buy' }]}
+        badge={{ color: 'success', label: 'In stock' }}
+        className={className}
+        description="Light pack"
+        image="https://example.com/a.png"
+        meta="$89"
+        rating={4.6}
+        ratingCount={312}
+        subtitle="Backpacks"
+        title="Daypack"
+      />
+    ),
+  },
   Favicon: {
     classes: faviconClasses,
     render: ({ className }) => <Favicon className={className} host="example.com" />,
@@ -389,6 +408,8 @@ export const DISPLAY_FIXTURES: Record<string, StableFixture> = {
   },
   List: {
     classes: listClasses,
+    // a2ui-only parts (`variant="a2ui"`).
+    conditional: ['marker', 'value', 'children', 'button'],
     render: ({ className }) => (
       <List
         glide
