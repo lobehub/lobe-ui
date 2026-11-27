@@ -26,6 +26,46 @@ export const createTokenFadeStore = (): TokenFadeStore => ({
   styles: new Map(),
 });
 
+/**
+ * Keep the births of the chars `prevText` and `nextText` share and drop the
+ * rest, instead of starting a fresh store. A code block's text is not
+ * append-only: while its closing fence streams in, the partial fence
+ * (one or two backticks on the last line) is part of the code, and it
+ * disappears once the fence completes. Resetting
+ * the whole store there would give every char a new birth and replay the
+ * fade over the entire block.
+ */
+export const retainCommonPrefix = (store: TokenFadeStore, prevText: string, nextText: string) => {
+  const limit = Math.min(prevText.length, nextText.length, store.births.length);
+  let common = 0;
+  while (common < limit && prevText.charCodeAt(common) === nextText.charCodeAt(common)) common++;
+  if (common < store.births.length) store.births.length = common;
+  for (const offset of store.styles.keys()) {
+    if (offset >= common) store.styles.delete(offset);
+  }
+};
+
+/**
+ * When the last token of `line` (starting at `start`) finishes fading in,
+ * or `0` when none is fading at `now`.
+ */
+export const getLineFadeEnd = (
+  store: TokenFadeStore,
+  line: ThemedToken[],
+  start: number,
+  now: number,
+): number => {
+  let end = 0;
+  let offset = start;
+  for (const token of line) {
+    const birth = store.births[offset];
+    const fadeEnd = birth + STREAM_FADE_DURATION;
+    if (fadeEnd > now && fadeEnd > end) end = fadeEnd;
+    offset += token.content.length;
+  }
+  return end;
+};
+
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 
 const RETOKENIZED_LINES = 2;
@@ -85,11 +125,20 @@ export const resolveTokenFadeStyle = (
   now: number,
 ): CSSProperties | null => {
   const birth = store.births[offset];
+  const elapsed = now - birth;
+  // A finished fade renders plain, so the span drops `.stream-char` and its
+  // CSS animation instead of holding `opacity: 1` via `forwards` forever.
+  if (!(elapsed < STREAM_FADE_DURATION)) {
+    store.styles.delete(offset);
+    return null;
+  }
+
+  // The delay is frozen at the first render so re-renders of a token that is
+  // mid-fade do not touch its running animation.
   const cached = store.styles.get(offset);
   if (cached && cached.birth === birth) return cached.style;
 
-  const elapsed = now - birth;
-  const style = elapsed >= STREAM_FADE_DURATION ? null : { animationDelay: `${-elapsed}ms` };
+  const style = { animationDelay: `${-elapsed}ms` };
   store.styles.set(offset, { birth, style });
   return style;
 };

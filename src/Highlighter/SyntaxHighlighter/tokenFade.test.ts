@@ -1,7 +1,13 @@
 import type { ThemedToken } from '@pierre/highlights';
 import { describe, expect, it } from 'vitest';
 
-import { createTokenFadeStore, markTokenBirths, resolveTokenFadeStyle } from './tokenFade';
+import {
+  createTokenFadeStore,
+  getLineFadeEnd,
+  markTokenBirths,
+  resolveTokenFadeStyle,
+  retainCommonPrefix,
+} from './tokenFade';
 
 const token = (content: string): ThemedToken => ({ content, offset: 0 });
 const delayAt = (store: ReturnType<typeof createTokenFadeStore>, offset: number, now: number) => {
@@ -64,5 +70,30 @@ describe('token fade', () => {
     markTokenBirths(store, [Array.from({ length: 200 }, (_, i) => token(`t${i}`))], 0);
     const maxDelay = Math.max(...store.births.map((birth) => birth));
     expect(maxDelay).toBeLessThanOrEqual(16 + 180);
+  });
+
+  it('renders a token plain once its fade has ended, even with a cached delay', () => {
+    const store = createTokenFadeStore();
+    markTokenBirths(store, [[token('a')]], 0);
+    expect(resolveTokenFadeStyle(store, 0, 10)).not.toBeNull();
+    expect(resolveTokenFadeStyle(store, 0, 1000)).toBeNull();
+    expect(store.styles.has(0)).toBe(false);
+  });
+
+  it('reports when a line stops fading', () => {
+    const store = createTokenFadeStore();
+    const line = [token('ab'), token('cd')];
+    markTokenBirths(store, [line], 0);
+    const end = getLineFadeEnd(store, line, 0, 0);
+    expect(end).toBe(store.births[2] + 180);
+    expect(getLineFadeEnd(store, line, 0, end)).toBe(0);
+  });
+
+  it('keeps births of the shared prefix when text is not appended', () => {
+    const store = createTokenFadeStore();
+    markTokenBirths(store, [[token('ab')], [token('`')]], 0);
+    const kept = store.births[0];
+    retainCommonPrefix(store, 'ab\n`', 'ab');
+    expect(store.births).toEqual([kept, kept]);
   });
 });

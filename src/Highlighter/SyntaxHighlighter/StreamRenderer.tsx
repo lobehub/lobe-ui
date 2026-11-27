@@ -3,15 +3,17 @@
 import type { ThemedToken } from '@pierre/highlights';
 import clsx from 'clsx';
 import type { CSSProperties } from 'react';
-import { memo, useRef } from 'react';
+import { memo, useEffect, useReducer, useRef } from 'react';
 
 import { useStreamHighlight } from '@/hooks/useStreamHighlight';
 
 import { getTokenStyle } from '../tokens';
 import {
   createTokenFadeStore,
+  getLineFadeEnd,
   markTokenBirths,
   resolveTokenFadeStyle,
+  retainCommonPrefix,
   type TokenFadeStore,
 } from './tokenFade';
 
@@ -45,6 +47,11 @@ const TokenLine = memo(
     start,
   }: {
     fade: TokenFadeStore;
+    /**
+     * When this line's last fade ends, `0` once nothing in it is fading.
+     * Only used to re-render the line when its fades finish.
+     */
+    fadeEnd: number;
     line: ThemedToken[];
     now: number;
     start: number;
@@ -74,7 +81,8 @@ const TokenLine = memo(
       </span>
     );
   },
-  (prev, next) => prev.line === next.line && prev.start === next.start,
+  (prev, next) =>
+    prev.line === next.line && prev.start === next.start && prev.fadeEnd === next.fadeEnd,
 );
 
 const StreamRenderer = memo<StreamRendererProps>(
@@ -94,11 +102,33 @@ const StreamRenderer = memo<StreamRendererProps>(
     const fadeRef = useRef<TokenFadeStore>(createTokenFadeStore());
     const previousTextRef = useRef('');
     if (!safeChildren.startsWith(previousTextRef.current)) {
-      fadeRef.current = createTokenFadeStore();
+      retainCommonPrefix(fadeRef.current, previousTextRef.current, safeChildren);
     }
     previousTextRef.current = safeChildren;
     const now = performance.now();
     const lineStarts = lines ? markTokenBirths(fadeRef.current, lines, now) : [];
+
+    // Refold: a token span keeps `.stream-char` and its CSS animation only
+    // until its fade ends. Lines are memoized, so once a line stops changing
+    // nothing would re-render it and every finished token would hold a
+    // `forwards` animation for the rest of the reply. Wake up when the
+    // earliest pending line fade ends and re-render only the lines whose
+    // `fadeEnd` changed (same idea as streamdown's `StreamTail` refold).
+    const [, refold] = useReducer((count: number) => count + 1, 0);
+    const lineFadeEnds = lines
+      ? lines.map((line, index) => getLineFadeEnd(fadeRef.current, line, lineStarts[index], now))
+      : [];
+    let nextRefoldAt = Infinity;
+    for (const end of lineFadeEnds) if (end > 0 && end < nextRefoldAt) nextRefoldAt = end;
+
+    useEffect(() => {
+      if (!Number.isFinite(nextRefoldAt)) return;
+      const timer = setTimeout(
+        refold,
+        Math.max(0, Math.ceil(nextRefoldAt - performance.now()) + 1),
+      );
+      return () => clearTimeout(timer);
+    }, [nextRefoldAt]);
 
     if (!lines || lines.length === 0) {
       return (
@@ -117,6 +147,7 @@ const StreamRenderer = memo<StreamRendererProps>(
             {lines.map((line, index) => (
               <TokenLine
                 fade={fadeRef.current}
+                fadeEnd={lineFadeEnds[index]}
                 key={`line-${index}`}
                 line={line}
                 now={now}
