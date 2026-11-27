@@ -28,9 +28,11 @@ import type {
 } from './type';
 
 const THUMB_METRICS: Record<
-  SwitchSize,
+  SwitchSize | 'a2ui',
   { checkedX: number; pressedCheckedX: number; pressedWidth: number; width: number }
 > = {
+  // The A2UI playground switch (shadcn): a 16px thumb that slides 14px and does not stretch.
+  a2ui: { checkedX: 14, pressedCheckedX: 14, pressedWidth: 16, width: 16 },
   default: { checkedX: 14, pressedCheckedX: 10, pressedWidth: 22, width: 18 },
   small: { checkedX: 12, pressedCheckedX: 8, pressedWidth: 16, width: 12 },
 };
@@ -191,17 +193,24 @@ export const SwitchRoot = ({
 
 SwitchRoot.displayName = 'SwitchRoot';
 
+type SwitchThumbInternalProps = SwitchThumbProps & {
+  /** Internal: the `a2ui` thumb metrics and look. */
+  variant?: 'default' | 'a2ui';
+};
+
 export const SwitchThumb = ({
   className,
   size = 'default',
   style,
   children,
+  variant,
   ...rest
-}: SwitchThumbProps) => {
+}: SwitchThumbInternalProps) => {
   const { isChecked, isPressed } = useSwitchContext();
   const ref = useRef<HTMLSpanElement>(null);
 
-  const metrics = THUMB_METRICS[size];
+  const isA2ui = variant === 'a2ui';
+  const metrics = THUMB_METRICS[isA2ui ? 'a2ui' : size];
   // Track travel: the fixed metric, or the measured width when the root grows (inner text).
   const [travel, setTravel] = useState(metrics.checkedX);
   useLayoutEffect(() => {
@@ -268,7 +277,7 @@ export const SwitchThumb = ({
           {...rest}
           ref={ref}
           {...styleProps(
-            [styles.thumb, thumbSizeStyles[size]],
+            [styles.thumb, thumbSizeStyles[size], isA2ui && styles.a2uiThumb],
             clsx(switchClasses('thumb'), className),
             {
               ...initialStyle,

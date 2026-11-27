@@ -377,6 +377,8 @@ export const FIXTURES: Record<string, StableFixture> = {
   },
   Switch: {
     classes: switchClasses,
+    // The well row around a labelled switch is `variant="a2ui"` only.
+    conditional: ['field', 'label', 'description'],
     render: ({ className }) => (
       <Switch checkedChildren="On" className={className} unCheckedChildren="Off" />
     ),

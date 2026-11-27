@@ -4,6 +4,7 @@ description: Base UI-powered Switch component.
 category: Data Entry
 ---
 
+import DemoA2ui from './demos/a2ui.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 import DemoAsyncLoading from './demos/asyncLoading.tsx?demo';
 import DemoAtoms from './demos/atoms.tsx?demo';
@@ -26,6 +27,12 @@ import { switchClasses } from './stable';
 ## Atom Components
 
 <Demo of={DemoAtoms} />
+
+## A2UI
+
+`variant="a2ui"` takes the look of the [A2UI playground](https://a2ui.open.bot/components/Switch) switch: a 32 × 18px track with a 16px thumb. With a `label` (and an optional `description`) it sits on the right of a well row that holds them, and the label is the switch's `<label>`. Colours stay the lobe-ui theme's.
+
+<Demo of={DemoA2ui} />
 
 ## Styles
 
