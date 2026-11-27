@@ -1,13 +1,15 @@
 'use client';
 
 import { Popover as BasePopover } from '@base-ui/react/popover';
-import { memo, useCallback, useMemo, useState } from 'react';
+import { type CSSProperties, memo, useCallback, useMemo, useState } from 'react';
 
 import { useIsClient } from '@/hooks/useIsClient';
 import { useNativeButton } from '@/hooks/useNativeButton';
+import { mergeRefs } from '@/utils/mergeRefs';
 import { parseTrigger } from '@/utils/parseTrigger';
 import { placementMap } from '@/utils/placement';
 
+import { styles as a2uiStyles } from './a2uiStyle';
 import { PopoverArrowIcon } from './ArrowIcon';
 import {
   PopoverArrow,
@@ -54,8 +56,11 @@ export const PopoverStandalone = memo<PopoverProps>(
     popupProps,
     backdropProps,
     portalProps,
+    variant = 'default',
   }) => {
     const isClient = useIsClient();
+    const isA2ui = variant === 'a2ui';
+    const [triggerNode, setTriggerNode] = useState<HTMLElement | null>(null);
     const popoverHandle = useMemo(() => BasePopover.createHandle(), []);
     const [uncontrolledOpen, setUncontrolledOpen] = useState(Boolean(defaultOpen));
     const close = useCallback(() => {
@@ -65,6 +70,22 @@ export const PopoverStandalone = memo<PopoverProps>(
 
     const mergedOpen = open ?? uncontrolledOpen;
     const resolvedOpen = disabled ? false : mergedOpen;
+
+    // The a2ui panel takes the trigger's font size, which the portal does not inherit, and wraps
+    // like the official panel (absolutely placed inside the trigger): at half the trigger's width
+    // when centred, at its width when aligned to an edge, never under 160px. Both are re-read on
+    // each toggle, so the panel's first measured size is already the wrapped one.
+    const a2uiVars = useMemo(() => {
+      if (!isA2ui || !triggerNode || typeof window === 'undefined') return;
+      const config = placementMap[placement] ?? placementMap.top;
+      const centred =
+        config.align === 'center' && (config.side === 'top' || config.side === 'bottom');
+      const width = triggerNode.getBoundingClientRect().width;
+      return {
+        '--lobe-a2ui-popover-font-size': window.getComputedStyle(triggerNode).fontSize,
+        '--lobe-a2ui-popover-max-width': `${Math.max(160, centred ? width / 2 : width)}px`,
+      } as CSSProperties;
+    }, [isA2ui, placement, resolvedOpen, triggerNode]); // resolvedOpen: re-read on each toggle
 
     // Parse trigger mode
     const { openOnClick, openOnHover } = useMemo(() => parseTrigger(trigger), [trigger]);
@@ -129,7 +150,7 @@ export const PopoverStandalone = memo<PopoverProps>(
           {...baseTriggerProps}
           className={resolvedClassNames.trigger}
           nativeButton={resolvedNativeButton}
-          ref={refProp as any}
+          ref={(isA2ui ? mergeRefs([refProp, setTriggerNode]) : refProp) as any}
         >
           {children}
         </PopoverTriggerElement>
@@ -137,6 +158,7 @@ export const PopoverStandalone = memo<PopoverProps>(
     }, [
       children,
       disabled,
+      isA2ui,
       openOnHover,
       popoverHandle,
       refProp,
@@ -162,9 +184,10 @@ export const PopoverStandalone = memo<PopoverProps>(
           ...styleProps?.root,
           ...(zIndex !== undefined ? { zIndex } : {}),
         },
+        popup: a2uiVars,
         viewport: styleProps?.content,
       }),
-      [styleProps?.arrow, styleProps?.content, styleProps?.root, zIndex],
+      [a2uiVars, styleProps?.arrow, styleProps?.content, styleProps?.root, zIndex],
     );
 
     const popup = useMemo(
@@ -179,7 +202,13 @@ export const PopoverStandalone = memo<PopoverProps>(
           style={resolvedStyles.positioner}
           {...positionerProps}
         >
-          <PopoverPopup className={resolvedClassNames.popup} {...popupProps}>
+          <PopoverPopup
+            className={resolvedClassNames.popup}
+            data-variant={isA2ui ? variant : undefined}
+            style={resolvedStyles.popup}
+            xstyle={isA2ui ? a2uiStyles.popup : undefined}
+            {...popupProps}
+          >
             {arrow && (
               <PopoverArrow className={resolvedClassNames.arrow} style={resolvedStyles.arrow}>
                 {PopoverArrowIcon}
@@ -188,6 +217,7 @@ export const PopoverStandalone = memo<PopoverProps>(
             <PopoverViewport
               className={resolvedClassNames.viewport}
               style={resolvedStyles.viewport}
+              xstyle={isA2ui ? a2uiStyles.viewport : undefined}
             >
               <PopoverProvider value={contextValue}>{content}</PopoverProvider>
             </PopoverViewport>
@@ -198,6 +228,7 @@ export const PopoverStandalone = memo<PopoverProps>(
         arrow,
         content,
         contextValue,
+        isA2ui,
         openOnHover,
         placement,
         placementConfig.align,
@@ -207,6 +238,7 @@ export const PopoverStandalone = memo<PopoverProps>(
         resolvedClassNames,
         resolvedSideOffset,
         resolvedStyles,
+        variant,
       ],
     );
 
