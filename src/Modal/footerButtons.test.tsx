@@ -15,6 +15,52 @@ const renderUi = (node: ReactElement) => render(node, { wrapper: Wrapper });
 
 afterEach(cleanup);
 
+describe('modal footer: variant', () => {
+  it('Modal footer is filled by default and borderless on request', () => {
+    const { rerender } = renderUi(
+      <Modal open title="Title" onCancel={() => {}} onOk={() => {}}>
+        Body
+      </Modal>,
+    );
+    expect(
+      screen
+        .getByRole('button', { name: 'OK' })
+        .closest('[data-variant]')
+        ?.getAttribute('data-variant'),
+    ).toBe('filled');
+
+    rerender(
+      <Modal open footerVariant="borderless" title="Title" onCancel={() => {}} onOk={() => {}}>
+        Body
+      </Modal>,
+    );
+    expect(
+      screen
+        .getByRole('button', { name: 'OK' })
+        .closest('[data-variant]')
+        ?.getAttribute('data-variant'),
+    ).toBe('borderless');
+  });
+
+  it('confirmModal accepts footerVariant', async () => {
+    renderUi(<ModalHost />);
+    await act(async () => {
+      confirmModal({
+        content: 'Sure?',
+        footerVariant: 'borderless',
+        okText: 'OK',
+        title: 'Confirm',
+      });
+    });
+
+    expect(
+      (await screen.findByRole('button', { name: 'OK' }))
+        .closest('[data-variant]')
+        ?.getAttribute('data-variant'),
+    ).toBe('borderless');
+  });
+});
+
 describe('modal footer: the secondary button is an outlined button on the footer band', () => {
   it('Modal built-in footer', () => {
     renderUi(

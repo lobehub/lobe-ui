@@ -81,12 +81,15 @@ export const styles = stylex.create({
     paddingBlock: 12,
     paddingInline: 16,
     alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'flex-end',
+  },
+
+  footerFilled: {
     backgroundColor: cssVar.colorFillQuaternary,
     borderBlockStartColor: `var(--lobe-fill-border, ${cssVar.colorFill})`,
     borderBlockStartStyle: 'solid',
     borderBlockStartWidth: 1,
-    display: 'flex',
-    justifyContent: 'flex-end',
   },
 
   fullscreenPopupInner: {

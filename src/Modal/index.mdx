@@ -92,19 +92,20 @@ instance.setCanDismissByClickOutside(false);
 
 #### ImperativeModalProps
 
-| Property             | Description                    | Type                      | Default |
-| -------------------- | ------------------------------ | ------------------------- | ------- |
-| title                | Modal title                    | `ReactNode`               | -       |
-| content              | Modal body content             | `ReactNode`               | -       |
-| children             | Alias for `content`            | `ReactNode`               | -       |
-| footer               | Custom footer                  | `ReactNode`               | -       |
-| open                 | Controlled open state          | `boolean`                 | `true`  |
-| width                | Modal width                    | `string \| number`        | -       |
-| maskClosable         | Close on backdrop click        | `boolean`                 | `true`  |
-| classNames           | Semantic classNames            | `BaseModalClassNames`     | -       |
-| styles               | Semantic styles                | `BaseModalStyles`         | -       |
-| onOpenChange         | Called when open state changes | `(open: boolean) => void` | -       |
-| onOpenChangeComplete | Called after exit animation    | `(open: boolean) => void` | -       |
+| Property | Description | Type | Default |
+| --- | --- | --- | --- |
+| title | Modal title | `ReactNode` | - |
+| content | Modal body content | `ReactNode` | - |
+| children | Alias for `content` | `ReactNode` | - |
+| footer | Custom footer | `ReactNode` | - |
+| footerVariant | `filled` puts the footer on a tinted band; `borderless` keeps it plain | `'filled' \| 'borderless'` | `'filled'` |
+| open | Controlled open state | `boolean` | `true` |
+| width | Modal width | `string \| number` | - |
+| maskClosable | Close on backdrop click | `boolean` | `true` |
+| classNames | Semantic classNames | `BaseModalClassNames` | - |
+| styles | Semantic styles | `BaseModalStyles` | - |
+| onOpenChange | Called when open state changes | `(open: boolean) => void` | - |
+| onOpenChangeComplete | Called after exit animation | `(open: boolean) => void` | - |
 
 #### ModalInstance
 
@@ -143,6 +144,7 @@ const { close, destroy } = confirmModal({
 | content | Dialog body content | `ReactNode` | - |
 | okText | OK button label | `ReactNode` | `'OK'` |
 | cancelText | Cancel button label | `ReactNode` | `'Cancel'` |
+| footerVariant | `filled` puts the footer on a tinted band; `borderless` keeps it plain | `'filled' \| 'borderless'` | `'filled'` |
 | okButtonProps | OK button extra props, supports `danger` | `ButtonHTMLAttributes & { danger?: boolean }` | - |
 | onOk | OK callback. Async functions keep the button in a loading state until resolved | `() => void \| Promise<void>` | - |
 | onCancel | Cancel callback | `() => void` | - |
@@ -184,7 +186,7 @@ The following primitive components are exported for composing custom modal layou
 | `ModalTitle` | Accessible dialog title (`Dialog.Title`) |
 | `ModalDescription` | Accessible dialog description (`Dialog.Description`) |
 | `ModalContent` | Scrollable body content area |
-| `ModalFooter` | Footer action bar |
+| `ModalFooter` | Footer action bar. `variant`: `'filled'` (default, tinted band) or `'borderless'` |
 | `ModalClose` | Close button with a default × icon |
 | `ModalTrigger` | Trigger element that opens the modal declaratively |
 

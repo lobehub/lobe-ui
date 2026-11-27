@@ -83,6 +83,7 @@ const Modal = memo<ModalComponentProps>(
     cancelButtonProps,
     confirmLoading,
     footer,
+    footerVariant = 'filled',
     width,
     height,
     initialFocus,
@@ -327,7 +328,7 @@ const Modal = memo<ModalComponentProps>(
               }}
               xstyle={[
                 !showHeader && styles.contentNoHeader,
-                footerNode !== null && styles.contentWithFooter,
+                footerNode !== null && footerVariant === 'filled' && styles.contentWithFooter,
               ]}
             >
               {loading ? (
@@ -339,7 +340,11 @@ const Modal = memo<ModalComponentProps>(
               )}
             </ModalContentImpl>
             {footerNode !== null && (
-              <ModalFooter className={classNames?.footer} style={semanticStyles?.footer}>
+              <ModalFooter
+                className={classNames?.footer}
+                style={semanticStyles?.footer}
+                variant={footerVariant}
+              >
                 {footerNode}
               </ModalFooter>
             )}

@@ -3,6 +3,8 @@ import type { CSSProperties, MouseEvent, ReactNode } from 'react';
 import type { ButtonProps as BaseButtonProps } from '../Button';
 import type { DialogInitialFocus } from '../internal/dialogFocus';
 
+export type ModalFooterVariant = 'filled' | 'borderless';
+
 export interface BaseModalProps {
   children?: ReactNode;
   className?: string;
@@ -52,6 +54,12 @@ export interface ModalInstance extends ModalContextValue {
 export type ImperativeModalProps = BaseModalProps & {
   content?: ReactNode;
   footer?: ReactNode;
+  /**
+   * Footer look. `filled` sets the footer on a tinted band with a top rule, and the body keeps 24px
+   * of space above it. `borderless` drops the band and keeps the plain padding.
+   * @default 'filled'
+   */
+  footerVariant?: ModalFooterVariant;
 };
 
 type ModalButtonProps = BaseButtonProps;
@@ -83,6 +91,12 @@ export interface ModalComponentProps {
     | false
     | null
     | ((originNode: ReactNode, extra: { CancelBtn: React.FC; OkBtn: React.FC }) => ReactNode);
+  /**
+   * Footer look. `filled` sets the footer on a tinted band with a top rule, and the body keeps 24px
+   * of space above it. `borderless` drops the band and keeps the plain padding.
+   * @default 'filled'
+   */
+  footerVariant?: ModalFooterVariant;
   getContainer?: HTMLElement | false | null;
   height?: number | string;
   /**
@@ -118,6 +132,12 @@ export interface ModalComponentProps {
 export interface ModalConfirmConfig {
   cancelText?: ReactNode;
   content?: ReactNode;
+  /**
+   * Footer look. `filled` sets the footer on a tinted band with a top rule, and the body keeps 24px
+   * of space above it. `borderless` drops the band and keeps the plain padding.
+   * @default 'filled'
+   */
+  footerVariant?: ModalFooterVariant;
   okButtonProps?: ModalButtonProps;
   okText?: ReactNode;
   onCancel?: () => void;
