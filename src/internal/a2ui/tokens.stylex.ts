@@ -93,7 +93,7 @@ export const a2ui = stylex.defineConsts({
   /** Control shadow (standard `shadow-xs`): slider thumb, selected segment */
   shadowXs: 'var(--lobe-a2ui-shadow-xs)',
   /** Loading placeholder fill (playground `.a2-shimmer`) */
-  shimmer: 'var(--lobe-color-fill-secondary)',
+  shimmer: 'var(--lobe-color-fill)',
   surface: 'var(--lobe-color-bg-container)',
   surface2: 'var(--lobe-color-bg-elevated)',
   warning: 'var(--lobe-color-warning)',

@@ -514,6 +514,8 @@ export const DISPLAY_FIXTURES: Record<string, StableFixture> = {
   },
   Skeleton: {
     classes: skeletonClasses,
+    // `variant="a2ui"` parts.
+    conditional: ['line', 'avatar', 'body', 'bar'],
     render: ({ className }) => <Skeleton className={className} />,
   },
   SkeletonAvatar: {

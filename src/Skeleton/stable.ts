@@ -2,8 +2,8 @@ import { stableClasses } from '@/utils/bem';
 
 export const skeletonClasses = stableClasses({
   block: 'skeleton',
-  dataAttributes: ['animated'],
-  elements: [],
+  dataAttributes: ['animated', 'type', 'variant'],
+  elements: ['line', 'avatar', 'body', 'bar'],
 });
 
 export const skeletonAvatarClasses = stableClasses({
