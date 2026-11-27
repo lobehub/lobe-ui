@@ -17,9 +17,14 @@ const Popover: FC<PopoverProps> = (props) => {
     Boolean(group) &&
     props.open === undefined &&
     props.defaultOpen === undefined &&
-    !props.standalone;
+    !props.standalone &&
+    props.variant !== 'a2ui';
 
-  return canUseGroup ? <PopoverInGroup {...props} /> : <PopoverStandalone {...props} />;
+  if (canUseGroup) return <PopoverInGroup {...props} />;
+  // The A2UI standard popover opens below its trigger, on click.
+  if (props.variant === 'a2ui')
+    return <PopoverStandalone placement="bottom" trigger="click" {...props} />;
+  return <PopoverStandalone {...props} />;
 };
 
 Popover.displayName = 'Popover';

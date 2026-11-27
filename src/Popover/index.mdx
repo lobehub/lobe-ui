@@ -18,6 +18,7 @@ import DemoTooltipHoverStay from './demos/tooltip-hover-stay.tsx?demo';
 import DemoPopoverWrappingTooltip from './demos/popover-wrapping-tooltip.tsx?demo';
 import DemoPopoverWrappingTooltipGroup from './demos/popover-wrapping-tooltip-group.tsx?demo';
 import DemoNativeButton from './demos/native-button.tsx?demo';
+import DemoA2ui from './demos/a2ui.tsx?demo';
 import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
 import { popoverClasses } from './stable';
 
@@ -98,6 +99,12 @@ Same as above, but with `TooltipGroup` (singleton mode). Hovering between button
 ## Native Button Auto Detection
 
 <Demo of={DemoNativeButton} layout="bare" />
+
+## A2UI
+
+`variant="a2ui"` takes the look of the [A2UI standard popover](https://a2ui.open.bot/components/Popover): an elevated panel with a hairline, the 14px a2ui radius, a soft floating shadow, 12px padding and an 8px gap between children, at least 160px wide. Like the official panel it wraps at half the trigger's width when centred (at the trigger's width when aligned to an edge), and its text takes the trigger's font size. Unless set, it opens below the trigger (`placement="bottom"`) on click (`trigger="click"`), like the official popover. It renders standalone inside a `PopoverGroup`; colours are the lobe-ui theme's.
+
+<Demo of={DemoA2ui} layout="center" />
 
 ## APIs
 

@@ -193,6 +193,16 @@ export interface PopoverProps {
   triggerProps?: PopoverTriggerComponentProps;
 
   /**
+   * `default`: the lobe-ui popover.
+   * `a2ui`: the A2UI standard popover, an elevated panel with a hairline, 14px radius, soft
+   * shadow, 12px padding and an 8px gap between children, at least 160px wide and wrapping like the
+   * official panel. Its text takes the trigger's font size. Unless set, `placement` is `bottom` and
+   * `trigger` is `click`, like the official popover. It renders standalone inside a `PopoverGroup`.
+   * @default 'default'
+   */
+  variant?: 'default' | 'a2ui';
+
+  /**
    * z-index
    */
   zIndex?: number;
