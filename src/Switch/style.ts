@@ -1,5 +1,6 @@
 import * as stylex from '@stylexjs/stylex';
 
+import { a2ui } from '@/internal/a2ui/tokens.stylex';
 import { cssVar } from '@/styles/stylex/cssVar.stylex';
 
 import { switchMarker } from './marker.stylex';
@@ -13,6 +14,67 @@ const reducedMotion = '@media (prefers-reduced-motion: reduce)';
 const enabledHover = ':hover:not([data-disabled])';
 
 export const styles = stylex.create({
+  // a2ui: adapted from CopilotKit a2ui-playground (MIT), `renderers/inputs.tsx` Switch (a well
+  // row: label and description, then a shadcn `Switch`).
+  a2uiDescription: {
+    margin: 0,
+    color: a2ui.fgMuted,
+    fontSize: 11.5,
+    lineHeight: 1.625,
+  },
+  a2uiLabel: {
+    gap: 8,
+    alignItems: 'center',
+    color: a2ui.fg90,
+    cursor: 'default',
+    display: 'flex',
+    fontSize: 13,
+    fontWeight: 500,
+    userSelect: 'none',
+  },
+  a2uiRoot: {
+    padding: 0,
+    borderColor: 'transparent',
+    borderStyle: 'solid',
+    borderWidth: 1,
+    transition: 'all 150ms',
+    backgroundColor: {
+      'default': a2ui.input,
+      [enabledHover]: a2ui.input,
+      ':is([data-checked])': cssVar.colorPrimary,
+      ':is([data-checked]):hover:not([data-disabled])': cssVar.colorPrimary,
+    },
+    boxShadow: 'none',
+    opacity: { 'default': null, ':is([data-disabled])': 0.5 },
+    height: 18.4,
+    minWidth: 32,
+    width: 32,
+  },
+  a2uiText: {
+    gap: 2,
+    display: 'flex',
+    flexDirection: 'column',
+    minWidth: 0,
+  },
+  a2uiThumb: {
+    transition: 'none',
+    backgroundColor: {
+      'default': cssVar.colorTextLightSolid,
+      ':is([data-checked])': a2ui.primaryFg,
+    },
+    boxShadow: 'none',
+    height: 16,
+  },
+  a2uiWell: {
+    gap: 16,
+    paddingBlock: 12,
+    paddingInline: 14,
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'space-between',
+    minWidth: 0,
+    width: '100%',
+  },
   icon: {
     insetBlock: 0,
     transition: `opacity 200ms ${cssVar.motionEaseOut}, scale 200ms ${cssVar.motionEaseOut}`,
@@ -159,4 +221,7 @@ export const switchStyles = {
   thumbSmall: stylex.props(styles.thumbSmall).className ?? '',
   iconLeftSmall: stylex.props(styles.iconLeft).className ?? '',
   iconRightSmall: stylex.props(styles.iconRight).className ?? '',
-} satisfies Record<keyof typeof styles | 'iconLeftSmall' | 'iconRightSmall', string>;
+} satisfies Record<
+  Exclude<keyof typeof styles, `a2ui${string}`> | 'iconLeftSmall' | 'iconRightSmall',
+  string
+>;
