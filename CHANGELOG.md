@@ -2,6 +2,31 @@
 
 # Changelog
 
+### [Version&nbsp;6.26.1](https://github.com/lobehub/lobe-ui/compare/v6.26.0...v6.26.1)
+
+<sup>Released on **2026-11-28**</sup>
+
+#### 🐛 Bug Fixes
+
+- **a2ui**: Dark cards a step above their floor.
+
+<br/>
+
+<details>
+<summary><kbd>Improvements and Fixes</kbd></summary>
+
+#### What's fixed
+
+- **a2ui**: Dark cards a step above their floor, closes [#825](https://github.com/lobehub/lobe-ui/issues/825) [#0d0d0d](https://github.com/lobehub/lobe-ui/issues/0d0d0d) ([248d8b7](https://github.com/lobehub/lobe-ui/commit/248d8b7))
+
+</details>
+
+<div align="right">
+
+[![](https://img.shields.io/badge/-BACK_TO_TOP-151515?style=flat-square)](#readme-top)
+
+</div>
+
 ## [Version&nbsp;6.26.0](https://github.com/lobehub/lobe-ui/compare/v6.25.0...v6.26.0)
 
 <sup>Released on **2026-11-28**</sup>
