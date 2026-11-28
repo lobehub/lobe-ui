@@ -2,7 +2,7 @@ import * as stylex from '@stylexjs/stylex';
 
 /**
  * Roles the `a2ui` variants read. Every colour is a lobe-ui theme token (`--lobe-*`, light and
- * dark from `theme.css`), so the a2ui look shares one colour scheme with the default variants;
+ * dark from `theme.css`, the surfaces as `--lobe-a2ui-*` steps of them), so the a2ui look shares one colour scheme with the default variants;
  * only the card geometry and shadow come from `src/styles/theme/a2ui.ts` (`--lobe-a2ui-*`).
  * Role names follow CopilotKit a2ui-playground (MIT), whose layout the variants reproduce.
  */
@@ -55,7 +55,7 @@ export const a2ui = stylex.defineConsts({
   fontFamilyCode: 'var(--lobe-font-family-code)',
   info: 'var(--lobe-color-info)',
   input: 'var(--lobe-color-border)',
-  inputBg: 'var(--lobe-color-bg-container)',
+  inputBg: 'var(--lobe-a2ui-input-bg, var(--lobe-color-bg-container))',
   /** Wells */
   ink3: 'var(--lobe-color-fill-tertiary)',
   /** Inverted surface (standard `surface-inverted`): tooltips */
@@ -94,7 +94,9 @@ export const a2ui = stylex.defineConsts({
   shadowXs: 'var(--lobe-a2ui-shadow-xs)',
   /** Loading placeholder fill (playground `.a2-shimmer`) */
   shimmer: 'var(--lobe-color-fill)',
-  surface: 'var(--lobe-color-bg-container)',
-  surface2: 'var(--lobe-color-bg-elevated)',
+  /** A card: one step above the floor (`--lobe-a2ui-surface`, see `styles/theme/a2ui.ts`) */
+  surface: 'var(--lobe-a2ui-surface, var(--lobe-color-bg-container))',
+  /** A control or popover on a card: a step above the card */
+  surface2: 'var(--lobe-a2ui-surface-2, var(--lobe-color-bg-elevated))',
   warning: 'var(--lobe-color-warning)',
 });
