@@ -1,0 +1,42 @@
+---
+title: EventCard
+description: An event card with a cover image, a calendar date block, the title, time, venue and host, a description, tags, the attendee count and an RSVP action, as a plain lobe-ui card or in the A2UI playground layout.
+category: Data Display
+---
+
+import A2ui from './demos/a2ui.tsx?demo';
+import Basic from './demos/index.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { eventCardClasses } from './stable';
+
+## Usage
+
+Lead an event or a conference with it. `date` (a `YYYY-MM-DD` string is read as a local date) becomes a calendar block with the month, day and weekday; with a cover `image` the block rises over the image's lower edge. Time, venue and host sit beside it with clock, pin and people icons. `attendees` adds the count to the footer, and `onAction` adds the RSVP button (`actionLabel` renames it). The default variant is a plain lobe-ui card with body-size type, `Tag` chips and a primary `Button`.
+
+<Demo of={Basic} layout="bare" />
+
+## A2UI
+
+`variant="a2ui"` takes the layout of the [A2UI playground](https://a2ui.open.bot/components/EventCard) event card: a 14px card, a raised date block with a solid month band, hairline chips and a small primary button. Colours stay the lobe-ui theme's in both variants: the month band and the button use the primary colour, and the attendee dots the preset palettes.
+
+<Demo of={A2ui} layout="bare" />
+
+## APIs
+
+<Api name="EventCard" />
+
+A `date` that does not parse ("Next Friday") is shown on the time line and the block reads "Date". Month and weekday names follow `locale` (default `en-US`). The `eventCard.*` texts come from `@lobehub/ui/i18n`; `texts` overrides them (`going` keeps a `{count}` placeholder and `hostedBy` a `{host}` one).
+
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `EventCard`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/EventCard.css';
+```
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={eventCardClasses} />

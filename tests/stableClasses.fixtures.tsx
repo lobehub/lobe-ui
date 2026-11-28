@@ -81,6 +81,7 @@ import type { AnyStableClasses } from '@/utils/bem';
 
 import { CONTENT_FIXTURES } from './stableClasses.fixtures.content';
 import { DISPLAY_FIXTURES } from './stableClasses.fixtures.display';
+import { MEDIA_FIXTURES } from './stableClasses.fixtures.media';
 import { OVERLAY_FIXTURES } from './stableClasses.fixtures.overlay';
 import { SUBPATH_FIXTURES } from './stableClasses.fixtures.subpath';
 
@@ -96,6 +97,7 @@ export interface StableFixture {
 export const FIXTURES: Record<string, StableFixture> = {
   ...CONTENT_FIXTURES,
   ...DISPLAY_FIXTURES,
+  ...MEDIA_FIXTURES,
   ...OVERLAY_FIXTURES,
   ...SUBPATH_FIXTURES,
   Checkbox: {

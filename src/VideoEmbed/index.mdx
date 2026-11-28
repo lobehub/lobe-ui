@@ -1,0 +1,47 @@
+---
+title: VideoEmbed
+description: A YouTube or Vimeo video embedded by URL through privacy-friendly domains, or a video file in the lobe-ui player, with a caption.
+category: Data Display
+---
+
+import A2ui from './demos/a2ui.tsx?demo';
+import Basic from './demos/index.tsx?demo';
+import File from './demos/file.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { videoEmbedClasses } from './stable';
+
+## Usage
+
+Pass the page URL as it is: YouTube `watch`, `youtu.be`, `embed` and `shorts` links play through `youtube-nocookie.com`, and Vimeo links through `player.vimeo.com` with Do Not Track on. A link to a video file (`.mp4`, `.webm`, `.mov`, `.ogg`) plays in the lobe-ui `Video` player; any other URL shows a short notice. The frame keeps a 16:9 ratio, and `title` becomes the caption and the player's accessible name. The default variant uses the theme radius and a body-size caption.
+
+<Demo of={Basic} layout="bare" />
+
+## A2UI
+
+`variant="a2ui"` takes the layout of the [A2UI playground](https://a2ui.open.bot/components/VideoEmbed) embed: a 12px hairline frame and a 12px muted caption. Colours stay the lobe-ui theme's; the letterbox is black, as in the lobe-ui `Video`.
+
+<Demo of={A2ui} layout="bare" />
+
+### Video file
+
+<Demo of={File} layout="bare" />
+
+## APIs
+
+<Api name="VideoEmbed" />
+
+`videoEmbedSourceOf(url)` returns where a URL plays (`youtube`, `vimeo`, `file` or `unsupported`) and the embed URL. The `video.embedTitle` and `video.embedUnsupported` texts come from `@lobehub/ui/i18n`; `texts` overrides them.
+
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `VideoEmbed`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/VideoEmbed.css';
+```
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={videoEmbedClasses} />

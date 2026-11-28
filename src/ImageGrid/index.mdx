@@ -1,0 +1,47 @@
+---
+title: ImageGrid
+description: A grid of images with captions under them; a click opens the lobe-ui image viewer or the image's link, and the bento layout makes the first image twice as large.
+category: Data Display
+---
+
+import A2ui from './demos/a2ui.tsx?demo';
+import Basic from './demos/index.tsx?demo';
+import Bento from './demos/bento.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { imageGridClasses } from './stable';
+
+## Usage
+
+`columns` (default 3), `gap` (4px steps, default 2) and `aspectRatio` (default `1 / 1`) shape the grid. A click opens the lobe-ui image viewer with the other images a swipe away; an image with `href` opens that link in a new tab instead (only `http(s):` and `mailto:`). `layout="bento"` gives the first image a 2×2 area. The default variant uses filled lobe-ui image tiles with a hairline border.
+
+<Demo of={Basic} layout="bare" />
+
+## A2UI
+
+`variant="a2ui"` takes the look of the CopilotKit Gen UI standard `ImageGrid` used by the [A2UI playground](https://a2ui.open.bot/components/ImageGrid): flat images with an 8px radius and 12px muted captions. Colours stay the lobe-ui theme's.
+
+<Demo of={A2ui} layout="bare" />
+
+### Bento
+
+<Demo of={Bento} layout="bare" />
+
+## APIs
+
+<Api name="ImageGrid" />
+
+Each image is `{ url, description?, caption?, href? }`; `description` is the alt text.
+
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `ImageGrid`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/ImageGrid.css';
+```
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={imageGridClasses} />

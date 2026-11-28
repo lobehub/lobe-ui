@@ -1,0 +1,42 @@
+---
+title: ProfileCard
+description: A person card with an avatar, name, role and company, location, bio, tags, stats and contact links, as a plain lobe-ui card or in the A2UI playground layout.
+category: Data Display
+---
+
+import A2ui from './demos/a2ui.tsx?demo';
+import Basic from './demos/index.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { profileCardClasses } from './stable';
+
+## Usage
+
+Use it for team members, speakers or candidates. The avatar overlaps a banner; the initials of `name` show while the image loads or when it fails. Up to four `stats` sit in one row, and `email`, `phone` and `website` become `mailto:`, `tel:` and new-tab links. The default variant is a plain lobe-ui card with body-size type and `Tag` chips.
+
+<Demo of={Basic} layout="bare" />
+
+## A2UI
+
+`variant="a2ui"` takes the layout of the [A2UI playground](https://a2ui.open.bot/components/ProfileCard) profile card: a 14px card under a gradient banner, compact type, hairline chips and a ruled stats strip. Colours stay the lobe-ui theme's in both variants: the banner and the initials take the `purple` and `blue` preset palettes.
+
+<Demo of={A2ui} layout="bare" />
+
+## APIs
+
+<Api name="ProfileCard" />
+
+The `profileCard.at` text ("at", between the role and the company) comes from `@lobehub/ui/i18n`; `texts` overrides it.
+
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `ProfileCard`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/ProfileCard.css';
+```
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={profileCardClasses} />

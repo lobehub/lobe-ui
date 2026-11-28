@@ -1,0 +1,42 @@
+---
+title: RecipeCard
+description: A recipe card with a cover image, the title, time, servings and difficulty, an ingredient checklist with progress, and numbered steps, as a plain lobe-ui card or in the A2UI playground layout.
+category: Data Display
+---
+
+import A2ui from './demos/a2ui.tsx?demo';
+import Basic from './demos/index.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { recipeCardClasses } from './stable';
+
+## Usage
+
+Use it for any recipe or cooking how-to. The title sits on the faded lower edge of the cover `image`, followed by time, servings and difficulty chips and tinted `tags`. Each ingredient can be ticked off: the count and the thin bar above the list follow along, and ticked lines are struck through. Once the card is 520px wide, ingredients and steps sit side by side. The checklist is uncontrolled (`defaultChecked`) or controlled (`checked` with `onCheckedChange`). The default variant is a plain lobe-ui card with body-size type, `Tag` chips and plain step numbers.
+
+<Demo of={Basic} layout="bare" />
+
+## A2UI
+
+`variant="a2ui"` takes the layout of the [A2UI playground](https://a2ui.open.bot/components/RecipeCard) recipe card: a 14px card, hairline chips, a purple-tinted tag and step numbers, and compact 13px type. Colours stay the lobe-ui theme's in both variants: the tints come from the `purple` preset palette.
+
+<Demo of={A2ui} layout="bare" />
+
+## APIs
+
+<Api name="RecipeCard" />
+
+`checked`, `defaultChecked` and `onCheckedChange` use ingredient indexes. The `recipeCard.*` texts come from `@lobehub/ui/i18n`; `texts` overrides them (`servings` keeps a `{count}` placeholder).
+
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `RecipeCard`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/RecipeCard.css';
+```
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={recipeCardClasses} />
