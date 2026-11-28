@@ -4,6 +4,8 @@ description: Base UI-powered Radio and RadioGroup with lobe visual style.
 category: Data Entry
 ---
 
+import DemoA2ui from './demos/a2ui.tsx?demo';
+import DemoA2uiVariants from './demos/a2uiVariants.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
 import { radioClasses, radioGroupClasses } from './stable';
@@ -11,6 +13,16 @@ import { radioClasses, radioGroupClasses } from './stable';
 ## Default
 
 <Demo of={DemoIndex} layout="bare" />
+
+## A2UI
+
+`variant="a2ui"` takes the look of the A2UI playground's standard [RadioGroup](https://a2ui.open.bot/components/RadioGroup) (CopilotKit Gen UI 2.0): a muted `label` above the options, 20px radios that turn into a primary ring when chosen, and type that follows the surrounding font size. Options can carry a `description`. `Radio` takes the same `variant` on its own.
+
+<Demo of={DemoA2ui} layout="bare" />
+
+`optionVariant` draws each option as a plain `list` row (the default), a bordered `pills` pill or a bordered `cards` card; the chosen pill or card takes a primary border. Options flow in a row unless `horizontal={false}`.
+
+<Demo of={DemoA2uiVariants} layout="bare" />
 
 ## APIs
 

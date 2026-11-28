@@ -38,5 +38,5 @@ export interface AutoCompleteProps extends BaseAutocompleteProps {
     popup?: CSSProperties;
   };
   suffix?: InputProps['suffix'];
-  variant?: InputProps['variant'];
+  variant?: Exclude<InputProps['variant'], 'a2ui'>;
 }

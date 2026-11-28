@@ -15,12 +15,14 @@ import {
 
 import formMessages from '@/i18n/resources/en/form';
 import { useTranslation } from '@/i18n/useTranslation';
+import { a2uiFieldStyles } from '@/internal/a2ui/standardField';
 import { styleProps } from '@/styles/stylex/props';
 import { useResponsive } from '@/styles/theme/scope';
 
 import FormDivider from '../Form/components/FormDivider';
 import FormTitle from '../Form/components/FormTitle';
 import { fieldLayoutStyles, fieldStyles } from '../Form/style';
+import { styles as a2uiFormStyles } from './a2uiStyle';
 import { resolveBinding } from './binding';
 import { useFormKitContext } from './context';
 import type { FieldValidator } from './engine/types';
@@ -248,6 +250,39 @@ const FormField = memo<FormFieldProps>(
           : undefined;
     const mergedLayout = layout || (mobile ? 'vertical' : config.layout);
     const mergedVariant = variant || config.variant;
+
+    if (mergedVariant === 'a2ui') {
+      // Adapted from CopilotKit Gen UI 2.0 standard catalog (MIT): `Field`, the label above the
+      // control.
+      const note = extra ?? desc;
+      return (
+        <div
+          {...styleProps(a2uiFieldStyles.field, clsx(formKitClasses('field'), className), style)}
+        >
+          {label != null && label !== '' && (
+            <label
+              {...styleProps(a2uiFieldStyles.label, formKitClasses('field-label'))}
+              htmlFor={labelFor}
+            >
+              {label}
+              {required ? (
+                <span
+                  aria-hidden
+                  {...styleProps(a2uiFormStyles.required, formKitClasses('field-required'))}
+                >
+                  *
+                </span>
+              ) : null}
+            </label>
+          )}
+          {control}
+          {note != null && (
+            <div {...styleProps(a2uiFormStyles.extra, formKitClasses('field-extra'))}>{note}</div>
+          )}
+        </div>
+      );
+    }
+
     const controlWidth =
       mergedLayout === 'vertical' || minWidth === undefined || minWidth === ''
         ? undefined

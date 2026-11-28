@@ -2,7 +2,8 @@ import { stableClasses } from '@/utils/bem';
 
 export const sliderClasses = stableClasses({
   block: 'slider',
-  elements: ['control', 'track', 'indicator', 'thumb'],
+  dataAttributes: ['variant'],
+  elements: ['control', 'track', 'indicator', 'thumb', 'header', 'label', 'value'],
 });
 
 export const sliderWithInputClasses = stableClasses({

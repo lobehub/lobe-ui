@@ -55,6 +55,8 @@ export interface SegmentedProps<Value extends string = string> {
   disabled?: boolean;
   glass?: boolean;
   id?: string;
+  /** Field label above the control, in the A2UI standard field look (`variant="a2ui"` only). */
+  label?: ReactNode;
   name?: string;
   onChange?: (value: Value) => void;
   options?: SegmentedOptions<Value>;
@@ -65,6 +67,13 @@ export interface SegmentedProps<Value extends string = string> {
   /** Semantic DOM inline styles, same parts as `classNames`. */
   styles?: SegmentedStyles;
   value?: Value;
-  variant?: SegmentedVariant;
+  /**
+   * `filled` or `outlined` track with a sliding indicator. `a2ui`: the A2UI standard
+   * `SegmentedControl`, a pill well of 32px segments in the surrounding font size where the chosen
+   * one is a raised surface, under an optional `label`; `size`, `glass`, `shadow` and `vertical`
+   * do not apply.
+   * @default 'filled'
+   */
+  variant?: SegmentedVariant | 'a2ui';
   vertical?: boolean;
 }

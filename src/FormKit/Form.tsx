@@ -1,8 +1,10 @@
 'use client';
 
 import clsx from 'clsx';
-import { type FormEvent, useCallback, useMemo, useRef } from 'react';
+import { type FormEvent, Fragment, useCallback, useMemo, useRef } from 'react';
 
+import { a2uiFieldStyles } from '@/internal/a2ui/standardField';
+import { a2uiStyles } from '@/internal/a2ui/styles';
 import { styleProps } from '@/styles/stylex/props';
 import { useResponsive } from '@/styles/theme/scope';
 import { toDataAttributes } from '@/utils/bem';
@@ -12,6 +14,7 @@ import FormGroup from '../Form/components/FormGroup';
 import { formMarker } from '../Form/marker.stylex';
 import { FormClassesContext } from '../Form/stableContext';
 import { rootStyles } from '../Form/style';
+import { styles as a2uiFormStyles } from './a2uiStyle';
 import { FormKitContext, type FormKitContextValue } from './context';
 import FormField from './Field';
 import { formKitClasses } from './stable';
@@ -86,8 +89,18 @@ const Form = <T extends FormValues>({
     />
   );
 
+  const isA2ui = variant === 'a2ui';
+  const groupVariant = isA2ui ? 'borderless' : variant;
+
   const renderGroup = (group: FormGroupItem<T>, index: number) => {
     const key = group.key ?? index;
+    // The A2UI form has no group chrome: a group is its fields in the column.
+    if (isA2ui)
+      return Array.isArray(group.children) ? (
+        group.children.filter((item) => !item.hidden).map(renderField)
+      ) : (
+        <Fragment key={key}>{group.children}</Fragment>
+      );
     return (
       <FormGroup
         active={activeKey && group.key ? activeKey.includes(key) : undefined}
@@ -99,7 +112,7 @@ const Form = <T extends FormValues>({
         key={key}
         style={customStyles?.group}
         title={group.title}
-        variant={group.variant || variant}
+        variant={group.variant || groupVariant}
         defaultActive={
           defaultActiveKey && group.key ? defaultActiveKey.includes(key) : group.defaultActive
         }
@@ -119,8 +132,14 @@ const Form = <T extends FormValues>({
     items && items.length > 0 ? (
       itemsType === 'group' ? (
         (items as FormGroupItem<T>[]).map(renderGroup)
+      ) : isA2ui ? (
+        (items as FormFieldProps<T>[]).filter((item) => !item.hidden).map(renderField)
       ) : (
-        <FormFlatGroup className={classNames?.group} style={customStyles?.group} variant={variant}>
+        <FormFlatGroup
+          className={classNames?.group}
+          style={customStyles?.group}
+          variant={groupVariant}
+        >
           {(items as FormFieldProps<T>[]).filter((item) => !item.hidden).map(renderField)}
         </FormFlatGroup>
       )
@@ -134,9 +153,13 @@ const Form = <T extends FormValues>({
         noValidate
         ref={mergedRef}
         {...styleProps(
-          [formMarker, rootStyles.root, variant === 'borderless' && rootStyles.borderless],
+          isA2ui
+            ? [formMarker, a2uiStyles.base, a2uiFieldStyles.base, a2uiFormStyles.root]
+            : [formMarker, rootStyles.root, variant === 'borderless' && rootStyles.borderless],
           clsx(formKitClasses(), className),
-          { gap: gap ?? (layout === 'vertical' ? 0 : undefined), ...style },
+          isA2ui
+            ? { gap, ...style }
+            : { gap: gap ?? (layout === 'vertical' ? 0 : undefined), ...style },
         )}
         onSubmit={handleSubmit}
       >

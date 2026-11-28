@@ -241,14 +241,16 @@ export const PopoverArrow = ({ className, children, ...rest }: PopoverArrowAtomP
 
 PopoverArrow.displayName = 'PopoverArrow';
 
-export type PopoverViewportAtomProps = ComponentProps<typeof BasePopover.Viewport>;
+export type PopoverViewportAtomProps = ComponentProps<typeof BasePopover.Viewport> & {
+  xstyle?: stylex.StyleXStyles;
+};
 
-export const PopoverViewport = ({ className, ...rest }: PopoverViewportAtomProps) => {
+export const PopoverViewport = ({ className, xstyle, ...rest }: PopoverViewportAtomProps) => {
   return (
     <BasePopover.Viewport
       className={(state) =>
         clsx(
-          stylex.props(styles.viewport).className,
+          stylex.props(styles.viewport, xstyle).className,
           'lobe-popover-viewport',
           popoverClasses('viewport'),
           typeof className === 'function' ? className(state) : className,

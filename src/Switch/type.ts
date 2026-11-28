@@ -20,15 +20,26 @@ export type SwitchClickEventHandler = SwitchChangeEventHandler;
 
 export interface SwitchClassNames {
   content?: string;
+  /** The description under the label (`variant="a2ui"`). */
+  description?: string;
+  /** The well row around label and switch (`variant="a2ui"`). */
+  field?: string;
+  /** The label (`variant="a2ui"`). */
+  label?: string;
   root?: string;
   thumb?: string;
 }
 
 export interface SwitchStyles {
   content?: CSSProperties;
+  description?: CSSProperties;
+  field?: CSSProperties;
+  label?: CSSProperties;
   root?: CSSProperties;
   thumb?: CSSProperties;
 }
+
+export type SwitchVariant = 'default' | 'a2ui';
 
 export interface SwitchContextType {
   isChecked: boolean;
@@ -88,6 +99,10 @@ export interface SwitchProps extends AriaAttributes {
    */
   defaultValue?: boolean;
   /**
+   * Muted line under `label` (`variant="a2ui"`)
+   */
+  description?: ReactNode;
+  /**
    * Whether the switch is disabled
    */
   disabled?: boolean;
@@ -95,6 +110,10 @@ export interface SwitchProps extends AriaAttributes {
    * Element id
    */
   id?: string;
+  /**
+   * Label on the left of the switch, in one well row with `description` (`variant="a2ui"`)
+   */
+  label?: ReactNode;
   /**
    * Show loading indicator
    */
@@ -148,4 +167,10 @@ export interface SwitchProps extends AriaAttributes {
    * Alias for `checked`
    */
   value?: boolean;
+  /**
+   * `a2ui`: the A2UI playground switch, a 32 × 18px track with a 16px thumb; with `label` or
+   * `description` it sits on the right of a well row that holds them.
+   * @default 'default'
+   */
+  variant?: SwitchVariant;
 }

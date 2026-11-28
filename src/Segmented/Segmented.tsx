@@ -1,18 +1,25 @@
 'use client';
 
+import { Toggle as BaseUIToggle } from '@base-ui/react/toggle';
+import { ToggleGroup as BaseUIToggleGroup } from '@base-ui/react/toggle-group';
 import clsx from 'clsx';
 import {
   type CSSProperties,
   useCallback,
   useEffect,
+  useId,
   useLayoutEffect,
   useMemo,
   useRef,
 } from 'react';
 
 import { useControlledState } from '@/hooks/useControlledState';
+import { A2uiField, a2uiFieldStyles } from '@/internal/a2ui/standardField';
+import { a2uiStyles } from '@/internal/a2ui/styles';
+import { styleProps } from '@/styles/stylex/props';
 import { toDataAttributes } from '@/utils/bem';
 
+import { styles as a2uiSegmentedStyles } from './a2uiStyle';
 import {
   SegmentedIndicator,
   SegmentedItem,
@@ -20,6 +27,7 @@ import {
   SegmentedItemLabel,
   SegmentedRoot,
 } from './atoms';
+import { segmentedClasses } from './stable';
 import type { SegmentedOption, SegmentedProps } from './type';
 
 const normalizeOption = <Value extends string>(
@@ -35,6 +43,7 @@ const Segmented = <Value extends string = string>({
   disabled = false,
   glass = false,
   id,
+  label,
   name,
   onChange,
   options,
@@ -109,6 +118,70 @@ const Segmented = <Value extends string = string>({
 
   // `list` is the same element as `root` (the toggle group holds the items directly).
   const rootStyle: CSSProperties = { ...style, ...customStyles?.list, ...customStyles?.root };
+  const labelId = useId();
+
+  if (variant === 'a2ui') {
+    // Adapted from CopilotKit Gen UI 2.0 standard catalog (MIT): `SegmentedControl`.
+    const control = (
+      <BaseUIToggleGroup<Value>
+        aria-labelledby={label == null ? undefined : labelId}
+        data-variant={variant}
+        disabled={disabled}
+        id={id}
+        ref={mergedRef}
+        {...toDataAttributes({ block })}
+        {...styleProps(
+          [
+            a2uiStyles.base,
+            a2uiFieldStyles.base,
+            a2uiSegmentedStyles.root,
+            block && a2uiSegmentedStyles.rootBlock,
+            disabled && a2uiSegmentedStyles.rootDisabled,
+          ],
+          clsx(segmentedClasses(), classNames?.root, classNames?.list, className),
+          rootStyle,
+        )}
+        value={groupValue}
+        onValueChange={(next) => {
+          const picked = next[0];
+          if (picked != null) setInnerValue(picked);
+        }}
+      >
+        {normalizedOptions.map((opt) => (
+          <BaseUIToggle<Value>
+            aria-label={typeof opt.label === 'string' ? opt.label : undefined}
+            data-segmented-item=""
+            disabled={disabled || opt.disabled}
+            key={opt.value}
+            title={opt.title}
+            value={opt.value}
+            {...styleProps(
+              [a2uiSegmentedStyles.item, block && a2uiSegmentedStyles.itemBlock],
+              clsx(segmentedClasses('item'), classNames?.item, opt.className),
+              customStyles?.item,
+            )}
+          >
+            {opt.icon != null && (
+              <SegmentedItemIcon className={classNames?.itemIcon} style={customStyles?.itemIcon}>
+                {opt.icon}
+              </SegmentedItemIcon>
+            )}
+            {opt.label != null && (
+              <SegmentedItemLabel className={classNames?.itemLabel} style={customStyles?.itemLabel}>
+                {opt.label}
+              </SegmentedItemLabel>
+            )}
+          </BaseUIToggle>
+        ))}
+      </BaseUIToggleGroup>
+    );
+    if (label == null) return control;
+    return (
+      <A2uiField label={label} labelId={labelId}>
+        {control}
+      </A2uiField>
+    );
+  }
 
   return (
     <SegmentedRoot<Value>

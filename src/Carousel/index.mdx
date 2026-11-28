@@ -4,6 +4,7 @@ description: Slide carousel with autoplay, loop, adaptive height, pill dots and 
 category: Data Display
 ---
 
+import DemoA2ui from './demos/a2ui.tsx?demo';
 import DemoIndex from './demos/index.tsx?demo';
 import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
 import { carouselClasses } from './stable';
@@ -11,6 +12,12 @@ import { carouselClasses } from './stable';
 ## Basic
 
 <Demo of={DemoIndex} layout="bare" />
+
+## A2UI
+
+`variant="a2ui"` takes the look of the [A2UI standard carousel](https://a2ui.open.bot/components/Carousel): slides at their own width in a row that scrolls sideways and snaps to each slide's start (`snap`), 8px apart (`slideGap`), with 32px round arrows that hide at either end and no dots. Each child is one slide laid out as a 16px-gap column, so a fragment of a title and a caption becomes one slide. `index` / `onIndexChange` and the `ref` methods follow the slide nearest the start. Colours are the lobe-ui theme's.
+
+<Demo of={DemoA2ui} layout="bare" />
 
 ## APIs
 

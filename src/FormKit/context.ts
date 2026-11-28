@@ -2,13 +2,13 @@
 
 import { createContext, use } from 'react';
 
-import type { FormLayout, FormVariant } from '../Form/type';
-import type { FormInstance, FormValues } from './type';
+import type { FormLayout } from '../Form/type';
+import type { FormInstance, FormKitVariant, FormValues } from './type';
 
 export interface FormKitContextValue {
   form: FormInstance<any>;
   layout: FormLayout;
-  variant: FormVariant;
+  variant: FormKitVariant;
 }
 
 export const FormKitContext = createContext<FormKitContextValue | null>(null);

@@ -2,14 +2,18 @@
 
 import { Select as BaseSelect } from '@base-ui/react/select';
 import clsx from 'clsx';
+import { ChevronDown } from 'lucide-react';
 import { type MouseEvent } from 'react';
-import { memo, useCallback, useEffect, useMemo, useState } from 'react';
+import { memo, useCallback, useEffect, useId, useMemo, useState } from 'react';
 
 import { menuClassNames, menuStyles } from '@/DropdownMenu/sharedStyle';
+import { A2uiField, a2uiFieldStyles } from '@/internal/a2ui/standardField';
+import { a2uiStyles } from '@/internal/a2ui/styles';
 import { styleProps } from '@/styles/stylex/props';
 import { useThemeMode } from '@/styles/theme/scope';
 import { toDataAttributes } from '@/utils/bem';
 
+import { styles as a2uiSelectStyles } from './a2uiStyle';
 import { SelectPositioner } from './atoms';
 import { isValueEmpty, shouldIgnoreRootValueChange } from './helpers';
 import {
@@ -43,6 +47,7 @@ const Select = memo<SelectProps<any>>(
     defaultValue,
     disabled,
     id,
+    label,
     labelRender,
     listHeight = 512,
     listItemHeight,
@@ -78,6 +83,9 @@ const Select = memo<SelectProps<any>>(
   }) => {
     const { isDarkMode } = useThemeMode();
     const resolvedVariant = variant ?? (isDarkMode ? 'filled' : 'outlined');
+    const isA2ui = resolvedVariant === 'a2ui';
+    const autoId = useId();
+    const triggerId = id ?? (isA2ui && label != null ? autoId : undefined);
     const isTags = mode === 'tags';
     const isMultiple = mode === 'multiple' || mode === 'tags';
     const isItemAligned = behaviorVariant === 'item-aligned';
@@ -189,8 +197,13 @@ const Select = memo<SelectProps<any>>(
 
     const prefixNode = useMemo(() => resolveIconNode(prefix), [prefix]);
     const suffixIconNode = useMemo(
-      () => resolveSuffixIcon(suffixIcon, suffixIconProps, loading),
-      [loading, suffixIcon, suffixIconProps],
+      () =>
+        resolveSuffixIcon(
+          suffixIcon ?? (isA2ui && !loading ? ChevronDown : undefined),
+          suffixIconProps ?? (isA2ui ? { size: { size: 12, strokeWidth: 1.5 } } : undefined),
+          loading,
+        ),
+      [isA2ui, loading, suffixIcon, suffixIconProps],
     );
 
     const popupStyle = useMemo(() => {
@@ -214,7 +227,15 @@ const Select = memo<SelectProps<any>>(
 
     const dataAttributes = toDataAttributes({ mode, shadow, size, variant: resolvedVariant });
     const triggerProps = styleProps(
-      triggerStyles({ shadow, size, variant: resolvedVariant }),
+      isA2ui
+        ? [
+            a2uiStyles.base,
+            a2uiFieldStyles.base,
+            a2uiFieldStyles.control,
+            a2uiFieldStyles.controlFocus,
+            a2uiSelectStyles.trigger,
+          ]
+        : triggerStyles({ shadow, size, variant: resolvedVariant }),
       clsx(selectClasses(), className, classNames?.root, classNames?.trigger),
       style,
     );
@@ -239,10 +260,10 @@ const Select = memo<SelectProps<any>>(
       })
     );
 
-    return (
+    const select = (
       <BaseSelect.Root
         disabled={disabled}
-        id={id}
+        id={triggerId}
         modal={isItemAligned}
         multiple={isMultiple}
         name={name}
@@ -255,6 +276,7 @@ const Select = memo<SelectProps<any>>(
       >
         <BaseSelect.Trigger
           autoFocus={!isTags && autoFocus}
+          id={triggerId}
           {...dataAttributes}
           {...triggerProps}
           disabled={disabled}
@@ -289,9 +311,16 @@ const Select = memo<SelectProps<any>>(
             />
           )}
           <SelectTriggerSuffix
-            classNames={classNames}
             showClear={showClear}
             suffixIconNode={suffixIconNode}
+            classNames={
+              isA2ui
+                ? {
+                    ...classNames,
+                    icon: clsx(styleProps(a2uiSelectStyles.icon).className, classNames?.icon),
+                  }
+                : classNames
+            }
             onClear={handleClear}
           />
         </BaseSelect.Trigger>
@@ -307,7 +336,12 @@ const Select = memo<SelectProps<any>>(
             <BaseSelect.Popup
               {...dataAttributes}
               {...styleProps(
-                [menuStyles.popup, styles.popup, styles.popupBounds],
+                [
+                  menuStyles.popup,
+                  styles.popup,
+                  styles.popupBounds,
+                  isA2ui && a2uiSelectStyles.popup,
+                ],
                 clsx(
                   menuClassNames.popup,
                   selectClasses('popup'),
@@ -341,6 +375,13 @@ const Select = memo<SelectProps<any>>(
           </SelectPositioner>
         </BaseSelect.Portal>
       </BaseSelect.Root>
+    );
+
+    if (!isA2ui || label == null) return select;
+    return (
+      <A2uiField htmlFor={triggerId} label={label}>
+        {select}
+      </A2uiField>
     );
   },
 );

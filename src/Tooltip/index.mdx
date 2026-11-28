@@ -10,6 +10,7 @@ import DemoGroup from './demos/group.tsx?demo';
 import DemoGroupShared from './demos/group-shared.tsx?demo';
 import DemoGroupRemoveTrigger from './demos/group-remove-trigger.tsx?demo';
 import DemoGroupChildrenPreserve from './demos/group-children-preserve.tsx?demo';
+import DemoA2ui from './demos/a2ui.tsx?demo';
 import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
 import { tooltipClasses } from './stable';
 
@@ -38,6 +39,12 @@ Verify tooltips close when the trigger node is removed, for both standalone and 
 When the active trigger becomes invalid the group hard-resets its popup. Sibling children must not be torn down with it. Type into the neighbor input, open a tooltip, then force a reset and confirm the input text and mount count survive.
 
 <Demo of={DemoGroupChildrenPreserve} />
+
+## A2UI
+
+`variant="a2ui"` takes the look of the [A2UI standard tooltip](https://a2ui.open.bot/components/Tooltip): an inverted panel (the text colour as the fill, the page background as the text) with 4px 8px padding, a 6px radius and a soft shadow, at most 240px wide. Its text is 0.75 of the font size of the text around the trigger. It opens and closes without a delay unless `openDelay` / `closeDelay` say otherwise, and it renders standalone inside a `TooltipGroup`.
+
+<Demo of={DemoA2ui} layout="center" />
 
 ## APIs
 

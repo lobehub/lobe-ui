@@ -176,6 +176,15 @@ export interface TooltipProps {
   triggerProps?: TooltipTriggerComponentProps;
 
   /**
+   * `default`: the lobe-ui tooltip.
+   * `a2ui`: the A2UI standard tooltip, an inverted panel with 4px 8px padding, 6px radius, a soft
+   * shadow and text at 0.75 of the font size around the trigger, at most 240px wide. It opens without a delay
+   * and always renders standalone (outside a `TooltipGroup`).
+   * @default 'default'
+   */
+  variant?: 'default' | 'a2ui';
+
+  /**
    * z-index for tooltip floating root.
    */
   zIndex?: number;

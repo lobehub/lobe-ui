@@ -9,6 +9,10 @@ import * as stylex from '@stylexjs/stylex';
 export const a2ui = stylex.defineConsts({
   /** Live / highlighted accent (official violet) */
   accent: 'var(--lobe-color-primary)',
+  /** Accent at 14%: a picked chip's wash (playground `ChipSelect`) */
+  accent14: 'color-mix(in srgb, var(--lobe-color-primary) 14%, transparent)',
+  /** Accent at 50%: a picked chip's hairline (playground `ChipSelect`) */
+  accent50: 'color-mix(in srgb, var(--lobe-color-primary) 50%, transparent)',
   alertErrorBase: 'var(--lobe-color-error)',
   alertErrorIcon: 'var(--lobe-color-error)',
   alertErrorText: 'var(--lobe-color-error-text)',
@@ -32,6 +36,8 @@ export const a2ui = stylex.defineConsts({
   cardShadow: 'var(--lobe-a2ui-card-shadow)',
   cardSheen: 'var(--lobe-a2ui-card-sheen)',
   fg: 'var(--lobe-color-text)',
+  /** `ring-foreground/10`: a popover's hairline ring */
+  fg10: 'color-mix(in srgb, var(--lobe-color-text) 10%, transparent)',
   /** `text-foreground/65` */
   fg65: 'color-mix(in srgb, var(--lobe-color-text) 65%, transparent)',
   /** `text-foreground/80` */
@@ -52,10 +58,14 @@ export const a2ui = stylex.defineConsts({
   inputBg: 'var(--lobe-color-bg-container)',
   /** Wells */
   ink3: 'var(--lobe-color-fill-tertiary)',
+  /** Inverted surface (standard `surface-inverted`): tooltips */
+  inverted: 'var(--lobe-color-text)',
   line: 'var(--lobe-color-border-secondary)',
   lineStrong: 'var(--lobe-color-border)',
   muted: 'var(--lobe-color-fill-tertiary)',
   negative: 'var(--lobe-color-error)',
+  /** Text on the inverted surface */
+  onInverted: 'var(--lobe-color-bg-layout)',
   /** Text on a solid tone fill */
   onSolid: 'var(--lobe-color-bg-layout)',
   overlay1_5: 'var(--lobe-color-fill-quaternary)',
@@ -76,6 +86,14 @@ export const a2ui = stylex.defineConsts({
   radius: 'var(--lobe-a2ui-radius)',
   ring: 'var(--lobe-color-primary-border)',
   secondary: 'var(--lobe-color-fill-tertiary)',
+  /** Floating panel shadow (standard `shadow-md`): popovers, tooltips */
+  shadowMd: 'var(--lobe-a2ui-shadow-md)',
+  /** Small floating shadow (standard `shadow-sm`): carousel arrows */
+  shadowSm: 'var(--lobe-a2ui-shadow-sm)',
+  /** Control shadow (standard `shadow-xs`): slider thumb, selected segment */
+  shadowXs: 'var(--lobe-a2ui-shadow-xs)',
+  /** Loading placeholder fill (playground `.a2-shimmer`) */
+  shimmer: 'var(--lobe-color-fill)',
   surface: 'var(--lobe-color-bg-container)',
   surface2: 'var(--lobe-color-bg-elevated)',
   warning: 'var(--lobe-color-warning)',

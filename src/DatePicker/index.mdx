@@ -27,6 +27,7 @@ import DemoStyleClass from './demos/style-class.tsx?demo';
 import DemoNested from './demos/nested.tsx?demo';
 import DemoMode from './demos/mode.tsx?demo';
 import DemoControlled from './demos/controlled.tsx?demo';
+import DemoA2ui from './demos/a2ui.tsx?demo';
 import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
 import { datePickerClasses, dateRangePickerClasses } from './stable';
 
@@ -206,6 +207,12 @@ The range picker sizes to its content by default. Give the root a width (`styles
 ## Component Token
 
 **Debug** (antd `component-token`) — **omitted.** antd's demo sets DatePicker component tokens through `ConfigProvider theme.components.DatePicker`. lobe's DatePicker has no component-level Design Token: it is styled from the global `--lobe-*` theme tokens. Customise it with `classNames` / `styles` (Custom semantic dom styling above) or a `className` from `createStaticStyles`. See the differences section.
+
+## A2UI
+
+`variant="a2ui"` takes the look of the [A2UI playground](https://a2ui.open.bot/components/DatePicker) date picker on a single-date picker: an outline trigger with a calendar icon and the date as "Thu, Nov 12, 2026" (in the `ConfigProvider` locale), under an optional `label`, opening a one-month calendar with 28px day cells, today on a muted fill and the picked day in the primary colour. It supports `value` / `defaultValue` / `onChange`, `open` / `onOpenChange`, `disabled`, `disabledDate`, `minDate` / `maxDate` and `placeholder`; `multiple` and the week / month / year / time pickers keep the default look. Colours stay the lobe-ui theme's.
+
+<Demo of={DemoA2ui} />
 
 ## Semantic DOM
 

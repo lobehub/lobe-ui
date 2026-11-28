@@ -1,0 +1,42 @@
+---
+title: Citation
+description: An inline source marker such as [1] that shows the source title, snippet and link on hover or click, placed right after the sentence it supports.
+category: General
+---
+
+import A2ui from './demos/a2ui.tsx?demo';
+import Basic from './demos/index.tsx?demo';
+import { StableClassTable } from '../../docs/stable-classes/StableClassTable';
+import { citationClasses } from './stable';
+
+## Usage
+
+Put a `Citation` right after the sentence it supports. Hovering the marker, or clicking it, opens a card with the source (the `url` host with its favicon unless `source` is set), the `title`, a `snippet` and an "Open source" link; Escape or a click outside closes it. `label` replaces the number, for example with a domain. Only `http` and `https` URLs get a link.
+
+<Demo of={Basic} layout="bare" />
+
+## A2UI
+
+`variant="a2ui"` takes the look of the [A2UI playground](https://a2ui.open.bot/components/Citation) citation (the CopilotKit standard `Citation`): a superscript pill marker and a 280px card, with type that follows the surrounding font size. Colours stay the lobe-ui theme's.
+
+<Demo of={A2ui} layout="bare" />
+
+## APIs
+
+<Api name="Citation" />
+
+The `citation.source` (the marker's accessible name, with `{marker}`) and `citation.openSource` texts come from `@lobehub/ui/i18n`; `texts` overrides them.
+
+## Styles
+
+`@lobehub/ui/style.css` already includes the styles of `Citation`. To load only the components you use, import this file instead of `style.css`:
+
+```tsx | pure
+import '@lobehub/ui/css/Citation.css';
+```
+
+## Class names
+
+These class names are public API for overrides, integrations and e2e selectors. See [Styling Overrides](/styling-overrides).
+
+<StableClassTable of={citationClasses} />

@@ -2,20 +2,24 @@
 
 import { Input as BaseInput } from '@base-ui/react/input';
 import clsx from 'clsx';
-import { memo, useRef, useState } from 'react';
+import { memo, useId, useRef, useState } from 'react';
 
 import { useEventCallback } from '@/hooks/useEventCallback';
+import { A2uiField, a2uiFieldStyles } from '@/internal/a2ui/standardField';
+import { a2uiStyles } from '@/internal/a2ui/styles';
 import { styleProps } from '@/styles/stylex/props';
 import { useThemeMode } from '@/styles/theme/scope';
 import { toDataAttributes } from '@/utils/bem';
 import { useMergeRefs } from '@/utils/mergeRefs';
 
+import { styles as a2uiInputStyles } from './a2uiStyle';
 import ClearButton from './ClearButton';
 import { clearNativeValue } from './clearNativeValue';
+import { inputMarker } from './marker.stylex';
 import { isPressEnter } from './pressEnter';
 import { inputClasses } from './stable';
 import { inputRootStyles, styles } from './style';
-import type { InputProps } from './type';
+import type { InputProps, InputVariant } from './type';
 
 const hasText = (value: unknown) =>
   value !== undefined && value !== null && String(value).length > 0;
@@ -41,10 +45,14 @@ const Input = memo<InputProps>(
     onChange,
     value,
     defaultValue,
+    label,
     ...rest
   }) => {
     const { isDarkMode } = useThemeMode();
     const mergedVariant = variant || (isDarkMode ? 'filled' : 'outlined');
+    const isA2ui = mergedVariant === 'a2ui';
+    const autoId = useId();
+    const inputId = rest.id ?? (isA2ui && label != null ? autoId : undefined);
     const inputRef = useRef<HTMLInputElement>(null);
     const mergedRef = useMergeRefs([ref, inputRef]);
     const [filled, setFilled] = useState(() => hasText(value ?? defaultValue));
@@ -56,13 +64,22 @@ const Input = memo<InputProps>(
       onClear?.();
     });
 
-    return (
+    const control = (
       <div
         data-disabled={disabled ? '' : undefined}
         data-variant={mergedVariant}
         {...toDataAttributes({ shadow, size })}
         {...styleProps(
-          inputRootStyles({ shadow, size, variant: mergedVariant }),
+          isA2ui
+            ? [
+                inputMarker,
+                a2uiStyles.base,
+                a2uiFieldStyles.base,
+                a2uiFieldStyles.control,
+                a2uiFieldStyles.controlFocusWithin,
+                a2uiInputStyles.root,
+              ]
+            : inputRootStyles({ shadow, size, variant: mergedVariant as InputVariant }),
           clsx(inputClasses(), className),
           style,
         )}
@@ -85,10 +102,11 @@ const Input = memo<InputProps>(
           ref={mergedRef}
           value={value}
           {...styleProps(
-            styles.input,
+            [styles.input, isA2ui && a2uiFieldStyles.placeholder],
             clsx(inputClasses('input'), classNames?.input),
             customStyles?.input,
           )}
+          id={inputId}
           onChange={(event) => {
             setFilled(event.currentTarget.value.length > 0);
             onChange?.(event);
@@ -112,6 +130,13 @@ const Input = memo<InputProps>(
           </span>
         )}
       </div>
+    );
+
+    if (!isA2ui || label == null) return control;
+    return (
+      <A2uiField htmlFor={inputId} label={label}>
+        {control}
+      </A2uiField>
     );
   },
 );

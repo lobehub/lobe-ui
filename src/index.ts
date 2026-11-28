@@ -29,9 +29,15 @@ export { default as Burger } from './Burger';
 export * from './Burger';
 export { default as Button } from './Button';
 export * from './Button';
+export { default as ButtonGroup } from './ButtonGroup';
+export * from './ButtonGroup';
 export { default as Carousel } from './Carousel';
 export * from './Carousel';
 export * from './Checkbox';
+export { default as ChipSelect } from './ChipSelect';
+export * from './ChipSelect';
+export { default as Citation } from './Citation';
+export * from './Citation';
 export {
   CodeDiff,
   type CodeDiffProps,
@@ -44,6 +50,8 @@ export { default as Collapsible } from './Collapsible';
 export * from './Collapsible';
 export * from './ColorPicker';
 export { default as ColorSwatches, type ColorSwatchesProps } from './ColorSwatches';
+export { default as Combobox } from './Combobox';
+export * from './Combobox';
 export { default as ComparisonTable } from './ComparisonTable';
 export * from './ComparisonTable';
 export {
@@ -145,6 +153,8 @@ export {
 } from './ElapsedTime';
 export { default as EmojiPicker, type EmojiPickerProps } from './EmojiPicker';
 export { default as Empty, type EmptyActionConfig, type EmptyProps } from './Empty';
+export { default as EntityCard } from './EntityCard';
+export * from './EntityCard';
 export { default as EventCard } from './EventCard';
 export * from './EventCard';
 export { default as Favicon, type FaviconProps, getFaviconHost } from './Favicon';
@@ -161,6 +171,8 @@ export * from './FloatingPanel';
 export * from './FloatingSheet';
 export { default as FluentEmoji, type FluentEmojiProps } from './FluentEmoji';
 export * from './FocusScope';
+export { default as FollowUp } from './FollowUp';
+export * from './FollowUp';
 export { default as FontLoader, type FontLoaderProps } from './FontLoader';
 export * from './Form';
 export { default as Freeze, type FreezeProps } from './Freeze';

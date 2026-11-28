@@ -59,9 +59,10 @@ type SharedInput = Pick<
   | 'suffixIcon'
   | 'superNextIcon'
   | 'superPrevIcon'
-  | 'variant'
 > & {
   classNames?: PickerClassNames;
+  /** The rc-picker variants; `a2ui` never reaches the shared hook. */
+  variant?: Exclude<DatePickerBaseProps<any>['variant'], 'a2ui'>;
   generateConfig?: GenerateConfig<any>;
   semanticProps: object;
   stable: typeof datePickerClasses;

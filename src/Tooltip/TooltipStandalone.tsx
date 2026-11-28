@@ -5,6 +5,7 @@ import { Tooltip as BaseTooltip } from '@base-ui/react/tooltip';
 import clsx from 'clsx';
 import {
   cloneElement,
+  type CSSProperties,
   isValidElement,
   memo,
   type Ref,
@@ -23,6 +24,7 @@ import { getElementRef } from '@/utils/getElementRef';
 import { mergeRefs } from '@/utils/mergeRefs';
 import { placementMap } from '@/utils/placement';
 
+import { styles as a2uiStyles } from './a2uiStyle';
 import { TooltipArrowIcon } from './ArrowIcon';
 import { tooltipClasses } from './stable';
 import { styles } from './style';
@@ -64,6 +66,7 @@ export const TooltipStandalone = memo<TooltipProps>(
     popupProps,
     portalProps,
     standalone: _standalone,
+    variant = 'default',
     ...restProps
   }) => {
     const isClient = useIsClient();
@@ -87,17 +90,28 @@ export const TooltipStandalone = memo<TooltipProps>(
       [disabled, onOpenChange, open],
     );
 
+    const isA2ui = variant === 'a2ui';
+
+    // The a2ui tooltip opens and closes at once, like the A2UI standard tooltip.
     const resolvedOpenDelay = useMemo(() => {
       if (openDelay !== undefined) return openDelay;
       if (mouseEnterDelay !== undefined) return mouseEnterDelay * 1000;
-      return DEFAULT_OPEN_DELAY;
-    }, [mouseEnterDelay, openDelay]);
+      return isA2ui ? 0 : DEFAULT_OPEN_DELAY;
+    }, [isA2ui, mouseEnterDelay, openDelay]);
 
     const resolvedCloseDelay = useMemo(() => {
       if (closeDelay !== undefined) return closeDelay;
       if (mouseLeaveDelay !== undefined) return mouseLeaveDelay * 1000;
-      return DEFAULT_CLOSE_DELAY;
-    }, [closeDelay, mouseLeaveDelay]);
+      return isA2ui ? 0 : DEFAULT_CLOSE_DELAY;
+    }, [closeDelay, isA2ui, mouseLeaveDelay]);
+
+    // The a2ui text is 0.75 of the text around the trigger (the official tooltip's wrapper
+    // inherits it), which the portal does not inherit.
+    const a2uiFontSize = useMemo(() => {
+      if (!isA2ui || !resolvedOpen || !triggerNode || typeof window === 'undefined') return;
+      const context = triggerNode.parentElement ?? triggerNode;
+      return window.getComputedStyle(context).fontSize || undefined;
+    }, [isA2ui, resolvedOpen, triggerNode]);
 
     const placementConfig = placementMap[placement] ?? placementMap.top;
     const baseSideOffset = arrow ? 8 : 6;
@@ -119,12 +133,13 @@ export const TooltipStandalone = memo<TooltipProps>(
           customStyles?.arrow,
         ),
         popup: styleProps(
-          styles.popup,
+          [styles.popup, isA2ui && a2uiStyles.popup],
           clsx(tooltipClasses(), className, classNames?.root, classNames?.container),
           {
+            ...(a2uiFontSize && { '--lobe-a2ui-tooltip-font-size': a2uiFontSize }),
             ...customStyles?.root,
             ...customStyles?.container,
-          },
+          } as CSSProperties,
         ),
         positioner: styleProps(
           styles.positioner,
@@ -132,18 +147,20 @@ export const TooltipStandalone = memo<TooltipProps>(
           zIndex === undefined ? undefined : { zIndex },
         ),
         viewport: styleProps(
-          styles.viewport,
+          [styles.viewport, isA2ui && a2uiStyles.viewport],
           clsx('lobe-tooltip-viewport', tooltipClasses('viewport'), classNames?.content),
           customStyles?.content,
         ),
       };
     }, [
+      a2uiFontSize,
       className,
       classNames?.arrow,
       classNames?.container,
       classNames?.content,
       classNames?.root,
       customStylesProp,
+      isA2ui,
       zIndex,
     ]);
 
@@ -236,7 +253,12 @@ export const TooltipStandalone = memo<TooltipProps>(
           {...positionerProps}
           collisionPadding={positionerProps?.collisionPadding ?? getFloatingCollisionPadding()}
         >
-          <BaseTooltip.Popup data-placement={placement} {...slots.popup} {...popupProps}>
+          <BaseTooltip.Popup
+            data-placement={placement}
+            data-variant={isA2ui ? variant : undefined}
+            {...slots.popup}
+            {...popupProps}
+          >
             {arrow && <BaseTooltip.Arrow {...slots.arrow}>{TooltipArrowIcon}</BaseTooltip.Arrow>}
             <BaseTooltip.Viewport {...slots.viewport}>
               <TooltipContent hotkey={hotkey} hotkeyProps={hotkeyProps} title={title} />

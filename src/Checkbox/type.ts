@@ -23,6 +23,10 @@ export interface CheckboxProps extends BaseCheckboxProps {
     wrapper?: string;
   };
   onChange?: (checked: boolean) => void;
+  /**
+   * Box shape: `square` by default, `circle` by default with `variant="a2ui"` (the A2UI standard
+   * `CheckBox` is round unless `shape: "square"`).
+   */
   shape?: CheckboxShape;
   /**
    * Box size in pixels
@@ -36,6 +40,13 @@ export interface CheckboxProps extends BaseCheckboxProps {
     wrapper?: CSSProperties;
   };
   textProps?: DistributiveOmit<TextProps, 'children' | 'className' | 'style'>;
+  /**
+   * `a2ui`: the A2UI standard `CheckBox`, a 20px round (or 6px-radius `square`) box filled with
+   * the primary colour when checked, next to a label in the surrounding font size. `size` and
+   * `textProps` do not apply.
+   * @default 'default'
+   */
+  variant?: 'default' | 'a2ui';
 }
 
 export interface CheckboxGroupOption {

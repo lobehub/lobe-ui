@@ -4,10 +4,13 @@ import { Radio as BaseRadio } from '@base-ui/react/radio';
 import clsx from 'clsx';
 import { type CSSProperties, memo } from 'react';
 
+import { a2uiStyles } from '@/internal/a2ui/styles';
 import { focusRing } from '@/styles/stylex/focusRing';
 import { styleProps } from '@/styles/stylex/props';
 import Text from '@/Text';
+import { toDataAttributes } from '@/utils/bem';
 
+import { styles as a2uiRadioStyles } from './a2uiStyle';
 import { radioClasses } from './stable';
 import { styles } from './style';
 import type { RadioProps } from './type';
@@ -23,8 +26,50 @@ const Radio = memo<RadioProps>(
     style,
     textProps,
     disabled,
+    variant = 'default',
     ...rest
   }) => {
+    if (variant === 'a2ui') {
+      // Adapted from CopilotKit Gen UI 2.0 standard catalog (MIT): `Radio`.
+      const a2uiDot = (
+        <BaseRadio.Root
+          disabled={disabled}
+          {...rest}
+          {...(children ? undefined : toDataAttributes({ variant }))}
+          {...styleProps(
+            a2uiRadioStyles.dot,
+            clsx(
+              !children && radioClasses(),
+              radioClasses('radio'),
+              children ? classNames?.radio : className,
+              classNames?.radio,
+            ),
+            {
+              ...(backgroundColor ? { borderColor: backgroundColor } : {}),
+              ...(children ? {} : style),
+              ...customStyles?.radio,
+            },
+          )}
+        />
+      );
+      if (!children) return a2uiDot;
+      return (
+        <label
+          {...toDataAttributes({ variant })}
+          {...styleProps(
+            [a2uiStyles.base, a2uiRadioStyles.option],
+            clsx(radioClasses(), className, classNames?.wrapper),
+            { ...style, ...customStyles?.wrapper },
+          )}
+        >
+          {a2uiDot}
+          <span className={clsx(radioClasses('text'), classNames?.text)} style={customStyles?.text}>
+            {children}
+          </span>
+        </label>
+      );
+    }
+
     const size = sizeProp ?? 16;
     const customSize = sizeProp !== undefined;
     const dotStyle: CSSProperties = {

@@ -6,9 +6,12 @@ import { actionIconGroupClasses } from '@/ActionIconGroup/stable';
 import { autoCompleteClasses } from '@/AutoComplete/stable';
 import { burgerClasses } from '@/Burger/stable';
 import { buttonClasses, splitButtonClasses } from '@/Button/stable';
+import { buttonGroupClasses } from '@/ButtonGroup/stable';
 import { checkboxClasses, checkboxGroupClasses } from '@/Checkbox/stable';
+import { chipSelectClasses } from '@/ChipSelect/stable';
 import { colorPickerClasses } from '@/ColorPicker/stable';
 import { colorSwatchesClasses } from '@/ColorSwatches/stable';
+import { comboboxClasses } from '@/Combobox/stable';
 import { copyButtonClasses } from '@/CopyButton/stable';
 import { datePickerClasses, dateRangePickerClasses } from '@/DatePicker/stable';
 import { downloadButtonClasses } from '@/DownloadButton/stable';
@@ -23,10 +26,13 @@ import {
   AutoComplete,
   Burger,
   Button,
+  ButtonGroup,
   Checkbox,
   CheckboxGroup,
+  ChipSelect,
   ColorPicker,
   ColorSwatches,
+  Combobox,
   CopyButton,
   DatePicker,
   DateRangePicker,
@@ -100,6 +106,12 @@ export const FIXTURES: Record<string, StableFixture> = {
   ...MEDIA_FIXTURES,
   ...OVERLAY_FIXTURES,
   ...SUBPATH_FIXTURES,
+  ButtonGroup: {
+    classes: buttonGroupClasses,
+    render: ({ className }) => (
+      <ButtonGroup className={className} defaultValue="a" label="Period" options={['a', 'b']} />
+    ),
+  },
   Checkbox: {
     classes: checkboxClasses,
     render: ({ className }) => (
@@ -111,6 +123,12 @@ export const FIXTURES: Record<string, StableFixture> = {
   CheckboxGroup: {
     classes: checkboxGroupClasses,
     render: ({ className }) => <CheckboxGroup className={className} options={['a', 'b']} />,
+  },
+  ChipSelect: {
+    classes: chipSelectClasses,
+    render: ({ className }) => (
+      <ChipSelect className={className} defaultValue={['a']} label="Topics" options={['a', 'b']} />
+    ),
   },
   ColorPicker: {
     classes: colorPickerClasses,
@@ -174,6 +192,8 @@ export const FIXTURES: Record<string, StableFixture> = {
   },
   RadioGroup: {
     classes: radioGroupClasses,
+    // a2ui-only parts (`variant="a2ui"`).
+    conditional: ['label', 'options', 'description'],
     render: ({ className }) => <RadioGroup className={className} options={['a', 'b']} />,
   },
   Rate: {
@@ -213,6 +233,8 @@ export const FIXTURES: Record<string, StableFixture> = {
   },
   Slider: {
     classes: sliderClasses,
+    // a2ui-only parts (`variant="a2ui"`).
+    conditional: ['header', 'label', 'value'],
     render: ({ className }) => <Slider className={className} defaultValue={20} />,
   },
   SliderWithInput: {
@@ -333,6 +355,14 @@ export const FIXTURES: Record<string, StableFixture> = {
       </Button>
     ),
   },
+  Combobox: {
+    classes: comboboxClasses,
+    // The popup parts render only while the list is open.
+    conditional: ['popup', 'search', 'list', 'item', 'check', 'empty'],
+    render: ({ className }) => (
+      <Combobox className={className} defaultValue="a" label="Pick" options={['a', 'b']} />
+    ),
+  },
   CopyButton: {
     classes: copyButtonClasses,
     render: ({ className }) => <CopyButton className={className} content="text" />,
@@ -373,6 +403,8 @@ export const FIXTURES: Record<string, StableFixture> = {
   },
   Switch: {
     classes: switchClasses,
+    // The well row around a labelled switch is `variant="a2ui"` only.
+    conditional: ['field', 'label', 'description'],
     render: ({ className }) => (
       <Switch checkedChildren="On" className={className} unCheckedChildren="Off" />
     ),

@@ -18,6 +18,7 @@ import { useControlledState } from '@/hooks/useControlledState';
 import { useEventCallback } from '@/hooks/useEventCallback';
 import { styleProps } from '@/styles/stylex/props';
 
+import A2uiCarousel from './A2uiCarousel';
 import { carouselClasses } from './stable';
 import { styles } from './style';
 import type { CarouselProps } from './type';
@@ -26,7 +27,7 @@ const DEFAULT_INTERVAL = 5000;
 const SWIPE_THRESHOLD = 40;
 const ARROW_SIZE = { blockSize: 28, borderRadius: '50%', size: 16 };
 
-const Carousel = memo<CarouselProps>(
+const DefaultCarousel = memo<CarouselProps>(
   ({
     adaptiveHeight = false,
     arrows = false,
@@ -42,6 +43,9 @@ const Carousel = memo<CarouselProps>(
     onPointerLeave,
     pauseOnHover = true,
     ref,
+    slideGap: _slideGap,
+    snap: _snap,
+    variant: _variant,
     ...rest
   }) => {
     const slides = Children.toArray(children);
@@ -193,6 +197,12 @@ const Carousel = memo<CarouselProps>(
       </div>
     );
   },
+);
+
+DefaultCarousel.displayName = 'DefaultCarousel';
+
+const Carousel = memo<CarouselProps>((props) =>
+  props.variant === 'a2ui' ? <A2uiCarousel {...props} /> : <DefaultCarousel {...props} />,
 );
 
 Carousel.displayName = 'Carousel';

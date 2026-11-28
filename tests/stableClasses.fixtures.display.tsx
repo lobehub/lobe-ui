@@ -11,6 +11,7 @@ import { badgeClasses } from '@/Badge/stable';
 import { blockClasses } from '@/Block/stable';
 import { breadcrumbClasses } from '@/Breadcrumb/stable';
 import { carouselClasses } from '@/Carousel/stable';
+import { citationClasses } from '@/Citation/stable';
 import { collapsibleClasses } from '@/Collapsible/stable';
 import { comparisonTableClasses } from '@/ComparisonTable/stable';
 import { descriptionsClasses } from '@/Descriptions/stable';
@@ -19,10 +20,12 @@ import { dividerClasses } from '@/Divider/stable';
 import { draggableSideNavClasses } from '@/DraggableSideNav/stable';
 import { elapsedTimeClasses } from '@/ElapsedTime/stable';
 import { emptyClasses } from '@/Empty/stable';
+import { entityCardClasses } from '@/EntityCard/stable';
 import { faviconClasses } from '@/Favicon/stable';
 import { fileTypeIconClasses } from '@/FileTypeIcon/stable';
 import { centerClasses, flexClasses } from '@/Flex/stable';
 import { fluentEmojiClasses } from '@/FluentEmoji/stable';
+import { followUpClasses } from '@/FollowUp/stable';
 import { glideHighlightClasses } from '@/GlideHighlight/stable';
 import { gridClasses } from '@/Grid/stable';
 import { groupAvatarClasses } from '@/GroupAvatar/stable';
@@ -45,6 +48,7 @@ import {
   Breadcrumb,
   Carousel,
   Center,
+  Citation,
   Collapsible,
   ComparisonTable,
   Descriptions,
@@ -53,10 +57,12 @@ import {
   DraggableSideNav,
   ElapsedTime,
   Empty,
+  EntityCard,
   Favicon,
   FileTypeIcon,
   Flexbox,
   FluentEmoji,
+  FollowUp,
   GlideHighlight,
   Grid,
   GroupAvatar,
@@ -234,7 +240,7 @@ export const DISPLAY_FIXTURES: Record<string, StableFixture> = {
   },
   Carousel: {
     classes: carouselClasses,
-    conditional: ['prev', 'next'],
+    conditional: ['prev', 'next', 'scroller'],
     render: ({ className }) => (
       <Carousel className={className}>
         <div>One</div>
@@ -245,6 +251,14 @@ export const DISPLAY_FIXTURES: Record<string, StableFixture> = {
   Center: {
     classes: centerClasses,
     render: ({ className }) => <Center className={className}>Center</Center>,
+  },
+  Citation: {
+    classes: citationClasses,
+    // The card opens on hover or click.
+    conditional: ['card', 'source', 'title', 'snippet', 'link'],
+    render: ({ className }) => (
+      <Citation className={className} title="Report" url="https://example.com/a" />
+    ),
   },
   Collapsible: {
     classNameTarget: 'panel',
@@ -318,6 +332,23 @@ export const DISPLAY_FIXTURES: Record<string, StableFixture> = {
       />
     ),
   },
+  EntityCard: {
+    classes: entityCardClasses,
+    render: ({ className }) => (
+      <EntityCard
+        actions={[{ label: 'Buy' }]}
+        badge={{ color: 'success', label: 'In stock' }}
+        className={className}
+        description="Light pack"
+        image="https://example.com/a.png"
+        meta="$89"
+        rating={4.6}
+        ratingCount={312}
+        subtitle="Backpacks"
+        title="Daypack"
+      />
+    ),
+  },
   Favicon: {
     classes: faviconClasses,
     render: ({ className }) => <Favicon className={className} host="example.com" />,
@@ -335,6 +366,11 @@ export const DISPLAY_FIXTURES: Record<string, StableFixture> = {
     classes: fluentEmojiClasses,
     render: ({ className }) => <FluentEmoji className={className} emoji="😀" type="raw" />,
   },
+  FollowUp: {
+    classes: followUpClasses,
+    render: ({ className }) => <FollowUp className={className} items={['Next']} title="Try" />,
+  },
+
   GlideHighlight: {
     classes: glideHighlightClasses,
     render: ({ className }) => (
@@ -389,6 +425,8 @@ export const DISPLAY_FIXTURES: Record<string, StableFixture> = {
   },
   List: {
     classes: listClasses,
+    // a2ui-only parts (`variant="a2ui"`).
+    conditional: ['marker', 'value', 'children', 'button'],
     render: ({ className }) => (
       <List
         glide
@@ -476,6 +514,8 @@ export const DISPLAY_FIXTURES: Record<string, StableFixture> = {
   },
   Skeleton: {
     classes: skeletonClasses,
+    // `variant="a2ui"` parts.
+    conditional: ['line', 'avatar', 'body', 'bar'],
     render: ({ className }) => <Skeleton className={className} />,
   },
   SkeletonAvatar: {

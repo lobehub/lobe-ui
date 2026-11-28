@@ -15,6 +15,7 @@ const pickerElements = [
 
 export const datePickerClasses = stableClasses({
   block: 'date-picker',
+  dataAttributes: ['variant'],
   elements: pickerElements,
 });
 
